@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/UIDTrackerFragment"
+        android:title="UID Tracker">
+    </item>
+
+    <item android:id="@+id/UIDTransactionFragment"
+        android:title="UID Transaction">
+    </item>
+    <item android:id="@+id/drugRegistryFragment"
+        android:title="Drug Registry">
+    </item>
+    <item android:id="@+id/version"
+        android:title="Version">
+    </item>
+    <item android:id="@+id/logout"
+        android:title="Logout">
+    </item>
+
+</menu>
