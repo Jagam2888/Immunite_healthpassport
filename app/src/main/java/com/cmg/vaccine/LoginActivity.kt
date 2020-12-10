@@ -9,8 +9,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.cmg.vaccine.databinding.ActivityLoginBinding
 import com.cmg.vaccine.listener.AuthListener
 import com.cmg.vaccine.model.response.AuthResponse
-import com.cmg.vaccine.network.MyApi
-import com.cmg.vaccine.repositary.AuthRepositary
 import com.cmg.vaccine.util.hide
 import com.cmg.vaccine.util.show
 import com.cmg.vaccine.util.toast
