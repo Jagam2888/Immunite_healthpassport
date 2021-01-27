@@ -22,7 +22,7 @@ fun createOkHttp(context: Context): OkHttpClient {
 fun RetrofitClientInstance(context: Context,preferenceProvider: PreferenceProvider) : Retrofit {
     //val url = Paper.book().read("url","")
     return Retrofit.Builder()
-            .baseUrl(preferenceProvider.getURL())
+            .baseUrl("http://47.254.238.145:7001/")
             .addConverterFactory(GsonConverterFactory.create())
             .client(createOkHttp(context))
             .build()

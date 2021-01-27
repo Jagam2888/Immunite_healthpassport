@@ -1,3 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Vaccine</string>
+    <string name="app_name">Immunitee</string>
+    <string name="full_name">Full Name</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="id_number">ID Number</string>
+    <string name="id_type">ID Type</string>
+    <string name="email">Email</string>
+    <string name="email_address1">Email Address 1</string>
+    <string name="email_address2">Email Address 2</string>
+    <string name="contact_number">Contact Number</string>
+    <string name="gender">Gender</string>
+    <string name="login">LOGIN</string>
+    <string name="signup">SIGNUP</string>
+    <string name="next">NEXT</string>
+    <string name="confirm">CONFIRM</string>
+    <string name="done">Done</string>
+    <string name="save_change">Save Changes</string>
+    <string name="password">Password</string>
+    <string name="retype_password">Re-type Password</string>
+    <string name="forgot_password">Forgot Password</string>
+    <string name="new_user">New User? Sign Up!</string>
+    <string name="submit">Submit</string>
+    <string name="country">Country</string>
+    <string name="profile">Profile</string>
+    <string name="personal_info">Personal Info</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="setting">Settings</string>
+    <string name="notification">Notifications</string>
+    <string name="view_private_key">View Private Key</string>
+    <string name="my_qr_code">MY QR CODE</string>
+    <string name="view_report">View Report</string>
+    <string name="change_password">Change Password</string>
+    <string name="change_language">Change Language</string>
+    <string name="language">Language</string>
+    <string name="logout">Logout</string>
+    <string name="private_key">Private Key</string>
+    <string name="upload_your_key">Upload Your Private Key Code</string>
+    <string name="email_private_key">Email Private Key</string>
+
+    <string name="submit_past_vaccine">Submit Past Vaccination Data</string>
+
+    <string name="current_password">Current Password</string>
+    <string name="new_password">New Password</string>
+    <string name="retype_new_password">Re-type New Password</string>
+
+    <string name="protest_again_covid">Protected Against Covid-19</string>
+    <string name="no_vaccine">No Vaccine</string>
+
+    <string name="english">English</string>
+    <string name="malay">Malay</string>
+    <string name="chinese">中文</string>
+
+
+    <string name="terms_condition">I agree to the terms and privacy policy.</string>
+    <string name="already_have_account">Already have an account? Login.</string>
+    <string name="sign_up_complete">Sign Up Complete</string>
+    <string name="thank_you_sign">Thank you for signing \n up with IMMUNITEE!</string>
+    <string name="check_your_mail">Check your email. A verification link has \nbeen sent to your email address. Click on \nit to verify your account.</string>
+    <string name="please_enter">Please enter the following information to retrieve your password.</string>
+    <string name="qr_text">Show this to prove that you’ve been protected and you’re safe to travel.</string>
+    <string name="tell_us_more">Tell us more about yourself</string>
+    <string name="have_you_done_vaccine">Have you done any vaccination?</string>
+    <string name="past_vaccine_data">Past Vaccination Data</string>
+    <string name="successfull_past_vaccine">Successfully Completed!\nPlease wait for your search result and your next steps of action</string>
+
+
+    <string name="authorization">Authorization</string>
+    <string name="i_hereby_agree">I hereby agreed to let IMMUNITEE adminstration to search on behalf of my medication records.</string>
+    <string name="yes_i_agree">Yes, I agree.</string>
+
+    <string name="vaccine_nam">Vaccine Name</string>
+    <string name="hospital_clinic">Hospital / Clinic / Medical Facility</string>
+    <string name="doctor_name">Doctor Name</string>
+    <string name="injection_date">Injection Date</string>
+    <string name="vaccination_ref_number">Vaccination Reference Number</string>
+    <string name="dose_type">Dose Type</string>
+
+    <string name="frequently_question">Frequently asked \nquestions</string>
+    <string name="got_a_question">Got a question? \nWe are here to answer :)</string>
+    <string name="faq">FAQ</string>
+    <string name="travel_advisary">Travel Advisory</string>
+    <string name="search">Search</string>
+    <string name="select_country">Select Your Country</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string-array name="code">
+        <item>+60</item>
+        <item>+61</item>
+    </string-array>
+
+    <string-array name="country">
+        <item>Malaysia</item>
+    </string-array>
+
+    <string-array name="id_type">
+        <item>MyKad</item>
+        <item>Passport</item>
+    </string-array>
+
+    <string-array name="language">
+        <item>English</item>
+        <item>Malay</item>
+        <item>中文</item>
+    </string-array>
+
+    <string name="title_activity_f_a_q_travel_advisory">FAQTravelAdvisoryActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 </resources>

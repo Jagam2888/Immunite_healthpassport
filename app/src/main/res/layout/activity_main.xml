@@ -1,99 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:id="@+id/drawyer_layout">
-    <fragment
-        android:id="@+id/fragment"
-        android:name="androidx.navigation.fragment.NavHostFragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:navGraph="@navigation/nav_graph" />
+    android:id="@+id/container">
 
-   <!-- <LinearLayout
+    <FrameLayout
+        android:id="@+id/frame_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+        android:layout_marginBottom="56dp"
+        android:background="@color/lite_yellow"/>
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottom_navigation_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/teal_700"/>
+            app:menu="@menu/bottom_appbar"
+            android:layout_marginStart="0dp"
+            android:layout_marginEnd="0dp"
+            app:labelVisibilityMode="labeled"
+            android:background="@drawable/background_transperent"
+            android:layout_gravity="bottom"
+            app:itemTextColor="@color/bottom_navigation_icon_state"
+            app:itemIconTint="@color/bottom_navigation_icon_state"/>
 
-
-    </LinearLayout>-->
-    <com.google.android.material.navigation.NavigationView
-        android:layout_gravity="start"
-        android:id="@+id/nav_view"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        app:menu="@menu/nav_menu"/>
-
-    <!--<ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:paddingBottom="20dp"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:paddingTop="20dp">
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Manufacturer"
-                android:background="@drawable/edittext_background"
-                android:paddingLeft="10dp"
-                android:paddingBottom="10dp"
-                android:paddingTop="10dp"
-                android:paddingRight="10dp"/>
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Drug Name"
-                android:background="@drawable/edittext_background"
-                android:paddingLeft="10dp"
-                android:paddingBottom="10dp"
-                android:paddingTop="10dp"
-                android:paddingRight="10dp"
-                android:layout_marginTop="10dp"/>
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Batch No"
-                android:background="@drawable/edittext_background"
-                android:paddingLeft="10dp"
-                android:paddingBottom="10dp"
-                android:paddingTop="10dp"
-                android:paddingRight="10dp"
-                android:layout_marginTop="10dp"/>
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Expiry Date"
-                android:background="@drawable/edittext_background"
-                android:paddingLeft="10dp"
-                android:paddingBottom="10dp"
-                android:paddingTop="10dp"
-                android:paddingRight="10dp"
-                android:layout_marginTop="10dp"/>
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Identy Card Type"
-                android:background="@drawable/edittext_background"
-                android:paddingLeft="10dp"
-                android:paddingBottom="10dp"
-                android:paddingTop="10dp"
-                android:paddingRight="10dp"
-                android:layout_marginTop="10dp"/>
-        </LinearLayout>
-    </ScrollView>-->
-
-</androidx.drawerlayout.widget.DrawerLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

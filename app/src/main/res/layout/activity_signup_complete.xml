@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/lite_yellow"
+        tools:context=".SignupCompleteActivity">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="85dp"
+            android:orientation="horizontal"
+            android:background="@color/primary"
+            android:gravity="center_horizontal|center_vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/sign_up_complete"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                style="@style/opens_bold"/>
+        </LinearLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center_horizontal"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/complete" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/thank_you_sign"
+                    android:textColor="@color/green"
+                    android:textSize="24sp"
+                    android:gravity="center"
+                    android:layout_marginTop="20dp"
+                    style="@style/opens_bold"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/check_your_mail"
+                    android:textSize="14sp"
+                    android:layout_marginTop="20dp"
+                    android:textColor="@color/text_color"
+                    style="@style/opens_regular"/>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_login"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/login"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:background="@drawable/button_background"
+                    android:layout_marginTop="20dp"
+                    style="@style/opens_bold"/>
+            </LinearLayout>
+        </ScrollView>
+
+    </LinearLayout>
+</layout>

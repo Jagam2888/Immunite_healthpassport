@@ -2,6 +2,8 @@ package com.cmg.vaccine.util
 
 import android.app.AlertDialog
 import android.content.Context
+import android.text.TextUtils
+import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ProgressBar
@@ -16,12 +18,22 @@ fun Context.toast(message:String){
     Toast.makeText(this,message, Toast.LENGTH_LONG).show()
 }
 
-fun ProgressBar.show(){
-    progress_bar.visibility = View.VISIBLE
+fun show(progressBar: ProgressBar){
+    //progress_bar.visibility = View.VISIBLE
+    progressBar.visibility = View.VISIBLE
 }
 
-fun ProgressBar.hide(){
-    progress_bar.visibility = View.INVISIBLE
+fun hide(progressBar: ProgressBar){
+    //progress_bar.visibility = View.INVISIBLE
+    progressBar.visibility = View.INVISIBLE
+}
+
+fun isValidEmail(value:String):Boolean{
+    return (!TextUtils.isEmpty(value) and Patterns.EMAIL_ADDRESS.matcher(value).matches())
+}
+
+fun isValidPassword(value:String):Boolean{
+    return value.length >= 4
 }
 
 fun Context.alertDialog(){

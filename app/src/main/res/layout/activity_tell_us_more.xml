@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="tellusviewmodel"
+            type="com.cmg.vaccine.viewmodel.TellUsMoreViewModel" />
+        <import type="com.cmg.vaccine.data.SimpleDatabindingAdapterKt"/>
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/lite_yellow"
+        tools:context=".TellUsMoreActivity">
+
+        <ProgressBar
+            android:id="@+id/progress_tellus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_centerInParent="true"/>
+
+        <include
+            android:id="@+id/action_bar"
+            layout="@layout/actionbar_layout" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/action_bar">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingRight="20dp"
+                android:paddingLeft="20dp"
+                android:paddingBottom="20dp"
+                android:paddingTop="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tell_us_more"
+                    android:textSize="24sp"
+                    android:textColor="@color/green"
+                    style="@style/opens_bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:orientation="horizontal"
+                    android:background="@drawable/edittext_background">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:paddingBottom="10dp"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingTop="10dp"
+                        android:layout_weight="2">
+
+                        <ImageView
+                            android:id="@+id/img_flag"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:src="@drawable/malaysia_flag"
+                            android:layout_centerVertical="true" />
+
+                        <ImageView
+                            android:id="@+id/img_down_arrow"
+                            android:layout_width="10dp"
+                            android:layout_height="10dp"
+                            android:layout_centerVertical="true"
+                            android:layout_alignParentRight="true"
+                            android:src="@drawable/down_arrow" />
+
+                        <Spinner
+                            android:id="@+id/postfield_category"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="16sp"
+                            android:background="@null"
+                            android:minHeight="0dp"
+                            android:entries="@array/code"
+                            android:layout_toRightOf="@+id/img_flag"
+                            android:layout_toLeftOf="@id/img_down_arrow"
+                            android:layout_centerVertical="true"
+                            android:selectedItemPosition="@={tellusviewmodel.selectedItemContactCode}"/>
+
+
+                    </RelativeLayout>
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/gray" />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:hint="0123456789"
+                        android:text="@={tellusviewmodel.contact}"
+                        android:inputType="phone"
+                        android:maxLines="1"
+                        android:maxLength="11"
+                        style="@style/opens_regular"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="10dp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/country"
+                    android:textColor="@color/gray"
+                    android:layout_marginTop="10dp"
+                    style="@style/opens_regular" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:background="@drawable/edittext_background"
+                    android:layout_marginTop="5dp"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="10dp">
+
+                    <Spinner
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:background="@null"
+                        android:minHeight="0dp"
+                        android:entries="@array/country"
+                        android:layout_centerVertical="true"/>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        android:src="@drawable/down_arrow"
+                        android:layout_marginRight="10dp" />
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/gender"
+                    android:textColor="@color/gray"
+                    android:layout_marginTop="10dp"
+                    style="@style/opens_regular" />
+
+                <RadioGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="5dp"
+                    android:checkedButton="@={SimpleDatabindingAdapterKt.genderToButtonId(tellusviewmodel.gender)}">
+
+                    <RadioButton
+                        android:id="@+id/btn_male"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:button="@null"
+                        android:checked="true"
+                        android:background="@drawable/male_radio_selector" />
+
+                    <RadioButton
+                        android:id="@+id/btn_female"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:button="@null"
+                        android:background="@drawable/female_radio_selector"
+                        android:layout_marginLeft="20dp" />
+
+                    <RadioButton
+                        android:id="@+id/btn_other"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:button="@null"
+                        android:background="@drawable/other_radio_selector"
+                        android:layout_marginLeft="20dp" />
+                </RadioGroup>
+
+                <androidx.appcompat.widget.AppCompatCheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/terms_condition"
+                    android:buttonTint="@color/blue"
+                    android:textColor="@color/blue"
+                    android:layout_marginTop="20dp"
+                    android:checked="@={tellusviewmodel.isChecked()}"
+                    style="@style/opens_regular" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_signup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/signup"
+                    android:textColor="@color/white"
+                    android:background="@drawable/button_background"
+                    android:layout_marginTop="20dp"
+                    style="@style/opens_bold"
+                    android:onClick="@{(v) -> tellusviewmodel.onRegister(v)}"/>
+            </LinearLayout>
+        </ScrollView>
+
+    </RelativeLayout>
+</layout>

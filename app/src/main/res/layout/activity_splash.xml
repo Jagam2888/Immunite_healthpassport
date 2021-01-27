@@ -13,10 +13,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".SplashActivity"
-    android:paddingRight="10dp"
-    android:paddingLeft="10dp">
+        android:background="@drawable/splash">
 
-    <androidx.cardview.widget.CardView
+    <!--<androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
@@ -67,7 +66,7 @@
                 android:layout_gravity="center_horizontal"
                 android:onClick="@{(v) -> splashviewmodel.onSetURLClick(v)}"/>
         </LinearLayout>
-    </androidx.cardview.widget.CardView>
+    </androidx.cardview.widget.CardView>-->
 
 </RelativeLayout>
 </layout>

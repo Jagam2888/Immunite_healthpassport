@@ -1,0 +1,34 @@
+package com.cmg.vaccine.repositary
+
+import com.cmg.vaccine.database.AppDatabase
+import com.cmg.vaccine.database.User
+import com.cmg.vaccine.model.request.SignUpReq
+import com.cmg.vaccine.model.response.RegisterResponse
+import com.cmg.vaccine.network.MyApi
+import com.cmg.vaccine.network.SafeAPIRequest
+import com.cmg.vaccine.prefernces.PreferenceProvider
+
+class TellUsRepositary(
+    private val api: MyApi,
+    private val database: AppDatabase,
+    private val preferenceProvider: PreferenceProvider
+):SafeAPIRequest() {
+
+    suspend fun signUp(signUpReq: SignUpReq): RegisterResponse {
+        return apiRequest {
+            api.signUp(signUpReq)
+        }
+    }
+
+    suspend fun insertUser(user: User){
+        database.getDao().insertSignUp(user)
+    }
+
+    fun getUserData():String?{
+        return preferenceProvider.getUserReqData()
+    }
+
+    fun saveUserEmail(email:String){
+        preferenceProvider.saveEmail(email)
+    }
+}

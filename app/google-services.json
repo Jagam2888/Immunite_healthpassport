@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "27057681166",
+    "project_id": "immunitee-4d833",
+    "storage_bucket": "immunitee-4d833.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:27057681166:android:f7b2eb2c4a335acbd69d5f",
+        "android_client_info": {
+          "package_name": "com.cmg.vaccine"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "27057681166-e0hjv4m7d8clvg7qlfiv61lqdlo4fbuc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCRJvqbZKlcVQ1iYP73Yy1bkWZ4FzLM8o0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "27057681166-e0hjv4m7d8clvg7qlfiv61lqdlo4fbuc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

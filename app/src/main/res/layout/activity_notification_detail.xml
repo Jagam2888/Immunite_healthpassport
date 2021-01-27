@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".NotificationDetailActivity"
+        android:background="@color/lite_yellow">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="?android:attr/actionBarSize"
+            android:background="@color/green"
+            android:orientation="horizontal">
+
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/msg_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/new_msg_icon"
+            android:paddingLeft="15dp"
+            android:paddingBottom="15dp"
+            android:paddingTop="15dp"
+            android:paddingRight="15dp"
+            android:background="@drawable/white_oval"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_below="@+id/msg_icon"
+            android:layout_marginTop="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="20dp"
+            android:paddingLeft="20dp">
+
+            <TextView
+                android:id="@+id/txt_msg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="dafdsasdffd"
+                android:textSize="16sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Dear Sir/Madam"
+                android:layout_marginTop="20dp"
+                android:textSize="12sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Please take note that your next Covid-19 dose is due in 2 weeks time. Your next dose is on 20/02/2021. Make sure you make an appointment with your doctor. If anything, do not hesitate to call our Hotline at 03-2818 8199. We will guide you on the matter.\n\nHope you\u00E2\u0080\u0099re doing great. Cheers!"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:textSize="12sp"/>
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_back"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Back"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:background="@drawable/button_background"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="30dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp" />
+    </RelativeLayout>
+</layout>

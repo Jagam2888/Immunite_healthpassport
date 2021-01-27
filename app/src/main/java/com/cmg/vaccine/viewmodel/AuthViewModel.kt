@@ -1,30 +1,46 @@
 package com.cmg.vaccine.viewmodel
 
-import android.app.AlertDialog
-import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.cmg.vaccine.listener.AuthListener
-import com.cmg.vaccine.model.request.AuthRequest
+import com.cmg.vaccine.listener.SimpleListener
 import com.cmg.vaccine.repositary.AuthRepositary
-import com.cmg.vaccine.util.APIException
 import com.cmg.vaccine.util.Couritnes
-import com.cmg.vaccine.util.NoInternetException
-import io.paperdb.Paper
-import java.lang.StringBuilder
-import java.net.SocketException
 import java.net.SocketTimeoutException
 
 class AuthViewModel(
     private val repositary: AuthRepositary
 ) : ViewModel() {
 
-    var username:String?=null
-    var password:String?=null
+    var email:MutableLiveData<String> = MutableLiveData()
+    var password:MutableLiveData<String> = MutableLiveData()
+    //var password:String?=null
 
-    var authListener:AuthListener?=null
+    var authListener:SimpleListener?=null
 
-    fun onLoginClick(view:View){
+    init {
+        val emailTemp = repositary.getEmail()
+        if (!emailTemp.isNullOrEmpty())
+            email.value = emailTemp
+    }
+
+    fun onLoginClick(){
+        authListener?.onStarted()
+        if (!email.value.isNullOrEmpty() and !password.value.isNullOrEmpty()){
+            val user = repositary.getLogin(email.value!!,password.value!!)
+            if(user != null){
+                repositary.saveUserEmail(email.value!!)
+                authListener?.onSuccess(user.email)
+            }else{
+                authListener?.onFailure("Login Failed")
+            }
+        }else{
+            authListener?.onFailure("Field(s) Missing")
+        }
+
+    }
+
+
+    /*fun onLoginClick(view:View){
         authListener?.onStarted()
         if(username.isNullOrEmpty() || password.isNullOrEmpty()){
             authListener?.onFailure("Field(s) Missing")
@@ -51,6 +67,6 @@ class AuthViewModel(
                 authListener?.onFailure(e.toString())
             }
         }
-    }
+    }*/
 
 }

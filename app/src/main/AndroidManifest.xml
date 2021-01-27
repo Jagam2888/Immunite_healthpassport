@@ -4,25 +4,78 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
         android:name=".AppController"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:usesCleartextTraffic="true"
-        android:theme="@style/Theme.Vaccine">
-        <activity android:name=".LoginActivity"
-            android:theme="@style/Theme.Noactionbar"
+        android:theme="@style/Theme.Noactionbar"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".EditProfileActivity"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"></activity>
-        <activity android:name=".MainActivity"
+        <activity
+            android:name=".FAQTravelAdvisoryActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".SuccessPopUpActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".AutherizationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".PastVaccineDetailActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".ChoosePastVaccinationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".TellUsMoreActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".ChangeLanguageActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ChangePasswordActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".NotificationDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ViewReportDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ViewPrivateKeyActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ForgotPasswordActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SignupCompleteActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SignUpActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".LoginActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".MainActivity"
             android:label="Home"
-            android:windowSoftInputMode="stateHidden"/>
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".SplashActivity"
-            android:theme="@style/Theme.Noactionbar">
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
