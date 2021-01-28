@@ -4,17 +4,20 @@
 
     <data>
         <variable
-            name="viewReport"
+            name="viewmodel"
             type="com.cmg.vaccine.viewmodel.ViewReportListViewModel" />
+
+        <import type="android.view.View"/>
     </data>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:context=".fragment.ViewReportFragment">
+        tools:context=".fragment.ViewReportFragment"
+        android:background="@color/lite_yellow">
 
         <RelativeLayout
+            android:id="@+id/action_bar"
             android:layout_width="match_parent"
             android:layout_height="?android:attr/actionBarSize"
             android:orientation="horizontal"
@@ -35,11 +38,26 @@
             android:id="@+id/recyclerview_view_report"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_below="@id/action_bar"
             android:paddingRight="20dp"
             android:paddingLeft="20dp"
             android:paddingTop="20dp"
             android:paddingBottom="20dp"/>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/no_vaccine"
+            android:textColor="@color/gray"
+            android:layout_centerInParent="true"
+            android:visibility="@{viewmodel.listSize == 0 ? View.VISIBLE:View.GONE}"/>
 
-    </LinearLayout>
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="gone"/>
+
+    </RelativeLayout>
 </layout>

@@ -13,6 +13,8 @@ import io.paperdb.Paper
 import kotlinx.android.synthetic.main.activity_login.view.*
 import kotlinx.android.synthetic.main.custom_alert_dialog.view.*
 import java.lang.StringBuilder
+import java.text.SimpleDateFormat
+import java.util.*
 
 fun Context.toast(message:String){
     Toast.makeText(this,message, Toast.LENGTH_LONG).show()
@@ -56,4 +58,11 @@ fun Context.alertDialog(){
         Paper.book().write("url",url.toString())
 
     }
+}
+
+fun changeDateFormatEmail(timeMills:Long):String?{
+    val simpleDateFormat = SimpleDateFormat("DD MMMM YYYY 'at' HH:mm aaa")
+    val calender = Calendar.getInstance()
+    calender.timeInMillis = timeMills
+    return simpleDateFormat.format(calender.time)
 }

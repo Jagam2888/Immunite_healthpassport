@@ -14,24 +14,24 @@ import com.cmg.vaccine.R
 import com.cmg.vaccine.ViewReportDetailActivity
 import com.cmg.vaccine.adapter.ViewReportListAdapter
 import com.cmg.vaccine.databinding.FragmentViewReportBinding
+import com.cmg.vaccine.listener.SimpleListener
 import com.cmg.vaccine.model.response.ViewReport
 import com.cmg.vaccine.util.RecyclerViewTouchListener
+import com.cmg.vaccine.util.hide
+import com.cmg.vaccine.util.show
+import com.cmg.vaccine.util.toast
 import com.cmg.vaccine.viewmodel.ViewReportListViewModel
+import com.cmg.vaccine.viewmodel.viewmodelfactory.ViewReportModelFactory
+import org.kodein.di.KodeinAware
+import org.kodein.di.android.x.kodein
+import org.kodein.di.generic.instance
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [ViewReportFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class ViewReportFragment : Fragment() {
-
+class ViewReportFragment : Fragment(),KodeinAware,SimpleListener {
+    override val kodein by kodein()
     private lateinit var binding:FragmentViewReportBinding
     private lateinit var viewModel:ViewReportListViewModel
+
+    private val factory:ViewReportModelFactory by instance()
     var list:List<ViewReport>?=null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,9 +44,11 @@ class ViewReportFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(ViewReportListViewModel::class.java)
+        viewModel = ViewModelProvider(this,factory).get(ViewReportListViewModel::class.java)
+        binding.viewmodel = viewModel
+        viewModel.listener = this
 
-        val viewReport1 = ViewReport()
+        /*val viewReport1 = ViewReport()
         viewReport1.title = "Covid-19 Vaccine"
         viewReport1.status = "EXPIRING"
         viewReport1.date = "20/02/2021"
@@ -69,7 +71,7 @@ class ViewReportFragment : Fragment() {
 
         list = listOf(viewReport1,viewReport2,viewReport3)
 
-        viewModel.setViewReport(list!!)
+        viewModel.setViewReport(list!!)*/
 
         viewModel.viewReport.observe(viewLifecycleOwner, Observer {viewReportList ->
 
@@ -79,7 +81,7 @@ class ViewReportFragment : Fragment() {
             }
         })
 
-        binding.recyclerviewViewReport.addOnItemTouchListener(RecyclerViewTouchListener(requireContext(),binding.recyclerviewViewReport,object : RecyclerViewTouchListener.ClickListener{
+        /*binding.recyclerviewViewReport.addOnItemTouchListener(RecyclerViewTouchListener(requireContext(),binding.recyclerviewViewReport,object : RecyclerViewTouchListener.ClickListener{
             override fun onClick(view: View?, position: Int) {
                Intent(requireContext(),ViewReportDetailActivity::class.java).also {
                    startActivity(it)
@@ -88,7 +90,20 @@ class ViewReportFragment : Fragment() {
 
             override fun onLongClick(view: View?, position: Int) {
             }
-        }))
+        }))*/
 
+    }
+
+    override fun onStarted() {
+        show(binding.progressBar)
+    }
+
+    override fun onSuccess(msg: String) {
+        hide(binding.progressBar)
+    }
+
+    override fun onFailure(msg: String) {
+        hide(binding.progressBar)
+        context?.toast(msg)
     }
 }

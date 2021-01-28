@@ -10,10 +10,11 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.cmg.vaccine.R
 import com.cmg.vaccine.databinding.ViewReportListItemBinding
+import com.cmg.vaccine.model.response.VaccineListResponseData
 import com.cmg.vaccine.model.response.ViewReport
 
 class ViewReportListAdapter(
-        private val viewReportList:List<ViewReport>,
+        private val viewReportList:List<VaccineListResponseData>,
         private val context:Context
 ) : RecyclerView.Adapter<ViewReportListAdapter.MyViewHolder>() {
 
@@ -29,7 +30,7 @@ class ViewReportListAdapter(
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.viewReportListItemBinding.viewreport = viewReportList.get(position)
 
-        if (viewReportList.get(position).status.equals("EXPIRING")) {
+        /*if (viewReportList.get(position).status.equals("EXPIRING")) {
             holder.viewReportListItemBinding.mainLayout.setBackgroundResource(R.drawable.box_red)
             holder.viewReportListItemBinding.txtStatus.setBackgroundColor(ContextCompat.getColor(context,R.color.red))
             holder.viewReportListItemBinding.imgIndicator.setImageResource(R.drawable.btn_red)
@@ -40,7 +41,7 @@ class ViewReportListAdapter(
         }else{
             holder.viewReportListItemBinding.mainLayout.setBackgroundResource(R.drawable.cardview_gray_background)
             holder.viewReportListItemBinding.imgIndicator.setImageResource(R.drawable.success_icon_green)
-        }
+        }*/
     }
 
     override fun getItemCount() = viewReportList.size

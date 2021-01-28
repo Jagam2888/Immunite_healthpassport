@@ -5,7 +5,7 @@
     <data>
         <variable
             name="viewreport"
-            type="com.cmg.vaccine.model.response.ViewReport" />
+            type="com.cmg.vaccine.model.response.VaccineListResponseData" />
     </data>
 
     <RelativeLayout
@@ -26,7 +26,7 @@
             android:id="@+id/img_indicator"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:src="@drawable/btn_red"
+            android:src="@drawable/success_icon_green"
             android:layout_alignParentRight="true"
             android:layout_marginTop="10dp"
             android:layout_marginRight="15dp"/>
@@ -50,7 +50,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{viewreport.title}"
+                    android:text="@{viewreport.brandName}"
                     style="@style/opens_regular"
                     android:textColor="@color/black" />
 
@@ -59,8 +59,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/opens_regular"
-                    android:text="@{viewreport.status + ` on ` + viewreport.date}"
-                    android:textColor="@{viewreport.status.equals(`Completed`) ? @color/parrot_green : @color/black}"
+                    android:text="@{viewreport.vaccineDate==null?`Completed On `+viewreport.item_expiry:`Completed On `+viewreport.vaccineDate}"
+                    android:textColor="@color/parrot_green"
                     android:layout_marginTop="5dp" />
 
                 <LinearLayout
@@ -79,7 +79,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         style="@style/opens_regular"
-                        android:text="Brand" />
+                        android:text="@{viewreport.manufacturerName}" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -98,7 +98,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         style="@style/opens_regular"
-                        android:text="@{viewreport.manufacture}" />
+                        android:text="@{viewreport.manufacturerNo}" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -117,7 +117,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         style="@style/opens_regular"
-                        android:text="@{viewreport.clinic}" />
+                        android:text="@{viewreport.facilityName}" />
                 </LinearLayout>
             </LinearLayout>
 

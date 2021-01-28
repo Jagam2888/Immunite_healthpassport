@@ -56,6 +56,8 @@ class HomeFragment : Fragment(),KodeinAware {
         binding.homeviewmodel = viewModel
         binding.lifecycleOwner = this
 
+        viewModel.loadVaccineDetail()
+
         /*val home = HomeResponse()
         home.title = "Vaccine ABC"
         home.date = "19/01/2021"

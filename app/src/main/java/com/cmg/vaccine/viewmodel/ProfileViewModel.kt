@@ -19,11 +19,12 @@ class ProfileViewModel(
     var idType:MutableLiveData<String> = MutableLiveData()
     var idNumber:MutableLiveData<String> = MutableLiveData()
     var gender:MutableLiveData<String> = MutableLiveData()
+    var privateKey:MutableLiveData<String> = MutableLiveData()
 
     var genderEnum:Gender = Gender.FEMALE
 
 
-    fun loadData(){
+    init{
         val user = repositary.getUserData(repositary.getUserEmail()!!)
 
         if(user != null) {
@@ -37,6 +38,7 @@ class ProfileViewModel(
             idNumber.value = user.patientIdNo
             country.value = user.countryCode
             gender.value = user.gender
+            privateKey.value = user.privateKey
 
             user.gender.run {
                 genderEnum = when(this){

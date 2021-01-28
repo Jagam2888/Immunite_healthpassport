@@ -27,7 +27,7 @@ class EditProfileActivity : AppCompatActivity(),KodeinAware {
         viewModel = ViewModelProvider(this,factory).get(ProfileViewModel::class.java)
         binding.profileviewmodel = viewModel
         binding.lifecycleOwner = this
-        viewModel.loadData()
+        //viewModel.loadData()
 
         binding.imgBack.setOnClickListener {
             finish()
