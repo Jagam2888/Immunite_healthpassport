@@ -44,6 +44,7 @@
     <string name="current_password">Current Password</string>
     <string name="new_password">New Password</string>
     <string name="retype_new_password">Re-type New Password</string>
+    <string name="your_password_reset">Your password has been reset successfully!</string>
 
     <string name="protest_again_covid">Protected Against Covid-19</string>
     <string name="no_vaccine">No Vaccine</string>

@@ -57,7 +57,7 @@ class ChangePasswordActivity : AppCompatActivity(),KodeinAware,SimpleListener {
 
     override fun onSuccess(msg: String) {
         toast(msg)
-        Intent(this,LoginActivity::class.java).also {
+        Intent(this,ChangePasswordDoneActivity::class.java).also {
             it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
             startActivity(it)
         }
