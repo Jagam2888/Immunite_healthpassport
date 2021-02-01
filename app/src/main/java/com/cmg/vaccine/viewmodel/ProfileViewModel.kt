@@ -12,6 +12,7 @@ class ProfileViewModel(
 
     var firstName:MutableLiveData<String> = MutableLiveData()
     var lastName:MutableLiveData<String> = MutableLiveData()
+    var fullName:MutableLiveData<String> = MutableLiveData()
     var email1:MutableLiveData<String> = MutableLiveData()
     var email2:MutableLiveData<String> = MutableLiveData()
     var contactNumber:MutableLiveData<String> = MutableLiveData()
@@ -28,7 +29,9 @@ class ProfileViewModel(
         val user = repositary.getUserData(repositary.getUserEmail()!!)
 
         if(user != null) {
-            firstName.value = user.firstName + user.lastName
+            fullName.value = user.firstName + user.lastName
+            firstName.value = user.firstName
+            lastName.value = user.lastName
             email1.value = user.email
             if (user.backupEmail != null) {
                 email2.value = user.backupEmail

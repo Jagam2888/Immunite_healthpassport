@@ -30,8 +30,8 @@ class AppController : Application(),KodeinAware {
         bind() from singleton { AuthRepositary(instance(),instance()) }
         bind() from provider { AuthViewModelFactory(instance()) }
 
-        bind() from singleton { SplashRepositary(instance()) }
-        bind() from provider { SplashModelFactory(instance()) }
+        /*bind() from singleton { SplashRepositary(instance()) }
+        bind() from provider { SplashModelFactory(instance()) }*/
 
         bind() from singleton { SignUpRepositary(instance(),instance(),instance()) }
         bind() from provider { SignUpModelFactory(instance()) }

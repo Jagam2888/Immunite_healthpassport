@@ -74,21 +74,22 @@ class ProfileFragment : Fragment(),KodeinAware {
             }else{
                 htmlMsgNody = Html.fromHtml("<h1>This email contains a backup of your private key</h1></br><h1>Send Your Self this email to keep your backup in your safe place</h1></br></br><font color=#ff0000><h3>Your Private Key</h3><h3>$privateKey</h3></font></br></br><h1>Backup Date: ${changeDateFormatEmail(System.currentTimeMillis())}</h1></br></br><h2>Sent via Immunitee App</h2>")
             }
-            sendEmail("jagadeesh2188@gmail.com","Immunitee Private Key Backup",htmlMsgNody)
+            sendEmail(email!!,"Immunitee Private Key Backup",htmlMsgNody)
         }
     }
 
     private fun sendEmail(receipent:String,subject:String,msgBody:Spanned){
         val mIntent = Intent(Intent.ACTION_SEND)
         mIntent.data = Uri.parse("mailto:")
-        mIntent.type = "text/html"
+        mIntent.type = "message/rfc822"
         mIntent.putExtra(Intent.EXTRA_EMAIL, arrayOf(receipent))
         mIntent.putExtra(Intent.EXTRA_SUBJECT, subject)
         mIntent.putExtra(Intent.EXTRA_TEXT, msgBody)
+        //mIntent.setClassName("com.google.android.gm", "com.google.android.gm.ComposeActivityGmail")
 
         try {
             //start email intent
-            startActivity(Intent.createChooser(mIntent, "Choose Email Client..."))
+            startActivity(Intent.createChooser(mIntent, "Send mail..."))
         }
         catch (e: Exception){
             //if any thing goes wrong for example no email client application or any exception

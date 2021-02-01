@@ -1,72 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
-    <data>
-        <variable
-            name="splashviewmodel"
-            type="com.cmg.vaccine.viewmodel.SplashViewModel" />
-    </data>
-    <RelativeLayout
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".SplashActivity"
-        android:background="@drawable/splash">
+    android:background="@mipmap/splash">
 
-    <!--<androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        app:cardCornerRadius="4dp"
-        android:elevation="5dp"
-        app:cardUseCompatPadding="true">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp">
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="IP ADDRESS"
-                android:text="@={splashviewmodel.ipAddress}"
-                android:textColorHint="@color/green"
-                android:paddingBottom="10dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:paddingTop="10dp"
-                android:background="@drawable/edittext_background"
-                android:layout_marginTop="20dp"/>
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="PORT"
-                android:text="@={splashviewmodel.port}"
-                android:textColorHint="@color/green"
-                android:inputType="number"
-                android:paddingBottom="10dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:paddingTop="10dp"
-                android:background="@drawable/edittext_background"
-                android:layout_marginTop="20dp"/>
-            <androidx.appcompat.widget.AppCompatButton
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:text="submit"
-                android:textSize="18sp"
-                android:textColor="@color/white"
-                android:background="@drawable/button_background"
-                android:layout_marginTop="20dp"
-                android:layout_gravity="center_horizontal"
-                android:onClick="@{(v) -> splashviewmodel.onSetURLClick(v)}"/>
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>-->
-
-</RelativeLayout>
-</layout>
+</androidx.constraintlayout.widget.ConstraintLayout>

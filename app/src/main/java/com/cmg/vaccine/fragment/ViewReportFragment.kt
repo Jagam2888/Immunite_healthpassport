@@ -81,7 +81,7 @@ class ViewReportFragment : Fragment(),KodeinAware,SimpleListener {
             }
         })
 
-        /*binding.recyclerviewViewReport.addOnItemTouchListener(RecyclerViewTouchListener(requireContext(),binding.recyclerviewViewReport,object : RecyclerViewTouchListener.ClickListener{
+        binding.recyclerviewViewReport.addOnItemTouchListener(RecyclerViewTouchListener(requireContext(),binding.recyclerviewViewReport,object : RecyclerViewTouchListener.ClickListener{
             override fun onClick(view: View?, position: Int) {
                Intent(requireContext(),ViewReportDetailActivity::class.java).also {
                    startActivity(it)
@@ -90,7 +90,7 @@ class ViewReportFragment : Fragment(),KodeinAware,SimpleListener {
 
             override fun onLongClick(view: View?, position: Int) {
             }
-        }))*/
+        }))
 
     }
 
