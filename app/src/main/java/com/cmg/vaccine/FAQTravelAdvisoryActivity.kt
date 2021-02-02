@@ -2,8 +2,7 @@ package com.cmg.vaccine
 
 import android.os.Bundle
 import android.view.View
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
+import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
@@ -20,43 +19,45 @@ class FAQTravelAdvisoryActivity : AppCompatActivity() {
 
     private var adapters: FAQTravelAdapter? = null
     private var titleList: List<String>? = null
+    var indicatorWidth:Int = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this,R.layout.activity_f_a_q_travel_advisory)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_f_a_q_travel_advisory)
 
         faq()
 
-        binding.btnFaq.setOnClickListener {
+        binding.radioGroup.setOnCheckedChangeListener { group, checkedId ->
+            when(checkedId){
+                R.id.faq_button ->{
+                    binding.txtTitle.setText("Frequently asked questions")
+                    binding.txtContent.setText("Got a question? \nWe are here to answer :)")
 
-            binding.txtTitle.setText("Frequently asked questions")
-            binding.txtContent.setText("Got a question? \nWe are here to answer :)")
+                    /*binding.btnFaq.setBackgroundResource(R.drawable.button_green)
+                    binding.btnTravel.setBackgroundResource(R.drawable.button_white)*/
 
-            binding.btnFaq.setBackgroundResource(R.drawable.button_green)
-            binding.btnTravel.setBackgroundResource(R.drawable.button_white)
+                    binding.spinnerLayout.visibility = View.GONE
+                    binding.searchLayout.visibility = View.VISIBLE
 
-            binding.spinnerLayout.visibility = View.GONE
-            binding.searchLayout.visibility = View.VISIBLE
+                    /*binding.txtFaq.setTextColor(ContextCompat.getColor(this,R.color.white))
+                    binding.txtTravel.setTextColor(ContextCompat.getColor(this,R.color.gray))*/
 
-            binding.txtFaq.setTextColor(ContextCompat.getColor(this,R.color.white))
-            binding.txtTravel.setTextColor(ContextCompat.getColor(this,R.color.gray))
+                    faq()
+                }
+                R.id.travel_button ->{
+                    binding.spinnerLayout.visibility = View.VISIBLE
+                    binding.searchLayout.visibility = View.GONE
 
-            faq()
-        }
+                    binding.txtTitle.setText("Travel\nAdvisory")
+                    binding.txtContent.setText("Check the latest COVID-19 travel and testing requirements for your destination.")
 
-        binding.btnTravel.setOnClickListener {
+                    /*binding.btnFaq.setBackgroundResource(R.drawable.button_white)
+                    binding.btnTravel.setBackgroundResource(R.drawable.button_green)*/
 
-            binding.spinnerLayout.visibility = View.VISIBLE
-            binding.searchLayout.visibility = View.GONE
-
-            binding.txtTitle.setText("Travel\nAdvisory")
-            binding.txtContent.setText("Check the latest COVID-19 travel and testing requirements for your destination.")
-
-            binding.btnFaq.setBackgroundResource(R.drawable.button_white)
-            binding.btnTravel.setBackgroundResource(R.drawable.button_green)
-
-            binding.txtFaq.setTextColor(ContextCompat.getColor(this,R.color.gray))
-            binding.txtTravel.setTextColor(ContextCompat.getColor(this,R.color.white))
-            travel()
+                    /*binding.txtFaq.setTextColor(ContextCompat.getColor(this,R.color.gray))
+                    binding.txtTravel.setTextColor(ContextCompat.getColor(this,R.color.white))*/
+                    travel()
+                }
+            }
         }
 
         binding.btnClose.setOnClickListener {

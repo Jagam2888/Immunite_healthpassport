@@ -54,66 +54,36 @@
                 android:textSize="14sp"
                 android:layout_marginTop="10dp"
                 style="@style/opens_regular" />
-
-            <!--<com.google.android.material.button.MaterialButtonToggleGroup
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:checkedButton="@id/btn_one"
-                app:singleSelection="true">
-                <Button
-                    android:id="@+id/btn_one"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/faq"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
-                <Button
-                    android:id="@+id/btn_two"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/travel_advisary"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
-            </com.google.android.material.button.MaterialButtonToggleGroup>-->
-
-            <LinearLayout
+            <RadioGroup
+                android:id="@+id/radio_group"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="46dp"
+                android:background="@drawable/tab_bg"
                 android:orientation="horizontal"
                 android:layout_marginTop="10dp">
+                <RadioButton
+                    android:id="@+id/faq_button"
+                    android:background="@drawable/toggle_widget_background"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="@string/faq"
+                    android:checked="true"
+                    android:textColor="@color/radio_button_text_color" />
 
-                <RelativeLayout
-                    android:id="@+id/btn_faq"
-                    android:layout_width="160dp"
-                    android:layout_height="46dp"
-                    android:background="@drawable/button_green">
-
-                    <TextView
-                        android:id="@+id/txt_faq"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/faq"
-                        android:textColor="@color/white"
-                        style="@style/opens_bold"
-                        android:layout_centerInParent="true" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/btn_travel"
-                    android:layout_width="160dp"
-                    android:layout_height="46dp"
-                    android:background="@drawable/button_white"
-                    android:layout_marginRight="30dp">
-
-                    <TextView
-                        android:id="@+id/txt_travel"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/travel_advisary"
-                        android:textColor="@color/gray"
-                        style="@style/opens_bold"
-                        android:layout_centerInParent="true" />
-                </RelativeLayout>
-            </LinearLayout>
-
+                <RadioButton
+                    android:id="@+id/travel_button"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/toggle_widget_background"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="@string/travel_advisary"
+                    android:textColor="@color/radio_button_text_color" />
+            </RadioGroup>
             <RelativeLayout
                 android:id="@+id/spinner_layout"
                 android:layout_width="match_parent"
