@@ -16,7 +16,7 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
 
-class TellUsMoreActivity : AppCompatActivity(),KodeinAware,SimpleListener {
+class TellUsMoreActivity : BaseActivity(),KodeinAware,SimpleListener {
     override val kodein by kodein()
     private lateinit var binding:ActivityTellUsMoreBinding
     private lateinit var viewModel:TellUsMoreViewModel

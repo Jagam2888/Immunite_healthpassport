@@ -27,6 +27,7 @@
     <string name="personal_info">Personal Info</string>
     <string name="edit_profile">Edit Profile</string>
     <string name="setting">Settings</string>
+    <string name="home">Home</string>
     <string name="notification">Notifications</string>
     <string name="view_private_key">View Private Key</string>
     <string name="my_qr_code">MY QR CODE</string>
@@ -38,6 +39,19 @@
     <string name="private_key">Private Key</string>
     <string name="upload_your_key">Upload Your Private Key Code</string>
     <string name="email_private_key">Email Private Key</string>
+
+    <string name="yes">YES</string>
+    <string name="no">NO</string>
+    <string name="complete">Complete</string>
+    <string name="name">Name</string>
+    <string name="brand">Brand</string>
+    <string name="type">Type</string>
+    <string name="manufacturer_name">Manufacturer Name</string>
+    <string name="manufacturer">Manufacturer</string>
+    <string name="hospital">Hospital</string>
+    <string name="save">Save</string>
+
+    <string name="report_detail">Report Details</string>
 
     <string name="submit_past_vaccine">Submit Past Vaccination Data</string>
 

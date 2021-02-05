@@ -6,7 +6,7 @@ import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import com.cmg.vaccine.databinding.ActivityForgotPasswordBinding
 
-class ForgotPasswordActivity : AppCompatActivity() {
+class ForgotPasswordActivity : BaseActivity() {
 
     private lateinit var binding:ActivityForgotPasswordBinding
 

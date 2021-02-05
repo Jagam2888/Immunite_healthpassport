@@ -3,27 +3,27 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item android:id="@+id/home"
-        android:title="Home"
+        android:title="@string/home"
         android:icon="@drawable/home_unselected"
         app:showAsAction="ifRoom"/>
 
     <item android:id="@+id/notification"
-        android:title="Notification"
+        android:title="@string/notification"
         android:icon="@drawable/notifications_unselected"
         app:showAsAction="ifRoom"/>
 
     <item android:id="@+id/view_report"
-        android:title="View Report"
+        android:title="@string/view_report"
         android:icon="@drawable/view_report"
         app:showAsAction="ifRoom"/>
 
     <item android:id="@+id/profile"
-        android:title="Profile"
+        android:title="@string/profile"
         android:icon="@drawable/profile"
         app:showAsAction="ifRoom"/>
 
     <item android:id="@+id/setting"
-        android:title="Settings"
+        android:title="@string/setting"
         android:icon="@drawable/settings_unselected"
         app:showAsAction="ifRoom"/>
 

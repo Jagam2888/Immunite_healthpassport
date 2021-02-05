@@ -56,7 +56,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Complete"
+                    android:text="@string/complete"
                     android:textColor="@color/white"
                     android:background="@drawable/btn_gray"
                     style="@style/opens_regular"/>
@@ -189,7 +189,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Report Details"
+                        android:text="@string/report_detail"
                         android:textColor="@color/black"
                         style="@style/opens_bold"/>
                     <LinearLayout
@@ -200,7 +200,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Name : "
+                            android:text="@{@string/name+` : `}"
                             android:textColor="@color/gray"
                             style="@style/opens_regular"/>
                         <TextView
@@ -218,7 +218,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Brand : "
+                            android:text="@{@string/brand+` : `}"
                             android:textColor="@color/gray"
                             style="@style/opens_regular"/>
                         <TextView
@@ -236,7 +236,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Type : "
+                            android:text="@{@string/type+` : `}"
                             style="@style/opens_regular"
                             android:textColor="@color/gray"/>
                         <TextView
@@ -254,7 +254,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Manufacturer Name : "
+                            android:text="@{@string/manufacturer_name+` : `}"
                             style="@style/opens_regular"
                             android:textColor="@color/gray"/>
                         <TextView
@@ -272,7 +272,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Hospital : "
+                            android:text="@{@string/hospital+` : `}"
                             style="@style/opens_regular"
                             android:textColor="@color/gray"/>
                         <TextView
@@ -290,7 +290,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Doctor Name : "
+                            android:text="@{@string/doctor_name+` : `}"
                             style="@style/opens_regular"
                             android:textColor="@color/gray"/>
                         <TextView

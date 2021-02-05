@@ -22,7 +22,7 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
 
-class ViewPrivateKeyActivity : AppCompatActivity(),KodeinAware {
+class ViewPrivateKeyActivity : BaseActivity(),KodeinAware {
     override val kodein by kodein()
     private lateinit var binding:ActivityViewPrivateKeyBinding
     private lateinit var viewModel:ViewPrivateKeyViewModel

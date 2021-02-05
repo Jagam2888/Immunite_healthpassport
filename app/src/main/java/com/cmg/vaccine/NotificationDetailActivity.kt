@@ -5,7 +5,7 @@ import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import com.cmg.vaccine.databinding.ActivityNotificationDetailBinding
 
-class NotificationDetailActivity : AppCompatActivity() {
+class NotificationDetailActivity : BaseActivity() {
     private lateinit var binding:ActivityNotificationDetailBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

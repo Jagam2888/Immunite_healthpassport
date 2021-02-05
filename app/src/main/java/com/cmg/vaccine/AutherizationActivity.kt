@@ -6,7 +6,7 @@ import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import com.cmg.vaccine.databinding.ActivityAutherizationBinding
 
-class AutherizationActivity : AppCompatActivity() {
+class AutherizationActivity : BaseActivity() {
 
     private lateinit var binding:ActivityAutherizationBinding
 

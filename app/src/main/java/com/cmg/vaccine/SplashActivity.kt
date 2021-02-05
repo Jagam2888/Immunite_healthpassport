@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.cmg.vaccine.viewmodel.SplashViewModel
 
 
-class SplashActivity : AppCompatActivity(){
+class SplashActivity : BaseActivity(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

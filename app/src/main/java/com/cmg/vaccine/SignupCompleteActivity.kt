@@ -6,7 +6,7 @@ import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import com.cmg.vaccine.databinding.ActivitySignupCompleteBinding
 
-class SignupCompleteActivity : AppCompatActivity() {
+class SignupCompleteActivity : BaseActivity() {
     private lateinit var binding:ActivitySignupCompleteBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

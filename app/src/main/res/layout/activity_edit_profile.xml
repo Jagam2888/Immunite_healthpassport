@@ -356,66 +356,6 @@
                         android:layout_marginLeft="20dp" />
                 </RadioGroup>
 
-                <!--<TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/private_key"
-                    android:textColor="@color/green"
-                    android:layout_marginTop="10dp"
-                    style="@style/opens_bold" />
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/edittext_background"
-                    android:layout_marginTop="5dp">
-
-                    <ImageView
-                        android:id="@+id/shield_icon"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/shield_icon"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="10dp" />
-
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/upload_your_key"
-                        android:textSize="12sp"
-                        android:textColorHint="@color/gray"
-                        android:layout_centerVertical="true"
-                        android:layout_toRightOf="@id/shield_icon"
-                        android:layout_marginLeft="10dp"
-                        android:background="@android:color/transparent" />
-
-                    <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="42dp"
-                        android:background="@drawable/upload_background"
-                        android:layout_alignParentRight="true">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/upload_icon"
-                            android:paddingRight="10dp"
-                            android:paddingLeft="10dp"
-                            android:paddingBottom="10dp"
-                            android:paddingTop="10dp" />
-                    </RelativeLayout>
-                </RelativeLayout>-->
-
-                <!--<androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btn_past_vaccine"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/submit_past_vaccine"
-                    style="@style/opens_bold"
-                    android:textColor="@color/white"
-                    android:background="@drawable/button_lite_red"
-                    android:layout_marginTop="30dp" />-->
-
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btn_signup"
                     android:layout_width="match_parent"

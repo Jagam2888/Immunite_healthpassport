@@ -20,7 +20,7 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
 
-class SignUpActivity : AppCompatActivity(),KodeinAware,SimpleListener {
+class SignUpActivity : BaseActivity(),KodeinAware,SimpleListener {
     override val kodein by kodein()
     private lateinit var binding:ActivitySignUpBinding
     private lateinit var viewModel:SignupViewModel

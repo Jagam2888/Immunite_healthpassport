@@ -3,6 +3,8 @@ package com.cmg.vaccine.util
 import android.app.AlertDialog
 import android.content.Context
 import android.text.TextUtils
+import android.util.Base64
+import android.util.Log
 import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
@@ -12,9 +14,15 @@ import com.cmg.vaccine.R
 import io.paperdb.Paper
 import kotlinx.android.synthetic.main.activity_login.view.*
 import kotlinx.android.synthetic.main.custom_alert_dialog.view.*
+import java.io.UnsupportedEncodingException
 import java.lang.StringBuilder
+import java.security.InvalidKeyException
+import java.security.MessageDigest
+import java.security.NoSuchAlgorithmException
 import java.text.SimpleDateFormat
 import java.util.*
+import javax.crypto.*
+import javax.crypto.spec.SecretKeySpec
 
 fun Context.toast(message:String){
     Toast.makeText(this,message, Toast.LENGTH_LONG).show()
@@ -65,4 +73,74 @@ fun changeDateFormatEmail(timeMills:Long):String?{
     val calender = Calendar.getInstance()
     calender.timeInMillis = timeMills
     return simpleDateFormat.format(calender.time)
+}
+fun genearteKey(secretKey:String): SecretKeySpec?{
+    try {
+        var keyBytes = secretKey.toByteArray(charset("UTF-8"))
+        val messageDigest = MessageDigest.getInstance("SHA-1")
+        keyBytes = messageDigest.digest(keyBytes)
+        keyBytes = Arrays.copyOf(keyBytes,16)
+        return SecretKeySpec(keyBytes,"AES")
+    } catch (e: NoSuchAlgorithmException) {
+        e.printStackTrace();
+    } catch (e: UnsupportedEncodingException) {
+        e.printStackTrace();
+    }
+    return null
+}
+fun decrypt(secretKey: String, jsonValues: String):String?{
+    try {
+        //val keyBytes = secretKey.toByteArray(charset("UTF-8"))
+        //val skey = SecretKeySpec(keyBytes, "AES")
+        Log.d("secretkey",genearteKey(secretKey).toString())
+        synchronized(Cipher::class.java) {
+            val cipher = Cipher.getInstance("AES/ECB/PKCS5PADDING")
+            cipher.init(Cipher.DECRYPT_MODE, genearteKey(secretKey))
+            var cipherFinal = cipher.doFinal(Base64.decode(jsonValues, Base64.DEFAULT))
+            val result = String(cipherFinal)
+            return result
+        }
+    } catch (uee: UnsupportedEncodingException) {
+        uee.printStackTrace()
+    } catch (ibse: IllegalBlockSizeException) {
+        ibse.printStackTrace()
+    } catch (bpe: BadPaddingException) {
+        bpe.printStackTrace()
+    } catch (ike: InvalidKeyException) {
+        ike.printStackTrace()
+    } catch (nspe: NoSuchPaddingException) {
+        nspe.printStackTrace()
+    } catch (nsae: NoSuchAlgorithmException) {
+        nsae.printStackTrace()
+    } catch (e: ShortBufferException) {
+        e.printStackTrace()
+    }
+    return null
+}
+fun encryptToString(secretKey: String, jsonValues: String): String? {
+    try {
+        //val keyBytes = secretKey.toByteArray(charset("UTF-8"))
+        //val skey = SecretKeySpec(keyBytes, "AES")
+        synchronized(Cipher::class.java) {
+            val cipher = Cipher.getInstance("AES/ECB/PKCS5PADDING")
+            cipher.init(Cipher.ENCRYPT_MODE, genearteKey(secretKey))
+            var cipherFinal = Base64.encodeToString(cipher.doFinal(jsonValues.toByteArray(charset("UTF-8"))), Base64.DEFAULT)
+            return cipherFinal
+        }
+    }catch (uee: UnsupportedEncodingException) {
+        uee.printStackTrace()
+    } catch (ibse: IllegalBlockSizeException) {
+        ibse.printStackTrace()
+    } catch (bpe: BadPaddingException) {
+        bpe.printStackTrace()
+    } catch (ike: InvalidKeyException) {
+        ike.printStackTrace()
+    } catch (nspe: NoSuchPaddingException) {
+        nspe.printStackTrace()
+    } catch (nsae: NoSuchAlgorithmException) {
+        nsae.printStackTrace()
+    } catch (e: ShortBufferException) {
+        e.printStackTrace()
+    }
+    return null
 }

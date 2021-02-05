@@ -5,7 +5,7 @@ import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import com.cmg.vaccine.databinding.ActivityViewReportDetailBinding
 
-class ViewReportDetailActivity : AppCompatActivity() {
+class ViewReportDetailActivity : BaseActivity() {
 
     private lateinit var binding:ActivityViewReportDetailBinding
 

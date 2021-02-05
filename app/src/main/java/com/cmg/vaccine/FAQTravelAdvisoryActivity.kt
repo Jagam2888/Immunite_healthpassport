@@ -13,7 +13,7 @@ import com.cmg.vaccine.databinding.ActivityFAQTravelAdvisoryBinding
 import kotlinx.android.synthetic.main.layout_faq.*
 import kotlinx.android.synthetic.main.layout_travel.*
 
-class FAQTravelAdvisoryActivity : AppCompatActivity() {
+class FAQTravelAdvisoryActivity : BaseActivity() {
 
     private lateinit var binding:ActivityFAQTravelAdvisoryBinding
 

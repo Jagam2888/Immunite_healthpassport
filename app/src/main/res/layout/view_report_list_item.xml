@@ -67,7 +67,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         style="@style/opens_regular"
-                        android:text="Brand : " />
+                        android:text="@{@string/brand+` : `}" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -86,7 +86,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         style="@style/opens_regular"
-                        android:text="Manufacture : " />
+                        android:text="@{@string/manufacturer+` : `}" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -105,7 +105,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         style="@style/opens_regular"
-                        android:text="Hospital : " />
+                        android:text="@{@string/hospital+` : `}" />
 
                     <TextView
                         android:layout_width="wrap_content"

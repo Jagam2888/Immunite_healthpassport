@@ -7,7 +7,7 @@ import androidx.databinding.DataBindingUtil
 import com.cmg.vaccine.databinding.ActivityChangePasswordDoneBinding
 
 
-class ChangePasswordDoneActivity : AppCompatActivity() {
+class ChangePasswordDoneActivity : BaseActivity() {
 
     private lateinit var binding: ActivityChangePasswordDoneBinding
 

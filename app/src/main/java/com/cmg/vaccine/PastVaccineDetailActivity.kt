@@ -6,7 +6,7 @@ import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import com.cmg.vaccine.databinding.ActivityPastVaccineDetailBinding
 
-class PastVaccineDetailActivity : AppCompatActivity() {
+class PastVaccineDetailActivity : BaseActivity() {
 
     private lateinit var binding:ActivityPastVaccineDetailBinding
 

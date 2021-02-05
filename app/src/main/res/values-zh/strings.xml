@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Immunitee</string>
+    <string name="full_name">全名</string>
+    <string name="first_name">名字</string>
+    <string name="last_name">姓</string>
+    <string name="id_number">ID 数</string>
+    <string name="id_type">ID 类型</string>
+    <string name="email">电子邮件</string>
+    <string name="email_address1">电子邮件地址 1</string>
+    <string name="email_address2">电子邮件地址 2</string>
+    <string name="contact_number">联系电话</string>
+    <string name="gender">性别</string>
+    <string name="login">登录</string>
+    <string name="signup">报名</string>
+    <string name="next">下一个</string>
+    <string name="confirm">确认</string>
+    <string name="done">做完了</string>
+    <string name="save_change">保存更改</string>
+    <string name="password">密码</string>
+    <string name="retype_password">重新输入密码</string>
+    <string name="forgot_password">忘记密码</string>
+    <string name="new_user">新的用户？ 报名！</string>
+    <string name="submit">提交</string>
+    <string name="country">国家</string>
+    <string name="profile">个人资料</string>
+    <string name="personal_info">个人信息</string>
+    <string name="home">家</string>
+    <string name="edit_profile">编辑个人资料</string>
+    <string name="setting">设定值</string>
+    <string name="notification">通知事项</string>
+    <string name="view_private_key">查看私钥</string>
+    <string name="my_qr_code">我的二维码</string>
+    <string name="view_report">查看报告</string>
+    <string name="change_password">更改密码</string>
+    <string name="change_language">改变语言</string>
+    <string name="language">语言</string>
+    <string name="logout">登出</string>
+    <string name="private_key">私钥</string>
+    <string name="upload_your_key">上传您的私钥代码</string>
+    <string name="email_private_key">电子邮件私钥</string>
+
+    <string name="yes">是</string>
+    <string name="no">没有</string>
+    <string name="complete">完成</string>
+    <string name="name">名称</string>
+    <string name="brand">牌</string>
+    <string name="type">类型</string>
+    <string name="manufacturer_name">生产商名称</string>
+    <string name="manufacturer">制造商</string>
+    <string name="hospital">医院</string>
+    <string name="save">保存</string>
+
+    <string name="report_detail">报告详情</string>
+
+    <string name="submit_past_vaccine">提交过去的疫苗接种数据</string>
+
+    <string name="current_password">当前密码</string>
+    <string name="new_password">新密码</string>
+    <string name="retype_new_password">重新输入新密码</string>
+    <string name="your_password_reset">您的密码已成功重置！</string>
+
+    <string name="protest_again_covid">保护免受Covid-19</string>
+    <string name="no_vaccine">没有疫苗</string>
+
+    <string name="english">English</string>
+    <string name="malay">Malay</string>
+    <string name="chinese">中文</string>
+
+
+    <string name="terms_condition">我同意这些条款和隐私政策。</string>
+    <string name="already_have_account">已经有帐号了？ 登录。</string>
+    <string name="sign_up_complete">注册完成</string>
+    <string name="thank_you_sign">感谢您注册 IMMUNITEE!</string>
+    <string name="check_your_mail">Check your email. A verification link has \nbeen sent to your email address. Click on \nit to verify your account.</string>
+    <string name="please_enter">请输入以下信息以检索密码。</string>
+    <string name="qr_text">出示此证明证明您已经受到保护并且可以安全旅行。</string>
+    <string name="tell_us_more">告诉我们更多关于你自己的信息</string>
+    <string name="have_you_done_vaccine">你打过疫苗了吗？</string>
+    <string name="past_vaccine_data">过去的疫苗接种数据</string>
+    <string name="successfull_past_vaccine">成功完成！\ n请等待您的搜索结果和下一步操作</string>
+
+
+    <string name="authorization">授权书</string>
+    <string name="i_hereby_agree">I hereby agreed to let IMMUNITEE adminstration to search on behalf of my medication records.</string>
+    <string name="yes_i_agree">是的我同意。</string>
+
+    <string name="vaccine_nam">疫苗名称</string>
+    <string name="hospital_clinic">Hospital / Clinic / Medical Facility</string>
+    <string name="doctor_name">医生姓名</string>
+    <string name="injection_date">注射日期</string>
+    <string name="vaccination_ref_number">疫苗接种参考编号</string>
+    <string name="dose_type">剂量类型</string>
+
+    <string name="frequently_question">Frequently asked \nquestions</string>
+    <string name="got_a_question">Got a question? \nWe are here to answer :)</string>
+    <string name="faq">FAQ</string>
+    <string name="travel_advisary">Travel Advisory</string>
+    <string name="search">搜索</string>
+    <string name="select_country">Select Your Country</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string-array name="code">
+        <item>+60</item>
+        <item>+61</item>
+    </string-array>
+
+    <string-array name="country">
+        <item>Malaysia</item>
+    </string-array>
+
+    <string-array name="id_type">
+        <item>MyKad</item>
+        <item>Passport</item>
+    </string-array>
+
+    <string-array name="language">
+        <item>English</item>
+        <item>Malay</item>
+        <item>中文</item>
+    </string-array>
+
+    <string name="title_activity_f_a_q_travel_advisory">FAQTravelAdvisoryActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+</resources>

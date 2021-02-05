@@ -17,7 +17,7 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
 
-class ChangePasswordActivity : AppCompatActivity(),KodeinAware,SimpleListener {
+class ChangePasswordActivity : BaseActivity(),KodeinAware,SimpleListener {
     override val kodein by kodein()
     private lateinit var binding:ActivityChangePasswordBinding
     private lateinit var viewModel:ChangePasswordViewModel

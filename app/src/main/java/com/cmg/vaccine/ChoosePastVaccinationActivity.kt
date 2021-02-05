@@ -6,7 +6,7 @@ import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import com.cmg.vaccine.databinding.ActivityChoosePastVaccinationBinding
 
-class ChoosePastVaccinationActivity : AppCompatActivity() {
+class ChoosePastVaccinationActivity : BaseActivity() {
 
     private lateinit var binding:ActivityChoosePastVaccinationBinding
     override fun onCreate(savedInstanceState: Bundle?) {
