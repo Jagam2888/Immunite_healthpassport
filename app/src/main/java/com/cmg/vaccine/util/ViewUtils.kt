@@ -1,6 +1,7 @@
 package com.cmg.vaccine.util
 
 import android.app.AlertDialog
+import android.app.DatePickerDialog
 import android.content.Context
 import android.text.TextUtils
 import android.util.Base64
@@ -8,6 +9,7 @@ import android.util.Log
 import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.Toast
 import com.cmg.vaccine.R
@@ -46,6 +48,25 @@ fun isValidPassword(value:String):Boolean{
     return value.length >= 4
 }
 
+fun Context.showDatePickerDialog(editText: EditText){
+    val calender = Calendar.getInstance()
+    val year = calender.get(Calendar.YEAR)
+    val month = calender.get(Calendar.MONTH)
+    val day = calender.get(Calendar.DAY_OF_MONTH)
+    val format = SimpleDateFormat("dd/MM/yyyy")
+
+    val datePicker = DatePickerDialog(this,
+        DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+            calender.set(year, month, dayOfMonth)
+            val dateDob = format.format(calender.time)
+            editText.setText(dateDob)
+        }, year, month, day
+    )
+    datePicker.datePicker.maxDate = System.currentTimeMillis()
+
+    datePicker.show()
+}
+
 fun Context.alertDialog(){
     val builder = AlertDialog.Builder(this)
 
@@ -66,6 +87,16 @@ fun Context.alertDialog(){
         Paper.book().write("url",url.toString())
 
     }
+}
+
+fun selectedRelationShipPosition(state: String, relationShipList: List<String>):Int{
+    var pos:Int = 0
+    for (i in relationShipList.indices!!){
+        if(state.equals(relationShipList.get(i))){
+            pos = i
+        }
+    }
+    return pos
 }
 
 fun changeDateFormatEmail(timeMills:Long):String?{

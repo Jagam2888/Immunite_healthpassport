@@ -7,7 +7,7 @@
         <variable
             name="signupviewmodel"
             type="com.cmg.vaccine.viewmodel.SignupViewModel" />
-        <import type="android.text.InputType"/>
+        <import type="com.cmg.vaccine.data.SimpleDatabindingAdapterKt"/>
     </data>
 
     <LinearLayout
@@ -33,78 +33,160 @@
                 android:paddingBottom="20dp"
                 android:paddingTop="20dp">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/signup"
+                    android:textColor="@color/primary"
+                    android:textSize="32sp"
+                    style="@style/opens_bold"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{`* `+@string/full_name_passport}"
+                    style="@style/opens_regular"
+                    android:textColor="@color/gray"
+                    android:layout_marginTop="20dp"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/full_name_passport"
+                    android:text="@={signupviewmodel.fullName}"
+                    style="@style/opens_regular"
+                    android:textColorHint="@color/gray"
+                    android:textColor="@color/black"
+                    android:maxLines="1"
+                    android:maxLength="100"
+                    android:background="@drawable/edittext_background"
+                    android:layout_marginTop="5dp"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="10dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{`* `+@string/contact_number}"
+                    style="@style/opens_regular"
+                    android:textColor="@color/gray"
+                    android:layout_marginTop="10dp"/>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal"
+                    android:background="@drawable/edittext_background">
 
-                    <LinearLayout
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_weight="1">
+                        android:layout_marginTop="5dp"
+                        android:paddingBottom="10dp"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingTop="10dp"
+                        android:layout_weight="2">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/first_name"
-                            style="@style/opens_regular"
-                            android:textColor="@color/gray" />
+                        <ImageView
+                            android:id="@+id/img_flag"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:src="@drawable/malaysia_flag"
+                            android:layout_centerVertical="true" />
 
-                        <EditText
+                        <ImageView
+                            android:id="@+id/img_down_arrow"
+                            android:layout_width="10dp"
+                            android:layout_height="10dp"
+                            android:layout_centerVertical="true"
+                            android:layout_alignParentRight="true"
+                            android:src="@drawable/down_arrow" />
+
+                        <Spinner
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="@string/first_name"
-                            android:text="@={signupviewmodel.firstName}"
-                            style="@style/opens_regular"
-                            android:textColorHint="@color/gray"
-                            android:textColor="@color/black"
-                            android:maxLines="1"
-                            android:maxLength="50"
-                            android:background="@drawable/edittext_background"
-                            android:layout_marginTop="5dp"
-                            android:paddingBottom="10dp"
-                            android:paddingLeft="10dp"
-                            android:paddingRight="10dp"
-                            android:paddingTop="10dp" />
-                    </LinearLayout>
-                    <LinearLayout
+                            android:textSize="16sp"
+                            android:background="@null"
+                            android:minHeight="0dp"
+                            android:entries="@array/code"
+                            android:layout_toRightOf="@+id/img_flag"
+                            android:layout_toLeftOf="@id/img_down_arrow"
+                            android:layout_centerVertical="true"
+                            android:selectedItemPosition="@={signupviewmodel.selectedItemContactCode}"/>
+
+
+                    </RelativeLayout>
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/gray" />
+
+                    <EditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
+                        android:textColor="@color/black"
+                        android:hint="0123456789"
+                        android:text="@={signupviewmodel.contactNumber}"
+                        android:inputType="phone"
+                        android:maxLines="1"
+                        android:maxLength="15"
+                        style="@style/opens_regular"
                         android:layout_weight="1"
-                        android:layout_marginLeft="5dp">
+                        android:background="@android:color/transparent"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="10dp" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/last_name"
-                            style="@style/opens_regular"
-                            android:textColor="@color/gray" />
-
-                        <EditText
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="@string/last_name"
-                            android:text="@={signupviewmodel.lastName}"
-                            style="@style/opens_regular"
-                            android:textColorHint="@color/gray"
-                            android:textColor="@color/black"
-                            android:maxLines="1"
-                            android:maxLength="50"
-                            android:background="@drawable/edittext_background"
-                            android:layout_marginTop="5dp"
-                            android:paddingBottom="10dp"
-                            android:paddingLeft="10dp"
-                            android:paddingRight="10dp"
-                            android:paddingTop="10dp" />
-                    </LinearLayout>
                 </LinearLayout>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/id_type"
+                    android:text="@{`* `+@string/gender}"
+                    android:textColor="@color/gray"
+                    android:layout_marginTop="10dp"
+                    style="@style/opens_regular" />
+
+                <RadioGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="5dp"
+                    android:checkedButton="@={SimpleDatabindingAdapterKt.genderToButtonId(signupviewmodel.gender)}">
+
+                    <RadioButton
+                        android:id="@+id/btn_male"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:button="@null"
+                        android:checked="true"
+                        android:background="@drawable/male_radio_selector" />
+
+                    <RadioButton
+                        android:id="@+id/btn_female"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:button="@null"
+                        android:background="@drawable/female_radio_selector"
+                        android:layout_marginLeft="20dp" />
+
+                    <RadioButton
+                        android:id="@+id/btn_other"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:button="@null"
+                        android:background="@drawable/other_radio_selector"
+                        android:layout_marginLeft="20dp" />
+                </RadioGroup>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{`* `+@string/nationality}"
                     android:textColor="@color/gray"
                     android:layout_marginTop="10dp"
                     style="@style/opens_regular" />
@@ -114,10 +196,10 @@
                     android:layout_height="56dp"
                     android:background="@drawable/edittext_background"
                     android:layout_marginTop="5dp"
-                    android:paddingBottom="5dp"
+                    android:paddingBottom="10dp"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
-                    android:paddingTop="5dp">
+                    android:paddingTop="10dp">
 
                     <Spinner
                         android:layout_width="match_parent"
@@ -125,13 +207,13 @@
                         android:textSize="16sp"
                         android:background="@null"
                         android:minHeight="0dp"
+                        android:entries="@array/country"
                         android:layout_centerVertical="true"
-                        android:entries="@array/id_type"
-                        android:selectedItemPosition="@={signupviewmodel.selectedItemIDType}"/>
+                        android:selectedItemPosition="@={signupviewmodel.selectedItemNationalityCode}"/>
 
                     <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_alignParentRight="true"
                         android:src="@drawable/down_arrow"
@@ -141,33 +223,33 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/id_number"
+                    android:text="@{`* `+@string/date_birth}"
                     android:textColor="@color/gray"
                     android:layout_marginTop="10dp"
-                    style="@style/opens_regular"/>
-
+                    style="@style/opens_regular" />
                 <EditText
+                    android:id="@+id/edt_dob"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/id_number"
-                    android:text="@={signupviewmodel.idNumber}"
+                    style="@style/opens_regular"
+                    android:maxLines="1"
+                    android:hint="dd/mm/yy"
+                    android:text="@={signupviewmodel.dob}"
                     android:textColorHint="@color/gray"
                     android:textColor="@color/black"
-                    android:maxLength="20"
-                    android:inputType="@{signupviewmodel.selectedItemIDType==0 ? InputType.TYPE_CLASS_NUMBER : InputType.TYPE_CLASS_TEXT}"
-                    android:maxLines="1"
                     android:background="@drawable/edittext_background"
+                    android:drawableRight="@drawable/calender_icon"
+                    android:drawablePadding="10dp"
                     android:layout_marginTop="5dp"
                     android:paddingBottom="10dp"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
                     android:paddingTop="10dp"
-                    style="@style/opens_regular"/>
-
+                    android:focusable="false"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/email_address1"
+                    android:text="@{`* `+@string/email_address1}"
                     android:textColor="@color/gray"
                     android:layout_marginTop="10dp"
                     style="@style/opens_regular"/>
@@ -176,8 +258,7 @@
                         android:id="@+id/edt_email1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/email_address1"
-                        android:text="@={signupviewmodel.email1}"
+                        android:text="@={signupviewmodel.email}"
                         android:maxLength="100"
                         android:maxLines="1"
                         android:textColorHint="@color/gray"
@@ -194,7 +275,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/email_address2"
+                    android:text="@{`* `+@string/retype_email}"
                     android:textColor="@color/gray"
                     android:layout_marginTop="10dp"
                     style="@style/opens_regular"/>
@@ -203,8 +284,7 @@
                     android:id="@+id/edt_email2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/email_address2"
-                    android:text="@={signupviewmodel.email2}"
+                    android:text="@={signupviewmodel.reTypeEmail}"
                     android:maxLength="100"
                     android:maxLines="1"
                     android:textColorHint="@color/gray"
@@ -218,59 +298,6 @@
                     style="@style/opens_regular"
                     android:background="@drawable/edittext_background"/>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/password"
-                    android:textColor="@color/gray"
-                    android:layout_marginTop="10dp"
-                    style="@style/opens_regular"/>
-
-                <EditText
-                    android:id="@+id/edt_password"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/password"
-                    android:text="@={signupviewmodel.password}"
-                    android:maxLength="30"
-                    android:maxLines="1"
-                    android:textColorHint="@color/gray"
-                    android:inputType="textPassword"
-                    android:textColor="@color/black"
-                    android:background="@drawable/edittext_background"
-                    android:layout_marginTop="5dp"
-                    android:paddingBottom="10dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingTop="10dp"
-                    style="@style/opens_regular"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/retype_password"
-                    android:textColor="@color/gray"
-                    android:layout_marginTop="10dp"
-                    style="@style/opens_regular"/>
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/retype_password"
-                    android:text="@={signupviewmodel.reTypePassword}"
-                    android:maxLength="30"
-                    android:maxLines="1"
-                    android:textColorHint="@color/gray"
-                    android:inputType="textPassword"
-                    android:textColor="@color/black"
-                    android:background="@drawable/edittext_background"
-                    android:layout_marginTop="5dp"
-                    android:paddingBottom="10dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingTop="10dp"
-                    style="@style/opens_regular"/>
-
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btn_signup"
                     android:layout_width="match_parent"
@@ -280,18 +307,9 @@
                     android:background="@drawable/button_background"
                     android:layout_marginTop="20dp"
                     style="@style/opens_bold"
+                    android:textAllCaps="false"
                     android:onClick="@{() -> signupviewmodel.onSignUp()}"/>
 
-                <TextView
-                    android:id="@+id/txt_login"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/already_have_account"
-                    android:textColor="@color/green"
-                    android:textSize="14sp"
-                    android:layout_marginTop="20dp"
-                    android:layout_gravity="center_horizontal"
-                    style="@style/opens_bold"/>
             </LinearLayout>
         </ScrollView>
 

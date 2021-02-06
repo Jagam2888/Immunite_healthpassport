@@ -90,7 +90,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{homeviewmodel.firstName+` `+homeviewmodel.lastName}"
+                    android:text="@{homeviewmodel.fullName}"
                     style="@style/opens_bold"
                     android:textSize="14sp"
                     android:layout_gravity="center_horizontal" />
@@ -98,7 +98,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{homeviewmodel.idNo}"
+                    android:text="@{homeviewmodel.passportNumber}"
                     android:textSize="12sp"
                     style="@style/opens_regular"
                     android:layout_gravity="center_horizontal"

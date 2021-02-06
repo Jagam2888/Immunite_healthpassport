@@ -9,8 +9,8 @@ import com.cmg.vaccine.viewmodel.SplashViewModel
 class SplashModelFactory(
     private val repositary:SplashRepositary
 ) : ViewModelProvider.NewInstanceFactory() {
-/*
+
     override fun <T : ViewModel?> create(modelclass : Class<T>):T{
         return SplashViewModel(repositary) as T
-    }*/
+    }
 }

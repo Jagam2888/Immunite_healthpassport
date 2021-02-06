@@ -31,26 +31,8 @@ class TellUsMoreActivity : BaseActivity(),KodeinAware,SimpleListener {
 
         viewModel.listener = this
 
-        /*binding.btnMale.setOnClickListener {
-            binding.btnMale.setBackgroundResource(R.drawable.male_selected)
-            binding.btnFemale.setBackgroundResource(R.drawable.female_unselected)
-            binding.btnOther.setBackgroundResource(R.drawable.other_unselected)
-        }
-
-        binding.btnFemale.setOnClickListener {
-            binding.btnFemale.setBackgroundResource(R.drawable.female_selected)
-            binding.btnMale.setBackgroundResource(R.drawable.male_unselected)
-            binding.btnOther.setBackgroundResource(R.drawable.other_unselected)
-        }
-
-        binding.btnOther.setOnClickListener {
-            binding.btnFemale.setBackgroundResource(R.drawable.female_unselected)
-            binding.btnMale.setBackgroundResource(R.drawable.male_unselected)
-            binding.btnOther.setBackgroundResource(R.drawable.other_selected)
-        }*/
-
         /*binding.btnSignup.setOnClickListener {
-            Intent(this,SignupCompleteActivity::class.java).also {
+            Intent(this,OTPVerifyActivity::class.java).also {
                 startActivity(it)
             }
         }*/
@@ -63,7 +45,8 @@ class TellUsMoreActivity : BaseActivity(),KodeinAware,SimpleListener {
     override fun onSuccess(msg: String) {
         hide(binding.progressTellus)
         toast(msg)
-        Intent(this,SignupCompleteActivity::class.java).also {
+        Intent(this,OTPVerifyActivity::class.java).also {
+            it.putExtra("IsExistUser",false)
             startActivity(it)
         }
     }

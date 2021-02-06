@@ -1,5 +1,6 @@
 package com.cmg.vaccine
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -7,14 +8,17 @@ import android.text.TextWatcher
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.cmg.vaccine.databinding.ActivityEditProfileBinding
+import com.cmg.vaccine.listener.SimpleListener
 import com.cmg.vaccine.util.isValidEmail
+import com.cmg.vaccine.util.showDatePickerDialog
+import com.cmg.vaccine.util.toast
 import com.cmg.vaccine.viewmodel.ProfileViewModel
 import com.cmg.vaccine.viewmodel.viewmodelfactory.ProfileViewModelFactory
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
 
-class EditProfileActivity : BaseActivity(),KodeinAware {
+class EditProfileActivity : BaseActivity(),KodeinAware,SimpleListener {
     override val kodein by kodein()
     private lateinit var binding:ActivityEditProfileBinding
     private lateinit var viewModel: ProfileViewModel
@@ -27,13 +31,18 @@ class EditProfileActivity : BaseActivity(),KodeinAware {
         viewModel = ViewModelProvider(this,factory).get(ProfileViewModel::class.java)
         binding.profileviewmodel = viewModel
         binding.lifecycleOwner = this
+        viewModel.listener = this
         //viewModel.loadData()
 
         binding.imgBack.setOnClickListener {
             finish()
         }
 
-        binding.edtEmail1.addTextChangedListener(object : TextWatcher {
+        binding.edtDob.setOnClickListener {
+            showDatePickerDialog(binding.edtDob)
+        }
+
+        /*binding.edtEmail1.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 
@@ -45,9 +54,9 @@ class EditProfileActivity : BaseActivity(),KodeinAware {
                     binding.edtEmail1.error = "Invalid Email"
                 }
             }
-        })
+        })*/
 
-        binding.edtEmail2.addTextChangedListener(object : TextWatcher {
+        /*binding.edtEmail2.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 
@@ -59,6 +68,20 @@ class EditProfileActivity : BaseActivity(),KodeinAware {
                     binding.edtEmail2.error = "Invalid Email"
                 }
             }
-        })
+        })*/
+    }
+
+    override fun onStarted() {
+    }
+
+    override fun onSuccess(msg: String) {
+        Intent(this,OTPVerifyActivity::class.java).also {
+            it.putExtra("IsExistUser",true)
+            startActivity(it)
+        }
+    }
+
+    override fun onFailure(msg: String) {
+        toast(msg)
     }
 }

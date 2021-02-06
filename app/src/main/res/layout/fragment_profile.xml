@@ -7,16 +7,17 @@
         <variable
             name="profileviewmodel"
             type="com.cmg.vaccine.viewmodel.ProfileViewModel" />
+        <import type="android.view.View"/>
     </data>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         tools:context=".fragment.ProfileFragment"
         android:background="@color/lite_yellow">
 
         <RelativeLayout
+            android:id="@+id/action_bar"
             android:layout_width="match_parent"
             android:layout_height="?android:attr/actionBarSize"
             android:orientation="horizontal"
@@ -32,7 +33,74 @@
                 android:layout_centerInParent="true" />
         </RelativeLayout>
 
-        <ScrollView
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingBottom="20dp"
+            android:paddingTop="20dp"
+            android:layout_below="@id/action_bar">
+
+            <RelativeLayout
+                android:id="@+id/layout_parent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/box_gray"
+                android:layout_marginTop="10dp"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
+                android:paddingRight="15dp"
+                android:paddingLeft="15dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{profileviewmodel.firstName}"
+                    android:textColor="@color/black"
+                    style="@style/opens_bold"
+                    android:layout_centerVertical="true"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="(Principle)"
+                    android:textColor="@color/gray"
+                    style="@style/opens_regular"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"/>
+            </RelativeLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view_child"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No Child available"
+            android:textColor="@color/gray"
+            style="@style/opens_regular"
+            android:layout_centerInParent="true"
+            android:visibility="@{profileviewmodel.dependentListCount == 0 ? View.VISIBLE:View.GONE}"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_add_dependent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add Dependent"
+            android:background="@drawable/button_background"
+            android:textColor="@color/white"
+            style="@style/opens_bold"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:visibility="@{profileviewmodel.dependentListCount &lt;= 4 ? View.VISIBLE:View.GONE}"/>
+
+        <!--<ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -309,7 +377,7 @@
                     android:background="@drawable/button_background"
                     android:layout_marginTop="30dp" />
             </LinearLayout>
-        </ScrollView>
+        </ScrollView>-->
 
-    </LinearLayout>
+    </RelativeLayout>
 </layout>

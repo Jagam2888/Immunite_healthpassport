@@ -12,11 +12,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.cmg.vaccine.ChoosePastVaccinationActivity
-import com.cmg.vaccine.EditProfileActivity
-import com.cmg.vaccine.R
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.cmg.vaccine.*
+import com.cmg.vaccine.adapter.ChildListAdapter
+import com.cmg.vaccine.database.Dependent
 import com.cmg.vaccine.databinding.FragmentProfileBinding
+import com.cmg.vaccine.util.RecyclerViewTouchListener
 import com.cmg.vaccine.util.changeDateFormatEmail
 import com.cmg.vaccine.util.toast
 import com.cmg.vaccine.viewmodel.ProfileViewModel
@@ -32,6 +35,9 @@ class ProfileFragment : Fragment(),KodeinAware {
     private lateinit var viewModel:ProfileViewModel
 
     private val factory:ProfileViewModelFactory by instance()
+
+    var childAdapter:ChildListAdapter?=null
+    var listChild:List<Dependent>?=null
 
 
 
@@ -49,13 +55,47 @@ class ProfileFragment : Fragment(),KodeinAware {
 
         viewModel = ViewModelProvider(this,factory).get(ProfileViewModel::class.java)
         binding.profileviewmodel = viewModel
-        binding.lifecycleOwner = this
 
         val email = viewModel.email1.value
         val privateKey = viewModel.privateKey.value
 
 
-        binding.btnPastVaccine.setOnClickListener {
+
+        viewModel.dependentList.observe(viewLifecycleOwner, Observer {list ->
+            binding.recyclerViewChild.also {
+                it.layoutManager = LinearLayoutManager(context)
+                it.adapter = ChildListAdapter(list)
+            }
+        })
+
+
+
+        binding.layoutParent.setOnClickListener {
+            Intent(context,EditProfileActivity::class.java).also {
+                context?.startActivity(it)
+            }
+        }
+
+        binding.btnAddDependent.setOnClickListener {
+            Intent(context,AddDependentActivity::class.java).also {
+                context?.startActivity(it)
+            }
+        }
+
+        binding.recyclerViewChild.addOnItemTouchListener(RecyclerViewTouchListener(context,binding.recyclerViewChild,object :RecyclerViewTouchListener.ClickListener{
+            override fun onClick(view: View?, position: Int) {
+                Intent(context,EditDependentProfileActivity::class.java).also {
+                    it.putExtra("child_private_key",viewModel.dependentList.value?.get(position)?.childPrivateKey)
+                    startActivity(it)
+                }
+            }
+
+            override fun onLongClick(view: View?, position: Int) {
+            }
+        }))
+
+
+        /*binding.btnPastVaccine.setOnClickListener {
             Intent(context,ChoosePastVaccinationActivity::class.java).also {
                 context?.startActivity(it)
             }
@@ -75,7 +115,7 @@ class ProfileFragment : Fragment(),KodeinAware {
                 htmlMsgNody = Html.fromHtml("<h1>This email contains a backup of your private key</h1></br><h1>Send Your Self this email to keep your backup in your safe place</h1></br></br><font color=#ff0000><h3>Your Private Key</h3><h3>$privateKey</h3></font></br></br><h1>Backup Date: ${changeDateFormatEmail(System.currentTimeMillis())}</h1></br></br><h2>Sent via Immunitee App</h2>")
             }
             sendEmail(email!!,"Immunitee Private Key Backup",htmlMsgNody)
-        }
+        }*/
     }
 
     private fun sendEmail(receipent:String,subject:String,msgBody:Spanned){
@@ -96,6 +136,11 @@ class ProfileFragment : Fragment(),KodeinAware {
             //get and show exception message
             context?.toast(e.message!!)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.loadChildList()
     }
 
 }

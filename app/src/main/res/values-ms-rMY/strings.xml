@@ -2,13 +2,18 @@
 <resources>
     <string name="app_name">Immunitee</string>
     <string name="full_name">Nama Penuh</string>
+    <string name="full_name_passport">Full Name as per Passport</string>
     <string name="first_name">Nama Pertama</string>
     <string name="last_name">Nama Terakhir</string>
     <string name="id_number">ID Nombor</string>
     <string name="id_type">ID Jenis</string>
     <string name="email">E-mel</string>
-    <string name="email_address1">Alamat E-mel 1</string>
+    <string name="passport_number">Passport Number</string>
+    <string name="date_birth">Date of Birth</string>
+    <string name="nationality">Nationality</string>
+    <string name="email_address1">Alamat E-mel</string>
     <string name="email_address2">Alamat E-mel 2</string>
+    <string name="retype_email">Retype your Email address to confirm</string>
     <string name="contact_number">Nombor Telefon</string>
     <string name="gender">Jantina</string>
     <string name="login">LOG MASUK</string>
@@ -23,6 +28,8 @@
     <string name="new_user">Pengguna baru? Daftar!</string>
     <string name="submit">Hantar</string>
     <string name="country">Negara</string>
+    <string name="city">Town/City</string>
+    <string name="state">Province/State</string>
     <string name="profile">Profil</string>
     <string name="personal_info">Maklumat Peribadi</string>
     <string name="edit_profile">Sunting profil</string>
@@ -39,6 +46,14 @@
     <string name="private_key">Kunci Peribadi</string>
     <string name="upload_your_key">Muat Naik Kod Kunci Peribadi Anda</string>
     <string name="email_private_key">Kunci Peribadi E-mel</string>
+    <string name="existing_user">Existing User</string>
+    <string name="new_user_signup">New User Sign Up</string>
+    <string name="residential_address">Residential Address</string>
+    <string name="alternate_id">Alternate ID</string>
+    <string name="skip">Skip</string>
+    <string name="create_pin_now">Create PIN now</string>
+    <string name="create_pin">Create PINs</string>
+    <string name="enter_4_pin">Enter 4-Digits PIN</string>
 
     <string name="yes">YA</string>
     <string name="no">TIADA</string>
@@ -63,12 +78,18 @@
     <string name="protest_again_covid">Dilindungi Terhadap Covid-19</string>
     <string name="no_vaccine">Tanpa Vaksin</string>
 
+    <string name="add_dependent">Add Dependent</string>
+    <string name="edit_dependent">Edit Dependent</string>
+    <string name="relationship">RelationShip</string>
+    <string name="same_principal_address">If same address as prinicipal,tick here</string>
+
     <string name="english">English</string>
     <string name="malay">Malay</string>
     <string name="chinese">中文</string>
 
 
     <string name="terms_condition">Saya bersetuju dengan syarat dan dasar privasi.</string>
+    <string name="update_profile_terms">I hereby acknowledged confirm of the above changes and agreed to the terms and policy of Immunitee</string>
     <string name="already_have_account">Sudah mempunyai akaun? Log masuk.</string>
     <string name="sign_up_complete">Daftar Lengkap</string>
     <string name="thank_you_sign">Terima kasih kerana mendaftar dengan IMMUNITEE!</string>
@@ -79,6 +100,11 @@
     <string name="have_you_done_vaccine">Adakah anda pernah melakukan vaksinasi?</string>
     <string name="past_vaccine_data">Data Vaksinasi Masa Lalu</string>
     <string name="successfull_past_vaccine">Successfully Completed!\nPlease wait for your search result and your next steps of action</string>
+    <string name="please_verify_email">Please Verify the Email sent to you to receive an Activation Code to complete your setup!</string>
+    <string name="enter_act_code">Enter Activation Code</string>
+    <string name="your_account_activate">Your account has been activated, a Personal Private Key has been registered in your Immunitee!</string>
+    <string name="recomand_set_pin">We recommend you to setup an access PINs to keep your personal data stored with Immunitee protected against unauthorised access!</string>
+
 
 
     <string name="authorization">Kebenaran</string>
@@ -113,13 +139,30 @@
 
     <string-array name="id_type">
         <item>MyKad</item>
-        <item>Passport</item>
+        <item>MyKid</item>
+    </string-array>
+    <string-array name="country_code">
+        <item>MY</item>
+        <item>SG</item>
+        <item>IN</item>
     </string-array>
 
     <string-array name="language">
         <item>English</item>
         <item>Malay</item>
         <item>中文</item>
+    </string-array>
+
+    <string-array name="relationships">
+        <item>Father</item>
+        <item>Mother</item>
+        <item>Wife</item>
+        <item>Son</item>
+        <item>Daughter</item>
+        <item>Brother</item>
+        <item>Sister</item>
+        <item>Grand Mother</item>
+        <item>Grand Father</item>
     </string-array>
 
     <string name="title_activity_f_a_q_travel_advisory">FAQTravelAdvisoryActivity</string>

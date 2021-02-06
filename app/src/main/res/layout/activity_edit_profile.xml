@@ -55,28 +55,22 @@
                 android:paddingBottom="30dp"
                 android:paddingTop="30dp">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_weight="1">
+                        android:orientation="vertical">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@{`* `+@string/first_name}"
+                            android:text="@{`* `+@string/full_name_passport}"
                             style="@style/opens_regular"
                             android:textColor="@color/gray" />
 
                         <EditText
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="@string/first_name"
+                            android:hint="@string/full_name_passport"
                             android:text="@={profileviewmodel.firstName}"
                             style="@style/opens_regular"
                             android:maxLines="1"
@@ -91,125 +85,13 @@
                             android:paddingTop="10dp" />
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_weight="1"
-                        android:layout_marginLeft="5dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@{`* `+@string/last_name}"
-                            style="@style/opens_regular"
-                            android:textColor="@color/gray" />
-
-                        <EditText
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="@string/last_name"
-                            android:text="@={profileviewmodel.lastName}"
-                            android:maxLines="1"
-                            android:maxLength="20"
-                            style="@style/opens_regular"
-                            android:textColorHint="@color/gray"
-                            android:textColor="@color/black"
-                            android:background="@drawable/edittext_background"
-                            android:layout_marginTop="5dp"
-                            android:paddingBottom="10dp"
-                            android:paddingLeft="10dp"
-                            android:paddingRight="10dp"
-                            android:paddingTop="10dp" />
-                    </LinearLayout>
-                </LinearLayout>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@{`* `+@string/id_number}"
-                    style="@style/opens_regular"
-                    android:textColor="@color/gray"
-                    android:layout_marginTop="10dp" />
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/id_number"
-                    android:text="@={profileviewmodel.idNumber}"
-                    style="@style/opens_regular"
-                    android:maxLines="1"
-                    android:maxLength="30"
-                    android:textColorHint="@color/gray"
-                    android:textColor="@color/black"
-                    android:background="@drawable/edittext_background"
-                    android:layout_marginTop="5dp"
-                    android:paddingBottom="10dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingTop="10dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@{`* `+@string/email_address1}"
-                    style="@style/opens_regular"
-                    android:textColor="@color/gray"
-                    android:layout_marginTop="10dp" />
-
-                <EditText
-                    android:id="@+id/edt_email1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/email_address1"
-                    android:text="@={profileviewmodel.email1}"
-                    style="@style/opens_regular"
-                    android:maxLines="1"
-                    android:maxLength="30"
-                    android:textColorHint="@color/gray"
-                    android:inputType="textEmailAddress"
-                    android:textColor="@color/black"
-                    android:background="@drawable/edittext_background"
-                    android:layout_marginTop="5dp"
-                    android:paddingBottom="10dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingTop="10dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/email_address2"
-                    style="@style/opens_regular"
-                    android:textColor="@color/gray"
-                    android:layout_marginTop="10dp" />
-
-                <EditText
-                    android:id="@+id/edt_email2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/email_address2"
-                    android:text="@={profileviewmodel.email2}"
-                    style="@style/opens_regular"
-                    android:maxLines="1"
-                    android:maxLength="30"
-                    android:textColorHint="@color/gray"
-                    android:inputType="textEmailAddress"
-                    android:textColor="@color/black"
-                    android:background="@drawable/edittext_background"
-                    android:layout_marginTop="5dp"
-                    android:paddingBottom="10dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingTop="10dp" />
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@{`* `+@string/contact_number}"
                     style="@style/opens_regular"
                     android:textColor="@color/gray"
-                    android:layout_marginTop="10dp" />
+                    android:layout_marginTop="5dp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -236,7 +118,7 @@
                             android:layout_centerVertical="true" />
 
                         <ImageView
-                            android:id="@+id/img_down_arrow"
+                            android:id="@+id/img_down_arrow1"
                             android:layout_width="10dp"
                             android:layout_height="10dp"
                             android:layout_centerVertical="true"
@@ -247,13 +129,13 @@
                             android:id="@+id/postfield_category"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textSize="16sp"
-                            android:background="@null"
-                            android:minHeight="0dp"
-                            android:entries="@array/code"
+                            android:layout_centerVertical="true"
+                            android:layout_toLeftOf="@id/img_down_arrow1"
                             android:layout_toRightOf="@+id/img_flag"
-                            android:layout_toLeftOf="@id/img_down_arrow"
-                            android:layout_centerVertical="true" />
+                            android:background="@null"
+                            android:entries="@array/code"
+                            android:minHeight="0dp"
+                            android:textSize="16sp" />
 
 
                     </RelativeLayout>
@@ -283,9 +165,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{`* `+@string/country}"
+                    android:text="@{`* `+@string/nationality}"
                     android:textColor="@color/gray"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="5dp"
                     style="@style/opens_regular" />
 
                 <RelativeLayout
@@ -305,7 +187,7 @@
                         android:background="@null"
                         android:minHeight="0dp"
                         android:entries="@array/country"
-                        android:layout_centerVertical="true" />
+                        android:layout_centerVertical="true"/>
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -321,7 +203,7 @@
                     android:layout_height="wrap_content"
                     android:text="@{`* `+@string/gender}"
                     android:textColor="@color/gray"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="5dp"
                     style="@style/opens_regular" />
 
                 <RadioGroup
@@ -356,6 +238,315 @@
                         android:layout_marginLeft="20dp" />
                 </RadioGroup>
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{`* `+@string/date_birth}"
+                    android:textColor="@color/gray"
+                    android:layout_marginTop="5dp"
+                    style="@style/opens_regular" />
+                <EditText
+                    android:id="@+id/edt_dob"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/opens_regular"
+                    android:maxLines="1"
+                    android:hint="dd/mm/yy"
+                    android:text="@={profileviewmodel.dob}"
+                    android:textColorHint="@color/gray"
+                    android:textColor="@color/black"
+                    android:background="@drawable/edittext_background"
+                    android:drawableRight="@drawable/calender_icon"
+                    android:drawablePadding="10dp"
+                    android:layout_marginTop="5dp"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="10dp"
+                    android:focusable="false"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{`* `+@string/email_address1}"
+                    style="@style/opens_regular"
+                    android:textColor="@color/gray"
+                    android:layout_marginTop="5dp" />
+
+                <EditText
+                    android:id="@+id/edt_email1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/email_address1"
+                    style="@style/opens_regular"
+                    android:text="@={profileviewmodel.email1}"
+                    android:focusable="false"
+                    android:maxLines="1"
+                    android:maxLength="30"
+                    android:textColorHint="@color/gray"
+                    android:inputType="textEmailAddress"
+                    android:textColor="@color/black"
+                    android:background="@drawable/edittext_background"
+                    android:layout_marginTop="5dp"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="10dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{`* `+@string/residential_address}"
+                    style="@style/opens_regular"
+                    android:textColor="@color/gray"
+                    android:layout_marginTop="5dp"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/opens_regular"
+                    android:textColorHint="@color/gray"
+                    android:textColor="@color/black"
+                    android:maxLines="3"
+                    android:text="@={profileviewmodel.residentalAddress}"
+                    android:maxLength="300"
+                    android:minLines="3"
+                    android:gravity="top"
+                    android:background="@drawable/edittext_background"
+                    android:layout_marginTop="5dp"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="10dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{`* `+@string/city}"
+                    style="@style/opens_regular"
+                    android:textColor="@color/gray"
+                    android:layout_marginTop="5dp"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/opens_regular"
+                    android:text="@={profileviewmodel.city}"
+                    android:textColorHint="@color/gray"
+                    android:textColor="@color/black"
+                    android:maxLines="1"
+                    android:maxLength="100"
+                    android:background="@drawable/edittext_background"
+                    android:layout_marginTop="5dp"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="10dp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{`* `+@string/state}"
+                    style="@style/opens_regular"
+                    android:textColor="@color/gray"
+                    android:layout_marginTop="5dp"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/opens_regular"
+                    android:text="@={profileviewmodel.state}"
+                    android:textColorHint="@color/gray"
+                    android:textColor="@color/black"
+                    android:maxLines="1"
+                    android:maxLength="100"
+                    android:background="@drawable/edittext_background"
+                    android:layout_marginTop="5dp"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="10dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/country"
+                    android:textColor="@color/gray"
+                    android:layout_marginTop="5dp"
+                    style="@style/opens_regular" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:background="@drawable/edittext_background"
+                    android:layout_marginTop="5dp"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="10dp">
+
+                    <Spinner
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:background="@null"
+                        android:minHeight="0dp"
+                        android:entries="@array/country"
+                        android:layout_centerVertical="true"/>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        android:src="@drawable/down_arrow"
+                        android:layout_marginRight="10dp" />
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{`* `+@string/passport_number}"
+                    style="@style/opens_regular"
+                    android:textColor="@color/gray"
+                    android:layout_marginTop="5dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal"
+                    android:background="@drawable/edittext_background">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:paddingBottom="10dp"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingTop="10dp"
+                        android:layout_weight="1.7">
+
+                        <ImageView
+                            android:id="@+id/img_down_arrow"
+                            android:layout_width="10dp"
+                            android:layout_height="10dp"
+                            android:layout_centerVertical="true"
+                            android:layout_alignParentRight="true"
+                            android:src="@drawable/down_arrow" />
+
+                        <Spinner
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="16sp"
+                            android:background="@null"
+                            android:minHeight="0dp"
+                            android:entries="@array/country_code"
+                            android:layout_toLeftOf="@id/img_down_arrow"
+                            android:layout_centerVertical="true"/>
+
+
+                    </RelativeLayout>
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/gray" />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:hint="@string/passport_number"
+                        android:text="@={profileviewmodel.passportNumber}"
+                        android:maxLines="1"
+                        android:maxLength="15"
+                        style="@style/opens_regular"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="10dp" />
+
+                </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{`* `+@string/alternate_id}"
+                    style="@style/opens_regular"
+                    android:textColor="@color/gray"
+                    android:layout_marginTop="5dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal"
+                    android:background="@drawable/edittext_background">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:paddingBottom="10dp"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingTop="10dp"
+                        android:layout_weight="1.7">
+
+                        <ImageView
+                            android:id="@+id/img_down_arrow_id"
+                            android:layout_width="10dp"
+                            android:layout_height="10dp"
+                            android:layout_centerVertical="true"
+                            android:layout_alignParentRight="true"
+                            android:src="@drawable/down_arrow" />
+
+                        <Spinner
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="16sp"
+                            android:background="@null"
+                            android:minHeight="0dp"
+                            android:entries="@array/id_type"
+                            android:layout_toLeftOf="@id/img_down_arrow_id"
+                            android:layout_centerVertical="true"/>
+
+
+                    </RelativeLayout>
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/gray" />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:text="@={profileviewmodel.idNo}"
+                        android:hint="@string/id_number"
+                        android:inputType="number"
+                        android:maxLines="1"
+                        android:maxLength="15"
+                        style="@style/opens_regular"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="10dp" />
+
+                </LinearLayout>
+
+                <androidx.appcompat.widget.AppCompatCheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/update_profile_terms"
+                    android:buttonTint="@color/blue"
+                    android:textColor="@color/blue"
+                    android:layout_marginTop="20dp"
+                    style="@style/opens_regular"
+                    android:gravity="top"
+                    android:checked="@={profileviewmodel.isChecked()}"/>
+
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btn_signup"
                     android:layout_width="match_parent"
@@ -364,7 +555,8 @@
                     style="@style/opens_bold"
                     android:textColor="@color/white"
                     android:background="@drawable/button_background"
-                    android:layout_marginTop="30dp" />
+                    android:layout_marginTop="30dp"
+                    android:onClick="@{() -> profileviewmodel.onClick()}"/>
             </LinearLayout>
         </ScrollView>
 

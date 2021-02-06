@@ -12,8 +12,16 @@ class SignupCompleteActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this,R.layout.activity_signup_complete)
 
-        binding.btnLogin.setOnClickListener {
-            Intent(this,LoginActivity::class.java).also {
+        binding.btnSkip.setOnClickListener {
+            Intent(this,MainActivity::class.java).also {
+                it.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+                startActivity(it)
+            }
+        }
+
+        binding.btnCreatePin.setOnClickListener {
+            Intent(this,LoginPinActivity::class.java).also {
+                it.putExtra("isCreate",true)
                 it.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
                 startActivity(it)
             }
@@ -21,7 +29,7 @@ class SignupCompleteActivity : BaseActivity() {
     }
 
     override fun onBackPressed() {
-        Intent(this,LoginActivity::class.java).also {
+        Intent(this,MainActivity::class.java).also {
             it.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
             startActivity(it)
         }

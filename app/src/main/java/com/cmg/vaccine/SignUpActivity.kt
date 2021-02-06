@@ -13,6 +13,7 @@ import com.cmg.vaccine.databinding.ActivitySignUpBinding
 import com.cmg.vaccine.listener.SimpleListener
 import com.cmg.vaccine.util.isValidEmail
 import com.cmg.vaccine.util.isValidPassword
+import com.cmg.vaccine.util.showDatePickerDialog
 import com.cmg.vaccine.util.toast
 import com.cmg.vaccine.viewmodel.SignupViewModel
 import com.cmg.vaccine.viewmodel.viewmodelfactory.SignUpModelFactory
@@ -39,10 +40,14 @@ class SignUpActivity : BaseActivity(),KodeinAware,SimpleListener {
             }
         }*/
 
-        binding.txtLogin.setOnClickListener {
+        /*binding.txtLogin.setOnClickListener {
             Intent(this,LoginActivity::class.java).also {
                 startActivity(it)
             }
+        }*/
+
+        binding.edtDob.setOnClickListener {
+            showDatePickerDialog(binding.edtDob)
         }
 
         binding.edtEmail1.addTextChangedListener(object :TextWatcher{
@@ -73,7 +78,7 @@ class SignUpActivity : BaseActivity(),KodeinAware,SimpleListener {
             }
         })
 
-        binding.edtPassword.addTextChangedListener(object :TextWatcher{
+       /* binding.edtPassword.addTextChangedListener(object :TextWatcher{
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 
@@ -84,7 +89,7 @@ class SignUpActivity : BaseActivity(),KodeinAware,SimpleListener {
                 if (!isValidPassword(s.toString()))
                     binding.edtPassword.error = "Password must Minimum 4 character"
             }
-        })
+        })*/
     }
 
     override fun onStarted() {

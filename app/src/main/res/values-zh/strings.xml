@@ -2,13 +2,18 @@
 <resources>
     <string name="app_name">Immunitee</string>
     <string name="full_name">全名</string>
+    <string name="full_name_passport">Full Name as per Passport</string>
     <string name="first_name">名字</string>
     <string name="last_name">姓</string>
     <string name="id_number">ID 数</string>
     <string name="id_type">ID 类型</string>
     <string name="email">电子邮件</string>
-    <string name="email_address1">电子邮件地址 1</string>
+    <string name="passport_number">Passport Number</string>
+    <string name="date_birth">Date of Birth</string>
+    <string name="nationality">Nationality</string>
+    <string name="email_address1">电子邮件地址</string>
     <string name="email_address2">电子邮件地址 2</string>
+    <string name="retype_email">Retype your Email address to confirm</string>
     <string name="contact_number">联系电话</string>
     <string name="gender">性别</string>
     <string name="login">登录</string>
@@ -23,6 +28,8 @@
     <string name="new_user">新的用户？ 报名！</string>
     <string name="submit">提交</string>
     <string name="country">国家</string>
+    <string name="city">Town/City</string>
+    <string name="state">Province/State</string>
     <string name="profile">个人资料</string>
     <string name="personal_info">个人信息</string>
     <string name="home">家</string>
@@ -39,6 +46,14 @@
     <string name="private_key">私钥</string>
     <string name="upload_your_key">上传您的私钥代码</string>
     <string name="email_private_key">电子邮件私钥</string>
+    <string name="existing_user">Existing User</string>
+    <string name="new_user_signup">New User Sign Up</string>
+    <string name="residential_address">Residential Address</string>
+    <string name="alternate_id">Alternate ID</string>
+    <string name="skip">Skip</string>
+    <string name="create_pin_now">Create PIN now</string>
+    <string name="create_pin">Create PINs</string>
+    <string name="enter_4_pin">Enter 4-Digits PIN</string>
 
     <string name="yes">是</string>
     <string name="no">没有</string>
@@ -63,12 +78,18 @@
     <string name="protest_again_covid">保护免受Covid-19</string>
     <string name="no_vaccine">没有疫苗</string>
 
+    <string name="add_dependent">Add Dependent</string>
+    <string name="edit_dependent">Edit Dependent</string>
+    <string name="relationship">RelationShip</string>
+    <string name="same_principal_address">If same address as prinicipal,tick here</string>
+
     <string name="english">English</string>
     <string name="malay">Malay</string>
     <string name="chinese">中文</string>
 
 
     <string name="terms_condition">我同意这些条款和隐私政策。</string>
+    <string name="update_profile_terms">I hereby acknowledged confirm of the above changes and agreed to the terms and policy of Immunitee</string>
     <string name="already_have_account">已经有帐号了？ 登录。</string>
     <string name="sign_up_complete">注册完成</string>
     <string name="thank_you_sign">感谢您注册 IMMUNITEE!</string>
@@ -79,6 +100,11 @@
     <string name="have_you_done_vaccine">你打过疫苗了吗？</string>
     <string name="past_vaccine_data">过去的疫苗接种数据</string>
     <string name="successfull_past_vaccine">成功完成！\ n请等待您的搜索结果和下一步操作</string>
+    <string name="please_verify_email">Please Verify the Email sent to you to receive an Activation Code to complete your setup!</string>
+    <string name="enter_act_code">Enter Activation Code</string>
+    <string name="your_account_activate">Your account has been activated, a Personal Private Key has been registered in your Immunitee!</string>
+    <string name="recomand_set_pin">We recommend you to setup an access PINs to keep your personal data stored with Immunitee protected against unauthorised access!</string>
+
 
 
     <string name="authorization">授权书</string>
@@ -113,13 +139,30 @@
 
     <string-array name="id_type">
         <item>MyKad</item>
-        <item>Passport</item>
+        <item>MyKid</item>
+    </string-array>
+    <string-array name="country_code">
+        <item>MY</item>
+        <item>SG</item>
+        <item>IN</item>
     </string-array>
 
     <string-array name="language">
         <item>English</item>
         <item>Malay</item>
         <item>中文</item>
+    </string-array>
+
+    <string-array name="relationships">
+        <item>Father</item>
+        <item>Mother</item>
+        <item>Wife</item>
+        <item>Son</item>
+        <item>Daughter</item>
+        <item>Brother</item>
+        <item>Sister</item>
+        <item>Grand Mother</item>
+        <item>Grand Father</item>
     </string-array>
 
     <string name="title_activity_f_a_q_travel_advisory">FAQTravelAdvisoryActivity</string>

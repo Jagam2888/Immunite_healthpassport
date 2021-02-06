@@ -2,11 +2,9 @@ package com.cmg.vaccine.network
 
 import android.content.Context
 import com.cmg.vaccine.model.request.AuthRequest
+import com.cmg.vaccine.model.request.DependentRegReq
 import com.cmg.vaccine.model.request.SignUpReq
-import com.cmg.vaccine.model.response.AuthResponse
-import com.cmg.vaccine.model.response.RegisterResponse
-import com.cmg.vaccine.model.response.VaccineListResponse
-import com.cmg.vaccine.model.response.VaccineResponse
+import com.cmg.vaccine.model.response.*
 import com.cmg.vaccine.prefernces.PreferenceProvider
 import retrofit2.Response
 import retrofit2.http.Body
@@ -19,8 +17,11 @@ interface MyApi {
     @POST("authenticate")
     suspend fun loginUser(@Body authReq:AuthRequest):Response<AuthResponse>
 
-    @POST("nhr-module-user/patientsign")
-    suspend fun signUp(@Body signUpReq: SignUpReq):Response<RegisterResponse>
+    @POST("nhr-module-user/patientreg")
+    suspend fun signUp(@Body signUpReq: SignUpReq):Response<PatientRegResponse>
+
+    @POST("nhr-module-user/patientdependentreg")
+    suspend fun dependentSignUp(@Body dependentRegReq: DependentRegReq):Response<DependentRegResponse>
 
     @GET("nhr-module-user/searchPrivateKey")
     suspend fun searchPatientVaccine(@Query("privateKey") key:String ):Response<VaccineResponse>

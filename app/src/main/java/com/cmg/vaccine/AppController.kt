@@ -30,8 +30,8 @@ class AppController : Application(),KodeinAware {
         bind() from singleton { AuthRepositary(instance(),instance()) }
         bind() from provider { AuthViewModelFactory(instance()) }
 
-        /*bind() from singleton { SplashRepositary(instance()) }
-        bind() from provider { SplashModelFactory(instance()) }*/
+        bind() from singleton { SplashRepositary(instance(),instance()) }
+        bind() from provider { SplashModelFactory(instance()) }
 
         bind() from singleton { SignUpRepositary(instance(),instance(),instance()) }
         bind() from provider { SignUpModelFactory(instance()) }
@@ -53,6 +53,15 @@ class AppController : Application(),KodeinAware {
 
         bind() from singleton { ViewReportListRepositary(instance(),instance(),instance()) }
         bind() from provider { ViewReportModelFactory(instance()) }
+
+        bind() from singleton { LoginPinRepositary(instance(),instance()) }
+        bind() from provider { LoginPinViewFactory(instance()) }
+
+        bind() from singleton { OTPVerifyRepositary(instance(),instance()) }
+        bind() from provider { OTPVerifyModelFactory(instance()) }
+
+        bind() from singleton { DependentRepositary(instance(),instance(),instance()) }
+        bind() from provider { DependentViewModelFactory(instance()) }
 
     }
 }

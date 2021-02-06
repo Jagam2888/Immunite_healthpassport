@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/primary"
+        tools:context=".WelcomeActivity">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_centerInParent="true"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="244dp"
+                android:src="@drawable/welcome_icon" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Welcome to \nIMMUNITEE"
+                android:textColor="@color/white"
+                android:textSize="32sp"
+                style="@style/opens_bold"
+                android:layout_gravity="center_horizontal" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_signup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/new_user_signup"
+                android:textAllCaps="false"
+                android:textColor="@color/primary"
+                android:background="@drawable/button_white"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp"
+                android:layout_marginTop="20dp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_existing_user"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/existing_user"
+                android:textColor="@color/white"
+                android:textAllCaps="false"
+                android:background="@drawable/button_white_corner"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp"
+                android:layout_marginTop="20dp" />
+        </LinearLayout>
+
+    </RelativeLayout>
+</layout>

@@ -27,9 +27,9 @@ class HomeViewModel(
 
     var listener:SimpleListener?=null
 
-    val firstName:MutableLiveData<String> = MutableLiveData()
-    val lastName:MutableLiveData<String> = MutableLiveData()
-    val idNo:MutableLiveData<String> = MutableLiveData()
+    val fullName:MutableLiveData<String> = MutableLiveData()
+   // val lastName:MutableLiveData<String> = MutableLiveData()
+    val passportNumber:MutableLiveData<String> = MutableLiveData()
     val gender:MutableLiveData<String> = MutableLiveData()
     val country:MutableLiveData<String> = MutableLiveData()
     val _privateKey:MutableLiveData<String> = MutableLiveData()
@@ -43,11 +43,12 @@ class HomeViewModel(
     init {
         val userData = repositary.getUserData()
 
-        firstName.value = userData.firstName
-        lastName.value = userData.lastName
-        gender.value = userData.gender
-        idNo.value = userData.patientIdNo
-        country.value = userData.countryCode
+        if (userData != null) {
+            fullName.value = userData.fullName
+            gender.value = userData.gender
+            passportNumber.value = userData.passportNumber
+            country.value = userData.countryCode
+        }
 
 
 
