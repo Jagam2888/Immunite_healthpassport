@@ -81,7 +81,17 @@
     <string name="add_dependent">Add Dependent</string>
     <string name="edit_dependent">Edit Dependent</string>
     <string name="relationship">RelationShip</string>
+    <string name="principal">Principal</string>
     <string name="same_principal_address">If same address as prinicipal,tick here</string>
+
+    <string name="security_pin">Security Pin</string>
+    <string name="payment_method">Payment Method</string>
+    <string name="advanced">Advanced</string>
+    <string name="help">Help</string>
+    <string name="about">About</string>
+    <string name="version_relase">Version Release</string>
+    <string name="terms_privacy_policy">Terms &amp; Privacy Policy</string>
+    <string name="change_security_pin">Change Security Pin</string>
 
     <string name="english">English</string>
     <string name="malay">Malay</string>

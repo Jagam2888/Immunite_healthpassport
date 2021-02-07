@@ -35,6 +35,8 @@ class AddDependentActivity : AppCompatActivity(),KodeinAware,SimpleListener {
 
             if (isChecked){
                 viewModel.address.set(viewModel.parentAddress)
+                viewModel.city.set(viewModel.parentcity)
+                viewModel.state.set(viewModel.parentState)
             }else{
                 viewModel.address.set("")
             }
@@ -57,6 +59,10 @@ class AddDependentActivity : AppCompatActivity(),KodeinAware,SimpleListener {
                 }
             }
         })
+
+        binding.imgBack.setOnClickListener {
+            finish()
+        }
     }
 
     override fun onStarted() {

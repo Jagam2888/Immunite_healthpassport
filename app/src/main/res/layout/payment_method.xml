@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/layout_credit_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp">
+        <ImageView
+            android:id="@+id/icon"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/creditcard"
+            android:layout_centerVertical="true"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/right_arrow"
+            app:tint="@color/black"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Credit Card"
+            android:textColor="@color/black"
+            style="@style/opens_bold"
+            android:layout_marginLeft="5dp"
+            android:textSize="13sp"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/icon"/>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray"
+        android:layout_marginTop="10dp"
+        android:paddingRight="30dp"
+        android:paddingLeft="30dp"/>
+
+    <RelativeLayout
+        android:id="@+id/layout_touch_go"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp">
+        <ImageView
+            android:id="@+id/icon1"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/touch_go"
+            android:layout_centerVertical="true"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/right_arrow"
+            app:tint="@color/black"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Touch `n Go"
+            android:textColor="@color/black"
+            style="@style/opens_bold"
+            android:textSize="13sp"
+            android:layout_marginLeft="5dp"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/icon1"/>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray"
+        android:layout_marginTop="10dp"
+        android:paddingRight="30dp"
+        android:paddingLeft="30dp"/>
+
+    <RelativeLayout
+        android:id="@+id/layout_ipay88"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp">
+        <ImageView
+            android:id="@+id/icon2"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/ipay88"
+            android:layout_centerVertical="true"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/right_arrow"
+            app:tint="@color/black"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="iPay 88"
+            android:textColor="@color/black"
+            style="@style/opens_bold"
+            android:textSize="13sp"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/icon2"
+            android:layout_marginLeft="5dp"/>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray"
+        android:layout_marginTop="10dp"
+        android:paddingRight="30dp"
+        android:paddingLeft="30dp"/>
+
+</LinearLayout>

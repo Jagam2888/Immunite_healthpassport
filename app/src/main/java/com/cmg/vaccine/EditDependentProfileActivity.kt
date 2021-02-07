@@ -6,6 +6,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.cmg.vaccine.databinding.ActivityEditDependentProfileBinding
 import com.cmg.vaccine.listener.SimpleListener
+import com.cmg.vaccine.util.hide
+import com.cmg.vaccine.util.show
+import com.cmg.vaccine.util.showDatePickerDialog
 import com.cmg.vaccine.util.toast
 import com.cmg.vaccine.viewmodel.DependentViewModel
 import com.cmg.vaccine.viewmodel.viewmodelfactory.DependentViewModelFactory
@@ -31,18 +34,29 @@ class EditDependentProfileActivity : AppCompatActivity(),KodeinAware,SimpleListe
         viewModel.listener = this
 
         val childPrivateKey = intent.extras?.getString("child_private_key","")
-        viewModel.loadProfileData(childPrivateKey!!)
+        viewModel.loadProfileData(this,childPrivateKey!!)
+
+        binding.edtDob.setOnClickListener {
+            showDatePickerDialog(binding.edtDob)
+        }
+
+        binding.imgBack.setOnClickListener {
+            finish()
+        }
     }
 
     override fun onStarted() {
+        show(binding.progressBar)
     }
 
     override fun onSuccess(msg: String) {
+        hide(binding.progressBar)
         toast(msg)
         finish()
     }
 
     override fun onFailure(msg: String) {
+        hide(binding.progressBar)
         toast(msg)
     }
 }

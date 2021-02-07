@@ -2,6 +2,7 @@ package com.cmg.vaccine.fragment
 
 import android.app.AlertDialog
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -13,6 +14,8 @@ import com.cmg.vaccine.ChangePasswordActivity
 import com.cmg.vaccine.LoginActivity
 import com.cmg.vaccine.R
 import com.cmg.vaccine.databinding.FragmentSettingsBinding
+import kotlinx.android.synthetic.main.about.*
+import kotlinx.android.synthetic.main.security_pin.*
 
 class SettingsFragment : Fragment() {
 
@@ -29,6 +32,27 @@ class SettingsFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        binding.layoutAbout.setOnClickListener {
+            hideMainLayout()
+            binding.about.visibility = View.VISIBLE
+
+        }
+
+        binding.layoutSecurityPin.setOnClickListener {
+            hideMainLayout()
+            binding.tested.visibility = View.VISIBLE
+        }
+
+        binding.layoutHelp.setOnClickListener {
+            hideMainLayout()
+            binding.help.visibility = View.VISIBLE
+        }
+
+        binding.layoutAdvanced.setOnClickListener {
+            hideMainLayout()
+            binding.advanced.visibility = View.VISIBLE
+        }
+
         binding.layoutChangePassword.setOnClickListener {
             Intent(context,ChangePasswordActivity::class.java).also {
                 context?.startActivity(it)
@@ -41,9 +65,56 @@ class SettingsFragment : Fragment() {
             }
         }
 
+        binding.layoutNotification.setOnClickListener {
+            hideMainLayout()
+            binding.notification.visibility = View.VISIBLE
+        }
+
+        binding.layoutPaymentMethod.setOnClickListener {
+            hideMainLayout()
+            binding.paymentMethod.visibility = View.VISIBLE
+        }
+
         binding.layoutLogout.setOnClickListener {
             showAlertForLogout()
         }
+
+        binding.imgBack.setOnClickListener {
+            showMainLayout()
+        }
+
+        layout_version_relase.setOnClickListener {
+            showReleaseAppVersion()
+        }
+
+
+
+    }
+
+    private fun hideMainLayout(){
+        binding.imgBack.visibility = View.VISIBLE
+        binding.mainLayout.visibility = View.GONE
+        binding.layoutLogout.visibility = View.GONE
+    }
+
+    private fun showMainLayout(){
+        if (binding.about.visibility == View.VISIBLE) {
+            binding.about.visibility = View.GONE
+        }else if(binding.tested.visibility == View.VISIBLE){
+            binding.tested.visibility = View.GONE
+        }else if (binding.help.visibility == View.VISIBLE){
+            binding.help.visibility = View.GONE
+        }else if (binding.advanced.visibility == View.VISIBLE){
+            binding.advanced.visibility = View.GONE
+        }else if (binding.notification.visibility == View.VISIBLE){
+            binding.notification.visibility = View.GONE
+        }else if (binding.paymentMethod.visibility == View.VISIBLE){
+            binding.paymentMethod.visibility = View.GONE
+        }
+
+        binding.mainLayout.visibility = View.VISIBLE
+        binding.layoutLogout.visibility = View.VISIBLE
+        binding.imgBack.visibility = View.GONE
     }
 
     private fun showAlertForLogout(){
@@ -60,6 +131,25 @@ class SettingsFragment : Fragment() {
 
         val alertDialog = alertDialogBuilder.create()
         alertDialog.show()
+    }
+
+    private fun showReleaseAppVersion(){
+
+        try {
+            val packageInfo = context?.packageManager?.getPackageInfo(context?.packageName!!,0)
+            val versionName = packageInfo?.versionName
+            val alertDialogBuilder = AlertDialog.Builder(requireContext())
+            alertDialogBuilder.setMessage("Version : $versionName").setTitle(R.string.app_name)
+                    .setNegativeButton("CANCEL"
+                    ) { dialog, which -> dialog?.dismiss() }
+
+            val alertDialog = alertDialogBuilder.create()
+            alertDialog.show()
+        }catch (e:PackageManager.NameNotFoundException){
+            e.printStackTrace()
+        }
+
+
     }
 
 }

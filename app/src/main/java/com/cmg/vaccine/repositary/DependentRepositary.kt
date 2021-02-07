@@ -4,6 +4,7 @@ import com.cmg.vaccine.database.AppDatabase
 import com.cmg.vaccine.database.Dependent
 import com.cmg.vaccine.database.User
 import com.cmg.vaccine.model.request.DependentRegReq
+import com.cmg.vaccine.model.request.UpdateProfileReq
 import com.cmg.vaccine.model.response.DependentRegResponse
 import com.cmg.vaccine.network.MyApi
 import com.cmg.vaccine.network.SafeAPIRequest
@@ -35,5 +36,11 @@ class DependentRepositary(
 
     fun updateDependent(dependent: Dependent):Int{
         return database.getDao().updateDependent(dependent)
+    }
+
+    suspend fun updateDependentProfile(updateProfileReq: UpdateProfileReq):DependentRegResponse{
+        return apiRequest {
+            api.updateDependentProfile(updateProfileReq)
+        }
     }
 }

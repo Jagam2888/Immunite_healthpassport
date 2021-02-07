@@ -45,7 +45,13 @@ class HomeViewModel(
 
         if (userData != null) {
             fullName.value = userData.fullName
-            gender.value = userData.gender
+            if (userData.gender == "M") {
+                gender.value = "MALE"
+            }else if (userData.gender == "F"){
+                gender.value = "FEMALE"
+            }else{
+                gender.value = "OTHERS"
+            }
             passportNumber.value = userData.passportNumber
             country.value = userData.countryCode
         }

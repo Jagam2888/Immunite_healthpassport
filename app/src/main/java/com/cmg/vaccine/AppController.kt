@@ -39,7 +39,7 @@ class AppController : Application(),KodeinAware {
         bind() from singleton { TellUsRepositary(instance(),instance(),instance()) }
         bind() from provider { TellUsViewModelFactory(instance()) }
 
-        bind() from singleton { ProfileRepositary(instance(),instance()) }
+        bind() from singleton { ProfileRepositary(instance(),instance(),instance()) }
         bind() from provider { ProfileViewModelFactory(instance()) }
 
         bind() from singleton { ViewPrivateKeyRepositary(instance(),instance()) }

@@ -58,7 +58,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{`* Priciple`}"
+                    android:text="@{`* `+@string/principal}"
                     android:textColor="@color/gray"
                     style="@style/opens_bold"/>
                 <TextView
@@ -69,6 +69,22 @@
                     style="@style/opens_bold"
                     android:textSize="14sp"
                     android:layout_marginTop="5dp"/>
+                <RadioGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp">
+                    <RadioButton
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="New Member"
+                        android:layout_weight="1"/>
+                    <RadioButton
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Existing Member"
+                        android:layout_weight="1"/>
+                </RadioGroup>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -213,6 +229,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/email_address1"
+                    android:focusable="false"
                     style="@style/opens_regular"
                     android:text="@={dependentViewModel.email}"
                     android:maxLines="1"
@@ -291,6 +308,7 @@
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
                         android:hint="0123456789"
+                        android:focusable="false"
                         android:text="@={dependentViewModel.contactNumber}"
                         android:inputType="phone"
                         android:maxLines="1"
@@ -578,22 +596,7 @@
                         android:layout_marginLeft="10dp" />
 
                 </LinearLayout>
-                <RadioGroup
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="10dp">
-                    <RadioButton
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="New Member"
-                        android:layout_weight="1"/>
-                    <RadioButton
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Existing Member"
-                        android:layout_weight="1"/>
-                </RadioGroup>
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -666,5 +669,11 @@
                     android:onClick="@{(v) -> dependentViewModel.updateProfile(v)}"/>
             </LinearLayout>
         </ScrollView>
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="gone"/>
     </RelativeLayout>
 </layout>

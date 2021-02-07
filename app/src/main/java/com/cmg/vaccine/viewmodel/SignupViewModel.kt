@@ -26,7 +26,7 @@ class SignupViewModel(
     var reTypeEmail:MutableLiveData<String> = MutableLiveData()
     var contactNumber:MutableLiveData<String> = MutableLiveData()
     var dob:MutableLiveData<String> = MutableLiveData()
-    var gender: Gender = Gender.MALE
+    var gender: Gender = Gender.M
     val selectedItemContactCode = ObservableInt()
     val selectedItemNationalityCode = ObservableInt()
 

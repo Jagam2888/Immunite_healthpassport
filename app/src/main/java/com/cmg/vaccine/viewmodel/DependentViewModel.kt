@@ -1,5 +1,6 @@
 package com.cmg.vaccine.viewmodel
 
+import android.content.Context
 import android.view.View
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
@@ -13,6 +14,8 @@ import com.cmg.vaccine.database.User
 import com.cmg.vaccine.listener.SimpleListener
 import com.cmg.vaccine.model.request.DependentRegReq
 import com.cmg.vaccine.model.request.DependentRegReqData
+import com.cmg.vaccine.model.request.UpdateProfileReq
+import com.cmg.vaccine.model.request.UpdateProfileReqData
 import com.cmg.vaccine.repositary.DependentRepositary
 import com.cmg.vaccine.util.APIException
 import com.cmg.vaccine.util.Couritnes
@@ -29,13 +32,14 @@ class DependentViewModel(
     var fullName:MutableLiveData<String> = MutableLiveData()
     var dob:MutableLiveData<String> = MutableLiveData()
     var address = ObservableField<String>()
-    var city:MutableLiveData<String> = MutableLiveData()
-    var state:MutableLiveData<String> = MutableLiveData()
+    var city = ObservableField<String>()
+    var state = ObservableField<String>()
     var passportNumber:MutableLiveData<String> = MutableLiveData()
     var idNo:MutableLiveData<String> = MutableLiveData()
     var contactNumber:MutableLiveData<String> = MutableLiveData()
     var email:MutableLiveData<String> = MutableLiveData()
     var masterPrivateKey:String?=null
+    var dependentPrivateKey:String?=null
 
     var relationshipItemPos = ObservableInt()
     var countryItemPos = ObservableInt()
@@ -44,9 +48,11 @@ class DependentViewModel(
     var isCheckedPrincipleAddress = ObservableBoolean()
 
     var parentAddress:String?=null
+    var parentcity:String?=null
+    var parentState:String?=null
     var dependent:Dependent?=null
 
-    var genderEnum: Gender = Gender.FEMALE
+    var genderEnum: Gender = Gender.F
     var listener:SimpleListener?=null
 
     init {
@@ -54,6 +60,8 @@ class DependentViewModel(
         if (parentUser != null) {
             masterPrivateKey = parentUser.privateKey
             parentAddress = parentUser.address
+            parentcity = parentUser.city
+            parentState = parentUser.state
             principalName.value = parentUser.fullName
 
             /*if (isCheckedPrincipleAddress.get()){
@@ -66,6 +74,7 @@ class DependentViewModel(
 
     fun onClick(view:View) {
         if (isChecked.get()) {
+            listener?.onStarted()
             val relationShips = view.context.resources.getStringArray(R.array.relationships)
             val relationShip = relationShips.get(relationshipItemPos.get())
 
@@ -79,23 +88,16 @@ class DependentViewModel(
 
             val dependentRegReqData = DependentRegReqData()
             dependentRegReqData.firstName = fullName.value
-            dependentRegReqData.countryCode = "60"
+            dependentRegReqData.countryCode = "MY"
             dependentRegReqData.mobileNumber = contactNumber.value
             dependentRegReqData.email = email.value
             dependentRegReqData.relationship = relationShip
             dependentRegReqData.nationalityCountry = "MY"
-            if (genderEnum.name == "MALE") {
-                dependentRegReqData.gender = "M"
-            } else if (genderEnum.name == "FEMALE") {
-                dependentRegReqData.gender = "F"
-            } else {
-                dependentRegReqData.gender = "O"
-            }
-
+            dependentRegReqData.gender = genderEnum.name
             dependentRegReqData.dob = dob.value
             dependentRegReqData.residentialAddress = address.get()
-            dependentRegReqData.townCity = city.value
-            dependentRegReqData.provinceState = state.value
+            dependentRegReqData.townCity = city.get()
+            dependentRegReqData.provinceState = state.get()
             dependentRegReqData.passportNo = passportNumber.value
             dependentRegReqData.idNo = idNo.value
             dependentRegReqData.masterPrivateKey = masterPrivateKey
@@ -118,10 +120,10 @@ class DependentViewModel(
                             contactNumber.value,
                             nationality,
                             passportNumber.value,
-                            state.value,
+                            state.get(),
                             relationShip,
                             address.get(),
-                            city.value
+                            city.get()
                         )
                         repositary.insertDependentSignUp(dependent)
                         listener?.onSuccess(response.Message)
@@ -142,24 +144,29 @@ class DependentViewModel(
         }
     }
 
-    fun loadProfileData(privateKey:String){
-        dependent = repositary.getDependent(privateKey)
+    fun loadProfileData(context: Context,privateKey:String){
+        dependentPrivateKey = privateKey
+        dependent = repositary.getDependent(dependentPrivateKey!!)
+        val relationShipList = context.resources.getStringArray(R.array.relationships).toList()
+        //val relationShip = relationShipList.get(relationshipItemPos.get())
 
         if (dependent != null){
             fullName.value = dependent?.firstName
             address.set(dependent?.residentialAddress)
             email.value = dependent?.email
             contactNumber.value = dependent?.mobileNumber
-            city.value = dependent?.townCity
-            state.value = dependent?.provinceState
+            city.set(dependent?.townCity)
+            state.set(dependent?.provinceState)
             passportNumber.value = dependent?.passportNo
             idNo.value = dependent?.idNo
+            dob.value = dependent?.dob
+            relationshipItemPos.set(selectedRelationShipPosition(dependent?.relationship!!,relationShipList!!))
 
             dependent?.gender.run {
                 genderEnum = when(this){
-                    "MALE" -> Gender.MALE
-                    "FEMALE" -> Gender.FEMALE
-                    else -> Gender.Other
+                    "M" -> Gender.M
+                    "F" -> Gender.F
+                    else -> Gender.O
                 }
             }
         }
@@ -167,21 +174,56 @@ class DependentViewModel(
 
     fun updateProfile(view: View){
         if (isChecked.get()){
+            listener?.onStarted()
+            Couritnes.main {
+                try {
+                    val updateProfileReq = UpdateProfileReq()
+                    val updateProfileReqData = UpdateProfileReqData()
 
-            val relationShipList = view.resources.getStringArray(R.array.relationships).toList()
+                    updateProfileReqData.firstName = fullName.value
+                    updateProfileReqData.nationalityCountry = "MY"
+                    updateProfileReqData.dob = dob.value
+                    updateProfileReqData.privateKey = dependentPrivateKey
+                    updateProfileReqData.passportNo = passportNumber.value
+                    updateProfileReqData.gender = genderEnum.name
+                    updateProfileReqData.idNo = idNo.value
+                    updateProfileReqData.residentialAddress = address.get()
+                    updateProfileReqData.townCity = city.get()
+                    updateProfileReqData.provinceState = state.get()
 
-            dependent?.residentialAddress = address.get()
-            dependent?.townCity = city.value
-            dependent?.provinceState = state.value
-            dependent?.dob = dob.value
-            dependent?.firstName = fullName.value
-            dependent?.idNo = idNo.value
-            dependent?.passportNo = passportNumber.value
-            dependent?.mobileNumber = contactNumber.value
-            relationshipItemPos.set(selectedRelationShipPosition(dependent?.relationship!!,relationShipList!!))
+                    updateProfileReq.data = updateProfileReqData
 
-            repositary.updateDependent(dependent!!)
-            listener?.onSuccess("Update Success")
+                    val response = repositary.updateDependentProfile(updateProfileReq)
+                    if (response.StatusCode == 1){
+                        var dependent = repositary.getDependent(dependentPrivateKey!!)
+                        val relationShipList = view.context.resources.getStringArray(R.array.relationships)
+                        val relationShip = relationShipList.get(relationshipItemPos.get())
+
+                        dependent?.residentialAddress = address.get()
+                        dependent?.townCity = city.get()
+                        dependent?.provinceState = state.get()
+                        dependent?.dob = dob.value
+                        dependent?.firstName = fullName.value
+                        dependent?.idNo = idNo.value
+                        dependent?.passportNo = passportNumber.value
+                        dependent?.mobileNumber = contactNumber.value
+                        dependent?.relationship = relationShip
+                        dependent?.gender = genderEnum.name
+
+                        repositary.updateDependent(dependent!!)
+                        listener?.onSuccess(response.Message)
+                    }else{
+                        listener?.onFailure(response.Message)
+                    }
+
+                }catch (e:APIException){
+                    listener?.onFailure(e.message!!)
+                }catch (e:NoInternetException){
+                    listener?.onFailure(e.message!!)
+                }catch (e:SocketTimeoutException){
+                    listener?.onFailure(e.message!!)
+                }
+            }
         }else{
             listener?.onFailure("Please accept Terms and conditions")
         }

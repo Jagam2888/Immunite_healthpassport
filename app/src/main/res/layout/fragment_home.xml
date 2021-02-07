@@ -87,22 +87,50 @@
                 android:paddingBottom="10dp"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center_horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Name : "
+                    style="@style/opens_bold"
+                    android:textSize="14sp"
+                    android:textColor="@color/gray" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@{homeviewmodel.fullName}"
                     style="@style/opens_bold"
                     android:textSize="14sp"
-                    android:layout_gravity="center_horizontal" />
+                    android:textColor="@color/black"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="5dp"
+                android:layout_gravity="center_horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Passport No : "
+                    style="@style/opens_regular"
+                    android:textSize="12sp"
+                    android:textColor="@color/gray"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@{homeviewmodel.passportNumber}"
                     android:textSize="12sp"
-                    style="@style/opens_regular"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="5dp" />
+                    style="@style/opens_regular"/>
+            </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -111,10 +139,14 @@
                     android:layout_marginTop="5dp"
                     android:layout_gravity="center_horizontal">
 
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:src="@drawable/location_icon" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Location : "
+                        style="@style/opens_regular"
+                        android:textSize="12sp"
+                        android:textColor="@color/gray"
+                        android:layout_gravity="center_horizontal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -131,12 +163,20 @@
                     android:orientation="horizontal"
                     android:layout_marginTop="5dp"
                     android:layout_gravity="center_horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Gender : "
+                        style="@style/opens_regular"
+                        android:textSize="12sp"
+                        android:textColor="@color/gray"
+                        android:layout_gravity="center_horizontal" />
 
-                    <ImageView
+                    <!--<ImageView
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:src="@{homeviewmodel.gender==`FEMALE`?@drawable/female:@drawable/male}" />
-
+-->
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

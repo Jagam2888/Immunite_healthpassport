@@ -260,7 +260,7 @@
                     android:id="@+id/btn_activate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Activate Immunitee"
+                    android:text="@{viewmodel.isExistUser() ? `Confirm`:`Activate Immunitee`}"
                     android:textColor="@color/white"
                     style="@style/opens_bold"
                     android:background="@drawable/button_background"

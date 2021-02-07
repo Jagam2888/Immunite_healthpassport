@@ -9,9 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.cmg.vaccine.databinding.ActivityEditProfileBinding
 import com.cmg.vaccine.listener.SimpleListener
-import com.cmg.vaccine.util.isValidEmail
-import com.cmg.vaccine.util.showDatePickerDialog
-import com.cmg.vaccine.util.toast
+import com.cmg.vaccine.util.*
 import com.cmg.vaccine.viewmodel.ProfileViewModel
 import com.cmg.vaccine.viewmodel.viewmodelfactory.ProfileViewModelFactory
 import org.kodein.di.KodeinAware
@@ -72,9 +70,12 @@ class EditProfileActivity : BaseActivity(),KodeinAware,SimpleListener {
     }
 
     override fun onStarted() {
+        show(binding.progressBar)
     }
 
     override fun onSuccess(msg: String) {
+        hide(binding.progressBar)
+        toast(msg)
         Intent(this,OTPVerifyActivity::class.java).also {
             it.putExtra("IsExistUser",true)
             startActivity(it)
@@ -82,6 +83,7 @@ class EditProfileActivity : BaseActivity(),KodeinAware,SimpleListener {
     }
 
     override fun onFailure(msg: String) {
+        hide(binding.progressBar)
         toast(msg)
     }
 }

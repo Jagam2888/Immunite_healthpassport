@@ -10,7 +10,13 @@ import com.cmg.vaccine.database.AppDatabase
 import com.cmg.vaccine.database.Dependent
 import com.cmg.vaccine.database.User
 import com.cmg.vaccine.listener.SimpleListener
+import com.cmg.vaccine.model.request.UpdateProfileReq
+import com.cmg.vaccine.model.request.UpdateProfileReqData
 import com.cmg.vaccine.repositary.ProfileRepositary
+import com.cmg.vaccine.util.APIException
+import com.cmg.vaccine.util.Couritnes
+import com.cmg.vaccine.util.NoInternetException
+import java.net.SocketTimeoutException
 
 class ProfileViewModel(
     private val repositary:ProfileRepositary
@@ -32,7 +38,7 @@ class ProfileViewModel(
     var isChecked = ObservableBoolean()
     var dependentListCount = ObservableInt()
 
-    var genderEnum:Gender = Gender.FEMALE
+    var genderEnum:Gender = Gender.F
 
     var listener:SimpleListener?=null
 
@@ -60,9 +66,9 @@ class ProfileViewModel(
             privateKey.value = user.privateKey
             user.gender.run {
                 genderEnum = when(this){
-                    "MALE" -> Gender.MALE
-                    "FEMALE" -> Gender.FEMALE
-                    else -> Gender.Other
+                    "M" -> Gender.M
+                    "F" -> Gender.F
+                    else -> Gender.O
                 }
             }
 
@@ -93,23 +99,55 @@ class ProfileViewModel(
     }
 
     fun onClick(){
-        var user = repositary.getUserData(repositary.getUserEmail()!!,"Y")
+        listener?.onStarted()
+        Couritnes.main {
+            try {
+                if (isChecked.get()) {
 
-        user.state = state.value
-        user.city = city.value
-        user.address = residentalAddress.value
-        user.gender = gender.value!!
-        user.fullName = firstName.value!!
-        user.mobileNumber = contactNumber.value!!
-        user.passportNumber = passportNumber.value!!
-        user.patientIdNo = idNo.value
-        user.dob = dob.value!!
+                    var user = repositary.getUserData(repositary.getUserEmail()!!,"Y")
 
-        if (isChecked.get()) {
-            repositary.saveUser(user)
-            listener?.onSuccess("Success")
-        }else{
-            listener?.onFailure("Please accept terms and conditions")
+                    val updateProfileReq = UpdateProfileReq()
+                    val updateProfileReqData = UpdateProfileReqData()
+
+                    updateProfileReqData.firstName = firstName.value
+                    updateProfileReqData.nationalityCountry = "MY"
+                    updateProfileReqData.dob = dob.value
+                    updateProfileReqData.privateKey = user.privateKey
+                    updateProfileReqData.passportNo = passportNumber.value
+                    updateProfileReqData.gender = genderEnum.name
+                    updateProfileReqData.idNo = idNo.value
+                    updateProfileReqData.residentialAddress = residentalAddress.value
+                    updateProfileReqData.townCity = city.value
+                    updateProfileReqData.provinceState = state.value
+
+                    updateProfileReq.data = updateProfileReqData
+
+                    val response = repositary.updateProfile(updateProfileReq)
+                    if (response.StatusCode == 1){
+                        user.state = state.value
+                        user.city = city.value
+                        user.address = residentalAddress.value
+                        user.gender = gender.value!!
+                        user.fullName = firstName.value!!
+                        user.mobileNumber = contactNumber.value!!
+                        user.passportNumber = passportNumber.value!!
+                        user.patientIdNo = idNo.value
+                        user.dob = dob.value!!
+                        repositary.saveUser(user)
+                        listener?.onSuccess(response.Message)
+                    }else{
+                        listener?.onFailure(response.Message)
+                    }
+                }else{
+                    listener?.onFailure("Please accept terms and conditions")
+                }
+            }catch (e:APIException){
+                listener?.onFailure(e.message!!)
+            }catch (e:NoInternetException){
+                listener?.onFailure(e.message!!)
+            }catch (e:SocketTimeoutException){
+                listener?.onFailure(e.message!!)
+            }
         }
     }
 }
