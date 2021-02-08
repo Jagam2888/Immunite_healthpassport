@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.cmg.vaccine.repositary.SplashRepositary
+import com.cmg.vaccine.util.Passparams
 import com.cmg.vaccine.viewmodel.SplashViewModel
 import com.cmg.vaccine.viewmodel.viewmodelfactory.SplashModelFactory
 import org.kodein.di.KodeinAware
@@ -46,7 +47,7 @@ class SplashActivity() : BaseActivity(),KodeinAware{
                 if (viewModel.loginPin != null) {
                     if (viewModel.loginPin.value?.enable == "Y") {
                         Intent(this, LoginPinActivity::class.java).also {
-                            it.putExtra("isCreate",false)
+                            it.putExtra(Passparams.ISCREATE,"")
                             startActivity(it)
                             finish()
                         }

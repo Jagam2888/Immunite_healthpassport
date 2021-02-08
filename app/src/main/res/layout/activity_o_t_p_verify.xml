@@ -9,10 +9,9 @@
             type="com.cmg.vaccine.viewmodel.OTPVerifyViewModel" />
     </data>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:background="@color/lite_yellow"
         tools:context=".OTPVerifyActivity">
 
@@ -286,5 +285,11 @@
                     android:onClick="@{() -> viewmodel.onClick()}"/>
             </LinearLayout>
         </ScrollView>
-    </LinearLayout>
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="gone"/>
+    </RelativeLayout>
 </layout>

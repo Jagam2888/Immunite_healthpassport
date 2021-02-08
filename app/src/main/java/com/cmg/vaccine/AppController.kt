@@ -57,11 +57,14 @@ class AppController : Application(),KodeinAware {
         bind() from singleton { LoginPinRepositary(instance(),instance()) }
         bind() from provider { LoginPinViewFactory(instance()) }
 
-        bind() from singleton { OTPVerifyRepositary(instance(),instance()) }
+        bind() from singleton { OTPVerifyRepositary(instance(),instance(),instance()) }
         bind() from provider { OTPVerifyModelFactory(instance()) }
 
         bind() from singleton { DependentRepositary(instance(),instance(),instance()) }
         bind() from provider { DependentViewModelFactory(instance()) }
+
+        bind() from singleton { SettingsRepositary(instance()) }
+        bind() from provider { SettingsModelFactory(instance()) }
 
     }
 }

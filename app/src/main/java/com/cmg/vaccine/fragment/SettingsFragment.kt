@@ -4,30 +4,47 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.cmg.vaccine.*
 import com.cmg.vaccine.databinding.FragmentSettingsBinding
+import com.cmg.vaccine.util.Passparams
+import com.cmg.vaccine.viewmodel.SettingsViewModel
+import com.cmg.vaccine.viewmodel.viewmodelfactory.SettingsModelFactory
+import com.zcw.togglebutton.ToggleButton.OnToggleChanged
 import kotlinx.android.synthetic.main.about.*
 import kotlinx.android.synthetic.main.security_pin.*
+import org.kodein.di.KodeinAware
+import org.kodein.di.android.x.kodein
+import org.kodein.di.generic.instance
 
-class SettingsFragment : Fragment() {
 
+class SettingsFragment : Fragment(),KodeinAware {
+    override val kodein by kodein()
     private lateinit var binding:FragmentSettingsBinding
+    private lateinit var viewModel:SettingsViewModel
+
+    private val factory:SettingsModelFactory by instance()
+
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        binding = DataBindingUtil.inflate(inflater,R.layout.fragment_settings,container,false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_settings, container, false)
         return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        viewModel = ViewModelProvider(this, factory).get(SettingsViewModel::class.java)
+        binding.viewmodel = viewModel
+        binding.lifecycleOwner = this
 
         binding.layoutAbout.setOnClickListener {
             hideMainLayout()
@@ -51,13 +68,13 @@ class SettingsFragment : Fragment() {
         }
 
         binding.layoutChangePassword.setOnClickListener {
-            Intent(context,ChangePasswordActivity::class.java).also {
+            Intent(context, ChangePasswordActivity::class.java).also {
                 context?.startActivity(it)
             }
         }
 
         binding.layoutChangeLanguage.setOnClickListener {
-            Intent(context,ChangeLanguageActivity::class.java).also {
+            Intent(context, ChangeLanguageActivity::class.java).also {
                 context?.startActivity(it)
             }
         }
@@ -83,6 +100,30 @@ class SettingsFragment : Fragment() {
         layout_version_relase.setOnClickListener {
             showReleaseAppVersion()
         }
+
+        viewModel.loginPinEnable.observe(viewLifecycleOwner, Observer { status ->
+            if (status == "Y"){
+                login_pin_enable.setToggleOn(true)
+            }else{
+                login_pin_enable.setToggleOff(true)
+            }
+        })
+
+        login_pin_enable.setOnToggleChanged(OnToggleChanged {
+            if (it){
+                viewModel.enableLoginPin()
+            }else{
+                viewModel.disableLoginPin()
+            }
+        })
+
+        layout_change_pin.setOnClickListener {
+            Intent(context,LoginPinActivity::class.java).also {
+                it.putExtra(Passparams.ISCREATE,"update")
+                context?.startActivity(it)
+            }
+        }
+
 
 
 
@@ -118,14 +159,14 @@ class SettingsFragment : Fragment() {
         val alertDialogBuilder = AlertDialog.Builder(requireContext())
         alertDialogBuilder.setMessage("Are you sure you want to log out?")
             .setTitle("Log Out").setCancelable(false).setPositiveButton("YES"
-            ) { dialog, which ->
+                ) { dialog, which ->
                 Intent(requireContext(), LoginPinActivity::class.java).also {
-                    it.putExtra("isCreate",false)
+                    it.putExtra(Passparams.ISCREATE, "")
                     it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
                     requireContext().startActivity(it)
                 }
             }.setNegativeButton("CANCEL"
-            ) { dialog, which -> dialog?.dismiss() }
+                ) { dialog, which -> dialog?.dismiss() }
 
         val alertDialog = alertDialogBuilder.create()
         alertDialog.show()
@@ -134,7 +175,7 @@ class SettingsFragment : Fragment() {
     private fun showReleaseAppVersion(){
 
         try {
-            val packageInfo = context?.packageManager?.getPackageInfo(context?.packageName!!,0)
+            val packageInfo = context?.packageManager?.getPackageInfo(context?.packageName!!, 0)
             val versionName = packageInfo?.versionName
             val alertDialogBuilder = AlertDialog.Builder(requireContext())
             alertDialogBuilder.setMessage("Version : $versionName").setTitle(R.string.app_name)
@@ -143,7 +184,7 @@ class SettingsFragment : Fragment() {
 
             val alertDialog = alertDialogBuilder.create()
             alertDialog.show()
-        }catch (e:PackageManager.NameNotFoundException){
+        }catch (e: PackageManager.NameNotFoundException){
             e.printStackTrace()
         }
 

@@ -13,13 +13,13 @@
         android:paddingTop="20dp"
         android:paddingBottom="20dp">
         <com.zcw.togglebutton.ToggleButton
+            android:id="@+id/login_pin_enable"
             android:layout_width="54dp"
             toggle:tbOnColor="#f00"
             toggle:tbOffColor="#ddd"
             toggle:tbSpotColor="#00f"
             toggle:tbOffBorderColor="#000"
             toggle:tbBorderWidth="2dp"
-            app:tbAsDefaultOn="true"
             android:layout_height="30dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"/>

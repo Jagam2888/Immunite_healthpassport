@@ -24,12 +24,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/create_pin"
+            android:text="@{pinviewmodel.title}"
             android:textColor="@color/primary"
             android:textSize="28sp"
             style="@style/opens_bold"
-            android:layout_marginTop="20dp" 
-            android:visibility="@{pinviewmodel.isCreate()?View.VISIBLE:View.INVISIBLE}"/>
+            android:layout_marginTop="20dp"/>
 
         <ScrollView
             android:layout_width="match_parent"
@@ -257,7 +256,7 @@
                     android:textColor="@color/white"
                     android:background="@drawable/button_background"
                     android:layout_marginTop="30dp"
-                    android:visibility="@{pinviewmodel.isCreate()?View.VISIBLE:View.INVISIBLE}"
+                    android:visibility="@{pinviewmodel.isCreateOrUpdate()?View.VISIBLE:View.GONE}"
                     android:onClick="@{() -> pinviewmodel.onLogin()}"/>
             </LinearLayout>
         </ScrollView>

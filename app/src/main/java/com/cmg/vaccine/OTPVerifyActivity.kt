@@ -10,6 +10,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.cmg.vaccine.databinding.ActivityOTPVerifyBinding
 import com.cmg.vaccine.listener.SimpleListener
+import com.cmg.vaccine.util.hide
+import com.cmg.vaccine.util.show
 import com.cmg.vaccine.util.toast
 import com.cmg.vaccine.viewmodel.OTPVerifyViewModel
 import com.cmg.vaccine.viewmodel.viewmodelfactory.OTPVerifyModelFactory
@@ -127,10 +129,11 @@ class OTPVerifyActivity : AppCompatActivity(),KodeinAware,SimpleListener{
     }
 
     override fun onStarted() {
-
+        show(binding.progressBar)
     }
 
     override fun onSuccess(msg: String) {
+        hide(binding.progressBar)
         toast(msg)
         if (!isExistUser!!) {
             Intent(this, SignupCompleteActivity::class.java).also {
@@ -145,6 +148,7 @@ class OTPVerifyActivity : AppCompatActivity(),KodeinAware,SimpleListener{
     }
 
     override fun onFailure(msg: String) {
+        hide(binding.progressBar)
         toast(msg)
     }
 }

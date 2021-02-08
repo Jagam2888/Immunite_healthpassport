@@ -53,6 +53,7 @@
     <string name="skip">Skip</string>
     <string name="create_pin_now">Create PIN now</string>
     <string name="create_pin">Create PINs</string>
+    <string name="update_pin">Update PINs</string>
     <string name="enter_4_pin">Enter 4-Digits PIN</string>
 
     <string name="yes">YA</string>

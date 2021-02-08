@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import com.cmg.vaccine.databinding.ActivitySignupCompleteBinding
+import com.cmg.vaccine.util.Passparams
 
 class SignupCompleteActivity : BaseActivity() {
     private lateinit var binding:ActivitySignupCompleteBinding
@@ -21,7 +22,7 @@ class SignupCompleteActivity : BaseActivity() {
 
         binding.btnCreatePin.setOnClickListener {
             Intent(this,LoginPinActivity::class.java).also {
-                it.putExtra("isCreate",true)
+                it.putExtra(Passparams.ISCREATE,"create")
                 it.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
                 startActivity(it)
             }

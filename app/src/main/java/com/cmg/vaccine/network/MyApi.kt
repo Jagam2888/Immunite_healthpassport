@@ -37,7 +37,7 @@ interface MyApi {
     suspend fun searchVaccineList(@Query("privateKey")key: String):Response<VaccineListResponse>
 
     @GET("nhr-module-user/verifyTac")
-    suspend fun verifyOTP(@Query("privateKey")key: String,@Query("verifyTac")verifyTac:String)
+    suspend fun verifyOTP(@Query("privateKey")key: String,@Query("verifyTac")verifyTac:String):Response<OTPVerifiyResponse>
 
     companion object{
         operator fun invoke(

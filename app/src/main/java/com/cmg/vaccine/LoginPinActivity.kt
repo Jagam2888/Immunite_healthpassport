@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.cmg.vaccine.databinding.ActivityLoginPinBinding
 import com.cmg.vaccine.listener.SimpleListener
+import com.cmg.vaccine.util.Passparams
 import com.cmg.vaccine.util.toast
 import com.cmg.vaccine.viewmodel.LoginPinViewModel
 import com.cmg.vaccine.viewmodel.viewmodelfactory.LoginPinViewFactory
@@ -22,6 +23,7 @@ class LoginPinActivity : AppCompatActivity(),KodeinAware,SimpleListener {
     private lateinit var viewModel:LoginPinViewModel
 
     private val factory:LoginPinViewFactory by instance()
+    private var loginStatus:String?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this,R.layout.activity_login_pin)
@@ -32,8 +34,10 @@ class LoginPinActivity : AppCompatActivity(),KodeinAware,SimpleListener {
 
         viewModel.listener = this
 
-        val isCreate = intent.extras?.getBoolean("isCreate",false)
-        viewModel.isCreate.value = isCreate
+        loginStatus = intent.extras?.getString(Passparams.ISCREATE,"")
+        viewModel.status.set(loginStatus)
+
+        viewModel.loadValues(this)
 
         initViews()
     }
@@ -84,7 +88,7 @@ class LoginPinActivity : AppCompatActivity(),KodeinAware,SimpleListener {
             }
 
             override fun afterTextChanged(editable: Editable?) {
-                if (viewModel.getPin.value != null){
+                if (viewModel.getPin.value != null && loginStatus ==""){
                     if (editable != null) {
                         if (editable.length == 4){
                             //if (!isDoneReEnter) {
@@ -134,9 +138,13 @@ class LoginPinActivity : AppCompatActivity(),KodeinAware,SimpleListener {
 
     override fun onSuccess(msg: String) {
         toast(msg)
-        Intent(this@LoginPinActivity,MainActivity::class.java).also {
-            it.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
-            startActivity(it)
+        if (loginStatus == "create") {
+            Intent(this@LoginPinActivity, MainActivity::class.java).also {
+                it.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+                startActivity(it)
+            }
+        }else if (loginStatus == "update"){
+            finish()
         }
     }
 
