@@ -35,7 +35,7 @@ class ViewPrivateKeyActivity : BaseActivity(),KodeinAware {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_view_private_key)
-        viewModel = ViewModelProvider(this, factory).get(ViewPrivateKeyViewModel::class.java)
+        /*viewModel = ViewModelProvider(this, factory).get(ViewPrivateKeyViewModel::class.java)
         binding.viewmodel = viewModel
         binding.lifecycleOwner = this
 
@@ -50,7 +50,16 @@ class ViewPrivateKeyActivity : BaseActivity(),KodeinAware {
                     requestPermission()
                 }
             }
-        })
+        })*/
+
+        privateKey = intent.extras?.getString("private_key","")
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkPermission()) {
+                generateQRCode(privateKey!!)
+            } else {
+                requestPermission()
+            }
+        }
 
         binding.imgBack.setOnClickListener {
             finish()

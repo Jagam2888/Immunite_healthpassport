@@ -8,6 +8,9 @@
             name="homeviewmodel"
             type="com.cmg.vaccine.viewmodel.HomeViewModel" />
         <import type="android.view.View"/>
+        <variable
+            name="adapter"
+            type="com.cmg.vaccine.adapter.MyViewPagerAdapter" />
     </data>
 
     <LinearLayout
@@ -25,6 +28,46 @@
             android:layout_height="match_parent">
 
             <RelativeLayout
+                android:id="@+id/btn_faq"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/chat_bubble"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="?"
+                    android:textSize="22sp"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:layout_centerInParent="true"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/mainlayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <LinearLayout
+                    android:id="@+id/layoutDots"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dots_height"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="5dp"
+                    android:gravity="center"
+                    android:orientation="horizontal"></LinearLayout>
+                <androidx.viewpager.widget.ViewPager
+                    android:id="@+id/slider_view_Pager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_above="@id/layoutDots"
+                    app:adapter="@{adapter}"/>
+
+            </RelativeLayout>
+
+            <!--<RelativeLayout
                 android:id="@+id/btn_view_key"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -57,24 +100,7 @@
 
             </RelativeLayout>
 
-            <RelativeLayout
-                android:id="@+id/btn_faq"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/chat_bubble"
-                android:layout_alignParentRight="true"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="10dp"
-                >
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="?"
-                    android:textSize="22sp"
-                    android:textColor="@color/white"
-                    android:textStyle="bold"
-                    android:layout_centerInParent="true"/>
-            </RelativeLayout>
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -172,11 +198,11 @@
                         android:textColor="@color/gray"
                         android:layout_gravity="center_horizontal" />
 
-                    <!--<ImageView
+                    &lt;!&ndash;<ImageView
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:src="@{homeviewmodel.gender==`FEMALE`?@drawable/female:@drawable/male}" />
--->
+&ndash;&gt;
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -206,7 +232,7 @@
                         style="@style/opens_regular"
                         android:background="#CCFEFAF5"/>
                 </RelativeLayout>
-                <!--<androidx.recyclerview.widget.RecyclerView
+                &lt;!&ndash;<androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler_view"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -214,7 +240,7 @@
                     android:paddingRight="10dp"
                     android:paddingLeft="10dp"
                     android:paddingBottom="10dp"
-                    android:paddingTop="10dp"/>-->
+                    android:paddingTop="10dp"/>&ndash;&gt;
                 <RelativeLayout
                     android:id="@+id/vaccine_detail"
                     android:layout_width="match_parent"
@@ -280,7 +306,7 @@
                             android:layout_gravity="center_vertical" />
                     </LinearLayout>
                 </RelativeLayout>
-            </LinearLayout>
+            </LinearLayout>-->
 
         </RelativeLayout>
 

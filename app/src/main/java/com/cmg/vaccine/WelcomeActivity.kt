@@ -13,8 +13,14 @@ class WelcomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this,R.layout.activity_welcome)
 
-        binding.btnSignup.setOnClickListener {
+        binding.btnNewUser.setOnClickListener {
             Intent(this,SignUpActivity::class.java).also {
+                startActivity(it)
+            }
+        }
+
+        binding.btnExistingUser.setOnClickListener {
+            Intent(this,ExistingUserActivity::class.java).also {
                 startActivity(it)
             }
         }

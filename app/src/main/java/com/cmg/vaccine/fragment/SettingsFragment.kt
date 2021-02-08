@@ -9,10 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import com.cmg.vaccine.ChangeLanguageActivity
-import com.cmg.vaccine.ChangePasswordActivity
-import com.cmg.vaccine.LoginActivity
-import com.cmg.vaccine.R
+import com.cmg.vaccine.*
 import com.cmg.vaccine.databinding.FragmentSettingsBinding
 import kotlinx.android.synthetic.main.about.*
 import kotlinx.android.synthetic.main.security_pin.*
@@ -122,11 +119,12 @@ class SettingsFragment : Fragment() {
         alertDialogBuilder.setMessage("Are you sure you want to log out?")
             .setTitle("Log Out").setCancelable(false).setPositiveButton("YES"
             ) { dialog, which ->
-                Intent(requireContext(), LoginActivity::class.java).also {
-                    it.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                Intent(requireContext(), LoginPinActivity::class.java).also {
+                    it.putExtra("isCreate",false)
+                    it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
                     requireContext().startActivity(it)
                 }
-            }.setNegativeButton("CANCEl"
+            }.setNegativeButton("CANCEL"
             ) { dialog, which -> dialog?.dismiss() }
 
         val alertDialog = alertDialogBuilder.create()

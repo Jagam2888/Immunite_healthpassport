@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <variable
+        <!--<variable
             name="viewmodel"
-            type="com.cmg.vaccine.viewmodel.ViewPrivateKeyViewModel" />
+            type="com.cmg.vaccine.viewmodel.ViewPrivateKeyViewModel" />-->
     </data>
 
     <LinearLayout

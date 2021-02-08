@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.cmg.vaccine.listener.SimpleListener
+import com.cmg.vaccine.model.Dashboard
 import com.cmg.vaccine.model.response.HomeResponse
 import com.cmg.vaccine.repositary.HomeRepositary
 import com.cmg.vaccine.util.APIException
@@ -40,6 +41,12 @@ class HomeViewModel(
     val vaccineDate:MutableLiveData<String> = MutableLiveData()
     val expiryDate:MutableLiveData<String> = MutableLiveData()
 
+    //var listDashboard:List<Dashboard>?=null
+
+    var _listDashboard:MutableLiveData<List<Dashboard>> = MutableLiveData()
+    val listDashboard:LiveData<List<Dashboard>>
+    get() = _listDashboard
+
     init {
         val userData = repositary.getUserData()
 
@@ -56,7 +63,32 @@ class HomeViewModel(
             country.value = userData.countryCode
         }
 
+        val dashBoard = Dashboard()
+        dashBoard.fullName = userData.fullName
+        dashBoard.gender = gender.value
+        dashBoard.passportNo = userData.passportNumber
+        dashBoard.location = userData.countryCode
+        dashBoard.privateKey = userData.privateKey
+        _listDashboard.value = listOf(dashBoard)
 
+        val dependentList = repositary.getDependentList()
+        if (!dependentList.isNullOrEmpty()) {
+            for (dependent in dependentList!!) {
+                val dashboard1 = Dashboard()
+                dashboard1.fullName = dependent.firstName
+                dashboard1.passportNo = dependent.passportNo
+                if (dependent.gender == "M") {
+                    dashboard1.gender = "MALE"
+                } else if (dependent.gender == "F") {
+                    dashboard1.gender = "FEMALE"
+                } else {
+                    dashboard1.gender = "OTHERS"
+                }
+                dashboard1.privateKey = dependent.childPrivateKey
+                dashboard1.relationShip = dependent.relationship
+                _listDashboard.value = _listDashboard.value!!.plus(dashboard1)
+            }
+        }
 
 
     }

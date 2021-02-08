@@ -3,6 +3,7 @@ package com.cmg.vaccine
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.util.Log
 import android.view.View
 import androidx.databinding.DataBindingUtil
@@ -85,6 +86,29 @@ class OTPVerifyActivity : AppCompatActivity(),KodeinAware,SimpleListener{
             }
         }*/
 
+        startTimer()
+
+        binding.txtResendOtp.setOnClickListener {
+            startTimer()
+            binding.txtResendOtp.visibility = View.GONE
+        }
+
+
+    }
+
+    private fun startTimer(){
+        val timer = object :CountDownTimer(300000,1000){
+            override fun onTick(millisUntilFinished: Long) {
+                val value = millisUntilFinished / 1000
+                val formatted = "${(value / 60).toString().padStart(2, '0')} : ${(value % 60).toString().padStart(2, '0')}"
+                binding.txtTimer.text = formatted
+            }
+
+            override fun onFinish() {
+                binding.txtResendOtp.visibility = View.VISIBLE
+            }
+        }
+        timer.start()
     }
 
     private fun removePin(){

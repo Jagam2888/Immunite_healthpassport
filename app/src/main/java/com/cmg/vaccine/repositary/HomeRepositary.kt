@@ -1,6 +1,7 @@
 package com.cmg.vaccine.repositary
 
 import com.cmg.vaccine.database.AppDatabase
+import com.cmg.vaccine.database.Dependent
 import com.cmg.vaccine.database.User
 import com.cmg.vaccine.model.response.VaccineResponse
 import com.cmg.vaccine.network.MyApi
@@ -29,5 +30,9 @@ class HomeRepositary(
 
     fun getPrivateKey():String?{
         return database.getDao().getPrivateKey(preferenceProvider.getEmail()!!)
+    }
+
+    fun getDependentList():List<Dependent>?{
+        return database.getDao().getDependentList(getPrivateKey()!!)
     }
 }

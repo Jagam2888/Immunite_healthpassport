@@ -1,20 +1,29 @@
 package com.cmg.vaccine.fragment
 
+import android.app.ActionBar
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.RelativeLayout
+import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.viewpager.widget.ViewPager
 import com.cmg.vaccine.FAQTravelAdvisoryActivity
 import com.cmg.vaccine.R
 import com.cmg.vaccine.ViewPrivateKeyActivity
 import com.cmg.vaccine.adapter.HomeListAdapter
+import com.cmg.vaccine.adapter.MyViewPagerAdapter
 import com.cmg.vaccine.databinding.FragmentHomeBinding
+import com.cmg.vaccine.model.Dashboard
 import com.cmg.vaccine.model.response.HomeResponse
 import com.cmg.vaccine.viewmodel.HomeViewModel
 import com.cmg.vaccine.viewmodel.viewmodelfactory.HomeViewModelFactory
@@ -30,6 +39,8 @@ class HomeFragment : Fragment(),KodeinAware {
     var list:List<HomeResponse>?=null
 
     private val factory:HomeViewModelFactory by instance()
+    val layouts = listOf("parent","child1","child2")
+    var listDashboard:List<Dashboard>?=null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,7 +48,6 @@ class HomeFragment : Fragment(),KodeinAware {
     ): View? {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_home,container,false)
-        //initViews()
         return binding.root
     }
 
@@ -49,47 +59,95 @@ class HomeFragment : Fragment(),KodeinAware {
 
         viewModel.loadVaccineDetail()
 
-        /*val home = HomeResponse()
-        home.title = "Vaccine ABC"
-        home.date = "19/01/2021"
+        viewModel.listDashboard.observe(viewLifecycleOwner, Observer { list->
+            listDashboard = list
+            val myViewPagerAdapter = MyViewPagerAdapter(requireContext(),listDashboard!!)
+            binding.adapter = myViewPagerAdapter
+            addBottomDots(0)
+        })
+        //loadDynamicLayouts()
 
-        val home1 = HomeResponse()
-        home1.title = "Vaccine ABC"
-        home1.date = "19/01/2021"
-
-        val home2 = HomeResponse()
-        home2.title = "Vaccine ABC"
-        home2.date = "19/01/2021"
-
-        list = listOf(home,home1,home2)
-        viewModel.setList(list!!)
-
-        viewModel.list.observe(viewLifecycleOwner, Observer { list ->
-            binding.recyclerView.also {
-                it.layoutManager = LinearLayoutManager(context)
-                it.adapter = HomeListAdapter(list)
-            }
-        })*/
-
-        binding.btnViewKey.setOnClickListener {
+        /*binding.btnViewKey.setOnClickListener {
             Intent(context,ViewPrivateKeyActivity::class.java).also {
                 context?.startActivity(it)
             }
-        }
+        }*/
+
+
+
 
         binding.btnFaq.setOnClickListener {
             Intent(context,FAQTravelAdvisoryActivity::class.java).also {
                 context?.startActivity(it)
             }
         }
+
+        binding.sliderViewPager?.addOnPageChangeListener(object : ViewPager.OnPageChangeListener{
+            override fun onPageScrolled(
+                position: Int,
+                positionOffset: Float,
+                positionOffsetPixels: Int
+            ) {
+            }
+
+            override fun onPageSelected(position: Int) {
+                addBottomDots(position)
+            }
+
+            override fun onPageScrollStateChanged(state: Int) {
+            }
+        })
     }
 
-   /* fun initViews(){
-        binding.btnViewKey.setOnClickListener {
-            Intent(context,ViewPrivateKeyActivity::class.java).also {
-                context?.startActivity(it)
-            }
+    fun addBottomDots(currentPage : Int){
+
+        var dotsView = arrayOfNulls<View>(listDashboard!!.size)
+        binding.layoutDots?.removeAllViews()
+
+        for(i in dotsView?.indices){
+            dotsView[i] = View(context)
+            dotsView[i]!!.layoutParams = LinearLayout.LayoutParams(80,10)
+            dotsView[i]!!.setBackgroundResource(R.drawable.rectangle_inactive)
+            binding.layoutDots?.addView(dotsView[i])
         }
-    }*/
+
+        if(dotsView!!.isNotEmpty()){
+            dotsView[currentPage]!!.setBackgroundResource(R.drawable.rectangle_active)
+        }
+    }
+
+    private fun loadDynamicLayouts(){
+
+        val btnLayout = RelativeLayout(context)
+        val btnLayoutParams = RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT)
+        btnLayout.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.red))
+        btnLayoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM)
+        btnLayoutParams.setMargins(20,20,20,20)
+        btnLayout.layoutParams = btnLayoutParams
+        btnLayout.setPadding(20,20,20,20)
+        binding.mainlayout.addView(btnLayout)
+
+        val btnChildLayout = LinearLayout(context)
+        val btnChildParams = RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT)
+        btnChildParams.addRule(RelativeLayout.CENTER_IN_PARENT)
+        btnChildLayout.layoutParams = btnChildParams
+        btnChildLayout.orientation = LinearLayout.VERTICAL
+        btnLayout.addView(btnChildLayout)
+
+        val btnChildImg = ImageView(context)
+        val btnChildImgParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT)
+        btnChildImg.layoutParams = btnChildImgParams
+        btnChildLayout.addView(btnChildImg)
+
+        val btnChildTextView = TextView(context)
+        val btnChildTextViewParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT)
+        btnChildTextView.layoutParams = btnChildTextViewParams
+        btnChildTextView.setTextColor(ContextCompat.getColor(requireContext(),R.color.white))
+        btnChildTextView.setText(requireContext().resources.getString(R.string.my_qr_code))
+        btnChildLayout.addView(btnChildTextView)
+
+
+    }
+
 
 }

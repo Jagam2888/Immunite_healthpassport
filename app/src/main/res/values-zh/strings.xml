@@ -93,6 +93,10 @@
     <string name="terms_privacy_policy">Terms &amp; Privacy Policy</string>
     <string name="change_security_pin">Change Security Pin</string>
 
+    <string name="registered_email">Registered Email Address</string>
+    <string name="setup_manually">SetUp \nManually</string>
+    <string name="restore_backup">Restore from \nBackup</string>
+
     <string name="english">English</string>
     <string name="malay">Malay</string>
     <string name="chinese">中文</string>

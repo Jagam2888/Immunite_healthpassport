@@ -1,5 +1,7 @@
 package com.cmg.vaccine
 
+import android.app.AlertDialog
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -55,7 +57,21 @@ class MainActivity : BaseActivity() {
         fragmentTransaction.commit()
     }
 
+    private fun showAlertForExit(){
+        val alertDialogBuilder = AlertDialog.Builder(this)
+        alertDialogBuilder.setMessage("Are you sure you want to Exit?")
+            .setTitle(resources.getString(R.string.app_name)).setCancelable(false).setPositiveButton("YES"
+            ) { dialog, which ->
+                finish()
+
+            }.setNegativeButton("CANCEL"
+            ) { dialog, which -> dialog?.dismiss() }
+
+        val alertDialog = alertDialogBuilder.create()
+        alertDialog.show()
+    }
+
     override fun onBackPressed() {
-        finish()
+        showAlertForExit()
     }
 }
