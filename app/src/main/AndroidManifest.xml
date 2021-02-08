@@ -14,9 +14,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Noactionbar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".EditDependentProfileActivity"
+        <activity android:name=".ExistingUserActivity"></activity>
+        <activity
+            android:name=".EditDependentProfileActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"></activity>
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".AddDependentActivity"
             android:screenOrientation="portrait"
