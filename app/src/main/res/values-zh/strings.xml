@@ -37,6 +37,7 @@
     <string name="setting">设定值</string>
     <string name="notification">通知事项</string>
     <string name="view_private_key">查看私钥</string>
+    <string name="world_entries">World Entries</string>
     <string name="my_qr_code">我的二维码</string>
     <string name="view_report">查看报告</string>
     <string name="change_password">更改密码</string>

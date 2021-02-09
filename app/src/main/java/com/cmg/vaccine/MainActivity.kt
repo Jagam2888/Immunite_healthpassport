@@ -38,8 +38,8 @@ class MainActivity : BaseActivity() {
                     loadFragment(ProfileFragment())
                     true
                 }
-                R.id.view_report -> {
-                    loadFragment(ViewReportFragment())
+                R.id.world_entries -> {
+                    loadFragment(WorldEntriesFragment())
                     true
                 }
                 R.id.setting -> {

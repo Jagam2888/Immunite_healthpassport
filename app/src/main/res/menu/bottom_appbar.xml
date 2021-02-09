@@ -12,9 +12,9 @@
         android:icon="@drawable/notifications_unselected"
         app:showAsAction="ifRoom"/>
 
-    <item android:id="@+id/view_report"
-        android:title="@string/view_report"
-        android:icon="@drawable/view_report"
+    <item android:id="@+id/world_entries"
+        android:title="@string/world_entries"
+        android:icon="@drawable/world_entries_icon"
         app:showAsAction="ifRoom"/>
 
     <item android:id="@+id/profile"

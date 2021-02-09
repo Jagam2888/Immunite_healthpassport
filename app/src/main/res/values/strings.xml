@@ -39,6 +39,7 @@
     <string name="view_private_key">View Private Key</string>
     <string name="my_qr_code">MY QR CODE</string>
     <string name="view_report">View Report</string>
+    <string name="world_entries">World Entries</string>
     <string name="change_password">Change Password</string>
     <string name="change_language">Change Language</string>
     <string name="language">Language</string>
