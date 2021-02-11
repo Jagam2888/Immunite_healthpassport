@@ -1,7 +1,5 @@
 package com.cmg.vaccine.fragment
 
-import android.app.ActionBar
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -15,12 +13,8 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager.widget.ViewPager
-import com.cmg.vaccine.FAQTravelAdvisoryActivity
 import com.cmg.vaccine.R
-import com.cmg.vaccine.ViewPrivateKeyActivity
-import com.cmg.vaccine.adapter.HomeListAdapter
 import com.cmg.vaccine.adapter.MyViewPagerAdapter
 import com.cmg.vaccine.databinding.FragmentHomeBinding
 import com.cmg.vaccine.model.Dashboard
@@ -74,13 +68,15 @@ class HomeFragment : Fragment(),KodeinAware {
         }*/
 
 
+        binding.notification.setOnClickListener {
 
+        }
 
-        binding.btnFaq.setOnClickListener {
+       /* binding.btnFaq.setOnClickListener {
             Intent(context,FAQTravelAdvisoryActivity::class.java).also {
                 context?.startActivity(it)
             }
-        }
+        }*/
 
         binding.sliderViewPager?.addOnPageChangeListener(object : ViewPager.OnPageChangeListener{
             override fun onPageScrolled(
@@ -106,8 +102,11 @@ class HomeFragment : Fragment(),KodeinAware {
 
         for(i in dotsView?.indices){
             dotsView[i] = View(context)
-            dotsView[i]!!.layoutParams = LinearLayout.LayoutParams(80,10)
+            val dotsViewParams = LinearLayout.LayoutParams(20,20)
+            dotsViewParams.setMargins(20,0,0,0)
+            dotsView[i]!!.layoutParams = dotsViewParams
             dotsView[i]!!.setBackgroundResource(R.drawable.rectangle_inactive)
+            dotsView[i]!!
             binding.layoutDots?.addView(dotsView[i])
         }
 

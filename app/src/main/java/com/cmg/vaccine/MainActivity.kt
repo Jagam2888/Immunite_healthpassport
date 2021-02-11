@@ -4,6 +4,8 @@ import android.app.AlertDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.navigation.Navigation
@@ -24,16 +26,17 @@ class MainActivity : BaseActivity() {
 
         loadFragment(HomeFragment())
 
+
         bottom_navigation_view.setOnNavigationItemSelectedListener { menuItem->
             when(menuItem.itemId){
                 R.id.home ->{
                     loadFragment(HomeFragment())
                     true
                 }
-                R.id.notification -> {
+                /*R.id.notification -> {
                     loadFragment(NotificationFragment())
                     true
-                }
+                }*/
                 R.id.profile -> {
                     loadFragment(ProfileFragment())
                     true
@@ -49,6 +52,12 @@ class MainActivity : BaseActivity() {
             }
         }
     }
+
+    /*override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflator = menuInflater
+        inflator.inflate(R.menu.home_menu,menu)
+        return super.onCreateOptionsMenu(menu)
+    }*/
 
     private fun loadFragment(fragment: Fragment){
         val fragmentTransaction: FragmentTransaction = supportFragmentManager.beginTransaction()
@@ -74,4 +83,14 @@ class MainActivity : BaseActivity() {
     override fun onBackPressed() {
         showAlertForExit()
     }
+
+    /*override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.notification ->{
+                loadFragment(NotificationFragment())
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }*/
 }

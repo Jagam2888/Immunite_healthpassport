@@ -31,6 +31,7 @@
     <string name="city">Town/City</string>
     <string name="state">Province/State</string>
     <string name="profile">Profil</string>
+    <string name="switch_profile">Switch Profile</string>
     <string name="personal_info">Maklumat Peribadi</string>
     <string name="edit_profile">Sunting profil</string>
     <string name="home">Kediaman</string>

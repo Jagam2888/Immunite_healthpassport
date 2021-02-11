@@ -14,6 +14,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.cmg.vaccine.databinding.ActivityViewPrivateKeyBinding
+import com.cmg.vaccine.util.Passparams
 import com.cmg.vaccine.util.toast
 import com.cmg.vaccine.viewmodel.ViewPrivateKeyViewModel
 import com.cmg.vaccine.viewmodel.viewmodelfactory.ViewPrivateKeyFactory
@@ -52,7 +53,7 @@ class ViewPrivateKeyActivity : BaseActivity(),KodeinAware {
             }
         })*/
 
-        privateKey = intent.extras?.getString("private_key","")
+        privateKey = intent.extras?.getString(Passparams.PRIVATEKEY,"")
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (checkPermission()) {
                 generateQRCode(privateKey!!)

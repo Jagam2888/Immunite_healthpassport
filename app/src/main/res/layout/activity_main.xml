@@ -21,7 +21,7 @@
             app:menu="@menu/bottom_appbar"
             android:layout_marginStart="0dp"
             android:layout_marginEnd="0dp"
-            app:labelVisibilityMode="labeled"
+            app:labelVisibilityMode="unlabeled"
             android:background="@drawable/background_transperent"
             android:layout_gravity="bottom"
             app:itemTextColor="@color/bottom_navigation_icon_state"

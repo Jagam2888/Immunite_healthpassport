@@ -1,9 +1,175 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <RelativeLayout
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="5dp"
+                android:paddingRight="20dp"
+                android:paddingLeft="20dp">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/user_icon"/>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginLeft="5dp">
+                    <TextView
+                        android:id="@+id/txt_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Aminah Binti Mohamad"
+                        android:textColor="@color/black"
+                        android:textSize="18sp"
+                        android:textAppearance="@style/opens_bold"/>
+                    <TextView
+                        android:id="@+id/txt_relationship"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Prinicipal Account"
+                        android:textColor="@color/gray"
+                        android:background="@drawable/gray_background"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp"
+                        android:paddingRight="15dp"
+                        android:paddingLeft="15dp"
+                        android:gravity="center_horizontal|center_vertical"
+                        android:layout_marginTop="10dp"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="5dp"
+                android:paddingRight="20dp"
+                android:paddingLeft="20dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Passport No.: "/>
+                <TextView
+                    android:id="@+id/txt_passport"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="A0000000000"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="5dp"
+                android:paddingRight="20dp"
+                android:paddingLeft="20dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ID No.: "/>
+                <TextView
+                    android:id="@+id/txt_id_no"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="9876543210 "/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="5dp"
+                android:paddingRight="20dp"
+                android:paddingLeft="20dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Nationality.: "/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Malaysia"/>
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_home_button_background">
+                <RadioGroup
+                    android:id="@+id/dashboard_radio_group"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="15dp"
+                    android:checkedButton="@id/radio_vaccine"
+                    android:background="@drawable/home_btn_second_bg"
+                    android:gravity="center_vertical|center_horizontal">
+                    <RadioButton
+                        android:id="@+id/radio_vaccine"
+                        android:layout_width="110dp"
+                        android:layout_height="157dp"
+                        android:button="@null"
+                        android:background="@drawable/vaccine_btn_selector"
+                    />
+                    <RadioButton
+                        android:id="@+id/radio_test"
+                        android:layout_width="110dp"
+                        android:layout_height="157dp"
+                        android:button="@null"
+                        android:background="@drawable/test_btn_selector"
+                        />
+                    <RadioButton
+                        android:id="@+id/radio_mykey"
+                        android:layout_width="110dp"
+                        android:layout_height="157dp"
+                        android:button="@null"
+                        android:background="@drawable/mykey_btn_unselected"
+                        />
+                </RadioGroup>
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Recent Report"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:layout_marginTop="5dp"
+                android:textAppearance="@style/opens_bold"
+                android:paddingRight="20dp"
+                android:paddingLeft="20dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:descendantFocusability="blocksDescendants"
+            android:orientation="vertical">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view_home"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingRight="20dp"
+                android:paddingLeft="20dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="10dp"/>
+        </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+
+
+
+    <!--<RelativeLayout
         android:id="@+id/btn_view_key"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -39,7 +205,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
+        android:orientation="verWtical"
         android:gravity="center_horizontal"
         android:layout_marginTop="20dp"
         android:layout_above="@id/btn_view_key"
@@ -193,7 +359,7 @@
                 style="@style/opens_regular"
                 android:background="#CCFEFAF5"/>
         </RelativeLayout>
-        <!--<androidx.recyclerview.widget.RecyclerView
+        &lt;!&ndash;<androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -201,7 +367,7 @@
         android:paddingRight="10dp"
         android:paddingLeft="10dp"
         android:paddingBottom="10dp"
-        android:paddingTop="10dp"/>-->
+        android:paddingTop="10dp"/>&ndash;&gt;
         <RelativeLayout
             android:id="@+id/vaccine_detail"
             android:layout_width="match_parent"
@@ -267,5 +433,5 @@
             </LinearLayout>
         </RelativeLayout>
     </LinearLayout>
-
-</RelativeLayout>
+-->
+</LinearLayout>
