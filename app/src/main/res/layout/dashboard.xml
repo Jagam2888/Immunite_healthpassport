@@ -21,7 +21,8 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/user_icon"/>
+                    android:src="@drawable/user_icon"
+                    android:layout_gravity="center_vertical"/>
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -44,10 +45,9 @@
                         android:background="@drawable/gray_background"
                         android:paddingTop="5dp"
                         android:paddingBottom="5dp"
-                        android:paddingRight="15dp"
-                        android:paddingLeft="15dp"
-                        android:gravity="center_horizontal|center_vertical"
-                        android:layout_marginTop="10dp"/>
+                        android:paddingRight="20dp"
+                        android:paddingLeft="20dp"
+                        android:gravity="center_horizontal|center_vertical" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -55,7 +55,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="5dp"
                 android:paddingRight="20dp"
                 android:paddingLeft="20dp">
                 <TextView
@@ -72,7 +71,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="5dp"
                 android:paddingRight="20dp"
                 android:paddingLeft="20dp">
                 <TextView
@@ -89,7 +87,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="5dp"
                 android:paddingRight="20dp"
                 android:paddingLeft="20dp">
                 <TextView
@@ -149,20 +146,29 @@
                 android:textAppearance="@style/opens_bold"
                 android:paddingRight="20dp"
                 android:paddingLeft="20dp"/>
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:descendantFocusability="blocksDescendants"
-            android:orientation="vertical">
+            >
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_view_home"
+                android:id="@+id/recycler_view_home_vaccine"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:paddingRight="20dp"
                 android:paddingLeft="20dp"
                 android:paddingTop="5dp"
                 android:paddingBottom="10dp"/>
-        </LinearLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view_home_test"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingRight="20dp"
+                android:paddingLeft="20dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="10dp"
+                android:visibility="gone"/>
+        </RelativeLayout>
         </LinearLayout>
     </ScrollView>
 

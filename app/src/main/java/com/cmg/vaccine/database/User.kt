@@ -15,6 +15,7 @@ data class User(
     var passportNumber:String,
     var patientIdNo: String?,
     var countryCode: String,
+    var placeBirth: String,
     var gender: String,
     var nationality:String,
     var dob:String,

@@ -2,6 +2,7 @@ package com.cmg.vaccine.util
 
 import android.app.AlertDialog
 import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import android.content.Context
 import android.text.TextUtils
 import android.util.Base64
@@ -66,6 +67,17 @@ fun Context.showDatePickerDialog(editText: EditText){
 
     datePicker.show()
 }
+
+fun Context.showTimepickerDialog(editText: EditText){
+    val cal = Calendar.getInstance()
+    val timeSetListener = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
+        cal.set(Calendar.HOUR_OF_DAY, hour)
+        cal.set(Calendar.MINUTE, minute)
+        editText.setText(SimpleDateFormat("HH:mm:ss").format(cal.time))
+    }
+    TimePickerDialog(this, timeSetListener, cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), true).show()
+}
+
 
 fun Context.alertDialog(){
     val builder = AlertDialog.Builder(this)

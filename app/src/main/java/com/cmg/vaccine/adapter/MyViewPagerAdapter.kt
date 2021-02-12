@@ -11,9 +11,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.PagerAdapter
 import com.cmg.vaccine.R
+import com.cmg.vaccine.VaccineAndTestReportActivity
 import com.cmg.vaccine.ViewPrivateKeyActivity
 import com.cmg.vaccine.model.Dashboard
 import com.cmg.vaccine.util.Passparams
+import com.cmg.vaccine.util.RecyclerViewTouchListener
 
 class MyViewPagerAdapter(
     private val context: Context,
@@ -38,45 +40,53 @@ private val layouts:List<Dashboard>
         val txtIdNo = view.findViewById<TextView>(R.id.txt_id_no)
         val radioGroup = view.findViewById<RadioGroup>(R.id.dashboard_radio_group)
 
-        val recycler_view = view.findViewById<RecyclerView>(R.id.recycler_view_home)
-
-        //val txtGender = view.findViewById<TextView>(R.id.txt_gender)
-
-        /*if (!layouts.get(position).relationShip.isNullOrEmpty()){
-            val linearLayout = view.findViewById<LinearLayout>(R.id.layout_relationShip)
-            linearLayout.visibility = View.VISIBLE
-            val txtRelationShip = view.findViewById<TextView>(R.id.txt_relationship)
-            txtRelationShip.text = layouts.get(position).relationShip
-        }*/
+        val recyclerViewVaccine = view.findViewById<RecyclerView>(R.id.recycler_view_home_vaccine)
+        val recyclerViewTest = view.findViewById<RecyclerView>(R.id.recycler_view_home_test)
 
         txtName.text = layouts.get(position).fullName
         txtRelationShip.text = layouts.get(position).relationShip+" Account"
-        //txtGender.text = layouts.get(position).gender
         txtPassportNo.text = layouts.get(position).passportNo
         txtIdNo.text = layouts.get(position).idNo
 
-        recycler_view.also {
+        recyclerViewVaccine.also {
             it.layoutManager = LinearLayoutManager(context)
             it.adapter = HomeVaccineListAdapter(layouts.get(position).data!!)
         }
 
+        recyclerViewTest.also {
+            it.layoutManager = LinearLayoutManager(context)
+            it.adapter = HomeTestListAdapter(layouts.get(position).dataTest!!)
+        }
+
+        recyclerViewTest.addOnItemTouchListener(RecyclerViewTouchListener(context,recyclerViewTest,object :RecyclerViewTouchListener.ClickListener{
+            override fun onClick(view: View?, position: Int) {
+                Intent(context,VaccineAndTestReportActivity::class.java).also {
+                    context.startActivity(it)
+                }
+            }
+
+            override fun onLongClick(view: View?, position: Int) {
+            }
+        }))
+
         radioGroup.setOnCheckedChangeListener { group, checkedId ->
             when(checkedId){
                 R.id.radio_vaccine ->{
-                    recycler_view.also {
-                        it.layoutManager = LinearLayoutManager(context)
-                        it.adapter = HomeVaccineListAdapter(layouts.get(position).data!!)
+                    if (recyclerViewVaccine.visibility == View.GONE){
+                        recyclerViewTest.visibility = View.GONE
+                        recyclerViewVaccine.visibility = View.VISIBLE
                     }
                     return@setOnCheckedChangeListener
                 }
                 R.id.radio_test ->{
-                    recycler_view.also {
-                        it.layoutManager = LinearLayoutManager(context)
-                        it.adapter = HomeTestListAdapter(layouts.get(position).dataTest!!)
+                    if (recyclerViewTest.visibility == View.GONE){
+                        recyclerViewVaccine.visibility = View.GONE
+                        recyclerViewTest.visibility = View.VISIBLE
                     }
                     return@setOnCheckedChangeListener
                 }
                 R.id.radio_mykey ->{
+                    radioGroup.check(R.id.radio_vaccine)
                     Intent(context,ViewPrivateKeyActivity::class.java).also {
                         it.putExtra(Passparams.PRIVATEKEY,layouts.get(position).privateKey)
                         context.startActivity(it)

@@ -16,10 +16,10 @@
     <color name="lite_red">#FF637F</color>
     <color name="lite_blue">#1FC0CA</color>
     <color name="parrot_green">#00C259</color>
+    <color name="lite_green">#80C5F2C7</color>
     <color name="gray">#B1BABA</color>
     <color name="soft_gray">#EBEBEB</color>
     <color name="lite_gray">#33448A8A</color>
     <color name="blue">#3293C9</color>
     <color name="text_color">#00172D</color>
-    <color name="lite_green">#CCa6deda</color>
 </resources>

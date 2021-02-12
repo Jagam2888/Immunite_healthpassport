@@ -8,9 +8,9 @@
             name="homeviewmodel"
             type="com.cmg.vaccine.viewmodel.HomeViewModel" />
         <import type="android.view.View"/>
-        <variable
+        <!--<variable
             name="adapter"
-            type="com.cmg.vaccine.adapter.MyViewPagerAdapter" />
+            type="com.cmg.vaccine.adapter.MyViewPagerAdapter" />-->
         <variable
             name="notification"
             type="com.cmg.vaccine.fragment.NotificationFragment" />
@@ -57,8 +57,7 @@
                     android:id="@+id/slider_view_Pager"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_below="@id/layoutDots"
-                    app:adapter="@{adapter}"/>
+                    android:layout_below="@id/layoutDots"/>
 
             </RelativeLayout>
 

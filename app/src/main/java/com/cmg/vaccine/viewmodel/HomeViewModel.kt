@@ -1,6 +1,7 @@
 package com.cmg.vaccine.viewmodel
 
 import androidx.databinding.ObservableBoolean
+import androidx.databinding.ObservableInt
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -8,6 +9,7 @@ import com.cmg.vaccine.listener.SimpleListener
 import com.cmg.vaccine.model.Dashboard
 import com.cmg.vaccine.model.DashboardTestData
 import com.cmg.vaccine.model.DashboardVaccineData
+import com.cmg.vaccine.model.SwitchProfile
 import com.cmg.vaccine.model.response.HomeResponse
 import com.cmg.vaccine.repositary.HomeRepositary
 import com.cmg.vaccine.util.APIException
@@ -43,7 +45,6 @@ class HomeViewModel(
     val vaccineDate:MutableLiveData<String> = MutableLiveData()
     val expiryDate:MutableLiveData<String> = MutableLiveData()
 
-    //var listDashboard:List<Dashboard>?=null
 
     var _listDashboard:MutableLiveData<List<Dashboard>> = MutableLiveData()
     val listDashboard:LiveData<List<Dashboard>>
@@ -51,6 +52,44 @@ class HomeViewModel(
 
     var listDashboardData:List<DashboardVaccineData>?= null
     var listDashboardTestData:List<DashboardTestData>?= null
+
+    var _currentPagerPosition:MutableLiveData<Int> = MutableLiveData()
+
+    val currentPagerPosition:LiveData<Int>
+    get() = _currentPagerPosition
+
+    var _users:MutableLiveData<List<SwitchProfile>> = MutableLiveData()
+
+    val users:LiveData<List<SwitchProfile>>
+    get() = _users
+
+
+    fun setCurrentItem(position:Int){
+        _currentPagerPosition.value = position
+    }
+
+    fun setUser(){
+        var listuser:List<SwitchProfile>?=null
+        val parent = repositary.getUserData()
+        var user = SwitchProfile()
+
+        user.fullName = parent.fullName
+        user.tyep = "Principal"
+        listuser = listOf(user)
+
+        val dependent = repositary.getDependentList()
+
+        if (!dependent.isNullOrEmpty()) {
+            for (child in dependent!!) {
+                var getChild = SwitchProfile()
+                getChild.fullName = child.firstName
+                getChild.tyep = "Child"
+                listuser = listuser?.plus(getChild)
+            }
+        }
+
+        _users.value = listuser
+    }
 
     init {
         val userData = repositary.getUserData()

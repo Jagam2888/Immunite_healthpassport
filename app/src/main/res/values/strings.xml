@@ -9,6 +9,8 @@
     <string name="id_type">ID Type</string>
     <string name="email">Email</string>
     <string name="date_birth">Date of Birth</string>
+    <string name="birth_time">Birth Time</string>
+    <string name="birth_place">Place of Birth</string>
     <string name="nationality">Nationality</string>
     <string name="email_address1">Email Address</string>
     <string name="email_address2">Email Address 2</string>
@@ -180,6 +182,21 @@
         <item>Sister</item>
         <item>Grand Mother</item>
         <item>Grand Father</item>
+    </string-array>
+
+    <string-array name="month">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
     </string-array>
 
     <string name="title_activity_f_a_q_travel_advisory">FAQTravelAdvisoryActivity</string>

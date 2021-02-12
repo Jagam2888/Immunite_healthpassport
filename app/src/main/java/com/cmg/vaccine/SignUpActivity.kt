@@ -1,20 +1,20 @@
 package com.cmg.vaccine
 
 import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
 import android.util.Patterns
+import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.cmg.vaccine.databinding.ActivitySignUpBinding
 import com.cmg.vaccine.listener.SimpleListener
-import com.cmg.vaccine.util.isValidEmail
-import com.cmg.vaccine.util.isValidPassword
+import com.cmg.vaccine.util.*
 import com.cmg.vaccine.util.showDatePickerDialog
-import com.cmg.vaccine.util.toast
 import com.cmg.vaccine.viewmodel.SignupViewModel
 import com.cmg.vaccine.viewmodel.viewmodelfactory.SignUpModelFactory
 import org.kodein.di.KodeinAware
@@ -33,6 +33,8 @@ class SignUpActivity : BaseActivity(),KodeinAware,SimpleListener {
         binding.signupviewmodel = viewModel
         binding.lifecycleOwner = this
         viewModel.listener = this
+        viewModel.loadYears()
+        //viewModel.loadDays()
 
         /*binding.btnSignup.setOnClickListener {
             Intent(this,TellUsMoreActivity::class.java).also {
@@ -46,8 +48,8 @@ class SignUpActivity : BaseActivity(),KodeinAware,SimpleListener {
             }
         }*/
 
-        binding.edtDob.setOnClickListener {
-            showDatePickerDialog(binding.edtDob)
+        binding.edtDobTime.setOnClickListener {
+            showTimepickerDialog(binding.edtDobTime)
         }
 
         binding.edtEmail1.addTextChangedListener(object :TextWatcher{

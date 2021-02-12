@@ -1,5 +1,6 @@
 package com.cmg.vaccine.fragment
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -47,36 +48,26 @@ class HomeFragment : Fragment(),KodeinAware {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this,factory).get(HomeViewModel::class.java)
+        viewModel = ViewModelProvider(requireActivity(),factory).get(HomeViewModel::class.java)
         binding.homeviewmodel = viewModel
         binding.lifecycleOwner = this
 
-        viewModel.loadVaccineDetail()
+        //viewModel.loadVaccineDetail()
 
         viewModel.listDashboard.observe(viewLifecycleOwner, Observer { list->
             listDashboard = list
-            val myViewPagerAdapter = MyViewPagerAdapter(requireContext(),listDashboard!!)
-            binding.adapter = myViewPagerAdapter
-            addBottomDots(0)
-        })
-        //loadDynamicLayouts()
+            binding.sliderViewPager.also {
+                it.adapter = MyViewPagerAdapter(requireContext(),listDashboard!!)
+                addBottomDots(0)
 
-        /*binding.btnViewKey.setOnClickListener {
-            Intent(context,ViewPrivateKeyActivity::class.java).also {
-                context?.startActivity(it)
             }
-        }*/
 
+        })
 
         binding.notification.setOnClickListener {
 
         }
 
-       /* binding.btnFaq.setOnClickListener {
-            Intent(context,FAQTravelAdvisoryActivity::class.java).also {
-                context?.startActivity(it)
-            }
-        }*/
 
         binding.sliderViewPager?.addOnPageChangeListener(object : ViewPager.OnPageChangeListener{
             override fun onPageScrolled(
@@ -93,6 +84,13 @@ class HomeFragment : Fragment(),KodeinAware {
             override fun onPageScrollStateChanged(state: Int) {
             }
         })
+
+
+        viewModel.currentPagerPosition.observe(viewLifecycleOwner, Observer {
+            binding.sliderViewPager.setCurrentItem(it,true)
+            addBottomDots(it)
+        })
+
     }
 
     fun addBottomDots(currentPage : Int){
@@ -115,7 +113,7 @@ class HomeFragment : Fragment(),KodeinAware {
         }
     }
 
-    private fun loadDynamicLayouts(){
+    /*private fun loadDynamicLayouts(){
 
         val btnLayout = RelativeLayout(context)
         val btnLayoutParams = RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT)
@@ -146,7 +144,15 @@ class HomeFragment : Fragment(),KodeinAware {
         btnChildLayout.addView(btnChildTextView)
 
 
-    }
+    }*/
+
+    /*override fun onResume() {
+        super.onResume()
+        viewModel.currentPagerPosition.observe(viewLifecycleOwner, Observer {
+            binding.sliderViewPager.currentItem = it
+            addBottomDots(it)
+        })
+    }*/
 
 
 }

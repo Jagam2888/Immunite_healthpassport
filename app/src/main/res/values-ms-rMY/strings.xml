@@ -10,6 +10,8 @@
     <string name="email">E-mel</string>
     <string name="passport_number">Passport Number</string>
     <string name="date_birth">Date of Birth</string>
+    <string name="birth_time">Birth Time</string>
+    <string name="birth_place">Place of Birth</string>
     <string name="nationality">Nationality</string>
     <string name="email_address1">Alamat E-mel</string>
     <string name="email_address2">Alamat E-mel 2</string>

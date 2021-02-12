@@ -44,12 +44,48 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/signup"
+                    android:text="@string/tell_us_more"
                     android:textSize="24sp"
                     android:textColor="@color/green"
                     style="@style/opens_bold" />
 
                 <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{`* `+@string/birth_place}"
+                    android:textColor="@color/gray"
+                    android:layout_marginTop="10dp"
+                    style="@style/opens_regular" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:background="@drawable/edittext_background"
+                    android:layout_marginTop="5dp"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="10dp">
+
+                    <Spinner
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:background="@null"
+                        android:minHeight="0dp"
+                        android:entries="@array/country"
+                        android:layout_centerVertical="true" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        android:src="@drawable/down_arrow"
+                        android:layout_marginRight="10dp" />
+                </RelativeLayout>
+
+                <!--<TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@{`* `+@string/residential_address}"
@@ -155,7 +191,7 @@
                         android:layout_alignParentRight="true"
                         android:src="@drawable/down_arrow"
                         android:layout_marginRight="10dp" />
-                </RelativeLayout>
+                </RelativeLayout>-->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -164,7 +200,24 @@
                     android:textColor="@color/gray"
                     android:layout_marginTop="10dp"/>
 
-                <LinearLayout
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@={tellusviewmodel.passportNo}"
+                    android:hint="@string/passport_number"
+                    android:maxLength="15"
+                    android:maxLines="1"
+                    android:textColorHint="@color/gray"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="10dp"
+                    style="@style/opens_regular"
+                    android:background="@drawable/edittext_background"/>
+
+                <!--<LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
@@ -206,27 +259,14 @@
                     <View
                         android:layout_width="1dp"
                         android:layout_height="match_parent"
-                        android:background="@color/gray" />
+                        android:background="@color/gray" />-->
 
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/black"
-                        android:hint="@string/passport_number"
-                        android:text="@={tellusviewmodel.passportNo}"
-                        android:maxLines="1"
-                        android:maxLength="15"
-                        style="@style/opens_regular"
-                        android:layout_weight="1"
-                        android:background="@android:color/transparent"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="10dp" />
 
-                </LinearLayout>
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{`* `+@string/alternate_id}"
+                    android:text="@string/alternate_id"
                     style="@style/opens_regular"
                     android:textColor="@color/gray"
                     android:layout_marginTop="10dp"/>

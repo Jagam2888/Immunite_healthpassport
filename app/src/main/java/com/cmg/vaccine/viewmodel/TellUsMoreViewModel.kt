@@ -64,11 +64,13 @@ class TellUsMoreViewModel(
                 signUpReqData.gender = userData.gender
                 signUpReqData.dob = userData.dob
                 signUpReqData.countryCode = userData.countryCode
-                signUpReqData.residentialAddress = userData.address
+                signUpReqData.placeOfBirth = userData.placeBirth
+                /*signUpReqData.residentialAddress = userData.address
                 signUpReqData.townCity = userData.city
-                signUpReqData.provinceState = userData.state
+                signUpReqData.provinceState = userData.state*/
                 signUpReqData.passportNo = userData.passportNumber
                 signUpReqData.idNo = userData.patientIdNo
+                signUpReqData.idType = "MyKad"
                 signUpReqData.nationalityCountry = userData.nationality
 
                 signUpReq.data = signUpReqData

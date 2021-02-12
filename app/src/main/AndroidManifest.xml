@@ -14,9 +14,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Noactionbar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ExistingUserActivity"
+        <activity android:name=".VaccineAndTestReportActivity"></activity>
+        <activity
+            android:name=".ExistingUserActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"></activity>
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".EditDependentProfileActivity"
             android:screenOrientation="portrait"
