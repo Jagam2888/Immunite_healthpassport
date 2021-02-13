@@ -16,13 +16,6 @@
         android:background="@color/lite_yellow"
         tools:context=".TellUsMoreActivity">
 
-        <ProgressBar
-            android:id="@+id/progress_tellus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:layout_centerInParent="true"/>
-
         <include
             android:id="@+id/action_bar"
             layout="@layout/actionbar_layout" />
@@ -52,7 +45,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{`* `+@string/birth_place}"
+                    android:text="@{`* `+@string/nationality}"
                     android:textColor="@color/gray"
                     android:layout_marginTop="10dp"
                     style="@style/opens_regular" />
@@ -73,8 +66,9 @@
                         android:textSize="16sp"
                         android:background="@null"
                         android:minHeight="0dp"
-                        android:entries="@array/country"
-                        android:layout_centerVertical="true" />
+                        android:entries="@{tellusviewmodel.countries}"
+                        android:layout_centerVertical="true"
+                        android:selectedItemPosition="@={tellusviewmodel.selectedItemNationalityCode}"/>
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -352,6 +346,11 @@
                     android:onClick="@{() -> tellusviewmodel.onRegister()}"/>
             </LinearLayout>
         </ScrollView>
-
+        <ProgressBar
+            android:id="@+id/progress_tellus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_centerInParent="true"/>
     </RelativeLayout>
 </layout>

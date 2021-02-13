@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/white"
+        tools:context=".SubscriptionActivity">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="?android:attr/actionBarSize"
+            android:background="@color/primary">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/subscription"
+                android:textSize="24sp"
+                android:textAppearance="@style/opens_bold"
+                android:textColor="@color/white"
+                android:layout_centerInParent="true" />
+        </RelativeLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp"
+                android:paddingRight="20dp"
+                android:paddingLeft="20dp">
+
+                <ImageView
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:src="@drawable/subscription_img"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="10dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Choose Your Plan"
+                    android:textSize="23sp"
+                    android:textAppearance="@style/opens_bold"
+                    android:textColor="@color/primary"
+                    android:layout_gravity="center_horizontal" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="You will be charges for the plan after the admin approves your account."
+                    android:textSize="14sp"
+                    android:textAppearance="@style/opens_regular"
+                    android:textColor="@color/black"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center_horizontal"
+                    android:layout_marginTop="20dp" />
+
+                <RadioGroup
+                    android:id="@+id/radio_subscription"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:checkedButton="@id/radio_free"
+                    android:layout_marginTop="20dp"
+                    android:layout_gravity="center_horizontal">
+
+                    <RadioButton
+                        android:id="@+id/radio_free"
+                        android:layout_width="100dp"
+                        android:layout_height="88dp"
+                        android:button="@null"
+                        android:background="@drawable/subscription_free_selector" />
+
+                    <RadioButton
+                        android:id="@+id/radio_standard"
+                        android:layout_width="100dp"
+                        android:layout_height="88dp"
+                        android:button="@null"
+                        android:background="@drawable/subscription_std_selector"
+                        android:layout_marginLeft="10dp" />
+
+                    <RadioButton
+                        android:id="@+id/radio_premium"
+                        android:layout_width="100dp"
+                        android:layout_height="88dp"
+                        android:button="@null"
+                        android:background="@drawable/subscription_pre_selector"
+                        android:layout_marginLeft="10dp" />
+                </RadioGroup>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_trial"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/button_background"
+                    android:text="Get 1 Month Free Trial"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:textAppearance="@style/opens_bold"
+                    android:layout_marginTop="30dp" />
+            </LinearLayout>
+        </ScrollView>
+
+
+    </LinearLayout>
+</layout>

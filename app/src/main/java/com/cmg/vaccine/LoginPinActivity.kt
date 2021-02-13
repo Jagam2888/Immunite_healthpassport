@@ -24,6 +24,7 @@ class LoginPinActivity : AppCompatActivity(),KodeinAware,SimpleListener {
 
     private val factory:LoginPinViewFactory by instance()
     private var loginStatus:String?=null
+    private var isComeFromSettings:Boolean = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this,R.layout.activity_login_pin)
@@ -37,13 +38,15 @@ class LoginPinActivity : AppCompatActivity(),KodeinAware,SimpleListener {
         loginStatus = intent.extras?.getString(Passparams.ISCREATE,"")
         viewModel.status.set(loginStatus)
 
+        isComeFromSettings = intent.extras?.getBoolean(Passparams.ISSETTINGS) == true
+
         viewModel.loadValues(this)
 
         initViews()
     }
 
     private fun initViews(){
-        binding.btnOne.setOnClickListener {
+        /*binding.btnOne.setOnClickListener {
             appendTxt(binding.btnOne.text.toString())
         }
 
@@ -78,7 +81,7 @@ class LoginPinActivity : AppCompatActivity(),KodeinAware,SimpleListener {
 
         binding.btnX.setOnClickListener {
             removePin()
-        }
+        }*/
 
         binding.edtTxt.addTextChangedListener(object : TextWatcher{
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {

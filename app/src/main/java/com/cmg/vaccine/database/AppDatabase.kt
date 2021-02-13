@@ -8,7 +8,7 @@ import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 
 @Database(
-    entities = [User::class,LoginPin::class,Dependent::class],
+    entities = [User::class,LoginPin::class,Dependent::class,Countries::class],
     version = 1,
     exportSchema = false
 )

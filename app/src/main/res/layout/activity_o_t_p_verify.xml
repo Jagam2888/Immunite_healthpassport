@@ -64,7 +64,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:cursorVisible="true"
-                    android:inputType="number"
+                    android:inputType="number|numberPassword"
                     android:text="@={viewmodel.pinTxt}"
                     android:itemBackground="@drawable/box_otp"
                     android:padding="10dp"
@@ -79,8 +79,7 @@
                     app:lineColor="@android:color/transparent"
                     app:lineWidth="2dp"
                     app:viewType="rectangle"
-                    android:layout_marginTop="10dp"
-                    android:focusable="false" />
+                    android:layout_marginTop="10dp"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -91,7 +90,7 @@
                     android:layout_marginTop="5dp"
                     style="@style/opens_bold" />
 
-                <LinearLayout
+                <!--<LinearLayout
                     android:id="@+id/keypad_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -262,7 +261,7 @@
 
                     </LinearLayout>
 
-                </LinearLayout>
+                </LinearLayout>-->
 
                 <TextView
                     android:id="@+id/txt_resend_otp"
@@ -281,7 +280,7 @@
                     android:textColor="@color/white"
                     style="@style/opens_bold"
                     android:background="@drawable/button_background"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="20dp"
                     android:onClick="@{() -> viewmodel.onClick()}"/>
             </LinearLayout>
         </ScrollView>

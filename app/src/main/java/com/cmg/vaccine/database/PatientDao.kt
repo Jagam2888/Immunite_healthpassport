@@ -5,6 +5,11 @@ import androidx.room.*
 @Dao
 interface PatientDao {
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertCountries(countries: Countries):Long
+
+    @Query("SELECT * FROM Countries")
+    fun getAllCountries():List<Countries>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertLoginPin(loginPin: LoginPin):Long

@@ -47,7 +47,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:cursorVisible="true"
-                    android:inputType="number"
+                    android:inputType="number|numberPassword"
                     android:itemBackground="@drawable/box_otp"
                     android:padding="10dp"
                     android:text="@={pinviewmodel.pin}"
@@ -62,8 +62,7 @@
                     app:lineColor="@android:color/transparent"
                     app:lineWidth="2dp"
                     app:viewType="rectangle"
-                    android:layout_marginTop="10dp"
-                    android:focusable="false" />
+                    android:layout_marginTop="10dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -74,7 +73,7 @@
                     android:layout_marginTop="5dp"
                     style="@style/opens_bold" />
 
-                <LinearLayout
+                <!--<LinearLayout
                     android:id="@+id/keypad_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -245,7 +244,7 @@
 
                     </LinearLayout>
 
-                </LinearLayout>
+                </LinearLayout>-->
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btn_confirm"
@@ -255,7 +254,7 @@
                     android:textAllCaps="false"
                     android:textColor="@color/white"
                     android:background="@drawable/button_background"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="40dp"
                     android:visibility="@{pinviewmodel.isCreateOrUpdate()?View.VISIBLE:View.GONE}"
                     android:onClick="@{() -> pinviewmodel.onLogin()}"/>
             </LinearLayout>

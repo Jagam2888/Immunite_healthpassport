@@ -14,6 +14,7 @@ import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.Toast
 import com.cmg.vaccine.R
+import com.cmg.vaccine.database.Countries
 import io.paperdb.Paper
 import kotlinx.android.synthetic.main.activity_login.view.*
 import kotlinx.android.synthetic.main.custom_alert_dialog.view.*
@@ -105,7 +106,17 @@ fun selectedRelationShipPosition(state: String, relationShipList: List<String>):
     var pos:Int = 0
     for (i in relationShipList.indices!!){
         if(state.equals(relationShipList.get(i))){
-            pos = i
+            return i
+        }
+    }
+    return pos
+}
+
+fun selectedCurrentCountry(country: String, countries: List<Countries>):Int{
+    var pos:Int = 0
+    for (i in countries.indices!!){
+        if(country.equals(countries.get(i).countryName,false)){
+            return i
         }
     }
     return pos

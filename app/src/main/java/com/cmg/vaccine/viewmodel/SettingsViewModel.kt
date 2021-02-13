@@ -3,6 +3,7 @@ package com.cmg.vaccine.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.cmg.vaccine.database.LoginPin
 import com.cmg.vaccine.listener.SimpleListener
 import com.cmg.vaccine.repositary.SettingsRepositary
 
@@ -26,16 +27,20 @@ class SettingsViewModel(
 
     fun disableLoginPin(){
         val loginPin = repositary.getLoginPin()
-
-        loginPin.enable = "N"
-        repositary.updateLoginPin(loginPin)
+        if (loginPin != null) {
+            loginPin.enable = "N"
+            repositary.updateLoginPin(loginPin)
+        }
     }
 
-    fun enableLoginPin(){
+    fun enableLoginPin():LoginPin{
         val loginPin = repositary.getLoginPin()
 
-        loginPin.enable = "Y"
-        repositary.updateLoginPin(loginPin)
+        if (loginPin != null) {
+            loginPin.enable = "Y"
+            repositary.updateLoginPin(loginPin)
+        }
+        return loginPin
     }
 
 }

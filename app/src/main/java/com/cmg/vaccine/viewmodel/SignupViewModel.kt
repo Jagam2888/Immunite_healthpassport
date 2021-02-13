@@ -10,10 +10,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.cmg.vaccine.data.Gender
+import com.cmg.vaccine.database.Countries
 import com.cmg.vaccine.database.User
 import com.cmg.vaccine.listener.SimpleListener
 import com.cmg.vaccine.repositary.SignUpRepositary
-import com.cmg.vaccine.util.isValidEmail
+import com.cmg.vaccine.util.*
+import com.hbb20.CountryCodePicker
+import java.net.SocketTimeoutException
 import java.time.YearMonth
 import java.util.*
 
@@ -28,8 +31,8 @@ class SignupViewModel(
     var dob:MutableLiveData<String> = MutableLiveData()
     var dobTime:MutableLiveData<String> = MutableLiveData()
     var gender: Gender = Gender.M
-    val selectedItemContactCode = ObservableInt()
-    val selectedItemNationalityCode = ObservableInt()
+    val selectedItemContactCode = ObservableField<String>()
+    var selectedItemNationalityCode = ObservableInt()
 
     var selectedYearsItem = ObservableField<String>()
     var selectedYearsMonth = ObservableField<String>()
@@ -37,7 +40,16 @@ class SignupViewModel(
 
     var listener:SimpleListener?=null
 
-    var _years:MutableLiveData<List<String>> = MutableLiveData()
+    var _countries:MutableLiveData<List<Countries>> = MutableLiveData()
+
+    val countries:LiveData<List<Countries>>
+    get() = _countries
+
+
+
+
+
+    /*var _years:MutableLiveData<List<String>> = MutableLiveData()
     val years:LiveData<List<String>>
     get() = _years
 
@@ -115,10 +127,62 @@ class SignupViewModel(
             listDays = listDays?.plus(i.toString())
         }
         _days.value = listDays
+    }*/
+
+    var countryList:List<Countries>?=null
+
+    fun setCurrentCountry(country:String){
+        countryList = signUpRepositary.getAllCountriesDB()
+        if (!countryList.isNullOrEmpty()){
+            val pos = selectedCurrentCountry(country,countryList!!)
+            selectedItemNationalityCode.set(pos)
+            //selectedItemNationalityCode.set(5)
+        }
+    }
+
+    init {
+        listener?.onStarted()
+        countryList = signUpRepositary.getAllCountriesDB()
+        if (countryList.isNullOrEmpty()){
+            Couritnes.main {
+                try {
+                    val reponse = signUpRepositary.getAllCountries()
+                    if (reponse.data.isNotEmpty()){
+                        for (country in reponse.data){
+                            val countries = Countries(
+                                    country.countryCodeAlpha,
+                                    country.countryMstrSeqno,
+                                    country.countryName
+
+                            )
+                            signUpRepositary.insertCountries(countries)
+                        }
+                        countryList = signUpRepositary.getAllCountriesDB()
+                        _countries.value = countryList
+                        listener?.onSuccess("")
+                    }else{
+                        listener?.onFailure("Failed to load Countries")
+                    }
+                }catch (e:APIException){
+                    listener?.onFailure(e.message!!)
+                }catch (e:NoInternetException){
+                    listener?.onFailure(e.message!!)
+                }catch (e:SocketTimeoutException){
+                    listener?.onFailure(e.message!!)
+                }
+            }
+        }else{
+            listener?.onSuccess("success")
+            _countries.value = countryList
+        }
     }
 
     fun onSignUp(){
-
+        listener?.onStarted()
+        var placeBirth = ""
+        if (!countryList.isNullOrEmpty()){
+            placeBirth = countryList?.get(selectedItemNationalityCode.get())?.countryName!!
+        }
         if(!fullName.value.isNullOrEmpty()and !email.value.isNullOrEmpty()) {
             if (email.value.equals(reTypeEmail.value)) {
                 if (isValidEmail(email.value!!)) {
@@ -146,7 +210,8 @@ class SignupViewModel(
                             1,
                             System.currentTimeMillis()
                         )*/
-                            dob.value = "${selectedYearsDay.get()}/${selectedYearsMonth.get()}/${selectedYearsItem.get()} ${dobTime.value}"
+                            //dob.value = "${selectedYearsDay.get()}/${selectedYearsMonth.get()}/${selectedYearsItem.get()} ${dobTime.value}"
+                            dob.value = "${dob.value} ${dobTime.value}"
                             var user = User(
                                     0,
                                     fullName.value!!,
@@ -156,8 +221,8 @@ class SignupViewModel(
                                     contactNumber.value!!,
                                     "",
                                     "",
-                                    "",
-                                    "Malaysia",
+                                    selectedItemContactCode.get()!!,
+                                    placeBirth,
                                     gender.name,
                                     "MY",
                                     dob.value!!,

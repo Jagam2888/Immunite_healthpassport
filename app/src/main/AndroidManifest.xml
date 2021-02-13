@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
     <application
         android:name=".AppController"
@@ -14,7 +15,20 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Noactionbar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".VaccineAndTestReportActivity"></activity>
+        <activity android:name=".AdvisoryAlertActivity"></activity>
+        <activity android:name=".RegulatoryUpdateActivity" />
+        <activity android:name=".NewsUpdateActivity" />
+        <activity android:name=".NotificationGroupListActivity" />
+        <activity
+            android:name=".CheckOutActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".SubscriptionActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".VaccineAndTestReportActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ExistingUserActivity"
             android:screenOrientation="portrait"

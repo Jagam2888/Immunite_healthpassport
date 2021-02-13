@@ -1,6 +1,7 @@
 package com.cmg.vaccine.fragment
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -15,6 +16,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager.widget.ViewPager
+import com.cmg.vaccine.NotificationGroupListActivity
 import com.cmg.vaccine.R
 import com.cmg.vaccine.adapter.MyViewPagerAdapter
 import com.cmg.vaccine.databinding.FragmentHomeBinding
@@ -65,7 +67,9 @@ class HomeFragment : Fragment(),KodeinAware {
         })
 
         binding.notification.setOnClickListener {
-
+            Intent(context,NotificationGroupListActivity::class.java).also {
+                context?.startActivity(it)
+            }
         }
 
 

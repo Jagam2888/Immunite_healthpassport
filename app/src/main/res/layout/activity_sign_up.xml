@@ -10,7 +10,7 @@
         <import type="com.cmg.vaccine.data.SimpleDatabindingAdapterKt"/>
     </data>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -18,11 +18,13 @@
         tools:context=".SignUpActivity">
 
         <include
+            android:id="@+id/action_bar"
             layout="@layout/actionbar_layout"/>
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_below="@id/action_bar">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -81,7 +83,14 @@
                     android:orientation="horizontal"
                     android:background="@drawable/edittext_background">
 
-                    <RelativeLayout
+                    <com.hbb20.CountryCodePicker
+                        android:id="@+id/ccp_loadCountryCode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:ccp_hintExampleNumber="true"
+                        app:ccp_defaultNameCode="my"/>
+
+                    <!--<RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
@@ -119,7 +128,7 @@
                             android:selectedItemPosition="@={signupviewmodel.selectedItemContactCode}"/>
 
 
-                    </RelativeLayout>
+                    </RelativeLayout>-->
 
                     <View
                         android:layout_width="1dp"
@@ -127,6 +136,7 @@
                         android:background="@color/gray" />
 
                     <EditText
+                        android:id="@+id/edt_mobile"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
@@ -191,7 +201,27 @@
                     android:layout_marginTop="10dp"
                     style="@style/opens_regular" />
 
-                <LinearLayout
+                <EditText
+                    android:id="@+id/edt_dob"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/opens_regular"
+                    android:maxLines="1"
+                    android:hint="dd/mm/yyyy"
+                    android:text="@={signupviewmodel.dob}"
+                    android:drawableRight="@drawable/calender_icon"
+                    android:drawablePadding="10dp"
+                    android:textColorHint="@color/gray"
+                    android:textColor="@color/black"
+                    android:background="@drawable/edittext_background"
+                    android:layout_marginTop="5dp"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="10dp"
+                    android:focusable="false"/>
+
+                <!--<LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
@@ -286,7 +316,7 @@
                             android:src="@drawable/down_arrow"
                             android:layout_marginRight="10dp" />
                     </RelativeLayout>
-                </LinearLayout>
+                </LinearLayout>-->
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -337,7 +367,7 @@
                         android:textSize="16sp"
                         android:background="@null"
                         android:minHeight="0dp"
-                        android:entries="@array/country"
+                        android:entries="@{signupviewmodel.countries}"
                         android:layout_centerVertical="true"
                         android:selectedItemPosition="@={signupviewmodel.selectedItemNationalityCode}"/>
 
@@ -417,6 +447,11 @@
 
             </LinearLayout>
         </ScrollView>
-
-    </LinearLayout>
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="gone"/>
+    </RelativeLayout>
 </layout>

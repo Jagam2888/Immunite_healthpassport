@@ -38,4 +38,10 @@ class OTPVerifyRepositary(
             api.verifyOTP(key,tacCode)
         }
     }
+
+    suspend fun recendOTP(key: String):OTPVerifiyResponse{
+        return apiRequest {
+            api.resendOTP(key)
+        }
+    }
 }

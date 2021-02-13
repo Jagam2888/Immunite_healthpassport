@@ -1,6 +1,7 @@
 package com.cmg.vaccine.repositary
 
 import com.cmg.vaccine.database.AppDatabase
+import com.cmg.vaccine.database.Countries
 import com.cmg.vaccine.database.User
 import com.cmg.vaccine.model.request.SignUpReq
 import com.cmg.vaccine.model.response.PatientRegResponse
@@ -30,5 +31,9 @@ class TellUsRepositary(
 
     fun saveUserEmail(email:String){
         preferenceProvider.saveEmail(email)
+    }
+
+    fun getAllCountriesDB():List<Countries>{
+        return database.getDao().getAllCountries()
     }
 }

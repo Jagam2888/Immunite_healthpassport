@@ -106,6 +106,17 @@
     <string name="malay">Malay</string>
     <string name="chinese">中文</string>
 
+    <string name="subscription">Subscription</string>
+    <string name="checkout">Checkout</string>
+    <string name="payment_details">Payment Details</string>
+    <string name="standard_sub_charges">Standard Subscription Charges</string>
+    <string name="tax">Tax</string>
+    <string name="total_amount">Total Amount</string>
+    <string name="select_evoucher">Select eVoucher</string>
+    <string name="evoucher_foc">eVoucher-FOC for update changes</string>
+    <string name="payment_due">Payment Due</string>
+    <string name="proceed_to_pay">Proceed to Payment</string>
+
 
     <string name="terms_condition">I agree to the terms and privacy policy.</string>
     <string name="update_profile_terms">I hereby acknowledged confirm of the above changes and agreed to the terms and policy of Immunitee</string>
@@ -142,6 +153,12 @@
     <string name="travel_advisary">Travel Advisory</string>
     <string name="search">Search</string>
     <string name="select_country">Select Your Country</string>
+
+    <!--Notification-->
+    <string name="news">News Update</string>
+    <string name="regulatory">Regulatory Update</string>
+    <string name="advisory">Advisory Alert</string>
+
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

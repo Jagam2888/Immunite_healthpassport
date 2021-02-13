@@ -40,7 +40,7 @@ class OTPVerifyActivity : AppCompatActivity(),KodeinAware,SimpleListener{
         viewModel.isExistUser.value = isExistUser
 
 
-        binding.btnOne.setOnClickListener {
+        /*binding.btnOne.setOnClickListener {
             appendTxt(binding.btnOne.text.toString())
         }
 
@@ -75,7 +75,7 @@ class OTPVerifyActivity : AppCompatActivity(),KodeinAware,SimpleListener{
 
         binding.btnX.setOnClickListener {
             removePin()
-        }
+        }*/
 
         /*binding.btnActivate.setOnClickListener {
             Log.d("text",binding.edtTxt.text.toString())
@@ -136,7 +136,7 @@ class OTPVerifyActivity : AppCompatActivity(),KodeinAware,SimpleListener{
         hide(binding.progressBar)
         toast(msg)
         if (!isExistUser!!) {
-            Intent(this, SignupCompleteActivity::class.java).also {
+            Intent(this, SubscriptionActivity::class.java).also {
                 startActivity(it)
             }
         }else{

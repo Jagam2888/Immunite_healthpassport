@@ -111,7 +111,14 @@ class SettingsFragment : Fragment(),KodeinAware {
 
         login_pin_enable.setOnToggleChanged(OnToggleChanged {
             if (it){
-                viewModel.enableLoginPin()
+                val loginPin = viewModel.enableLoginPin()
+                if (loginPin == null){
+                    Intent(context,LoginPinActivity::class.java).also {
+                        it.putExtra(Passparams.ISCREATE,"create")
+                        it.putExtra(Passparams.ISSETTINGS,true)
+                        context?.startActivity(it)
+                    }
+                }
             }else{
                 viewModel.disableLoginPin()
             }
@@ -120,6 +127,7 @@ class SettingsFragment : Fragment(),KodeinAware {
         layout_change_pin.setOnClickListener {
             Intent(context,LoginPinActivity::class.java).also {
                 it.putExtra(Passparams.ISCREATE,"update")
+                it.putExtra(Passparams.ISSETTINGS,true)
                 context?.startActivity(it)
             }
         }

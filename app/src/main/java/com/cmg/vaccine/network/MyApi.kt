@@ -39,6 +39,12 @@ interface MyApi {
     @GET("nhr-module-user/verifyTac")
     suspend fun verifyOTP(@Query("privateKey")key: String,@Query("verifyTac")verifyTac:String):Response<OTPVerifiyResponse>
 
+    @GET("nhr-module-user/resendtac")
+    suspend fun resendOTP(@Query("privateKey")key: String):Response<OTPVerifiyResponse>
+
+    @GET("nhr-module-user/countries")
+    suspend fun getAllCountries():Response<CountryResponse>
+
     companion object{
         operator fun invoke(
             context: Context,
