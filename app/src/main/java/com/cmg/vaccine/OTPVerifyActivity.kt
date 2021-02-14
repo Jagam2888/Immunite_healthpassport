@@ -91,6 +91,7 @@ class OTPVerifyActivity : AppCompatActivity(),KodeinAware,SimpleListener{
         startTimer()
 
         binding.txtResendOtp.setOnClickListener {
+            viewModel.onResendTac()
             startTimer()
             binding.txtResendOtp.visibility = View.GONE
         }
@@ -137,6 +138,7 @@ class OTPVerifyActivity : AppCompatActivity(),KodeinAware,SimpleListener{
         toast(msg)
         if (!isExistUser!!) {
             Intent(this, SubscriptionActivity::class.java).also {
+                it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
                 startActivity(it)
             }
         }else{

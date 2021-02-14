@@ -3,6 +3,7 @@ package com.cmg.vaccine.network
 import android.content.Context
 import com.cmg.vaccine.prefernces.PreferenceProvider
 import com.cmg.vaccine.util.NoInternetException
+import com.cmg.vaccine.util.Passparams
 import io.paperdb.Paper
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -22,7 +23,7 @@ fun createOkHttp(context: Context): OkHttpClient {
 fun RetrofitClientInstance(context: Context,preferenceProvider: PreferenceProvider) : Retrofit {
     //val url = Paper.book().read("url","")
     return Retrofit.Builder()
-            .baseUrl("http://47.254.238.145:7001/")
+            .baseUrl(Passparams.URL)
             .addConverterFactory(GsonConverterFactory.create())
             .client(createOkHttp(context))
             .build()

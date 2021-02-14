@@ -30,14 +30,25 @@ class EditProfileActivity : BaseActivity(),KodeinAware,SimpleListener {
         binding.profileviewmodel = viewModel
         binding.lifecycleOwner = this
         viewModel.listener = this
-        //viewModel.loadData()
+        viewModel.loadParentData()
+        //viewModel.setCurrentCountry(getCurrentCountryName()!!)
+        if (viewModel.countryCode.value != null)
+            binding.ccpLoadCountryCode.setCountryForPhoneCode(viewModel.countryCode.value!!)
 
+        binding.ccpLoadCountryCode.registerCarrierNumberEditText(binding.edtMobile)
         binding.imgBack.setOnClickListener {
             finish()
         }
+        viewModel.selectedItemContactCode.set(binding.ccpLoadCountryCode.selectedCountryCode)
+        binding.ccpLoadCountryCode.setOnCountryChangeListener {
+            viewModel.selectedItemContactCode.set(binding.ccpLoadCountryCode.selectedCountryCode) }
 
         binding.edtDob.setOnClickListener {
             showDatePickerDialog(binding.edtDob)
+        }
+
+        binding.edtDobTime.setOnClickListener {
+            showTimepickerDialog(binding.edtDobTime)
         }
 
         /*binding.edtEmail1.addTextChangedListener(object : TextWatcher {

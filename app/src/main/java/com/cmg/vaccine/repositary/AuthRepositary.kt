@@ -24,7 +24,7 @@ class AuthRepositary(
         return preferenceProvider.getEmail()
     }
 
-    fun getLogin(email:String,password:String):User?{
+    /*fun getLogin(email:String,password:String):User?{
         return database.getDao().login(email,password)
-    }
+    }*/
 }

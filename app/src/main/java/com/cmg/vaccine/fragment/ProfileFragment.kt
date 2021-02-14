@@ -2,9 +2,7 @@ package com.cmg.vaccine.fragment
 
 import android.content.Intent
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
-import android.text.Html
 import android.text.Spanned
 
 import androidx.fragment.app.Fragment
@@ -19,8 +17,8 @@ import com.cmg.vaccine.*
 import com.cmg.vaccine.adapter.ChildListAdapter
 import com.cmg.vaccine.database.Dependent
 import com.cmg.vaccine.databinding.FragmentProfileBinding
+import com.cmg.vaccine.util.Passparams
 import com.cmg.vaccine.util.RecyclerViewTouchListener
-import com.cmg.vaccine.util.changeDateFormatEmail
 import com.cmg.vaccine.util.toast
 import com.cmg.vaccine.viewmodel.ProfileViewModel
 import com.cmg.vaccine.viewmodel.viewmodelfactory.ProfileViewModelFactory
@@ -55,6 +53,7 @@ class ProfileFragment : Fragment(),KodeinAware {
 
         viewModel = ViewModelProvider(this,factory).get(ProfileViewModel::class.java)
         binding.profileviewmodel = viewModel
+        viewModel.loadParentData()
 
         val email = viewModel.email1.value
         val privateKey = viewModel.privateKey.value
@@ -71,7 +70,12 @@ class ProfileFragment : Fragment(),KodeinAware {
 
 
         binding.layoutParent.setOnClickListener {
-            Intent(context,EditProfileActivity::class.java).also {
+            /*Intent(context,EditProfileActivity::class.java).also {
+                context?.startActivity(it)
+            }*/
+            Intent(context,ViewProfileActivity::class.java).also {
+                it.putExtra("child_private_key","")
+                it.putExtra(Passparams.USER,Passparams.PARENT)
                 context?.startActivity(it)
             }
         }
@@ -84,9 +88,15 @@ class ProfileFragment : Fragment(),KodeinAware {
 
         binding.recyclerViewChild.addOnItemTouchListener(RecyclerViewTouchListener(context,binding.recyclerViewChild,object :RecyclerViewTouchListener.ClickListener{
             override fun onClick(view: View?, position: Int) {
-                Intent(context,EditDependentProfileActivity::class.java).also {
+               /* Intent(context,EditDependentProfileActivity::class.java).also {
                     it.putExtra("child_private_key",viewModel.dependentList.value?.get(position)?.childPrivateKey)
                     startActivity(it)
+                }*/
+                Intent(context,ViewProfileActivity::class.java).also {
+                    //it.putExtra(Passparams.PRIVATEKEY,viewModel.dependentList.value?.get(position)?.childPrivateKey)
+                    it.putExtra(Passparams.PRIVATEKEY,"")
+                    it.putExtra(Passparams.USER,Passparams.DEPENDENT)
+                    context?.startActivity(it)
                 }
             }
 

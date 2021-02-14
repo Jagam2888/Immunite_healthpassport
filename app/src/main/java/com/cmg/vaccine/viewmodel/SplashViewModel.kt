@@ -25,7 +25,7 @@ class SplashViewModel(
 
     val _loginPin:MutableLiveData<LoginPin> = MutableLiveData()
     val _userData:MutableLiveData<User> = MutableLiveData()
-    val _email:MutableLiveData<String> = MutableLiveData()
+    val _subId:MutableLiveData<String> = MutableLiveData()
 
     val loginPin:LiveData<LoginPin>
     get() = _loginPin
@@ -33,16 +33,16 @@ class SplashViewModel(
     val userData:LiveData<User>
     get() = _userData
 
-    val email:LiveData<String>
-    get() = _email
+    val subId:LiveData<String>
+    get() = _subId
 
     init {
-        _email.value = repositary.getEmail()
-        if (!repositary.getEmail().isNullOrEmpty()) {
+        _subId.value = repositary.getSubId()
+        if (!repositary.getSubId().isNullOrEmpty()) {
             val pinData = repositary.getLoginPin()
             _loginPin.value = pinData
 
-            val user = repositary.getUserData(repositary.getEmail()!!,"Y")
+            val user = repositary.getUserData(repositary.getSubId()!!,"Y")
             _userData.value = user
         }
     }

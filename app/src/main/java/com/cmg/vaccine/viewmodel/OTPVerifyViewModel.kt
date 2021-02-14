@@ -23,12 +23,34 @@ class OTPVerifyViewModel(
 
     val isExistUser:MutableLiveData<Boolean> = MutableLiveData()
 
+
+    fun onResendTac(){
+        listener?.onStarted()
+        Couritnes.main {
+            try {
+                val response = repositary.resendOTP(repositary.getPatientSubId()!!)
+                listener?.onFailure(response.Message)
+                /*if (response.success){
+                    listener?.onSuccess(response.message)
+                }else{
+                    listener?.onSuccess(response.message)
+                }*/
+            }catch (e: APIException) {
+                listener?.onFailure(e.message!!)
+            }catch (e:NoInternetException){
+                listener?.onFailure(e.message!!)
+            }catch (e:SocketTimeoutException){
+                listener?.onFailure(e.message!!)
+            }
+        }
+    }
+
     fun onClick(){
         listener?.onStarted()
         Couritnes.main {
             if (!pinTxt.value.isNullOrEmpty()) {
                 try {
-                    val response = repositary.OTPVerify(repositary.getPrivateKey()!!,pinTxt.value!!)
+                    val response = repositary.OTPVerify(repositary.getPatientSubId()!!,pinTxt.value!!)
                     if (response.success){
                         if (!isExistUser.value!!) {
                             val userData = repositary.getUserData( "N")

@@ -37,10 +37,9 @@ class SignUpActivity : BaseActivity(),KodeinAware,SimpleListener {
     private lateinit var viewModel:SignupViewModel
     private val signUpModelFactory:SignUpModelFactory by instance()
     val LOCATION:Int = 1
-    private lateinit var locationManager: LocationManager
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        locationManager = applicationContext.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+
         binding = DataBindingUtil.setContentView(this,R.layout.activity_sign_up)
         viewModel = ViewModelProvider(this,signUpModelFactory).get(SignupViewModel::class.java)
         binding.signupviewmodel = viewModel
@@ -127,21 +126,7 @@ class SignUpActivity : BaseActivity(),KodeinAware,SimpleListener {
         }
     }
 
-    private fun getCurrentCountryName():String?{
-        var country:String = ""
-        val geocoder = Geocoder(applicationContext)
-        for (provider in locationManager.allProviders){
-            @SuppressWarnings("ResourceType")
-            val location = locationManager.getLastKnownLocation(provider)
-            if (location != null){
-                val address:List<Address> = geocoder.getFromLocation(location.latitude,location.longitude,1)
-                if (!address.isNullOrEmpty()){
-                    country = address.get(0).countryName
-                }
-            }
-        }
-        return country
-    }
+
 
     private fun checkPermission():Boolean{
         return (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)

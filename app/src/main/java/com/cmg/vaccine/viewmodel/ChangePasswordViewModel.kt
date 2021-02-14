@@ -19,7 +19,7 @@ class ChangePasswordViewModel(
     var listener: SimpleListener?=null
 
     fun onClick(){
-        Couritnes.main {
+        /*Couritnes.main {
             try {
                 val user = repositary.getUser()
                 if (!currentPassword.value.isNullOrEmpty() and !password.value.isNullOrEmpty()) {
@@ -45,7 +45,7 @@ class ChangePasswordViewModel(
             }catch (e:Exception){
                 listener?.onFailure(e.message!!)
             }
-        }
+        }*/
 
     }
 }

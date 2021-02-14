@@ -4,6 +4,9 @@ import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Context
+import android.location.Address
+import android.location.Geocoder
+import android.location.LocationManager
 import android.text.TextUtils
 import android.util.Base64
 import android.util.Log
@@ -127,6 +130,22 @@ fun changeDateFormatEmail(timeMills:Long):String?{
     val calender = Calendar.getInstance()
     calender.timeInMillis = timeMills
     return simpleDateFormat.format(calender.time)
+}
+fun Context.getCurrentCountryName():String?{
+    val locationManager = applicationContext.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+    var country:String = ""
+    val geocoder = Geocoder(applicationContext)
+    for (provider in locationManager.allProviders){
+        @SuppressWarnings("ResourceType")
+        val location = locationManager.getLastKnownLocation(provider)
+        if (location != null){
+            val address:List<Address> = geocoder.getFromLocation(location.latitude,location.longitude,1)
+            if (!address.isNullOrEmpty()){
+                country = address.get(0).countryName
+            }
+        }
+    }
+    return country
 }
 fun genearteKey(secretKey:String): SecretKeySpec?{
     try {

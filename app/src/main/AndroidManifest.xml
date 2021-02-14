@@ -5,7 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:name=".AppController"
@@ -15,10 +15,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Noactionbar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".AdvisoryAlertActivity"></activity>
-        <activity android:name=".RegulatoryUpdateActivity" />
-        <activity android:name=".NewsUpdateActivity" />
-        <activity android:name=".NotificationGroupListActivity" />
+        <activity android:name=".ViewProfileActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".AdvisoryAlertActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".RegulatoryUpdateActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".NewsUpdateActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".NotificationGroupListActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".CheckOutActivity"
             android:screenOrientation="portrait"
@@ -123,6 +129,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <service android:name=".services.MyFirebaseInstanceIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

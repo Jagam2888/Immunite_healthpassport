@@ -31,7 +31,7 @@ class SignupViewModel(
     var dob:MutableLiveData<String> = MutableLiveData()
     var dobTime:MutableLiveData<String> = MutableLiveData()
     var gender: Gender = Gender.M
-    val selectedItemContactCode = ObservableField<String>()
+    var selectedItemContactCode = ObservableField<String>()
     var selectedItemNationalityCode = ObservableInt()
 
     var selectedYearsItem = ObservableField<String>()
@@ -181,61 +181,32 @@ class SignupViewModel(
         listener?.onStarted()
         var placeBirth = ""
         if (!countryList.isNullOrEmpty()){
-            placeBirth = countryList?.get(selectedItemNationalityCode.get())?.countryName!!
+            placeBirth = countryList?.get(selectedItemNationalityCode.get())?.countryCodeAlpha!!
         }
         if(!fullName.value.isNullOrEmpty()and !email.value.isNullOrEmpty()) {
             if (email.value.equals(reTypeEmail.value)) {
                 if (isValidEmail(email.value!!)) {
-                        /*if (selectedItemIDType.get() == 0) {
-                            idType = "MyKad"
-                        } else {
-                            idType = "Passport"
-                        }*/
+                                var user = User(
+                                        fullName.value!!,
+                                        email.value!!,
+                                        "",
+                                        contactNumber.value!!,
+                                "",
+                                "",
+                                "",
+                                selectedItemContactCode.get()!!,
+                                placeBirth,
+                                gender.name,
+                                "",
+                                dob.value!!,
+                                dobTime.value!!,
+                                "",
+                                "",
+                                "",
+                                "",
+                                "",
+                                "N")
 
-                        /*var user = User(
-                            "",
-                            1,
-                            System.currentTimeMillis(),
-                            email1!!,
-                            email2!!,
-                            firstName!!,
-                            "M",
-                            lastName!!,
-                            "123455",
-                            idNumber!!,
-                            idType!!,
-                            1,
-                            "",
-                            password!!,
-                            1,
-                            System.currentTimeMillis()
-                        )*/
-                            //dob.value = "${selectedYearsDay.get()}/${selectedYearsMonth.get()}/${selectedYearsItem.get()} ${dobTime.value}"
-                            dob.value = "${dob.value} ${dobTime.value}"
-                            var user = User(
-                                    0,
-                                    fullName.value!!,
-                                    "",
-                                    email.value!!,
-                                    "",
-                                    contactNumber.value!!,
-                                    "",
-                                    "",
-                                    selectedItemContactCode.get()!!,
-                                    placeBirth,
-                                    gender.name,
-                                    "MY",
-                                    dob.value!!,
-                                    "",
-                                    "",
-                                    "",
-                                    "",
-                                    0,
-                                    System.currentTimeMillis(),
-                                    0,
-                                    System.currentTimeMillis(),
-                                    "",
-                                    "N")
 
                         signUpRepositary.saveUser(user)
                         listener?.onSuccess("success")

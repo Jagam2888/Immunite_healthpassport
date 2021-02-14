@@ -1,0 +1,422 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.cmg.vaccine.viewmodel.ProfileViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ViewProfileActivity">
+
+        <RelativeLayout
+            android:id="@+id/action_bar"
+            android:layout_width="match_parent"
+            android:layout_height="?android:attr/actionBarSize"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/img_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/left_arrow"
+                app:tint="@color/black" />
+
+            <TextView
+                style="@style/opens_bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="@{ viewModel.user+` Profile`}"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+        </RelativeLayout>
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/lite_yellow"
+            android:fillViewport="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/action_bar">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:layout_editor_absoluteX="4dp"
+                tools:layout_editor_absoluteY="5dp">
+
+
+                <TextView
+                    android:id="@+id/textView45"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="28dp"
+                    android:layout_marginTop="25dp"
+                    android:fontFamily="@font/opensans_bold"
+                    android:text="Personal Info"
+                    android:textAlignment="center"
+                    android:textColor="#14969E"
+                    android:textSize="16sp"
+                    android:textStyle="normal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <LinearLayout
+                    android:id="@+id/txt_editProfile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toStartOf="@+id/guidelineleft"
+                    app:layout_constraintTop_toTopOf="@+id/textView45">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/edit_icon"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:fontFamily="@font/opensans_bold"
+                        android:text="Edit"
+                        android:textAlignment="center"
+                        android:textColor="#FF637F"
+                        android:textSize="@dimen/txtSize"
+                        android:textStyle="normal"/>
+                </LinearLayout>
+
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guidelineleft"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.9" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.5" />
+
+                <ImageView
+                    android:id="@+id/iv_profileImage"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="25dp"
+                    app:layout_constraintStart_toStartOf="@+id/textView45"
+                    app:layout_constraintTop_toBottomOf="@+id/textView45"
+                    android:src="@drawable/user_icon"
+                    app:tint="@color/lite_blue" />
+
+                <TextView
+                    android:id="@+id/txt_userName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:fontFamily="@font/opensans_bold"
+                    android:text="@{viewModel.fullName}"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/txtSize"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toEndOf="@+id/iv_profileImage"
+                    app:layout_constraintTop_toTopOf="@+id/iv_profileImage" />
+
+                <TextView
+                    android:id="@+id/tv_accountType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:background="@drawable/box_blue_corner_round"
+                    android:drawablePadding="5dp"
+                    android:fontFamily="@font/opensans_bold"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="2dp"
+                    android:paddingRight="10dp"
+                    android:paddingBottom="2dp"
+                    android:text="Basic"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/txtSize"
+                    app:layout_constraintBottom_toBottomOf="@+id/iv_profileImage"
+                    app:layout_constraintStart_toEndOf="@+id/iv_profileImage"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_userName" />
+
+                <View
+                    android:id="@+id/view3"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="10dp"
+                    android:background="#448A8A"
+                    app:layout_constraintEnd_toStartOf="@+id/guidelineleft"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@+id/iv_profileImage"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_profileStatus" />
+
+                <TextView
+                    android:id="@+id/txt_facilityName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:fontFamily="@font/opensans_bold"
+                    android:text="@string/email"
+                    android:textColor="#B1BABA"
+                    android:textSize="@dimen/txtSize"
+                    app:layout_constraintStart_toStartOf="@+id/txt_birthDateDtl"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_birthDateDtl" />
+
+                <TextView
+                    android:id="@+id/txt_emailAddressOne"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/opensans_regular"
+                    android:text="@{viewModel.email1}"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/txtSize"
+                    app:layout_constraintStart_toStartOf="@+id/txt_facilityName"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_facilityName" />
+
+                <TextView
+                    android:id="@+id/label_contactNumber"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:fontFamily="@font/opensans_bold"
+                    android:text="@string/contact_number"
+                    android:textColor="#B1BABA"
+                    android:textSize="@dimen/txtSize"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline9"
+                    app:layout_constraintStart_toStartOf="@+id/view3"
+                    app:layout_constraintTop_toBottomOf="@+id/view3" />
+
+                <com.hbb20.CountryCodePicker
+                    android:id="@+id/phoneCode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="38dp"
+                    android:layout_marginTop="4dp"
+                    app:ccp_clickable="false"
+                    app:ccp_defaultNameCode="MY"
+                    app:ccp_showArrow="false"
+                    app:ccp_showFullName="false"
+                    app:ccp_showNameCode="false"
+                    app:ccp_showPhoneCode="false"
+                    app:layout_constraintStart_toStartOf="@+id/label_contactNumber"
+                    app:layout_constraintTop_toBottomOf="@+id/label_contactNumber" />
+
+                <TextView
+                    android:id="@+id/txt_phoneNo"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/opensans_regular"
+                    android:text="@{viewModel.contactNumber}"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/phoneCode"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline9"
+                    app:layout_constraintStart_toEndOf="@+id/phoneCode"
+                    app:layout_constraintTop_toTopOf="@+id/phoneCode" />
+
+
+                <TextView
+                    android:id="@+id/textView55"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:fontFamily="@font/opensans_bold"
+                    android:text="@string/country"
+                    android:textColor="#B1BABA"
+                    android:textSize="@dimen/txtSize"
+                    app:layout_constraintStart_toStartOf="@+id/txt_emailAddressOne"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_emailAddressOne" />
+
+
+                <TextView
+                    android:id="@+id/txt_country"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:fontFamily="@font/opensans_regular"
+                    android:text="@{viewModel.placeBirth}"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/txtSize"
+                    app:layout_constraintEnd_toStartOf="@+id/guidelineleft"
+                    app:layout_constraintStart_toStartOf="@+id/textView55"
+                    app:layout_constraintTop_toBottomOf="@+id/textView55" />
+
+
+                <TextView
+                    android:id="@+id/txt_passportNo"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/opensans_bold"
+                    android:text="@string/alternate_id"
+                    android:textColor="#B1BABA"
+                    android:textSize="@dimen/txtSize"
+                    app:layout_constraintEnd_toStartOf="@+id/guidelineleft"
+                    app:layout_constraintStart_toStartOf="@+id/guideline9"
+                    app:layout_constraintTop_toTopOf="@+id/textView59" />
+
+                <TextView
+                    android:id="@+id/txt_passportNoDtl"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/opensans_regular"
+                    android:text="@{viewModel.idNo}"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/txtSize"
+                    app:layout_constraintEnd_toStartOf="@+id/guidelineleft"
+                    app:layout_constraintStart_toStartOf="@+id/txt_passportNo"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_passportNo" />
+
+                <TextView
+                    android:id="@+id/textView59"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/opensans_bold"
+                    android:text="@string/passport_number"
+                    android:textColor="#B1BABA"
+                    android:textSize="@dimen/txtSize"
+                    app:layout_constraintStart_toStartOf="@+id/txt_country"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_country" />
+
+                <TextView
+                    android:id="@+id/txt_idNumber"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/opensans_regular"
+                    android:text="@{viewModel.passportNumber}"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/txtSize"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline9"
+                    app:layout_constraintStart_toStartOf="@+id/textView59"
+                    app:layout_constraintTop_toBottomOf="@+id/textView59" />
+
+                <TextView
+                    android:id="@+id/label_DateOfBirth"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:fontFamily="@font/opensans_bold"
+                    android:text="Date of Birth"
+                    android:textColor="#B1BABA"
+                    android:textSize="@dimen/txtSize"
+                    app:layout_constraintStart_toStartOf="@+id/phoneCode"
+                    app:layout_constraintTop_toBottomOf="@+id/phoneCode" />
+
+                <TextView
+                    android:id="@+id/txt_birthDateDtl"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/opensans_regular"
+                    android:text="@{viewModel.dob}"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/txtSize"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline9"
+                    app:layout_constraintStart_toStartOf="@+id/label_DateOfBirth"
+                    app:layout_constraintTop_toBottomOf="@+id/label_DateOfBirth" />
+
+                <TextView
+                    android:id="@+id/label_TimeOfBirth"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/opensans_bold"
+                    android:text="Birth Time"
+                    android:textColor="#B1BABA"
+                    android:textSize="@dimen/txtSize"
+                    app:layout_constraintStart_toStartOf="@+id/guideline9"
+                    app:layout_constraintTop_toTopOf="@+id/label_DateOfBirth" />
+
+                <TextView
+                    android:id="@+id/txt_birthTimeDtl"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/opensans_regular"
+                    android:text="@{viewModel.dobTime}"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/txtSize"
+                    app:layout_constraintEnd_toStartOf="@+id/guidelineleft"
+                    app:layout_constraintStart_toStartOf="@+id/label_TimeOfBirth"
+                    app:layout_constraintTop_toBottomOf="@+id/label_TimeOfBirth" />
+
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="0dp"
+                    android:layout_height="12dp"
+                    android:layout_marginTop="15dp"
+                    android:indeterminateTintMode="src_in"
+                    android:progress="30"
+                    android:progressDrawable="@drawable/progress_horizontal_yellow"
+                    app:layout_constraintEnd_toStartOf="@+id/guidelineleft"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@+id/iv_profileImage"
+                    app:layout_constraintTop_toBottomOf="@+id/iv_profileImage" />
+
+                <TextView
+                    android:id="@+id/tv_profileStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/opensans_regular"
+                    android:text="30% incomplete"
+                    app:layout_constraintStart_toStartOf="@+id/progressBar"
+                    app:layout_constraintTop_toBottomOf="@+id/progressBar" />
+
+                <TextView
+                    android:id="@+id/tv_submPassVccDt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:clickable="true"
+                    android:fontFamily="@font/opensans_bold"
+                    android:text="Sumbit Past Medical Data"
+                    android:textColor="@color/blue"
+                    app:layout_constraintStart_toStartOf="@+id/txt_idNumber"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_idNumber" />
+
+                <TextView
+                    android:id="@+id/label_gender"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Gender"
+                    app:layout_constraintStart_toStartOf="@+id/guideline9"
+                    app:layout_constraintTop_toTopOf="@+id/label_contactNumber" />
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:drawableLeft="@drawable/female"
+                    android:drawablePadding="5dp"
+                    android:text="@{viewModel.gender}"
+                    app:layout_constraintStart_toStartOf="@+id/guideline9"
+                    app:layout_constraintTop_toTopOf="@+id/txt_phoneNo" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

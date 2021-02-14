@@ -1,6 +1,7 @@
 package com.cmg.vaccine.repositary
 
 import com.cmg.vaccine.database.AppDatabase
+import com.cmg.vaccine.database.Countries
 import com.cmg.vaccine.database.Dependent
 import com.cmg.vaccine.database.User
 import com.cmg.vaccine.model.request.DependentRegReq
@@ -23,7 +24,7 @@ class DependentRepositary(
     }
 
     fun getUserData():User{
-        return database.getDao().getUserData(preferenceProvider.getEmail()!!,"Y")
+        return database.getDao().getUserData(preferenceProvider.getSubId()!!,"Y")
     }
 
     suspend fun insertDependentSignUp(dependent: Dependent):Long{
@@ -38,9 +39,17 @@ class DependentRepositary(
         return database.getDao().updateDependent(dependent)
     }
 
+    fun getAllCountriesDB():List<Countries>{
+        return database.getDao().getAllCountries()
+    }
+
     suspend fun updateDependentProfile(updateProfileReq: UpdateProfileReq):DependentRegResponse{
         return apiRequest {
             api.updateDependentProfile(updateProfileReq)
         }
+    }
+
+    fun getParentSubId():String?{
+        return preferenceProvider.getSubId()
     }
 }

@@ -1,10 +1,12 @@
 package com.cmg.vaccine.viewmodel
 
+import android.view.View
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableInt
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.cmg.vaccine.R
 import com.cmg.vaccine.database.Countries
 import com.cmg.vaccine.database.User
 import com.cmg.vaccine.listener.SimpleListener
@@ -29,10 +31,11 @@ class TellUsMoreViewModel(
     var state:MutableLiveData<String> = MutableLiveData()
     var passportNo:MutableLiveData<String> = MutableLiveData()
     var idNo:MutableLiveData<String> = MutableLiveData()
+    var idType:MutableLiveData<String> = MutableLiveData()
     var selectedItemNationalityCode = ObservableInt()
 
     var isTermsRead:MutableLiveData<Boolean> = MutableLiveData()
-    val selectedItemContactCode = ObservableInt()
+    val selectedItemIdTYpe = ObservableInt()
     var isChecked = ObservableBoolean()
 
     var listener:SimpleListener?=null
@@ -56,7 +59,7 @@ class TellUsMoreViewModel(
         }
     }
 
-    fun onRegister(){
+    fun onRegister(view:View){
         listener?.onStarted()
         if(!passportNo.value.isNullOrEmpty()) {
             if (isChecked.get()) {
@@ -65,15 +68,19 @@ class TellUsMoreViewModel(
                 val type: Type = object : TypeToken<User>() {}.type
                 var userData = gson.fromJson<User>(alreadyStored, type)
 
-                /*val phoneCode = view.context.resources.getStringArray(R.array.code)
-                var code = phoneCode.get(selectedItemContactCode.get())*/
+                var nationality = ""
+                if (!countries.value.isNullOrEmpty()){
+                    nationality = countries.value?.get(selectedItemNationalityCode.get())?.countryCodeAlpha!!
+                }
+
+                val idTypeList = view.context.resources.getStringArray(R.array.id_type)
+                idType.value = idTypeList[selectedItemIdTYpe.get()]
 
                 userData.passportNumber = passportNo.value!!
-                userData.patientIdNo = idNo.value
-                userData.address = address.value
-                userData.city = city.value
-                userData.state = state.value
-                userData.patientSeqno = 0
+                userData.patientIdNo = idNo.value!!
+                userData.patientIdType = idType.value!!
+                userData.nationality = nationality
+
 
 
 
@@ -85,7 +92,7 @@ class TellUsMoreViewModel(
                 signUpReqData.firstName = userData.fullName
                 signUpReqData.mobileNumber = userData.mobileNumber
                 signUpReqData.gender = userData.gender
-                signUpReqData.dob = userData.dob
+                signUpReqData.dob = userData.dob+" "+userData.dobTime
                 signUpReqData.countryCode = userData.countryCode
                 signUpReqData.placeOfBirth = userData.placeBirth
                 /*signUpReqData.residentialAddress = userData.address
@@ -93,7 +100,7 @@ class TellUsMoreViewModel(
                 signUpReqData.provinceState = userData.state*/
                 signUpReqData.passportNo = userData.passportNumber
                 signUpReqData.idNo = userData.patientIdNo
-                signUpReqData.idType = "MyKad"
+                signUpReqData.idType = userData.patientIdType
                 signUpReqData.nationalityCountry = userData.nationality
 
                 signUpReq.data = signUpReqData
@@ -101,9 +108,10 @@ class TellUsMoreViewModel(
                 Couritnes.main {
                     try {
                         val response = repositary.signUp(signUpReq)
-                        if (response.StatusCode == 1 && !response.ParentPrivateKey.isNullOrEmpty()) {
+                        if (response.StatusCode == 1 && !response.ParentSubscriberId.isNullOrEmpty()) {
                             repositary.saveUserEmail(userData.email)
-                            userData.privateKey = response.ParentPrivateKey
+                            repositary.saveUserSubId(response.ParentSubscriberId)
+                            userData.parentSubscriberId = response.ParentSubscriberId
                             repositary.insertUser(userData)
                             listener?.onSuccess(response.Message)
                         }else{

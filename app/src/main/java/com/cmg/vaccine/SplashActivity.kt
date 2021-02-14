@@ -37,7 +37,7 @@ class SplashActivity() : BaseActivity(),KodeinAware{
 
     }
     private fun navigateActivity(){
-        if (viewModel.email.value.isNullOrEmpty()) {
+        if (viewModel.subId.value.isNullOrEmpty()) {
             Intent(this, WelcomeActivity::class.java).also {
                 startActivity(it)
                 finish()

@@ -183,7 +183,7 @@ class HomeViewModel(
                 } else {
                     dashboard1.gender = "OTHERS"
                 }*/
-                dashboard1.privateKey = dependent.childPrivateKey
+                //dashboard1.privateKey = dependent.childPrivateKey
                 dashboard1.idNo = dependent.idNo
                 dashboard1.relationShip = "Child"
                 dashboard1.data = listDashboardData

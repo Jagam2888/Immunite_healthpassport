@@ -115,7 +115,7 @@ class SettingsFragment : Fragment(),KodeinAware {
                 if (loginPin == null){
                     Intent(context,LoginPinActivity::class.java).also {
                         it.putExtra(Passparams.ISCREATE,"create")
-                        it.putExtra(Passparams.ISSETTINGS,true)
+                        //it.putExtra(Passparams.ISSETTINGS,true)
                         context?.startActivity(it)
                     }
                 }
@@ -127,7 +127,7 @@ class SettingsFragment : Fragment(),KodeinAware {
         layout_change_pin.setOnClickListener {
             Intent(context,LoginPinActivity::class.java).also {
                 it.putExtra(Passparams.ISCREATE,"update")
-                it.putExtra(Passparams.ISSETTINGS,true)
+                //it.putExtra(Passparams.ISSETTINGS,true)
                 context?.startActivity(it)
             }
         }

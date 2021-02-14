@@ -1,8 +1,8 @@
 package com.cmg.vaccine.model.response
 
-data class PatientRegResponse(
+data class ResentOTPResponse(
     val Message: String,
-    val ParentSubscriberId: String,
     val StatusCode: Int,
+    val SubsId: String,
     val TimeStamp: String
 )

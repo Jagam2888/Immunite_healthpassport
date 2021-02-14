@@ -33,6 +33,10 @@ class TellUsRepositary(
         preferenceProvider.saveEmail(email)
     }
 
+    fun saveUserSubId(subId:String){
+        preferenceProvider.saveSubId(subId)
+    }
+
     fun getAllCountriesDB():List<Countries>{
         return database.getDao().getAllCountries()
     }

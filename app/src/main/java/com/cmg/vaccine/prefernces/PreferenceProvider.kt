@@ -11,6 +11,7 @@ import io.paperdb.Paper
 private const val KEY_SAVE_URL = "key_save_url"
 private const val USER_DATA_REGISTER_REQ = "user_req"
 private const val USER_EMAIL = "user_email"
+private const val USER_SUB_ID = "user_sub_id"
 class PreferenceProvider(
         context: Context
 ) {
@@ -39,6 +40,17 @@ class PreferenceProvider(
 
     fun getEmail():String?{
         return prefernece.getString(USER_EMAIL,null)
+    }
+
+    fun saveSubId(subId:String){
+        prefernece.edit().putString(
+                USER_SUB_ID,
+                subId
+        ).apply()
+    }
+
+    fun getSubId():String?{
+        return prefernece.getString(USER_SUB_ID,null)
     }
 
     fun saveUserReqData(user: User){

@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.cmg.vaccine.databinding.ActivityAddDependentBinding
@@ -31,7 +32,7 @@ class AddDependentActivity : AppCompatActivity(),KodeinAware,SimpleListener {
         binding.lifecycleOwner = this
         viewModel.listener = this
 
-        binding.addressCheckbox.setOnCheckedChangeListener { buttonView, isChecked ->
+        /*binding.addressCheckbox.setOnCheckedChangeListener { buttonView, isChecked ->
 
             if (isChecked){
                 viewModel.address.set(viewModel.parentAddress)
@@ -40,10 +41,19 @@ class AddDependentActivity : AppCompatActivity(),KodeinAware,SimpleListener {
             }else{
                 viewModel.address.set("")
             }
-        }
+        }*/
+        viewModel.selectedItemContactCode.set(binding.ccpLoadCountryCode.selectedCountryCode)
+        binding.ccpLoadCountryCode.registerCarrierNumberEditText(binding.edtMobile)
+
+        binding.ccpLoadCountryCode.setOnCountryChangeListener {
+            viewModel.selectedItemContactCode.set(binding.ccpLoadCountryCode.selectedCountryCode) }
 
         binding.edtDob.setOnClickListener {
             showDatePickerDialog(binding.edtDob)
+        }
+
+        binding.edtDobTime.setOnClickListener {
+            showTimepickerDialog(binding.edtDobTime)
         }
 
         binding.edtEmail.addTextChangedListener(object : TextWatcher {
@@ -59,9 +69,41 @@ class AddDependentActivity : AppCompatActivity(),KodeinAware,SimpleListener {
                 }
             }
         })
+        binding.edtEmail2.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                if (!isValidEmail(s.toString())){
+                    binding.edtEmail2.error = "Invalid Email"
+                }
+            }
+        })
 
         binding.imgBack.setOnClickListener {
             finish()
+        }
+
+        binding.radioGroup.setOnCheckedChangeListener { group, checkedId ->
+
+            when(checkedId){
+                R.id.radio_new_member ->{
+                    if (binding.layoutNewMembers.visibility == View.GONE) {
+                        binding.layoutNewMembers.visibility = View.VISIBLE
+                    }
+                        binding.layoutExistingUser.visibility = View.GONE
+                }
+                else ->{
+                    if (binding.layoutExistingUser.visibility == View.GONE) {
+                        binding.layoutExistingUser.visibility = View.VISIBLE
+                    }
+                        binding.layoutNewMembers.visibility = View.GONE
+
+                }
+            }
         }
     }
 

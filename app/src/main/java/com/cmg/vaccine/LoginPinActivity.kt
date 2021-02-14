@@ -24,7 +24,7 @@ class LoginPinActivity : AppCompatActivity(),KodeinAware,SimpleListener {
 
     private val factory:LoginPinViewFactory by instance()
     private var loginStatus:String?=null
-    private var isComeFromSettings:Boolean = false
+    //private var isComeFromSettings:Boolean = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this,R.layout.activity_login_pin)
@@ -38,7 +38,7 @@ class LoginPinActivity : AppCompatActivity(),KodeinAware,SimpleListener {
         loginStatus = intent.extras?.getString(Passparams.ISCREATE,"")
         viewModel.status.set(loginStatus)
 
-        isComeFromSettings = intent.extras?.getBoolean(Passparams.ISSETTINGS) == true
+        //isComeFromSettings = intent.extras?.getBoolean(Passparams.ISSETTINGS) == true
 
         viewModel.loadValues(this)
 

@@ -25,7 +25,7 @@ class HomeRepositary(
     }
 
     fun getUserData():User{
-        return database.getDao().getUserData(preferenceProvider.getEmail()!!,"Y")
+        return database.getDao().getUserData(preferenceProvider.getSubId()!!,"Y")
     }
 
     fun getPrivateKey():String?{

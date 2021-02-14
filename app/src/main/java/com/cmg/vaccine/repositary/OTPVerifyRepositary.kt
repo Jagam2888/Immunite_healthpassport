@@ -3,6 +3,7 @@ package com.cmg.vaccine.repositary
 import com.cmg.vaccine.database.AppDatabase
 import com.cmg.vaccine.database.User
 import com.cmg.vaccine.model.response.OTPVerifiyResponse
+import com.cmg.vaccine.model.response.ResentOTPResponse
 import com.cmg.vaccine.network.MyApi
 import com.cmg.vaccine.network.SafeAPIRequest
 import com.cmg.vaccine.prefernces.PreferenceProvider
@@ -14,15 +15,15 @@ class OTPVerifyRepositary(
 ):SafeAPIRequest() {
 
     fun getUserData(verifyStatus:String):User{
-        return database.getDao().getUserData(preferenceProvider.getEmail()!!,verifyStatus)
+        return database.getDao().getUserData(preferenceProvider.getSubId()!!,verifyStatus)
     }
 
     fun updateVerifyStatus(user: User):Int{
         return database.getDao().updateVerifyStatus(user)
     }
 
-    fun getPrivateKey():String?{
-        return database.getDao().getPrivateKey(preferenceProvider.getEmail()!!)
+    fun getPatientSubId():String?{
+        return preferenceProvider.getSubId()
     }
 
     fun updateUser(user: User):Int{
@@ -39,7 +40,7 @@ class OTPVerifyRepositary(
         }
     }
 
-    suspend fun recendOTP(key: String):OTPVerifiyResponse{
+    suspend fun resendOTP(key: String):ResentOTPResponse{
         return apiRequest {
             api.resendOTP(key)
         }

@@ -23,11 +23,11 @@ interface PatientDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertSignUp(user:User):Long
 
-    @Query("SELECT * FROM User where email = :email AND password = :password")
-    fun login(email:String,password:String):User
+    /*@Query("SELECT * FROM User where email = :email AND password = :password")
+    fun login(email:String,password:String):User*/
 
-    @Query("SELECT * FROM User where email = :email AND virifyStatus = :verifyStatus")
-    fun getUserData(email:String,verifyStatus:String):User
+    @Query("SELECT * FROM User where parentSubscriberId = :subsId AND virifyStatus = :verifyStatus")
+    fun getUserData(subsId:String,verifyStatus:String):User
 
     @Query("SELECT privateKey FROM user where email =:email")
     fun getPrivateKey(email: String):String
@@ -35,8 +35,8 @@ interface PatientDao {
     @Update(onConflict = OnConflictStrategy.REPLACE)
     fun updateUser(user: User):Int
 
-    @Update(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun updatePassword(user: User):Int
+    /*@Update(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun updatePassword(user: User):Int*/
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
     fun updateVerifyStatus(user: User):Int
@@ -47,10 +47,10 @@ interface PatientDao {
     @Update(onConflict = OnConflictStrategy.REPLACE)
     fun updateDependent(dependent: Dependent):Int
 
-    @Query("SELECT * FROM Dependent WHERE parentPrivateKey = :privateKey")
+    @Query("SELECT * FROM Dependent WHERE masterSubsId = :privateKey")
     fun getDependentList(privateKey: String):List<Dependent>
 
-    @Query("SELECT * FROM Dependent WHERE childPrivateKey =:childPrivateKey")
+    @Query("SELECT * FROM Dependent WHERE subsId =:childPrivateKey")
     fun getDependent(childPrivateKey:String):Dependent
 
 }

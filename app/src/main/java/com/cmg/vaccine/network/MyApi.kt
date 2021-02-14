@@ -7,6 +7,7 @@ import com.cmg.vaccine.model.request.SignUpReq
 import com.cmg.vaccine.model.request.UpdateProfileReq
 import com.cmg.vaccine.model.response.*
 import com.cmg.vaccine.prefernces.PreferenceProvider
+import com.cmg.vaccine.util.Passparams
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -15,34 +16,34 @@ import retrofit2.http.Query
 
 interface MyApi {
 
-    @POST("authenticate")
-    suspend fun loginUser(@Body authReq:AuthRequest):Response<AuthResponse>
+    /*@POST("authenticate")
+    suspend fun loginUser(@Body authReq:AuthRequest):Response<AuthResponse>*/
 
-    @POST("nhr-module-user/patientreg")
+    @POST(Passparams.PATIENT_REGISTRATION)
     suspend fun signUp(@Body signUpReq: SignUpReq):Response<PatientRegResponse>
 
-    @POST("nhr-module-user/editpatientprofile")
-    suspend fun updateProfile(@Body updateProfileReq: UpdateProfileReq):Response<PatientRegResponse>
+    @POST(Passparams.EDIT_PATIENT_PROFILE)
+    suspend fun updateProfile(@Body updateProfileReq: UpdateProfileReq):Response<UpdatePatientResponse>
 
-    @POST("nhr-module-user/patientdependentreg")
+    @POST(Passparams.DEPENDENT_REGISTRATION)
     suspend fun dependentSignUp(@Body dependentRegReq: DependentRegReq):Response<DependentRegResponse>
 
-    @POST("nhr-module-user/editdependentProfile")
+    @POST(Passparams.EDIT_DEPENDENT_PROFILE)
     suspend fun updateDependentProfile(@Body updateProfileReq: UpdateProfileReq):Response<DependentRegResponse>
 
-    @GET("nhr-module-user/searchPrivateKey")
+    @GET(Passparams.SEARCH_PRIVATE_KEY)
     suspend fun searchPatientVaccine(@Query("privateKey") key:String ):Response<VaccineResponse>
 
-    @GET("nhr-module-user/searchVaccine")
+    @GET(Passparams.SEARCH_VACCINE)
     suspend fun searchVaccineList(@Query("privateKey")key: String):Response<VaccineListResponse>
 
-    @GET("nhr-module-user/verifyTac")
-    suspend fun verifyOTP(@Query("privateKey")key: String,@Query("verifyTac")verifyTac:String):Response<OTPVerifiyResponse>
+    @POST(Passparams.VERIFY_TAC)
+    suspend fun verifyOTP(@Query("subsId")key: String,@Query("verifyTac")verifyTac:String):Response<OTPVerifiyResponse>
 
-    @GET("nhr-module-user/resendtac")
-    suspend fun resendOTP(@Query("privateKey")key: String):Response<OTPVerifiyResponse>
+    @GET(Passparams.RESEND_TAC)
+    suspend fun resendOTP(@Query("subsId")key: String):Response<ResentOTPResponse>
 
-    @GET("nhr-module-user/countries")
+    @GET(Passparams.COUNTRIES)
     suspend fun getAllCountries():Response<CountryResponse>
 
     companion object{

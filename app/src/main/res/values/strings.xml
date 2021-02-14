@@ -97,7 +97,7 @@
     <string name="no_vaccine">No Vaccine</string>
 
     <string name="add_dependent">Add Dependent</string>
-    <string name="edit_dependent">Edit Dependent</string>
+    <string name="edit_dependent">Edit Dependent Profile</string>
     <string name="relationship">RelationShip</string>
     <string name="principal">Principal</string>
     <string name="same_principal_address">If same address as prinicipal,tick here</string>
@@ -190,15 +190,11 @@
     </string-array>
 
     <string-array name="relationships">
-        <item>Father</item>
-        <item>Mother</item>
-        <item>Wife</item>
-        <item>Son</item>
-        <item>Daughter</item>
-        <item>Brother</item>
-        <item>Sister</item>
-        <item>Grand Mother</item>
-        <item>Grand Father</item>
+        <item>Spouse</item>
+        <item>Children</item>
+        <item>Guardian</item>
+        <item>Parent</item>
+        <item>Grandparent</item>
     </string-array>
 
     <string-array name="month">

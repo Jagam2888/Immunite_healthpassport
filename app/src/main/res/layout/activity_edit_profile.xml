@@ -56,35 +56,50 @@
                 android:paddingBottom="30dp"
                 android:paddingTop="30dp">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Prinicpal Info"
+                    android:textSize="16sp"
+                    android:textColor="@color/primary"
+                    android:textAppearance="@style/opens_bold"/>
+                <!--<TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{`* Profile Picture`}"/>-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:background="@drawable/user_profile_bg"/>
+                </RelativeLayout>
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@{`* `+@string/full_name_passport}"
-                            style="@style/opens_regular"
-                            android:textColor="@color/gray" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{`* `+@string/full_name_passport}"
+                    style="@style/opens_regular"
+                    android:textColor="@color/gray" />
 
-                        <EditText
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="@string/full_name_passport"
-                            android:text="@={profileviewmodel.firstName}"
-                            style="@style/opens_regular"
-                            android:maxLines="1"
-                            android:maxLength="30"
-                            android:textColorHint="@color/gray"
-                            android:textColor="@color/black"
-                            android:background="@drawable/edittext_background"
-                            android:layout_marginTop="5dp"
-                            android:paddingBottom="10dp"
-                            android:paddingLeft="10dp"
-                            android:paddingRight="10dp"
-                            android:paddingTop="10dp" />
-                    </LinearLayout>
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/full_name_passport"
+                    android:text="@={profileviewmodel.firstName}"
+                    style="@style/opens_regular"
+                    android:maxLines="1"
+                    android:maxLength="30"
+                    android:textColorHint="@color/gray"
+                    android:textColor="@color/black"
+                    android:background="@drawable/edittext_background"
+                    android:layout_marginTop="5dp"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="10dp" />
+
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -101,7 +116,13 @@
                     android:orientation="horizontal"
                     android:background="@drawable/edittext_background">
 
-                    <RelativeLayout
+                    <com.hbb20.CountryCodePicker
+                        android:id="@+id/ccp_loadCountryCode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:ccp_hintExampleNumber="true"/>
+
+                    <!--<RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
@@ -139,7 +160,7 @@
                             android:textSize="16sp" />
 
 
-                    </RelativeLayout>
+                    </RelativeLayout>-->
 
                     <View
                         android:layout_width="1dp"
@@ -147,6 +168,7 @@
                         android:background="@color/gray" />
 
                     <EditText
+                        android:id="@+id/edt_mobile"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
@@ -164,41 +186,7 @@
 
                 </LinearLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@{`* `+@string/nationality}"
-                    android:textColor="@color/gray"
-                    android:layout_marginTop="5dp"
-                    style="@style/opens_regular" />
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="56dp"
-                    android:background="@drawable/edittext_background"
-                    android:layout_marginTop="5dp"
-                    android:paddingBottom="10dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingTop="10dp">
-
-                    <Spinner
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="16sp"
-                        android:background="@null"
-                        android:minHeight="0dp"
-                        android:entries="@array/country"
-                        android:layout_centerVertical="true"/>
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_alignParentRight="true"
-                        android:src="@drawable/down_arrow"
-                        android:layout_marginRight="10dp" />
-                </RelativeLayout>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -270,6 +258,68 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="@{`* `+@string/birth_time}"
+                    android:textColor="@color/gray"
+                    android:layout_marginTop="10dp"
+                    style="@style/opens_regular" />
+                <EditText
+                    android:id="@+id/edt_dob_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/opens_regular"
+                    android:maxLines="1"
+                    android:hint="HH/MM"
+                    android:text="@={profileviewmodel.dobTime}"
+                    android:textColorHint="@color/gray"
+                    android:textColor="@color/black"
+                    android:background="@drawable/edittext_background"
+                    android:layout_marginTop="5dp"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="10dp"
+                    android:focusable="false"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{`* `+@string/birth_place}"
+                    android:textColor="@color/gray"
+                    android:layout_marginTop="10dp"
+                    style="@style/opens_regular" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:background="@drawable/edittext_background"
+                    android:layout_marginTop="5dp"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="10dp">
+
+                    <Spinner
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:background="@null"
+                        android:minHeight="0dp"
+                        android:entries="@{profileviewmodel.countries}"
+                        android:layout_centerVertical="true"
+                        android:selectedItemPosition="@={profileviewmodel.selectedItemBirthPlaceCode}"/>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        android:src="@drawable/down_arrow"
+                        android:layout_marginRight="10dp" />
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:text="@{`* `+@string/email_address1}"
                     style="@style/opens_regular"
                     android:textColor="@color/gray"
@@ -295,7 +345,7 @@
                     android:paddingRight="10dp"
                     android:paddingTop="10dp" />
 
-                <TextView
+                <!--<TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@{`* `+@string/residential_address}"
@@ -402,6 +452,43 @@
                         android:layout_alignParentRight="true"
                         android:src="@drawable/down_arrow"
                         android:layout_marginRight="10dp" />
+                </RelativeLayout>-->
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{`* `+@string/nationality}"
+                    android:textColor="@color/gray"
+                    android:layout_marginTop="5dp"
+                    style="@style/opens_regular" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:background="@drawable/edittext_background"
+                    android:layout_marginTop="5dp"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="10dp">
+
+                    <Spinner
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:background="@null"
+                        android:minHeight="0dp"
+                        android:entries="@{profileviewmodel.countries}"
+                        android:layout_centerVertical="true"
+                        android:selectedItemPosition="@={profileviewmodel.selectedItemNationalityCode}"/>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        android:src="@drawable/down_arrow"
+                        android:layout_marginRight="10dp" />
                 </RelativeLayout>
 
                 <TextView
@@ -412,7 +499,7 @@
                     android:textColor="@color/gray"
                     android:layout_marginTop="5dp"/>
 
-                <LinearLayout
+                <!--<LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
@@ -453,23 +540,26 @@
                     <View
                         android:layout_width="1dp"
                         android:layout_height="match_parent"
-                        android:background="@color/gray" />
+                        android:background="@color/gray" />-->
 
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/black"
-                        android:hint="@string/passport_number"
-                        android:text="@={profileviewmodel.passportNumber}"
-                        android:maxLines="1"
-                        android:maxLength="15"
-                        style="@style/opens_regular"
-                        android:layout_weight="1"
-                        android:background="@android:color/transparent"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="10dp" />
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/passport_number"
+                    android:text="@={profileviewmodel.passportNumber}"
+                    style="@style/opens_regular"
+                    android:maxLines="1"
+                    android:maxLength="30"
+                    android:textColorHint="@color/gray"
+                    android:textColor="@color/black"
+                    android:background="@drawable/edittext_background"
+                    android:layout_marginTop="5dp"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="10dp" />
 
-                </LinearLayout>
+               <!-- </LinearLayout>-->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -511,7 +601,8 @@
                             android:minHeight="0dp"
                             android:entries="@array/id_type"
                             android:layout_toLeftOf="@id/img_down_arrow_id"
-                            android:layout_centerVertical="true"/>
+                            android:layout_centerVertical="true"
+                            android:selectedItemPosition="@={profileviewmodel.selectedItemIdTYpe}"/>
 
 
                     </RelativeLayout>
@@ -558,7 +649,7 @@
                     android:textColor="@color/white"
                     android:background="@drawable/button_background"
                     android:layout_marginTop="30dp"
-                    android:onClick="@{() -> profileviewmodel.onClick()}"/>
+                    android:onClick="@{(v) -> profileviewmodel.onClick(v)}"/>
             </LinearLayout>
         </ScrollView>
 

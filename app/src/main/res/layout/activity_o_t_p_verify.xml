@@ -270,7 +270,7 @@
                     android:text="Resend OTP"
                     style="@style/opens_bold"
                     android:layout_marginTop="20dp"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btn_activate"

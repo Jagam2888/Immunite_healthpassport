@@ -343,7 +343,7 @@
                     android:background="@drawable/button_background"
                     android:layout_marginTop="20dp"
                     style="@style/opens_bold"
-                    android:onClick="@{() -> tellusviewmodel.onRegister()}"/>
+                    android:onClick="@{(v) -> tellusviewmodel.onRegister(v)}"/>
             </LinearLayout>
         </ScrollView>
         <ProgressBar

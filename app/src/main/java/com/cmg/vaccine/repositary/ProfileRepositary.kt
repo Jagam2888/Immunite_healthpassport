@@ -1,10 +1,12 @@
 package com.cmg.vaccine.repositary
 
 import com.cmg.vaccine.database.AppDatabase
+import com.cmg.vaccine.database.Countries
 import com.cmg.vaccine.database.Dependent
 import com.cmg.vaccine.database.User
 import com.cmg.vaccine.model.request.UpdateProfileReq
 import com.cmg.vaccine.model.response.PatientRegResponse
+import com.cmg.vaccine.model.response.UpdatePatientResponse
 import com.cmg.vaccine.network.MyApi
 import com.cmg.vaccine.network.SafeAPIRequest
 import com.cmg.vaccine.prefernces.PreferenceProvider
@@ -15,12 +17,16 @@ class ProfileRepositary(
     private val preferenceProvider: PreferenceProvider
 ):SafeAPIRequest() {
 
-    fun getUserData(email:String,verifyStatus:String):User{
-        return database.getDao().getUserData(email,verifyStatus)
+    fun getUserData(verifyStatus:String):User{
+        return database.getDao().getUserData(preferenceProvider.getSubId()!!,verifyStatus)
     }
 
     fun getUserEmail():String?{
         return preferenceProvider.getEmail()
+    }
+
+    fun getSubId():String?{
+        return preferenceProvider.getSubId()
     }
 
     fun saveUser(user: User){
@@ -31,7 +37,15 @@ class ProfileRepositary(
         return database.getDao().getDependentList(privateKey)
     }
 
-    suspend fun updateProfile(updateProfileReq: UpdateProfileReq):PatientRegResponse{
+    fun getDependent(privateKey: String):Dependent{
+        return database.getDao().getDependent(privateKey)
+    }
+
+    fun getAllCountriesDB():List<Countries>{
+        return database.getDao().getAllCountries()
+    }
+
+    suspend fun updateProfile(updateProfileReq: UpdateProfileReq): UpdatePatientResponse {
         return apiRequest {
             api.updateProfile(updateProfileReq)
         }

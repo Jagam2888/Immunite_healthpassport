@@ -7,12 +7,11 @@ class DependentRegReqData {
     var firstName: String?=null
     var gender: String?=null
     var idNo: String?=null
-    var masterPrivateKey: String?=null
+    var idType: String?=null
+    var masterSubsId: String?=null
     var mobileNumber: String?=null
     var nationalityCountry: String?=null
     var passportNo: String?=null
-    var provinceState: String?=null
+    var placeOfBirth: String?=null
     var relationship: String?=null
-    var residentialAddress: String?=null
-    var townCity: String?=null
 }

@@ -21,6 +21,9 @@ class SplashRepositary(
     fun getEmail():String?{
         return preferenceProvider.getEmail()
     }
+    fun getSubId():String?{
+        return preferenceProvider.getSubId()
+    }
     fun getURL() : String? {
         return preferenceProvider.getURL()
     }

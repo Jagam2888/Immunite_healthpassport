@@ -24,7 +24,7 @@ class AuthViewModel(
     }
 
     fun onLoginClick(){
-        authListener?.onStarted()
+        /*authListener?.onStarted()
         if (!email.value.isNullOrEmpty() and !password.value.isNullOrEmpty()){
             val user = repositary.getLogin(email.value!!,password.value!!)
             if(user != null){
@@ -35,7 +35,7 @@ class AuthViewModel(
             }
         }else{
             authListener?.onFailure("Field(s) Missing")
-        }
+        }*/
 
     }
 
