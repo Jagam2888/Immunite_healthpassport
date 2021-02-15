@@ -307,7 +307,7 @@
                         android:minHeight="0dp"
                         android:entries="@{dependentViewModel.countries}"
                         android:layout_centerVertical="true"
-                        android:selectedItemPosition="@={dependentViewModel.selectedItemNationalityCode}"/>
+                        android:selectedItemPosition="@={dependentViewModel.selectedItemBirthPlaceCode}"/>
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -392,9 +392,9 @@
                         android:textSize="16sp"
                         android:background="@null"
                         android:minHeight="0dp"
-                        android:entries="@array/country"
+                        android:entries="@{dependentViewModel.countries}"
                         android:layout_centerVertical="true"
-                        android:selectedItemPosition="@={dependentViewModel.nationalityItemPos}"/>
+                        android:selectedItemPosition="@={dependentViewModel.selectedItemNationalityCode}"/>
 
                     <ImageView
                         android:layout_width="wrap_content"

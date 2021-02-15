@@ -607,7 +607,7 @@
                     android:textColor="@color/white"
                     android:background="@drawable/button_background"
                     android:layout_marginTop="30dp"
-                    android:onClick="@{(v) -> dependentViewModel.onClick(v)}"/>
+                    android:onClick="@{(v) -> dependentViewModel.updateProfile(v)}"/>
             </LinearLayout>
         </ScrollView>
         <!--<ScrollView

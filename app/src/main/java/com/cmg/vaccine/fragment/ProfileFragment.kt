@@ -94,7 +94,7 @@ class ProfileFragment : Fragment(),KodeinAware {
                 }*/
                 Intent(context,ViewProfileActivity::class.java).also {
                     //it.putExtra(Passparams.PRIVATEKEY,viewModel.dependentList.value?.get(position)?.childPrivateKey)
-                    it.putExtra(Passparams.PRIVATEKEY,"")
+                    it.putExtra(Passparams.DEPENDENT_SUBID,viewModel.dependentList.value?.get(position)?.subsId)
                     it.putExtra(Passparams.USER,Passparams.DEPENDENT)
                     context?.startActivity(it)
                 }

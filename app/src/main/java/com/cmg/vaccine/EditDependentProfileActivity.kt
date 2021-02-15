@@ -6,10 +6,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.cmg.vaccine.databinding.ActivityEditDependentProfileBinding
 import com.cmg.vaccine.listener.SimpleListener
-import com.cmg.vaccine.util.hide
-import com.cmg.vaccine.util.show
-import com.cmg.vaccine.util.showDatePickerDialog
-import com.cmg.vaccine.util.toast
+import com.cmg.vaccine.util.*
 import com.cmg.vaccine.viewmodel.DependentViewModel
 import com.cmg.vaccine.viewmodel.viewmodelfactory.DependentViewModelFactory
 import org.kodein.di.KodeinAware
@@ -33,16 +30,29 @@ class EditDependentProfileActivity : AppCompatActivity(),KodeinAware,SimpleListe
         binding.lifecycleOwner = this
         viewModel.listener = this
 
-        val childPrivateKey = intent.extras?.getString("child_private_key","")
+
+
+        val childPrivateKey = intent.extras?.getString(Passparams.DEPENDENT_SUBID,"")
         viewModel.loadProfileData(this,childPrivateKey!!)
 
         binding.edtDob.setOnClickListener {
             showDatePickerDialog(binding.edtDob)
         }
 
+        binding.edtDobTime.setOnClickListener {
+            showTimepickerDialog(binding.edtDobTime)
+        }
+
         binding.imgBack.setOnClickListener {
             finish()
         }
+
+        if (viewModel.countryCode.value != null)
+            binding.ccpLoadCountryCode.setCountryForPhoneCode(viewModel.countryCode.value!!)
+
+        viewModel.selectedItemContactCode.set(binding.ccpLoadCountryCode.selectedCountryCode)
+        binding.ccpLoadCountryCode.setOnCountryChangeListener {
+            viewModel.selectedItemContactCode.set(binding.ccpLoadCountryCode.selectedCountryCode) }
     }
 
     override fun onStarted() {

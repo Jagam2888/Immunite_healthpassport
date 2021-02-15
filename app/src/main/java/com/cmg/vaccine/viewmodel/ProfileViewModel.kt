@@ -141,8 +141,8 @@ class ProfileViewModel(
         }
     }
 
-    fun loadDependentData(privateKey:String){
-        val dependent = repositary.getDependent(privateKey)
+    fun loadDependentData(subId:String){
+        val dependent = repositary.getDependent(subId)
         if (dependent != null){
             firstName.value = dependent.firstName
             contactNumber.value = dependent.mobileNumber

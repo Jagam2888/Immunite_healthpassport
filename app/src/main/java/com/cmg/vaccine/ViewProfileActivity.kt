@@ -17,6 +17,7 @@ class ViewProfileActivity : AppCompatActivity(),KodeinAware {
     override val kodein by kodein()
     private lateinit var binding:ActivityViewProfileBinding
     private lateinit var viewModel:ProfileViewModel
+    var user:String?=null
 
     private val factory:ProfileViewModelFactory by instance()
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,25 +26,37 @@ class ViewProfileActivity : AppCompatActivity(),KodeinAware {
         viewModel = ViewModelProvider(this,factory).get(ProfileViewModel::class.java)
         binding.viewModel = viewModel
 
+        user = intent.extras?.getString(Passparams.USER,"")
 
-        val user = intent.extras?.getString(Passparams.USER,"")
-        viewModel.user.value = user
-        if (user == Passparams.PARENT){
-            viewModel.loadParentData()
-        }else if (user == Passparams.DEPENDENT){
-            viewModel.loadDependentData(intent.extras?.getString(Passparams.PRIVATEKEY,"")!!)
-        }
-        if (viewModel.countryCode.value != null)
-            binding.phoneCode.setCountryForPhoneCode(viewModel.countryCode.value!!)
 
         binding.txtEditProfile.setOnClickListener {
-            Intent(this,EditProfileActivity::class.java).also {
-                startActivity(it)
+
+            if (user == Passparams.PARENT){
+                Intent(this,EditProfileActivity::class.java).also {
+                    startActivity(it)
+                }
+            }else if (user == Passparams.DEPENDENT){
+                Intent(this,EditDependentProfileActivity::class.java).also {
+                    it.putExtra(Passparams.DEPENDENT_SUBID,intent.extras?.getString(Passparams.DEPENDENT_SUBID,"")!!)
+                    startActivity(it)
+                }
             }
         }
 
         binding.imgBack.setOnClickListener {
             finish()
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.user.value = user
+        if (user == Passparams.PARENT){
+            viewModel.loadParentData()
+        }else if (user == Passparams.DEPENDENT){
+            viewModel.loadDependentData(intent.extras?.getString(Passparams.DEPENDENT_SUBID,"")!!)
+        }
+        if (viewModel.countryCode.value != null)
+            binding.phoneCode.setCountryForPhoneCode(viewModel.countryCode.value!!)
     }
 }

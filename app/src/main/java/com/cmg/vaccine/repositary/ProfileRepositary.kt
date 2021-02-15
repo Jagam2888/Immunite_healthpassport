@@ -37,8 +37,8 @@ class ProfileRepositary(
         return database.getDao().getDependentList(privateKey)
     }
 
-    fun getDependent(privateKey: String):Dependent{
-        return database.getDao().getDependent(privateKey)
+    fun getDependent(subId: String):Dependent{
+        return database.getDao().getDependent(subId)
     }
 
     fun getAllCountriesDB():List<Countries>{

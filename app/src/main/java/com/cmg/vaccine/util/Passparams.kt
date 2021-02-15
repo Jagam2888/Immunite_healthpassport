@@ -9,6 +9,7 @@ object Passparams{
     const val USER:String = "user"
     const val PARENT:String = "Principal"
     const val DEPENDENT:String = "Dependant"
+    const val DEPENDENT_SUBID:String = "dependant_sub_id"
 
     //API
     const val URL:String = "http://47.254.238.145:7001/"

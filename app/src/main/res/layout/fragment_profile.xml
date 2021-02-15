@@ -74,16 +74,23 @@
                     android:layout_height="wrap_content"
                     android:text="@{profileviewmodel.firstName}"
                     android:textColor="@color/black"
+                    android:textSize="18sp"
                     style="@style/opens_bold"
                     android:layout_centerVertical="true"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{`(`+@string/principal+`)`}"
-                    android:textColor="@color/gray"
-                    style="@style/opens_regular"
+                    android:text="Principle Account"
+                    android:textColor="@color/white"
+                    android:background="@drawable/gray_background"
+                    android:textSize="12sp"
+                    android:textAppearance="@style/opens_regular"
                     android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"/>
+                    android:layout_centerVertical="true"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:paddingBottom="5dp"
+                    android:paddingTop="5dp"/>
             </LinearLayout>
 
             <!--<RelativeLayout
@@ -118,12 +125,11 @@
             android:id="@+id/recycler_view_child"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:layout_below="@id/layout_parent"
-            android:paddingTop="20dp"
             android:paddingBottom="20dp"
-            android:paddingRight="20dp"
-            android:paddingLeft="20dp"/>
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp"/>
 
         <TextView
             android:layout_width="wrap_content"

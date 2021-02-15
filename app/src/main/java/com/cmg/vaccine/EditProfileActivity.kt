@@ -87,8 +87,8 @@ class EditProfileActivity : BaseActivity(),KodeinAware,SimpleListener {
     override fun onSuccess(msg: String) {
         hide(binding.progressBar)
         toast(msg)
-        Intent(this,OTPVerifyActivity::class.java).also {
-            it.putExtra("IsExistUser",true)
+        Intent(this,CheckOutActivity::class.java).also {
+            //it.putExtra("IsExistUser",true)
             startActivity(it)
         }
     }

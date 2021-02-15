@@ -4,6 +4,8 @@ import android.content.pm.PackageManager
 import android.graphics.Point
 import android.os.Build
 import android.os.Bundle
+import android.os.CountDownTimer
+import android.view.View
 import android.view.WindowManager
 import androidmads.library.qrgenearator.QRGContents
 import androidmads.library.qrgenearator.QRGEncoder
@@ -65,6 +67,27 @@ class ViewPrivateKeyActivity : BaseActivity(),KodeinAware {
         binding.imgBack.setOnClickListener {
             finish()
         }
+
+        binding.btnBack.setOnClickListener {
+            finish()
+        }
+
+        startTimer()
+    }
+
+    private fun startTimer(){
+        val timer = object : CountDownTimer(300000,1000){
+            override fun onTick(millisUntilFinished: Long) {
+                val value = millisUntilFinished / 1000
+                val formatted = "${(value / 60).toString().padStart(2, '0')} : ${(value % 60).toString().padStart(2, '0')}"
+                binding.txtTimer.text = formatted
+            }
+
+            override fun onFinish() {
+                finish()
+            }
+        }
+        timer.start()
     }
 
     private fun generateQRCode(privateKey: String){

@@ -32,6 +32,8 @@ class AddDependentActivity : AppCompatActivity(),KodeinAware,SimpleListener {
         binding.lifecycleOwner = this
         viewModel.listener = this
 
+        viewModel.setCurrentCountry(getCurrentCountryName()!!)
+
         /*binding.addressCheckbox.setOnCheckedChangeListener { buttonView, isChecked ->
 
             if (isChecked){
@@ -105,6 +107,7 @@ class AddDependentActivity : AppCompatActivity(),KodeinAware,SimpleListener {
                 }
             }
         }
+
     }
 
     override fun onStarted() {

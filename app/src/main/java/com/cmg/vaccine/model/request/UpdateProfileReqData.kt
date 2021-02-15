@@ -13,4 +13,6 @@ class UpdateProfileReqData {
     var passportNo: String?=null
     var placeOfBirth: String?=null
     var subsId: String?=null
+    var masterSubsId: String?=null
+    var relationship: String?=null
 }

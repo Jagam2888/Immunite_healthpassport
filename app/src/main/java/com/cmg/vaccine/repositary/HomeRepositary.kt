@@ -33,6 +33,6 @@ class HomeRepositary(
     }
 
     fun getDependentList():List<Dependent>?{
-        return database.getDao().getDependentList(getPrivateKey()!!)
+        return database.getDao().getDependentList(preferenceProvider.getSubId()!!)
     }
 }

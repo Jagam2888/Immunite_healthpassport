@@ -125,7 +125,8 @@
     <string name="thank_you_sign">Thank you for signing \n up with IMMUNITEE!</string>
     <string name="check_your_mail">Check your email. A verification link has \nbeen sent to your email address. Click on \nit to verify your account.</string>
     <string name="please_enter">Please enter the following information to retrieve your password.</string>
-    <string name="qr_text">Show this to prove that you’ve been protected and you’re safe to travel.</string>
+    <string name="qr_text">By showing this QR code to a person, you hereby confirmed to grant this person the right to read your personal medical history.
+This QR Code is one time use and it expires in 5 minutes.</string>
     <string name="tell_us_more">Tell us more about yourself</string>
     <string name="have_you_done_vaccine">Have you done any vaccination?</string>
     <string name="past_vaccine_data">Past Vaccination Data</string>

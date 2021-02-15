@@ -118,7 +118,7 @@ fun selectedRelationShipPosition(state: String, relationShipList: List<String>):
 fun selectedCurrentCountry(country: String, countries: List<Countries>):Int{
     var pos:Int = 0
     for (i in countries.indices!!){
-        if(country.equals(countries.get(i).countryName,false)){
+        if(country.equals(countries.get(i).countryCodeAlpha,false)){
             return i
         }
     }
@@ -147,6 +147,7 @@ fun Context.getCurrentCountryName():String?{
     }
     return country
 }
+
 fun genearteKey(secretKey:String): SecretKeySpec?{
     try {
         var keyBytes = secretKey.toByteArray(charset("UTF-8"))

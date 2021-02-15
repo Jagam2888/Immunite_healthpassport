@@ -47,10 +47,10 @@ interface PatientDao {
     @Update(onConflict = OnConflictStrategy.REPLACE)
     fun updateDependent(dependent: Dependent):Int
 
-    @Query("SELECT * FROM Dependent WHERE masterSubsId = :privateKey")
-    fun getDependentList(privateKey: String):List<Dependent>
+    @Query("SELECT * FROM Dependent WHERE masterSubsId = :masterSubId")
+    fun getDependentList(masterSubId: String):List<Dependent>
 
-    @Query("SELECT * FROM Dependent WHERE subsId =:childPrivateKey")
-    fun getDependent(childPrivateKey:String):Dependent
+    @Query("SELECT * FROM Dependent WHERE subsId =:subId")
+    fun getDependent(subId:String):Dependent
 
 }
