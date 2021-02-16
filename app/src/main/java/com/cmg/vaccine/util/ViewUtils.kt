@@ -26,6 +26,8 @@ import java.lang.StringBuilder
 import java.security.InvalidKeyException
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
+import java.sql.Date
+import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.crypto.*
@@ -112,11 +114,32 @@ fun getCurrentCountry(country: String, countries: List<Countries>):Int{
     return pos
 }
 
+fun getCountryNameUsingCode(code: String, countries: List<Countries>):String?{
+
+    for (i in countries.indices!!){
+        if(code.equals(countries.get(i).countryCodeAlpha,false)){
+            return countries.get(i).countryName
+        }
+    }
+    return ""
+}
+
 fun changeDateFormatEmail(timeMills:Long):String?{
     val simpleDateFormat = SimpleDateFormat("DD MMMM YYYY 'at' HH:mm aaa")
     val calender = Calendar.getInstance()
     calender.timeInMillis = timeMills
     return simpleDateFormat.format(calender.time)
+}
+fun changeDateFormatForViewProfile(dateString:String):String?{
+    val currentDateFormat = SimpleDateFormat("dd/MM/yyyy")
+    val simpleDateFormat = SimpleDateFormat("dd MMM yyyy")
+    try {
+        val date = currentDateFormat.parse(dateString)
+        return simpleDateFormat.format(date)
+    }catch (e:ParseException){
+        e.printStackTrace()
+    }
+    return ""
 }
 fun Context.getCurrentCountryName():String?{
     val locationManager = applicationContext.getSystemService(Context.LOCATION_SERVICE) as LocationManager

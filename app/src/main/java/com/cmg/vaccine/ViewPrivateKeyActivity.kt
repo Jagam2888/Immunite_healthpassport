@@ -56,13 +56,14 @@ class ViewPrivateKeyActivity : BaseActivity(),KodeinAware {
         })*/
 
         privateKey = intent.extras?.getString(Passparams.PRIVATEKEY,"")
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        generateQRCode(privateKey!!)
+        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (checkPermission()) {
                 generateQRCode(privateKey!!)
             } else {
                 requestPermission()
             }
-        }
+        }*/
 
         binding.imgBack.setOnClickListener {
             finish()
@@ -138,9 +139,9 @@ class ViewPrivateKeyActivity : BaseActivity(),KodeinAware {
         when(requestCode){
             WRITE_EXTERNAL_STORAGE -> {
                 if (grantResults.isNotEmpty()) {
-                    val cameraAccepted: Boolean =
+                    val accepted: Boolean =
                         grantResults[0] == PackageManager.PERMISSION_GRANTED
-                    if (cameraAccepted) {
+                    if (accepted) {
                         generateQRCode(privateKey!!)
 
                     } else {

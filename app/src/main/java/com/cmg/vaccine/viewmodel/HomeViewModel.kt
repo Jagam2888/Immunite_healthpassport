@@ -33,9 +33,7 @@ class HomeViewModel(
     var listener:SimpleListener?=null
 
     val fullName:MutableLiveData<String> = MutableLiveData()
-   // val lastName:MutableLiveData<String> = MutableLiveData()
     val passportNumber:MutableLiveData<String> = MutableLiveData()
-    val gender:MutableLiveData<String> = MutableLiveData()
     val country:MutableLiveData<String> = MutableLiveData()
     val _privateKey:MutableLiveData<String> = MutableLiveData()
 
@@ -83,7 +81,7 @@ class HomeViewModel(
             for (child in dependent!!) {
                 var getChild = SwitchProfile()
                 getChild.fullName = child.firstName
-                getChild.tyep = "Child"
+                getChild.tyep = child.relationship
                 listuser = listuser?.plus(getChild)
             }
         }
@@ -91,7 +89,7 @@ class HomeViewModel(
         _users.value = listuser
     }
 
-    init {
+    fun loadData() {
         val userData = repositary.getUserData()
 
 
@@ -148,20 +146,12 @@ class HomeViewModel(
 
         if (userData != null) {
             fullName.value = userData.fullName
-            if (userData.gender == "M") {
-                gender.value = "MALE"
-            }else if (userData.gender == "F"){
-                gender.value = "FEMALE"
-            }else{
-                gender.value = "OTHERS"
-            }
             passportNumber.value = userData.passportNumber
             country.value = userData.countryCode
         }
 
         val dashBoard = Dashboard()
         dashBoard.fullName = userData.fullName
-        //dashBoard.gender = gender.value
         dashBoard.passportNo = userData.passportNumber
         dashBoard.idNo = userData.patientIdNo
         dashBoard.privateKey = userData.privateKey
@@ -176,17 +166,10 @@ class HomeViewModel(
                 val dashboard1 = Dashboard()
                 dashboard1.fullName = dependent.firstName
                 dashboard1.passportNo = dependent.passportNo
-                /*if (dependent.gender == "M") {
-                    dashboard1.gender = "MALE"
-                } else if (dependent.gender == "F") {
-                    dashboard1.gender = "FEMALE"
-                } else {
-                    dashboard1.gender = "OTHERS"
-                }*/
-                //dashboard1.privateKey = dependent.childPrivateKey
                 dashboard1.idNo = dependent.idNo
-                dashboard1.relationShip = "Child"
+                dashboard1.relationShip = dependent.relationship
                 dashboard1.data = listDashboardData
+                dashboard1.privateKey = dependent.privateKey
                 dashboard1.dataTest = listDashboardTestData
                 _listDashboard.value = _listDashboard.value!!.plus(dashboard1)
             }

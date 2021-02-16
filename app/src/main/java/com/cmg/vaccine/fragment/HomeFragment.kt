@@ -54,7 +54,15 @@ class HomeFragment : Fragment(),KodeinAware {
         binding.homeviewmodel = viewModel
         binding.lifecycleOwner = this
 
+        //this function only for refersh page
+        viewModel.setUser()
+
+        viewModel.users.observe(viewLifecycleOwner, Observer {
+            viewModel.loadData()
+        })
+
         //viewModel.loadVaccineDetail()
+
 
         viewModel.listDashboard.observe(viewLifecycleOwner, Observer { list->
             listDashboard = list
@@ -116,46 +124,9 @@ class HomeFragment : Fragment(),KodeinAware {
             dotsView[currentPage]!!.setBackgroundResource(R.drawable.rectangle_active)
         }
     }
-
-    /*private fun loadDynamicLayouts(){
-
-        val btnLayout = RelativeLayout(context)
-        val btnLayoutParams = RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT)
-        btnLayout.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.red))
-        btnLayoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM)
-        btnLayoutParams.setMargins(20,20,20,20)
-        btnLayout.layoutParams = btnLayoutParams
-        btnLayout.setPadding(20,20,20,20)
-        binding.mainlayout.addView(btnLayout)
-
-        val btnChildLayout = LinearLayout(context)
-        val btnChildParams = RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT)
-        btnChildParams.addRule(RelativeLayout.CENTER_IN_PARENT)
-        btnChildLayout.layoutParams = btnChildParams
-        btnChildLayout.orientation = LinearLayout.VERTICAL
-        btnLayout.addView(btnChildLayout)
-
-        val btnChildImg = ImageView(context)
-        val btnChildImgParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT)
-        btnChildImg.layoutParams = btnChildImgParams
-        btnChildLayout.addView(btnChildImg)
-
-        val btnChildTextView = TextView(context)
-        val btnChildTextViewParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT)
-        btnChildTextView.layoutParams = btnChildTextViewParams
-        btnChildTextView.setTextColor(ContextCompat.getColor(requireContext(),R.color.white))
-        btnChildTextView.setText(requireContext().resources.getString(R.string.my_qr_code))
-        btnChildLayout.addView(btnChildTextView)
-
-
-    }*/
-
-    /*override fun onResume() {
+   /* override fun onResume() {
         super.onResume()
-        viewModel.currentPagerPosition.observe(viewLifecycleOwner, Observer {
-            binding.sliderViewPager.currentItem = it
-            addBottomDots(it)
-        })
+        viewModel.loadData()
     }*/
 
 

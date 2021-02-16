@@ -94,14 +94,6 @@ private val layouts:List<Dashboard>
                 }
             }
         }
-        /*val btnPrivateKey = view.findViewById<RelativeLayout>(R.id.btn_view_key)
-        btnPrivateKey.setOnClickListener {
-            Intent(context, ViewPrivateKeyActivity::class.java).also {
-                it.putExtra("private_key",layouts.get(position).privateKey)
-                context?.startActivity(it)
-            }
-        }*/
-
         container!!.addView(view)
         return view
     }

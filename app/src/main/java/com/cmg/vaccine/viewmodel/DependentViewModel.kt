@@ -76,19 +76,16 @@ class DependentViewModel(
         val parentUser = repositary.getUserData()
         if (parentUser != null) {
             masterPrivateKey = parentUser.privateKey
-            parentAddress = parentUser.address
+            /*parentAddress = parentUser.address
             parentcity = parentUser.city
-            parentState = parentUser.state
+            parentState = parentUser.state*/
             principalName.value = parentUser.fullName
 
-            /*if (isCheckedPrincipleAddress.get()){
-                address.value = parentUser.address
-            }else{
-                address.value = ""
-            }*/
         }
         countryList = repositary.getAllCountriesDB()
         _countries.value = countryList
+
+        dobTime.value = "12:00:00"
     }
 
     fun setCurrentCountry(country:String){
@@ -103,88 +100,99 @@ class DependentViewModel(
 
     fun onClick(view:View) {
         if (isChecked.get()) {
-            listener?.onStarted()
-            val relationShips = view.context.resources.getStringArray(R.array.relationships)
-            val relationShip = relationShips.get(relationshipItemPos.get())
+            if (!fullName.value.isNullOrEmpty() and !email.value.isNullOrEmpty() and !contactNumber.value.isNullOrEmpty() and !dob.value.isNullOrEmpty()) {
+                listener?.onStarted()
 
-            var placeBirth = ""
-            if (!countryList.isNullOrEmpty()){
-                placeBirth = countryList?.get(selectedItemBirthPlaceCode.get())?.countryCodeAlpha!!
-            }
+                val relationShips = view.context.resources.getStringArray(R.array.relationships)
+                val relationShip = relationShips.get(relationshipItemPos.get())
 
-            var nationality = ""
-            if (!countryList.isNullOrEmpty()){
-                nationality = countryList?.get(selectedItemNationalityCode.get())?.countryCodeAlpha!!
-            }
-
-            val idTypeList = view.context.resources.getStringArray(R.array.id_type)
-            idType.value = idTypeList[selectedItemIdTYpe.get()]
-
-            //remove first char if zero
-            if (!contactNumber.value.isNullOrEmpty()){
-                if (contactNumber.value!!.startsWith("0")){
-                    contactNumber.value = contactNumber.value!!.drop(1)
+                if (dobTime.value.isNullOrEmpty()){
+                    dobTime.value = "00:00:00"
                 }
-            }
+
+                var placeBirth = ""
+                if (!countryList.isNullOrEmpty()) {
+                    placeBirth =
+                        countryList?.get(selectedItemBirthPlaceCode.get())?.countryCodeAlpha!!
+                }
+
+                var nationality = ""
+                if (!countryList.isNullOrEmpty()) {
+                    nationality =
+                        countryList?.get(selectedItemNationalityCode.get())?.countryCodeAlpha!!
+                }
+
+                val idTypeList = view.context.resources.getStringArray(R.array.id_type)
+                idType.value = idTypeList[selectedItemIdTYpe.get()]
+
+                //remove first char if zero
+                if (!contactNumber.value.isNullOrEmpty()) {
+                    if (contactNumber.value!!.startsWith("0")) {
+                        contactNumber.value = contactNumber.value!!.drop(1)
+                    }
+                }
 
 
+                val dependentRegReq = DependentRegReq()
 
-            val dependentRegReq = DependentRegReq()
+                val dependentRegReqData = DependentRegReqData()
+                dependentRegReqData.firstName = fullName.value
+                dependentRegReqData.countryCode = selectedItemContactCode.get()
+                dependentRegReqData.mobileNumber = contactNumber.value
+                dependentRegReqData.email = email.value
+                dependentRegReqData.relationship = relationShip
+                dependentRegReqData.nationalityCountry = nationality
+                dependentRegReqData.gender = genderEnum.name
+                dependentRegReqData.dob = dob.value + " " + dobTime.value
+                dependentRegReqData.placeOfBirth = placeBirth
+                dependentRegReqData.idType = idType.value
 
-            val dependentRegReqData = DependentRegReqData()
-            dependentRegReqData.firstName = fullName.value
-            dependentRegReqData.countryCode = selectedItemContactCode.get()
-            dependentRegReqData.mobileNumber = contactNumber.value
-            dependentRegReqData.email = email.value
-            dependentRegReqData.relationship = relationShip
-            dependentRegReqData.nationalityCountry = nationality
-            dependentRegReqData.gender = genderEnum.name
-            dependentRegReqData.dob = dob.value+" "+dobTime.value
-            dependentRegReqData.placeOfBirth = placeBirth
-            dependentRegReqData.idType = idType.value
+                dependentRegReqData.passportNo = passportNumber.value
+                dependentRegReqData.idNo = idNo.value
+                dependentRegReqData.masterSubsId = repositary.getParentSubId()
 
-            dependentRegReqData.passportNo = passportNumber.value
-            dependentRegReqData.idNo = idNo.value
-            dependentRegReqData.masterSubsId = repositary.getParentSubId()
+                dependentRegReq.data = dependentRegReqData
 
-            dependentRegReq.data = dependentRegReqData
-
-            Couritnes.main {
-                try {
-                    val response = repositary.dependentSignUp(dependentRegReq)
-                    if (response.StatusCode == 1) {
+                Couritnes.main {
+                    try {
+                        val response = repositary.dependentSignUp(dependentRegReq)
+                        if (response.StatusCode == 1) {
 
                             val dependent = Dependent(
-                                    selectedItemContactCode.get(),
-                                    dob.value,
-                                    dobTime.value,
-                                    email.value,
-                                    fullName.value,
-                                    genderEnum.name,
-                                    idNo.value,
-                                    idType.value,
-                                    repositary.getParentSubId(),
-                                    response.SubsId,
-                                    contactNumber.value,
-                                    nationality,
-                                    passportNumber.value,
-                                    placeBirth,
-                                    relationShip
+                                selectedItemContactCode.get(),
+                                dob.value,
+                                dobTime.value,
+                                email.value,
+                                fullName.value,
+                                genderEnum.name,
+                                idNo.value,
+                                idType.value,
+                                repositary.getParentSubId(),
+                                response.SubsId,
+                                response.privateKey,
+                                contactNumber.value,
+                                nationality,
+                                passportNumber.value,
+                                placeBirth,
+                                relationShip
                             )
-                        repositary.insertDependentSignUp(dependent)
-                        listener?.onSuccess(response.Message)
-                    } else {
-                        listener?.onFailure(response.Message)
+                            repositary.insertDependentSignUp(dependent)
+                            listener?.onSuccess(response.Message)
+                        } else {
+                            listener?.onFailure(response.Message)
+                        }
+                    } catch (e: APIException) {
+                        listener?.onFailure(e.message!!)
+                    } catch (e: NoInternetException) {
+                        listener?.onFailure(e.message!!)
+                    } catch (e: SocketTimeoutException) {
+                        listener?.onFailure(e.message!!)
                     }
-                } catch (e: APIException) {
-                    listener?.onFailure(e.message!!)
-                } catch (e: NoInternetException) {
-                    listener?.onFailure(e.message!!)
-                } catch (e: SocketTimeoutException) {
-                    listener?.onFailure(e.message!!)
                 }
-            }
 
+            }else{
+                listener?.onFailure("Please fill all mandatory fields")
+            }
         }else{
             listener?.onFailure("Please accept Terms and conditions")
         }
@@ -205,6 +213,7 @@ class DependentViewModel(
             //state.set(dependent?.provinceState)
             passportNumber.value = dependent?.passportNo
             idNo.value = dependent?.idNo
+            idType.value = dependent?.idType
             dob.value = dependent?.dob
             dobTime.value = dependent?.dobTime
             country.value = dependent?.nationalityCountry

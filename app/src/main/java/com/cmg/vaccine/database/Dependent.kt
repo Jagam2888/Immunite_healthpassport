@@ -15,6 +15,7 @@ data class Dependent(
         var idType: String?,
         var masterSubsId: String?,
         var subsId: String?,
+        var privateKey: String?,
         var mobileNumber: String?,
         var nationalityCountry: String?,
         var passportNo: String?,

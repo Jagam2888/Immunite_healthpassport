@@ -65,6 +65,10 @@ class ProfileViewModel(
     var selectedItemBirthPlaceCode = ObservableInt()
     var selectedItemContactCode = ObservableField<String>()
 
+    var dobViewFormat:MutableLiveData<String> = MutableLiveData()
+    var placeBirthViewFormat:MutableLiveData<String> = MutableLiveData()
+    var nationalityViewFormat:MutableLiveData<String> = MutableLiveData()
+
     init {
         countryList = repositary.getAllCountriesDB()
         _countries.value = countryList
@@ -77,12 +81,11 @@ class ProfileViewModel(
             firstName.value = user.fullName
             contactNumber.value = user.mobileNumber
             dob.value = user.dob
-            residentalAddress.value = user.address
-            city.value = user.city
-            state.value = user.state
-            country.value = user.countryCode
+
+            country.value = user.nationality
             passportNumber.value = user.passportNumber
             idNo.value = user.patientIdNo
+            idType.value = user.patientIdType
             email1.value = user.email
             privateKey.value = user.privateKey
             placeBirth.value = user.placeBirth
@@ -109,34 +112,18 @@ class ProfileViewModel(
             if (!user.countryCode.isNullOrEmpty())
                 countryCode.value = user.countryCode.toInt()
 
-            /*fullName.value = user.firstName + user.lastName
-            firstName.value = user.firstName
-            lastName.value = user.lastName
-            email1.value = user.email
-            if (user.backupEmail != null) {
-                email2.value = user.backupEmail
-            }
-            contactNumber.value = user.mobileNumber
-            idType.value = user.patientIdType
-            idNumber.value = user.patientIdNo
-            country.value = user.countryCode
-            gender.value = user.gender
-            privateKey.value = user.privateKey
+            if (!dob.value.isNullOrEmpty())
+                dobViewFormat.value = changeDateFormatForViewProfile(dob.value!!)
 
-            */
+            if (!placeBirth.value.isNullOrEmpty())
+                placeBirthViewFormat.value = getCountryNameUsingCode(placeBirth.value!!,countryList!!)
+
+            if (!country.value.isNullOrEmpty())
+                nationalityViewFormat.value = getCountryNameUsingCode(country.value!!,countryList!!)
+
         }
     }
 
-
-
-    fun setCurrentCountry(country:String){
-
-        if (!countryList.isNullOrEmpty()){
-            val pos = getCurrentCountry(country,countryList!!)
-            selectedItemNationalityCode.set(pos)
-            //selectedItemNationalityCode.set(5)
-        }
-    }
 
     fun loadDependentData(subId:String){
         val dependent = repositary.getDependent(subId)
@@ -147,6 +134,7 @@ class ProfileViewModel(
             country.value = dependent.countryCode
             passportNumber.value = dependent.passportNo
             idNo.value = dependent.idNo
+            idType.value = dependent.idType
             email1.value = dependent.email
 
             if (dependent.gender == "M"){
@@ -156,6 +144,18 @@ class ProfileViewModel(
             }else{
                 gender.value = "Other"
             }
+
+            if (!dependent.countryCode.isNullOrEmpty())
+                countryCode.value = dependent.countryCode!!.toInt()
+
+            if (!dob.value.isNullOrEmpty())
+                dobViewFormat.value = changeDateFormatForViewProfile(dob.value!!)
+
+            if (!dependent?.placeOfBirth.isNullOrEmpty())
+                placeBirthViewFormat.value = getCountryNameUsingCode(dependent?.placeOfBirth!!,countryList!!)
+
+            if (!dependent?.nationalityCountry.isNullOrEmpty())
+                nationalityViewFormat.value = getCountryNameUsingCode(dependent?.nationalityCountry!!,countryList!!)
         }
     }
 
@@ -210,9 +210,7 @@ class ProfileViewModel(
                     updateProfileReqData.countryCode = selectedItemContactCode.get()!!
                     updateProfileReqData.email = email1.value
                     updateProfileReqData.mobileNumber = contactNumber.value
-                    /*updateProfileReqData.residentialAddress = residentalAddress.value
-                    updateProfileReqData.townCity = city.value
-                    updateProfileReqData.provinceState = state.value*/
+
 
                     updateProfileReq.data = updateProfileReqData
 
@@ -221,14 +219,15 @@ class ProfileViewModel(
                         user.state = state.value
                         user.city = city.value
                         user.address = residentalAddress.value
-                        user.gender = gender.value!!
+                        user.gender = genderEnum.name
                         user.fullName = firstName.value!!
                         user.mobileNumber = contactNumber.value!!
                         user.passportNumber = passportNumber.value!!
-                        user.patientIdNo = idNo.value!!
-                        user.dob = dob.value!!
-                        user.dobTime = dobTime.value!!
-                        repositary.saveUser(user)
+                        user.patientIdNo = idNo.value
+                        user.dob = dob.value
+                        user.dobTime = dobTime.value
+                        repositary.updateUser(user)
+                        //repositary.saveUser(user)
                         listener?.onSuccess(response.Message)
                     }else{
                         listener?.onFailure(response.Message)

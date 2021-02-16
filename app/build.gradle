@@ -21,8 +21,8 @@ android {
         applicationId "com.cmg.vaccine"
         minSdkVersion 23
         targetSdkVersion 30
-        versionCode 24
-        versionName "1.23"
+        versionCode 25
+        versionName "1.24"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -57,6 +57,7 @@ dependencies {
     implementation 'com.chaos.view:pinview:1.4.3'
     implementation 'com.zcw:togglebutton-library:1.0.0'
     implementation 'com.hbb20:ccp:2.4.5'
+    implementation 'com.squareup.picasso:picasso:2.5.2'
 
     implementation 'androidmads.library.qrgenearator:QRGenearator:1.0.3'
 

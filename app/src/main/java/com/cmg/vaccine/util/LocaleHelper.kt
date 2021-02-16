@@ -11,7 +11,7 @@ abstract class LocaleHelper {
     companion object{
         const val LANGUAGE_ENGLISH:String = "en"
         const val LANGUAGE_MALAY:String = "ms"
-        const val LANGUAGE_CHINESE:String = "zh"
+        //const val LANGUAGE_CHINESE:String = "zh"
         const val LANGUAGE_KEY:String = "language_key"
 
 

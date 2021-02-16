@@ -21,8 +21,8 @@ class ProfileRepositary(
         return database.getDao().getUserData(preferenceProvider.getSubId()!!,verifyStatus)
     }
 
-    fun getUserEmail():String?{
-        return preferenceProvider.getEmail()
+    fun updateUser(user: User):Int{
+        return database.getDao().updateUser(user)
     }
 
     fun getSubId():String?{

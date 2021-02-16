@@ -22,11 +22,11 @@ class ChangeLanguageActivity : BaseActivity() {
                 LocaleHelper.setNewLocale(this,LocaleHelper.LANGUAGE_ENGLISH)
             }else if(binding.spinnerLanguage.selectedItemPosition == 1){
                 LocaleHelper.setNewLocale(this,LocaleHelper.LANGUAGE_MALAY)
-            }else if(binding.spinnerLanguage.selectedItemPosition == 2){
+            }/*else if(binding.spinnerLanguage.selectedItemPosition == 2){
                 LocaleHelper.setNewLocale(this,LocaleHelper.LANGUAGE_CHINESE)
-            }
+            }*/
 
-            Intent(this,LoginActivity::class.java).also {
+            Intent(this,MainActivity::class.java).also {
                 it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
                 startActivity(it)
             }

@@ -175,6 +175,8 @@ class SignupViewModel(
             listener?.onSuccess("success")
             _countries.value = countryList
         }
+
+        dobTime.value = "12:00:00"
     }
 
     fun onSignUp(){

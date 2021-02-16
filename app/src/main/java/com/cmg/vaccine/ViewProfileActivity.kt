@@ -1,6 +1,7 @@
 package com.cmg.vaccine
 
 import android.content.Intent
+import android.graphics.Paint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
@@ -25,8 +26,10 @@ class ViewProfileActivity : AppCompatActivity(),KodeinAware {
         binding = DataBindingUtil.setContentView(this,R.layout.activity_view_profile)
         viewModel = ViewModelProvider(this,factory).get(ProfileViewModel::class.java)
         binding.viewModel = viewModel
+        binding.lifecycleOwner = this
 
         user = intent.extras?.getString(Passparams.USER,"")
+
 
 
         binding.txtEditProfile.setOnClickListener {

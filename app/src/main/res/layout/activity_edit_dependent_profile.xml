@@ -62,18 +62,28 @@
                     android:textSize="16sp"
                     android:textColor="@color/primary"
                     android:textAppearance="@style/opens_bold"/>
-                <!--<TextView
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{`* Profile Picture`}"/>-->
+                    android:textSize="14sp"
+                    android:textColor="@color/gray"
+                    android:textAppearance="@style/opens_regular"
+                    android:text="@{`* Profile Picture`}"/>
                 <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/user_profile_bg"/>
-                </RelativeLayout>
+                    android:id="@+id/layout_img"
+                    android:layout_width="150dp"
+                    android:layout_height="130dp"
+                    android:background="@drawable/user_profile_bg_svg"
+                    android:layout_gravity="center_horizontal"
+                    android:paddingBottom="5dp"
+                    android:paddingTop="5dp"
+                    android:paddingRight="5dp"
+                    android:paddingLeft="5dp">
+                <ImageView
+                    android:id="@+id/img_gallery"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_centerInParent="true" /></RelativeLayout>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -560,7 +570,8 @@
                             android:minHeight="0dp"
                             android:entries="@array/id_type"
                             android:layout_toLeftOf="@id/img_down_arrow_id"
-                            android:layout_centerVertical="true"/>
+                            android:layout_centerVertical="true"
+                            android:selectedItemPosition="@={dependentViewModel.selectedItemIdTYpe}"/>
 
 
                     </RelativeLayout>

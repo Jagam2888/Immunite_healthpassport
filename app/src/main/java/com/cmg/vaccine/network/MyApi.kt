@@ -35,7 +35,7 @@ interface MyApi {
     suspend fun searchPatientVaccine(@Query("privateKey") key:String ):Response<VaccineResponse>
 
     @GET(Passparams.SEARCH_VACCINE)
-    suspend fun searchVaccineList(@Query("privateKey")key: String):Response<VaccineListResponse>
+    suspend fun searchVaccineList(@Query("subsId")key: String):Response<VaccineListResponse>
 
     @POST(Passparams.VERIFY_TAC)
     suspend fun verifyOTP(@Query("subsId")key: String,@Query("verifyTac")verifyTac:String):Response<OTPVerifiyResponse>

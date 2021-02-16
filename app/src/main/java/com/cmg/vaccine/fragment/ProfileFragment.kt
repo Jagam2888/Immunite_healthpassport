@@ -34,10 +34,6 @@ class ProfileFragment : Fragment(),KodeinAware {
 
     private val factory:ProfileViewModelFactory by instance()
 
-    var childAdapter:ChildListAdapter?=null
-    var listChild:List<Dependent>?=null
-
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,7 +49,8 @@ class ProfileFragment : Fragment(),KodeinAware {
 
         viewModel = ViewModelProvider(this,factory).get(ProfileViewModel::class.java)
         binding.profileviewmodel = viewModel
-        viewModel.loadParentData()
+        binding.lifecycleOwner = this
+
 
 
         viewModel.dependentList.observe(viewLifecycleOwner, Observer {list ->
@@ -66,9 +63,6 @@ class ProfileFragment : Fragment(),KodeinAware {
 
 
         binding.layoutParent.setOnClickListener {
-            /*Intent(context,EditProfileActivity::class.java).also {
-                context?.startActivity(it)
-            }*/
             Intent(context,ViewProfileActivity::class.java).also {
                 it.putExtra(Passparams.USER,Passparams.PARENT)
                 context?.startActivity(it)
@@ -83,10 +77,6 @@ class ProfileFragment : Fragment(),KodeinAware {
 
         binding.recyclerViewChild.addOnItemTouchListener(RecyclerViewTouchListener(context,binding.recyclerViewChild,object :RecyclerViewTouchListener.ClickListener{
             override fun onClick(view: View?, position: Int) {
-               /* Intent(context,EditDependentProfileActivity::class.java).also {
-                    it.putExtra("child_private_key",viewModel.dependentList.value?.get(position)?.childPrivateKey)
-                    startActivity(it)
-                }*/
                 Intent(context,ViewProfileActivity::class.java).also {
                     //it.putExtra(Passparams.PRIVATEKEY,viewModel.dependentList.value?.get(position)?.childPrivateKey)
                     it.putExtra(Passparams.DEPENDENT_SUBID,viewModel.dependentList.value?.get(position)?.subsId)
@@ -145,6 +135,7 @@ class ProfileFragment : Fragment(),KodeinAware {
 
     override fun onResume() {
         super.onResume()
+        viewModel.loadParentData()
         viewModel.loadChildList()
     }
 
