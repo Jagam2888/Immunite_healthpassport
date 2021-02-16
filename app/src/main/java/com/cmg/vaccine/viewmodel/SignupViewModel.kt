@@ -134,7 +134,7 @@ class SignupViewModel(
     fun setCurrentCountry(country:String){
         countryList = signUpRepositary.getAllCountriesDB()
         if (!countryList.isNullOrEmpty()){
-            val pos = selectedCurrentCountry(country,countryList!!)
+            val pos = getCurrentCountry(country,countryList!!)
             selectedItemNationalityCode.set(pos)
             //selectedItemNationalityCode.set(5)
         }
@@ -183,8 +183,19 @@ class SignupViewModel(
         if (!countryList.isNullOrEmpty()){
             placeBirth = countryList?.get(selectedItemNationalityCode.get())?.countryCodeAlpha!!
         }
-        if(!fullName.value.isNullOrEmpty()and !email.value.isNullOrEmpty()) {
+        if(!fullName.value.isNullOrEmpty()and !email.value.isNullOrEmpty() and !contactNumber.value.isNullOrEmpty()) {
             if (email.value.equals(reTypeEmail.value)) {
+                if (dobTime.value.isNullOrEmpty()){
+                    dobTime.value = "00:00:00"
+                }
+
+                //remove first char if zero
+                if (!contactNumber.value.isNullOrEmpty()){
+                    if (contactNumber.value!!.startsWith("0")){
+                        contactNumber.value = contactNumber.value!!.drop(1)
+                    }
+                }
+
                 if (isValidEmail(email.value!!)) {
                                 var user = User(
                                         fullName.value!!,
@@ -198,8 +209,8 @@ class SignupViewModel(
                                 placeBirth,
                                 gender.name,
                                 "",
-                                dob.value!!,
-                                dobTime.value!!,
+                                dob.value,
+                                dobTime.value,
                                 "",
                                 "",
                                 "",

@@ -17,10 +17,7 @@ import com.cmg.vaccine.listener.SimpleListener
 import com.cmg.vaccine.model.request.UpdateProfileReq
 import com.cmg.vaccine.model.request.UpdateProfileReqData
 import com.cmg.vaccine.repositary.ProfileRepositary
-import com.cmg.vaccine.util.APIException
-import com.cmg.vaccine.util.Couritnes
-import com.cmg.vaccine.util.NoInternetException
-import com.cmg.vaccine.util.selectedCurrentCountry
+import com.cmg.vaccine.util.*
 import java.net.SocketTimeoutException
 
 class ProfileViewModel(
@@ -106,8 +103,8 @@ class ProfileViewModel(
                 gender.value = "Other"
             }
 
-            selectedItemNationalityCode.set(selectedCurrentCountry(user.nationality,countryList!!))
-            selectedItemBirthPlaceCode.set(selectedCurrentCountry(user.placeBirth,countryList!!))
+            selectedItemNationalityCode.set(selectedCountryName(user.nationality,countryList!!))
+            selectedItemBirthPlaceCode.set(selectedCountryName(user.placeBirth,countryList!!))
 
             if (!user.countryCode.isNullOrEmpty())
                 countryCode.value = user.countryCode.toInt()
@@ -135,7 +132,7 @@ class ProfileViewModel(
     fun setCurrentCountry(country:String){
 
         if (!countryList.isNullOrEmpty()){
-            val pos = selectedCurrentCountry(country,countryList!!)
+            val pos = getCurrentCountry(country,countryList!!)
             selectedItemNationalityCode.set(pos)
             //selectedItemNationalityCode.set(5)
         }
@@ -188,6 +185,13 @@ class ProfileViewModel(
 
                     val idTypeList = view.context.resources.getStringArray(R.array.id_type)
                     idType.value = idTypeList[selectedItemIdTYpe.get()]
+
+                    //remove first char if zero
+                    if (!contactNumber.value.isNullOrEmpty()){
+                        if (contactNumber.value!!.startsWith("0")){
+                            contactNumber.value = contactNumber.value!!.drop(1)
+                        }
+                    }
 
                     var user = repositary.getUserData("Y")
 

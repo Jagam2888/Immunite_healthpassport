@@ -13,10 +13,7 @@ import com.cmg.vaccine.listener.SimpleListener
 import com.cmg.vaccine.model.request.SignUpReq
 import com.cmg.vaccine.model.request.SignUpReqData
 import com.cmg.vaccine.repositary.TellUsRepositary
-import com.cmg.vaccine.util.APIException
-import com.cmg.vaccine.util.Couritnes
-import com.cmg.vaccine.util.NoInternetException
-import com.cmg.vaccine.util.selectedCurrentCountry
+import com.cmg.vaccine.util.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.lang.reflect.Type
@@ -54,7 +51,7 @@ class TellUsMoreViewModel(
             val gson = Gson()
             val type: Type = object : TypeToken<User>() {}.type
             var userData = gson.fromJson<User>(alreadyStored, type)
-            val pos = selectedCurrentCountry(userData.placeBirth,countries)
+            val pos = selectedCountryName(userData.placeBirth,countries)
             selectedItemNationalityCode.set(pos)
         }
     }
@@ -77,7 +74,7 @@ class TellUsMoreViewModel(
                 idType.value = idTypeList[selectedItemIdTYpe.get()]
 
                 userData.passportNumber = passportNo.value!!
-                userData.patientIdNo = idNo.value!!
+                userData.patientIdNo = idNo.value
                 userData.patientIdType = idType.value!!
                 userData.nationality = nationality
 
@@ -129,7 +126,7 @@ class TellUsMoreViewModel(
                 listener?.onFailure("Please Read Terms and Condtition")
             }
         }else{
-            listener?.onFailure("Passport Number Missing")
+            listener?.onFailure("Passport Number Mandatory")
         }
     }
 }

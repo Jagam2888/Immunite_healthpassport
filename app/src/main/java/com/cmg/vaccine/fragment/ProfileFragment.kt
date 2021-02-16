@@ -55,10 +55,6 @@ class ProfileFragment : Fragment(),KodeinAware {
         binding.profileviewmodel = viewModel
         viewModel.loadParentData()
 
-        val email = viewModel.email1.value
-        val privateKey = viewModel.privateKey.value
-
-
 
         viewModel.dependentList.observe(viewLifecycleOwner, Observer {list ->
             binding.recyclerViewChild.also {
@@ -74,7 +70,6 @@ class ProfileFragment : Fragment(),KodeinAware {
                 context?.startActivity(it)
             }*/
             Intent(context,ViewProfileActivity::class.java).also {
-                it.putExtra("child_private_key","")
                 it.putExtra(Passparams.USER,Passparams.PARENT)
                 context?.startActivity(it)
             }

@@ -94,7 +94,7 @@ class DependentViewModel(
     fun setCurrentCountry(country:String){
         countryList = repositary.getAllCountriesDB()
         if (!countryList.isNullOrEmpty()){
-            val pos = selectedCurrentCountry(country,countryList!!)
+            val pos = getCurrentCountry(country,countryList!!)
             selectedItemBirthPlaceCode.set(pos)
             selectedItemNationalityCode.set(pos)
             //selectedItemNationalityCode.set(5)
@@ -120,6 +120,13 @@ class DependentViewModel(
             val idTypeList = view.context.resources.getStringArray(R.array.id_type)
             idType.value = idTypeList[selectedItemIdTYpe.get()]
 
+            //remove first char if zero
+            if (!contactNumber.value.isNullOrEmpty()){
+                if (contactNumber.value!!.startsWith("0")){
+                    contactNumber.value = contactNumber.value!!.drop(1)
+                }
+            }
+
 
 
             val dependentRegReq = DependentRegReq()
@@ -135,9 +142,7 @@ class DependentViewModel(
             dependentRegReqData.dob = dob.value+" "+dobTime.value
             dependentRegReqData.placeOfBirth = placeBirth
             dependentRegReqData.idType = idType.value
-            /*dependentRegReqData.residentialAddress = address.get()
-            dependentRegReqData.townCity = city.get()
-            dependentRegReqData.provinceState = state.get()*/
+
             dependentRegReqData.passportNo = passportNumber.value
             dependentRegReqData.idNo = idNo.value
             dependentRegReqData.masterSubsId = repositary.getParentSubId()
@@ -148,23 +153,7 @@ class DependentViewModel(
                 try {
                     val response = repositary.dependentSignUp(dependentRegReq)
                     if (response.StatusCode == 1) {
-                        /*val dependent = Dependent(
-                            selectedItemContactCode.get(),
-                            dob.value,
-                            email.value!!,
-                            fullName.value,
-                            genderEnum.name,
-                            idNo.value,
-                            repositary.getParentSubId()!!,
-                            response.DependentPrivateKey,
-                            contactNumber.value,
-                            nationality,
-                            passportNumber.value,
-                            state.get(),
-                            relationShip,
-                            address.get(),
-                            city.get()
-                        )*/
+
                             val dependent = Dependent(
                                     selectedItemContactCode.get(),
                                     dob.value,
@@ -225,8 +214,8 @@ class DependentViewModel(
             if (!dependent?.countryCode.isNullOrEmpty())
                 countryCode.value = dependent?.countryCode?.toInt()
 
-            selectedItemNationalityCode.set(selectedCurrentCountry(dependent?.nationalityCountry!!,countryList!!))
-            selectedItemBirthPlaceCode.set(selectedCurrentCountry(dependent?.placeOfBirth!!,countryList!!))
+            selectedItemNationalityCode.set(selectedCountryName(dependent?.nationalityCountry!!,countryList!!))
+            selectedItemBirthPlaceCode.set(selectedCountryName(dependent?.placeOfBirth!!,countryList!!))
 
             dependent?.gender.run {
                 genderEnum = when(this){

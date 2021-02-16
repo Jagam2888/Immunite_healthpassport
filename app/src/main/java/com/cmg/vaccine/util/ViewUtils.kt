@@ -83,28 +83,6 @@ fun Context.showTimepickerDialog(editText: EditText){
 }
 
 
-fun Context.alertDialog(){
-    val builder = AlertDialog.Builder(this)
-
-    val dialogView = LayoutInflater.from(this).inflate(R.layout.custom_alert_dialog,null)
-    builder.setView(dialogView).setCancelable(false).setTitle("Please Enter Your URL")
-
-    dialogView.btn_submit.setOnClickListener {
-        var url = StringBuilder()
-        if(dialogView.edt_ip_address.text.isNullOrEmpty()){
-            return@setOnClickListener
-        }
-        url.append(dialogView.edt_ip_address.text.toString())
-
-        if(!dialogView.edt_port.text.isNullOrEmpty()){
-            url.append(":")
-            url.append(dialogView.edt_port.text)
-        }
-        Paper.book().write("url",url.toString())
-
-    }
-}
-
 fun selectedRelationShipPosition(state: String, relationShipList: List<String>):Int{
     var pos:Int = 0
     for (i in relationShipList.indices!!){
@@ -115,10 +93,19 @@ fun selectedRelationShipPosition(state: String, relationShipList: List<String>):
     return pos
 }
 
-fun selectedCurrentCountry(country: String, countries: List<Countries>):Int{
+fun selectedCountryName(country: String, countries: List<Countries>):Int{
     var pos:Int = 0
     for (i in countries.indices!!){
         if(country.equals(countries.get(i).countryCodeAlpha,false)){
+            return i
+        }
+    }
+    return pos
+}
+fun getCurrentCountry(country: String, countries: List<Countries>):Int{
+    var pos:Int = 0
+    for (i in countries.indices!!){
+        if(country.equals(countries.get(i).countryName,false)){
             return i
         }
     }
