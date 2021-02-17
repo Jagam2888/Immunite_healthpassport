@@ -1,21 +1,15 @@
 package com.cmg.vaccine
 
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.location.Address
-import android.location.Geocoder
-import android.location.Location
-import android.location.LocationManager
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
-import android.text.TextUtils
 import android.text.TextWatcher
-import android.util.Log
-import android.util.Patterns
-import androidx.annotation.RequiresApi
+import android.view.KeyEvent
+import android.view.inputmethod.EditorInfo
+import android.widget.TextView
+import android.widget.TextView.OnEditorActionListener
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
@@ -23,25 +17,31 @@ import androidx.lifecycle.ViewModelProvider
 import com.cmg.vaccine.databinding.ActivitySignUpBinding
 import com.cmg.vaccine.listener.SimpleListener
 import com.cmg.vaccine.util.*
-import com.cmg.vaccine.util.showDatePickerDialog
 import com.cmg.vaccine.viewmodel.SignupViewModel
 import com.cmg.vaccine.viewmodel.viewmodelfactory.SignUpModelFactory
-import com.hbb20.CountryCodePicker
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
+
 
 class SignUpActivity : BaseActivity(),KodeinAware,SimpleListener {
     override val kodein by kodein()
     private lateinit var binding:ActivitySignUpBinding
     private lateinit var viewModel:SignupViewModel
     private val signUpModelFactory:SignUpModelFactory by instance()
-    val LOCATION:Int = 1
+    var fusedLocationProviderClient:FusedLocationProviderClient?=null
+
+    companion object{
+        const val LOCATION:Int = 1000
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        binding = DataBindingUtil.setContentView(this,R.layout.activity_sign_up)
-        viewModel = ViewModelProvider(this,signUpModelFactory).get(SignupViewModel::class.java)
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_sign_up)
+        viewModel = ViewModelProvider(this, signUpModelFactory).get(SignupViewModel::class.java)
         binding.signupviewmodel = viewModel
         binding.lifecycleOwner = this
         viewModel.listener = this
@@ -61,6 +61,14 @@ class SignUpActivity : BaseActivity(),KodeinAware,SimpleListener {
             }
         }*/
 
+        binding.edtMobile.setOnEditorActionListener(OnEditorActionListener { v, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_NEXT) {
+                showDatePickerDialog(binding.edtDob)
+                return@OnEditorActionListener true
+            }
+            false
+        })
+
         binding.ccpLoadCountryCode.registerCarrierNumberEditText(binding.edtMobile)
 
         binding.ccpLoadCountryCode.setOnCountryChangeListener {
@@ -75,7 +83,7 @@ class SignUpActivity : BaseActivity(),KodeinAware,SimpleListener {
             showTimepickerDialog(binding.edtDobTime)
         }
 
-        binding.edtEmail1.addTextChangedListener(object :TextWatcher{
+        binding.edtEmail1.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 
@@ -83,13 +91,13 @@ class SignUpActivity : BaseActivity(),KodeinAware,SimpleListener {
             }
 
             override fun afterTextChanged(s: Editable?) {
-                if (!isValidEmail(s.toString())){
+                if (!isValidEmail(s.toString())) {
                     binding.edtEmail1.error = "Invalid Email"
                 }
             }
         })
 
-        binding.edtEmail2.addTextChangedListener(object :TextWatcher{
+        binding.edtEmail2.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 
@@ -97,7 +105,7 @@ class SignUpActivity : BaseActivity(),KodeinAware,SimpleListener {
             }
 
             override fun afterTextChanged(s: Editable?) {
-                if (!isValidEmail(s.toString())){
+                if (!isValidEmail(s.toString())) {
                     binding.edtEmail2.error = "Invalid Email"
                 }
             }
@@ -120,16 +128,15 @@ class SignUpActivity : BaseActivity(),KodeinAware,SimpleListener {
             if (checkPermission()) {
                 viewModel.setCurrentCountry(getCurrentCountryName()!!)
                 //toast(getCurrentCountryName()!!)
+                //getLastLocation()
             } else {
                 requestPermission()
             }
         }
     }
 
-
-
     private fun checkPermission():Boolean{
-        return (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
+        return ((ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED))
     }
 
     private fun requestPermission(){
@@ -142,14 +149,14 @@ class SignUpActivity : BaseActivity(),KodeinAware,SimpleListener {
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         when(requestCode){
-            LOCATION ->{
-                if (grantResults.isNotEmpty()){
+            LOCATION -> {
+                if (grantResults.isNotEmpty()) {
                     val locationAccepted: Boolean =
                             grantResults[0] == PackageManager.PERMISSION_GRANTED
-                    if (locationAccepted){
+                    if (locationAccepted) {
                         viewModel.setCurrentCountry(getCurrentCountryName()!!)
                         //toast(getCurrentCountryName()!!)
-                    }else{
+                    } else {
                         toast("Permission Denied, You cannot get Location")
                     }
                 }

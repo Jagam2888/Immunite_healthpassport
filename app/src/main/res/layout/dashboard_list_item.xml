@@ -4,7 +4,7 @@
     <data>
         <variable
             name="dashboard"
-            type="com.cmg.vaccine.model.DashboardVaccineData" />
+            type="com.cmg.vaccine.model.response.VaccineListResponseData" />
     </data>
 
     <RelativeLayout
@@ -58,7 +58,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{dashboard.vaccineName}"
+                        android:text="@{dashboard.brandName}"
                         android:textSize="14sp"
                         android:textColor="@color/black"
                         android:textAppearance="@style/opens_bold" />
@@ -101,7 +101,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{dashboard.brandname}"
+                        android:text="@{dashboard.brandName}"
                         android:textColor="@color/gray"
                         android:textSize="12sp" />
                 </LinearLayout>
@@ -121,7 +121,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{dashboard.manufacturer}"
+                        android:text="@{dashboard.manufacturerName}"
                         android:textColor="@color/gray"
                         android:textSize="12sp" />
                 </LinearLayout>
@@ -141,7 +141,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{dashboard.clinic}"
+                        android:text="@{dashboard.manufacturerName}"
                         android:textColor="@color/gray"
                         android:textSize="12sp" />
                 </LinearLayout>

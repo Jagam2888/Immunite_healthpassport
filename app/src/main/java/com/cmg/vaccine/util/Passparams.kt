@@ -21,6 +21,7 @@ object Passparams{
 
     const val SEARCH_PRIVATE_KEY:String = "nhr-module-user/searchPrivateKey"
     const val SEARCH_VACCINE:String = "nhr-module-user/searchVaccine"
+    const val SEARCH_TEST_REPORT:String = "nhr-module-user/searchtest"
     const val VERIFY_TAC:String = "nhr-module-user/verifyTac"
     const val RESEND_TAC:String = "nhr-module-user/resendtac"
     const val COUNTRIES:String = "nhr-module-user/countries"

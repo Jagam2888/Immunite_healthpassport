@@ -20,8 +20,12 @@ import com.cmg.vaccine.NotificationGroupListActivity
 import com.cmg.vaccine.R
 import com.cmg.vaccine.adapter.MyViewPagerAdapter
 import com.cmg.vaccine.databinding.FragmentHomeBinding
+import com.cmg.vaccine.listener.SimpleListener
 import com.cmg.vaccine.model.Dashboard
 import com.cmg.vaccine.model.response.HomeResponse
+import com.cmg.vaccine.util.hide
+import com.cmg.vaccine.util.show
+import com.cmg.vaccine.util.toast
 import com.cmg.vaccine.viewmodel.HomeViewModel
 import com.cmg.vaccine.viewmodel.viewmodelfactory.HomeViewModelFactory
 import org.kodein.di.KodeinAware
@@ -29,7 +33,7 @@ import org.kodein.di.android.x.kodein
 import org.kodein.di.generic.instance
 
 
-class HomeFragment : Fragment(),KodeinAware {
+class HomeFragment : Fragment(),KodeinAware,SimpleListener {
     override val kodein by kodein()
     private lateinit var binding:FragmentHomeBinding
     private lateinit var viewModel:HomeViewModel
@@ -53,13 +57,15 @@ class HomeFragment : Fragment(),KodeinAware {
         viewModel = ViewModelProvider(requireActivity(),factory).get(HomeViewModel::class.java)
         binding.homeviewmodel = viewModel
         binding.lifecycleOwner = this
+        viewModel.listener = this
+
+        viewModel.loadVaccineList()
+
 
         //this function only for refersh page
         viewModel.setUser()
 
-        viewModel.users.observe(viewLifecycleOwner, Observer {
-            viewModel.loadData()
-        })
+
 
         //viewModel.loadVaccineDetail()
 
@@ -124,7 +130,25 @@ class HomeFragment : Fragment(),KodeinAware {
             dotsView[currentPage]!!.setBackgroundResource(R.drawable.rectangle_active)
         }
     }
-   /* override fun onResume() {
+
+    override fun onStarted() {
+        show(binding.progressBar)
+    }
+
+    override fun onSuccess(msg: String) {
+        hide(binding.progressBar)
+        //context?.toast(msg)
+        viewModel.users.observe(viewLifecycleOwner, Observer {
+            viewModel.loadData()
+        })
+    }
+
+    override fun onFailure(msg: String) {
+        hide(binding.progressBar)
+        context?.toast(msg)
+    }
+
+    /* override fun onResume() {
         super.onResume()
         viewModel.loadData()
     }*/

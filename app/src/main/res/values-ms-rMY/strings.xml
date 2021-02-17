@@ -163,6 +163,8 @@
     <string name="regulatory">Regulatory Update</string>
     <string name="advisory">Advisory Alert</string>
 
+    <string name="add_entry">Add Entry Point</string>
+
 
     <string-array name="code">
         <item>+60</item>

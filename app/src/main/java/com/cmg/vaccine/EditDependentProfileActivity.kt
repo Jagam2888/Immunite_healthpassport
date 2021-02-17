@@ -2,6 +2,8 @@ package com.cmg.vaccine
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.inputmethod.EditorInfo
+import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.cmg.vaccine.databinding.ActivityEditDependentProfileBinding
@@ -46,6 +48,14 @@ class EditDependentProfileActivity : AppCompatActivity(),KodeinAware,SimpleListe
         binding.imgBack.setOnClickListener {
             finish()
         }
+
+        binding.edtMobile.setOnEditorActionListener(TextView.OnEditorActionListener { v, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_NEXT) {
+                showDatePickerDialog(binding.edtDob)
+                return@OnEditorActionListener true
+            }
+            false
+        })
 
         if (viewModel.countryCode.value != null)
             binding.ccpLoadCountryCode.setCountryForPhoneCode(viewModel.countryCode.value!!)

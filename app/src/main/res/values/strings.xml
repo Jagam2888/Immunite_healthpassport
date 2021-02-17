@@ -131,7 +131,7 @@ This QR Code is one time use and it expires in 5 minutes.</string>
     <string name="have_you_done_vaccine">Have you done any vaccination?</string>
     <string name="past_vaccine_data">Past Vaccination Data</string>
     <string name="successfull_past_vaccine">Successfully Completed!\nPlease wait for your search result and your next steps of action</string>
-    <string name="please_verify_email">Please Verify the Email sent to you to receive an Activation Code to complete your setup!</string>
+    <string name="please_verify_email">Please Verify the Mobile sent to you to receive an Activation Code to complete your setup!</string>
     <string name="enter_act_code">Enter Activation Code</string>
     <string name="your_account_activate">Your account has been activated, a Personal Private Key has been registered in your Immunitee!</string>
     <string name="recomand_set_pin">We recommend you to setup an access PINs to keep your personal data stored with Immunitee protected against unauthorised access!</string>
@@ -159,6 +159,8 @@ This QR Code is one time use and it expires in 5 minutes.</string>
     <string name="news">News Update</string>
     <string name="regulatory">Regulatory Update</string>
     <string name="advisory">Advisory Alert</string>
+
+    <string name="add_entry">Add Entry Point</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->

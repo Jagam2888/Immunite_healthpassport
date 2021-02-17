@@ -16,7 +16,7 @@
             type="com.cmg.vaccine.fragment.NotificationFragment" />
     </data>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -24,6 +24,7 @@
         android:background="@color/white">
 
         <RelativeLayout
+            android:id="@+id/action_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <include
@@ -40,7 +41,8 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_below="@id/action_bar">
 
             <RelativeLayout
                 android:id="@+id/mainlayout"
@@ -81,5 +83,12 @@
             </RelativeLayout>-->
         </RelativeLayout>
 
-    </LinearLayout>
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="gone"/>
+
+    </RelativeLayout>
 </layout>

@@ -1,6 +1,7 @@
 package com.cmg.vaccine.viewmodel
 
 import android.view.View
+import android.widget.AdapterView
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import androidx.databinding.ObservableInt
@@ -68,6 +69,17 @@ class ProfileViewModel(
     var dobViewFormat:MutableLiveData<String> = MutableLiveData()
     var placeBirthViewFormat:MutableLiveData<String> = MutableLiveData()
     var nationalityViewFormat:MutableLiveData<String> = MutableLiveData()
+
+
+    val clicksListener = object : AdapterView.OnItemSelectedListener {
+        override fun onNothingSelected(parent: AdapterView<*>?) {
+
+        }
+
+        override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+            selectedItemNationalityCode.set(position)
+        }
+    }
 
     init {
         countryList = repositary.getAllCountriesDB()
@@ -172,65 +184,68 @@ class ProfileViewModel(
         Couritnes.main {
             try {
                 if (isChecked.get()) {
-
-                    var placeBirth = ""
-                    if (!countryList.isNullOrEmpty()){
-                        placeBirth = countryList?.get(selectedItemBirthPlaceCode.get())?.countryCodeAlpha!!
-                    }
-
-                    var nationality = ""
-                    if (!countryList.isNullOrEmpty()){
-                        nationality = countryList?.get(selectedItemNationalityCode.get())?.countryCodeAlpha!!
-                    }
-
-                    val idTypeList = view.context.resources.getStringArray(R.array.id_type)
-                    idType.value = idTypeList[selectedItemIdTYpe.get()]
-
-                    //remove first char if zero
-                    if (!contactNumber.value.isNullOrEmpty()){
-                        if (contactNumber.value!!.startsWith("0")){
-                            contactNumber.value = contactNumber.value!!.drop(1)
+                    if (isValidEmail(email1.value!!)) {
+                        var placeBirth = ""
+                        if (!countryList.isNullOrEmpty()) {
+                            placeBirth = countryList?.get(selectedItemBirthPlaceCode.get())?.countryCodeAlpha!!
                         }
-                    }
 
-                    var user = repositary.getUserData("Y")
+                        var nationality = ""
+                        if (!countryList.isNullOrEmpty()) {
+                            nationality = countryList?.get(selectedItemNationalityCode.get())?.countryCodeAlpha!!
+                        }
 
-                    val updateProfileReq = UpdateProfileReq()
-                    val updateProfileReqData = UpdateProfileReqData()
+                        val idTypeList = view.context.resources.getStringArray(R.array.id_type)
+                        idType.value = idTypeList[selectedItemIdTYpe.get()]
 
-                    updateProfileReqData.firstName = firstName.value
-                    updateProfileReqData.nationalityCountry = nationality
-                    updateProfileReqData.dob = dob.value+" "+dobTime.value
-                    updateProfileReqData.subsId = user.parentSubscriberId
-                    updateProfileReqData.passportNo = passportNumber.value
-                    updateProfileReqData.gender = genderEnum.name
-                    updateProfileReqData.idNo = idNo.value
-                    updateProfileReqData.idType = idType.value
-                    updateProfileReqData.placeOfBirth = placeBirth
-                    updateProfileReqData.countryCode = selectedItemContactCode.get()!!
-                    updateProfileReqData.email = email1.value
-                    updateProfileReqData.mobileNumber = contactNumber.value
+                        //remove first char if zero
+                        if (!contactNumber.value.isNullOrEmpty()) {
+                            if (contactNumber.value!!.startsWith("0")) {
+                                contactNumber.value = contactNumber.value!!.drop(1)
+                            }
+                        }
+
+                        var user = repositary.getUserData("Y")
+
+                        val updateProfileReq = UpdateProfileReq()
+                        val updateProfileReqData = UpdateProfileReqData()
+
+                        updateProfileReqData.firstName = firstName.value
+                        updateProfileReqData.nationalityCountry = nationality
+                        updateProfileReqData.dob = dob.value + " " + dobTime.value
+                        updateProfileReqData.subsId = user.parentSubscriberId
+                        updateProfileReqData.passportNo = passportNumber.value
+                        updateProfileReqData.gender = genderEnum.name
+                        updateProfileReqData.idNo = idNo.value
+                        updateProfileReqData.idType = idType.value
+                        updateProfileReqData.placeOfBirth = placeBirth
+                        updateProfileReqData.countryCode = selectedItemContactCode.get()!!
+                        updateProfileReqData.email = email1.value
+                        updateProfileReqData.mobileNumber = contactNumber.value
 
 
-                    updateProfileReq.data = updateProfileReqData
+                        updateProfileReq.data = updateProfileReqData
 
-                    val response = repositary.updateProfile(updateProfileReq)
-                    if (response.StatusCode == 1){
-                        user.state = state.value
-                        user.city = city.value
-                        user.address = residentalAddress.value
-                        user.gender = genderEnum.name
-                        user.fullName = firstName.value!!
-                        user.mobileNumber = contactNumber.value!!
-                        user.passportNumber = passportNumber.value!!
-                        user.patientIdNo = idNo.value
-                        user.dob = dob.value
-                        user.dobTime = dobTime.value
-                        repositary.updateUser(user)
-                        //repositary.saveUser(user)
-                        listener?.onSuccess(response.Message)
+                        val response = repositary.updateProfile(updateProfileReq)
+                        if (response.StatusCode == 1) {
+                            user.state = state.value
+                            user.city = city.value
+                            user.address = residentalAddress.value
+                            user.gender = genderEnum.name
+                            user.fullName = firstName.value!!
+                            user.mobileNumber = contactNumber.value!!
+                            user.passportNumber = passportNumber.value!!
+                            user.patientIdNo = idNo.value
+                            user.dob = dob.value
+                            user.dobTime = dobTime.value
+                            repositary.updateUser(user)
+                            //repositary.saveUser(user)
+                            listener?.onSuccess(response.Message)
+                        } else {
+                            listener?.onFailure(response.Message)
+                        }
                     }else{
-                        listener?.onFailure(response.Message)
+                        listener?.onFailure("InValid Email")
                     }
                 }else{
                     listener?.onFailure("Please accept terms and conditions")

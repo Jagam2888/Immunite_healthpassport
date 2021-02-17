@@ -58,7 +58,7 @@ class TellUsMoreViewModel(
 
     fun onRegister(view:View){
         listener?.onStarted()
-        if(!passportNo.value.isNullOrEmpty()) {
+        //if(!passportNo.value.isNullOrEmpty()) {
             if (isChecked.get()) {
                 var alreadyStored = repositary.getUserData()
                 val gson = Gson()
@@ -73,7 +73,7 @@ class TellUsMoreViewModel(
                 val idTypeList = view.context.resources.getStringArray(R.array.id_type)
                 idType.value = idTypeList[selectedItemIdTYpe.get()]
 
-                userData.passportNumber = passportNo.value!!
+                userData.passportNumber = passportNo.value
                 userData.patientIdNo = idNo.value
                 userData.patientIdType = idType.value!!
                 userData.nationality = nationality
@@ -92,9 +92,6 @@ class TellUsMoreViewModel(
                 signUpReqData.dob = userData.dob+" "+userData.dobTime
                 signUpReqData.countryCode = userData.countryCode
                 signUpReqData.placeOfBirth = userData.placeBirth
-                /*signUpReqData.residentialAddress = userData.address
-                signUpReqData.townCity = userData.city
-                signUpReqData.provinceState = userData.state*/
                 signUpReqData.passportNo = userData.passportNumber
                 signUpReqData.idNo = userData.patientIdNo
                 signUpReqData.idType = userData.patientIdType
@@ -125,8 +122,8 @@ class TellUsMoreViewModel(
             } else {
                 listener?.onFailure("Please Read Terms and Condtition")
             }
-        }else{
+        /*}else{
             listener?.onFailure("Passport Number Mandatory")
-        }
+        }*/
     }
 }

@@ -149,7 +149,8 @@
                         android:layout_weight="1"
                         android:background="@android:color/transparent"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="10dp" />
+                        android:layout_marginLeft="10dp"
+                        android:imeOptions="actionNext"/>
 
                 </LinearLayout>
 

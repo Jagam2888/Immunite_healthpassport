@@ -5,8 +5,10 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
 
     <application
         android:name=".AppController"
@@ -16,16 +18,24 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Noactionbar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ViewProfileActivity"
-            android:screenOrientation="portrait"></activity>
-        <activity android:name=".AdvisoryAlertActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".RegulatoryUpdateActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".NewsUpdateActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".NotificationGroupListActivity"
-            android:screenOrientation="portrait"/>
+        <activity android:name=".AddWorldEntryActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"></activity>
+        <activity
+            android:name=".ViewProfileActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".AdvisoryAlertActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".RegulatoryUpdateActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".NewsUpdateActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".NotificationGroupListActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".CheckOutActivity"
             android:screenOrientation="portrait"

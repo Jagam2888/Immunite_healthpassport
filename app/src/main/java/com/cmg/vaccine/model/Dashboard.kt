@@ -1,5 +1,8 @@
 package com.cmg.vaccine.model
 
+import com.cmg.vaccine.model.response.TestReportListResponseData
+import com.cmg.vaccine.model.response.VaccineListResponseData
+
 class Dashboard {
     var fullName:String?=null
     var relationShip:String?=null
@@ -7,6 +10,6 @@ class Dashboard {
     var idNo:String?=null
     var nationality:String?=null
     var privateKey:String?=null
-    var data:List<DashboardVaccineData>?=null
-    var dataTest:List<DashboardTestData>?=null
+    var data:List<VaccineListResponseData>?=null
+    var dataTest:List<TestReportListResponseData>?=null
 }

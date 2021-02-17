@@ -11,6 +11,8 @@ import com.cmg.vaccine.model.DashboardTestData
 import com.cmg.vaccine.model.DashboardVaccineData
 import com.cmg.vaccine.model.SwitchProfile
 import com.cmg.vaccine.model.response.HomeResponse
+import com.cmg.vaccine.model.response.TestReportListResponseData
+import com.cmg.vaccine.model.response.VaccineListResponseData
 import com.cmg.vaccine.repositary.HomeRepositary
 import com.cmg.vaccine.util.APIException
 import com.cmg.vaccine.util.Couritnes
@@ -61,6 +63,14 @@ class HomeViewModel(
     val users:LiveData<List<SwitchProfile>>
     get() = _users
 
+    var _vaccineList:MutableLiveData<List<VaccineListResponseData>> = MutableLiveData()
+    val vaccineList:LiveData<List<VaccineListResponseData>>
+    get() = _vaccineList
+
+    private var _testReportList:MutableLiveData<List<TestReportListResponseData>> = MutableLiveData()
+    private val testReportList:LiveData<List<TestReportListResponseData>>
+        get() = _testReportList
+
 
     fun setCurrentItem(position:Int){
         _currentPagerPosition.value = position
@@ -89,9 +99,47 @@ class HomeViewModel(
         _users.value = listuser
     }
 
+    fun loadVaccineList(){
+        listener?.onStarted()
+        Couritnes.main {
+            try {
+
+                val response = repositary.getVaccineList(repositary.getSubsId()!!)
+                if (!response.data.isNullOrEmpty()){
+                    _vaccineList.value = response.data
+                }
+                loadTestReportList()
+            }catch (e: APIException) {
+                listener?.onFailure(e.message!!)
+            }catch (e:NoInternetException){
+                listener?.onFailure(e.message!!)
+            }catch (e:SocketTimeoutException){
+                listener?.onFailure(e.message!!)
+            }
+        }
+    }
+
+    fun loadTestReportList(){
+        Couritnes.main {
+            try {
+                val response = repositary.getTestReportList(repositary.getSubsId()!!)
+                if (!response.data.isNullOrEmpty()){
+                    _testReportList.value = response.data
+                }
+                listener?.onSuccess("success")
+            }catch (e: APIException) {
+                listener?.onFailure(e.message!!)
+            }catch (e:NoInternetException){
+                listener?.onFailure(e.message!!)
+            }catch (e:SocketTimeoutException){
+                listener?.onFailure(e.message!!)
+            }
+        }
+    }
+
     fun loadData() {
         val userData = repositary.getUserData()
-
+/*
 
         val dashboardData = DashboardVaccineData()
 
@@ -142,7 +190,7 @@ class HomeViewModel(
         dashboardTestData2.result = "Negative"
 
         listDashboardData = listOf(dashboardData,dashboardData1,dashboardData2)
-        listDashboardTestData = listOf(dashboardTestData,dashboardTestData1,dashboardTestData2)
+        listDashboardTestData = listOf(dashboardTestData,dashboardTestData1,dashboardTestData2)*/
 
         if (userData != null) {
             fullName.value = userData.fullName
@@ -155,8 +203,8 @@ class HomeViewModel(
         dashBoard.passportNo = userData.passportNumber
         dashBoard.idNo = userData.patientIdNo
         dashBoard.privateKey = userData.privateKey
-        dashBoard.data = listDashboardData
-        dashBoard.dataTest = listDashboardTestData
+        dashBoard.data = vaccineList.value
+        dashBoard.dataTest = testReportList.value
         dashBoard.relationShip = "Principal"
         _listDashboard.value = listOf(dashBoard)
 
@@ -168,9 +216,9 @@ class HomeViewModel(
                 dashboard1.passportNo = dependent.passportNo
                 dashboard1.idNo = dependent.idNo
                 dashboard1.relationShip = dependent.relationship
-                dashboard1.data = listDashboardData
+                dashboard1.data = vaccineList.value
                 dashboard1.privateKey = dependent.privateKey
-                dashboard1.dataTest = listDashboardTestData
+                dashboard1.dataTest = testReportList.value
                 _listDashboard.value = _listDashboard.value!!.plus(dashboard1)
             }
         }
@@ -178,7 +226,7 @@ class HomeViewModel(
 
     }
 
-    fun loadVaccineDetail(){
+    /*fun loadVaccineDetail(){
         listener?.onStarted()
         Couritnes.main {
             try {
@@ -202,5 +250,5 @@ class HomeViewModel(
                 listener?.onFailure(e.message!!)
             }
         }
-    }
+    }*/
 }

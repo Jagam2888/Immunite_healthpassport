@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import android.view.inputmethod.EditorInfo
+import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.cmg.vaccine.databinding.ActivityAddDependentBinding
@@ -57,6 +59,14 @@ class AddDependentActivity : AppCompatActivity(),KodeinAware,SimpleListener {
         binding.edtDobTime.setOnClickListener {
             showTimepickerDialog(binding.edtDobTime)
         }
+
+        binding.edtMobile.setOnEditorActionListener(TextView.OnEditorActionListener { v, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_NEXT) {
+                showDatePickerDialog(binding.edtDob)
+                return@OnEditorActionListener true
+            }
+            false
+        })
 
         binding.edtEmail.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {

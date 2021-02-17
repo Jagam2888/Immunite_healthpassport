@@ -10,8 +10,8 @@ data class User(
     var email: String,
     var backupEmail: String?,
     var mobileNumber: String,
-    var passportNumber:String,
-    var patientIdType:String,
+    var passportNumber:String?,
+    var patientIdType:String?,
     var patientIdNo:String?,
     var countryCode: String,
     var placeBirth: String,
@@ -23,8 +23,8 @@ data class User(
     var city:String?,
     var state:String?,
     var privateKey: String?,
-    var parentSubscriberId: String,
-    var virifyStatus:String
+    var parentSubscriberId: String?,
+    var virifyStatus:String?
 ){
     @PrimaryKey(autoGenerate = true)
     var id:Int = 0

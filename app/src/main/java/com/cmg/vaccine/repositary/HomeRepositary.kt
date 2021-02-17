@@ -3,6 +3,8 @@ package com.cmg.vaccine.repositary
 import com.cmg.vaccine.database.AppDatabase
 import com.cmg.vaccine.database.Dependent
 import com.cmg.vaccine.database.User
+import com.cmg.vaccine.model.response.TestReportListResponse
+import com.cmg.vaccine.model.response.VaccineListResponse
 import com.cmg.vaccine.model.response.VaccineResponse
 import com.cmg.vaccine.network.MyApi
 import com.cmg.vaccine.network.SafeAPIRequest
@@ -20,6 +22,18 @@ class HomeRepositary(
         }
     }
 
+    suspend fun getVaccineList(subsId:String):VaccineListResponse{
+        return apiRequest {
+            api.searchVaccineList(subsId)
+        }
+    }
+
+    suspend fun getTestReportList(subsId:String):TestReportListResponse{
+        return apiRequest {
+            api.searchTestReportList(subsId)
+        }
+    }
+
     fun getEmail():String?{
         return preferenceProvider.getEmail()
     }
@@ -34,5 +48,9 @@ class HomeRepositary(
 
     fun getDependentList():List<Dependent>?{
         return database.getDao().getDependentList(preferenceProvider.getSubId()!!)
+    }
+
+    fun getSubsId():String?{
+        return preferenceProvider.getSubId()
     }
 }

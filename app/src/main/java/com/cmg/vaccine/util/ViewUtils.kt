@@ -1,40 +1,38 @@
 package com.cmg.vaccine.util
 
-import android.app.AlertDialog
+import android.Manifest
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Context
+import android.content.pm.PackageManager
 import android.location.Address
 import android.location.Geocoder
+import android.location.Location
 import android.location.LocationManager
 import android.text.TextUtils
 import android.util.Base64
 import android.util.Log
 import android.util.Patterns
-import android.view.LayoutInflater
 import android.view.View
 import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.Toast
-import com.cmg.vaccine.R
+import androidx.core.app.ActivityCompat
 import com.cmg.vaccine.database.Countries
-import io.paperdb.Paper
-import kotlinx.android.synthetic.main.activity_login.view.*
-import kotlinx.android.synthetic.main.custom_alert_dialog.view.*
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import java.io.UnsupportedEncodingException
-import java.lang.StringBuilder
 import java.security.InvalidKeyException
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
-import java.sql.Date
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.crypto.*
 import javax.crypto.spec.SecretKeySpec
 
-fun Context.toast(message:String){
-    Toast.makeText(this,message, Toast.LENGTH_LONG).show()
+fun Context.toast(message: String){
+    Toast.makeText(this, message, Toast.LENGTH_LONG).show()
 }
 
 fun show(progressBar: ProgressBar){
@@ -47,11 +45,11 @@ fun hide(progressBar: ProgressBar){
     progressBar.visibility = View.INVISIBLE
 }
 
-fun isValidEmail(value:String):Boolean{
+fun isValidEmail(value: String):Boolean{
     return (!TextUtils.isEmpty(value) and Patterns.EMAIL_ADDRESS.matcher(value).matches())
 }
 
-fun isValidPassword(value:String):Boolean{
+fun isValidPassword(value: String):Boolean{
     return value.length >= 4
 }
 
@@ -63,11 +61,11 @@ fun Context.showDatePickerDialog(editText: EditText){
     val format = SimpleDateFormat("dd/MM/yyyy")
 
     val datePicker = DatePickerDialog(this,
-        DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
-            calender.set(year, month, dayOfMonth)
-            val dateDob = format.format(calender.time)
-            editText.setText(dateDob)
-        }, year, month, day
+            DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+                calender.set(year, month, dayOfMonth)
+                val dateDob = format.format(calender.time)
+                editText.setText(dateDob)
+            }, year, month, day
     )
     datePicker.datePicker.maxDate = System.currentTimeMillis()
 
@@ -75,7 +73,14 @@ fun Context.showDatePickerDialog(editText: EditText){
 }
 
 fun Context.showTimepickerDialog(editText: EditText){
+    val sdf = SimpleDateFormat("HH:mm:ss")
     val cal = Calendar.getInstance()
+    try {
+        val date = sdf.parse("12:00:00")
+        cal.time = date
+    }catch (e:ParseException){
+        e.printStackTrace()
+    }
     val timeSetListener = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
         cal.set(Calendar.HOUR_OF_DAY, hour)
         cal.set(Calendar.MINUTE, minute)
@@ -98,7 +103,7 @@ fun selectedRelationShipPosition(state: String, relationShipList: List<String>):
 fun selectedCountryName(country: String, countries: List<Countries>):Int{
     var pos:Int = 0
     for (i in countries.indices!!){
-        if(country.equals(countries.get(i).countryCodeAlpha,false)){
+        if(country.equals(countries.get(i).countryCodeAlpha, false)){
             return i
         }
     }
@@ -107,7 +112,7 @@ fun selectedCountryName(country: String, countries: List<Countries>):Int{
 fun getCurrentCountry(country: String, countries: List<Countries>):Int{
     var pos:Int = 0
     for (i in countries.indices!!){
-        if(country.equals(countries.get(i).countryName,false)){
+        if(country.equals(countries.get(i).countryName, false)){
             return i
         }
     }
@@ -117,26 +122,26 @@ fun getCurrentCountry(country: String, countries: List<Countries>):Int{
 fun getCountryNameUsingCode(code: String, countries: List<Countries>):String?{
 
     for (i in countries.indices!!){
-        if(code.equals(countries.get(i).countryCodeAlpha,false)){
+        if(code.equals(countries.get(i).countryCodeAlpha, false)){
             return countries.get(i).countryName
         }
     }
     return ""
 }
 
-fun changeDateFormatEmail(timeMills:Long):String?{
+fun changeDateFormatEmail(timeMills: Long):String?{
     val simpleDateFormat = SimpleDateFormat("DD MMMM YYYY 'at' HH:mm aaa")
     val calender = Calendar.getInstance()
     calender.timeInMillis = timeMills
     return simpleDateFormat.format(calender.time)
 }
-fun changeDateFormatForViewProfile(dateString:String):String?{
+fun changeDateFormatForViewProfile(dateString: String):String?{
     val currentDateFormat = SimpleDateFormat("dd/MM/yyyy")
     val simpleDateFormat = SimpleDateFormat("dd MMM yyyy")
     try {
         val date = currentDateFormat.parse(dateString)
         return simpleDateFormat.format(date)
-    }catch (e:ParseException){
+    }catch (e: ParseException){
         e.printStackTrace()
     }
     return ""
@@ -149,7 +154,7 @@ fun Context.getCurrentCountryName():String?{
         @SuppressWarnings("ResourceType")
         val location = locationManager.getLastKnownLocation(provider)
         if (location != null){
-            val address:List<Address> = geocoder.getFromLocation(location.latitude,location.longitude,1)
+            val address:List<Address> = geocoder.getFromLocation(location.latitude, location.longitude, 1)
             if (!address.isNullOrEmpty()){
                 country = address.get(0).countryName
             }
@@ -158,13 +163,27 @@ fun Context.getCurrentCountryName():String?{
     return country
 }
 
-fun genearteKey(secretKey:String): SecretKeySpec?{
+fun Context.getLastLocation():Location? {
+    var lastLocation: Location? = null
+    var fusedLocationProviderClient: FusedLocationProviderClient =LocationServices.getFusedLocationProviderClient(this)
+    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        return null
+    }
+    fusedLocationProviderClient?.lastLocation!!.addOnCompleteListener { task ->
+        if (task.isSuccessful && task != null){
+            lastLocation =  task.result
+        }
+    }
+    return lastLocation
+}
+
+fun genearteKey(secretKey: String): SecretKeySpec?{
     try {
         var keyBytes = secretKey.toByteArray(charset("UTF-8"))
         val messageDigest = MessageDigest.getInstance("SHA-1")
         keyBytes = messageDigest.digest(keyBytes)
-        keyBytes = Arrays.copyOf(keyBytes,16)
-        return SecretKeySpec(keyBytes,"AES")
+        keyBytes = Arrays.copyOf(keyBytes, 16)
+        return SecretKeySpec(keyBytes, "AES")
     } catch (e: NoSuchAlgorithmException) {
         e.printStackTrace();
     } catch (e: UnsupportedEncodingException) {
@@ -176,7 +195,7 @@ fun decrypt(secretKey: String, jsonValues: String):String?{
     try {
         //val keyBytes = secretKey.toByteArray(charset("UTF-8"))
         //val skey = SecretKeySpec(keyBytes, "AES")
-        Log.d("secretkey",genearteKey(secretKey).toString())
+        Log.d("secretkey", genearteKey(secretKey).toString())
         synchronized(Cipher::class.java) {
             val cipher = Cipher.getInstance("AES/ECB/PKCS5PADDING")
             cipher.init(Cipher.DECRYPT_MODE, genearteKey(secretKey))

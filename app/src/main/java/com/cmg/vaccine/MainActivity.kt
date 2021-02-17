@@ -35,6 +35,7 @@ class MainActivity : BaseActivity(),KodeinAware {
     private lateinit var homeViewModel:HomeViewModel
 
     private val factory:HomeViewModelFactory by instance()
+    var isHome:Boolean = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,23 +55,29 @@ class MainActivity : BaseActivity(),KodeinAware {
         bottom_navigation_view.setOnNavigationItemSelectedListener { menuItem->
             when(menuItem.itemId){
                 R.id.home -> {
+                    isHome = true
                     homeViewModel.setCurrentItem(0)
                     loadFragment(HomeFragment())
                     true
                 }
                 R.id.switch_profile -> {
+                    if (!isHome)
+                        loadFragment(HomeFragment())
                     popUpWindow()
                     true
                 }
                 R.id.profile -> {
+                    isHome = false
                     loadFragment(ProfileFragment())
                     true
                 }
                 R.id.world_entries -> {
+                    isHome = false
                     loadFragment(WorldEntriesFragment())
                     true
                 }
                 R.id.setting -> {
+                    isHome = false
                     loadFragment(SettingsFragment())
                     true
                 }else -> false

@@ -37,10 +37,13 @@ interface MyApi {
     @GET(Passparams.SEARCH_VACCINE)
     suspend fun searchVaccineList(@Query("subsId")key: String):Response<VaccineListResponse>
 
+    @GET(Passparams.SEARCH_TEST_REPORT)
+    suspend fun searchTestReportList(@Query("subsId")key: String):Response<TestReportListResponse>
+
     @POST(Passparams.VERIFY_TAC)
     suspend fun verifyOTP(@Query("subsId")key: String,@Query("verifyTac")verifyTac:String):Response<OTPVerifiyResponse>
 
-    @GET(Passparams.RESEND_TAC)
+    @POST(Passparams.RESEND_TAC)
     suspend fun resendOTP(@Query("subsId")key: String):Response<ResentOTPResponse>
 
     @GET(Passparams.COUNTRIES)

@@ -151,7 +151,8 @@
                         android:layout_weight="1"
                         android:background="@null"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="10dp" />
+                        android:layout_marginLeft="10dp"
+                        android:imeOptions="actionNext"/>
 
                 </LinearLayout>
 
@@ -275,7 +276,8 @@
                         android:minHeight="0dp"
                         android:entries="@{dependentViewModel.countries}"
                         android:layout_centerVertical="true"
-                        android:selectedItemPosition="@={dependentViewModel.selectedItemBirthPlaceCode}"/>
+                        android:selectedItemPosition="@={dependentViewModel.selectedItemBirthPlaceCode}"
+                        tools:setOnItemSelectedListener="@{dependentViewModel.clicksListener}"/>
 
                     <ImageView
                         android:layout_width="wrap_content"

@@ -5,6 +5,7 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.RadioGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -38,7 +39,9 @@ private val layouts:List<Dashboard>
         val txtRelationShip = view.findViewById<TextView>(R.id.txt_relationship)
         val txtPassportNo = view.findViewById<TextView>(R.id.txt_passport)
         val txtIdNo = view.findViewById<TextView>(R.id.txt_id_no)
+        val txtNoData = view.findViewById<TextView>(R.id.txt_nodata)
         val radioGroup = view.findViewById<RadioGroup>(R.id.dashboard_radio_group)
+
 
         val recyclerViewVaccine = view.findViewById<RecyclerView>(R.id.recycler_view_home_vaccine)
         val recyclerViewTest = view.findViewById<RecyclerView>(R.id.recycler_view_home_test)
@@ -48,14 +51,27 @@ private val layouts:List<Dashboard>
         txtPassportNo.text = layouts.get(position).passportNo
         txtIdNo.text = layouts.get(position).idNo
 
-        recyclerViewVaccine.also {
-            it.layoutManager = LinearLayoutManager(context)
-            it.adapter = HomeVaccineListAdapter(layouts.get(position).data!!)
+        if (!layouts[position].data.isNullOrEmpty()) {
+            recyclerViewVaccine.also {
+                it.layoutManager = LinearLayoutManager(context)
+                it.adapter = HomeVaccineListAdapter(layouts.get(position).data!!)
+            }
+            if (txtNoData.visibility == View.VISIBLE)
+                txtNoData.visibility = View.GONE
+        }else{
+            if (txtNoData.visibility == View.GONE)
+                txtNoData.visibility = View.VISIBLE
         }
-
-        recyclerViewTest.also {
-            it.layoutManager = LinearLayoutManager(context)
-            it.adapter = HomeTestListAdapter(layouts.get(position).dataTest!!)
+        if (!layouts[position].data.isNullOrEmpty()) {
+            recyclerViewTest.also {
+                it.layoutManager = LinearLayoutManager(context)
+                it.adapter = HomeTestListAdapter(layouts.get(position).dataTest!!)
+            }
+            if (txtNoData.visibility == View.VISIBLE)
+                txtNoData.visibility = View.GONE
+        }else{
+            if (txtNoData.visibility == View.GONE)
+                txtNoData.visibility = View.VISIBLE
         }
 
         recyclerViewTest.addOnItemTouchListener(RecyclerViewTouchListener(context,recyclerViewTest,object :RecyclerViewTouchListener.ClickListener{
@@ -68,6 +84,24 @@ private val layouts:List<Dashboard>
             override fun onLongClick(view: View?, position: Int) {
             }
         }))
+
+       /* btnVaccine.setOnClickListener {
+            if (recyclerViewVaccine.visibility == View.GONE){
+                recyclerViewTest.visibility = View.GONE
+                recyclerViewVaccine.visibility = View.VISIBLE
+            }
+            btnVaccine.setBackgroundResource(R.drawable.vaccine_btn_selected)
+            btnTest.setBackgroundResource(R.drawable.test_btn_unselected)
+        }
+
+        btnTest.setOnClickListener {
+            if (recyclerViewTest.visibility == View.GONE){
+                recyclerViewVaccine.visibility = View.GONE
+                recyclerViewTest.visibility = View.VISIBLE
+            }
+            btnTest.setBackgroundResource(R.drawable.test_btn_selected)
+            btnVaccine.setBackgroundResource(R.drawable.vaccine_btn_unselected_svg)
+        }*/
 
         radioGroup.setOnCheckedChangeListener { group, checkedId ->
             when(checkedId){

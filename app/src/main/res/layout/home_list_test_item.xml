@@ -4,7 +4,7 @@
     <data>
         <variable
             name="model"
-            type="com.cmg.vaccine.model.DashboardTestData" />
+            type="com.cmg.vaccine.model.response.TestReportListResponseData" />
     </data>
 
     <RelativeLayout
@@ -58,7 +58,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{model.vaccineName}"
+                        android:text="Covid-19 (rRT-PCR) test"
                         android:textSize="14sp"
                         android:textColor="@color/black"
                         android:textAppearance="@style/opens_bold" />
@@ -75,7 +75,7 @@
                     android:id="@+id/txt_vaccinedate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{`Complete on `+model.vaccineDate}"
+                    android:text="@{`Complete on `+model.specimenDateSampleCollected}"
                     android:textColor="@color/white"
                     android:textSize="12sp"
                     android:background="@drawable/home_list_injected_gray"
@@ -101,7 +101,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{model.specimenDate}"
+                        android:text="@{model.specimenDateSampleCollected}"
                         android:textColor="@color/gray"
                         android:textSize="12sp" />
                 </LinearLayout>
@@ -121,7 +121,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{model.takenBy}"
+                        android:text="@{model.performerQualificationIssuerName}"
                         android:textColor="@color/gray"
                         android:textSize="12sp" />
                 </LinearLayout>
@@ -141,7 +141,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{model.testBy}"
+                        android:text="@{model.performerType}"
                         android:textColor="@color/gray"
                         android:textSize="12sp" />
                 </LinearLayout>
@@ -160,7 +160,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{model.result}"
+                        android:text="@{model.observationResult}"
                         android:textColor="@color/gray"
                         android:textSize="12sp" />
                 </LinearLayout>
