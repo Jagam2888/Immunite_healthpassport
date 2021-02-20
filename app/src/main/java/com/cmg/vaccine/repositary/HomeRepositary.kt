@@ -1,8 +1,6 @@
 package com.cmg.vaccine.repositary
 
-import com.cmg.vaccine.database.AppDatabase
-import com.cmg.vaccine.database.Dependent
-import com.cmg.vaccine.database.User
+import com.cmg.vaccine.database.*
 import com.cmg.vaccine.model.response.TestReportListResponse
 import com.cmg.vaccine.model.response.VaccineListResponse
 import com.cmg.vaccine.model.response.VaccineResponse
@@ -52,5 +50,21 @@ class HomeRepositary(
 
     fun getSubsId():String?{
         return preferenceProvider.getSubId()
+    }
+
+    fun insertVaccine(vaccine: Vaccine){
+        database.getDao().insertVaccineData(vaccine)
+    }
+
+    fun insertTestReport(testReport: TestReport){
+        database.getDao().insertTestReport(testReport)
+    }
+
+    fun getVaccineList():List<Vaccine>{
+        return database.getDao().getVaccineList()
+    }
+
+    fun getTestReportList():List<TestReport>{
+        return database.getDao().getTestReportList()
     }
 }

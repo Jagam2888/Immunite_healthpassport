@@ -73,6 +73,9 @@ class LoginPinViewModel(
                             }
                         }else{
                             isDoneReEnter = false
+                            labelTxt.value = "Enter Your 4 Digits PIN"
+                            tempPin.value = ""
+                            pin.value = ""
                             listener?.onFailure("Please enter correct PIN")
                         }
                     }else{

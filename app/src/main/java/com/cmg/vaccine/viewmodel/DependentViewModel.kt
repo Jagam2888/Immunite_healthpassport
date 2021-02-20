@@ -22,6 +22,7 @@ import com.cmg.vaccine.model.request.UpdateProfileReqData
 import com.cmg.vaccine.repositary.DependentRepositary
 import com.cmg.vaccine.util.*
 import java.net.SocketTimeoutException
+import kotlin.concurrent.fixedRateTimer
 
 class DependentViewModel(
     private val repositary: DependentRepositary
@@ -73,6 +74,11 @@ class DependentViewModel(
     var selectedItemIdTYpe = ObservableInt()
     var countryCode:MutableLiveData<Int> = MutableLiveData()
 
+    var isAllow:Boolean = true
+
+    var currentEmail:String?=null
+    var currentMobile:String?=null
+
     val clicksListener = object : AdapterView.OnItemSelectedListener {
         override fun onNothingSelected(parent: AdapterView<*>?) {
 
@@ -96,7 +102,7 @@ class DependentViewModel(
         countryList = repositary.getAllCountriesDB()
         _countries.value = countryList
 
-        dobTime.value = "12:00:00"
+        dobTime.value = "1200"
     }
 
     fun setCurrentCountry(country:String){
@@ -120,7 +126,7 @@ class DependentViewModel(
                         val relationShip = relationShips.get(relationshipItemPos.get())
 
                         if (dobTime.value.isNullOrEmpty()) {
-                            dobTime.value = "00:00:00"
+                            dobTime.value = "00:00"
                         }
 
                         var placeBirth = ""
@@ -156,7 +162,7 @@ class DependentViewModel(
                         dependentRegReqData.relationship = relationShip
                         dependentRegReqData.nationalityCountry = nationality
                         dependentRegReqData.gender = genderEnum.name
-                        dependentRegReqData.dob = dob.value + " " + dobTime.value
+                        dependentRegReqData.dob = dob.value + " " + dobTime.value+":00"
                         dependentRegReqData.placeOfBirth = placeBirth
                         dependentRegReqData.idType = idType.value
 
@@ -227,6 +233,7 @@ class DependentViewModel(
             fullName.value = dependent?.firstName
             //address.set(dependent?.residentialAddress)
             email.value = dependent?.email
+            reTypeEmail.value = dependent?.email
             contactNumber.value = dependent?.mobileNumber
             //city.set(dependent?.townCity)
             //state.set(dependent?.provinceState)
@@ -234,7 +241,7 @@ class DependentViewModel(
             idNo.value = dependent?.idNo
             idType.value = dependent?.idType
             dob.value = dependent?.dob
-            dobTime.value = dependent?.dobTime
+            dobTime.value = dependent?.dobTime?.replace(":","")
             country.value = dependent?.nationalityCountry
             relationshipItemPos.set(selectedRelationShipPosition(dependent?.relationship!!,relationShipList!!))
 
@@ -261,92 +268,109 @@ class DependentViewModel(
                 gender.value = "Other"
             }
         }
+        currentEmail = email.value
+        currentMobile = contactNumber.value
     }
 
     fun updateProfile(view: View){
+        isAllow = !(!currentEmail.equals(email.value) and !currentMobile.equals(contactNumber.value))
         if (isChecked.get()){
-            if (isValidEmail(email.value!!)) {
-                listener?.onStarted()
-                Couritnes.main {
-                    try {
+            if (!fullName.value.isNullOrEmpty() and !email.value.isNullOrEmpty() and !contactNumber.value.isNullOrEmpty()) {
+                if (isAllow) {
+                    if (email.value.equals(reTypeEmail.value)) {
+                        if (isValidEmail(email.value!!)) {
+                            listener?.onStarted()
+                            Couritnes.main {
+                                try {
 
-                        val relationShips = view.context.resources.getStringArray(R.array.relationships)
-                        val relationShip = relationShips.get(relationshipItemPos.get())
+                                    val relationShips = view.context.resources.getStringArray(R.array.relationships)
+                                    val relationShip = relationShips.get(relationshipItemPos.get())
 
-                        var placeBirth = ""
-                        if (!countryList.isNullOrEmpty()) {
-                            placeBirth = countryList?.get(selectedItemBirthPlaceCode.get())?.countryCodeAlpha!!
-                        }
+                                    var placeBirth = ""
+                                    if (!countryList.isNullOrEmpty()) {
+                                        placeBirth = countryList?.get(selectedItemBirthPlaceCode.get())?.countryCodeAlpha!!
+                                    }
 
-                        var nationality = ""
-                        if (!countryList.isNullOrEmpty()) {
-                            nationality = countryList?.get(selectedItemNationalityCode.get())?.countryCodeAlpha!!
-                        }
+                                    var nationality = ""
+                                    if (!countryList.isNullOrEmpty()) {
+                                        nationality = countryList?.get(selectedItemNationalityCode.get())?.countryCodeAlpha!!
+                                    }
 
-                        val idTypeList = view.context.resources.getStringArray(R.array.id_type)
-                        idType.value = idTypeList[selectedItemIdTYpe.get()]
+                                    val idTypeList = view.context.resources.getStringArray(R.array.id_type)
+                                    idType.value = idTypeList[selectedItemIdTYpe.get()]
 
 
-                        val updateProfileReq = UpdateProfileReq()
-                        val updateProfileReqData = UpdateProfileReqData()
+                                    val updateProfileReq = UpdateProfileReq()
+                                    val updateProfileReqData = UpdateProfileReqData()
 
-                        updateProfileReqData.firstName = fullName.value
-                        updateProfileReqData.nationalityCountry = nationality
-                        updateProfileReqData.dob = dob.value + " " + dobTime.value
-                        updateProfileReqData.placeOfBirth = placeBirth
-                        updateProfileReqData.countryCode = selectedItemContactCode.get()
-                        updateProfileReqData.passportNo = passportNumber.value
-                        updateProfileReqData.gender = genderEnum.name
-                        updateProfileReqData.idNo = idNo.value
-                        updateProfileReqData.subsId = dependent?.subsId
-                        updateProfileReqData.masterSubsId = dependent?.masterSubsId
-                        updateProfileReqData.relationship = relationShip
-                        updateProfileReqData.email = email.value
-                        updateProfileReqData.mobileNumber = contactNumber.value
-                        updateProfileReqData.idType = idType.value
-                        /*updateProfileReqData.residentialAddress = address.get()
+                                    updateProfileReqData.firstName = fullName.value
+                                    updateProfileReqData.nationalityCountry = nationality
+                                    updateProfileReqData.dob = dob.value + " " + dobTime.value + ":00"
+                                    updateProfileReqData.placeOfBirth = placeBirth
+                                    updateProfileReqData.countryCode = selectedItemContactCode.get()
+                                    updateProfileReqData.passportNo = passportNumber.value
+                                    updateProfileReqData.gender = genderEnum.name
+                                    updateProfileReqData.idNo = idNo.value
+                                    updateProfileReqData.subsId = dependent?.subsId
+                                    updateProfileReqData.masterSubsId = dependent?.masterSubsId
+                                    updateProfileReqData.relationship = relationShip
+                                    updateProfileReqData.email = email.value
+                                    updateProfileReqData.mobileNumber = contactNumber.value
+                                    updateProfileReqData.idType = idType.value
+                                    /*updateProfileReqData.residentialAddress = address.get()
                     updateProfileReqData.townCity = city.get()
                     updateProfileReqData.provinceState = state.get()*/
 
-                        updateProfileReq.data = updateProfileReqData
+                                    updateProfileReq.data = updateProfileReqData
 
-                        val response = repositary.updateDependentProfile(updateProfileReq)
-                        if (response.StatusCode == 1) {
-                            var dependent = repositary.getDependent(dependentPrivateKey!!)
-                            val relationShipList = view.context.resources.getStringArray(R.array.relationships)
-                            val relationShip = relationShipList.get(relationshipItemPos.get())
+                                    val response = repositary.updateDependentProfile(updateProfileReq)
+                                    if (response.StatusCode == 1) {
+                                        var dependent = repositary.getDependent(dependentPrivateKey!!)
+                                        val relationShipList = view.context.resources.getStringArray(R.array.relationships)
+                                        val relationShip = relationShipList.get(relationshipItemPos.get())
 
-                            //dependent?.residentialAddress = address.get()
-                            //dependent?.townCity = city.get()
-                            //dependent?.provinceState = state.get()
-                            dependent?.dob = dob.value
-                            dependent?.dobTime = dobTime.value
-                            dependent?.firstName = fullName.value
-                            dependent?.idNo = idNo.value
-                            dependent?.idType = idType.value
-                            dependent?.passportNo = passportNumber.value
-                            dependent?.mobileNumber = contactNumber.value
-                            dependent?.relationship = relationShip
-                            dependent?.gender = genderEnum.name
-                            dependent?.placeOfBirth = placeBirth
-                            dependent?.nationalityCountry = nationality
+                                        //dependent?.residentialAddress = address.get()
+                                        //dependent?.townCity = city.get()
+                                        //dependent?.provinceState = state.get()
+                                        dependent?.dob = dob.value
+                                        dependent?.dobTime = dobTime.value
+                                        dependent?.firstName = fullName.value
+                                        dependent?.idNo = idNo.value
+                                        dependent?.idType = idType.value
+                                        dependent?.passportNo = passportNumber.value
+                                        dependent?.mobileNumber = contactNumber.value
+                                        dependent?.relationship = relationShip
+                                        dependent?.gender = genderEnum.name
+                                        dependent?.placeOfBirth = placeBirth
+                                        dependent?.nationalityCountry = nationality
+                                        dependent?.email = email.value
+                                        dependent?.countryCode = selectedItemContactCode.get()
 
-                            repositary.updateDependent(dependent!!)
-                            listener?.onSuccess(response.Message)
+                                        repositary.updateDependent(dependent!!)
+                                        listener?.onSuccess(response.Message)
+                                    } else {
+                                        listener?.onFailure(response.Message)
+                                    }
+
+                                } catch (e: APIException) {
+                                    listener?.onFailure(e.message!!)
+                                } catch (e: NoInternetException) {
+                                    listener?.onFailure(e.message!!)
+                                } catch (e: SocketTimeoutException) {
+                                    listener?.onFailure(e.message!!)
+                                }
+                            }
                         } else {
-                            listener?.onFailure(response.Message)
+                            listener?.onFailure("InValid Email")
                         }
-
-                    } catch (e: APIException) {
-                        listener?.onFailure(e.message!!)
-                    } catch (e: NoInternetException) {
-                        listener?.onFailure(e.message!!)
-                    } catch (e: SocketTimeoutException) {
-                        listener?.onFailure(e.message!!)
+                    }else{
+                        listener?.onFailure("Email and Retype Email Mismatch")
                     }
+                }else{
+                    listener?.onFailure("Sorry! You are not allowed to change Email Address and Mobile Number at same time")
                 }
             }else{
-                listener?.onFailure("InValid Email")
+                listener?.onFailure("Please fill all Mandatory fields")
             }
         }else{
             listener?.onFailure("Please accept Terms and conditions")

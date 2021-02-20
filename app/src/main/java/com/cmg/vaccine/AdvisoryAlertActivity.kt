@@ -5,7 +5,7 @@ import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import com.cmg.vaccine.databinding.ActivityAdvisoryAlertBinding
 
-class AdvisoryAlertActivity : AppCompatActivity() {
+class AdvisoryAlertActivity : BaseActivity() {
 
     private lateinit var binding:ActivityAdvisoryAlertBinding
 

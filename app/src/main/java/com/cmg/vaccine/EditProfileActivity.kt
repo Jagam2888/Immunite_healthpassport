@@ -3,10 +3,11 @@ package com.cmg.vaccine
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.MotionEvent
+import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import androidx.core.app.ActivityCompat
@@ -30,10 +31,11 @@ class EditProfileActivity : BaseActivity(),KodeinAware,SimpleListener {
 
     private val factory: ProfileViewModelFactory by instance()
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this,R.layout.activity_edit_profile)
-        viewModel = ViewModelProvider(this,factory).get(ProfileViewModel::class.java)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_edit_profile)
+        viewModel = ViewModelProvider(this, factory).get(ProfileViewModel::class.java)
         binding.profileviewmodel = viewModel
         //binding.lifecycleOwner = this
         viewModel.listener = this
@@ -50,13 +52,33 @@ class EditProfileActivity : BaseActivity(),KodeinAware,SimpleListener {
         binding.ccpLoadCountryCode.setOnCountryChangeListener {
             viewModel.selectedItemContactCode.set(binding.ccpLoadCountryCode.selectedCountryCode) }
 
-        binding.edtDob.setOnClickListener {
-            showDatePickerDialog(binding.edtDob)
-        }
+        binding.edtDob.listen()
 
-        binding.edtDobTime.setOnClickListener {
-            showTimepickerDialog(binding.edtDobTime)
-        }
+        binding.edtDob.setOnTouchListener(object : View.OnTouchListener{
+            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+                if(event?.action == MotionEvent.ACTION_UP) {
+                    if(binding.edtDob.compoundDrawables[2]!=null){
+                        if(event?.x!! >= (binding.edtDob.right- binding.edtDob.left - binding.edtDob.compoundDrawables[2].bounds.width())) {
+                            showDatePickerDialog(binding.edtDob)
+                        }
+                    }
+                }
+                return false
+            }
+        })
+
+        binding.edtDobTime.setOnTouchListener(object : View.OnTouchListener{
+            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+                if(event?.action == MotionEvent.ACTION_UP) {
+                    if(binding.edtDobTime.compoundDrawables[2]!=null){
+                        if(event?.x!! >= (binding.edtDobTime.right- binding.edtDobTime.left - binding.edtDobTime.compoundDrawables[2].bounds.width())) {
+                            showTimepickerDialog(binding.edtDobTime)
+                        }
+                    }
+                }
+                return false
+            }
+        })
 
         binding.layoutImg.setOnClickListener {
             if (checkPermission()){
@@ -68,13 +90,13 @@ class EditProfileActivity : BaseActivity(),KodeinAware,SimpleListener {
 
         binding.edtMobile.setOnEditorActionListener(TextView.OnEditorActionListener { v, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_NEXT) {
-                showDatePickerDialog(binding.edtDob)
+                binding.edtDob.requestFocus()
                 return@OnEditorActionListener true
             }
             false
         })
 
-        /*binding.edtEmail1.addTextChangedListener(object : TextWatcher {
+        binding.edtEmail1.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 
@@ -86,9 +108,9 @@ class EditProfileActivity : BaseActivity(),KodeinAware,SimpleListener {
                     binding.edtEmail1.error = "Invalid Email"
                 }
             }
-        })*/
+        })
 
-        /*binding.edtEmail2.addTextChangedListener(object : TextWatcher {
+        binding.edtRetype.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 
@@ -97,10 +119,10 @@ class EditProfileActivity : BaseActivity(),KodeinAware,SimpleListener {
 
             override fun afterTextChanged(s: Editable?) {
                 if (!isValidEmail(s.toString())){
-                    binding.edtEmail2.error = "Invalid Email"
+                    binding.edtRetype.error = "Invalid Email"
                 }
             }
-        })*/
+        })
     }
 
     private fun pickImageFromGallery() {
@@ -120,16 +142,16 @@ class EditProfileActivity : BaseActivity(),KodeinAware,SimpleListener {
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         when (requestCode) {
             PERMISSION_CODE -> {
-            if (grantResults.isNotEmpty()) {
-                val accepted: Boolean =
-                        grantResults[0] == PackageManager.PERMISSION_GRANTED
-                if (accepted){
-                    pickImageFromGallery()
-                }else{
-                    toast("Permission Denied, You cannot access your gallery")
+                if (grantResults.isNotEmpty()) {
+                    val accepted: Boolean =
+                            grantResults[0] == PackageManager.PERMISSION_GRANTED
+                    if (accepted) {
+                        pickImageFromGallery()
+                    } else {
+                        toast("Permission Denied, You cannot access your gallery")
+                    }
                 }
             }
-        }
         }
     }
 
@@ -164,8 +186,8 @@ class EditProfileActivity : BaseActivity(),KodeinAware,SimpleListener {
     override fun onSuccess(msg: String) {
         hide(binding.progressBar)
         toast(msg)
-        Intent(this,CheckOutActivity::class.java).also {
-            //it.putExtra("IsExistUser",true)
+        Intent(this, OTPVerifyActivity::class.java).also {
+            it.putExtra("IsExistUser", true)
             startActivity(it)
             finish()
         }

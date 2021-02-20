@@ -16,6 +16,7 @@ import com.cmg.vaccine.repositary.TellUsRepositary
 import com.cmg.vaccine.util.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import io.paperdb.Paper
 import java.lang.reflect.Type
 import java.net.SocketTimeoutException
 
@@ -41,6 +42,8 @@ class TellUsMoreViewModel(
 
     val countries: LiveData<List<Countries>>
         get() = _countries
+
+    val token = Paper.book().read(Passparams.FCM_TOKEN,"")
 
     init {
         val countries = repositary.getAllCountriesDB()
@@ -89,13 +92,14 @@ class TellUsMoreViewModel(
                 signUpReqData.firstName = userData.fullName
                 signUpReqData.mobileNumber = userData.mobileNumber
                 signUpReqData.gender = userData.gender
-                signUpReqData.dob = userData.dob+" "+userData.dobTime
+                signUpReqData.dob = userData.dob+" "+userData.dobTime+":00"
                 signUpReqData.countryCode = userData.countryCode
                 signUpReqData.placeOfBirth = userData.placeBirth
                 signUpReqData.passportNo = userData.passportNumber
                 signUpReqData.idNo = userData.patientIdNo
                 signUpReqData.idType = userData.patientIdType
                 signUpReqData.nationalityCountry = userData.nationality
+                signUpReqData.token = token
 
                 signUpReq.data = signUpReqData
 

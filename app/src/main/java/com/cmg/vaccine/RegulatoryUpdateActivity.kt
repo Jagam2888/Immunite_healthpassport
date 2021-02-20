@@ -5,7 +5,7 @@ import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import com.cmg.vaccine.databinding.ActivityRegulatoryUpdateBinding
 
-class RegulatoryUpdateActivity : AppCompatActivity() {
+class RegulatoryUpdateActivity : BaseActivity() {
 
     private lateinit var binding:ActivityRegulatoryUpdateBinding
 

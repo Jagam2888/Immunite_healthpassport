@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.cmg.vaccine.databinding.ActivityLoginPinBinding
 import com.cmg.vaccine.listener.SimpleListener
 import com.cmg.vaccine.util.Passparams
+import com.cmg.vaccine.util.hideKeyBoard
 import com.cmg.vaccine.util.toast
 import com.cmg.vaccine.viewmodel.LoginPinViewModel
 import com.cmg.vaccine.viewmodel.viewmodelfactory.LoginPinViewFactory
@@ -17,7 +18,7 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
 
-class LoginPinActivity : AppCompatActivity(),KodeinAware,SimpleListener {
+class LoginPinActivity : BaseActivity(),KodeinAware,SimpleListener {
     override val kodein by kodein()
     private lateinit var binding:ActivityLoginPinBinding
     private lateinit var viewModel:LoginPinViewModel
@@ -97,7 +98,7 @@ class LoginPinActivity : AppCompatActivity(),KodeinAware,SimpleListener {
                             //if (!isDoneReEnter) {
                                 if (viewModel.getPin.value!!.pin.equals(editable.toString())){
                                 Intent(this@LoginPinActivity,MainActivity::class.java).also {
-                                    it.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+                                    it.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                                     startActivity(it)
                                     finish()
                                 }
@@ -141,10 +142,12 @@ class LoginPinActivity : AppCompatActivity(),KodeinAware,SimpleListener {
 
     override fun onSuccess(msg: String) {
         toast(msg)
+        hideKeyBoard()
         if (loginStatus == "create") {
             Intent(this@LoginPinActivity, MainActivity::class.java).also {
-                it.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+                it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(it)
+                finish()
             }
         }else if (loginStatus == "update"){
             finish()

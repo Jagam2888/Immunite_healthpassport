@@ -49,6 +49,15 @@ interface MyApi {
     @GET(Passparams.COUNTRIES)
     suspend fun getAllCountries():Response<CountryResponse>
 
+    @GET(Passparams.TESTTYPE)
+    suspend fun getTestType():Response<TestTypeResponse>
+
+    @GET(Passparams.VIRUS)
+    suspend fun getVirusList():Response<VirusListResponse>
+
+    @GET(Passparams.VACCINE)
+    suspend fun getVaccineDetailList():Response<VaccineDetailListResponse>
+
     companion object{
         operator fun invoke(
             context: Context,

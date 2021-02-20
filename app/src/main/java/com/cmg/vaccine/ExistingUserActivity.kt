@@ -5,7 +5,7 @@ import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import com.cmg.vaccine.databinding.ActivityExistingUserBinding
 
-class ExistingUserActivity : AppCompatActivity() {
+class ExistingUserActivity : BaseActivity() {
 
     private lateinit var binding:ActivityExistingUserBinding
 

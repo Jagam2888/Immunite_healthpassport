@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="viewmodel"
+            type="com.cmg.vaccine.viewmodel.VaccineAndTestViewModel" />
     </data>
 
     <LinearLayout
@@ -73,7 +75,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Complete on 31/12/2021"
+                            android:text="@{`Complete on `+viewmodel.testReport.specimenDateSampleCollected}"
                             android:textColor="@color/white"
                             android:textSize="14sp"
                             android:textAppearance="@style/opens_bold"
@@ -128,7 +130,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="258500001"
+                        android:text="@{viewmodel.testReport.specimenCode}"
                         android:textColor="@color/gray"
                         android:textSize="14sp"
                         android:textAppearance="@style/opens_regular"
@@ -146,7 +148,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Name Nasopharyngeal swab (specimen) 2020-0827T06:15Z"
+                        android:text="@{viewmodel.testReport.specimenName}"
                         android:textColor="@color/gray"
                         android:textSize="14sp"
                         android:textAppearance="@style/opens_regular"
@@ -164,7 +166,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="29/12/2021"
+                        android:text="@{viewmodel.testReport.specimenDateSampleCollected}"
                         android:textColor="@color/gray"
                         android:textSize="14sp"
                         android:textAppearance="@style/opens_regular"
@@ -206,7 +208,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="94531-1 \nmerase chain reaction (rRT-PCR) test"
+                        android:text="@{viewmodel.testReport.testCode}"
                         android:textColor="@color/gray"
                         android:textSize="14sp"
                         android:textAppearance="@style/opens_regular"
@@ -230,7 +232,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="260385009 \nNegative \n2020-08-28T06:15Z"
+                        android:text="@{viewmodel.testReport.observationCodeSnomedCt+`\n`+viewmodel.testReport.observationResult+`\n`+viewmodel.testReport.observationDateTime}"
                         android:textColor="@color/gray"
                         android:textSize="14sp"
                         android:textAppearance="@style/opens_regular"
@@ -254,7 +256,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Finalized"
+                        android:text="@{viewmodel.testReport.status}"
                         android:textColor="@color/gray"
                         android:textSize="14sp"
                         android:textAppearance="@style/opens_regular"
@@ -278,7 +280,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Name \nBP Healthcare Group"
+                        android:text="@{viewmodel.testReport.performerName}"
                         android:textColor="@color/gray"
                         android:textSize="14sp"
                         android:textAppearance="@style/opens_regular"
@@ -296,7 +298,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Licensed Healthcare Provider"
+                        android:text="@{viewmodel.testReport.performerQualificationIdentifier}"
                         android:textColor="@color/gray"
                         android:textSize="14sp"
                         android:textAppearance="@style/opens_regular"
@@ -314,7 +316,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="BP Clincal Lab Sdn Bhd"
+                        android:text="@{viewmodel.testReport.performerQualificationIssuerName}"
                         android:textColor="@color/gray"
                         android:textSize="14sp"
                         android:textAppearance="@style/opens_regular"
@@ -332,7 +334,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Accredited Laboratory"
+                        android:text="@{viewmodel.testReport.performerType}"
                         android:textColor="@color/gray"
                         android:textSize="14sp"
                         android:textAppearance="@style/opens_regular"
@@ -350,7 +352,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="+60355699996"
+                        android:text="@{viewmodel.testReport.performerContactTelecom}"
                         android:textColor="@color/gray"
                         android:textSize="14sp"
                         android:textAppearance="@style/opens_regular"
@@ -368,7 +370,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Temasya @ Glenmarie, \nShah Alam, Selangor"
+                        android:text="@{viewmodel.testReport.performerAddTxt}"
                         android:textColor="@color/gray"
                         android:textSize="14sp"
                         android:textAppearance="@style/opens_regular"

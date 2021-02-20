@@ -1,6 +1,7 @@
 package com.cmg.vaccine.util
 
 import android.Manifest
+import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Context
@@ -14,6 +15,7 @@ import android.util.Base64
 import android.util.Log
 import android.util.Patterns
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.Toast
@@ -53,6 +55,11 @@ fun isValidPassword(value: String):Boolean{
     return value.length >= 4
 }
 
+fun Activity.hideKeyBoard(){
+    val inputMethodManager = this.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+    inputMethodManager.hideSoftInputFromWindow(this.currentFocus?.windowToken,0)
+}
+
 fun Context.showDatePickerDialog(editText: EditText){
     val calender = Calendar.getInstance()
     val year = calender.get(Calendar.YEAR)
@@ -73,10 +80,10 @@ fun Context.showDatePickerDialog(editText: EditText){
 }
 
 fun Context.showTimepickerDialog(editText: EditText){
-    val sdf = SimpleDateFormat("HH:mm:ss")
+    val sdf = SimpleDateFormat("HHmm")
     val cal = Calendar.getInstance()
     try {
-        val date = sdf.parse("12:00:00")
+        val date = sdf.parse("1200")
         cal.time = date
     }catch (e:ParseException){
         e.printStackTrace()
@@ -84,7 +91,7 @@ fun Context.showTimepickerDialog(editText: EditText){
     val timeSetListener = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
         cal.set(Calendar.HOUR_OF_DAY, hour)
         cal.set(Calendar.MINUTE, minute)
-        editText.setText(SimpleDateFormat("HH:mm:ss").format(cal.time))
+        editText.setText(SimpleDateFormat("HHmm").format(cal.time))
     }
     TimePickerDialog(this, timeSetListener, cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), true).show()
 }

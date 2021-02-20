@@ -176,7 +176,7 @@ class SignupViewModel(
             _countries.value = countryList
         }
 
-        dobTime.value = "12:00:00"
+        dobTime.value = "1200"
     }
 
     fun onSignUp(){
@@ -188,12 +188,12 @@ class SignupViewModel(
         if(!fullName.value.isNullOrEmpty()and !email.value.isNullOrEmpty() and !contactNumber.value.isNullOrEmpty()) {
             if (email.value.equals(reTypeEmail.value)) {
                 if (dobTime.value.isNullOrEmpty()){
-                    dobTime.value = "00:00:00"
+                    dobTime.value = "00:00"
                 }
 
                 //remove first char if zero
                 if (!contactNumber.value.isNullOrEmpty()){
-                    if (contactNumber.value!!.startsWith("0")){
+                    if (contactNumber.value!!.startsWith("0") and selectedItemContactCode.get().equals("60")){
                         contactNumber.value = contactNumber.value!!.drop(1)
                     }
                 }

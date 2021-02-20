@@ -38,8 +38,7 @@
                 android:src="@drawable/plus_icon"
                 android:layout_marginRight="20dp"
                 android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:visibility="@{profileviewmodel.dependentListCount &lt;= 4 ? View.VISIBLE:View.GONE}"/>
+                android:layout_centerVertical="true"/>
         </RelativeLayout>
 
         <LinearLayout

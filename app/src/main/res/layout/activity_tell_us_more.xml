@@ -209,7 +209,8 @@
                     android:paddingRight="10dp"
                     android:paddingTop="10dp"
                     style="@style/opens_regular"
-                    android:background="@drawable/edittext_background"/>
+                    android:background="@drawable/edittext_background"
+                    android:inputType="text"/>
 
                 <!--<LinearLayout
                     android:layout_width="match_parent"

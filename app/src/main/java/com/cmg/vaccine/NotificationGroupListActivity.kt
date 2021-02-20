@@ -6,7 +6,7 @@ import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import com.cmg.vaccine.databinding.ActivityNotificationGroupListBinding
 
-class NotificationGroupListActivity : AppCompatActivity() {
+class NotificationGroupListActivity : BaseActivity() {
 
     private lateinit var binding:ActivityNotificationGroupListBinding
 

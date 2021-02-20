@@ -47,6 +47,7 @@ class TellUsMoreActivity : BaseActivity(),KodeinAware,SimpleListener {
         toast(msg)
         Intent(this,OTPVerifyActivity::class.java).also {
             it.putExtra("IsExistUser",false)
+            it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(it)
         }
     }

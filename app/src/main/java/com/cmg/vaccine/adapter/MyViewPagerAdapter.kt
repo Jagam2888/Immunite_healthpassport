@@ -17,6 +17,7 @@ import com.cmg.vaccine.ViewPrivateKeyActivity
 import com.cmg.vaccine.model.Dashboard
 import com.cmg.vaccine.util.Passparams
 import com.cmg.vaccine.util.RecyclerViewTouchListener
+import com.google.gson.Gson
 
 class MyViewPagerAdapter(
     private val context: Context,
@@ -62,7 +63,7 @@ private val layouts:List<Dashboard>
             if (txtNoData.visibility == View.GONE)
                 txtNoData.visibility = View.VISIBLE
         }
-        if (!layouts[position].data.isNullOrEmpty()) {
+        if (!layouts[position].dataTest.isNullOrEmpty()) {
             recyclerViewTest.also {
                 it.layoutManager = LinearLayoutManager(context)
                 it.adapter = HomeTestListAdapter(layouts.get(position).dataTest!!)
@@ -75,8 +76,11 @@ private val layouts:List<Dashboard>
         }
 
         recyclerViewTest.addOnItemTouchListener(RecyclerViewTouchListener(context,recyclerViewTest,object :RecyclerViewTouchListener.ClickListener{
-            override fun onClick(view: View?, position: Int) {
+            override fun onClick(view: View?, pos: Int) {
+                val gson = Gson()
+                val value:String = gson.toJson(layouts[position].dataTest?.get(pos))
                 Intent(context,VaccineAndTestReportActivity::class.java).also {
+                    it.putExtra(Passparams.TEST_REPORT_ID,value)
                     context.startActivity(it)
                 }
             }

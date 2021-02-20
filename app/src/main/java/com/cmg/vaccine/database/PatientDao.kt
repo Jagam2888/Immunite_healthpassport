@@ -53,4 +53,49 @@ interface PatientDao {
     @Query("SELECT * FROM Dependent WHERE subsId =:subId")
     fun getDependent(subId:String):Dependent
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertVaccineData(vaccine: Vaccine):Long
+
+    @Query("SELECT * FROM Vaccine")
+    fun getVaccineList():List<Vaccine>
+
+    @Query("SELECT * FROM Vaccine WHERE id =:id")
+    fun getVaccine(id:Int):Vaccine
+
+    @Query("DELETE FROM Vaccine")
+    fun deleteAllVaccine():Int
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertTestReport(testReport: TestReport):Long
+
+    @Query("SELECT * FROM TestReport")
+    fun getTestReportList():List<TestReport>
+
+    @Query("SELECT * FROM TestReport WHERE id =:id")
+    fun getTestReport(id:Int):TestReport
+
+    @Query("DELETE FROM TestReport")
+    fun deleteAllTestReport():Int
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertAddWorldEntry(addWorldEntries: AddWorldEntries):Long
+
+    @Query("SELECT * FROM AddWorldEntries")
+    fun getWorldEntries():List<AddWorldEntries>
+
+    @Query("SELECT * FROM AddWorldEntries WHERE countryName =:countryName")
+    fun getCountryExists(countryName:String):Int
+
+    @Query("DELETE FROM AddWorldEntries WHERE countryName =:countryName")
+    fun deleteAddWorldEntries(countryName: String)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertTestType(testType: TestType):Long
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertVirus(virus: Virus):Long
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertVaccineDetail(vaccineDetail: VaccineDetail):Long
+
 }

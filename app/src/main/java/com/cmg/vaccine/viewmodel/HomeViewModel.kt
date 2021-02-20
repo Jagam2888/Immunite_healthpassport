@@ -5,6 +5,8 @@ import androidx.databinding.ObservableInt
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.cmg.vaccine.database.TestReport
+import com.cmg.vaccine.database.Vaccine
 import com.cmg.vaccine.listener.SimpleListener
 import com.cmg.vaccine.model.Dashboard
 import com.cmg.vaccine.model.DashboardTestData
@@ -63,12 +65,12 @@ class HomeViewModel(
     val users:LiveData<List<SwitchProfile>>
     get() = _users
 
-    var _vaccineList:MutableLiveData<List<VaccineListResponseData>> = MutableLiveData()
-    val vaccineList:LiveData<List<VaccineListResponseData>>
+    var _vaccineList:MutableLiveData<List<Vaccine>> = MutableLiveData()
+    val vaccineList:LiveData<List<Vaccine>>
     get() = _vaccineList
 
-    private var _testReportList:MutableLiveData<List<TestReportListResponseData>> = MutableLiveData()
-    private val testReportList:LiveData<List<TestReportListResponseData>>
+    var _testReportList:MutableLiveData<List<TestReport>> = MutableLiveData()
+    val testReportList:LiveData<List<TestReport>>
         get() = _testReportList
 
 
@@ -100,41 +102,105 @@ class HomeViewModel(
     }
 
     fun loadVaccineList(){
-        listener?.onStarted()
-        Couritnes.main {
-            try {
+        var vaccineList = repositary.getVaccineList()
 
-                val response = repositary.getVaccineList(repositary.getSubsId()!!)
-                if (!response.data.isNullOrEmpty()){
-                    _vaccineList.value = response.data
+        if (vaccineList.isNullOrEmpty()) {
+            listener?.onStarted()
+            Couritnes.main {
+                try {
+
+                    val response = repositary.getVaccineList(repositary.getSubsId()!!)
+                    //val response = repositary.getVaccineList("60135720210213180206476394")
+                    if (!response.data.isNullOrEmpty()) {
+
+                        response.data.forEach { vaccineListResponseData ->
+                            val vaccine = Vaccine(
+                                    vaccineListResponseData.brandName,
+                                    vaccineListResponseData.facilityName,
+                                    vaccineListResponseData.gitn,
+                                    vaccineListResponseData.gsicodeSerialCode,
+                                    vaccineListResponseData.itemBatch,
+                                    vaccineListResponseData.item_expiry,
+                                    vaccineListResponseData.malNo,
+                                    vaccineListResponseData.manufacturerName,
+                                    vaccineListResponseData.manufacturerNo,
+                                    vaccineListResponseData.nfcTag,
+                                    vaccineListResponseData.patientSeqNo,
+                                    vaccineListResponseData.privateKey,
+                                    vaccineListResponseData.uuidTagNo,
+                                    vaccineListResponseData.vaccinationStatus,
+                                    vaccineListResponseData.vaccineDate,
+                                    vaccineListResponseData.vaccineType,
+                                    vaccineListResponseData.vccprivatekey
+                            )
+                            repositary.insertVaccine(vaccine)
+                        }
+                    }
+                    vaccineList = repositary.getVaccineList()
+                    _vaccineList.value = vaccineList
+                    //loadTestReportList()
+                } catch (e: APIException) {
+                    listener?.onFailure(e.message!!)
+                } catch (e: NoInternetException) {
+                    listener?.onFailure(e.message!!)
+                } catch (e: SocketTimeoutException) {
+                    listener?.onFailure(e.message!!)
                 }
-                loadTestReportList()
-            }catch (e: APIException) {
-                listener?.onFailure(e.message!!)
-            }catch (e:NoInternetException){
-                listener?.onFailure(e.message!!)
-            }catch (e:SocketTimeoutException){
-                listener?.onFailure(e.message!!)
             }
+        }else{
+            _vaccineList.value = vaccineList
         }
     }
 
     fun loadTestReportList(){
-        Couritnes.main {
-            try {
-                val response = repositary.getTestReportList(repositary.getSubsId()!!)
-                if (!response.data.isNullOrEmpty()){
-                    _testReportList.value = response.data
+        var testReportList = repositary.getTestReportList()
+        if (testReportList.isNullOrEmpty()) {
+            Couritnes.main {
+                try {
+                    val response = repositary.getTestReportList(repositary.getSubsId()!!)
+                    //val response = repositary.getTestReportList("60135720210213180206476394")
+                    if (!response.data.isNullOrEmpty()) {
+                        response.data.forEach { testReportListResponseData ->
+                            val testReport = TestReport(
+                                    testReportListResponseData.filePath,
+                                    testReportListResponseData.observationCodeSnomedCt,
+                                    testReportListResponseData.observationDateTime,
+                                    testReportListResponseData.observationResult,
+                                    testReportListResponseData.performerAddTxt,
+                                    testReportListResponseData.performerAddType,
+                                    testReportListResponseData.performerAddUse,
+                                    testReportListResponseData.performerContactTelecom,
+                                    testReportListResponseData.performerContactTelecomValue,
+                                    testReportListResponseData.performerName,
+                                    testReportListResponseData.performerQualificationIdentifier,
+                                    testReportListResponseData.performerQualificationIssuerName,
+                                    testReportListResponseData.performerType,
+                                    testReportListResponseData.specimenCode,
+                                    testReportListResponseData.specimenDateSampleCollected,
+                                    testReportListResponseData.specimenName,
+                                    testReportListResponseData.status,
+                                    testReportListResponseData.subsId,
+                                    testReportListResponseData.testCode,
+                                    testReportListResponseData.testSeqno,
+                            )
+                            repositary.insertTestReport(testReport)
+                        }
+                    }
+                    testReportList = repositary.getTestReportList()
+                    _testReportList.value = testReportList
+                } catch (e: APIException) {
+                    listener?.onFailure(e.message!!)
+                } catch (e: NoInternetException) {
+                    listener?.onFailure(e.message!!)
+                } catch (e: SocketTimeoutException) {
+                    listener?.onFailure(e.message!!)
                 }
-                listener?.onSuccess("success")
-            }catch (e: APIException) {
-                listener?.onFailure(e.message!!)
-            }catch (e:NoInternetException){
-                listener?.onFailure(e.message!!)
-            }catch (e:SocketTimeoutException){
-                listener?.onFailure(e.message!!)
             }
+        }else{
+            _testReportList.value = testReportList
         }
+        setUser()
+        listener?.onSuccess("success")
     }
 
     fun loadData() {

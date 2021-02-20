@@ -15,7 +15,8 @@ class SignupCompleteActivity : BaseActivity() {
 
         binding.btnSkip.setOnClickListener {
             Intent(this,MainActivity::class.java).also {
-                it.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+                it.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                it.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(it)
                 finish()
             }
@@ -25,7 +26,8 @@ class SignupCompleteActivity : BaseActivity() {
             Intent(this,LoginPinActivity::class.java).also {
                 it.putExtra(Passparams.ISCREATE,"create")
                 //it.putExtra(Passparams.ISSETTINGS,false)
-                it.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+                it.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                it.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(it)
                 finish()
             }
@@ -34,7 +36,8 @@ class SignupCompleteActivity : BaseActivity() {
 
     override fun onBackPressed() {
         Intent(this,MainActivity::class.java).also {
-            it.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+            it.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            it.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(it)
         }
     }

@@ -5,7 +5,7 @@ import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import com.cmg.vaccine.databinding.ActivityCheckOutBinding
 
-class CheckOutActivity : AppCompatActivity() {
+class CheckOutActivity : BaseActivity() {
 
     private lateinit var binding:ActivityCheckOutBinding
 

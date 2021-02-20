@@ -135,6 +135,10 @@ This QR Code is one time use and it expires in 5 minutes.</string>
     <string name="enter_act_code">Enter Activation Code</string>
     <string name="your_account_activate">Your account has been activated, a Personal Private Key has been registered in your Immunitee!</string>
     <string name="recomand_set_pin">We recommend you to setup an access PINs to keep your personal data stored with Immunitee protected against unauthorised access!</string>
+    <string name="manually_sync">Manually Sync Your Device</string>
+    <string name="disclaimer">Disclaimer</string>
+    <string name="disclaimer_desc">The verification for entry to a destination is done at our best knowledge. It is for reference and does not guarantee a entry to the destination desired. The right of entry to a destination is remained at the authority of entry owner.</string>
+    <string name="covid19_rrt_pcr_test">Covid-19 rRT-PCR Test</string>
 
 
     <string name="authorization">Authorization</string>
@@ -161,6 +165,8 @@ This QR Code is one time use and it expires in 5 minutes.</string>
     <string name="advisory">Advisory Alert</string>
 
     <string name="add_entry">Add Entry Point</string>
+
+    <string name="sync_now">Sync Now</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->

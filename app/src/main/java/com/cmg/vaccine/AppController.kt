@@ -5,7 +5,9 @@ import com.cmg.vaccine.database.AppDatabase
 import com.cmg.vaccine.network.MyApi
 import com.cmg.vaccine.prefernces.PreferenceProvider
 import com.cmg.vaccine.repositary.*
+import com.cmg.vaccine.services.MyFirebaseInstanceIDService
 import com.cmg.vaccine.viewmodel.viewmodelfactory.*
+import io.paperdb.Paper
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.androidXModule
@@ -21,6 +23,7 @@ class AppController : Application(),KodeinAware {
         Paper.init(this)
     }*/
     override val kodein = Kodein.lazy {
+
 
         import(androidXModule(this@AppController))
         bind() from singleton { PreferenceProvider(instance()) }
@@ -63,11 +66,16 @@ class AppController : Application(),KodeinAware {
         bind() from singleton { DependentRepositary(instance(),instance(),instance()) }
         bind() from provider { DependentViewModelFactory(instance()) }
 
-        bind() from singleton { SettingsRepositary(instance()) }
+        bind() from singleton { SettingsRepositary(instance(),instance(),instance()) }
         bind() from provider { SettingsModelFactory(instance()) }
 
         bind() from singleton { WorldEntryRepositary(instance()) }
         bind() from provider { WorldEntryViewModelFactory(instance()) }
+
+        bind() from singleton { VaccineAndTestRepositary(instance()) }
+        bind() from provider { VaccineAndTestModelFactory(instance()) }
+
+        //bind() from provider { MyFirebaseInstanceIDService(instance()) }
 
     }
 }

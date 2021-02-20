@@ -137,6 +137,11 @@ class ProfileFragment : Fragment(),KodeinAware {
         super.onResume()
         viewModel.loadParentData()
         viewModel.loadChildList()
+        if (viewModel.dependentListCount.get() >= 4) {
+            if (binding.btnAddDependent.visibility == View.VISIBLE){
+                binding.btnAddDependent.visibility = View.GONE
+            }
+        }
     }
 
 }

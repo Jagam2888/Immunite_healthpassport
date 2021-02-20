@@ -5,7 +5,7 @@ import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import com.cmg.vaccine.databinding.ActivityNewsUpdateBinding
 
-class NewsUpdateActivity : AppCompatActivity() {
+class NewsUpdateActivity : BaseActivity() {
 
     private lateinit var binding:ActivityNewsUpdateBinding
 

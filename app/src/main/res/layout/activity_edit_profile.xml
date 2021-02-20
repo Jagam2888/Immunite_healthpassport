@@ -109,7 +109,8 @@
                     android:paddingBottom="10dp"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
-                    android:paddingTop="10dp" />
+                    android:paddingTop="10dp"
+                    android:inputType="text"/>
 
 
                 <TextView
@@ -184,7 +185,6 @@
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
                         android:hint="0123456789"
-                        android:focusable="false"
                         android:text="@={profileviewmodel.contactNumber}"
                         android:inputType="phone"
                         android:maxLines="1"
@@ -247,13 +247,17 @@
                     android:textColor="@color/gray"
                     android:layout_marginTop="5dp"
                     style="@style/opens_regular" />
-                <EditText
+                <com.msa.dateedittext.DateEditText
                     android:id="@+id/edt_dob"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="@style/opens_regular"
                     android:maxLines="1"
                     android:hint="dd/mm/yy"
+                    app:dateFormat="ddMMyyyy"
+                    app:maxDate="01/12/2100"
+                    app:minDate="01/12/1900"
+                    app:dividerCharacter="slash"
                     android:text="@={profileviewmodel.dob}"
                     android:textColorHint="@color/gray"
                     android:textColor="@color/black"
@@ -264,8 +268,7 @@
                     android:paddingBottom="10dp"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
-                    android:paddingTop="10dp"
-                    android:focusable="false"/>
+                    android:paddingTop="10dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -274,23 +277,25 @@
                     android:textColor="@color/gray"
                     android:layout_marginTop="10dp"
                     style="@style/opens_regular" />
-                <EditText
+                <br.com.sapereaude.maskedEditText.MaskedEditText
                     android:id="@+id/edt_dob_time"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="@style/opens_regular"
                     android:maxLines="1"
-                    android:hint="HH/MM"
+                    android:hint="HH:MM"
+                    android:inputType="time"
+                    app:mask="##:##"
                     android:text="@={profileviewmodel.dobTime}"
                     android:textColorHint="@color/gray"
                     android:textColor="@color/black"
                     android:background="@drawable/edittext_background"
+                    android:drawableRight="@drawable/calender_icon"
                     android:layout_marginTop="5dp"
                     android:paddingBottom="10dp"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
-                    android:paddingTop="10dp"
-                    android:focusable="false"/>
+                    android:paddingTop="10dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -345,7 +350,32 @@
                     android:hint="@string/email_address1"
                     style="@style/opens_regular"
                     android:text="@={profileviewmodel.email1}"
-                    android:focusable="false"
+                    android:maxLines="1"
+                    android:maxLength="30"
+                    android:textColorHint="@color/gray"
+                    android:inputType="textEmailAddress"
+                    android:textColor="@color/black"
+                    android:background="@drawable/edittext_background"
+                    android:layout_marginTop="5dp"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="10dp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{`* `+@string/retype_email}"
+                    style="@style/opens_regular"
+                    android:textColor="@color/gray"
+                    android:layout_marginTop="5dp" />
+
+                <EditText
+                    android:id="@+id/edt_retype"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/retype_email"
+                    style="@style/opens_regular"
+                    android:text="@={profileviewmodel.reTypeEmail}"
                     android:maxLines="1"
                     android:maxLength="30"
                     android:textColorHint="@color/gray"
@@ -507,7 +537,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{`* `+@string/passport_number}"
+                    android:text="@string/passport_number"
                     style="@style/opens_regular"
                     android:textColor="@color/gray"
                     android:layout_marginTop="5dp"/>
@@ -570,7 +600,8 @@
                     android:paddingBottom="10dp"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
-                    android:paddingTop="10dp" />
+                    android:paddingTop="10dp"
+                    android:inputType="text"/>
 
                <!-- </LinearLayout>-->
                 <TextView

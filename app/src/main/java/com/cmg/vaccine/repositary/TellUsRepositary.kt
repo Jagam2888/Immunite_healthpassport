@@ -40,4 +40,8 @@ class TellUsRepositary(
     fun getAllCountriesDB():List<Countries>{
         return database.getDao().getAllCountries()
     }
+
+    fun getFCMToken():String?{
+        return preferenceProvider.getFCMTOKEN()
+    }
 }

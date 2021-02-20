@@ -12,6 +12,7 @@ private const val KEY_SAVE_URL = "key_save_url"
 private const val USER_DATA_REGISTER_REQ = "user_req"
 private const val USER_EMAIL = "user_email"
 private const val USER_SUB_ID = "user_sub_id"
+private const val FCM_TOKEN = "fcm_token"
 class PreferenceProvider(
         context: Context
 ) {
@@ -40,6 +41,17 @@ class PreferenceProvider(
 
     fun getEmail():String?{
         return prefernece.getString(USER_EMAIL,null)
+    }
+
+    fun saveFCMToken(token:String){
+        prefernece.edit().putString(
+            FCM_TOKEN,
+            token
+        ).apply()
+    }
+
+    fun getFCMTOKEN():String?{
+        return prefernece.getString(FCM_TOKEN,null)
     }
 
     fun saveSubId(subId:String){

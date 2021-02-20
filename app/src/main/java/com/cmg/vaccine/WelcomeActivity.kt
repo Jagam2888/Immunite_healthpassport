@@ -6,7 +6,7 @@ import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import com.cmg.vaccine.databinding.ActivityWelcomeBinding
 
-class WelcomeActivity : AppCompatActivity() {
+class WelcomeActivity : BaseActivity() {
 
     private lateinit var binding:ActivityWelcomeBinding
     override fun onCreate(savedInstanceState: Bundle?) {

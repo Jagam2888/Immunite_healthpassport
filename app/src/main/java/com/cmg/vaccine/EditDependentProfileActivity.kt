@@ -1,7 +1,12 @@
 package com.cmg.vaccine
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.view.MotionEvent
+import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
@@ -15,7 +20,7 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
 
-class EditDependentProfileActivity : AppCompatActivity(),KodeinAware,SimpleListener {
+class EditDependentProfileActivity : BaseActivity(),KodeinAware,SimpleListener {
 
     override val kodein by kodein()
     private lateinit var binding:ActivityEditDependentProfileBinding
@@ -37,13 +42,33 @@ class EditDependentProfileActivity : AppCompatActivity(),KodeinAware,SimpleListe
         val childPrivateKey = intent.extras?.getString(Passparams.DEPENDENT_SUBID,"")
         viewModel.loadProfileData(this,childPrivateKey!!)
 
-        binding.edtDob.setOnClickListener {
-            showDatePickerDialog(binding.edtDob)
-        }
+        binding.edtDob.listen()
 
-        binding.edtDobTime.setOnClickListener {
-            showTimepickerDialog(binding.edtDobTime)
-        }
+        binding.edtDob.setOnTouchListener(object : View.OnTouchListener{
+            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+                if(event?.action == MotionEvent.ACTION_UP) {
+                    if(binding.edtDob.compoundDrawables[2]!=null){
+                        if(event?.x!! >= (binding.edtDob.right- binding.edtDob.left - binding.edtDob.compoundDrawables[2].bounds.width())) {
+                            showDatePickerDialog(binding.edtDob)
+                        }
+                    }
+                }
+                return false
+            }
+        })
+
+        binding.edtDobTime.setOnTouchListener(object : View.OnTouchListener{
+            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+                if(event?.action == MotionEvent.ACTION_UP) {
+                    if(binding.edtDobTime.compoundDrawables[2]!=null){
+                        if(event?.x!! >= (binding.edtDobTime.right- binding.edtDobTime.left - binding.edtDobTime.compoundDrawables[2].bounds.width())) {
+                            showTimepickerDialog(binding.edtDobTime)
+                        }
+                    }
+                }
+                return false
+            }
+        })
 
         binding.imgBack.setOnClickListener {
             finish()
@@ -51,18 +76,48 @@ class EditDependentProfileActivity : AppCompatActivity(),KodeinAware,SimpleListe
 
         binding.edtMobile.setOnEditorActionListener(TextView.OnEditorActionListener { v, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_NEXT) {
-                showDatePickerDialog(binding.edtDob)
+                binding.edtDob.requestFocus()
                 return@OnEditorActionListener true
             }
             false
         })
 
+        binding.ccpLoadCountryCode.registerCarrierNumberEditText(binding.edtMobile)
         if (viewModel.countryCode.value != null)
             binding.ccpLoadCountryCode.setCountryForPhoneCode(viewModel.countryCode.value!!)
 
         viewModel.selectedItemContactCode.set(binding.ccpLoadCountryCode.selectedCountryCode)
         binding.ccpLoadCountryCode.setOnCountryChangeListener {
             viewModel.selectedItemContactCode.set(binding.ccpLoadCountryCode.selectedCountryCode) }
+
+
+        binding.edtEmail1.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                if (!isValidEmail(s.toString())){
+                    binding.edtEmail1.error = "Invalid Email"
+                }
+            }
+        })
+
+        binding.edtRetype.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                if (!isValidEmail(s.toString())){
+                    binding.edtRetype.error = "Invalid Email"
+                }
+            }
+        })
     }
 
     override fun onStarted() {
@@ -72,7 +127,12 @@ class EditDependentProfileActivity : AppCompatActivity(),KodeinAware,SimpleListe
     override fun onSuccess(msg: String) {
         hide(binding.progressBar)
         toast(msg)
-        finish()
+        //finish()
+        Intent(this, OTPVerifyActivity::class.java).also {
+            it.putExtra("IsExistUser", true)
+            startActivity(it)
+            finish()
+        }
     }
 
     override fun onFailure(msg: String) {

@@ -60,10 +60,16 @@ class HomeFragment : Fragment(),KodeinAware,SimpleListener {
         viewModel.listener = this
 
         viewModel.loadVaccineList()
+        viewModel.loadTestReportList()
+        /*if (viewModel.vaccineList.value.isNullOrEmpty()) {
+            viewModel.loadVaccineList()
+        }else if (viewModel.testReportList.value.isNullOrEmpty()){
+            viewModel.loadTestReportList()
+        }*/
 
 
         //this function only for refersh page
-        viewModel.setUser()
+        //viewModel.setUser()
 
 
 
@@ -74,7 +80,9 @@ class HomeFragment : Fragment(),KodeinAware,SimpleListener {
             listDashboard = list
             binding.sliderViewPager.also {
                 it.adapter = MyViewPagerAdapter(requireContext(),listDashboard!!)
-                addBottomDots(0)
+                if (!listDashboard.isNullOrEmpty()) {
+                    addBottomDots(0)
+                }
 
             }
 
@@ -106,7 +114,9 @@ class HomeFragment : Fragment(),KodeinAware,SimpleListener {
 
         viewModel.currentPagerPosition.observe(viewLifecycleOwner, Observer {
             binding.sliderViewPager.setCurrentItem(it,true)
-            addBottomDots(it)
+            if (!listDashboard.isNullOrEmpty()) {
+                addBottomDots(it)
+            }
         })
 
     }
@@ -138,9 +148,9 @@ class HomeFragment : Fragment(),KodeinAware,SimpleListener {
     override fun onSuccess(msg: String) {
         hide(binding.progressBar)
         //context?.toast(msg)
-        viewModel.users.observe(viewLifecycleOwner, Observer {
+        //viewModel.users.observe(viewLifecycleOwner, Observer {
             viewModel.loadData()
-        })
+        //})
     }
 
     override fun onFailure(msg: String) {

@@ -2,27 +2,34 @@ package com.cmg.vaccine.util
 
 
 object Passparams{
-    const val LOGINPIN:String = "loginpin"
-    const val ISCREATE:String = "isCreate"
-    const val ISSETTINGS:String = "isSettings"
-    const val PRIVATEKEY:String = "private_key"
-    const val USER:String = "user"
-    const val PARENT:String = "Principal"
-    const val DEPENDENT:String = "Dependant"
-    const val DEPENDENT_SUBID:String = "dependant_sub_id"
+    const val LOGINPIN = "loginpin"
+    const val ISCREATE = "isCreate"
+    const val ISSETTINGS = "isSettings"
+    const val PRIVATEKEY = "private_key"
+    const val USER = "user"
+    const val PARENT = "Principal"
+    const val DEPENDENT = "Dependant"
+    const val DEPENDENT_SUBID = "dependant_sub_id"
+    const val TEST_REPORT_ID = "test_report_id"
+    const val FCM_TOKEN = "fcm_token"
 
     //API
-    const val URL:String = "http://47.254.238.145:7001/"
-    const val PATIENT_REGISTRATION:String = "nhr-module-user/patientreg"
-    const val DEPENDENT_REGISTRATION:String = "nhr-module-user/patientdependentreg"
+    const val URL = "http://47.254.238.145:7001/"
+    const val PATIENT_REGISTRATION = "nhr-module-user/patientreg"
+    const val DEPENDENT_REGISTRATION = "nhr-module-user/patientdependentreg"
 
-    const val EDIT_PATIENT_PROFILE:String = "nhr-module-user/editpatientprofile"
-    const val EDIT_DEPENDENT_PROFILE:String = "nhr-module-user/editdependentProfile"
+    const val EDIT_PATIENT_PROFILE = "nhr-module-user/editpatientprofile"
+    const val EDIT_DEPENDENT_PROFILE = "nhr-module-user/editdependentProfile"
 
-    const val SEARCH_PRIVATE_KEY:String = "nhr-module-user/searchPrivateKey"
-    const val SEARCH_VACCINE:String = "nhr-module-user/searchVaccine"
-    const val SEARCH_TEST_REPORT:String = "nhr-module-user/searchtest"
-    const val VERIFY_TAC:String = "nhr-module-user/verifyTac"
-    const val RESEND_TAC:String = "nhr-module-user/resendtac"
-    const val COUNTRIES:String = "nhr-module-user/countries"
+    const val SEARCH_PRIVATE_KEY = "nhr-module-user/searchPrivateKey"
+    const val SEARCH_VACCINE = "nhr-module-user/searchVaccine"
+    const val SEARCH_TEST_REPORT = "nhr-module-user/searchtest"
+    const val VERIFY_TAC = "nhr-module-user/verifyTac"
+    const val RESEND_TAC = "nhr-module-user/resendtac"
+    const val COUNTRIES = "nhr-module-user/countries"
+    const val VACCINE = "nhr-module-user/vaccine"
+    const val TESTTYPE = "nhr-module-user/testtype"
+    const val VIRUS = "nhr-module-user/virus"
+
+
 }

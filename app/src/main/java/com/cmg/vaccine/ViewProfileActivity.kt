@@ -14,7 +14,7 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
 
-class ViewProfileActivity : AppCompatActivity(),KodeinAware {
+class ViewProfileActivity : BaseActivity(),KodeinAware {
     override val kodein by kodein()
     private lateinit var binding:ActivityViewProfileBinding
     private lateinit var viewModel:ProfileViewModel

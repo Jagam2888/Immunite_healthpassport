@@ -12,4 +12,5 @@ class SignUpReqData {
     var nationalityCountry: String?=null
     var passportNo: String?=null
     var placeOfBirth: String?=null
+    var token:String?=null
 }

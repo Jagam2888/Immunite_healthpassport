@@ -59,6 +59,7 @@
                     style="@style/opens_regular"
                     android:textColorHint="@color/gray"
                     android:textColor="@color/black"
+                    android:inputType="text"
                     android:maxLines="1"
                     android:maxLength="100"
                     android:background="@drawable/edittext_background"
@@ -202,7 +203,33 @@
                     android:layout_marginTop="10dp"
                     style="@style/opens_regular" />
 
-                <EditText
+                <com.msa.dateedittext.DateEditText
+                    android:id="@+id/edt_dob"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/opens_regular"
+                    android:maxLines="1"
+                    android:cursorVisible="true"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:hint="dd/mm/yyyy"
+                    app:dateFormat="ddMMyyyy"
+                    app:dividerCharacter="slash"
+                    android:text="@={signupviewmodel.dob}"
+                    android:drawableRight="@drawable/calender_icon"
+                    app:maxDate="01/12/2100"
+                    app:minDate="01/12/1900"
+                    app:helperTextEnabled="true"
+                    android:textColorHint="@color/gray"
+                    android:textColor="@color/black"
+                    android:background="@drawable/edittext_background"
+                    android:layout_marginTop="5dp"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="10dp"/>
+
+                <!--<com.msa.dateedittext.DateEditText
                     android:id="@+id/edt_dob"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -219,8 +246,7 @@
                     android:paddingBottom="10dp"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
-                    android:paddingTop="10dp"
-                    android:focusable="false"/>
+                    android:paddingTop="10dp"/>-->
 
                 <!--<LinearLayout
                     android:layout_width="match_parent"
@@ -326,23 +352,26 @@
                     android:textColor="@color/gray"
                     android:layout_marginTop="10dp"
                     style="@style/opens_regular" />
-                <EditText
+                <br.com.sapereaude.maskedEditText.MaskedEditText
                     android:id="@+id/edt_dob_time"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="@style/opens_regular"
                     android:maxLines="1"
-                    android:hint="HH/MM"
+                    android:inputType="time"
+                    app:mask="##:##"
+                    android:hint="HH:MM"
                     android:text="@={signupviewmodel.dobTime}"
                     android:textColorHint="@color/gray"
                     android:textColor="@color/black"
                     android:background="@drawable/edittext_background"
+                    android:drawableRight="@drawable/calender_icon"
                     android:layout_marginTop="5dp"
                     android:paddingBottom="10dp"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
                     android:paddingTop="10dp"
-                    android:focusable="false"/>
+                    android:focusable="true"/>
 
                 <TextView
                     android:layout_width="wrap_content"

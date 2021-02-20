@@ -413,8 +413,19 @@
                     android:id="@+id/payment_method"
                     layout="@layout/payment_method"
                     android:visibility="gone"/>
+                <include
+                    android:id="@+id/sync"
+                    layout="@layout/sync"
+                    android:visibility="gone"/>
             </LinearLayout>
         </ScrollView>
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="gone"/>
 
 
     </RelativeLayout>

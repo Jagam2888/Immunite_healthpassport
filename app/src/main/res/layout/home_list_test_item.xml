@@ -4,7 +4,7 @@
     <data>
         <variable
             name="model"
-            type="com.cmg.vaccine.model.response.TestReportListResponseData" />
+            type="com.cmg.vaccine.database.TestReport" />
     </data>
 
     <RelativeLayout

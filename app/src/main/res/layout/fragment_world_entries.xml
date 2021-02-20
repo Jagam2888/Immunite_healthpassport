@@ -4,7 +4,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+        <variable
+            name="viewmodel"
+            type="com.cmg.vaccine.viewmodel.WorldEntryViewModel" />
+        <import type="android.view.View"/>
     </data>
 
     <RelativeLayout
@@ -45,7 +48,8 @@
                 android:layout_marginBottom="15dp"
                 android:src="@drawable/left_arrow"
                 app:tint="@color/black"
-                tools:ignore="VectorDrawableCompat" />
+                tools:ignore="VectorDrawableCompat"
+                android:visibility="gone"/>
 
             <ImageView
                 android:id="@+id/imgAdd"
@@ -60,10 +64,11 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 android:src="@drawable/plus_icon"
-                tools:ignore="VectorDrawableCompat" />
+                tools:ignore="VectorDrawableCompat"
+                android:visibility="@{viewmodel.worldEntriesList.size() >=10?View.GONE:View.VISIBLE}"/>
         </RelativeLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
+        <com.tubb.smrv.SwipeMenuRecyclerView
             android:id="@+id/recyclerViewWorldEntry"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -81,7 +86,8 @@
             android:textAlignment="center"
             android:textColor="@color/gray"
             android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:visibility="@{viewmodel.countryList.size() > 0?View.GONE:View.VISIBLE}"/>
 
 
     </RelativeLayout>

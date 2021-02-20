@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
@@ -18,7 +19,7 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
 
-class AddDependentActivity : AppCompatActivity(),KodeinAware,SimpleListener {
+class AddDependentActivity : BaseActivity(),KodeinAware,SimpleListener {
     override val kodein by kodein()
     private lateinit var binding:ActivityAddDependentBinding
     private lateinit var viewModel:DependentViewModel
@@ -36,6 +37,34 @@ class AddDependentActivity : AppCompatActivity(),KodeinAware,SimpleListener {
 
         viewModel.setCurrentCountry(getCurrentCountryName()!!)
 
+        binding.edtDob.listen()
+
+        binding.edtDob.setOnTouchListener(object : View.OnTouchListener{
+            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+                if(event?.action == MotionEvent.ACTION_UP) {
+                    if(binding.edtDob.compoundDrawables[2]!=null){
+                        if(event?.x!! >= (binding.edtDob.right- binding.edtDob.left - binding.edtDob.compoundDrawables[2].bounds.width())) {
+                            showDatePickerDialog(binding.edtDob)
+                        }
+                    }
+                }
+                return false
+            }
+        })
+
+        binding.edtDobTime.setOnTouchListener(object : View.OnTouchListener{
+            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+                if(event?.action == MotionEvent.ACTION_UP) {
+                    if(binding.edtDobTime.compoundDrawables[2]!=null){
+                        if(event?.x!! >= (binding.edtDobTime.right- binding.edtDobTime.left - binding.edtDobTime.compoundDrawables[2].bounds.width())) {
+                            showTimepickerDialog(binding.edtDobTime)
+                        }
+                    }
+                }
+                return false
+            }
+        })
+
         /*binding.addressCheckbox.setOnCheckedChangeListener { buttonView, isChecked ->
 
             if (isChecked){
@@ -52,17 +81,11 @@ class AddDependentActivity : AppCompatActivity(),KodeinAware,SimpleListener {
         binding.ccpLoadCountryCode.setOnCountryChangeListener {
             viewModel.selectedItemContactCode.set(binding.ccpLoadCountryCode.selectedCountryCode) }
 
-        binding.edtDob.setOnClickListener {
-            showDatePickerDialog(binding.edtDob)
-        }
 
-        binding.edtDobTime.setOnClickListener {
-            showTimepickerDialog(binding.edtDobTime)
-        }
 
         binding.edtMobile.setOnEditorActionListener(TextView.OnEditorActionListener { v, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_NEXT) {
-                showDatePickerDialog(binding.edtDob)
+                binding.edtDob.requestFocus()
                 return@OnEditorActionListener true
             }
             false

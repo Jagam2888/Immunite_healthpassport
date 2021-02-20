@@ -4,7 +4,7 @@
     <data>
         <variable
             name="dashboard"
-            type="com.cmg.vaccine.model.response.VaccineListResponseData" />
+            type="com.cmg.vaccine.database.Vaccine" />
     </data>
 
     <RelativeLayout

@@ -7,6 +7,7 @@ import android.os.Build
 import android.os.Bundle
 import android.transition.Slide
 import android.transition.TransitionManager
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -21,9 +22,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cmg.vaccine.adapter.SwitchProfileAdapter
 import com.cmg.vaccine.fragment.*
+import com.cmg.vaccine.util.Passparams
 import com.cmg.vaccine.util.RecyclerViewTouchListener
 import com.cmg.vaccine.viewmodel.HomeViewModel
 import com.cmg.vaccine.viewmodel.viewmodelfactory.HomeViewModelFactory
+import io.paperdb.Paper
 import kotlinx.android.synthetic.main.activity_main.*
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
@@ -36,6 +39,7 @@ class MainActivity : BaseActivity(),KodeinAware {
 
     private val factory:HomeViewModelFactory by instance()
     var isHome:Boolean = true
+    var popupWindow:PopupWindow?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,6 +54,9 @@ class MainActivity : BaseActivity(),KodeinAware {
     private fun initViews(){
         loadFragment(HomeFragment())
 
+        val token = Paper.book().read(Passparams.FCM_TOKEN,"")
+        Log.d("token",token)
+
 
 
         bottom_navigation_view.setOnNavigationItemSelectedListener { menuItem->
@@ -57,6 +64,7 @@ class MainActivity : BaseActivity(),KodeinAware {
                 R.id.home -> {
                     isHome = true
                     homeViewModel.setCurrentItem(0)
+                    isShowPopWindow()
                     loadFragment(HomeFragment())
                     true
                 }
@@ -68,19 +76,30 @@ class MainActivity : BaseActivity(),KodeinAware {
                 }
                 R.id.profile -> {
                     isHome = false
+                    isShowPopWindow()
                     loadFragment(ProfileFragment())
                     true
                 }
                 R.id.world_entries -> {
                     isHome = false
+                    isShowPopWindow()
                     loadFragment(WorldEntriesFragment())
                     true
                 }
                 R.id.setting -> {
                     isHome = false
+                    isShowPopWindow()
                     loadFragment(SettingsFragment())
                     true
                 }else -> false
+            }
+        }
+    }
+
+    private fun isShowPopWindow(){
+        if (popupWindow != null){
+            if (popupWindow?.isShowing == true){
+                popupWindow?.dismiss()
             }
         }
     }
@@ -113,7 +132,7 @@ class MainActivity : BaseActivity(),KodeinAware {
         val inflater:LayoutInflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         // Inflate a custom view using layout inflater
         val view = inflater.inflate(R.layout.switch_profile_popupwindow, null)
-        val popupWindow = PopupWindow(
+        popupWindow = PopupWindow(
             view,
             LinearLayout.LayoutParams.MATCH_PARENT,
             LinearLayout.LayoutParams.WRAP_CONTENT
@@ -124,15 +143,15 @@ class MainActivity : BaseActivity(),KodeinAware {
         display.getSize(size)
         val width: Int = size.x
 
-        popupWindow.width = width - 30
+        popupWindow?.width = width - 30
 
-        popupWindow.elevation = 10.0F
+        popupWindow?.elevation = 10.0F
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_view_switch_profile)
         val btnBack = view.findViewById<ImageView>(R.id.img_back)
 
         btnBack.setOnClickListener {
-            popupWindow.dismiss()
+            popupWindow?.dismiss()
         }
 
         recyclerView.also {
@@ -145,7 +164,7 @@ class MainActivity : BaseActivity(),KodeinAware {
         recyclerView.addOnItemTouchListener(RecyclerViewTouchListener(this,recyclerView,object :RecyclerViewTouchListener.ClickListener{
             override fun onClick(view: View?, position: Int) {
                 homeViewModel.setCurrentItem(position)
-                popupWindow.dismiss()
+                popupWindow?.dismiss()
             }
 
             override fun onLongClick(view: View?, position: Int) {
@@ -158,21 +177,21 @@ class MainActivity : BaseActivity(),KodeinAware {
             // Create a new slide animation for popup window enter transition
             val slideIn = Slide()
             slideIn.slideEdge = Gravity.TOP
-            popupWindow.enterTransition = slideIn
+            popupWindow?.enterTransition = slideIn
 
             // Slide animation for popup window exit transition
             val slideOut = Slide()
             slideOut.slideEdge = Gravity.BOTTOM
-            popupWindow.exitTransition = slideOut
+            popupWindow?.exitTransition = slideOut
 
         }
         // Finally, show the popup window on app
         TransitionManager.beginDelayedTransition(container)
-        popupWindow.showAtLocation(
+        popupWindow?.showAtLocation(
             container, // Location to display popup window
-            Gravity.BOTTOM, // Exact position of layout to display popup
+            Gravity.CENTER_VERTICAL, // Exact position of layout to display popup
             0, // X offset
-            0 // Y offset
+            bottom_navigation_view.height // Y offset
         )
     }
 

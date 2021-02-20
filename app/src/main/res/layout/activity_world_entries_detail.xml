@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="108dp"
+            android:orientation="horizontal"
+            android:background="@color/lite_blue">
+
+            <TextView
+                android:id="@+id/entries_name"
+                android:layout_width="266dp"
+                android:layout_height="wrap_content"
+                android:textSize="26sp"
+                android:text="Help \nUniversity"
+                android:textColor="@color/white"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                />
+            <ImageView
+                android:id="@+id/close_btn"
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:src="@drawable/close_icon"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                app:tint="@color/white"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="80dp"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:layout_below="@id/title">
+
+
+            <include
+                android:id="@+id/travel"
+                layout="@layout/layout_travel"
+                android:layout_marginTop="10dp"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent" />
+
+            <TextView
+                android:id="@+id/disclaimer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                style="@style/opens_regular"
+                android:gravity="bottom"
+                android:text="@string/disclaimer"
+                android:textColor="@color/black"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                />
+            <TextView
+                android:id="@+id/disclaimer_desc"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginLeft="20dp"
+                style="@style/opens_regular"
+                android:gravity="center_vertical"
+                android:paddingRight="60dp"
+                android:text="@string/disclaimer_desc"
+                android:textColor="@color/black"
+                android:textSize="11sp"
+
+                />
+
+            <View
+                android:id="@+id/line5"
+                android:layout_width="320dp"
+                android:layout_height="1dp"
+                android:background="#33448A80" />
+
+            <RelativeLayout
+                android:id="@+id/other_inform_con"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginTop="15dp"
+                    style="@style/opens_regular"
+                    android:gravity="center_vertical"
+                    android:paddingRight="60dp"
+                    android:text="Answer 1"
+                    android:textColor="@color/black"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+
+                    />
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+</layout>

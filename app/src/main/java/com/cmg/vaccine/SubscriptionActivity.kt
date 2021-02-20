@@ -6,7 +6,7 @@ import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import com.cmg.vaccine.databinding.ActivitySubscriptionBinding
 
-class SubscriptionActivity : AppCompatActivity() {
+class SubscriptionActivity : BaseActivity() {
 
     private lateinit var binding:ActivitySubscriptionBinding
 

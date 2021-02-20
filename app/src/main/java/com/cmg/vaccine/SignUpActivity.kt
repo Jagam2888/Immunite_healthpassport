@@ -6,9 +6,9 @@ import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.KeyEvent
+import android.view.MotionEvent
+import android.view.View
 import android.view.inputmethod.EditorInfo
-import android.widget.TextView
 import android.widget.TextView.OnEditorActionListener
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -24,6 +24,7 @@ import com.google.android.gms.location.LocationServices
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
+import java.util.*
 
 
 class SignUpActivity : BaseActivity(),KodeinAware,SimpleListener {
@@ -32,6 +33,9 @@ class SignUpActivity : BaseActivity(),KodeinAware,SimpleListener {
     private lateinit var viewModel:SignupViewModel
     private val signUpModelFactory:SignUpModelFactory by instance()
     var fusedLocationProviderClient:FusedLocationProviderClient?=null
+    var current = ""
+    val ddmmyyyy = "dd/mm/yy"
+    val cal = Calendar.getInstance()
 
     companion object{
         const val LOCATION:Int = 1000
@@ -39,6 +43,7 @@ class SignUpActivity : BaseActivity(),KodeinAware,SimpleListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_sign_up)
         viewModel = ViewModelProvider(this, signUpModelFactory).get(SignupViewModel::class.java)
@@ -61,9 +66,45 @@ class SignUpActivity : BaseActivity(),KodeinAware,SimpleListener {
             }
         }*/
 
+        binding.edtDob.listen()
+
+        binding.edtDob.setOnTouchListener(object :View.OnTouchListener{
+            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+                if(event?.action == MotionEvent.ACTION_UP) {
+                    if(binding.edtDob.compoundDrawables[2]!=null){
+                        if(event?.x!! >= (binding.edtDob.right- binding.edtDob.left - binding.edtDob.compoundDrawables[2].bounds.width())) {
+                            showDatePickerDialog(binding.edtDob)
+                        }
+                    }
+                }
+                return false
+            }
+        })
+
+        binding.edtDobTime.setOnTouchListener(object :View.OnTouchListener{
+            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+                if(event?.action == MotionEvent.ACTION_UP) {
+                    if(binding.edtDobTime.compoundDrawables[2]!=null){
+                        if(event?.x!! >= (binding.edtDobTime.right- binding.edtDobTime.left - binding.edtDobTime.compoundDrawables[2].bounds.width())) {
+                            showTimepickerDialog(binding.edtDobTime)
+                        }
+                    }
+                }
+                return false
+            }
+        })
+
         binding.edtMobile.setOnEditorActionListener(OnEditorActionListener { v, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_NEXT) {
-                showDatePickerDialog(binding.edtDob)
+                binding.edtDob.requestFocus()
+                return@OnEditorActionListener true
+            }
+            false
+        })
+
+        binding.edtDob.setOnEditorActionListener(OnEditorActionListener { v, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_NEXT) {
+                binding.edtDobTime.requestFocus()
                 return@OnEditorActionListener true
             }
             false
@@ -75,13 +116,15 @@ class SignUpActivity : BaseActivity(),KodeinAware,SimpleListener {
             viewModel.selectedItemContactCode.set(binding.ccpLoadCountryCode.selectedCountryCode) }
 
 
-        binding.edtDob.setOnClickListener {
+        /*binding.edtDob.setOnClickListener {
             showDatePickerDialog(binding.edtDob)
-        }
+        }*/
 
-        binding.edtDobTime.setOnClickListener {
+        /*binding.edtDobTime.setOnClickListener {
             showTimepickerDialog(binding.edtDobTime)
-        }
+        }*/
+
+
 
         binding.edtEmail1.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {

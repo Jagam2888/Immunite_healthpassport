@@ -13,18 +13,23 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.cmg.vaccine.*
 import com.cmg.vaccine.databinding.FragmentSettingsBinding
+import com.cmg.vaccine.listener.SimpleListener
 import com.cmg.vaccine.util.Passparams
+import com.cmg.vaccine.util.hide
+import com.cmg.vaccine.util.show
+import com.cmg.vaccine.util.toast
 import com.cmg.vaccine.viewmodel.SettingsViewModel
 import com.cmg.vaccine.viewmodel.viewmodelfactory.SettingsModelFactory
 import com.zcw.togglebutton.ToggleButton.OnToggleChanged
 import kotlinx.android.synthetic.main.about.*
 import kotlinx.android.synthetic.main.security_pin.*
+import kotlinx.android.synthetic.main.sync.*
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
 import org.kodein.di.generic.instance
 
 
-class SettingsFragment : Fragment(),KodeinAware {
+class SettingsFragment : Fragment(),KodeinAware,SimpleListener {
     override val kodein by kodein()
     private lateinit var binding:FragmentSettingsBinding
     private lateinit var viewModel:SettingsViewModel
@@ -46,6 +51,8 @@ class SettingsFragment : Fragment(),KodeinAware {
         binding.viewmodel = viewModel
         binding.lifecycleOwner = this
 
+        viewModel.listener = this
+
         binding.layoutAbout.setOnClickListener {
             hideMainLayout()
             binding.about.visibility = View.VISIBLE
@@ -65,6 +72,11 @@ class SettingsFragment : Fragment(),KodeinAware {
         binding.layoutAdvanced.setOnClickListener {
             hideMainLayout()
             binding.advanced.visibility = View.VISIBLE
+        }
+
+        binding.layoutSync.setOnClickListener {
+            hideMainLayout()
+            binding.sync.visibility = View.VISIBLE
         }
 
         binding.layoutChangePassword.setOnClickListener {
@@ -133,6 +145,9 @@ class SettingsFragment : Fragment(),KodeinAware {
         }
 
 
+        btn_sync.setOnClickListener {
+            viewModel.syncRecord()
+        }
 
 
     }
@@ -156,10 +171,12 @@ class SettingsFragment : Fragment(),KodeinAware {
             binding.notification.visibility = View.GONE
         }else if (binding.paymentMethod.visibility == View.VISIBLE){
             binding.paymentMethod.visibility = View.GONE
+        }else if (binding.sync.visibility == View.VISIBLE){
+            binding.sync.visibility = View.GONE
         }
 
         binding.mainLayout.visibility = View.VISIBLE
-        binding.layoutLogout.visibility = View.VISIBLE
+        //binding.layoutLogout.visibility = View.VISIBLE
         binding.imgBack.visibility = View.GONE
     }
 
@@ -170,7 +187,7 @@ class SettingsFragment : Fragment(),KodeinAware {
                 ) { dialog, which ->
                 Intent(requireContext(), LoginPinActivity::class.java).also {
                     it.putExtra(Passparams.ISCREATE, "")
-                    it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     requireContext().startActivity(it)
                 }
             }.setNegativeButton("CANCEL"
@@ -199,4 +216,17 @@ class SettingsFragment : Fragment(),KodeinAware {
 
     }
 
+    override fun onStarted() {
+        show(binding.progressBar)
+    }
+
+    override fun onSuccess(msg: String) {
+        hide(binding.progressBar)
+        context?.toast(msg)
+    }
+
+    override fun onFailure(msg: String) {
+        hide(binding.progressBar)
+        context?.toast(msg)
+    }
 }

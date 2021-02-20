@@ -1,5 +1,7 @@
 package com.cmg.vaccine.viewmodel
 
+import androidx.databinding.ObservableField
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.cmg.vaccine.database.User
@@ -22,6 +24,11 @@ class OTPVerifyViewModel(
     var listener:SimpleListener?=null
 
     val isExistUser:MutableLiveData<Boolean> = MutableLiveData()
+
+    var _txtOTP:MutableLiveData<String> = MutableLiveData()
+    val txtOTP:LiveData<String>
+    get() = _txtOTP
+    //var txtOTP = ObservableField<String>()
 
 
     fun onResendTac(){
