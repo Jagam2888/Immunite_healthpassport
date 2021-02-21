@@ -52,7 +52,7 @@ class EditProfileActivity : BaseActivity(),KodeinAware,SimpleListener {
         binding.ccpLoadCountryCode.setOnCountryChangeListener {
             viewModel.selectedItemContactCode.set(binding.ccpLoadCountryCode.selectedCountryCode) }
 
-        binding.edtDob.listen()
+        //binding.edtDob.listen()
 
         binding.edtDob.setOnTouchListener(object : View.OnTouchListener{
             override fun onTouch(v: View?, event: MotionEvent?): Boolean {
@@ -72,7 +72,7 @@ class EditProfileActivity : BaseActivity(),KodeinAware,SimpleListener {
                 if(event?.action == MotionEvent.ACTION_UP) {
                     if(binding.edtDobTime.compoundDrawables[2]!=null){
                         if(event?.x!! >= (binding.edtDobTime.right- binding.edtDobTime.left - binding.edtDobTime.compoundDrawables[2].bounds.width())) {
-                            showTimepickerDialog(binding.edtDobTime)
+                            showTimepickerDialog(binding.edtDobTime,viewModel.dobTime.value!!)
                         }
                     }
                 }
@@ -91,6 +91,22 @@ class EditProfileActivity : BaseActivity(),KodeinAware,SimpleListener {
         binding.edtMobile.setOnEditorActionListener(TextView.OnEditorActionListener { v, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_NEXT) {
                 binding.edtDob.requestFocus()
+                return@OnEditorActionListener true
+            }
+            false
+        })
+
+        binding.edtDobTime.setOnEditorActionListener(TextView.OnEditorActionListener { v, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_NEXT) {
+                binding.edtEmail1.requestFocus()
+                return@OnEditorActionListener true
+            }
+            false
+        })
+
+        binding.edtDob.setOnEditorActionListener(TextView.OnEditorActionListener { v, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_NEXT) {
+                binding.edtDobTime.requestFocus()
                 return@OnEditorActionListener true
             }
             false

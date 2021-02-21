@@ -1,5 +1,7 @@
 package com.cmg.vaccine.data
 
+import android.widget.ImageView
+import androidx.databinding.BindingAdapter
 import androidx.databinding.InverseMethod
 import com.cmg.vaccine.R
 
@@ -14,6 +16,11 @@ fun genderToButtonId(gender: Gender) : Int?{
         }
     }
     return selectedItem
+}
+
+@BindingAdapter("android:src")
+fun serImage(imageView: ImageView,resource:Int){
+    imageView.setImageResource(resource)
 }
 
 fun buttonIdToGender(selectedItem : Int) : Gender?{

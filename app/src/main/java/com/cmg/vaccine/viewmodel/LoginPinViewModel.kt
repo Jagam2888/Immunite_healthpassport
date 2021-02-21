@@ -76,7 +76,7 @@ class LoginPinViewModel(
                             labelTxt.value = "Enter Your 4 Digits PIN"
                             tempPin.value = ""
                             pin.value = ""
-                            listener?.onFailure("Please enter correct PIN")
+                            listener?.onFailure("Incorrect PIN")
                         }
                     }else{
                         labelTxt.value = "Re-enter Your 4 Digits PIN"

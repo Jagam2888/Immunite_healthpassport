@@ -101,7 +101,7 @@
                     android:text="@={profileviewmodel.firstName}"
                     style="@style/opens_regular"
                     android:maxLines="1"
-                    android:maxLength="30"
+                    android:maxLength="100"
                     android:textColorHint="@color/gray"
                     android:textColor="@color/black"
                     android:background="@drawable/edittext_background"
@@ -247,17 +247,14 @@
                     android:textColor="@color/gray"
                     android:layout_marginTop="5dp"
                     style="@style/opens_regular" />
-                <com.msa.dateedittext.DateEditText
+                <br.com.sapereaude.maskedEditText.MaskedEditText
                     android:id="@+id/edt_dob"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="@style/opens_regular"
                     android:maxLines="1"
-                    android:hint="dd/mm/yy"
-                    app:dateFormat="ddMMyyyy"
-                    app:maxDate="01/12/2100"
-                    app:minDate="01/12/1900"
-                    app:dividerCharacter="slash"
+                    app:mask="##/##/####"
+                    android:inputType="number"
                     android:text="@={profileviewmodel.dob}"
                     android:textColorHint="@color/gray"
                     android:textColor="@color/black"
@@ -268,7 +265,8 @@
                     android:paddingBottom="10dp"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
-                    android:paddingTop="10dp" />
+                    android:paddingTop="10dp"
+                    android:imeOptions="actionNext"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -295,7 +293,8 @@
                     android:paddingBottom="10dp"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
-                    android:paddingTop="10dp" />
+                    android:paddingTop="10dp"
+                    android:imeOptions="actionNext"/>
 
                 <TextView
                     android:layout_width="wrap_content"

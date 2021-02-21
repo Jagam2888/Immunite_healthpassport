@@ -240,7 +240,7 @@ class DependentViewModel(
             passportNumber.value = dependent?.passportNo
             idNo.value = dependent?.idNo
             idType.value = dependent?.idType
-            dob.value = dependent?.dob
+            dob.value = dependent?.dob?.replace("/","")
             dobTime.value = dependent?.dobTime?.replace(":","")
             country.value = dependent?.nationalityCountry
             relationshipItemPos.set(selectedRelationShipPosition(dependent?.relationship!!,relationShipList!!))

@@ -7,6 +7,7 @@
         <variable
             name="viewModel"
             type="com.cmg.vaccine.viewmodel.ProfileViewModel" />
+        <import type="com.cmg.vaccine.data.SimpleDatabindingAdapterKt"/>
     </data>
 
     <LinearLayout
@@ -228,9 +229,10 @@
                             android:orientation="horizontal"
                             android:layout_marginTop="5dp">
                             <ImageView
+                                android:id="@+id/img_gender"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:src="@drawable/female"
+                                android:src="@{viewModel.genderIcon}"
                                 android:layout_gravity="center_vertical"/>
                         <TextView
                             android:layout_width="wrap_content"

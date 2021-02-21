@@ -203,7 +203,7 @@
                     android:layout_marginTop="10dp"
                     style="@style/opens_regular" />
 
-                <com.msa.dateedittext.DateEditText
+                <br.com.sapereaude.maskedEditText.MaskedEditText
                     android:id="@+id/edt_dob"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -212,14 +212,10 @@
                     android:cursorVisible="true"
                     android:focusable="true"
                     android:focusableInTouchMode="true"
-                    android:hint="dd/mm/yyyy"
-                    app:dateFormat="ddMMyyyy"
-                    app:dividerCharacter="slash"
+                    app:mask="##/##/####"
+                    android:inputType="number"
                     android:text="@={signupviewmodel.dob}"
                     android:drawableRight="@drawable/calender_icon"
-                    app:maxDate="01/12/2100"
-                    app:minDate="01/12/1900"
-                    app:helperTextEnabled="true"
                     android:textColorHint="@color/gray"
                     android:textColor="@color/black"
                     android:background="@drawable/edittext_background"
@@ -227,7 +223,8 @@
                     android:paddingBottom="10dp"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
-                    android:paddingTop="10dp"/>
+                    android:paddingTop="10dp"
+                    android:imeOptions="actionNext"/>
 
                 <!--<com.msa.dateedittext.DateEditText
                     android:id="@+id/edt_dob"
@@ -235,6 +232,11 @@
                     android:layout_height="wrap_content"
                     style="@style/opens_regular"
                     android:maxLines="1"
+                    app:dateFormat="ddMMyyyy"
+                    app:dividerCharacter="slash"
+                    app:maxDate="01/12/2100"
+                    app:minDate="01/12/1900"
+                    app:helperTextEnabled="true"
                     android:hint="dd/mm/yyyy"
                     android:text="@={signupviewmodel.dob}"
                     android:drawableRight="@drawable/calender_icon"
@@ -371,7 +373,8 @@
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
                     android:paddingTop="10dp"
-                    android:focusable="true"/>
+                    android:focusable="true"
+                    android:imeOptions="actionNext"/>
 
                 <TextView
                     android:layout_width="wrap_content"

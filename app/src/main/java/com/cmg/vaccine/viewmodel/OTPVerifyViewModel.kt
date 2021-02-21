@@ -62,7 +62,6 @@ class OTPVerifyViewModel(
                         if (!isExistUser.value!!) {
                             val userData = repositary.getUserData( "N")
                             if (userData != null) {
-                                userData.privateKey = response.privateKey
                                 userData.virifyStatus = "Y"
                                 repositary.updateVerifyStatus(userData)
                             }

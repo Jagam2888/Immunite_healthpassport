@@ -58,6 +58,9 @@ interface MyApi {
     @GET(Passparams.VACCINE)
     suspend fun getVaccineDetailList():Response<VaccineDetailListResponse>
 
+    @GET(Passparams.GET_PRIVATE_KEY)
+    suspend fun getPrivateKey(@Query("subsId") subsId:String):Response<GetPrivateKeyResponse>
+
     companion object{
         operator fun invoke(
             context: Context,

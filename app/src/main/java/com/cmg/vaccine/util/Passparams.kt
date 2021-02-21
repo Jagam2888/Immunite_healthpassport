@@ -22,6 +22,7 @@ object Passparams{
     const val EDIT_DEPENDENT_PROFILE = "nhr-module-user/editdependentProfile"
 
     const val SEARCH_PRIVATE_KEY = "nhr-module-user/searchPrivateKey"
+    const val GET_PRIVATE_KEY = "nhr-module-user/privateKeyBySubsId"
     const val SEARCH_VACCINE = "nhr-module-user/searchVaccine"
     const val SEARCH_TEST_REPORT = "nhr-module-user/searchtest"
     const val VERIFY_TAC = "nhr-module-user/verifyTac"

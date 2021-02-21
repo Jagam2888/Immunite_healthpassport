@@ -29,8 +29,11 @@ interface PatientDao {
     @Query("SELECT * FROM User where parentSubscriberId = :subsId AND virifyStatus = :verifyStatus")
     fun getUserData(subsId:String,verifyStatus:String):User
 
-    @Query("SELECT privateKey FROM user where email =:email")
-    fun getPrivateKey(email: String):String
+    /*@Update(onConflict = OnConflictStrategy.REPLACE)
+    fun updatePrivateKey(user: User):Int*/
+
+    @Query("SELECT privateKey FROM User where parentSubscriberId =:subsId")
+    fun getPrivateKey(subsId: String):String
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
     fun updateUser(user: User):Int

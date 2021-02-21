@@ -45,7 +45,7 @@ class AppController : Application(),KodeinAware {
         bind() from singleton { ProfileRepositary(instance(),instance(),instance()) }
         bind() from provider { ProfileViewModelFactory(instance()) }
 
-        bind() from singleton { ViewPrivateKeyRepositary(instance(),instance()) }
+        bind() from singleton { ViewPrivateKeyRepositary(instance(),instance(),instance()) }
         bind() from provider { ViewPrivateKeyFactory(instance()) }
 
         bind() from singleton { HomeRepositary(instance(),instance(),instance()) }

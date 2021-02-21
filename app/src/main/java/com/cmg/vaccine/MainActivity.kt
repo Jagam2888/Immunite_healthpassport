@@ -69,9 +69,17 @@ class MainActivity : BaseActivity(),KodeinAware {
                     true
                 }
                 R.id.switch_profile -> {
-                    if (!isHome)
+                    if (!isHome) {
+                        homeViewModel.setUser()
                         loadFragment(HomeFragment())
-                    popUpWindow()
+                    }
+                    if (popupWindow!=null) {
+                        if (popupWindow?.isShowing == false) {
+                            popUpWindow()
+                        }
+                    }else{
+                        popUpWindow()
+                    }
                     true
                 }
                 R.id.profile -> {

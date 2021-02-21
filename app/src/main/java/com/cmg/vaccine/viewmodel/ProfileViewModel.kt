@@ -38,6 +38,7 @@ class ProfileViewModel(
     var city:MutableLiveData<String> = MutableLiveData()
     var state:MutableLiveData<String> = MutableLiveData()
     var gender:MutableLiveData<String> = MutableLiveData()
+    var genderIcon:MutableLiveData<Int> = MutableLiveData()
     var privateKey:MutableLiveData<String> = MutableLiveData()
     var passportNumber:MutableLiveData<String> = MutableLiveData()
     var countryCode:MutableLiveData<Int> = MutableLiveData()
@@ -119,10 +120,13 @@ class ProfileViewModel(
 
             if (user.gender == "M"){
                 gender.value = "Male"
+                genderIcon.value = R.drawable.male_icon
             }else if (user.gender == "F"){
                 gender.value = "Female"
+                genderIcon.value = R.drawable.female
             }else{
                 gender.value = "Other"
+                genderIcon.value = 0
             }
 
 
@@ -134,6 +138,8 @@ class ProfileViewModel(
 
             if (!dob.value.isNullOrEmpty())
                 dobViewFormat.value = changeDateFormatForViewProfile(dob.value!!)
+
+            dob.value = user.dob?.replace("/","")
 
             if (!placeBirth.value.isNullOrEmpty())
                 placeBirthViewFormat.value = getCountryNameUsingCode(placeBirth.value!!,countryList!!)

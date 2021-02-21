@@ -79,11 +79,12 @@ fun Context.showDatePickerDialog(editText: EditText){
     datePicker.show()
 }
 
-fun Context.showTimepickerDialog(editText: EditText){
+fun Context.showTimepickerDialog(editText: EditText,currentTime:String){
     val sdf = SimpleDateFormat("HHmm")
     val cal = Calendar.getInstance()
     try {
-        val date = sdf.parse("1200")
+        val changeFormat = currentTime.replace(":","")
+        val date = sdf.parse(changeFormat)
         cal.time = date
     }catch (e:ParseException){
         e.printStackTrace()

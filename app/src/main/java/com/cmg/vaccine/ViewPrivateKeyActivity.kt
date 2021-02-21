@@ -16,7 +16,10 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.cmg.vaccine.databinding.ActivityViewPrivateKeyBinding
+import com.cmg.vaccine.listener.SimpleListener
 import com.cmg.vaccine.util.Passparams
+import com.cmg.vaccine.util.hide
+import com.cmg.vaccine.util.show
 import com.cmg.vaccine.util.toast
 import com.cmg.vaccine.viewmodel.ViewPrivateKeyViewModel
 import com.cmg.vaccine.viewmodel.viewmodelfactory.ViewPrivateKeyFactory
@@ -25,7 +28,7 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
 
-class ViewPrivateKeyActivity : BaseActivity(),KodeinAware {
+class ViewPrivateKeyActivity : BaseActivity(),KodeinAware,SimpleListener {
     override val kodein by kodein()
     private lateinit var binding:ActivityViewPrivateKeyBinding
     private lateinit var viewModel:ViewPrivateKeyViewModel
@@ -38,11 +41,14 @@ class ViewPrivateKeyActivity : BaseActivity(),KodeinAware {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_view_private_key)
-        /*viewModel = ViewModelProvider(this, factory).get(ViewPrivateKeyViewModel::class.java)
+        viewModel = ViewModelProvider(this, factory).get(ViewPrivateKeyViewModel::class.java)
         binding.viewmodel = viewModel
         binding.lifecycleOwner = this
 
-        viewModel.getPrivateKey()
+        viewModel.listener = this
+
+
+        /*viewModel.getPrivateKey()
 
         viewModel.privateKey.observe(this, Observer { key ->
             privateKey = key
@@ -56,7 +62,16 @@ class ViewPrivateKeyActivity : BaseActivity(),KodeinAware {
         })*/
 
         privateKey = intent.extras?.getString(Passparams.PRIVATEKEY,"")
-        generateQRCode(privateKey!!)
+        if (!privateKey.isNullOrEmpty()) {
+            generateQRCode(privateKey!!)
+        }else{
+            viewModel.getPrivateKey()
+            viewModel.privateKey.observe(this, Observer { privateKey->
+                if (!privateKey.isNullOrEmpty()){
+                    generateQRCode(privateKey)
+                }
+            })
+        }
         /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (checkPermission()) {
                 generateQRCode(privateKey!!)
@@ -64,6 +79,12 @@ class ViewPrivateKeyActivity : BaseActivity(),KodeinAware {
                 requestPermission()
             }
         }*/
+
+        /*viewModel.privateKey.observe(this, Observer { privateKey->
+            if (!privateKey.isNullOrEmpty()){
+                generateQRCode(privateKey)
+            }
+        })*/
 
         binding.imgBack.setOnClickListener {
             finish()
@@ -158,5 +179,19 @@ class ViewPrivateKeyActivity : BaseActivity(),KodeinAware {
                 }
             }
         }
+    }
+
+    override fun onStarted() {
+        show(binding.progressBar)
+    }
+
+    override fun onSuccess(msg: String) {
+        hide(binding.progressBar)
+    }
+
+    override fun onFailure(msg: String) {
+        hide(binding.progressBar)
+        toast(msg)
+        finish()
     }
 }
