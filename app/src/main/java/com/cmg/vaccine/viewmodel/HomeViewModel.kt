@@ -1,5 +1,6 @@
 package com.cmg.vaccine.viewmodel
 
+import android.util.Log
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableInt
 import androidx.lifecycle.LiveData
@@ -12,13 +13,14 @@ import com.cmg.vaccine.model.Dashboard
 import com.cmg.vaccine.model.DashboardTestData
 import com.cmg.vaccine.model.DashboardVaccineData
 import com.cmg.vaccine.model.SwitchProfile
-import com.cmg.vaccine.model.response.HomeResponse
-import com.cmg.vaccine.model.response.TestReportListResponseData
-import com.cmg.vaccine.model.response.VaccineListResponseData
+import com.cmg.vaccine.model.response.*
 import com.cmg.vaccine.repositary.HomeRepositary
 import com.cmg.vaccine.util.APIException
 import com.cmg.vaccine.util.Couritnes
 import com.cmg.vaccine.util.NoInternetException
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.net.SocketTimeoutException
 
 class HomeViewModel(
@@ -101,6 +103,22 @@ class HomeViewModel(
         _users.value = listuser
     }
 
+   /* fun loaddummyVaccine(){
+        Couritnes.main {
+            val response = repositary.getAPI().getVaccineList("75F4B6C90564CD5D982FFD4D78178432BB441194469A00073C3FBC274AFF9814") as Call<GetVaccineBlockChainResponse>
+            response.enqueue(object :Callback<GetVaccineBlockChainResponse>{
+                override fun onResponse(call: Call<GetVaccineBlockChainResponse>, response: Response<GetVaccineBlockChainResponse>) {
+                    val responseCode = response.code()
+                    Log.d("response","code $responseCode")
+                }
+
+                override fun onFailure(call: Call<GetVaccineBlockChainResponse>, t: Throwable) {
+                    Log.d("erreor",t.message!!)
+                }
+            })
+        }
+    }*/
+
     fun loadVaccineList(){
         var vaccineList = repositary.getVaccineList()
 
@@ -109,36 +127,34 @@ class HomeViewModel(
             Couritnes.main {
                 try {
 
-                    val response = repositary.getVaccineList(repositary.getSubsId()!!)
-                    //val response = repositary.getVaccineList("60135720210213180206476394")
-                    if (!response.data.isNullOrEmpty()) {
-
-                        response.data.forEach { vaccineListResponseData ->
-                            val vaccine = Vaccine(
-                                    vaccineListResponseData.brandName,
-                                    vaccineListResponseData.facilityName,
-                                    vaccineListResponseData.gitn,
-                                    vaccineListResponseData.gsicodeSerialCode,
-                                    vaccineListResponseData.itemBatch,
-                                    vaccineListResponseData.item_expiry,
-                                    vaccineListResponseData.malNo,
-                                    vaccineListResponseData.manufacturerName,
-                                    vaccineListResponseData.manufacturerNo,
-                                    vaccineListResponseData.nfcTag,
-                                    vaccineListResponseData.patientSeqNo,
-                                    vaccineListResponseData.privateKey,
-                                    vaccineListResponseData.uuidTagNo,
-                                    vaccineListResponseData.vaccinationStatus,
-                                    vaccineListResponseData.vaccineDate,
-                                    vaccineListResponseData.vaccineType,
-                                    vaccineListResponseData.vccprivatekey
-                            )
-                            repositary.insertVaccine(vaccine)
+                    val response = repositary.getVaccineListNew(repositary.getPrivateKey()!!)
+                    //val response = repositary.getVaccineListNew("1C5C2D93ECF5DCB7ECD20531145D17F46CF3095F50A0AE5E7AC37C21C07E73AE")
+                    if (response.data.statusCode == 1) {
+                        if (!response.data.data.isNullOrEmpty()) {
+                            response.data.data.forEach { vaccineData ->
+                                val vaccine = Vaccine(
+                                        vaccineData.GITN,
+                                        vaccineData.NFCTag,
+                                        vaccineData.brandName,
+                                        vaccineData.facilityname,
+                                        vaccineData.gsicodeSerialCode,
+                                        vaccineData.itemBatch,
+                                        vaccineData.malNo,
+                                        vaccineData.manufacturerName,
+                                        vaccineData.manufacturerNo,
+                                        vaccineData.recordId,
+                                        vaccineData.status,
+                                        vaccineData.uuidTagNo,
+                                        vaccineData.vaccinetype
+                                )
+                                repositary.insertVaccine(vaccine)
+                            }
                         }
+                        vaccineList = repositary.getVaccineList()
+                        _vaccineList.value = vaccineList
+                    }else{
+                        listener?.onFailure(response.data.message)
                     }
-                    vaccineList = repositary.getVaccineList()
-                    _vaccineList.value = vaccineList
-                    //loadTestReportList()
                 } catch (e: APIException) {
                     listener?.onFailure(e.message!!)
                 } catch (e: NoInternetException) {
@@ -157,9 +173,43 @@ class HomeViewModel(
         if (testReportList.isNullOrEmpty()) {
             Couritnes.main {
                 try {
-                    val response = repositary.getTestReportList(repositary.getSubsId()!!)
+                    val response = repositary.getTestReportList(repositary.getPrivateKey()!!)
+                    //val response = repositary.getTestReportList("1C5C2D93ECF5DCB7ECD20531145D17F46CF3095F50A0AE5E7AC37C21C07E73AE")
+                    if (response.data.statusCode == 1) {
+                        if (!response.data.data.isNullOrEmpty()) {
+                            response.data.data.forEach { report ->
+                                val testReport = TestReport(
+                                        report.codeDisplay,
+                                        report.codeSystem,
+                                        report.collectedDateTime,
+                                        report.conceptCode,
+                                        report.conceptName,
+                                        report.contactAddressText,
+                                        report.contactAddressType,
+                                        report.contactAddressUse,
+                                        report.contactTelecom,
+                                        report.contactTelecomValue,
+                                        report.effectiveDateTime,
+                                        report.name,
+                                        report.qualificationIssuerName,
+                                        report.qualitificationIdentifier,
+                                        report.recordId,
+                                        report.status,
+                                        report.type
+                                )
+                                repositary.insertTestReport(testReport)
+                            }
+
+                        }
+                        testReportList = repositary.getTestReportList()
+                        _testReportList.value = testReportList
+                        setUser()
+                        listener?.onSuccess("success")
+                    }else{
+                        listener?.onFailure(response.data.message)
+                    }
                     //val response = repositary.getTestReportList("60135720210213180206476394")
-                    if (!response.data.isNullOrEmpty()) {
+                    /*if (!response.data.isNullOrEmpty()) {
                         response.data.forEach { testReportListResponseData ->
                             val testReport = TestReport(
                                     testReportListResponseData.filePath,
@@ -185,9 +235,8 @@ class HomeViewModel(
                             )
                             repositary.insertTestReport(testReport)
                         }
-                    }
-                    testReportList = repositary.getTestReportList()
-                    _testReportList.value = testReportList
+                    }*/
+
                 } catch (e: APIException) {
                     listener?.onFailure(e.message!!)
                 } catch (e: NoInternetException) {
@@ -197,10 +246,11 @@ class HomeViewModel(
                 }
             }
         }else{
+            setUser()
+            listener?.onSuccess("success")
             _testReportList.value = testReportList
         }
-        setUser()
-        listener?.onSuccess("success")
+
     }
 
     fun loadData() {
@@ -288,8 +338,10 @@ class HomeViewModel(
                 _listDashboard.value = _listDashboard.value!!.plus(dashboard1)
             }
         }
+    }
 
-
+    fun getPrivateKey():String?{
+        return repositary.getPrivateKey()
     }
 
     /*fun loadVaccineDetail(){

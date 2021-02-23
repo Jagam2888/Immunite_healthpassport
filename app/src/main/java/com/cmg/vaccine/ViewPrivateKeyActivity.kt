@@ -61,6 +61,9 @@ class ViewPrivateKeyActivity : BaseActivity(),KodeinAware,SimpleListener {
             }
         })*/
 
+        val userName = intent.extras?.getString(Passparams.USER_NAME,"")
+        viewModel._userName.value = userName
+
         privateKey = intent.extras?.getString(Passparams.PRIVATEKEY,"")
         if (!privateKey.isNullOrEmpty()) {
             generateQRCode(privateKey!!)

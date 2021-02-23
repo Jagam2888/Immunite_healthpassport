@@ -58,7 +58,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Covid-19 (rRT-PCR) test"
+                        android:text="@{model.codeDisplay}"
                         android:textSize="14sp"
                         android:textColor="@color/black"
                         android:textAppearance="@style/opens_bold" />
@@ -75,7 +75,7 @@
                     android:id="@+id/txt_vaccinedate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{`Complete on `+model.specimenDateSampleCollected}"
+                    android:text="@{`Complete on `+model.collectedDateTime}"
                     android:textColor="@color/white"
                     android:textSize="12sp"
                     android:background="@drawable/home_list_injected_gray"
@@ -101,7 +101,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{model.specimenDateSampleCollected}"
+                        android:text="@{model.collectedDateTime}"
                         android:textColor="@color/gray"
                         android:textSize="12sp" />
                 </LinearLayout>
@@ -121,7 +121,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{model.performerQualificationIssuerName}"
+                        android:text="@{model.qualificationIssuerName}"
                         android:textColor="@color/gray"
                         android:textSize="12sp" />
                 </LinearLayout>
@@ -141,7 +141,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{model.performerType}"
+                        android:text="@{model.name}"
                         android:textColor="@color/gray"
                         android:textSize="12sp" />
                 </LinearLayout>
@@ -160,7 +160,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{model.observationResult}"
+                        android:text="Negative"
                         android:textColor="@color/gray"
                         android:textSize="12sp" />
                 </LinearLayout>

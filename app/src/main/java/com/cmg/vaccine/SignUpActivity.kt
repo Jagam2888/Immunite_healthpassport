@@ -17,6 +17,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.cmg.vaccine.databinding.ActivitySignUpBinding
 import com.cmg.vaccine.listener.SimpleListener
 import com.cmg.vaccine.util.*
+import com.cmg.vaccine.util.DrawableClickListener.DrawablePosition
 import com.cmg.vaccine.viewmodel.SignupViewModel
 import com.cmg.vaccine.viewmodel.viewmodelfactory.SignUpModelFactory
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -68,29 +69,29 @@ class SignUpActivity : BaseActivity(),KodeinAware,SimpleListener {
 
         //binding.edtDob.listen()
 
-        binding.edtDob.setOnTouchListener(object :View.OnTouchListener{
-            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
-                if(event?.action == MotionEvent.ACTION_UP) {
-                    if(binding.edtDob.compoundDrawables[2]!=null){
-                        if(event?.x!! >= (binding.edtDob.right- binding.edtDob.left - binding.edtDob.compoundDrawables[2].bounds.width())) {
-                            showDatePickerDialog(binding.edtDob)
-                        }
+
+
+        binding.edtDob.setDrawableClickListener(object : DrawableClickListener {
+            override fun onClick(target: DrawablePosition?) {
+                when (target) {
+                    DrawablePosition.RIGHT -> {
+                        showDatePickerDialog(binding.edtDob)
+                    }
+                    else -> {
                     }
                 }
-                return false
             }
         })
 
-        binding.edtDobTime.setOnTouchListener(object :View.OnTouchListener{
-            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
-                if(event?.action == MotionEvent.ACTION_UP) {
-                    if(binding.edtDobTime.compoundDrawables[2]!=null){
-                        if(event?.x!! >= (binding.edtDobTime.right- binding.edtDobTime.left - binding.edtDobTime.compoundDrawables[2].bounds.width())) {
-                            showTimepickerDialog(binding.edtDobTime,viewModel.dobTime.value!!)
-                        }
+        binding.edtDobTime.setDrawableClickListener(object : DrawableClickListener {
+            override fun onClick(target: DrawablePosition?) {
+                when (target) {
+                    DrawablePosition.RIGHT -> {
+                        showTimepickerDialog(binding.edtDobTime, viewModel.dobTime.value!!)
+                    }
+                    else -> {
                     }
                 }
-                return false
             }
         })
 
@@ -187,23 +188,30 @@ class SignUpActivity : BaseActivity(),KodeinAware,SimpleListener {
     }
 
     private fun checkPermission():Boolean{
-        return ((ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED))
+        return ((ContextCompat.checkSelfPermission(
+            this,
+            android.Manifest.permission.ACCESS_FINE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED))
     }
 
     private fun requestPermission(){
         ActivityCompat.requestPermissions(
-                this,
-                arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
-                LOCATION
+            this,
+            arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
+            LOCATION
         )
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
         when(requestCode){
             LOCATION -> {
                 if (grantResults.isNotEmpty()) {
                     val locationAccepted: Boolean =
-                            grantResults[0] == PackageManager.PERMISSION_GRANTED
+                        grantResults[0] == PackageManager.PERMISSION_GRANTED
                     if (locationAccepted) {
                         viewModel.setCurrentCountry(getCurrentCountryName()!!)
                         //toast(getCurrentCountryName()!!)

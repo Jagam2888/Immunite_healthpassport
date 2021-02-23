@@ -7,6 +7,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.cmg.vaccine.databinding.ActivityTellUsMoreBinding
 import com.cmg.vaccine.listener.SimpleListener
+import com.cmg.vaccine.util.Passparams
 import com.cmg.vaccine.util.hide
 import com.cmg.vaccine.util.show
 import com.cmg.vaccine.util.toast
@@ -47,6 +48,7 @@ class TellUsMoreActivity : BaseActivity(),KodeinAware,SimpleListener {
         toast(msg)
         Intent(this,OTPVerifyActivity::class.java).also {
             it.putExtra("IsExistUser",false)
+            it.putExtra(Passparams.SUBSID, viewModel.userSubId.value)
             it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(it)
         }

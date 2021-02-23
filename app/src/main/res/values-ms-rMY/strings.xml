@@ -74,6 +74,7 @@
     <string name="report_detail">Perincian Laporan</string>
 
     <string name="submit_past_vaccine">Hantar Data Vaksinasi Yang Lalu</string>
+    <string name="submit_history">Submit Immunisation History</string>
 
     <string name="current_password">Kata Laluan Semasa</string>
     <string name="new_password">Kata laluan baharu</string>
@@ -183,6 +184,7 @@
     </string-array>
 
     <string-array name="id_type">
+        <item>None</item>
         <item>MyKad</item>
         <item>MyKid</item>
     </string-array>

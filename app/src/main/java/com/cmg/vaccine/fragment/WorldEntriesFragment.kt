@@ -52,6 +52,8 @@ class WorldEntriesFragment : Fragment(),KodeinAware {
 
         binding.lifecycleOwner = this
 
+        viewModel.getVaccineAndTestReportList()
+
 
 
 

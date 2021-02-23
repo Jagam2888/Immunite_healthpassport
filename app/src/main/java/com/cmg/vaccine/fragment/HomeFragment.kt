@@ -59,8 +59,13 @@ class HomeFragment : Fragment(),KodeinAware,SimpleListener {
         binding.lifecycleOwner = this
         viewModel.listener = this
 
-        viewModel.loadVaccineList()
-        viewModel.loadTestReportList()
+        if (!viewModel.getPrivateKey().isNullOrEmpty()) {
+            viewModel.loadVaccineList()
+            viewModel.loadTestReportList()
+        }else{
+            viewModel.setUser()
+            //viewModel.loadData()
+        }
         /*if (viewModel.vaccineList.value.isNullOrEmpty()) {
             viewModel.loadVaccineList()
         }else if (viewModel.testReportList.value.isNullOrEmpty()){
@@ -74,6 +79,10 @@ class HomeFragment : Fragment(),KodeinAware,SimpleListener {
 
 
         //viewModel.loadVaccineDetail()
+
+        viewModel.users.observe(viewLifecycleOwner, Observer {
+            viewModel.loadData()
+        })
 
 
         viewModel.listDashboard.observe(viewLifecycleOwner, Observer { list->
@@ -149,7 +158,7 @@ class HomeFragment : Fragment(),KodeinAware,SimpleListener {
         hide(binding.progressBar)
         //context?.toast(msg)
         //viewModel.users.observe(viewLifecycleOwner, Observer {
-            viewModel.loadData()
+            //viewModel.loadData()
         //})
     }
 

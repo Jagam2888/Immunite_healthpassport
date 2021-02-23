@@ -6,12 +6,15 @@ object Passparams{
     const val ISCREATE = "isCreate"
     const val ISSETTINGS = "isSettings"
     const val PRIVATEKEY = "private_key"
+    const val USER_NAME = "user_name"
+    const val SUBSID = "subsid"
     const val USER = "user"
     const val PARENT = "Principal"
     const val DEPENDENT = "Dependant"
     const val DEPENDENT_SUBID = "dependant_sub_id"
     const val TEST_REPORT_ID = "test_report_id"
     const val FCM_TOKEN = "fcm_token"
+    const val WORLD_ENTRY_SELECTED_COUNTRY_NAME = "world_entry_selected_country_name"
 
     //API
     const val URL = "http://47.254.238.145:7001/"
@@ -31,6 +34,13 @@ object Passparams{
     const val VACCINE = "nhr-module-user/vaccine"
     const val TESTTYPE = "nhr-module-user/testtype"
     const val VIRUS = "nhr-module-user/virus"
+    const val GET_VACCINE_LIST = "nhr-module-user/getallvaccinerecord"
+    const val GET_TEST_REPORT_LIST = "nhr-module-user/getalltestrecord"
 
+    //Block Chain
+    const val BLOCK_CHAIN_URL = "https://cashierbook.com.my:8081/blockchainapi/"
+
+    const val GET_VACCINE_LIST_BLOCK_CHAIN = "getAllVaccineRecord"
+    const val GET_TEST_REPORT_LIST_BLOCK_CHAIN = "getAllTestRecord"
 
 }

@@ -36,7 +36,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/add_dependent"
-                style="@style/opens_bold"
+                android:textAppearance="@style/opens_bold"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:layout_centerInParent="true" />
@@ -77,12 +77,16 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="New Member"
+                        android:textSize="14sp"
+                        android:textAppearance="@style/opens_regular"
                         android:layout_weight="1"/>
                     <RadioButton
                         android:id="@+id/radio_existing"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Existing Member"
+                        android:textSize="14sp"
+                        android:textAppearance="@style/opens_regular"
                         android:layout_weight="1"/>
                 </RadioGroup>
 
@@ -92,7 +96,8 @@
                     android:text="@{`* `+@string/relationship}"
                     android:layout_marginTop="5dp"
                     android:textColor="@color/gray"
-                    style="@style/opens_bold"/>
+                    android:textSize="14sp"
+                    android:textAppearance="@style/opens_regular"/>
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
@@ -106,7 +111,8 @@
                     <Spinner
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="16sp"
+                        android:textSize="14sp"
+                        android:textAppearance="@style/opens_regular"
                         android:background="@null"
                         android:minHeight="0dp"
                         android:entries="@array/relationships"
@@ -132,13 +138,15 @@
                     android:text="@{`* `+@string/full_name}"
                     android:layout_marginTop="5dp"
                     android:textColor="@color/gray"
-                    style="@style/opens_bold"/>
+                    android:textAppearance="@style/opens_regular"
+                    android:textSize="14sp"/>
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/full_name"
                     android:text="@={dependentViewModel.fullName}"
-                    style="@style/opens_regular"
+                    android:textAppearance="@style/opens_regular"
+                    android:textSize="14sp"
                     android:textColorHint="@color/gray"
                     android:textColor="@color/black"
                     android:maxLines="1"
@@ -154,7 +162,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@{`* `+@string/contact_number}"
-                    style="@style/opens_regular"
+                    android:textAppearance="@style/opens_regular"
+                    android:textSize="14sp"
                     android:textColor="@color/gray"
                     android:layout_marginTop="5dp" />
 
@@ -167,10 +176,12 @@
 
                     <com.hbb20.CountryCodePicker
                         android:id="@+id/ccp_loadCountryCode"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:ccp_hintExampleNumber="true"
-                        app:ccp_defaultNameCode="my"/>
+                        app:ccp_defaultNameCode="my"
+                        app:ccp_textSize="14sp"
+                        android:layout_weight="1"/>
                     <View
                         android:layout_width="1dp"
                         android:layout_height="match_parent"
@@ -186,7 +197,8 @@
                         android:inputType="phone"
                         android:maxLines="1"
                         android:maxLength="15"
-                        style="@style/opens_regular"
+                        android:textSize="14sp"
+                        android:textAppearance="@style/opens_regular"
                         android:layout_weight="1"
                         android:background="@android:color/transparent"
                         android:layout_gravity="center_vertical"
@@ -200,7 +212,8 @@
                     android:text="@{`* `+@string/gender}"
                     android:textColor="@color/gray"
                     android:layout_marginTop="5dp"
-                    style="@style/opens_regular" />
+                    android:textAppearance="@style/opens_regular"
+                    android:textSize="14sp" />
 
                 <RadioGroup
                     android:layout_width="match_parent"
@@ -239,19 +252,22 @@
                     android:text="@{`* `+@string/date_birth}"
                     android:textColor="@color/gray"
                     android:layout_marginTop="5dp"
-                    style="@style/opens_regular" />
+                    android:textAppearance="@style/opens_regular"
+                    android:textSize="14sp" />
 
-                <br.com.sapereaude.maskedEditText.MaskedEditText
+                <com.cmg.vaccine.util.CustomEditText
                     android:id="@+id/edt_dob"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    style="@style/opens_regular"
+                    android:textAppearance="@style/opens_regular"
+                    android:textSize="14sp"
                     android:maxLines="1"
                     app:mask="##/##/####"
                     android:inputType="number"
                     android:text="@={dependentViewModel.dob}"
                     android:textColorHint="@color/gray"
                     android:textColor="@color/black"
+                    android:hint="ddmmyyyy"
                     android:background="@drawable/edittext_background"
                     android:drawableRight="@drawable/calender_icon"
                     android:drawablePadding="10dp"
@@ -267,14 +283,16 @@
                     android:text="@{`* `+@string/birth_time}"
                     android:textColor="@color/gray"
                     android:layout_marginTop="10dp"
-                    style="@style/opens_regular" />
-                <br.com.sapereaude.maskedEditText.MaskedEditText
+                    android:textAppearance="@style/opens_regular"
+                    android:textSize="14sp" />
+                <com.cmg.vaccine.util.CustomEditText
                     android:id="@+id/edt_dob_time"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    style="@style/opens_regular"
+                    android:textAppearance="@style/opens_regular"
+                    android:textSize="14sp"
                     android:maxLines="1"
-                    android:inputType="time"
+                    android:inputType="number"
                     app:mask="##:##"
                     android:hint="HH:MM"
                     android:text="@={dependentViewModel.dobTime}"
@@ -294,7 +312,8 @@
                     android:text="@{`* `+@string/birth_place}"
                     android:textColor="@color/gray"
                     android:layout_marginTop="10dp"
-                    style="@style/opens_regular" />
+                    android:textAppearance="@style/opens_regular"
+                    android:textSize="14sp"/>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -329,7 +348,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@{`* `+@string/email_address1}"
-                    style="@style/opens_regular"
+                    android:textAppearance="@style/opens_regular"
+                    android:textSize="14sp"
                     android:textColor="@color/gray"
                     android:layout_marginTop="5dp" />
 
@@ -338,7 +358,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/email_address1"
-                    style="@style/opens_regular"
+                    android:textAppearance="@style/opens_regular"
+                    android:textSize="14sp"
                     android:text="@={dependentViewModel.email}"
                     android:maxLines="1"
                     android:maxLength="30"
@@ -357,7 +378,8 @@
                     android:text="@{`* `+@string/retype_email}"
                     android:textColor="@color/gray"
                     android:layout_marginTop="10dp"
-                    style="@style/opens_regular"/>
+                    android:textAppearance="@style/opens_regular"
+                    android:textSize="14sp"/>
 
                 <EditText
                     android:id="@+id/edt_email2"
@@ -374,7 +396,8 @@
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
                     android:paddingTop="10dp"
-                    style="@style/opens_regular"
+                    android:textAppearance="@style/opens_regular"
+                    android:textSize="14sp"
                     android:background="@drawable/edittext_background"/>
                 <TextView
                     android:layout_width="wrap_content"
@@ -382,7 +405,8 @@
                     android:text="@{`* `+@string/nationality}"
                     android:textColor="@color/gray"
                     android:layout_marginTop="5dp"
-                    style="@style/opens_regular" />
+                    android:textAppearance="@style/opens_regular"
+                    android:textSize="14sp" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -416,8 +440,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{`* `+@string/passport_number}"
-                    style="@style/opens_regular"
+                    android:text="@string/passport_number"
+                    android:textAppearance="@style/opens_regular"
+                    android:textSize="14sp"
                     android:textColor="@color/gray"
                     android:layout_marginTop="5dp"/>
 
@@ -435,7 +460,8 @@
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
                     android:paddingTop="10dp"
-                    style="@style/opens_regular"
+                    android:textAppearance="@style/opens_regular"
+                    android:textSize="14sp"
                     android:background="@drawable/edittext_background"
                     android:inputType="text"/>
 
@@ -443,7 +469,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@{`* `+@string/alternate_id}"
-                    style="@style/opens_regular"
+                    android:textAppearance="@style/opens_regular"
+                    android:textSize="14sp"
                     android:textColor="@color/gray"
                     android:layout_marginTop="5dp"/>
 
@@ -500,7 +527,8 @@
                         android:inputType="number"
                         android:maxLines="1"
                         android:maxLength="15"
-                        style="@style/opens_regular"
+                        android:textAppearance="@style/opens_regular"
+                        android:textSize="14sp"
                         android:layout_weight="1"
                         android:background="@android:color/transparent"
                         android:layout_gravity="center_vertical"
@@ -519,15 +547,18 @@
                         android:text="@{`* `+@string/date_birth}"
                         android:textColor="@color/gray"
                         android:layout_marginTop="5dp"
-                        style="@style/opens_regular" />
-                    <EditText
-                        android:id="@+id/edt_dob_exist_user"
+                        android:textAppearance="@style/opens_regular"
+                        android:textSize="14sp" />
+                    <com.cmg.vaccine.util.CustomEditText
+                        android:id="@+id/edt_existing_user_dob"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        style="@style/opens_regular"
+                        android:textSize="14sp"
+                        android:textAppearance="@style/opens_regular"
                         android:maxLines="1"
-                        android:hint="dd/mm/yy"
-                        android:text="@={dependentViewModel.dob}"
+                        app:mask="##/##/####"
+                        android:hint="ddmmyyyy"
+                        android:inputType="number"
                         android:textColorHint="@color/gray"
                         android:textColor="@color/black"
                         android:background="@drawable/edittext_background"
@@ -538,7 +569,7 @@
                         android:paddingLeft="10dp"
                         android:paddingRight="10dp"
                         android:paddingTop="10dp"
-                        android:focusable="false"/>
+                        android:imeOptions="actionNext"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -559,10 +590,10 @@
                             android:textColor="@color/black"
                             android:hint="Encrypted Private Key"
                             android:textColorHint="@color/blue"
+                            android:textAppearance="@style/opens_regular"
                             android:textSize="14sp"
                             android:drawableLeft="@drawable/shield_icon"
                             android:background="@drawable/edittext_background"
-                            android:textAppearance="@style/opens_regular"
                             android:maxLines="4"
                             android:minLines="4"
                             android:paddingRight="10dp"
@@ -609,7 +640,8 @@
                     android:buttonTint="@color/blue"
                     android:textColor="@color/blue"
                     android:layout_marginTop="20dp"
-                    style="@style/opens_regular"
+                    android:textAppearance="@style/opens_regular"
+                    android:textSize="12sp"
                     android:gravity="top"
                     android:checked="@={dependentViewModel.isChecked()}"/>
 
@@ -618,7 +650,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/save_change"
-                    style="@style/opens_bold"
+                    android:textAppearance="@style/opens_bold"
+                    android:textSize="16sp"
                     android:textColor="@color/white"
                     android:background="@drawable/button_background"
                     android:layout_marginTop="30dp"

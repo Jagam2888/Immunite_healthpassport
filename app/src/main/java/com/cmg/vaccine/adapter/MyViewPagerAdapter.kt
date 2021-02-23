@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -42,6 +43,21 @@ private val layouts:List<Dashboard>
         val txtIdNo = view.findViewById<TextView>(R.id.txt_id_no)
         val txtNoData = view.findViewById<TextView>(R.id.txt_nodata)
         val radioGroup = view.findViewById<RadioGroup>(R.id.dashboard_radio_group)
+
+        val radioVaccine = view.findViewById<RadioButton>(R.id.radio_vaccine)
+        val radioTest = view.findViewById<RadioButton>(R.id.radio_test)
+
+        if (layouts[position].dataTest?.isNotEmpty() == true){
+            radioTest.setBackgroundResource(R.drawable.test_data_btn_selector)
+        }else{
+            radioTest.setBackgroundResource(R.drawable.test_no_data_btn_selector)
+        }
+
+        if (layouts[position].data?.isNotEmpty() == true){
+            radioVaccine.setBackgroundResource(R.drawable.vaccine_data_btn_selector)
+        }else{
+            radioVaccine.setBackgroundResource(R.drawable.vaccine_no_data_btn_selector)
+        }
 
 
         val recyclerViewVaccine = view.findViewById<RecyclerView>(R.id.recycler_view_home_vaccine)
@@ -127,6 +143,7 @@ private val layouts:List<Dashboard>
                     radioGroup.check(R.id.radio_vaccine)
                     Intent(context,ViewPrivateKeyActivity::class.java).also {
                         it.putExtra(Passparams.PRIVATEKEY,layouts.get(position).privateKey)
+                        it.putExtra(Passparams.USER_NAME,layouts.get(position).fullName)
                         context.startActivity(it)
                     }
                 }

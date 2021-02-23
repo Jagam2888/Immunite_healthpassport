@@ -437,7 +437,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="14sp"
-                    android:text="@string/submit_past_vaccine"
+                    android:text="@string/submit_history"
                     android:textColor="@color/blue"
                     android:textAppearance="@style/opens_bold"
                     android:layout_marginTop="20dp"/>

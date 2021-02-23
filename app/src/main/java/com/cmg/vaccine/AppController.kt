@@ -2,6 +2,7 @@ package com.cmg.vaccine
 
 import android.app.Application
 import com.cmg.vaccine.database.AppDatabase
+import com.cmg.vaccine.network.BlockChainAPi
 import com.cmg.vaccine.network.MyApi
 import com.cmg.vaccine.prefernces.PreferenceProvider
 import com.cmg.vaccine.repositary.*
@@ -27,7 +28,8 @@ class AppController : Application(),KodeinAware {
 
         import(androidXModule(this@AppController))
         bind() from singleton { PreferenceProvider(instance()) }
-        bind() from singleton { MyApi(instance(),instance()) }
+        bind() from singleton { MyApi(instance()) }
+        bind() from singleton { BlockChainAPi(instance()) }
         bind() from singleton { AppDatabase(instance()) }
 
         bind() from singleton { AuthRepositary(instance(),instance()) }

@@ -1,9 +1,8 @@
 package com.cmg.vaccine.repositary
 
 import com.cmg.vaccine.database.*
-import com.cmg.vaccine.model.response.TestReportListResponse
-import com.cmg.vaccine.model.response.VaccineListResponse
-import com.cmg.vaccine.model.response.VaccineResponse
+import com.cmg.vaccine.model.response.*
+import com.cmg.vaccine.network.BlockChainAPi
 import com.cmg.vaccine.network.MyApi
 import com.cmg.vaccine.network.SafeAPIRequest
 import com.cmg.vaccine.prefernces.PreferenceProvider
@@ -26,11 +25,23 @@ class HomeRepositary(
         }
     }
 
-    suspend fun getTestReportList(subsId:String):TestReportListResponse{
+    /*suspend fun getTestReportList(subsId:String):TestReportListResponse{
         return apiRequest {
             api.searchTestReportList(subsId)
         }
+    }*/
+
+    suspend fun getTestReportList(privateKey: String):TestReportNewResponse{
+        return apiRequest {
+            api.getTestReportList(privateKey)
+        }
     }
+    suspend fun getVaccineListNew(privateKey: String):VaccineNewResponse{
+        return apiRequest {
+            api.getVaccineList(privateKey)
+        }
+    }
+
 
     fun getEmail():String?{
         return preferenceProvider.getEmail()
@@ -40,9 +51,9 @@ class HomeRepositary(
         return database.getDao().getUserData(preferenceProvider.getSubId()!!,"Y")
     }
 
-    /*fun getPrivateKey():String?{
-        return database.getDao().getPrivateKey(preferenceProvider.getEmail()!!)
-    }*/
+    fun getPrivateKey():String?{
+        return preferenceProvider.getPrincipalPrivateKey()
+    }
 
     fun getDependentList():List<Dependent>?{
         return database.getDao().getDependentList(preferenceProvider.getSubId()!!)
@@ -67,4 +78,5 @@ class HomeRepositary(
     fun getTestReportList():List<TestReport>{
         return database.getDao().getTestReportList()
     }
+
 }

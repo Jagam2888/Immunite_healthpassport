@@ -75,7 +75,7 @@
                     android:id="@+id/txt_vaccinedate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{`Injected on `+dashboard.vaccineDate}"
+                    android:text="Injected on 01/02/2021"
                     android:textColor="@color/white"
                     android:textSize="12sp"
                     android:background="@drawable/home_list_injected_gray"
@@ -141,7 +141,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{dashboard.manufacturerName}"
+                        android:text="@{dashboard.facilityname}"
                         android:textColor="@color/gray"
                         android:textSize="12sp" />
                 </LinearLayout>

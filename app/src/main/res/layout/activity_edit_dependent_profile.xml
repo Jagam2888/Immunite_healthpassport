@@ -62,34 +62,48 @@
                     android:textSize="16sp"
                     android:textColor="@color/primary"
                     android:textAppearance="@style/opens_bold"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="14sp"
-                    android:textColor="@color/gray"
-                    android:textAppearance="@style/opens_regular"
-                    android:text="@{`* Profile Picture`}"/>
                 <RelativeLayout
-                    android:id="@+id/layout_img"
-                    android:layout_width="150dp"
-                    android:layout_height="130dp"
-                    android:background="@drawable/user_profile_bg_svg"
-                    android:layout_gravity="center_horizontal"
-                    android:paddingBottom="5dp"
-                    android:paddingTop="5dp"
-                    android:paddingRight="5dp"
-                    android:paddingLeft="5dp">
-                <ImageView
-                    android:id="@+id/img_gallery"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_centerInParent="true" /></RelativeLayout>
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="*Profile Picture"
+                            style="@style/opens_regular"
+                            android:textColor="@color/gray" />
+                        <LinearLayout
+                            android:id="@+id/layout_img"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginLeft="100dp">
+                            <de.hdodenhof.circleimageview.CircleImageView
+                                android:id="@+id/head_picture"
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:src="@drawable/ic_head_profile"
+                                android:layout_gravity="center_horizontal|center_vertical"/>
+                            <ImageView
+                                android:id="@+id/upload_img_btn"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_upload_img"
+                                android:layout_marginLeft="-30dp"
+                                android:layout_gravity="bottom"/>
+                        </LinearLayout>
+                    </LinearLayout>
+                </RelativeLayout>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@{`* `+@string/full_name_passport}"
-                    style="@style/opens_regular"
+                    android:textSize="14sp"
+                    android:textAppearance="@style/opens_regular"
                     android:textColor="@color/gray" />
 
                 <EditText
@@ -97,7 +111,8 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/full_name_passport"
                     android:text="@={dependentViewModel.fullName}"
-                    style="@style/opens_regular"
+                    android:textSize="14sp"
+                    android:textAppearance="@style/opens_regular"
                     android:maxLines="1"
                     android:maxLength="100"
                     android:textColorHint="@color/gray"
@@ -115,7 +130,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@{`* `+@string/contact_number}"
-                    style="@style/opens_regular"
+                    android:textSize="14sp"
+                    android:textAppearance="@style/opens_regular"
                     android:textColor="@color/gray"
                     android:layout_marginTop="5dp" />
 
@@ -128,9 +144,11 @@
 
                     <com.hbb20.CountryCodePicker
                         android:id="@+id/ccp_loadCountryCode"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:ccp_hintExampleNumber="true"/>
+                        app:ccp_hintExampleNumber="true"
+                        app:ccp_textSize="14sp"
+                        android:layout_weight="1"/>
 
                     <View
                         android:layout_width="1dp"
@@ -146,8 +164,9 @@
                         android:text="@={dependentViewModel.contactNumber}"
                         android:inputType="phone"
                         android:maxLines="1"
-                        android:maxLength="11"
-                        style="@style/opens_regular"
+                        android:maxLength="20"
+                        android:textSize="14sp"
+                        android:textAppearance="@style/opens_regular"
                         android:layout_weight="1"
                         android:background="@null"
                         android:layout_gravity="center_vertical"
@@ -164,7 +183,8 @@
                     android:text="@{`* `+@string/gender}"
                     android:textColor="@color/gray"
                     android:layout_marginTop="5dp"
-                    style="@style/opens_regular" />
+                    android:textSize="14sp"
+                    android:textAppearance="@style/opens_regular" />
 
                 <RadioGroup
                     android:layout_width="match_parent"
@@ -204,14 +224,17 @@
                     android:text="@{`* `+@string/date_birth}"
                     android:textColor="@color/gray"
                     android:layout_marginTop="5dp"
-                    style="@style/opens_regular" />
-                <br.com.sapereaude.maskedEditText.MaskedEditText
+                    android:textSize="14sp"
+                    android:textAppearance="@style/opens_regular" />
+                <com.cmg.vaccine.util.CustomEditText
                     android:id="@+id/edt_dob"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    style="@style/opens_regular"
+                    android:textSize="14sp"
+                    android:textAppearance="@style/opens_regular"
                     android:maxLines="1"
                     app:mask="##/##/####"
+                    android:hint="ddmmyyyy"
                     android:inputType="number"
                     android:text="@={dependentViewModel.dob}"
                     android:textColorHint="@color/gray"
@@ -232,14 +255,17 @@
                     android:text="@{`* `+@string/birth_time}"
                     android:textColor="@color/gray"
                     android:layout_marginTop="10dp"
-                    style="@style/opens_regular" />
-                <br.com.sapereaude.maskedEditText.MaskedEditText
+                    android:textSize="14sp"
+                    android:textAppearance="@style/opens_regular" />
+                <com.cmg.vaccine.util.CustomEditText
                     android:id="@+id/edt_dob_time"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    style="@style/opens_regular"
+                    android:textSize="14sp"
+                    android:textAppearance="@style/opens_regular"
                     android:maxLines="1"
-                    android:inputType="time"
+                    android:inputType="number"
+                    android:drawableRight="@drawable/calender_icon"
                     app:mask="##:##"
                     android:hint="HH:MM"
                     android:text="@={dependentViewModel.dobTime}"
@@ -259,7 +285,8 @@
                     android:text="@{`* `+@string/birth_place}"
                     android:textColor="@color/gray"
                     android:layout_marginTop="10dp"
-                    style="@style/opens_regular" />
+                    android:textSize="14sp"
+                    android:textAppearance="@style/opens_regular" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -274,7 +301,8 @@
                     <Spinner
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="16sp"
+                        android:textSize="14sp"
+                        android:textAppearance="@style/opens_regular"
                         android:background="@null"
                         android:minHeight="0dp"
                         android:entries="@{dependentViewModel.countries}"
@@ -295,7 +323,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@{`* `+@string/email_address1}"
-                    style="@style/opens_regular"
+                    android:textSize="14sp"
+                    android:textAppearance="@style/opens_regular"
                     android:textColor="@color/gray"
                     android:layout_marginTop="5dp" />
 
@@ -304,7 +333,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/email_address1"
-                    style="@style/opens_regular"
+                    android:textSize="14sp"
+                    android:textAppearance="@style/opens_regular"
                     android:text="@={dependentViewModel.email}"
                     android:maxLines="1"
                     android:maxLength="30"
@@ -321,7 +351,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@{`* `+@string/retype_email}"
-                    style="@style/opens_regular"
+                    android:textSize="14sp"
+                    android:textAppearance="@style/opens_regular"
                     android:textColor="@color/gray"
                     android:layout_marginTop="5dp" />
 
@@ -330,7 +361,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/email_address1"
-                    style="@style/opens_regular"
+                    android:textSize="14sp"
+                    android:textAppearance="@style/opens_regular"
                     android:text="@={dependentViewModel.reTypeEmail}"
                     android:maxLines="1"
                     android:maxLength="30"
@@ -459,7 +491,8 @@
                     android:text="@{`* `+@string/nationality}"
                     android:textColor="@color/gray"
                     android:layout_marginTop="5dp"
-                    style="@style/opens_regular" />
+                    android:textSize="14sp"
+                    android:textAppearance="@style/opens_regular" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -474,7 +507,8 @@
                     <Spinner
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="16sp"
+                        android:textSize="14sp"
+                        android:textAppearance="@style/opens_regular"
                         android:background="@null"
                         android:minHeight="0dp"
                         android:entries="@{dependentViewModel.countries}"
@@ -494,7 +528,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/passport_number"
-                    style="@style/opens_regular"
+                    android:textSize="14sp"
+                    android:textAppearance="@style/opens_regular"
                     android:textColor="@color/gray"
                     android:layout_marginTop="5dp"/>
 
@@ -546,7 +581,8 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/passport_number"
                     android:text="@={dependentViewModel.passportNumber}"
-                    style="@style/opens_regular"
+                    android:textSize="14sp"
+                    android:textAppearance="@style/opens_regular"
                     android:maxLines="1"
                     android:maxLength="30"
                     android:textColorHint="@color/gray"
@@ -564,7 +600,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@{`* `+@string/alternate_id}"
-                    style="@style/opens_regular"
+                    android:textSize="14sp"
+                    android:textAppearance="@style/opens_regular"
                     android:textColor="@color/gray"
                     android:layout_marginTop="5dp"/>
 
@@ -596,7 +633,8 @@
                         <Spinner
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textSize="16sp"
+                            android:textSize="14sp"
+                            android:textAppearance="@style/opens_regular"
                             android:background="@null"
                             android:minHeight="0dp"
                             android:entries="@array/id_type"
@@ -621,7 +659,8 @@
                         android:inputType="number"
                         android:maxLines="1"
                         android:maxLength="15"
-                        style="@style/opens_regular"
+                        android:textSize="14sp"
+                        android:textAppearance="@style/opens_regular"
                         android:layout_weight="1"
                         android:background="@android:color/transparent"
                         android:layout_gravity="center_vertical"
@@ -636,7 +675,8 @@
                     android:buttonTint="@color/blue"
                     android:textColor="@color/blue"
                     android:layout_marginTop="20dp"
-                    style="@style/opens_regular"
+                    android:textSize="12sp"
+                    android:textAppearance="@style/opens_regular"
                     android:gravity="top"
                     android:checked="@={dependentViewModel.isChecked()}"/>
 
@@ -645,7 +685,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/save_change"
-                    style="@style/opens_bold"
+                    android:textSize="16sp"
+                    android:textAppearance="@style/opens_bold"
                     android:textColor="@color/white"
                     android:background="@drawable/button_background"
                     android:layout_marginTop="30dp"

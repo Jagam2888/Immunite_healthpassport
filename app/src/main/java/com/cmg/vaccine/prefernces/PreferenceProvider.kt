@@ -12,6 +12,7 @@ private const val KEY_SAVE_URL = "key_save_url"
 private const val USER_DATA_REGISTER_REQ = "user_req"
 private const val USER_EMAIL = "user_email"
 private const val USER_SUB_ID = "user_sub_id"
+private const val PRINCIPAL_PRIVATE_KEY = "prinicipal_private_key"
 private const val FCM_TOKEN = "fcm_token"
 class PreferenceProvider(
         context: Context
@@ -63,6 +64,17 @@ class PreferenceProvider(
 
     fun getSubId():String?{
         return prefernece.getString(USER_SUB_ID,null)
+    }
+
+    fun savePrincipalPrivateKey(privateKey:String){
+        prefernece.edit().putString(
+            PRINCIPAL_PRIVATE_KEY,
+            privateKey
+        ).apply()
+    }
+
+    fun getPrincipalPrivateKey():String?{
+        return prefernece.getString(PRINCIPAL_PRIVATE_KEY,null)
     }
 
     fun saveUserReqData(user: User){

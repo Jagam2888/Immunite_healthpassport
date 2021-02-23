@@ -5,6 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.cmg.vaccine.database.AddWorldEntries
 import com.cmg.vaccine.database.Countries
+import com.cmg.vaccine.database.TestReport
+import com.cmg.vaccine.database.Vaccine
 import com.cmg.vaccine.listener.SimpleListener
 import com.cmg.vaccine.repositary.WorldEntryRepositary
 
@@ -20,7 +22,19 @@ class WorldEntryViewModel(
     val worldEntriesList:LiveData<ArrayList<AddWorldEntries>>
     get() = _worldEntriesList
 
+    val _vaccineList:MutableLiveData<List<Vaccine>> = MutableLiveData()
+    val vaccineList:LiveData<List<Vaccine>>
+    get() = _vaccineList
+
+    val _testReportList:MutableLiveData<List<TestReport>> = MutableLiveData()
+    val testReportList:LiveData<List<TestReport>>
+        get() = _testReportList
+
     var listener:SimpleListener?=null
+
+    val _selectedCountryName:MutableLiveData<String> = MutableLiveData()
+    val selectedCountryName:LiveData<String>
+    get() = _selectedCountryName
 
 
     init {
@@ -58,6 +72,13 @@ class WorldEntryViewModel(
 
     fun deleteWorldEntries(countryName:String){
         repositary.deleteCountry(countryName)
+    }
+
+    fun getVaccineAndTestReportList(){
+        val vaccineList = repositary.getVaccineList()
+        _vaccineList.value = vaccineList
+        val testReportList = repositary.getTestReportList()
+        _testReportList.value = testReportList
     }
 
 }

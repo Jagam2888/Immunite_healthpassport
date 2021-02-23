@@ -61,28 +61,23 @@ class SettingsViewModel(
     private fun getVaccineFromAPI(){
         Couritnes.main {
             try {
-                val response = repositary.getVaccineList(repositary.getSubId()!!)
-                if (!response.data.isNullOrEmpty()) {
-
-                    response.data.forEach { vaccineListResponseData ->
+                val response = repositary.getVaccineListBlockChain(repositary.getPrivateKey()!!)
+                if (!response.data.data.isNullOrEmpty()){
+                    response.data.data.forEach { vaccineData->
                         val vaccine = Vaccine(
-                                vaccineListResponseData.brandName,
-                                vaccineListResponseData.facilityName,
-                                vaccineListResponseData.gitn,
-                                vaccineListResponseData.gsicodeSerialCode,
-                                vaccineListResponseData.itemBatch,
-                                vaccineListResponseData.item_expiry,
-                                vaccineListResponseData.malNo,
-                                vaccineListResponseData.manufacturerName,
-                                vaccineListResponseData.manufacturerNo,
-                                vaccineListResponseData.nfcTag,
-                                vaccineListResponseData.patientSeqNo,
-                                vaccineListResponseData.privateKey,
-                                vaccineListResponseData.uuidTagNo,
-                                vaccineListResponseData.vaccinationStatus,
-                                vaccineListResponseData.vaccineDate,
-                                vaccineListResponseData.vaccineType,
-                                vaccineListResponseData.vccprivatekey
+                                vaccineData.GITN,
+                                vaccineData.NFCTag,
+                                vaccineData.brandName,
+                                vaccineData.facilityname,
+                                vaccineData.gsicodeSerialCode,
+                                vaccineData.itemBatch,
+                                vaccineData.malNo,
+                                vaccineData.manufacturerName,
+                                vaccineData.manufacturerNo,
+                                vaccineData.recordId,
+                                vaccineData.status,
+                                vaccineData.uuidTagNo,
+                                vaccineData.vaccinetype
                         )
                         repositary.insertVaccine(vaccine)
                     }
@@ -101,33 +96,31 @@ class SettingsViewModel(
     private fun getTestReportListFromAPI(){
         Couritnes.main {
             try {
-                val response = repositary.getTestReportList(repositary.getSubId()!!)
-                if (!response.data.isNullOrEmpty()) {
-                    response.data.forEach { testReportListResponseData ->
+                val response = repositary.getTestReportList(repositary.getPrivateKey()!!)
+                if (!response.data.data.isNullOrEmpty()){
+                    response.data.data.forEach { report->
                         val testReport = TestReport(
-                                testReportListResponseData.filePath,
-                                testReportListResponseData.observationCodeSnomedCt,
-                                testReportListResponseData.observationDateTime,
-                                testReportListResponseData.observationResult,
-                                testReportListResponseData.performerAddTxt,
-                                testReportListResponseData.performerAddType,
-                                testReportListResponseData.performerAddUse,
-                                testReportListResponseData.performerContactTelecom,
-                                testReportListResponseData.performerContactTelecomValue,
-                                testReportListResponseData.performerName,
-                                testReportListResponseData.performerQualificationIdentifier,
-                                testReportListResponseData.performerQualificationIssuerName,
-                                testReportListResponseData.performerType,
-                                testReportListResponseData.specimenCode,
-                                testReportListResponseData.specimenDateSampleCollected,
-                                testReportListResponseData.specimenName,
-                                testReportListResponseData.status,
-                                testReportListResponseData.subsId,
-                                testReportListResponseData.testCode,
-                                testReportListResponseData.testSeqno,
+                            report.codeDisplay,
+                            report.codeSystem,
+                            report.collectedDateTime,
+                            report.conceptCode,
+                            report.conceptName,
+                            report.contactAddressText,
+                            report.contactAddressType,
+                            report.contactAddressUse,
+                            report.contactTelecom,
+                            report.contactTelecomValue,
+                            report.effectiveDateTime,
+                            report.name,
+                            report.qualificationIssuerName,
+                            report.qualitificationIdentifier,
+                            report.recordId,
+                            report.status,
+                            report.type
                         )
                         repositary.insertTestReport(testReport)
                     }
+
                 }
                 listener?.onSuccess("Sync Successfully")
             }catch (e: APIException) {

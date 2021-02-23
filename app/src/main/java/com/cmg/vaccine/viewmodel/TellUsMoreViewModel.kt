@@ -45,6 +45,8 @@ class TellUsMoreViewModel(
 
     val token = Paper.book().read(Passparams.FCM_TOKEN,"")
 
+    var userSubId:MutableLiveData<String> = MutableLiveData()
+
     init {
         val countries = repositary.getAllCountriesDB()
         if (!countries.isNullOrEmpty()){
@@ -76,8 +78,8 @@ class TellUsMoreViewModel(
                 val idTypeList = view.context.resources.getStringArray(R.array.id_type)
                 idType.value = idTypeList[selectedItemIdTYpe.get()]
 
-                userData.passportNumber = passportNo.value
-                userData.patientIdNo = idNo.value
+                userData.passportNumber = passportNo.value?.trim()
+                userData.patientIdNo = idNo.value?.trim()
                 userData.patientIdType = idType.value!!
                 userData.nationality = nationality
 
@@ -108,8 +110,9 @@ class TellUsMoreViewModel(
                         val response = repositary.signUp(signUpReq)
                         if (response.StatusCode == 1 && !response.ParentSubscriberId.isNullOrEmpty()) {
                             repositary.saveUserEmail(userData.email)
-                            repositary.saveUserSubId(response.ParentSubscriberId)
+                            repositary.saveUserSubId(response.ParentSubscriberId.trim())
                             userData.parentSubscriberId = response.ParentSubscriberId
+                            userSubId.value = response.ParentSubscriberId
                             repositary.insertUser(userData)
                             listener?.onSuccess(response.Message)
                         }else{

@@ -1,8 +1,6 @@
 package com.cmg.vaccine.repositary
 
-import com.cmg.vaccine.database.AddWorldEntries
-import com.cmg.vaccine.database.AppDatabase
-import com.cmg.vaccine.database.Countries
+import com.cmg.vaccine.database.*
 
 class WorldEntryRepositary(
     private val database: AppDatabase
@@ -26,5 +24,13 @@ class WorldEntryRepositary(
 
     fun countryExists(countryName:String):Int{
         return database.getDao().getCountryExists(countryName)
+    }
+
+    fun getVaccineList():List<Vaccine>{
+        return database.getDao().getVaccineList()
+    }
+
+    fun getTestReportList():List<TestReport>{
+        return database.getDao().getTestReportList()
     }
 }

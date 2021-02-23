@@ -40,23 +40,25 @@
                     android:layout_height="wrap_content"
                     android:text="@string/signup"
                     android:textColor="@color/primary"
-                    android:textSize="32sp"
-                    style="@style/opens_bold"/>
+                    android:textSize="24sp"
+                    android:textAppearance="@style/opens_bold"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{`* `+@string/full_name_passport}"
-                    style="@style/opens_regular"
+                    android:text="@{`* `+@string/full_name}"
+                    android:textAppearance="@style/opens_regular"
+                    android:textSize="14sp"
                     android:textColor="@color/gray"
                     android:layout_marginTop="20dp"/>
 
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/full_name_passport"
+                    android:hint="@string/full_name"
                     android:text="@={signupviewmodel.fullName}"
-                    style="@style/opens_regular"
+                    android:textAppearance="@style/opens_regular"
+                    android:textSize="14sp"
                     android:textColorHint="@color/gray"
                     android:textColor="@color/black"
                     android:inputType="text"
@@ -73,7 +75,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@{`* `+@string/contact_number}"
-                    style="@style/opens_regular"
+                    android:textAppearance="@style/opens_regular"
+                    android:textSize="14sp"
                     android:textColor="@color/gray"
                     android:layout_marginTop="10dp"/>
 
@@ -86,10 +89,12 @@
 
                     <com.hbb20.CountryCodePicker
                         android:id="@+id/ccp_loadCountryCode"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:ccp_hintExampleNumber="true"
-                        app:ccp_defaultNameCode="my"/>
+                        app:ccp_textSize="14sp"
+                        app:ccp_defaultNameCode="my"
+                        android:layout_weight="1"/>
 
                     <!--<RelativeLayout
                         android:layout_width="match_parent"
@@ -145,8 +150,9 @@
                         android:text="@={signupviewmodel.contactNumber}"
                         android:inputType="phone"
                         android:maxLines="1"
-                        android:maxLength="15"
-                        style="@style/opens_regular"
+                        android:maxLength="20"
+                        android:textAppearance="@style/opens_regular"
+                        android:textSize="14sp"
                         android:layout_weight="1"
                         android:background="@android:color/transparent"
                         android:layout_gravity="center_vertical"
@@ -161,7 +167,8 @@
                     android:text="@{`* `+@string/gender}"
                     android:textColor="@color/gray"
                     android:layout_marginTop="10dp"
-                    style="@style/opens_regular" />
+                    android:textAppearance="@style/opens_regular"
+                    android:textSize="14sp" />
 
                 <RadioGroup
                     android:layout_width="match_parent"
@@ -201,17 +208,20 @@
                     android:text="@{`* `+@string/date_birth}"
                     android:textColor="@color/gray"
                     android:layout_marginTop="10dp"
-                    style="@style/opens_regular" />
+                    android:textAppearance="@style/opens_regular"
+                    android:textSize="14sp" />
 
-                <br.com.sapereaude.maskedEditText.MaskedEditText
+                <com.cmg.vaccine.util.CustomEditText
                     android:id="@+id/edt_dob"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    style="@style/opens_regular"
+                    android:textAppearance="@style/opens_regular"
+                    android:textSize="14sp"
                     android:maxLines="1"
                     android:cursorVisible="true"
                     android:focusable="true"
                     android:focusableInTouchMode="true"
+                    android:hint="ddmmyyyy"
                     app:mask="##/##/####"
                     android:inputType="number"
                     android:text="@={signupviewmodel.dob}"
@@ -353,14 +363,16 @@
                     android:text="@{`* `+@string/birth_time}"
                     android:textColor="@color/gray"
                     android:layout_marginTop="10dp"
-                    style="@style/opens_regular" />
-                <br.com.sapereaude.maskedEditText.MaskedEditText
+                    android:textAppearance="@style/opens_regular"
+                    android:textSize="14sp" />
+                <com.cmg.vaccine.util.CustomEditText
                     android:id="@+id/edt_dob_time"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    style="@style/opens_regular"
+                    android:textAppearance="@style/opens_regular"
+                    android:textSize="14sp"
                     android:maxLines="1"
-                    android:inputType="time"
+                    android:inputType="number"
                     app:mask="##:##"
                     android:hint="HH:MM"
                     android:text="@={signupviewmodel.dobTime}"
@@ -382,7 +394,8 @@
                     android:text="@{`* `+@string/birth_place}"
                     android:textColor="@color/gray"
                     android:layout_marginTop="10dp"
-                    style="@style/opens_regular" />
+                    android:textAppearance="@style/opens_regular"
+                    android:textSize="14sp" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -397,7 +410,8 @@
                     <Spinner
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="16sp"
+                        android:textAppearance="@style/opens_regular"
+                        android:textSize="14sp"
                         android:background="@null"
                         android:minHeight="0dp"
                         android:entries="@{signupviewmodel.countries}"
@@ -420,7 +434,8 @@
                     android:text="@{`* `+@string/email_address1}"
                     android:textColor="@color/gray"
                     android:layout_marginTop="10dp"
-                    style="@style/opens_regular"/>
+                    android:textAppearance="@style/opens_regular"
+                    android:textSize="14sp"/>
 
                     <EditText
                         android:id="@+id/edt_email1"
@@ -437,7 +452,8 @@
                         android:paddingLeft="10dp"
                         android:paddingRight="10dp"
                         android:paddingTop="10dp"
-                        style="@style/opens_regular"
+                        android:textAppearance="@style/opens_regular"
+                        android:textSize="14sp"
                         android:background="@drawable/edittext_background"/>
 
                 <TextView
@@ -446,7 +462,8 @@
                     android:text="@{`* `+@string/retype_email}"
                     android:textColor="@color/gray"
                     android:layout_marginTop="10dp"
-                    style="@style/opens_regular"/>
+                    android:textAppearance="@style/opens_regular"
+                    android:textSize="14sp"/>
 
                 <EditText
                     android:id="@+id/edt_email2"
@@ -463,7 +480,8 @@
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
                     android:paddingTop="10dp"
-                    style="@style/opens_regular"
+                    android:textAppearance="@style/opens_regular"
+                    android:textSize="14sp"
                     android:background="@drawable/edittext_background"/>
 
                 <androidx.appcompat.widget.AppCompatButton
@@ -474,7 +492,8 @@
                     android:textColor="@color/white"
                     android:background="@drawable/button_background"
                     android:layout_marginTop="20dp"
-                    style="@style/opens_bold"
+                    android:textAppearance="@style/opens_bold"
+                    android:textSize="16sp"
                     android:textAllCaps="false"
                     android:onClick="@{() -> signupviewmodel.onSignUp()}"/>
 

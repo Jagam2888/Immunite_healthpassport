@@ -3,14 +3,14 @@
     <item>
         <shape>
             <size
-                android:width="90dp"
-                android:height="136dp" />
+                android:width="110dp"
+                android:height="156dp" />
 
             <solid android:color="@android:color/transparent" />
         </shape>
     </item>
     <item
-        android:width="90dp"
-        android:height="136dp"
-        android:drawable="@drawable/vaccine_btn_unselected_svg" />
+        android:width="110dp"
+        android:height="156dp"
+        android:drawable="@drawable/vaccine_no_data_btn_selected" />
 </layer-list>

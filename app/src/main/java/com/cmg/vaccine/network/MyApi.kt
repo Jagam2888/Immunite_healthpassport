@@ -61,12 +61,17 @@ interface MyApi {
     @GET(Passparams.GET_PRIVATE_KEY)
     suspend fun getPrivateKey(@Query("subsId") subsId:String):Response<GetPrivateKeyResponse>
 
+    @GET(Passparams.GET_TEST_REPORT_LIST)
+    suspend fun getTestReportList(@Query("privateKey") key:String):Response<TestReportNewResponse>
+
+    @GET(Passparams.GET_VACCINE_LIST)
+    suspend fun getVaccineList(@Query("privateKey") key:String):Response<VaccineNewResponse>
+
     companion object{
         operator fun invoke(
-            context: Context,
-        preferenceProvider: PreferenceProvider
+            context: Context
         ) : MyApi{
-            return RetrofitClientInstance(context,preferenceProvider).create(MyApi::class.java)
+            return RetrofitClientInstance(context).create(MyApi::class.java)
         }
     }
 }

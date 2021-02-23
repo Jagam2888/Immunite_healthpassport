@@ -1,27 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white"
-    android:orientation="vertical"
-    android:paddingBottom="10dp"
-    android:paddingTop="10dp"
-    android:paddingLeft="10dp"
-    android:paddingRight="10dp">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="The United States has restricted the entry of all foreign nationals who have passed through or have been in China, Iran, Most European Countries, UK, Ireland and Brazil in the past 14 days."
-        android:textSize="12sp"
-        android:textColor="@color/black"/>
+    <data>
+        <!--<variable
+            name="viewmodel"
+            type="com.cmg.vaccine.viewmodel.WorldEntryViewModel" />-->
+    </data>
 
-    <ExpandableListView
-        android:id="@+id/listview_travel"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:groupIndicator="@null"
-        android:transcriptMode="alwaysScroll"
-        android:layout_marginTop="10dp"/>
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp">
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/txt_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:textColor="@color/black" />
+
+        <ExpandableListView
+            android:id="@+id/listview_travel"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:groupIndicator="@null"
+            android:transcriptMode="disabled"
+            android:layout_marginTop="10dp" />
+
+    </LinearLayout>
+</layout>

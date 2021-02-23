@@ -21,6 +21,10 @@ class ViewPrivateKeyViewModel(
 
     var listener:SimpleListener?=null
 
+    var _userName:MutableLiveData<String> = MutableLiveData()
+    val userName:LiveData<String>
+    get() = _userName
+
 
     fun getPrivateKey() {
         val getPrivateKey = repositary.getPrivateKey()
@@ -35,6 +39,7 @@ class ViewPrivateKeyViewModel(
                             getUser.privateKey = response.PrivateKey
                             repositary.updateUser(getUser)
                         }
+                        repositary.savePrivateKey(response.PrivateKey)
                         _privateKey.value = response.PrivateKey
                         listener?.onSuccess(response.Message)
                     }else{

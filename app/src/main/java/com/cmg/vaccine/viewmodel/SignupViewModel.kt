@@ -199,11 +199,13 @@ class SignupViewModel(
                 }
 
                 if (isValidEmail(email.value!!)) {
-                                var user = User(
-                                        fullName.value!!,
-                                        email.value!!,
-                                        "",
-                                        contactNumber.value!!,
+                    if (validateDateFormat(dob.value!!)) {
+                        if (validateTime(dobTime.value!!)) {
+                            var user = User(
+                                fullName.value!!.trim(),
+                                email.value!!.trim(),
+                                "",
+                                contactNumber.value!!.trim(),
                                 "",
                                 "",
                                 "",
@@ -218,11 +220,18 @@ class SignupViewModel(
                                 "",
                                 "",
                                 "",
-                                "N")
+                                "N"
+                            )
 
 
-                        signUpRepositary.saveUser(user)
-                        listener?.onSuccess("success")
+                            signUpRepositary.saveUser(user)
+                            listener?.onSuccess("success")
+                        }else{
+                            listener?.onFailure("Sorry! Invalid Birth Time")
+                        }
+                    }else{
+                        listener?.onFailure("Sorry! Invalid Date of Birth")
+                    }
                 } else {
                     listener?.onFailure("Your Email Address 1 is Invalid")
                 }

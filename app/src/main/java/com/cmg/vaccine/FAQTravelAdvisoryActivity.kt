@@ -24,7 +24,7 @@ class FAQTravelAdvisoryActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_f_a_q_travel_advisory)
 
-        faq()
+        //faq()
 
         binding.radioGroup.setOnCheckedChangeListener { group, checkedId ->
             when(checkedId){
@@ -41,7 +41,7 @@ class FAQTravelAdvisoryActivity : BaseActivity() {
                     /*binding.txtFaq.setTextColor(ContextCompat.getColor(this,R.color.white))
                     binding.txtTravel.setTextColor(ContextCompat.getColor(this,R.color.gray))*/
 
-                    faq()
+                    //faq()
                 }
                 R.id.travel_button ->{
                     binding.spinnerLayout.visibility = View.VISIBLE
@@ -55,7 +55,7 @@ class FAQTravelAdvisoryActivity : BaseActivity() {
 
                     /*binding.txtFaq.setTextColor(ContextCompat.getColor(this,R.color.gray))
                     binding.txtTravel.setTextColor(ContextCompat.getColor(this,R.color.white))*/
-                    travel()
+                    //travel()
                 }
             }
         }
@@ -66,7 +66,7 @@ class FAQTravelAdvisoryActivity : BaseActivity() {
 
     }
 
-    fun faq(){
+    /*fun faq(){
         binding.faq.visibility = View.VISIBLE
         binding.travel.visibility = View.GONE
         val listData = data
@@ -81,5 +81,5 @@ class FAQTravelAdvisoryActivity : BaseActivity() {
         titleList = ArrayList(listData.keys)
         adapters = FAQTravelAdapter(this, titleList as ArrayList<String>, listData)
         listview_travel!!.setAdapter(adapters)
-    }
+    }*/
 }

@@ -13,6 +13,7 @@ import com.cmg.vaccine.WorldEntriesDetailActivity
 import com.cmg.vaccine.database.AddWorldEntries
 import com.cmg.vaccine.databinding.EntriesListItemBinding
 import com.cmg.vaccine.databinding.SwipeHorizontalRightBinding
+import com.cmg.vaccine.util.Passparams
 import com.cmg.vaccine.viewmodel.WorldEntryViewModel
 import com.tubb.smrv.SwipeHorizontalMenuLayout
 import com.tubb.smrv.SwipeMenuLayout
@@ -36,6 +37,16 @@ class WorldEntriesAdapter(
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         //holder.swipeHorizontalRightBinding.worldentries = countryList.get(position)
         holder.swipeHorizontalRightBinding.smContentView.worldentries = countryList.get(position)
+
+        if ((viewModel.vaccineList.value?.isEmpty() == true) and (viewModel.testReportList.value?.isEmpty() == true)){
+            holder.swipeHorizontalRightBinding.smContentView.statusIndicator.setImageResource(R.drawable.red_indicator)
+        }else if ((viewModel.vaccineList.value?.isNotEmpty() == true) and (viewModel.testReportList.value?.isNotEmpty() == true)){
+            holder.swipeHorizontalRightBinding.smContentView.statusIndicator.setImageResource(R.drawable.green_indicator)
+        }else if ((viewModel.vaccineList.value?.isNotEmpty() == true) and (viewModel.testReportList.value?.isEmpty() == true)){
+            holder.swipeHorizontalRightBinding.smContentView.statusIndicator.setImageResource(R.drawable.green_indicator)
+        }else if ((viewModel.vaccineList.value?.isEmpty() == true) and (viewModel.testReportList.value?.isNotEmpty() == true)){
+            holder.swipeHorizontalRightBinding.smContentView.statusIndicator.setImageResource(R.drawable.yellow_indicator)
+        }
 
         holder.swipeHorizontalRightBinding.sml.setSwipeListener(object :SwipeSwitchListener{
             override fun beginMenuClosed(swipeMenuLayout: SwipeMenuLayout?) {
@@ -61,6 +72,7 @@ class WorldEntriesAdapter(
         holder.swipeHorizontalRightBinding.sml.setOnClickListener {
             if (!holder.swipeHorizontalRightBinding.sml.isMenuOpen){
                 Intent(context,WorldEntriesDetailActivity::class.java).also {
+                    it.putExtra(Passparams.WORLD_ENTRY_SELECTED_COUNTRY_NAME, countryList[position].countryName)
                     context?.startActivity(it)
                 }
             }

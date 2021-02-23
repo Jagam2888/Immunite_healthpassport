@@ -289,7 +289,8 @@
                     style="@style/opens_bold"
                     android:background="@drawable/button_background"
                     android:layout_marginTop="20dp"
-                    android:onClick="@{() -> viewmodel.onClick()}"/>
+                    android:onClick="@{() -> viewmodel.onClick()}"
+                    android:imeOptions="actionDone"/>
 
             </LinearLayout>
         </ScrollView>

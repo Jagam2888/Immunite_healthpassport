@@ -28,6 +28,8 @@ class OTPVerifyViewModel(
     var _txtOTP:MutableLiveData<String> = MutableLiveData()
     val txtOTP:LiveData<String>
     get() = _txtOTP
+
+    var userSubId:MutableLiveData<String> = MutableLiveData()
     //var txtOTP = ObservableField<String>()
 
 
@@ -35,7 +37,7 @@ class OTPVerifyViewModel(
         listener?.onStarted()
         Couritnes.main {
             try {
-                val response = repositary.resendOTP(repositary.getPatientSubId()!!)
+                val response = repositary.resendOTP(userSubId.value!!)
                 listener?.onFailure(response.Message)
                 /*if (response.success){
                     listener?.onSuccess(response.message)
@@ -57,7 +59,7 @@ class OTPVerifyViewModel(
         Couritnes.main {
             if (!pinTxt.value.isNullOrEmpty()) {
                 try {
-                    val response = repositary.OTPVerify(repositary.getPatientSubId()!!,pinTxt.value!!)
+                    val response = repositary.OTPVerify(userSubId.value!!,pinTxt.value!!)
                     if (response.success){
                         if (!isExistUser.value!!) {
                             val userData = repositary.getUserData( "N")

@@ -5,6 +5,8 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.View
+import android.view.inputmethod.EditorInfo
+import android.widget.TextView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
@@ -13,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.cmg.vaccine.databinding.ActivityOTPVerifyBinding
 import com.cmg.vaccine.listener.SimpleListener
 import com.cmg.vaccine.receiver.OTPReceiver
+import com.cmg.vaccine.util.Passparams
 import com.cmg.vaccine.util.hide
 import com.cmg.vaccine.util.show
 import com.cmg.vaccine.util.toast
@@ -47,6 +50,9 @@ class OTPVerifyActivity : BaseActivity(),KodeinAware,SimpleListener{
 
         isExistUser = intent.extras?.getBoolean("IsExistUser")
         viewModel.isExistUser.value = isExistUser
+
+        val subsId = intent.extras?.getString(Passparams.SUBSID,"")
+        viewModel.userSubId.value = subsId
 
         if (checkPermission()){
             //viewModel.txtOTP.set(OTPReceiver().getOTPValue())
@@ -121,6 +127,14 @@ class OTPVerifyActivity : BaseActivity(),KodeinAware,SimpleListener{
             startTimer()
             binding.txtResendOtp.visibility = View.GONE
         }
+
+        binding.btnActivate.setOnEditorActionListener(TextView.OnEditorActionListener { v, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                viewModel.onClick()
+                return@OnEditorActionListener true
+            }
+            false
+        })
 
 
     }

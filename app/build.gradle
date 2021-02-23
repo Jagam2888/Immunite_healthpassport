@@ -21,8 +21,8 @@ android {
         applicationId "com.cmg.vaccine"
         minSdkVersion 23
         targetSdkVersion 30
-        versionCode 29
-        versionName "1.28"
+        versionCode 30
+        versionName "1.29"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -100,6 +100,11 @@ dependencies {
     kapt "androidx.room:room-compiler:2.2.6"
     implementation "androidx.room:room-ktx:2.2.6"
     androidTestImplementation "androidx.room:room-testing:2.2.6"
+
+    //ImageCropper
+    implementation 'com.theartofdev.edmodo:android-image-cropper:2.8.+'
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+
 
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'

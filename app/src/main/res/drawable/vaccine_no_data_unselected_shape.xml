@@ -12,5 +12,5 @@
     <item
         android:width="110dp"
         android:height="156dp"
-        android:drawable="@drawable/vaccine_btn_selected" />
+        android:drawable="@drawable/vaccine_no_data_btn_unselected" />
 </layer-list>

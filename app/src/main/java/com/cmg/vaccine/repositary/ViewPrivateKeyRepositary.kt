@@ -21,6 +21,10 @@ class ViewPrivateKeyRepositary(
         return database.getDao().getPrivateKey(preferenceProvider.getSubId()!!)
     }
 
+    fun savePrivateKey(privateKey:String){
+        return preferenceProvider.savePrincipalPrivateKey(privateKey)
+    }
+
     suspend fun getPrivateKeyFromAPI():GetPrivateKeyResponse{
         return apiRequest {
             api.getPrivateKey(preferenceProvider.getSubId()!!)

@@ -67,7 +67,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Covid-19 Swab Test (RT-PCR)"
+                            android:text="@{viewmodel.testReport.codeDisplay}"
                             android:textSize="14sp"
                             android:textColor="@color/black"
                             android:textAppearance="@style/opens_bold" />
@@ -75,7 +75,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@{`Complete on `+viewmodel.testReport.specimenDateSampleCollected}"
+                            android:text="@{`Complete on `+viewmodel.testReport.collectedDateTime}"
                             android:textColor="@color/white"
                             android:textSize="14sp"
                             android:textAppearance="@style/opens_bold"
@@ -130,7 +130,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{viewmodel.testReport.specimenCode}"
+                        android:text="@{viewmodel.testReport.conceptCode}"
                         android:textColor="@color/gray"
                         android:textSize="14sp"
                         android:textAppearance="@style/opens_regular"
@@ -148,7 +148,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{viewmodel.testReport.specimenName}"
+                        android:text="@{viewmodel.testReport.conceptName}"
                         android:textColor="@color/gray"
                         android:textSize="14sp"
                         android:textAppearance="@style/opens_regular"
@@ -166,7 +166,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{viewmodel.testReport.specimenDateSampleCollected}"
+                        android:text="@{viewmodel.testReport.collectedDateTime}"
                         android:textColor="@color/gray"
                         android:textSize="14sp"
                         android:textAppearance="@style/opens_regular"
@@ -208,7 +208,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{viewmodel.testReport.testCode}"
+                        android:text="@{viewmodel.testReport.codeSystem}"
                         android:textColor="@color/gray"
                         android:textSize="14sp"
                         android:textAppearance="@style/opens_regular"
@@ -232,7 +232,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{viewmodel.testReport.observationCodeSnomedCt+`\n`+viewmodel.testReport.observationResult+`\n`+viewmodel.testReport.observationDateTime}"
+                        android:text="@{`260385009`+`\n`+`Negative`+`\n`+viewmodel.testReport.effectiveDateTime}"
                         android:textColor="@color/gray"
                         android:textSize="14sp"
                         android:textAppearance="@style/opens_regular"
@@ -280,7 +280,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{viewmodel.testReport.performerName}"
+                        android:text="@{viewmodel.testReport.name}"
                         android:textColor="@color/gray"
                         android:textSize="14sp"
                         android:textAppearance="@style/opens_regular"
@@ -298,7 +298,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{viewmodel.testReport.performerQualificationIdentifier}"
+                        android:text="@{viewmodel.testReport.qualitificationIdentifier}"
                         android:textColor="@color/gray"
                         android:textSize="14sp"
                         android:textAppearance="@style/opens_regular"
@@ -316,7 +316,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{viewmodel.testReport.performerQualificationIssuerName}"
+                        android:text="@{viewmodel.testReport.qualificationIssuerName}"
                         android:textColor="@color/gray"
                         android:textSize="14sp"
                         android:textAppearance="@style/opens_regular"
@@ -334,7 +334,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{viewmodel.testReport.performerType}"
+                        android:text="@{viewmodel.testReport.type}"
                         android:textColor="@color/gray"
                         android:textSize="14sp"
                         android:textAppearance="@style/opens_regular"
@@ -352,7 +352,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{viewmodel.testReport.performerContactTelecom}"
+                        android:text="@{viewmodel.testReport.contactTelecom}"
                         android:textColor="@color/gray"
                         android:textSize="14sp"
                         android:textAppearance="@style/opens_regular"
@@ -370,7 +370,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{viewmodel.testReport.performerAddTxt}"
+                        android:text="@{viewmodel.testReport.contactAddressText}"
                         android:textColor="@color/gray"
                         android:textSize="14sp"
                         android:textAppearance="@style/opens_regular"

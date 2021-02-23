@@ -39,29 +39,27 @@ class AddDependentActivity : BaseActivity(),KodeinAware,SimpleListener {
 
         //binding.edtDob.listen()
 
-        binding.edtDob.setOnTouchListener(object : View.OnTouchListener{
-            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
-                if(event?.action == MotionEvent.ACTION_UP) {
-                    if(binding.edtDob.compoundDrawables[2]!=null){
-                        if(event?.x!! >= (binding.edtDob.right- binding.edtDob.left - binding.edtDob.compoundDrawables[2].bounds.width())) {
-                            showDatePickerDialog(binding.edtDob)
-                        }
+        binding.edtDob.setDrawableClickListener(object : DrawableClickListener {
+            override fun onClick(target: DrawableClickListener.DrawablePosition?) {
+                when (target) {
+                    DrawableClickListener.DrawablePosition.RIGHT -> {
+                        showDatePickerDialog(binding.edtDob)
+                    }
+                    else -> {
                     }
                 }
-                return false
             }
         })
 
-        binding.edtDobTime.setOnTouchListener(object : View.OnTouchListener{
-            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
-                if(event?.action == MotionEvent.ACTION_UP) {
-                    if(binding.edtDobTime.compoundDrawables[2]!=null){
-                        if(event?.x!! >= (binding.edtDobTime.right- binding.edtDobTime.left - binding.edtDobTime.compoundDrawables[2].bounds.width())) {
-                            showTimepickerDialog(binding.edtDobTime,viewModel.dobTime.value!!)
-                        }
+        binding.edtDobTime.setDrawableClickListener(object : DrawableClickListener {
+            override fun onClick(target: DrawableClickListener.DrawablePosition?) {
+                when (target) {
+                    DrawableClickListener.DrawablePosition.RIGHT -> {
+                        showTimepickerDialog(binding.edtDobTime, viewModel.dobTime.value!!)
+                    }
+                    else -> {
                     }
                 }
-                return false
             }
         })
 
@@ -75,6 +73,8 @@ class AddDependentActivity : BaseActivity(),KodeinAware,SimpleListener {
                 viewModel.address.set("")
             }
         }*/
+        if (viewModel.countryCode.value != null)
+            binding.ccpLoadCountryCode.setCountryForPhoneCode(viewModel.countryCode.value!!)
         viewModel.selectedItemContactCode.set(binding.ccpLoadCountryCode.selectedCountryCode)
         binding.ccpLoadCountryCode.registerCarrierNumberEditText(binding.edtMobile)
 

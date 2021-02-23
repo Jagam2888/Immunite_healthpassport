@@ -117,15 +117,12 @@
                         android:layout_width="110dp"
                         android:layout_height="157dp"
                         android:button="@null"
-                        android:background="@drawable/vaccine_btn_selector"
                         />
                     <RadioButton
                         android:id="@+id/radio_test"
                         android:layout_width="110dp"
                         android:layout_height="157dp"
-                        android:button="@null"
-                        android:background="@drawable/test_btn_selector"
-                        />
+                        android:button="@null"/>
                     <RadioButton
                         android:id="@+id/radio_mykey"
                         android:layout_width="110dp"

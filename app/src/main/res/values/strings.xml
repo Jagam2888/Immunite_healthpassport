@@ -87,6 +87,7 @@
     <string name="report_detail">Report Details</string>
 
     <string name="submit_past_vaccine"><u>Submit Past Vaccination Data</u></string>
+    <string name="submit_history">Submit Immunisation History</string>
 
     <string name="current_password">Current Password</string>
     <string name="new_password">New Password</string>
@@ -182,6 +183,7 @@ This QR Code is one time use and it expires in 5 minutes.</string>
     </string-array>
 
     <string-array name="id_type">
+        <item>None</item>
         <item>MyKad</item>
         <item>MyKid</item>
     </string-array>

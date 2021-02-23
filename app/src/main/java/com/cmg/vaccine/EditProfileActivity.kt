@@ -20,6 +20,8 @@ import com.cmg.vaccine.util.*
 import com.cmg.vaccine.viewmodel.ProfileViewModel
 import com.cmg.vaccine.viewmodel.viewmodelfactory.ProfileViewModelFactory
 import com.squareup.picasso.Picasso
+import com.theartofdev.edmodo.cropper.CropImage
+import com.theartofdev.edmodo.cropper.CropImageView
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
@@ -54,35 +56,34 @@ class EditProfileActivity : BaseActivity(),KodeinAware,SimpleListener {
 
         //binding.edtDob.listen()
 
-        binding.edtDob.setOnTouchListener(object : View.OnTouchListener{
-            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
-                if(event?.action == MotionEvent.ACTION_UP) {
-                    if(binding.edtDob.compoundDrawables[2]!=null){
-                        if(event?.x!! >= (binding.edtDob.right- binding.edtDob.left - binding.edtDob.compoundDrawables[2].bounds.width())) {
-                            showDatePickerDialog(binding.edtDob)
-                        }
+        binding.edtDob.setDrawableClickListener(object : DrawableClickListener {
+            override fun onClick(target: DrawableClickListener.DrawablePosition?) {
+                when (target) {
+                    DrawableClickListener.DrawablePosition.RIGHT -> {
+                        showDatePickerDialog(binding.edtDob)
+                    }
+                    else -> {
                     }
                 }
-                return false
             }
         })
 
-        binding.edtDobTime.setOnTouchListener(object : View.OnTouchListener{
-            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
-                if(event?.action == MotionEvent.ACTION_UP) {
-                    if(binding.edtDobTime.compoundDrawables[2]!=null){
-                        if(event?.x!! >= (binding.edtDobTime.right- binding.edtDobTime.left - binding.edtDobTime.compoundDrawables[2].bounds.width())) {
-                            showTimepickerDialog(binding.edtDobTime,viewModel.dobTime.value!!)
-                        }
+        binding.edtDobTime.setDrawableClickListener(object : DrawableClickListener {
+            override fun onClick(target: DrawableClickListener.DrawablePosition?) {
+                when (target) {
+                    DrawableClickListener.DrawablePosition.RIGHT -> {
+                        showTimepickerDialog(binding.edtDobTime, viewModel.dobTime.value!!)
+                    }
+                    else -> {
                     }
                 }
-                return false
             }
         })
 
         binding.layoutImg.setOnClickListener {
             if (checkPermission()){
-                pickImageFromGallery()
+                //pickImageFromGallery()
+                cropImage()
             }else{
                 requestPermission()
             }
@@ -111,6 +112,22 @@ class EditProfileActivity : BaseActivity(),KodeinAware,SimpleListener {
             }
             false
         })
+
+        /*binding.edtDob.addTextChangedListener(object : TextWatcher{
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                if (s.toString().length <=10) {
+                    if (!validateDateFormat(s.toString())) {
+                        binding.edtDob.error = "Invalid Date of Birth"
+                    }
+                }
+            }
+        })*/
 
         binding.edtEmail1.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -141,6 +158,17 @@ class EditProfileActivity : BaseActivity(),KodeinAware,SimpleListener {
         })
     }
 
+    private fun cropImage() {
+        CropImage.activity( )
+            .setGuidelines(CropImageView.Guidelines.ON)
+            .setActivityTitle("Edit Photo")
+            .setCropShape(CropImageView.CropShape.OVAL)
+            .setFixAspectRatio(true)
+            .setCropMenuCropButtonTitle("Done")
+            .start(this)
+    }
+
+
     private fun pickImageFromGallery() {
         //Intent to pick image
         val intent = Intent(Intent.ACTION_PICK)
@@ -162,7 +190,8 @@ class EditProfileActivity : BaseActivity(),KodeinAware,SimpleListener {
                     val accepted: Boolean =
                             grantResults[0] == PackageManager.PERMISSION_GRANTED
                     if (accepted) {
-                        pickImageFromGallery()
+                        //pickImageFromGallery()
+                        cropImage()
                     } else {
                         toast("Permission Denied, You cannot access your gallery")
                     }
@@ -173,24 +202,35 @@ class EditProfileActivity : BaseActivity(),KodeinAware,SimpleListener {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE){
+        /*if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE){
             Picasso.with(this)
                     .load(data?.data)
                     .centerCrop()
                     .fit()
                     .into(binding.imgGallery)
-            //binding.imgGallery.setImageURI(data?.data)
+        }*/
+        if (requestCode === CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            val result = CropImage.getActivityResult(data)
+            if (resultCode === RESULT_OK) {
+                val resultUri = result.uri
+                binding.headPicture.setImageURI(resultUri)
+                toast("You profile picture was successfully changed")
+            } else if (resultCode === CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                val error = result.error
+                error.message?.let { toast(it) }
+            }
         }
+
     }
 
     private fun checkPermission():Boolean{
-        return (ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
+        return (ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
     }
 
     private fun requestPermission(){
         ActivityCompat.requestPermissions(
                 this,
-                arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE),
+                arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE),
                 PERMISSION_CODE
         )
     }
@@ -204,6 +244,7 @@ class EditProfileActivity : BaseActivity(),KodeinAware,SimpleListener {
         toast(msg)
         Intent(this, OTPVerifyActivity::class.java).also {
             it.putExtra("IsExistUser", true)
+            it.putExtra(Passparams.SUBSID, viewModel.userSubId.value)
             startActivity(it)
             finish()
         }

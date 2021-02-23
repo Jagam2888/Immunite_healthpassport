@@ -6,7 +6,6 @@ import android.graphics.Rect
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.view.MotionEvent
-import androidx.appcompat.widget.AppCompatEditText
 import br.com.sapereaude.maskedEditText.MaskedEditText
 
 
@@ -154,7 +153,8 @@ class CustomEditText : MaskedEditText {
         drawableTop = null
     }
 
-    fun setDrawableClickListener(listener: DrawableClickListener?) {
+
+     fun setDrawableClickListener(listener: DrawableClickListener?) {
         clickListener = listener
     }
 }

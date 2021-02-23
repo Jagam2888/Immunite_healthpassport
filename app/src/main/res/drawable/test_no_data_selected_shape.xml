@@ -12,5 +12,5 @@
     <item
         android:width="110dp"
         android:height="156dp"
-        android:drawable="@drawable/test_btn_selected" />
+        android:drawable="@drawable/test_no_data_btn_selected" />
 </layer-list>

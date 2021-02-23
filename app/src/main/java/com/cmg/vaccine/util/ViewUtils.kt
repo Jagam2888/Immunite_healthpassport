@@ -24,12 +24,14 @@ import com.cmg.vaccine.database.Countries
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import java.io.UnsupportedEncodingException
+import java.lang.Exception
 import java.security.InvalidKeyException
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.regex.Pattern
 import javax.crypto.*
 import javax.crypto.spec.SecretKeySpec
 
@@ -57,7 +59,7 @@ fun isValidPassword(value: String):Boolean{
 
 fun Activity.hideKeyBoard(){
     val inputMethodManager = this.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-    inputMethodManager.hideSoftInputFromWindow(this.currentFocus?.windowToken,0)
+    inputMethodManager.hideSoftInputFromWindow(this.currentFocus?.windowToken, 0)
 }
 
 fun Context.showDatePickerDialog(editText: EditText){
@@ -65,28 +67,75 @@ fun Context.showDatePickerDialog(editText: EditText){
     val year = calender.get(Calendar.YEAR)
     val month = calender.get(Calendar.MONTH)
     val day = calender.get(Calendar.DAY_OF_MONTH)
-    val format = SimpleDateFormat("dd/MM/yyyy")
+    val format = SimpleDateFormat("ddMMyyyy")
 
-    val datePicker = DatePickerDialog(this,
-            DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
-                calender.set(year, month, dayOfMonth)
-                val dateDob = format.format(calender.time)
-                editText.setText(dateDob)
-            }, year, month, day
+    val datePicker = DatePickerDialog(
+        this,
+        DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+            calender.set(year, month, dayOfMonth)
+            val dateDob = format.format(calender.time)
+            editText.setText(dateDob)
+        }, year, month, day
     )
     datePicker.datePicker.maxDate = System.currentTimeMillis()
 
     datePicker.show()
 }
 
-fun Context.showTimepickerDialog(editText: EditText,currentTime:String){
+fun validateTime(time:String):Boolean{
+    val timeArray = time.split(":")
+    return (timeArray[0].toInt() <=23) and (timeArray[1].toInt() <= 59)
+}
+
+fun covertDateFormatFromISO(dateString: String){
+
+}
+
+fun validateDateFormat(date: String):Boolean{
+    //val formatPattern = "(0?[1-9]|1[012]) [/.-] (0?[1-9]|[12][0-9]|3[01]) [/.-] ((19|20)\\\\d\\\\d)"
+    val formatPattern = "^(1[0-9]|0[1-9]|3[0-1]|2[1-9])/(0[1-9]|1[0-2])/[0-9]{4}\$"
+    val pattern = Pattern.compile(formatPattern)
+    val matcher = pattern.matcher(date)
+    if (date.isNullOrEmpty() or !matcher.matches()){
+        return false
+    }
+    val dateFormat = SimpleDateFormat("dd/MM/yyyy")
+    return try {
+        dateFormat.parse(date)
+        true
+    } catch (e: ParseException) {
+        false
+    }
+}
+/*fun validateDateFormat(fromDate: String):Boolean{
+    try {
+        val calender = Calendar.getInstance()
+        calender.isLenient = false
+        val simpleDateFormat = SimpleDateFormat("dd/MM/yyyy")
+        val currentDate = simpleDateFormat.format(Date())
+        val validateDate = simpleDateFormat.parse(fromDate)
+
+        calender.time = validateDate
+        calender.time
+        val lastDate = "01/01/1900"
+        return if (fromDate > currentDate){
+            false
+        }else (fromDate < currentDate) and (fromDate > lastDate)
+
+    }catch (e:Exception){
+        return false
+    }
+    return false
+}*/
+
+fun Context.showTimepickerDialog(editText: EditText, currentTime: String){
     val sdf = SimpleDateFormat("HHmm")
     val cal = Calendar.getInstance()
     try {
-        val changeFormat = currentTime.replace(":","")
+        val changeFormat = currentTime.replace(":", "")
         val date = sdf.parse(changeFormat)
         cal.time = date
-    }catch (e:ParseException){
+    }catch (e: ParseException){
         e.printStackTrace()
     }
     val timeSetListener = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
@@ -94,7 +143,13 @@ fun Context.showTimepickerDialog(editText: EditText,currentTime:String){
         cal.set(Calendar.MINUTE, minute)
         editText.setText(SimpleDateFormat("HHmm").format(cal.time))
     }
-    TimePickerDialog(this, timeSetListener, cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), true).show()
+    TimePickerDialog(
+        this,
+        timeSetListener,
+        cal.get(Calendar.HOUR_OF_DAY),
+        cal.get(Calendar.MINUTE),
+        true
+    ).show()
 }
 
 
@@ -162,7 +217,11 @@ fun Context.getCurrentCountryName():String?{
         @SuppressWarnings("ResourceType")
         val location = locationManager.getLastKnownLocation(provider)
         if (location != null){
-            val address:List<Address> = geocoder.getFromLocation(location.latitude, location.longitude, 1)
+            val address:List<Address> = geocoder.getFromLocation(
+                location.latitude,
+                location.longitude,
+                1
+            )
             if (!address.isNullOrEmpty()){
                 country = address.get(0).countryName
             }
@@ -173,8 +232,13 @@ fun Context.getCurrentCountryName():String?{
 
 fun Context.getLastLocation():Location? {
     var lastLocation: Location? = null
-    var fusedLocationProviderClient: FusedLocationProviderClient =LocationServices.getFusedLocationProviderClient(this)
-    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+    var fusedLocationProviderClient: FusedLocationProviderClient =LocationServices.getFusedLocationProviderClient(
+        this
+    )
+    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+            this,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        ) != PackageManager.PERMISSION_GRANTED) {
         return null
     }
     fusedLocationProviderClient?.lastLocation!!.addOnCompleteListener { task ->
@@ -235,7 +299,10 @@ fun encryptToString(secretKey: String, jsonValues: String): String? {
         synchronized(Cipher::class.java) {
             val cipher = Cipher.getInstance("AES/ECB/PKCS5PADDING")
             cipher.init(Cipher.ENCRYPT_MODE, genearteKey(secretKey))
-            var cipherFinal = Base64.encodeToString(cipher.doFinal(jsonValues.toByteArray(charset("UTF-8"))), Base64.DEFAULT)
+            var cipherFinal = Base64.encodeToString(
+                cipher.doFinal(jsonValues.toByteArray(charset("UTF-8"))),
+                Base64.DEFAULT
+            )
             return cipherFinal
         }
     }catch (uee: UnsupportedEncodingException) {
