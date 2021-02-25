@@ -2,14 +2,12 @@ package com.cmg.vaccine
 
 import android.content.pm.PackageManager
 import android.graphics.Point
-import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.view.View
+import android.util.Log
 import android.view.WindowManager
 import androidmads.library.qrgenearator.QRGContents
 import androidmads.library.qrgenearator.QRGEncoder
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
@@ -17,13 +15,11 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.cmg.vaccine.databinding.ActivityViewPrivateKeyBinding
 import com.cmg.vaccine.listener.SimpleListener
-import com.cmg.vaccine.util.Passparams
-import com.cmg.vaccine.util.hide
-import com.cmg.vaccine.util.show
-import com.cmg.vaccine.util.toast
+import com.cmg.vaccine.util.*
 import com.cmg.vaccine.viewmodel.ViewPrivateKeyViewModel
 import com.cmg.vaccine.viewmodel.viewmodelfactory.ViewPrivateKeyFactory
 import com.google.zxing.WriterException
+import my.com.immunitee.blockchainapi.utils.EncryptionUtils
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
@@ -64,14 +60,29 @@ class ViewPrivateKeyActivity : BaseActivity(),KodeinAware,SimpleListener {
         val userName = intent.extras?.getString(Passparams.USER_NAME,"")
         viewModel._userName.value = userName
 
+        val relationShip = intent.extras?.getString(Passparams.RELATIONSHIP,"")
+        val subId = intent.extras?.getString(Passparams.SUBSID,"")
+
         privateKey = intent.extras?.getString(Passparams.PRIVATEKEY,"")
         if (!privateKey.isNullOrEmpty()) {
-            generateQRCode(privateKey!!)
+            val timeStamp = System.currentTimeMillis().toString()
+            val encryptMasterKeyValue = encryptMasterKey(timeStamp)
+            val encryptPrivateKey = resources.getString(R.string.app_name)+"|"+encryptMasterKeyValue+"|"+encryptPrivateKey(privateKey!!,timeStamp)!!
+            Log.d("encrypt_pk",encryptPrivateKey)
+            generateQRCode(encryptPrivateKey)
         }else{
-            viewModel.getPrivateKey()
+            if (relationShip.equals(Passparams.PARENT,true)) {
+                viewModel.getPatientPrivateKey()
+            }else{
+                viewModel.getDependentPrivateKey(subId!!)
+            }
             viewModel.privateKey.observe(this, Observer { privateKey->
                 if (!privateKey.isNullOrEmpty()){
-                    generateQRCode(privateKey)
+                    val timeStamp = System.currentTimeMillis().toString()
+                    val encryptMasterKeyValue = encryptMasterKey(timeStamp)
+                    val encryptPrivateKey = resources.getString(R.string.app_name)+"|"+encryptMasterKeyValue+"|"+encryptPrivateKey(privateKey,timeStamp)!!
+                    Log.d("encrypt_pk",encryptPrivateKey)
+                    generateQRCode(encryptPrivateKey)
                 }
             })
         }
@@ -98,7 +109,43 @@ class ViewPrivateKeyActivity : BaseActivity(),KodeinAware,SimpleListener {
         }
 
         startTimer()
+
+
+        /*val decryptMasterKeyValue = decryptMasterKey(encrptMasterKeyValue!!)
+        Log.d("masterkey_1",encrptMasterKeyValue!!)
+        Log.d("masterkey_2",decryptMasterKeyValue!!)
+
+        Log.d("key_2",resources.getString(R.string.app_name)+"|"+encryptMasterKey(timeStamp)+"|"+encryptPrivateKey(timeStamp)!!)*/
+
+
+        /*Log.d("key_1",privateKey!!)
+        Log.d("key_2",encryptPrivateKey(privateKey!!)!!)
+        decryptionPrivateKey()*/
+
     }
+
+    private fun encryptPrivateKey(pKey: String,timeStamp: String):String?{
+
+        return EncryptionUtils.encrypt(pKey,timeStamp)
+    }
+
+    private fun encryptMasterKey(timeStamp:String):String?{
+        return EncryptionUtils.encrypt(timeStamp,"")
+    }
+
+   /* private fun decryptMasterKey(encryPtKey:String):String?{
+        return EncryptionUtils.decrypt(encryPtKey,"")
+    }*/
+
+    /*private fun decryptionPrivateKey(){
+        val minutes = 1614161650312
+        var decrypt = EncryptionUtils.decrypt(encryptPrivateKey(privateKey!!),"28071988")
+
+        if (decrypt.isNullOrEmpty())
+            decrypt = "null"
+        //val decrypt = EncryptionUtils.decrypt(encryptPrivateKey(privateKey!!),"1614161650312")
+        Log.d("key_3",decrypt)
+    }*/
 
     private fun startTimer(){
         val timer = object : CountDownTimer(300000,1000){

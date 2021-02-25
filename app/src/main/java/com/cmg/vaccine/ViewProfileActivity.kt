@@ -51,6 +51,7 @@ class ViewProfileActivity : BaseActivity(),KodeinAware {
         }
     }
 
+
     override fun onResume() {
         super.onResume()
         viewModel.user.value = user

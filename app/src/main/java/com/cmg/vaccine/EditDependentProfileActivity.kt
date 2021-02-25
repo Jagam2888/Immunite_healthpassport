@@ -13,7 +13,10 @@ import android.widget.TextView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.blongho.country_data.Country
+import com.cmg.vaccine.adapter.CountryListAdapter
 import com.cmg.vaccine.databinding.ActivityEditDependentProfileBinding
 import com.cmg.vaccine.listener.SimpleListener
 import com.cmg.vaccine.util.*
@@ -45,7 +48,15 @@ class EditDependentProfileActivity : BaseActivity(),KodeinAware,SimpleListener {
 
 
         val childPrivateKey = intent.extras?.getString(Passparams.DEPENDENT_SUBID,"")
-        viewModel.loadProfileData(this,childPrivateKey!!)
+
+
+        viewModel.countries.observe(this, Observer {list->
+            val arrayList = arrayListOf<Country>()
+            arrayList.addAll(list)
+            binding.spinnerPlaceBirth.adapter = CountryListAdapter(arrayList)
+            binding.spinnerNationality.adapter = CountryListAdapter(arrayList)
+            viewModel.loadProfileData(this,childPrivateKey!!)
+        })
 
         //binding.edtDob.listen()
 

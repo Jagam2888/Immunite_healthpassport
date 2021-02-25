@@ -1,5 +1,6 @@
 package com.cmg.vaccine.viewmodel
 
+import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -12,7 +13,6 @@ import com.cmg.vaccine.util.Couritnes
 import com.cmg.vaccine.util.NoInternetException
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import java.lang.Exception
 import java.lang.reflect.Type
 import java.net.SocketTimeoutException
 
@@ -30,7 +30,27 @@ class OTPVerifyViewModel(
     get() = _txtOTP
 
     var userSubId:MutableLiveData<String> = MutableLiveData()
-    //var txtOTP = ObservableField<String>()
+
+    var displaymobileNumber = ObservableField<String>()
+
+    init {
+        val userData = repositary.getUserData()
+        if (userData != null){
+            if (!userData.mobileNumber.isNullOrEmpty()) {
+                var mobileNumberTest = userData.mobileNumber
+                if (mobileNumberTest.length > 8) {
+                    val myName = StringBuilder(mobileNumberTest)
+                    myName.setCharAt(2, 'x')
+                    myName.setCharAt(3, 'x')
+                    myName.setCharAt(4, 'x')
+                    myName.setCharAt(5, 'x')
+                    mobileNumberTest = myName.toString()
+                }
+                displaymobileNumber.set("+" + userData.countryCode + mobileNumberTest)
+                Log.d("mobilenumber", displaymobileNumber.get()!!)
+            }
+        }
+    }
 
 
     fun onResendTac(){
@@ -46,9 +66,9 @@ class OTPVerifyViewModel(
                 }*/
             }catch (e: APIException) {
                 listener?.onFailure(e.message!!)
-            }catch (e:NoInternetException){
+            }catch (e: NoInternetException){
                 listener?.onFailure(e.message!!)
-            }catch (e:SocketTimeoutException){
+            }catch (e: SocketTimeoutException){
                 listener?.onFailure(e.message!!)
             }
         }
@@ -59,16 +79,16 @@ class OTPVerifyViewModel(
         Couritnes.main {
             if (!pinTxt.value.isNullOrEmpty()) {
                 try {
-                    val response = repositary.OTPVerify(userSubId.value!!,pinTxt.value!!)
+                    val response = repositary.OTPVerify(userSubId.value!!, pinTxt.value!!)
                     if (response.success){
                         if (!isExistUser.value!!) {
-                            val userData = repositary.getUserData( "N")
+                            val userData = repositary.getUserData()
                             if (userData != null) {
                                 userData.virifyStatus = "Y"
                                 repositary.updateVerifyStatus(userData)
                             }
                         }else{
-                            var alreadyStored = repositary.getUserData()
+                            var alreadyStored = repositary.getUserDataPref()
                             val gson = Gson()
                             val type: Type = object : TypeToken<User>() {}.type
                             var userData = gson.fromJson<User>(alreadyStored, type)
@@ -103,9 +123,9 @@ class OTPVerifyViewModel(
                     }*/
                 } catch (e: APIException) {
                     listener?.onFailure(e.message!!)
-                }catch (e:NoInternetException){
+                }catch (e: NoInternetException){
                     listener?.onFailure(e.message!!)
-                }catch (e:SocketTimeoutException){
+                }catch (e: SocketTimeoutException){
                     listener?.onFailure(e.message!!)
                 }
             }else{

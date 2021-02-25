@@ -3,9 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingBottom="10dp"
-    android:paddingTop="10dp"
-    android:paddingLeft="10dp"
-    android:paddingRight="10dp">
+    android:paddingTop="10dp">
 
     <ImageView
         android:id="@+id/arrow_img"
@@ -16,16 +14,23 @@
         android:layout_centerVertical="true"
         android:layout_marginRight="10dp"/>
 
+    <ImageView
+        android:id="@+id/indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/yellow_indicator"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="30dp"/>
+
     <TextView
         android:id="@+id/txt_group"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingBottom="10dp"
-        android:paddingLeft="?android:attr/expandableListPreferredItemPaddingLeft"
-        android:paddingTop="10dp"
-        android:layout_toLeftOf="@id/arrow_img"
         android:layout_marginRight="10dp"
-        android:textColor="@color/black"/>
+        android:textColor="@color/black"
+        android:textAppearance="@style/opens_bold"
+        android:textSize="14sp" />
 
 
 

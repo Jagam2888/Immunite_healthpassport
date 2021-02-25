@@ -1,13 +1,24 @@
 package com.cmg.vaccine.repositary
 
+import com.cmg.vaccine.data.WorldEntriesListData
 import com.cmg.vaccine.database.*
+import com.cmg.vaccine.model.response.WorldEntriesCountryList
+import com.cmg.vaccine.network.MyApi
+import com.cmg.vaccine.network.SafeAPIRequest
+import com.cmg.vaccine.prefernces.PreferenceProvider
 
 class WorldEntryRepositary(
-    private val database: AppDatabase
-) {
+    private val database: AppDatabase,
+    private val preferenceProvider: PreferenceProvider,
+    private val api: MyApi
+):SafeAPIRequest() {
 
-    fun getCountries():List<Countries>{
-        return database.getDao().getAllCountries()
+    fun getWorldEntryCountries():List<WorldEntryCountries>{
+        return database.getDao().getAllWorldCountries()
+    }
+
+    fun insertWorldEntryCountries(worldEntryCountries: WorldEntryCountries){
+        database.getDao().insertWorldCountries(worldEntryCountries)
     }
 
     fun insertWorldEntry(addWorldEntries: AddWorldEntries){
@@ -32,5 +43,14 @@ class WorldEntryRepositary(
 
     fun getTestReportList():List<TestReport>{
         return database.getDao().getTestReportList()
+    }
+
+    fun getUserData():User{
+        return database.getDao().getUserData(preferenceProvider.getSubId()!!)
+    }
+    suspend fun getWorldEntriesCountryList():WorldEntriesCountryList{
+        return apiRequest {
+            api.getWorldEntriesCountryList()
+        }
     }
 }

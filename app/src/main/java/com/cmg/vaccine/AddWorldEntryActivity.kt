@@ -7,7 +7,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.cmg.vaccine.adapter.CountryListAdapter
+import com.cmg.vaccine.adapter.WorldEntryCountryListAdapter
 import com.cmg.vaccine.databinding.ActivityAddWorldEntryBinding
 import com.cmg.vaccine.listener.SimpleListener
 import com.cmg.vaccine.util.RecyclerViewTouchListener
@@ -26,7 +26,7 @@ class AddWorldEntryActivity : BaseActivity(),KodeinAware,SimpleListener {
     private lateinit var viewModel:WorldEntryViewModel
 
     private val factory:WorldEntryViewModelFactory by instance()
-    var countryListAdapter:CountryListAdapter?=null
+    var worldEntryCountryListAdapter:WorldEntryCountryListAdapter?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_add_world_entry)
@@ -36,11 +36,12 @@ class AddWorldEntryActivity : BaseActivity(),KodeinAware,SimpleListener {
         viewModel.listener = this
 
 
+
         viewModel.countryList.observe(this, Observer {
-            countryListAdapter = CountryListAdapter(it)
+            worldEntryCountryListAdapter = WorldEntryCountryListAdapter(it)
             binding.recyclerViewCountries.also {
                 it.layoutManager = LinearLayoutManager(this)
-                it.adapter = countryListAdapter
+                it.adapter = worldEntryCountryListAdapter
             }
         })
 
@@ -51,7 +52,7 @@ class AddWorldEntryActivity : BaseActivity(),KodeinAware,SimpleListener {
 
         binding.recyclerViewCountries.addOnItemTouchListener(RecyclerViewTouchListener(this,binding.recyclerViewCountries,object :RecyclerViewTouchListener.ClickListener{
             override fun onClick(view: View?, position: Int) {
-                viewModel.insertWorldEntry(viewModel.countryList.value?.get(position)?.countryName!!)
+                viewModel.insertWorldEntry(viewModel.countryList.value?.get(position)?.countryName!!,viewModel.countryList.value?.get(position)?.countryCodeAlpha!!)
                 hideKeyBoard()
                 finish()
             }
@@ -66,7 +67,7 @@ class AddWorldEntryActivity : BaseActivity(),KodeinAware,SimpleListener {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                countryListAdapter?.filter?.filter(newText)
+                worldEntryCountryListAdapter?.filter?.filter(newText)
                 return false
             }
         })

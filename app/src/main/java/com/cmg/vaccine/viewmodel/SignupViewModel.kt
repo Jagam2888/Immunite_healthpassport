@@ -9,6 +9,8 @@ import androidx.databinding.ObservableInt
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.blongho.country_data.Country
+import com.blongho.country_data.World
 import com.cmg.vaccine.data.Gender
 import com.cmg.vaccine.database.Countries
 import com.cmg.vaccine.database.User
@@ -40,10 +42,10 @@ class SignupViewModel(
 
     var listener:SimpleListener?=null
 
-    var _countries:MutableLiveData<List<Countries>> = MutableLiveData()
+    var _countries:MutableLiveData<List<Country>> = MutableLiveData()
 
-    val countries:LiveData<List<Countries>>
-    get() = _countries
+    val countries:LiveData<List<Country>>
+        get() = _countries
 
 
 
@@ -129,10 +131,11 @@ class SignupViewModel(
         _days.value = listDays
     }*/
 
-    var countryList:List<Countries>?=null
+    var countryList:List<Country>?=null
 
     fun setCurrentCountry(country:String){
-        countryList = signUpRepositary.getAllCountriesDB()
+        //countryList = signUpRepositary.getAllCountriesDB()
+        countryList = World.getAllCountries()
         if (!countryList.isNullOrEmpty()){
             val pos = getCurrentCountry(country,countryList!!)
             selectedItemNationalityCode.set(pos)
@@ -142,8 +145,10 @@ class SignupViewModel(
 
     init {
         listener?.onStarted()
-        countryList = signUpRepositary.getAllCountriesDB()
-        if (countryList.isNullOrEmpty()){
+        //countryList = signUpRepositary.getAllCountriesDB()
+        countryList = World.getAllCountries()
+        _countries.value = countryList
+       /* if (countryList.isNullOrEmpty()){
             Couritnes.main {
                 try {
                     val reponse = signUpRepositary.getAllCountries()
@@ -174,7 +179,7 @@ class SignupViewModel(
         }else{
             listener?.onSuccess("success")
             _countries.value = countryList
-        }
+        }*/
 
         dobTime.value = "1200"
     }
@@ -183,7 +188,7 @@ class SignupViewModel(
         listener?.onStarted()
         var placeBirth = ""
         if (!countryList.isNullOrEmpty()){
-            placeBirth = countryList?.get(selectedItemNationalityCode.get())?.countryCodeAlpha!!
+            placeBirth = countryList?.get(selectedItemNationalityCode.get())?.alpha3!!
         }
         if(!fullName.value.isNullOrEmpty()and !email.value.isNullOrEmpty() and !contactNumber.value.isNullOrEmpty()) {
             if (email.value.equals(reTypeEmail.value)) {

@@ -9,17 +9,21 @@ import android.text.TextWatcher
 import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
+import android.widget.SimpleAdapter
 import android.widget.TextView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.blongho.country_data.Country
+import com.blongho.country_data.World
+import com.cmg.vaccine.adapter.CountryListAdapter
 import com.cmg.vaccine.databinding.ActivityEditProfileBinding
 import com.cmg.vaccine.listener.SimpleListener
 import com.cmg.vaccine.util.*
 import com.cmg.vaccine.viewmodel.ProfileViewModel
 import com.cmg.vaccine.viewmodel.viewmodelfactory.ProfileViewModelFactory
-import com.squareup.picasso.Picasso
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
 import org.kodein.di.KodeinAware
@@ -66,6 +70,13 @@ class EditProfileActivity : BaseActivity(),KodeinAware,SimpleListener {
                     }
                 }
             }
+        })
+
+        viewModel.countries.observe(this, Observer { list->
+            val arrayList = arrayListOf<Country>()
+            arrayList.addAll(list)
+            binding.edtPlaceBirth.adapter = CountryListAdapter(arrayList)
+            binding.spinnerNationality.adapter = CountryListAdapter(arrayList)
         })
 
         binding.edtDobTime.setDrawableClickListener(object : DrawableClickListener {

@@ -128,6 +128,7 @@
     <string name="disclaimer">Disclaimer</string>
     <string name="disclaimer_desc">The verification for entry to a destination is done at our best knowledge. It is for reference and does not guarantee a entry to the destination desired. The right of entry to a destination is remained at the authority of entry owner.</string>
     <string name="covid19_rrt_pcr_test">Covid-19 rRT-PCR Test</string>
+    <string name="enter_the_activate_code">Enter the 6-digit activation code sent to </string>
 
 
 

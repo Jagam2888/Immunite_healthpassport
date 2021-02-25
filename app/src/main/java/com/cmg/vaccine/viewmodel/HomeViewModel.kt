@@ -18,6 +18,7 @@ import com.cmg.vaccine.repositary.HomeRepositary
 import com.cmg.vaccine.util.APIException
 import com.cmg.vaccine.util.Couritnes
 import com.cmg.vaccine.util.NoInternetException
+import com.cmg.vaccine.util.Passparams
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -321,7 +322,8 @@ class HomeViewModel(
         dashBoard.privateKey = userData.privateKey
         dashBoard.data = vaccineList.value
         dashBoard.dataTest = testReportList.value
-        dashBoard.relationShip = "Principal"
+        dashBoard.relationShip = Passparams.PARENT
+        dashBoard.subId = userData.parentSubscriberId
         _listDashboard.value = listOf(dashBoard)
 
         val dependentList = repositary.getDependentList()
@@ -335,6 +337,7 @@ class HomeViewModel(
                 dashboard1.data = vaccineList.value
                 dashboard1.privateKey = dependent.privateKey
                 dashboard1.dataTest = testReportList.value
+                dashboard1.subId = dependent.subsId
                 _listDashboard.value = _listDashboard.value!!.plus(dashboard1)
             }
         }

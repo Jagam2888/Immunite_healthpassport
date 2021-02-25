@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.blongho.country_data.World
 import com.cmg.vaccine.R
 import com.cmg.vaccine.WorldEntriesDetailActivity
 import com.cmg.vaccine.database.AddWorldEntries
@@ -37,6 +38,10 @@ class WorldEntriesAdapter(
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         //holder.swipeHorizontalRightBinding.worldentries = countryList.get(position)
         holder.swipeHorizontalRightBinding.smContentView.worldentries = countryList.get(position)
+
+        val flag = World.getFlagOf(countryList.get(position).countryCodeAlpha)
+        holder.swipeHorizontalRightBinding.smContentView.imgFlag.setImageResource(flag)
+
 
         if ((viewModel.vaccineList.value?.isEmpty() == true) and (viewModel.testReportList.value?.isEmpty() == true)){
             holder.swipeHorizontalRightBinding.smContentView.statusIndicator.setImageResource(R.drawable.red_indicator)
@@ -69,6 +74,7 @@ class WorldEntriesAdapter(
             showAlertForDelete(position,holder.swipeHorizontalRightBinding.sml)
         }
 
+
         holder.swipeHorizontalRightBinding.sml.setOnClickListener {
             if (!holder.swipeHorizontalRightBinding.sml.isMenuOpen){
                 Intent(context,WorldEntriesDetailActivity::class.java).also {
@@ -99,6 +105,7 @@ class WorldEntriesAdapter(
                         "DELETE"
                 ) { dialog, which ->
                     removeItem(pos)
+                view.smoothCloseEndMenu()
 
                 }.setNegativeButton(
                         "CANCEL"

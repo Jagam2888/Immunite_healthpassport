@@ -15,9 +15,27 @@
         android:background="@color/lite_yellow"
         tools:context=".OTPVerifyActivity">
 
+        <RelativeLayout
+            android:id="@+id/action_bar"
+            android:layout_width="match_parent"
+            android:layout_height="?android:attr/actionBarSize"
+            android:orientation="horizontal"
+            android:background="@color/primary">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Activation Code"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:layout_centerInParent="true"
+                android:textAppearance="@style/opens_bold"/>
+        </RelativeLayout>
+
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_below="@id/action_bar">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -37,7 +55,18 @@
                     android:textSize="22sp"
                     android:gravity="center_horizontal"
                     android:layout_marginTop="5dp"
-                    style="@style/opens_bold" />
+                    style="@style/opens_bold"
+                    android:visibility="gone"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textAppearance="@style/opens_regular"
+                    android:text="@{@string/enter_the_activate_code+`\n`+viewmodel.displaymobileNumber}"
+                    android:textSize="14sp"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_horizontal" />
 
                 <TextView
                     android:id="@+id/txt_timer"
@@ -48,15 +77,7 @@
                     style="@style/opens_regular"
                     android:layout_marginTop="10dp"/>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    style="@style/opens_regular"
-                    android:text="@string/please_verify_email"
-                    android:textSize="14sp"
-                    android:layout_marginTop="10dp"
-                    android:gravity="center_horizontal" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

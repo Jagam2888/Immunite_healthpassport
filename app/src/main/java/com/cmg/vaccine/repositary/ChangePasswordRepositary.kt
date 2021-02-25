@@ -11,7 +11,7 @@ class ChangePasswordRepositary(
 ) {
 
     fun getUser(): User {
-        return database.getDao().getUserData(preferenceProvider.getEmail()!!,"Y")
+        return database.getDao().getUserData(preferenceProvider.getEmail()!!)
     }
 
     /*suspend fun updatePassword(user: User):Int{

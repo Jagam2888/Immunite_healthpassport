@@ -1,16 +1,16 @@
 package com.cmg.vaccine
 
 import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import com.blongho.country_data.Country
+import com.cmg.vaccine.adapter.CountryListAdapter
 import com.cmg.vaccine.databinding.ActivityTellUsMoreBinding
 import com.cmg.vaccine.listener.SimpleListener
-import com.cmg.vaccine.util.Passparams
-import com.cmg.vaccine.util.hide
-import com.cmg.vaccine.util.show
-import com.cmg.vaccine.util.toast
+import com.cmg.vaccine.util.*
 import com.cmg.vaccine.viewmodel.TellUsMoreViewModel
 import com.cmg.vaccine.viewmodel.viewmodelfactory.TellUsViewModelFactory
 import org.kodein.di.KodeinAware
@@ -31,6 +31,15 @@ class TellUsMoreActivity : BaseActivity(),KodeinAware,SimpleListener {
         binding.lifecycleOwner = this
 
         viewModel.listener = this
+
+        viewModel.countries.observe(this, androidx.lifecycle.Observer {list->
+            val arrayList = arrayListOf<Country>()
+            arrayList.addAll(list)
+            binding.spinnerNationality.adapter = CountryListAdapter(arrayList)
+            viewModel.getPlaceOfBirthPos()
+        })
+
+        //viewModel.setPlaceOfBirthToNationality()
 
         /*binding.btnSignup.setOnClickListener {
             Intent(this,OTPVerifyActivity::class.java).also {

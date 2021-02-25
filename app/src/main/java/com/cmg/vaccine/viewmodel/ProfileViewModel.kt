@@ -1,5 +1,6 @@
 package com.cmg.vaccine.viewmodel
 
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import androidx.databinding.ObservableBoolean
@@ -8,6 +9,8 @@ import androidx.databinding.ObservableInt
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.blongho.country_data.Country
+import com.blongho.country_data.World
 import com.cmg.vaccine.R
 import com.cmg.vaccine.data.Gender
 import com.cmg.vaccine.database.AppDatabase
@@ -58,12 +61,12 @@ class ProfileViewModel(
     val dependentList:LiveData<List<Dependent>>
     get() = _dependentList
 
-    var _countries:MutableLiveData<List<Countries>> = MutableLiveData()
+    var _countries:MutableLiveData<List<Country>> = MutableLiveData()
 
-    val countries:LiveData<List<Countries>>
+    val countries:LiveData<List<Country>>
         get() = _countries
 
-    var countryList:List<Countries>?=null
+    var countryList:List<Country>?=null
     var selectedItemNationalityCode = ObservableInt()
     var selectedItemBirthPlaceCode = ObservableInt()
     var selectedItemContactCode = ObservableField<String>()
@@ -80,6 +83,7 @@ class ProfileViewModel(
     var userSubId:MutableLiveData<String> = MutableLiveData()
 
 
+
     val clicksListener = object : AdapterView.OnItemSelectedListener {
         override fun onNothingSelected(parent: AdapterView<*>?) {
 
@@ -91,12 +95,14 @@ class ProfileViewModel(
     }
 
     init {
-        countryList = repositary.getAllCountriesDB()
+        //val countries = World.
+       // countryList = repositary.getAllCountriesDB()
+        countryList = World.getAllCountries()
         _countries.value = countryList
     }
 
     fun loadParentData(){
-        val user = repositary.getUserData("Y")
+        val user = repositary.getUserData()
 
         if(user != null) {
             firstName.value = user.fullName
@@ -217,13 +223,13 @@ class ProfileViewModel(
                                             var placeBirth = ""
                                             if (!countryList.isNullOrEmpty()) {
                                                 placeBirth =
-                                                    countryList?.get(selectedItemBirthPlaceCode.get())?.countryCodeAlpha!!
+                                                    countryList?.get(selectedItemBirthPlaceCode.get())?.alpha3!!
                                             }
 
                                             var nationality = ""
                                             if (!countryList.isNullOrEmpty()) {
                                                 nationality =
-                                                    countryList?.get(selectedItemNationalityCode.get())?.countryCodeAlpha!!
+                                                    countryList?.get(selectedItemNationalityCode.get())?.alpha3!!
                                             }
 
                                             val idTypeList =
@@ -238,7 +244,7 @@ class ProfileViewModel(
                                                 }
                                             }
 
-                                            var user = repositary.getUserData("Y")
+                                            var user = repositary.getUserData()
 
                                             val updateProfileReq = UpdateProfileReq()
                                             val updateProfileReqData = UpdateProfileReqData()
@@ -275,6 +281,8 @@ class ProfileViewModel(
                                                 user.dob = dob.value
                                                 user.email = email1.value!!.trim()
                                                 user.dobTime = dobTime.value
+                                                user.placeBirth = placeBirth
+                                                user.nationality = nationality
                                                 repositary.updateUser(user)
                                                 //repositary.saveUser(user)
                                                 listener?.onSuccess(response.Message)

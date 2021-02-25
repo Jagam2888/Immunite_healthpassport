@@ -24,7 +24,7 @@ class DependentRepositary(
     }
 
     fun getUserData():User{
-        return database.getDao().getUserData(preferenceProvider.getSubId()!!,"Y")
+        return database.getDao().getUserData(preferenceProvider.getSubId()!!)
     }
 
     suspend fun insertDependentSignUp(dependent: Dependent):Long{

@@ -12,6 +12,12 @@ interface PatientDao {
     fun getAllCountries():List<Countries>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertWorldCountries(worldEntryCountries: WorldEntryCountries):Long
+
+    @Query("SELECT * FROM WorldEntryCountries")
+    fun getAllWorldCountries():List<WorldEntryCountries>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertLoginPin(loginPin: LoginPin):Long
 
     @Query("SELECT * FROM LoginPin")
@@ -26,14 +32,17 @@ interface PatientDao {
     /*@Query("SELECT * FROM User where email = :email AND password = :password")
     fun login(email:String,password:String):User*/
 
-    @Query("SELECT * FROM User where parentSubscriberId = :subsId AND virifyStatus = :verifyStatus")
-    fun getUserData(subsId:String,verifyStatus:String):User
+    @Query("SELECT * FROM User where parentSubscriberId = :subsId")
+    fun getUserData(subsId:String):User
 
     /*@Update(onConflict = OnConflictStrategy.REPLACE)
     fun updatePrivateKey(user: User):Int*/
 
     @Query("SELECT privateKey FROM User where parentSubscriberId =:subsId")
     fun getPrivateKey(subsId: String):String
+
+    @Query("SELECT privateKey FROM Dependent where subsId =:subsId")
+    fun getDependentPrivateKey(subsId: String):String
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
     fun updateUser(user: User):Int

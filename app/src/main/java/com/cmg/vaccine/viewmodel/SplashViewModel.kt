@@ -42,7 +42,7 @@ class SplashViewModel(
             val pinData = repositary.getLoginPin()
             _loginPin.value = pinData
 
-            val user = repositary.getUserData(repositary.getSubId()!!,"Y")
+            val user = repositary.getUserData(repositary.getSubId()!!)
             _userData.value = user
         }
     }

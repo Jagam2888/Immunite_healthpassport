@@ -1,6 +1,6 @@
 package com.cmg.vaccine.model.response
 
-data class VaccineListNewDataFirstSecond(
+data class VaccineListBlockChainDataSecond(
     val GITN: String,
     val NFCTag: String,
     val brandName: String,

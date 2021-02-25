@@ -10,6 +10,7 @@ import android.location.Address
 import android.location.Geocoder
 import android.location.Location
 import android.location.LocationManager
+import android.provider.Settings
 import android.text.TextUtils
 import android.util.Base64
 import android.util.Log
@@ -20,7 +21,10 @@ import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
+import com.blongho.country_data.Country
 import com.cmg.vaccine.database.Countries
+import com.cmg.vaccine.database.WorldEntryCountries
+import com.cmg.vaccine.model.response.WorldEntriesCountryListData
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import java.io.UnsupportedEncodingException
@@ -60,6 +64,15 @@ fun isValidPassword(value: String):Boolean{
 fun Activity.hideKeyBoard(){
     val inputMethodManager = this.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
     inputMethodManager.hideSoftInputFromWindow(this.currentFocus?.windowToken, 0)
+}
+
+fun Context.getDeviceUUID():String?{
+    try {
+        return Settings.Secure.getString(contentResolver,Settings.Secure.ANDROID_ID)
+    }catch (e:Exception){
+        e.printStackTrace()
+    }
+    return ""
 }
 
 fun Context.showDatePickerDialog(editText: EditText){
@@ -163,26 +176,35 @@ fun selectedRelationShipPosition(state: String, relationShipList: List<String>):
     return pos
 }
 
-fun selectedCountryName(country: String, countries: List<Countries>):Int{
+fun selectedCountryName(country: String, countries: List<Country>):Int{
     var pos:Int = 0
     for (i in countries.indices!!){
-        if(country.equals(countries.get(i).countryCodeAlpha, false)){
+        if(country.equals(countries.get(i).alpha3, false)){
             return i
         }
     }
     return pos
 }
-fun getCurrentCountry(country: String, countries: List<Countries>):Int{
+fun getCurrentCountry(country: String, countries: List<Country>):Int{
     var pos:Int = 0
     for (i in countries.indices!!){
-        if(country.equals(countries.get(i).countryName, false)){
+        if(country.equals(countries[i].name, false)){
             return i
         }
     }
     return pos
 }
 
-fun getCountryNameUsingCode(code: String, countries: List<Countries>):String?{
+fun getCountryNameUsingCode(code: String, countries: List<Country>):String?{
+
+    for (i in countries.indices!!){
+        if(code.equals(countries.get(i).alpha3, false)){
+            return countries.get(i).name
+        }
+    }
+    return ""
+}
+fun getWorldEntryCountryNameUsingCode(code: String, countries: List<WorldEntryCountries>):String?{
 
     for (i in countries.indices!!){
         if(code.equals(countries.get(i).countryCodeAlpha, false)){

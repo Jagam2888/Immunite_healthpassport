@@ -63,15 +63,15 @@ private val layouts:List<Dashboard>
         val recyclerViewVaccine = view.findViewById<RecyclerView>(R.id.recycler_view_home_vaccine)
         val recyclerViewTest = view.findViewById<RecyclerView>(R.id.recycler_view_home_test)
 
-        txtName.text = layouts.get(position).fullName
-        txtRelationShip.text = layouts.get(position).relationShip+" Account"
-        txtPassportNo.text = layouts.get(position).passportNo
-        txtIdNo.text = layouts.get(position).idNo
+        txtName.text = layouts[position].fullName
+        txtRelationShip.text = layouts[position].relationShip+" Account"
+        txtPassportNo.text = layouts[position].passportNo
+        txtIdNo.text = layouts[position].idNo
 
         if (!layouts[position].data.isNullOrEmpty()) {
             recyclerViewVaccine.also {
                 it.layoutManager = LinearLayoutManager(context)
-                it.adapter = HomeVaccineListAdapter(layouts.get(position).data!!)
+                it.adapter = HomeVaccineListAdapter(layouts[position].data!!)
             }
             if (txtNoData.visibility == View.VISIBLE)
                 txtNoData.visibility = View.GONE
@@ -82,7 +82,7 @@ private val layouts:List<Dashboard>
         if (!layouts[position].dataTest.isNullOrEmpty()) {
             recyclerViewTest.also {
                 it.layoutManager = LinearLayoutManager(context)
-                it.adapter = HomeTestListAdapter(layouts.get(position).dataTest!!)
+                it.adapter = HomeTestListAdapter(layouts[position].dataTest!!)
             }
             if (txtNoData.visibility == View.VISIBLE)
                 txtNoData.visibility = View.GONE
@@ -142,8 +142,10 @@ private val layouts:List<Dashboard>
                 R.id.radio_mykey ->{
                     radioGroup.check(R.id.radio_vaccine)
                     Intent(context,ViewPrivateKeyActivity::class.java).also {
-                        it.putExtra(Passparams.PRIVATEKEY,layouts.get(position).privateKey)
-                        it.putExtra(Passparams.USER_NAME,layouts.get(position).fullName)
+                        it.putExtra(Passparams.PRIVATEKEY, layouts[position].privateKey)
+                        it.putExtra(Passparams.USER_NAME, layouts[position].fullName)
+                        it.putExtra(Passparams.RELATIONSHIP, layouts[position].relationShip)
+                        it.putExtra(Passparams.SUBSID, layouts[position].subId)
                         context.startActivity(it)
                     }
                 }

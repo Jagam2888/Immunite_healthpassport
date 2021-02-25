@@ -24,6 +24,7 @@ import com.cmg.vaccine.adapter.SwitchProfileAdapter
 import com.cmg.vaccine.fragment.*
 import com.cmg.vaccine.util.Passparams
 import com.cmg.vaccine.util.RecyclerViewTouchListener
+import com.cmg.vaccine.util.getDeviceUUID
 import com.cmg.vaccine.viewmodel.HomeViewModel
 import com.cmg.vaccine.viewmodel.viewmodelfactory.HomeViewModelFactory
 import io.paperdb.Paper
@@ -55,7 +56,8 @@ class MainActivity : BaseActivity(),KodeinAware {
         loadFragment(HomeFragment())
 
         val token = Paper.book().read(Passparams.FCM_TOKEN,"")
-        Log.d("token",token)
+        Log.d("fcm_token",token)
+        Log.d("device_id",getDeviceUUID()!!)
 
 
 

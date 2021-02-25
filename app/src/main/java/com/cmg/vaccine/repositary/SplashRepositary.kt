@@ -10,8 +10,8 @@ class SplashRepositary(
     private val database: AppDatabase
 ) {
 
-    fun getUserData(email:String,verifyStatus:String):User{
-        return database.getDao().getUserData(email,verifyStatus)
+    fun getUserData(email:String):User{
+        return database.getDao().getUserData(email)
     }
 
     fun getLoginPin():LoginPin{

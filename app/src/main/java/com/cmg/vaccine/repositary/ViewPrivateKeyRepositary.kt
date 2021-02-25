@@ -1,6 +1,7 @@
 package com.cmg.vaccine.repositary
 
 import com.cmg.vaccine.database.AppDatabase
+import com.cmg.vaccine.database.Dependent
 import com.cmg.vaccine.database.User
 import com.cmg.vaccine.model.response.GetPrivateKeyResponse
 import com.cmg.vaccine.network.MyApi
@@ -17,17 +18,27 @@ class ViewPrivateKeyRepositary(
         return preferenceProvider.getEmail()
     }
 
-    fun getPrivateKey():String?{
+    fun getParentPrivateKey():String?{
         return database.getDao().getPrivateKey(preferenceProvider.getSubId()!!)
+    }
+
+    fun getDependentPrivateKey(subId: String):String?{
+        return database.getDao().getDependentPrivateKey(subId)
     }
 
     fun savePrivateKey(privateKey:String){
         return preferenceProvider.savePrincipalPrivateKey(privateKey)
     }
 
-    suspend fun getPrivateKeyFromAPI():GetPrivateKeyResponse{
+    suspend fun getParentPrivateKeyFromAPI():GetPrivateKeyResponse{
         return apiRequest {
-            api.getPrivateKey(preferenceProvider.getSubId()!!)
+            api.getParentPrivateKey(preferenceProvider.getSubId()!!)
+        }
+    }
+
+    suspend fun getDependentPrivateKeyFromAPI(subId:String):GetPrivateKeyResponse{
+        return apiRequest {
+            api.getDependentPrivateKey(subId)
         }
     }
 
@@ -36,6 +47,14 @@ class ViewPrivateKeyRepositary(
     }
 
     fun getUserData():User{
-        return database.getDao().getUserData(preferenceProvider.getSubId()!!,"Y")
+        return database.getDao().getUserData(preferenceProvider.getSubId()!!)
+    }
+
+    fun getDependentData(subId: String):Dependent{
+        return database.getDao().getDependent(subId)
+    }
+
+    fun updateDependent(dependent: Dependent):Int{
+        return database.getDao().updateDependent(dependent)
     }
 }

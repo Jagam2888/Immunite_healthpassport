@@ -61,12 +61,12 @@
                     android:paddingTop="10dp">
 
                     <Spinner
+                        android:id="@+id/spinner_nationality"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textSize="16sp"
                         android:background="@null"
                         android:minHeight="0dp"
-                        android:entries="@{tellusviewmodel.countries}"
                         android:layout_centerVertical="true"
                         android:selectedItemPosition="@={tellusviewmodel.selectedItemNationalityCode}"/>
 

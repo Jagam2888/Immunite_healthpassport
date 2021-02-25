@@ -5,7 +5,6 @@ import com.cmg.vaccine.database.LoginPin
 import com.cmg.vaccine.database.TestReport
 import com.cmg.vaccine.database.Vaccine
 import com.cmg.vaccine.model.response.*
-import com.cmg.vaccine.network.BlockChainAPi
 import com.cmg.vaccine.network.MyApi
 import com.cmg.vaccine.network.SafeAPIRequest
 import com.cmg.vaccine.prefernces.PreferenceProvider
@@ -50,13 +49,13 @@ class SettingsRepositary(
         }
     }
 
-    suspend fun getVaccineListBlockChain(privateKey: String): VaccineNewResponse {
+    suspend fun getVaccineListBlockChain(privateKey: String): VaccineResponseBlockChain {
         return apiRequest {
             api.getVaccineList(privateKey)
         }
     }
 
-    suspend fun getTestReportList(privateKey: String): TestReportNewResponse {
+    suspend fun getTestReportList(privateKey: String): TestReportResponseBlockChain {
         return apiRequest {
             api.getTestReportList(privateKey)
         }

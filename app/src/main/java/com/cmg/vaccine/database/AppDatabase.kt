@@ -9,7 +9,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 
 @Database(
     entities = [User::class,LoginPin::class,Dependent::class,Countries::class,Vaccine::class,TestReport::class,AddWorldEntries::class,
-               TestType::class,Virus::class,VaccineDetail::class],
+               TestType::class,Virus::class,VaccineDetail::class,WorldEntryCountries::class],
     version = 1,
     exportSchema = false
 )

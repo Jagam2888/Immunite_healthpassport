@@ -12,6 +12,7 @@ class Dashboard {
     var idNo:String?=null
     var nationality:String?=null
     var privateKey:String?=null
+    var subId:String?=null
     var data:List<Vaccine>?=null
     var dataTest:List<TestReport>?=null
 }

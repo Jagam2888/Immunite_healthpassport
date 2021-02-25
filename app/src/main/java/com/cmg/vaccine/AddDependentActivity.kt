@@ -9,7 +9,10 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.blongho.country_data.Country
+import com.cmg.vaccine.adapter.CountryListAdapter
 import com.cmg.vaccine.databinding.ActivityAddDependentBinding
 import com.cmg.vaccine.listener.SimpleListener
 import com.cmg.vaccine.util.*
@@ -35,7 +38,16 @@ class AddDependentActivity : BaseActivity(),KodeinAware,SimpleListener {
         binding.lifecycleOwner = this
         viewModel.listener = this
 
-        viewModel.setCurrentCountry(getCurrentCountryName()!!)
+        viewModel.countries.observe(this, Observer {list->
+            val arrayList = arrayListOf<Country>()
+            arrayList.addAll(list)
+            binding.spinnerPlaceBirth.adapter = CountryListAdapter(arrayList)
+            binding.spinnerNationality.adapter = CountryListAdapter(arrayList)
+            viewModel.setCurrentCountry(getCurrentCountryName()!!)
+        })
+
+
+
 
         //binding.edtDob.listen()
 

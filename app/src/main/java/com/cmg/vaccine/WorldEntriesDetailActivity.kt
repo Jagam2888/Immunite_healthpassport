@@ -3,6 +3,7 @@ package com.cmg.vaccine
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.cmg.vaccine.adapter.WorldEntriesDetailAdapter
 import com.cmg.vaccine.data.WorldEntriesListData.WorldCountryData
@@ -41,7 +42,21 @@ class WorldEntriesDetailActivity : BaseActivity(),KodeinAware {
             finish()
         }
 
-        importData()
+        viewModel.getVaccineAndTestReportList()
+
+        viewModel.countryList.observe(this, Observer {
+            viewModel.loadEntriesExpandableListData()
+
+        })
+
+
+        viewModel.worldEntriesExpandable.observe(this, Observer { listData->
+            titleList = ArrayList(listData.keys)
+            adapters = WorldEntriesDetailAdapter(this, titleList as ArrayList<String>, listData)
+            listview_travel!!.setAdapter(adapters)
+        })
+
+        //importData()
     }
 
     private fun importData()

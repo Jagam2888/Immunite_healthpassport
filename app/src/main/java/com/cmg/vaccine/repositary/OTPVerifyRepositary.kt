@@ -14,8 +14,8 @@ class OTPVerifyRepositary(
         private val preferenceProvider: PreferenceProvider
 ):SafeAPIRequest() {
 
-    fun getUserData(verifyStatus:String):User{
-        return database.getDao().getUserData(preferenceProvider.getSubId()!!,verifyStatus)
+    fun getUserData():User{
+        return database.getDao().getUserData(preferenceProvider.getSubId()!!)
     }
 
     fun updateVerifyStatus(user: User):Int{
@@ -30,7 +30,7 @@ class OTPVerifyRepositary(
         return database.getDao().updateUser(user)
     }
 
-    fun getUserData():String?{
+    fun getUserDataPref():String?{
         return preferenceProvider.getUserReqData()
     }
 

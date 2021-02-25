@@ -2,7 +2,6 @@ package com.cmg.vaccine.repositary
 
 import com.cmg.vaccine.database.*
 import com.cmg.vaccine.model.response.*
-import com.cmg.vaccine.network.BlockChainAPi
 import com.cmg.vaccine.network.MyApi
 import com.cmg.vaccine.network.SafeAPIRequest
 import com.cmg.vaccine.prefernces.PreferenceProvider
@@ -31,12 +30,12 @@ class HomeRepositary(
         }
     }*/
 
-    suspend fun getTestReportList(privateKey: String):TestReportNewResponse{
+    suspend fun getTestReportList(privateKey: String):TestReportResponseBlockChain{
         return apiRequest {
             api.getTestReportList(privateKey)
         }
     }
-    suspend fun getVaccineListNew(privateKey: String):VaccineNewResponse{
+    suspend fun getVaccineListNew(privateKey: String):VaccineResponseBlockChain{
         return apiRequest {
             api.getVaccineList(privateKey)
         }
@@ -48,7 +47,7 @@ class HomeRepositary(
     }
 
     fun getUserData():User{
-        return database.getDao().getUserData(preferenceProvider.getSubId()!!,"Y")
+        return database.getDao().getUserData(preferenceProvider.getSubId()!!)
     }
 
     fun getPrivateKey():String?{

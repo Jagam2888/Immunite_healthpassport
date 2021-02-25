@@ -9,6 +9,8 @@ import androidx.databinding.ObservableInt
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.blongho.country_data.Country
+import com.blongho.country_data.World
 import com.cmg.vaccine.R
 import com.cmg.vaccine.data.Gender
 import com.cmg.vaccine.database.Countries
@@ -62,12 +64,12 @@ class DependentViewModel(
     var genderEnum: Gender = Gender.F
     var listener:SimpleListener?=null
 
-    var _countries:MutableLiveData<List<Countries>> = MutableLiveData()
+    var _countries:MutableLiveData<List<Country>> = MutableLiveData()
 
-    val countries: LiveData<List<Countries>>
+    val countries:LiveData<List<Country>>
         get() = _countries
 
-    var countryList:List<Countries>?=null
+    var countryList:List<Country>?=null
     var selectedItemNationalityCode = ObservableInt()
     var selectedItemBirthPlaceCode = ObservableInt()
     var selectedItemContactCode = ObservableField<String>()
@@ -105,14 +107,17 @@ class DependentViewModel(
 
 
         }
-        countryList = repositary.getAllCountriesDB()
+        /*countryList = repositary.getAllCountriesDB()
+        _countries.value = countryList*/
+        countryList = World.getAllCountries()
         _countries.value = countryList
 
         dobTime.value = "1200"
     }
 
     fun setCurrentCountry(country:String){
-        countryList = repositary.getAllCountriesDB()
+        //countryList = repositary.getAllCountriesDB()
+        countryList = World.getAllCountries()
         if (!countryList.isNullOrEmpty()){
             val pos = getCurrentCountry(country,countryList!!)
             selectedItemBirthPlaceCode.set(pos)
@@ -141,13 +146,13 @@ class DependentViewModel(
                                 var placeBirth = ""
                                 if (!countryList.isNullOrEmpty()) {
                                     placeBirth =
-                                        countryList?.get(selectedItemBirthPlaceCode.get())?.countryCodeAlpha!!
+                                        countryList?.get(selectedItemBirthPlaceCode.get())?.alpha3!!
                                 }
 
                                 var nationality = ""
                                 if (!countryList.isNullOrEmpty()) {
                                     nationality =
-                                        countryList?.get(selectedItemNationalityCode.get())?.countryCodeAlpha!!
+                                        countryList?.get(selectedItemNationalityCode.get())?.alpha3!!
                                 }
 
                                 val idTypeList =
@@ -311,13 +316,13 @@ class DependentViewModel(
                                             var placeBirth = ""
                                             if (!countryList.isNullOrEmpty()) {
                                                 placeBirth =
-                                                    countryList?.get(selectedItemBirthPlaceCode.get())?.countryCodeAlpha!!
+                                                    countryList?.get(selectedItemBirthPlaceCode.get())?.alpha3!!
                                             }
 
                                             var nationality = ""
                                             if (!countryList.isNullOrEmpty()) {
                                                 nationality =
-                                                    countryList?.get(selectedItemNationalityCode.get())?.countryCodeAlpha!!
+                                                    countryList?.get(selectedItemNationalityCode.get())?.alpha3!!
                                             }
 
                                             val idTypeList =

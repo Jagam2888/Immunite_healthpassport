@@ -26,13 +26,13 @@ class ViewPrivateKeyViewModel(
     get() = _userName
 
 
-    fun getPrivateKey() {
-        val getPrivateKey = repositary.getPrivateKey()
+    fun getPatientPrivateKey() {
+        val getPrivateKey = repositary.getParentPrivateKey()
         listener?.onStarted()
         if (getPrivateKey.isNullOrEmpty()){
             Couritnes.main {
                 try {
-                    val response = repositary.getPrivateKeyFromAPI()
+                    val response = repositary.getParentPrivateKeyFromAPI()
                     if (response.StatusCode == 1){
                         val getUser = repositary.getUserData()
                         if (getUser != null){
@@ -40,6 +40,40 @@ class ViewPrivateKeyViewModel(
                             repositary.updateUser(getUser)
                         }
                         repositary.savePrivateKey(response.PrivateKey)
+                        _privateKey.value = response.PrivateKey
+                        listener?.onSuccess(response.Message)
+                    }else{
+                        listener?.onFailure(response.Message)
+                    }
+
+                }catch (e: APIException) {
+                    listener?.onFailure(e.message!!)
+                } catch (e: NoInternetException) {
+                    listener?.onFailure(e.message!!)
+                } catch (e: SocketTimeoutException) {
+                    listener?.onFailure(e.message!!)
+                }
+            }
+        }else{
+            listener?.onSuccess(getPrivateKey)
+            _privateKey.value = getPrivateKey
+        }
+    }
+
+    fun getDependentPrivateKey(subId:String) {
+        val getPrivateKey = repositary.getDependentPrivateKey(subId)
+        listener?.onStarted()
+        if (getPrivateKey.isNullOrEmpty()){
+            Couritnes.main {
+                try {
+                    val response = repositary.getDependentPrivateKeyFromAPI(subId)
+                    if (response.StatusCode == 1){
+                        val getUser = repositary.getDependentData(subId)
+                        if (getUser != null){
+                            getUser.privateKey = response.PrivateKey
+                            repositary.updateDependent(getUser)
+                        }
+                        //repositary.savePrivateKey(response.PrivateKey)
                         _privateKey.value = response.PrivateKey
                         listener?.onSuccess(response.Message)
                     }else{

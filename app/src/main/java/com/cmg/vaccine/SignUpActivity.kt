@@ -14,6 +14,8 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import com.blongho.country_data.Country
+import com.cmg.vaccine.adapter.CountryListAdapter
 import com.cmg.vaccine.databinding.ActivitySignUpBinding
 import com.cmg.vaccine.listener.SimpleListener
 import com.cmg.vaccine.util.*
@@ -69,7 +71,20 @@ class SignUpActivity : BaseActivity(),KodeinAware,SimpleListener {
 
         //binding.edtDob.listen()
 
-
+        viewModel.countries.observe(this, androidx.lifecycle.Observer {list->
+            val arrayList = arrayListOf<Country>()
+            arrayList.addAll(list)
+            binding.spinnerPlaceBirth.adapter = CountryListAdapter(arrayList)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (checkPermission()) {
+                    viewModel.setCurrentCountry(getCurrentCountryName()!!)
+                    //toast(getCurrentCountryName()!!)
+                    //getLastLocation()
+                } else {
+                    requestPermission()
+                }
+            }
+        })
 
         binding.edtDob.setDrawableClickListener(object : DrawableClickListener {
             override fun onClick(target: DrawablePosition?) {
@@ -176,15 +191,7 @@ class SignUpActivity : BaseActivity(),KodeinAware,SimpleListener {
             }
         })*/
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (checkPermission()) {
-                viewModel.setCurrentCountry(getCurrentCountryName()!!)
-                //toast(getCurrentCountryName()!!)
-                //getLastLocation()
-            } else {
-                requestPermission()
-            }
-        }
+
     }
 
     private fun checkPermission():Boolean{

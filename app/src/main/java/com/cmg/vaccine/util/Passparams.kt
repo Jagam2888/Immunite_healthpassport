@@ -11,6 +11,7 @@ object Passparams{
     const val USER = "user"
     const val PARENT = "Principal"
     const val DEPENDENT = "Dependant"
+    const val RELATIONSHIP = "relation_ship"
     const val DEPENDENT_SUBID = "dependant_sub_id"
     const val TEST_REPORT_ID = "test_report_id"
     const val FCM_TOKEN = "fcm_token"
@@ -25,7 +26,8 @@ object Passparams{
     const val EDIT_DEPENDENT_PROFILE = "nhr-module-user/editdependentProfile"
 
     const val SEARCH_PRIVATE_KEY = "nhr-module-user/searchPrivateKey"
-    const val GET_PRIVATE_KEY = "nhr-module-user/privateKeyBySubsId"
+    const val GET_PATIENT_PRIVATE_KEY = "nhr-module-user/privateKeyBySubsId"
+    const val GET_DEPENDENT_PRIVATE_KEY = "nhr-module-user/privatekeybydepsubsid"
     const val SEARCH_VACCINE = "nhr-module-user/searchVaccine"
     const val SEARCH_TEST_REPORT = "nhr-module-user/searchtest"
     const val VERIFY_TAC = "nhr-module-user/verifyTac"
@@ -36,6 +38,7 @@ object Passparams{
     const val VIRUS = "nhr-module-user/virus"
     const val GET_VACCINE_LIST = "nhr-module-user/getallvaccinerecord"
     const val GET_TEST_REPORT_LIST = "nhr-module-user/getalltestrecord"
+    const val GET_WORLD_ENTRIES_LIST = "nhr-module-user/worldentry"
 
     //Block Chain
     const val BLOCK_CHAIN_URL = "https://cashierbook.com.my:8081/blockchainapi/"

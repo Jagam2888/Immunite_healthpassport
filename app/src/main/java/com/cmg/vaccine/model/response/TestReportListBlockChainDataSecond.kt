@@ -1,6 +1,6 @@
 package com.cmg.vaccine.model.response
 
-data class GetTestReportBlockChainResponseItem(
+data class TestReportListBlockChainDataSecond(
     val codeDisplay: String,
     val codeSystem: String,
     val collectedDateTime: String,

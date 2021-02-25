@@ -17,8 +17,8 @@ class ProfileRepositary(
     private val preferenceProvider: PreferenceProvider
 ):SafeAPIRequest() {
 
-    fun getUserData(verifyStatus:String):User{
-        return database.getDao().getUserData(preferenceProvider.getSubId()!!,verifyStatus)
+    fun getUserData():User{
+        return database.getDao().getUserData(preferenceProvider.getSubId()!!)
     }
 
     fun updateUser(user: User):Int{

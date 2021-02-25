@@ -12,6 +12,12 @@ import android.widget.TextView
 import com.cmg.vaccine.R
 import com.cmg.vaccine.RRTPCRActivity
 import com.cmg.vaccine.VaccineAndTestReportActivity
+import com.cmg.vaccine.database.TestReport
+import com.cmg.vaccine.database.Vaccine
+import com.cmg.vaccine.util.Passparams
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import java.lang.reflect.Type
 
 class WorldEntriesDetailAdapter internal constructor(
     private val context: Context,
@@ -35,14 +41,31 @@ class WorldEntriesDetailAdapter internal constructor(
         }
         val expandedListTextView = convertView!!.findViewById<TextView>(R.id.txt_item)
         expandedListTextView.text = expandedListText
+        if (listPosition ==1){
+            val gson = Gson()
+            val type: Type = object : TypeToken<TestReport>() {}.type
+            val testReportData = gson.fromJson<TestReport>(expandedListText, type)
+            expandedListTextView.text = testReportData.codeDisplay
+        }else if (listPosition == 2){
+            val gson = Gson()
+            val type: Type = object : TypeToken<Vaccine>() {}.type
+            val vaccineData = gson.fromJson<Vaccine>(expandedListText, type)
+            expandedListTextView.text = vaccineData.brandName
+        }
         expandedListTextView.setOnClickListener {
-            if(expandedListTextView.text=="Covid-19 Vaccine2 (Pfizer)") {
+            /*if(expandedListTextView.text=="Covid-19 Vaccine2 (Pfizer)") {
                 var it = Intent(this.context, VaccineAndTestReportActivity::class.java)
                 this.context.startActivity(it)
             }
             else{
                 var it = Intent(this.context, RRTPCRActivity::class.java)
                 this.context.startActivity(it)
+            }*/
+            if (listPosition == 1){
+                Intent(this.context, VaccineAndTestReportActivity::class.java).also {
+                    it.putExtra(Passparams.TEST_REPORT_ID,expandedListText)
+                    context.startActivity(it)
+                }
             }
         }
         return convertView
@@ -67,6 +90,7 @@ class WorldEntriesDetailAdapter internal constructor(
     override fun getGroupView(listPosition: Int, isExpanded: Boolean, convertView: View?, parent: ViewGroup): View {
         var convertView = convertView
         val listTitle = getGroup(listPosition) as String
+        //val listTitleArray = listTitle.split("_")
         if (convertView == null) {
             val layoutInflater = this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
             convertView = layoutInflater.inflate(R.layout.list_group, null)
@@ -75,6 +99,16 @@ class WorldEntriesDetailAdapter internal constructor(
         listTitleTextView.setTypeface(null, Typeface.BOLD)
         listTitleTextView.text = listTitle
         val arrow = convertView!!.findViewById<ImageView>(R.id.arrow_img)
+        val indicator = convertView!!.findViewById<ImageView>(R.id.indicator)
+
+        /*if (listTitleArray[1].equals("red",true)){
+            indicator.setImageResource(R.drawable.red_indicator)
+        }else if (listTitleArray[1].equals("green",true)){
+            indicator.setImageResource(R.drawable.green_indicator)
+        }else if (listTitleArray[1].equals("yellow",true)){
+            indicator.setImageResource(R.drawable.yellow_indicator)
+        }*/
+
         if(isExpanded){
             arrow.setImageResource(R.drawable.arrow_up)
         }else{

@@ -181,7 +181,8 @@
                         app:ccp_hintExampleNumber="true"
                         app:ccp_defaultNameCode="my"
                         app:ccp_textSize="14sp"
-                        android:layout_weight="1"/>
+                        android:layout_weight="1"
+                        android:layout_gravity="center_vertical"/>
                     <View
                         android:layout_width="1dp"
                         android:layout_height="match_parent"
@@ -326,12 +327,12 @@
                     android:paddingTop="10dp">
 
                     <Spinner
+                        android:id="@+id/spinner_place_birth"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textSize="16sp"
                         android:background="@null"
                         android:minHeight="0dp"
-                        android:entries="@{dependentViewModel.countries}"
                         android:layout_centerVertical="true"
                         android:selectedItemPosition="@={dependentViewModel.selectedItemBirthPlaceCode}"
                         tools:setOnItemSelectedListener="@{dependentViewModel.clicksListener}"/>
@@ -419,12 +420,12 @@
                     android:paddingTop="10dp">
 
                     <Spinner
+                        android:id="@+id/spinner_nationality"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textSize="16sp"
                         android:background="@null"
                         android:minHeight="0dp"
-                        android:entries="@{dependentViewModel.countries}"
                         android:layout_centerVertical="true"
                         android:selectedItemPosition="@={dependentViewModel.selectedItemNationalityCode}"/>
 

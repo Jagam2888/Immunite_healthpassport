@@ -71,7 +71,7 @@ class AppController : Application(),KodeinAware {
         bind() from singleton { SettingsRepositary(instance(),instance(),instance()) }
         bind() from provider { SettingsModelFactory(instance()) }
 
-        bind() from singleton { WorldEntryRepositary(instance()) }
+        bind() from singleton { WorldEntryRepositary(instance(),instance(),instance()) }
         bind() from provider { WorldEntryViewModelFactory(instance()) }
 
         bind() from singleton { VaccineAndTestRepositary(instance()) }

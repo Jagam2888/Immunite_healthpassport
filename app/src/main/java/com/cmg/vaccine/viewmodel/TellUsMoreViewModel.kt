@@ -6,6 +6,8 @@ import androidx.databinding.ObservableInt
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.blongho.country_data.Country
+import com.blongho.country_data.World
 import com.cmg.vaccine.R
 import com.cmg.vaccine.database.Countries
 import com.cmg.vaccine.database.User
@@ -38,9 +40,9 @@ class TellUsMoreViewModel(
 
     var listener:SimpleListener?=null
 
-    var _countries:MutableLiveData<List<Countries>> = MutableLiveData()
+    var _countries:MutableLiveData<List<Country>> = MutableLiveData()
 
-    val countries: LiveData<List<Countries>>
+    val countries:LiveData<List<Country>>
         get() = _countries
 
     val token = Paper.book().read(Passparams.FCM_TOKEN,"")
@@ -48,17 +50,20 @@ class TellUsMoreViewModel(
     var userSubId:MutableLiveData<String> = MutableLiveData()
 
     init {
-        val countries = repositary.getAllCountriesDB()
+        //val countries = repositary.getAllCountriesDB()
+        val countries = World.getAllCountries()
         if (!countries.isNullOrEmpty()){
             _countries.value = countries
-
-            var alreadyStored = repositary.getUserData()
-            val gson = Gson()
-            val type: Type = object : TypeToken<User>() {}.type
-            var userData = gson.fromJson<User>(alreadyStored, type)
-            val pos = selectedCountryName(userData.placeBirth,countries)
-            selectedItemNationalityCode.set(pos)
         }
+    }
+
+    fun getPlaceOfBirthPos(){
+        var alreadyStored = repositary.getUserData()
+        val gson = Gson()
+        val type: Type = object : TypeToken<User>() {}.type
+        var userData = gson.fromJson<User>(alreadyStored, type)
+        val pos = selectedCountryName(userData.placeBirth,countries.value!!)
+        selectedItemNationalityCode.set(pos)
     }
 
     fun onRegister(view:View){
@@ -72,7 +77,7 @@ class TellUsMoreViewModel(
 
                 var nationality = ""
                 if (!countries.value.isNullOrEmpty()){
-                    nationality = countries.value?.get(selectedItemNationalityCode.get())?.countryCodeAlpha!!
+                    nationality = countries.value?.get(selectedItemNationalityCode.get())?.alpha3!!
                 }
 
                 val idTypeList = view.context.resources.getStringArray(R.array.id_type)
@@ -102,6 +107,7 @@ class TellUsMoreViewModel(
                 signUpReqData.idType = userData.patientIdType
                 signUpReqData.nationalityCountry = userData.nationality
                 signUpReqData.token = token
+                signUpReqData.imeId = view.context.getDeviceUUID()
 
                 signUpReq.data = signUpReqData
 

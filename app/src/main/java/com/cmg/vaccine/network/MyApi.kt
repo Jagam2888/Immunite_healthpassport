@@ -1,12 +1,10 @@
 package com.cmg.vaccine.network
 
 import android.content.Context
-import com.cmg.vaccine.model.request.AuthRequest
 import com.cmg.vaccine.model.request.DependentRegReq
 import com.cmg.vaccine.model.request.SignUpReq
 import com.cmg.vaccine.model.request.UpdateProfileReq
 import com.cmg.vaccine.model.response.*
-import com.cmg.vaccine.prefernces.PreferenceProvider
 import com.cmg.vaccine.util.Passparams
 import retrofit2.Response
 import retrofit2.http.Body
@@ -58,14 +56,20 @@ interface MyApi {
     @GET(Passparams.VACCINE)
     suspend fun getVaccineDetailList():Response<VaccineDetailListResponse>
 
-    @GET(Passparams.GET_PRIVATE_KEY)
-    suspend fun getPrivateKey(@Query("subsId") subsId:String):Response<GetPrivateKeyResponse>
+    @GET(Passparams.GET_PATIENT_PRIVATE_KEY)
+    suspend fun getParentPrivateKey(@Query("subsId") subsId:String):Response<GetPrivateKeyResponse>
+
+    @GET(Passparams.GET_DEPENDENT_PRIVATE_KEY)
+    suspend fun getDependentPrivateKey(@Query("subsId") subsId:String):Response<GetPrivateKeyResponse>
 
     @GET(Passparams.GET_TEST_REPORT_LIST)
-    suspend fun getTestReportList(@Query("privateKey") key:String):Response<TestReportNewResponse>
+    suspend fun getTestReportList(@Query("privateKey") key:String):Response<TestReportResponseBlockChain>
 
     @GET(Passparams.GET_VACCINE_LIST)
-    suspend fun getVaccineList(@Query("privateKey") key:String):Response<VaccineNewResponse>
+    suspend fun getVaccineList(@Query("privateKey") key:String):Response<VaccineResponseBlockChain>
+
+    @GET(Passparams.GET_WORLD_ENTRIES_LIST)
+    suspend fun getWorldEntriesCountryList():Response<WorldEntriesCountryList>
 
     companion object{
         operator fun invoke(

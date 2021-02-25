@@ -158,7 +158,8 @@
                         android:layout_height="wrap_content"
                         app:ccp_textSize="14sp"
                         app:ccp_hintExampleNumber="true"
-                        android:layout_weight="1"/>
+                        android:layout_weight="1"
+                        android:layout_gravity="center_vertical"/>
 
                     <!--<RelativeLayout
                         android:layout_width="match_parent"
@@ -338,6 +339,14 @@
                     android:textAppearance="@style/opens_regular"
                     android:textSize="14sp" />
 
+                <!--<AutoCompleteTextView
+                    android:id="@+id/edt_place_birth"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/edittext_background"
+                    android:drawableRight="@drawable/down_arrow"
+                    android:paddingRight="20dp"/>-->
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
@@ -348,18 +357,23 @@
                     android:paddingRight="10dp"
                     android:paddingTop="10dp">
 
+                    <!--<com.hbb20.CountryCodePicker
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:ccp_countryPreference="my"
+                        app:ccp_customMasterCountries="@{profileviewmodel.countryList}"/>
+-->
                     <Spinner
+                        android:id="@+id/edt_place_birth"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textAppearance="@style/opens_regular"
                         android:textSize="14sp"
                         android:background="@null"
                         android:minHeight="0dp"
-                        android:entries="@{profileviewmodel.countries}"
                         android:layout_centerVertical="true"
                         android:selectedItemPosition="@={profileviewmodel.selectedItemBirthPlaceCode}"
                         tools:setOnItemSelectedListener="@{profileviewmodel.clicksListener}"/>
-
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -555,13 +569,13 @@
                     android:paddingTop="10dp">
 
                     <Spinner
+                        android:id="@+id/spinner_nationality"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textAppearance="@style/opens_regular"
                         android:textSize="14sp"
                         android:background="@null"
                         android:minHeight="0dp"
-                        android:entries="@{profileviewmodel.countries}"
                         android:layout_centerVertical="true"
                         android:selectedItemPosition="@={profileviewmodel.selectedItemNationalityCode}"/>
 
