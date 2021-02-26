@@ -71,6 +71,9 @@ interface MyApi {
     @GET(Passparams.GET_WORLD_ENTRIES_LIST)
     suspend fun getWorldEntriesCountryList():Response<WorldEntriesCountryList>
 
+    @GET(Passparams.GET_WORLD_ENTRIES_RULES)
+    suspend fun getWorldEntryCountryRules(@Query("countryCode")countryCode:String):Response<WorldEntryRulesResponse>
+
     companion object{
         operator fun invoke(
             context: Context

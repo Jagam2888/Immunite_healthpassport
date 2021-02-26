@@ -35,6 +35,8 @@ class AddWorldEntryActivity : BaseActivity(),KodeinAware,SimpleListener {
         //binding.lifecycleOwner = this
         viewModel.listener = this
 
+        viewModel.loadWorldEntryCountries()
+
 
 
         viewModel.countryList.observe(this, Observer {

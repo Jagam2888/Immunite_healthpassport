@@ -5,7 +5,6 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.TextView
@@ -13,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.PagerAdapter
 import com.cmg.vaccine.R
-import com.cmg.vaccine.VaccineAndTestReportActivity
+import com.cmg.vaccine.TestReportDetailActivity
 import com.cmg.vaccine.ViewPrivateKeyActivity
 import com.cmg.vaccine.model.Dashboard
 import com.cmg.vaccine.util.Passparams
@@ -95,7 +94,7 @@ private val layouts:List<Dashboard>
             override fun onClick(view: View?, pos: Int) {
                 val gson = Gson()
                 val value:String = gson.toJson(layouts[position].dataTest?.get(pos))
-                Intent(context,VaccineAndTestReportActivity::class.java).also {
+                Intent(context,TestReportDetailActivity::class.java).also {
                     it.putExtra(Passparams.TEST_REPORT_ID,value)
                     context.startActivity(it)
                 }

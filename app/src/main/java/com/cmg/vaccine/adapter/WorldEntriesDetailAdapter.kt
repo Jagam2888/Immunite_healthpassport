@@ -10,10 +10,9 @@ import android.widget.BaseExpandableListAdapter
 import android.widget.ImageView
 import android.widget.TextView
 import com.cmg.vaccine.R
-import com.cmg.vaccine.RRTPCRActivity
-import com.cmg.vaccine.VaccineAndTestReportActivity
+import com.cmg.vaccine.TestReportDetailActivity
+import com.cmg.vaccine.TestReportFailedActivity
 import com.cmg.vaccine.database.TestReport
-import com.cmg.vaccine.database.Vaccine
 import com.cmg.vaccine.util.Passparams
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -40,17 +39,33 @@ class WorldEntriesDetailAdapter internal constructor(
             convertView = layoutInflater.inflate(R.layout.list_test_item, null)
         }
         val expandedListTextView = convertView!!.findViewById<TextView>(R.id.txt_item)
+        val indicator = convertView!!.findViewById<ImageView>(R.id.indicator)
         expandedListTextView.text = expandedListText
+
         if (listPosition ==1){
-            val gson = Gson()
+            /*val gson = Gson()
             val type: Type = object : TypeToken<TestReport>() {}.type
-            val testReportData = gson.fromJson<TestReport>(expandedListText, type)
-            expandedListTextView.text = testReportData.codeDisplay
+            val testReportData = gson.fromJson<TestReport>(expandedListText, type)*/
+                val testReportArray = expandedListText.split("|")
+            val status:Boolean = testReportArray[1].toBoolean()
+            if (status){
+                indicator.setImageResource(R.drawable.ic_green_tick)
+            }else{
+                indicator.setImageResource(R.drawable.ic_red_failed)
+            }
+            expandedListTextView.text = testReportArray[0]
         }else if (listPosition == 2){
-            val gson = Gson()
+            /*val gson = Gson()
             val type: Type = object : TypeToken<Vaccine>() {}.type
-            val vaccineData = gson.fromJson<Vaccine>(expandedListText, type)
-            expandedListTextView.text = vaccineData.brandName
+            val vaccineData = gson.fromJson<Vaccine>(expandedListText, type)*/
+            val vaccineArray = expandedListText.split("|")
+            val status:Boolean = vaccineArray[1].toBoolean()
+            if (status){
+                indicator.setImageResource(R.drawable.ic_green_tick)
+            }else{
+                indicator.setImageResource(R.drawable.ic_red_failed)
+            }
+            expandedListTextView.text = vaccineArray[0]
         }
         expandedListTextView.setOnClickListener {
             /*if(expandedListTextView.text=="Covid-19 Vaccine2 (Pfizer)") {
@@ -62,9 +77,18 @@ class WorldEntriesDetailAdapter internal constructor(
                 this.context.startActivity(it)
             }*/
             if (listPosition == 1){
-                Intent(this.context, VaccineAndTestReportActivity::class.java).also {
-                    it.putExtra(Passparams.TEST_REPORT_ID,expandedListText)
-                    context.startActivity(it)
+                val vaccineArray = expandedListText.split("|")
+                val status:Boolean = vaccineArray[1].toBoolean()
+                if (status){
+                    Intent(context, TestReportDetailActivity::class.java).also {
+                        it.putExtra(Passparams.TEST_REPORT_ID, vaccineArray[2])
+                        context.startActivity(it)
+                    }
+                }else{
+                    Intent(context,TestReportFailedActivity::class.java).also {
+                        it.putExtra(Passparams.TEST_REPORT_ID,vaccineArray[0])
+                        context.startActivity(it)
+                    }
                 }
             }
         }

@@ -110,4 +110,10 @@ interface PatientDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertVaccineDetail(vaccineDetail: VaccineDetail):Long
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertWorldEntryRulesByCountry(worldEntryRulesByCountry: WorldEntryRulesByCountry)
+
+    @Query("SELECT * FROM WorldEntryRulesByCountry WHERE woen_country_code =:countryCode")
+    fun getWorldEntryRuleByCountry(countryCode:String):List<WorldEntryRulesByCountry>
+
 }

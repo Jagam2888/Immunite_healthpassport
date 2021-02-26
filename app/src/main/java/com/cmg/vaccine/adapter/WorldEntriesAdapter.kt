@@ -78,7 +78,7 @@ class WorldEntriesAdapter(
         holder.swipeHorizontalRightBinding.sml.setOnClickListener {
             if (!holder.swipeHorizontalRightBinding.sml.isMenuOpen){
                 Intent(context,WorldEntriesDetailActivity::class.java).also {
-                    it.putExtra(Passparams.WORLD_ENTRY_SELECTED_COUNTRY_NAME, countryList[position].countryName)
+                    it.putExtra(Passparams.WORLD_ENTRY_SELECTED_COUNTRY_CODE, countryList[position].countryCodeAlpha)
                     context?.startActivity(it)
                 }
             }

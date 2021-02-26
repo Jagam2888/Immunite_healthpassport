@@ -171,6 +171,8 @@
     <string name="news">News Update</string>
     <string name="regulatory">Regulatory Update</string>
     <string name="advisory">Advisory Alert</string>
+    <string name="channel_name">Immunitee Channel</string>
+    <string name="channel_description">Immunitee Channel Description</string>
 
     <string name="add_entry">Add Entry Point</string>
 

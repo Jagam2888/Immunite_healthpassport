@@ -9,11 +9,17 @@ import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import io.paperdb.Paper
 
-class MyFirebaseInstanceIDService(
-):FirebaseMessagingService() {
+class MyFirebaseInstanceIDService():FirebaseMessagingService() {
     //val prefernece:PreferenceProvider = PreferenceProvider(this)
-    override fun onMessageReceived(p0: RemoteMessage) {
-        super.onMessageReceived(p0)
+    override fun onMessageReceived(remoteMessage: RemoteMessage) {
+        super.onMessageReceived(remoteMessage)
+        val notificationService = NotificationService(applicationContext)
+        if (remoteMessage.data.isNotEmpty()) {
+            notificationService.createNotificationChannel(remoteMessage.data.toString())
+        }
+        if (remoteMessage.notification != null){
+            remoteMessage.notification?.body?.let { notificationService.createNotificationChannel(it) }
+        }
     }
 
     override fun onNewToken(token: String) {
