@@ -35,10 +35,11 @@ class LoginPinViewModel(
 
 
     fun loadValues(context: Context){
-        labelTxt.value = "Enter Your 4 Digits PIN"
+        labelTxt.value = "Enter your 4-digit Security PIN!"
         _getPin.value = repositary.getLoginPin()
         if (status.get() == ""){
             isCreateOrUpdate.set(false)
+            labelTxt.value = "Enter your Security PIN to login!"
             title.value = context.resources.getString(R.string.login)
         }else{
             isCreateOrUpdate.set(true)
@@ -73,13 +74,13 @@ class LoginPinViewModel(
                             }
                         }else{
                             isDoneReEnter = false
-                            labelTxt.value = "Enter Your 4 Digits PIN"
+                            labelTxt.value = "Enter your 4-digit Security PIN!"
                             tempPin.value = ""
                             pin.value = ""
                             listener?.onFailure("Incorrect PIN")
                         }
                     }else{
-                        labelTxt.value = "Re-enter Your 4 Digits PIN"
+                        labelTxt.value = "Re-enter your 4-digit Security PIN!"
                         tempPin.value = pin.value
                         pin.value = ""
                         isDoneReEnter = true

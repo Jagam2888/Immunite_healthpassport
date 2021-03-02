@@ -10,9 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.cmg.vaccine.adapter.WorldEntryCountryListAdapter
 import com.cmg.vaccine.databinding.ActivityAddWorldEntryBinding
 import com.cmg.vaccine.listener.SimpleListener
-import com.cmg.vaccine.util.RecyclerViewTouchListener
-import com.cmg.vaccine.util.hideKeyBoard
-import com.cmg.vaccine.util.toast
+import com.cmg.vaccine.util.*
 import com.cmg.vaccine.viewmodel.WorldEntryViewModel
 import com.cmg.vaccine.viewmodel.viewmodelfactory.WorldEntryViewModelFactory
 import org.kodein.di.KodeinAware
@@ -77,12 +75,15 @@ class AddWorldEntryActivity : BaseActivity(),KodeinAware,SimpleListener {
     }
 
     override fun onStarted() {
+        show(binding.progressBar)
     }
 
     override fun onSuccess(msg: String) {
+        hide(binding.progressBar)
     }
 
     override fun onFailure(msg: String) {
+        hide(binding.progressBar)
         toast(msg)
     }
 }

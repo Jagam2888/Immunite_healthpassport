@@ -78,16 +78,30 @@
             android:paddingRight="20dp"
             android:paddingBottom="20dp" />
 
-        <TextView
-            android:layout_width="210dp"
-            android:layout_height="100dp"
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:layout_centerInParent="true"
-            android:text="No World Entry Setup! Add your favourite World Entry Destination by clicking “+”  sign."
+            android:visibility="@{viewmodel.worldEntriesList.size() > 0?View.GONE:View.VISIBLE}">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_no_world_entries"
+            android:layout_gravity="center_horizontal"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No World Entry Setup! \nAdd your favourite World \nEntry Destination by \nclicking “+”  sign."
             android:textAlignment="center"
             android:textColor="@color/gray"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:visibility="@{viewmodel.worldEntriesList.size() > 0?View.GONE:View.VISIBLE}"/>
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"/>
+        </LinearLayout>
 
 
     </RelativeLayout>

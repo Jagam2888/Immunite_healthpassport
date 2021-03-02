@@ -12,6 +12,7 @@
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
 
     <application
         android:name=".AppController"
@@ -21,8 +22,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Noactionbar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".TestReportFailedActivity"
-            android:screenOrientation="portrait"></activity>
+        <activity android:name=".ImmunizationDetailActivity"></activity>
+        <activity
+            android:name=".TestReportFailedActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />

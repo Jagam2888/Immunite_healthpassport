@@ -64,6 +64,7 @@ class EditProfileActivity : BaseActivity(),KodeinAware,SimpleListener {
             override fun onClick(target: DrawableClickListener.DrawablePosition?) {
                 when (target) {
                     DrawableClickListener.DrawablePosition.RIGHT -> {
+                        hideKeyBoard()
                         showDatePickerDialog(binding.edtDob)
                     }
                     else -> {
@@ -71,6 +72,22 @@ class EditProfileActivity : BaseActivity(),KodeinAware,SimpleListener {
                 }
             }
         })
+
+        /*binding.edtDob.addTextChangedListener(object :TextWatcher{
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                if (s.toString().length > 1){
+                    if (!validateDateFormat(s.toString())){
+                        binding.edtDob.error = "Sorry! Invalid Date of Birth"
+                    }
+                }
+            }
+        })*/
 
         viewModel.countries.observe(this, Observer { list->
             val arrayList = arrayListOf<Country>()
@@ -83,6 +100,7 @@ class EditProfileActivity : BaseActivity(),KodeinAware,SimpleListener {
             override fun onClick(target: DrawableClickListener.DrawablePosition?) {
                 when (target) {
                     DrawableClickListener.DrawablePosition.RIGHT -> {
+                        hideKeyBoard()
                         showTimepickerDialog(binding.edtDobTime, viewModel.dobTime.value!!)
                     }
                     else -> {

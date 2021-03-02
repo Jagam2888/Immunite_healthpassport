@@ -44,13 +44,13 @@ fun Context.toast(message: String){
 }
 
 fun show(progressBar: ProgressBar){
-    //progress_bar.visibility = View.VISIBLE
-    progressBar.visibility = View.VISIBLE
+    if (progressBar.visibility == View.GONE)
+        progressBar.visibility = View.VISIBLE
 }
 
 fun hide(progressBar: ProgressBar){
-    //progress_bar.visibility = View.INVISIBLE
-    progressBar.visibility = View.INVISIBLE
+    if (progressBar.visibility == View.VISIBLE)
+        progressBar.visibility = View.GONE
 }
 
 fun isValidEmail(value: String):Boolean{
@@ -223,6 +223,17 @@ fun changeDateFormatEmail(timeMills: Long):String?{
 fun changeDateFormatForViewProfile(dateString: String):String?{
     val currentDateFormat = SimpleDateFormat("dd/MM/yyyy")
     val simpleDateFormat = SimpleDateFormat("dd MMM yyyy")
+    try {
+        val date = currentDateFormat.parse(dateString)
+        return simpleDateFormat.format(date)
+    }catch (e: ParseException){
+        e.printStackTrace()
+    }
+    return ""
+}
+fun changeDateFormatForPrivateKeyDecrypt(dateString:String):String?{
+    val currentDateFormat = SimpleDateFormat("dd/MM/yyyy")
+    val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd")
     try {
         val date = currentDateFormat.parse(dateString)
         return simpleDateFormat.format(date)

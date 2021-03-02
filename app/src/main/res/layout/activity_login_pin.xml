@@ -15,11 +15,39 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:background="@color/lite_yellow"
-        tools:context=".LoginPinActivity"
-        android:paddingTop="20dp"
-        android:paddingBottom="20dp"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp">
+        tools:context=".LoginPinActivity">
+        <RelativeLayout
+            android:id="@+id/action_bar1"
+            android:layout_width="match_parent"
+            android:layout_height="?android:attr/actionBarSize"
+            android:orientation="horizontal"
+            android:background="@color/primary">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Create Security PIN"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:layout_centerInParent="true"
+                android:textAppearance="@style/opens_bold"/>
+        </RelativeLayout>
+        <LinearLayout
+            android:id="@+id/action_bar2"
+            android:layout_width="match_parent"
+            android:layout_height="?android:attr/actionBarSize"
+            android:orientation="horizontal"
+            android:background="@drawable/action_bar_center"
+            android:gravity="center_horizontal|center_vertical" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp">
+
 
         <TextView
             android:layout_width="wrap_content"
@@ -27,238 +55,55 @@
             android:text="@{pinviewmodel.title}"
             android:textColor="@color/primary"
             android:textSize="28sp"
-            style="@style/opens_bold"
-            android:layout_marginTop="20dp"/>
-
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="20dp">
-
-            <LinearLayout
+            android:textAppearance="@style/opens_regular"
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center_horizontal"
+            android:visibility="gone"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@={pinviewmodel.labelTxt}"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:layout_marginTop="5dp"
+                style="@style/opens_bold"
+                android:layout_gravity="center_horizontal"/>
+            <com.chaos.view.PinView
+                android:id="@+id/edt_txt"
+                style="@style/PinWidget.PinView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:cursorVisible="true"
+                android:focusable="true"
+                android:inputType="number|numberPassword"
+                android:itemBackground="@drawable/box_otp"
+                android:padding="10dp"
+                android:text="@={pinviewmodel.pin}"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:textAppearance="@style/opens_bold"
+                android:textCursorDrawable="@null"
+                app:hideLineWhenFilled="true"
+                app:itemCount="4"
+                app:itemRadius="4dp"
+                app:itemSpacing="8dp"
+                app:lineColor="@android:color/transparent"
+                app:lineWidth="2dp"
+                app:viewType="rectangle"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center_horizontal"/>
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_confirm"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:gravity="center_horizontal">
-
-                <com.chaos.view.PinView
-                    android:id="@+id/edt_txt"
-                    style="@style/PinWidget.PinView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:cursorVisible="true"
-                    android:inputType="number|numberPassword"
-                    android:itemBackground="@drawable/box_otp"
-                    android:padding="10dp"
-                    android:text="@={pinviewmodel.pin}"
-                    android:textColor="@color/black"
-                    android:textSize="14sp"
-                    android:textAppearance="@style/opens_bold"
-                    android:textCursorDrawable="@null"
-                    app:hideLineWhenFilled="true"
-                    app:itemCount="4"
-                    app:itemRadius="4dp"
-                    app:itemSpacing="8dp"
-                    app:lineColor="@android:color/transparent"
-                    app:lineWidth="2dp"
-                    app:viewType="rectangle"
-                    android:layout_marginTop="10dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@={pinviewmodel.labelTxt}"
-                    android:textColor="@color/gray"
-                    android:textSize="14sp"
-                    android:layout_marginTop="5dp"
-                    style="@style/opens_bold" />
-
-                <!--<LinearLayout
-                    android:id="@+id/keypad_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginTop="5dp">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="5dp">
-
-                        <Button
-                            android:id="@+id/btn_one"
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
-                            android:background="@drawable/btn_select"
-                            android:text="1"
-                            style="@style/opens_bold"
-                            android:textSize="18sp"
-                            android:textColor="@color/white" />
-
-                        <Button
-                            android:id="@+id/btn_two"
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
-                            android:background="@drawable/btn_select"
-                            android:text="2"
-                            style="@style/opens_bold"
-                            android:textSize="18sp"
-                            android:layout_marginLeft="20dp"
-                            android:textColor="@color/white" />
-
-                        <Button
-                            android:id="@+id/btn_three"
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
-                            android:background="@drawable/btn_select"
-                            android:text="3"
-                            style="@style/opens_bold"
-                            android:textSize="18sp"
-                            android:layout_marginLeft="20dp"
-                            android:textColor="@color/white" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="10dp"
-                        android:layout_gravity="center_horizontal">
-
-                        <Button
-                            android:id="@+id/btn_four"
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
-                            android:background="@drawable/btn_select"
-                            android:text="4"
-                            style="@style/opens_bold"
-                            android:textSize="18sp"
-                            android:textColor="@color/white" />
-
-                        <Button
-                            android:id="@+id/btn_five"
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
-                            android:background="@drawable/btn_select"
-                            android:text="5"
-                            style="@style/opens_bold"
-                            android:textSize="18sp"
-                            android:layout_marginLeft="20dp"
-                            android:textColor="@color/white" />
-
-                        <Button
-                            android:id="@+id/btn_six"
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
-                            android:background="@drawable/btn_select"
-                            android:text="6"
-                            style="@style/opens_bold"
-                            android:textSize="18sp"
-                            android:layout_marginLeft="20dp"
-                            android:textColor="@color/white" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="10dp"
-                        android:layout_gravity="center_horizontal">
-
-                        <Button
-                            android:id="@+id/btn_seven"
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
-                            android:background="@drawable/btn_select"
-                            android:text="7"
-                            style="@style/opens_bold"
-                            android:textSize="18sp"
-                            android:textColor="@color/white" />
-
-                        <Button
-                            android:id="@+id/btn_eight"
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
-                            android:background="@drawable/btn_select"
-                            android:text="8"
-                            android:textSize="18sp"
-                            android:layout_marginLeft="20dp"
-                            android:textColor="@color/white" />
-
-                        <Button
-                            android:id="@+id/btn_nine"
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
-                            android:background="@drawable/btn_select"
-                            android:text="9"
-                            style="@style/opens_bold"
-                            android:textSize="18sp"
-                            android:layout_marginLeft="20dp"
-                            android:textColor="@color/white" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="10dp"
-                        android:layout_gravity="center_horizontal">
-
-                        <Button
-                            android:id="@+id/btn_submit"
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
-                            android:background="@drawable/btn_select"
-                            android:text="\u2713"
-                            style="@style/opens_bold"
-                            android:textSize="18sp"
-                            android:visibility="invisible"
-                            android:textColor="@color/white" />
-
-                        <Button
-                            android:id="@+id/btn_zero"
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
-                            android:background="@drawable/btn_select"
-                            android:text="0"
-                            style="@style/opens_bold"
-                            android:textSize="18sp"
-                            android:textColor="@color/white"
-                            android:layout_marginLeft="20dp" />
-
-                        <Button
-                            android:id="@+id/btn_x"
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
-                            android:background="@drawable/btn_select"
-                            android:text="X"
-                            style="@style/opens_bold"
-                            android:textSize="18sp"
-                            android:textColor="@color/white"
-                            android:layout_marginLeft="20dp" />
-
-                    </LinearLayout>
-
-                </LinearLayout>-->
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btn_confirm"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/confirm"
-                    android:textAllCaps="false"
-                    android:textColor="@color/white"
-                    android:background="@drawable/button_background"
-                    android:layout_marginTop="40dp"
-                    android:visibility="@{pinviewmodel.isCreateOrUpdate()?View.VISIBLE:View.GONE}"
-                    android:onClick="@{() -> pinviewmodel.onLogin()}"/>
-            </LinearLayout>
-        </ScrollView>
+                android:layout_height="wrap_content"
+                android:text="@string/confirm"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:background="@drawable/button_background"
+                android:layout_marginTop="40dp"
+                android:visibility="@{pinviewmodel.isCreateOrUpdate()?View.VISIBLE:View.GONE}"
+                android:onClick="@{() -> pinviewmodel.onLogin()}"/>
+        </LinearLayout>
 
     </LinearLayout>
 </layout>

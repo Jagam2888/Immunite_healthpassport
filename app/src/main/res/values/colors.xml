@@ -22,4 +22,6 @@
     <color name="lite_gray">#33448A8A</color>
     <color name="blue">#3293C9</color>
     <color name="text_color">#00172D</color>
+
+    <color name="dim_background">#CC000000</color>
 </resources>

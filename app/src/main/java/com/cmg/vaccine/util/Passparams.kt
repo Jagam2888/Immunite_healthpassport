@@ -14,6 +14,7 @@ object Passparams{
     const val RELATIONSHIP = "relation_ship"
     const val DEPENDENT_SUBID = "dependant_sub_id"
     const val TEST_REPORT_ID = "test_report_id"
+    const val VACCINE_CODE = "vaccine_code"
     const val FCM_TOKEN = "fcm_token"
     const val WORLD_ENTRY_SELECTED_COUNTRY_NAME = "world_entry_selected_country_name"
     const val WORLD_ENTRY_SELECTED_COUNTRY_CODE = "world_entry_selected_country_code"

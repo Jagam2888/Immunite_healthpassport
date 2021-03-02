@@ -3,6 +3,7 @@ package com.cmg.vaccine.fragment
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -28,6 +29,7 @@ import com.cmg.vaccine.util.show
 import com.cmg.vaccine.util.toast
 import com.cmg.vaccine.viewmodel.HomeViewModel
 import com.cmg.vaccine.viewmodel.viewmodelfactory.HomeViewModelFactory
+import my.com.immunitee.blockchainapi.utils.EncryptionUtils
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
 import org.kodein.di.generic.instance
@@ -128,6 +130,8 @@ class HomeFragment : Fragment(),KodeinAware,SimpleListener {
             }
         })
 
+        Log.d("server_key",decryptServerKey("zKTbKnBGBRZ7iW3/dsT23aHbYyBiAmTb28andAJfC0oS5s8pwNNFHfdfIlC5TYoP29+yQHWY7wX2wT24lIyqvckiLbMMPC6Tx6ZkKcmFZME=","2014-09-14")!!)
+
     }
 
     fun addBottomDots(currentPage : Int){
@@ -148,6 +152,10 @@ class HomeFragment : Fragment(),KodeinAware,SimpleListener {
         if(dotsView!!.isNotEmpty()){
             dotsView[currentPage]!!.setBackgroundResource(R.drawable.rectangle_active)
         }
+    }
+
+    private fun decryptServerKey(pk:String,dob:String):String?{
+        return EncryptionUtils.decrypt(pk,dob)
     }
 
     override fun onStarted() {

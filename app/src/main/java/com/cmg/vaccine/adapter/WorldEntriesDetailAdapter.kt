@@ -9,10 +9,12 @@ import android.view.ViewGroup
 import android.widget.BaseExpandableListAdapter
 import android.widget.ImageView
 import android.widget.TextView
+import com.cmg.vaccine.ImmunizationDetailActivity
 import com.cmg.vaccine.R
 import com.cmg.vaccine.TestReportDetailActivity
 import com.cmg.vaccine.TestReportFailedActivity
 import com.cmg.vaccine.database.TestReport
+import com.cmg.vaccine.database.Vaccine
 import com.cmg.vaccine.util.Passparams
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -48,9 +50,7 @@ class WorldEntriesDetailAdapter internal constructor(
             val testReportData = gson.fromJson<TestReport>(expandedListText, type)*/
                 val testReportArray = expandedListText.split("|")
             val status:Boolean = testReportArray[1].toBoolean()
-            if (status){
-                indicator.setImageResource(R.drawable.ic_green_tick)
-            }else{
+            if (!status){
                 indicator.setImageResource(R.drawable.ic_red_failed)
             }
             expandedListTextView.text = testReportArray[0]
@@ -60,9 +60,7 @@ class WorldEntriesDetailAdapter internal constructor(
             val vaccineData = gson.fromJson<Vaccine>(expandedListText, type)*/
             val vaccineArray = expandedListText.split("|")
             val status:Boolean = vaccineArray[1].toBoolean()
-            if (status){
-                indicator.setImageResource(R.drawable.ic_green_tick)
-            }else{
+            if (!status){
                 indicator.setImageResource(R.drawable.ic_red_failed)
             }
             expandedListTextView.text = vaccineArray[0]
@@ -77,16 +75,25 @@ class WorldEntriesDetailAdapter internal constructor(
                 this.context.startActivity(it)
             }*/
             if (listPosition == 1){
-                val vaccineArray = expandedListText.split("|")
-                val status:Boolean = vaccineArray[1].toBoolean()
+                val testReportArray = expandedListText.split("|")
+                val status:Boolean = testReportArray[1].toBoolean()
                 if (status){
                     Intent(context, TestReportDetailActivity::class.java).also {
-                        it.putExtra(Passparams.TEST_REPORT_ID, vaccineArray[2])
+                        it.putExtra(Passparams.TEST_REPORT_ID, testReportArray[2])
                         context.startActivity(it)
                     }
                 }else{
                     Intent(context,TestReportFailedActivity::class.java).also {
-                        it.putExtra(Passparams.TEST_REPORT_ID,vaccineArray[0])
+                        it.putExtra(Passparams.TEST_REPORT_ID,testReportArray[0])
+                        context.startActivity(it)
+                    }
+                }
+            }else if (listPosition == 2){
+                val vaccineArray = expandedListText.split("|")
+                val status:Boolean = vaccineArray[1].toBoolean()
+                if (status) {
+                    Intent(context, ImmunizationDetailActivity::class.java).also {
+                        it.putExtra(Passparams.VACCINE_CODE,vaccineArray[3])
                         context.startActivity(it)
                     }
                 }

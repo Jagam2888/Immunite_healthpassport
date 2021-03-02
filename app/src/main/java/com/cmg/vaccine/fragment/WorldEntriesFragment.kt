@@ -50,9 +50,6 @@ class WorldEntriesFragment : Fragment(),KodeinAware {
         viewModel.getVaccineAndTestReportList()
 
 
-
-
-
         viewModel.worldEntriesList.observe(viewLifecycleOwner, Observer { list ->
             binding.recyclerViewWorldEntry.also {
                 it.layoutManager = LinearLayoutManager(context)

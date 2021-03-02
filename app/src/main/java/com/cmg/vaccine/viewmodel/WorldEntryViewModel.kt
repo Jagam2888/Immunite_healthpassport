@@ -58,10 +58,23 @@ class WorldEntryViewModel(
     val worldEntryRulesByCountry:LiveData<List<WorldEntryRulesByCountry>>
     get() = _worldEntryRuleByCountry
 
+    var _vaccineDetailList:MutableLiveData<List<VaccineDetail>> = MutableLiveData()
+    val vaccineDetailList:LiveData<List<VaccineDetail>>
+    get() = _vaccineDetailList
+
+    var _testTypeList:MutableLiveData<List<TestType>> = MutableLiveData()
+    val testTypeList:LiveData<List<TestType>>
+    get() = _testTypeList
+
+    var _vaccineDetail:MutableLiveData<VaccineDetail> = MutableLiveData()
+    val vaccineDetail:LiveData<VaccineDetail>
+        get() = _vaccineDetail
+
 
     fun loadWorldEntryCountries() {
         var getWorldEntryCountries = repositary.getWorldEntryCountries()
         if (getWorldEntryCountries.isNullOrEmpty()) {
+            listener?.onStarted()
             Couritnes.main {
                 try {
                     val worldEntryCountries = repositary.getWorldEntriesCountryList()
@@ -78,6 +91,7 @@ class WorldEntryViewModel(
                         val tempList = arrayListOf<WorldEntryCountries>()
                         tempList.addAll(getWorldEntryCountries)
                         _countryList.value = tempList
+                        listener?.onSuccess("")
                     }
                 }catch (e:Exception){
                     listener?.onFailure(e.message!!)
@@ -140,6 +154,7 @@ class WorldEntryViewModel(
     fun loadWorldEntryRulesByCountryData(countryCode: String){
         var getWorldEntryRuleByCountry = repositary.getWorldEntryRulesByCountry(countryCode)
         if (getWorldEntryRuleByCountry.isNullOrEmpty()){
+            listener?.onStarted()
             Couritnes.main {
                 try {
                     val response = repositary.getWorldEntryRulesByCountryFromAPI(countryCode)
@@ -166,7 +181,8 @@ class WorldEntryViewModel(
                         getWorldEntryRuleByCountry = repositary.getWorldEntryRulesByCountry(countryCode)
                         _worldEntryRuleByCountry.value = getWorldEntryRuleByCountry
                         loadEntriesExpandableListData(countryCode)
-                        listener?.onSuccess("")
+                        loadVaccineDataList()
+                        //listener?.onSuccess("")
                     }else{
                         listener?.onFailure("No Rules for this country")
                     }
@@ -181,6 +197,7 @@ class WorldEntryViewModel(
         }else{
             _worldEntryRuleByCountry.value = getWorldEntryRuleByCountry
             loadEntriesExpandableListData(countryCode)
+            loadVaccineDataList()
         }
     }
 
@@ -220,6 +237,7 @@ class WorldEntryViewModel(
                 "V" ->{
                     var status = "false"
                     var successVaccine:String = ""
+                    var vaccineCode:String = worldEntryRulesByCountry.woen_vaccine_code!!
                     vaccineList.value?.forEach { vaccine ->
                         if (worldEntryRulesByCountry.woen_test_code.equals(vaccine.vaccinetype)){
                             status = "true"
@@ -227,18 +245,10 @@ class WorldEntryViewModel(
                             successVaccine = gson.toJson(vaccine)
                         }
                     }
-                    vaccineArrayList.add(worldEntryRulesByCountry.woen_rule_description!!+"|"+status+"|"+successVaccine)
+                    vaccineArrayList.add(worldEntryRulesByCountry.woen_rule_description!!+"|"+status+"|"+successVaccine+"|"+vaccineCode)
                 }
             }
-            /*if (worldEntryRulesByCountry.woen_rule_match_criteria.equals("A")){
-                entryRequirement.add(worldEntryRulesByCountry.woen_rule_description!!)
-            }else if (worldEntryRulesByCountry.woen_rule_match_criteria.equals("P")){
-                personalData.add(worldEntryRulesByCountry.woen_rule_description!!)
-            }else if (worldEntryRulesByCountry.woen_rule_match_criteria.equals("T")){
-                testReportArrayList.add(worldEntryRulesByCountry.woen_rule_description!!)
-            }else if (worldEntryRulesByCountry.woen_rule_match_criteria.equals("V")){
-                vaccineArrayList.add(worldEntryRulesByCountry.woen_rule_description!!)
-            }*/
+
         }
 
         //val userData = repositary.getUserData()
@@ -290,6 +300,109 @@ class WorldEntryViewModel(
 
         _worldEntriesExpandableData.value = expandableListDetail
 
+    }
+
+    private fun loadVaccineDataList(){
+        var getVaccineDetail = repositary.getVaccineDetailList()
+        if (getVaccineDetail.isNullOrEmpty()) {
+            listener?.onStarted()
+            Couritnes.main {
+                try {
+                    val response = repositary.getVaccineDetailListFromAPI()
+                    if (!response.data.isNullOrEmpty()) {
+                        response.data.forEach { vaccineData ->
+                            val vaccineDetail = VaccineDetail(
+                                    vaccineData.loinc,
+                                    vaccineData.snomed,
+                                    vaccineData.vaccineSeqno,
+                                    vaccineData.vaccine_code,
+                                    vaccineData.vaccine_created_by,
+                                    vaccineData.vaccine_created_date,
+                                    vaccineData.vaccine_duration_between_dosses,
+                                    vaccineData.vaccine_manufacterer,
+                                    vaccineData.vaccine_manufacturing_year,
+                                    vaccineData.vaccine_name,
+                                    vaccineData.vaccine_no_of_days_for_maximum_efficacy,
+                                    vaccineData.vaccine_no_of_doses,
+                                    vaccineData.vaccine_status,
+                                    vaccineData.vaccine_updated_by,
+                                    vaccineData.vaccine_updated_date,
+                                    vaccineData.vaccine_virus_code
+
+                            )
+                            repositary.insertVaccineDetail(vaccineDetail)
+
+                        }
+                        loadTestTypeList()
+                        getVaccineDetail = repositary.getVaccineDetailList()
+                        _vaccineDetailList.value = getVaccineDetail
+                    }
+                } catch (e: Exception) {
+                    listener?.onFailure(e.message!!)
+                } catch (e: NoInternetException) {
+                    listener?.onFailure(e.message!!)
+                } catch (e: SocketTimeoutException) {
+                    listener?.onFailure(e.message!!)
+                }
+            }
+        }else{
+            getVaccineDetail = repositary.getVaccineDetailList()
+            _vaccineDetailList.value = getVaccineDetail
+            loadTestTypeList()
+        }
+    }
+
+    private fun loadTestTypeList(){
+        var getTestTypeList = repositary.getTestTypeList()
+        if (getTestTypeList.isNullOrEmpty()) {
+            listener?.onStarted()
+            Couritnes.main {
+                try {
+                    val response = repositary.getTestTypeDataListFromAPI()
+                    if (!response.data.isNullOrEmpty()) {
+                        response.data.forEach {
+                            val testType = TestType(
+                                    it.loinc,
+                                    it.snomed,
+                                    it.testTypeSeqno,
+                                    it.test_code,
+                                    it.test_created_by,
+                                    it.test_created_date,
+                                    it.test_name,
+                                    it.test_result_validaty,
+                                    it.test_specimen,
+                                    it.test_status,
+                                    it.test_update_date,
+                                    it.test_updated_by,
+                                    it.test_virus_code
+                            )
+                            repositary.insertTestType(testType)
+                        }
+                        getTestTypeList = repositary.getTestTypeList()
+                        _testTypeList.value = getTestTypeList
+                        listener?.onSuccess("")
+                    }
+                } catch (e: Exception) {
+                    listener?.onFailure(e.message!!)
+                } catch (e: NoInternetException) {
+                    listener?.onFailure(e.message!!)
+                } catch (e: SocketTimeoutException) {
+                    listener?.onFailure(e.message!!)
+                }
+            }
+        }else{
+            getTestTypeList = repositary.getTestTypeList()
+            _testTypeList.value = getTestTypeList
+            listener?.onSuccess("")
+        }
+    }
+
+
+    fun getVaccineDetail(vaccineCode:String){
+        val vaccineDetails = repositary.getVaccineDetail(vaccineCode)
+        if (vaccineDetails != null){
+            _vaccineDetail.value = vaccineDetails
+        }
     }
 
 }

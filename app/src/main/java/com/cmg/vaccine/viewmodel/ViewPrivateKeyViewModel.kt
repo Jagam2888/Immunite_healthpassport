@@ -8,6 +8,9 @@ import com.cmg.vaccine.repositary.ViewPrivateKeyRepositary
 import com.cmg.vaccine.util.APIException
 import com.cmg.vaccine.util.Couritnes
 import com.cmg.vaccine.util.NoInternetException
+import com.cmg.vaccine.util.changeDateFormatForPrivateKeyDecrypt
+import my.com.immunitee.blockchainapi.utils.EncryptionUtils
+
 import java.net.SocketTimeoutException
 
 class ViewPrivateKeyViewModel(
@@ -25,9 +28,14 @@ class ViewPrivateKeyViewModel(
     val userName:LiveData<String>
     get() = _userName
 
+    private fun decryptServerKey(pk:String,dob:String):String?{
+        return EncryptionUtils.decrypt(pk,dob)
+    }
+
 
     fun getPatientPrivateKey() {
         val getPrivateKey = repositary.getParentPrivateKey()
+        var originalPrivateKey:String?=null
         listener?.onStarted()
         if (getPrivateKey.isNullOrEmpty()){
             Couritnes.main {
@@ -36,11 +44,17 @@ class ViewPrivateKeyViewModel(
                     if (response.StatusCode == 1){
                         val getUser = repositary.getUserData()
                         if (getUser != null){
-                            getUser.privateKey = response.PrivateKey
+                            if (!response.PrivateKey.isNullOrEmpty()){
+                                val tempDob = changeDateFormatForPrivateKeyDecrypt(getUser.dob!!)
+                                val tempPK = response.PrivateKey
+                                originalPrivateKey = decryptServerKey(tempPK,
+                                    tempDob!!)
+                            }
+                            getUser.privateKey = originalPrivateKey
                             repositary.updateUser(getUser)
                         }
-                        repositary.savePrivateKey(response.PrivateKey)
-                        _privateKey.value = response.PrivateKey
+                        repositary.savePrivateKey(originalPrivateKey!!)
+                        _privateKey.value = originalPrivateKey
                         listener?.onSuccess(response.Message)
                     }else{
                         listener?.onFailure(response.Message)
@@ -62,6 +76,7 @@ class ViewPrivateKeyViewModel(
 
     fun getDependentPrivateKey(subId:String) {
         val getPrivateKey = repositary.getDependentPrivateKey(subId)
+        var originalPrivateKey:String?=null
         listener?.onStarted()
         if (getPrivateKey.isNullOrEmpty()){
             Couritnes.main {
@@ -70,11 +85,17 @@ class ViewPrivateKeyViewModel(
                     if (response.StatusCode == 1){
                         val getUser = repositary.getDependentData(subId)
                         if (getUser != null){
-                            getUser.privateKey = response.PrivateKey
+                            if (!response.PrivateKey.isNullOrEmpty()){
+                                val tempDob = changeDateFormatForPrivateKeyDecrypt(getUser.dob!!)
+                                val tempPK = response.PrivateKey
+                                originalPrivateKey = decryptServerKey(tempPK,
+                                    tempDob!!)
+                            }
+                            getUser.privateKey = originalPrivateKey
                             repositary.updateDependent(getUser)
                         }
                         //repositary.savePrivateKey(response.PrivateKey)
-                        _privateKey.value = response.PrivateKey
+                        _privateKey.value = originalPrivateKey
                         listener?.onSuccess(response.Message)
                     }else{
                         listener?.onFailure(response.Message)

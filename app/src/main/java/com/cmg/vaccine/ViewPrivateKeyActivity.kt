@@ -122,6 +122,11 @@ class ViewPrivateKeyActivity : BaseActivity(),KodeinAware,SimpleListener {
         Log.d("key_2",encryptPrivateKey(privateKey!!)!!)
         decryptionPrivateKey()*/
 
+        Log.d("server_keyssssss",decryptPrivateKey("Immunitee|QK3SOL3xqq9uYtQoehi0Xg==|webkLzOOKXkLZWIACFcfg00HMQQmoKr0vI8JwUvF+7RV2GmG1u93fgvUr0OvxVVMmyRsNpy9o2bgsXVkTrayjmpItKU8wwIkYvOe3XeAUxTQdAqU4zo7too+DbVS8MSmuTMSoAxoTkr4iTfwlef7Xw==")!!)
+    }
+
+    private fun decryptServerKey(pk:String,dob:String):String?{
+        return EncryptionUtils.decrypt(pk,dob)
     }
 
     private fun encryptPrivateKey(pKey: String,timeStamp: String):String?{
@@ -131,6 +136,12 @@ class ViewPrivateKeyActivity : BaseActivity(),KodeinAware,SimpleListener {
 
     private fun encryptMasterKey(timeStamp:String):String?{
         return EncryptionUtils.encrypt(timeStamp,"")
+    }
+
+    private fun decryptPrivateKey(key:String):String?{
+        val pkArray = key.split("|")
+        val masterKey = EncryptionUtils.decrypt(pkArray[1],"")
+        return EncryptionUtils.decrypt(pkArray[2],masterKey)
     }
 
    /* private fun decryptMasterKey(encryPtKey:String):String?{
@@ -145,6 +156,12 @@ class ViewPrivateKeyActivity : BaseActivity(),KodeinAware,SimpleListener {
             decrypt = "null"
         //val decrypt = EncryptionUtils.decrypt(encryptPrivateKey(privateKey!!),"1614161650312")
         Log.d("key_3",decrypt)
+    }*/
+
+    /*fun decryptPKQrCode(key:String,dob: String):String?{
+        if (key.isNullOrEmpty())
+            return "InValid"
+        val finalDecryptedPrivateKey = EncryptionUtils.decrypt(key,dob)
     }*/
 
     private fun startTimer(){

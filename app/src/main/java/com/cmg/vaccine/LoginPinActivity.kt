@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.cmg.vaccine.databinding.ActivityLoginPinBinding
@@ -36,14 +37,32 @@ class LoginPinActivity : BaseActivity(),KodeinAware,SimpleListener {
 
         viewModel.listener = this
 
+
+
         loginStatus = intent.extras?.getString(Passparams.ISCREATE,"")
         viewModel.status.set(loginStatus)
+
+        if (loginStatus.isNullOrEmpty()){
+            if (binding.actionBar1.visibility == View.VISIBLE)
+                binding.actionBar1.visibility = View.GONE
+
+            if (binding.actionBar2.visibility == View.GONE)
+                binding.actionBar2.visibility = View.VISIBLE
+        }else{
+            if (binding.actionBar2.visibility == View.VISIBLE)
+                binding.actionBar2.visibility = View.GONE
+
+            if (binding.actionBar1.visibility == View.GONE)
+                binding.actionBar1.visibility = View.VISIBLE
+        }
 
         //isComeFromSettings = intent.extras?.getBoolean(Passparams.ISSETTINGS) == true
 
         viewModel.loadValues(this)
 
         initViews()
+
+        binding.edtTxt.requestFocus()
     }
 
     private fun initViews(){

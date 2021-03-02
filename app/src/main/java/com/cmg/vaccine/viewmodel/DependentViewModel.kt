@@ -61,7 +61,7 @@ class DependentViewModel(
     var parentState:String?=null
     var dependent:Dependent?=null
 
-    var genderEnum: Gender = Gender.F
+    var genderEnum: Gender = Gender.M
     var listener:SimpleListener?=null
 
     var _countries:MutableLiveData<List<Country>> = MutableLiveData()
@@ -113,6 +113,7 @@ class DependentViewModel(
         _countries.value = countryList
 
         dobTime.value = "1200"
+
     }
 
     fun setCurrentCountry(country:String){

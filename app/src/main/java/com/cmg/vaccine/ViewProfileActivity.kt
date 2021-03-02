@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.Paint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.cmg.vaccine.databinding.ActivityViewProfileBinding
@@ -56,6 +57,8 @@ class ViewProfileActivity : BaseActivity(),KodeinAware {
         super.onResume()
         viewModel.user.value = user
         if (user == Passparams.PARENT){
+            if (binding.btnRemoveDependent.visibility == View.VISIBLE)
+                binding.btnRemoveDependent.visibility = View.GONE
             viewModel.loadParentData()
         }else if (user == Passparams.DEPENDENT){
             viewModel.loadDependentData(intent.extras?.getString(Passparams.DEPENDENT_SUBID,"")!!)

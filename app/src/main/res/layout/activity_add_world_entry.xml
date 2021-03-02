@@ -9,10 +9,9 @@
             type="com.cmg.vaccine.viewmodel.WorldEntryViewModel" />
     </data>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:background="@color/lite_yellow"
         tools:context=".AddWorldEntryActivity">
 
@@ -52,7 +51,8 @@
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
             android:paddingTop="20dp"
-            android:paddingBottom="20dp">
+            android:paddingBottom="20dp"
+            android:layout_below="@id/action_bar">
 
             <SearchView
                 android:id="@+id/searchview"
@@ -68,5 +68,12 @@
                 android:layout_height="match_parent"/>
         </LinearLayout>
 
-    </LinearLayout>
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="gone"/>
+
+    </RelativeLayout>
 </layout>

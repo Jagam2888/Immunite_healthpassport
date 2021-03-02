@@ -34,111 +34,100 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="My Key"
+                android:text="@string/my_key"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:layout_centerInParent="true"
                 style="@style/opens_regular"/>
         </RelativeLayout>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingRight="30dp"
-            android:paddingLeft="30dp"
-            android:paddingTop="20dp"
-            android:paddingBottom="20dp"
-            android:layout_marginTop="20dp"
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_below="@id/action_bar">
-
-            <!--<androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardElevation="4dp"
-                app:cardCornerRadius="6dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:paddingBottom="20dp"
-                    android:paddingTop="20dp"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="20dp">-->
-            <TextView
-                android:id="@+id/txt_timer"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="00.00"
-                android:textSize="16sp"
-                android:textColor="@color/gray"
-                android:textAppearance="@style/opens_regular"
-                android:layout_gravity="center_horizontal"
-                android:background="@drawable/gray_background"
-                android:paddingBottom="5dp"
-                android:paddingTop="5dp"
-                android:paddingRight="20dp"
-                android:paddingLeft="20dp"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:layout_marginTop="20dp"
-                android:background="@color/white"
-                android:layout_gravity="center">
-                <RelativeLayout
+                android:paddingRight="30dp"
+                android:paddingLeft="30dp"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp">
+
+                <TextView
+                    android:id="@+id/txt_timer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="00.00"
+                    android:textSize="16sp"
+                    android:textColor="@color/gray"
+                    android:textAppearance="@style/opens_regular"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/gray_background"
+                    android:paddingBottom="5dp"
+                    android:paddingTop="5dp"
+                    android:paddingRight="20dp"
+                    android:paddingLeft="20dp"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/white"
                     android:layout_gravity="center">
-
-                    <ImageView
-                        android:id="@+id/qr_code_generate"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                    <ImageView
-                        android:id="@+id/qr_code_logo"
+                    <RelativeLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/qr_code_logo"
-                        android:layout_centerInParent="true"/>
-                </RelativeLayout>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{viewmodel.userName}"
-                android:textAppearance="@style/opens_bold"
-                android:textSize="16sp"
-                android:textColor="@color/black"
-                android:layout_marginTop="5dp"
-                android:layout_gravity="center_horizontal"/>
+                        android:layout_gravity="center">
+
+                        <ImageView
+                            android:id="@+id/qr_code_generate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                        <ImageView
+                            android:id="@+id/qr_code_logo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/qr_code_logo"
+                            android:layout_centerInParent="true"/>
+                    </RelativeLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewmodel.userName}"
+                    android:textAppearance="@style/opens_bold"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="5dp"
+                    android:layout_gravity="center_horizontal"/>
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/qr_text"
+                    android:textColor="@color/black"
+                    android:gravity="center_horizontal"
+                    style="@style/opens_regular"
+                    android:layout_marginTop="10dp"/>
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_back"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Back to Homepage"
+                    android:textSize="16sp"
+                    android:textColor="@color/white"
+                    android:textAppearance="@style/opens_bold"
+                    android:background="@drawable/button_green"
+                    android:layout_marginTop="20dp"
+                    android:paddingTop="10dp"
+                    android:layout_marginBottom="20dp"
+                    android:paddingBottom="10dp"/>
+
             </LinearLayout>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/qr_text"
-                        android:textColor="@color/black"
-                        android:gravity="center_horizontal"
-                        style="@style/opens_regular"
-                        android:layout_marginTop="10dp"/>
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btn_back"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Back to Homepage"
-                android:textSize="16sp"
-                android:textColor="@color/white"
-                android:textAppearance="@style/opens_bold"
-                android:background="@drawable/button_green"
-                android:layout_marginTop="30dp"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"/>
-                <!--</LinearLayout>
-
-            </androidx.cardview.widget.CardView>-->
-        </LinearLayout>
+        </ScrollView>
 
         <ProgressBar
             android:id="@+id/progress_bar"

@@ -2,8 +2,7 @@ package com.cmg.vaccine.repositary
 
 import com.cmg.vaccine.data.WorldEntriesListData
 import com.cmg.vaccine.database.*
-import com.cmg.vaccine.model.response.WorldEntriesCountryList
-import com.cmg.vaccine.model.response.WorldEntryRulesResponse
+import com.cmg.vaccine.model.response.*
 import com.cmg.vaccine.network.MyApi
 import com.cmg.vaccine.network.SafeAPIRequest
 import com.cmg.vaccine.prefernces.PreferenceProvider
@@ -67,5 +66,36 @@ class WorldEntryRepositary(
         return apiRequest {
             api.getWorldEntryCountryRules(countryCode)
         }
+    }
+
+    suspend fun getVaccineDetailListFromAPI():VaccineDetailListResponse{
+        return apiRequest {
+            api.getVaccineDetailList()
+        }
+    }
+
+    suspend fun getTestTypeDataListFromAPI():TestTypeResponse{
+        return apiRequest {
+            api.getTestType()
+        }
+    }
+    fun insertVaccineDetail(vaccineDetail: VaccineDetail){
+        database.getDao().insertVaccineDetail(vaccineDetail)
+    }
+
+    fun getVaccineDetailList():List<VaccineDetail>{
+        return database.getDao().getVaccineDetailList()
+    }
+
+    fun insertTestType(testType: TestType){
+        database.getDao().insertTestType(testType)
+    }
+
+    fun getTestTypeList():List<TestType>{
+        return database.getDao().getTestTypeList()
+    }
+
+    fun getVaccineDetail(vaccineCode:String):VaccineDetail{
+        return database.getDao().getVaccineDetail(vaccineCode)
     }
 }

@@ -2,6 +2,7 @@ package com.cmg.vaccine
 
 import android.app.AlertDialog
 import android.content.Context
+import android.graphics.PixelFormat
 import android.graphics.Point
 import android.os.Build
 import android.os.Bundle
@@ -11,9 +12,12 @@ import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
+import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.PopupWindow
+import androidx.core.content.ContextCompat
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
@@ -21,6 +25,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cmg.vaccine.adapter.SwitchProfileAdapter
+import com.cmg.vaccine.databinding.ActivityMainBinding
 import com.cmg.vaccine.fragment.*
 import com.cmg.vaccine.util.Passparams
 import com.cmg.vaccine.util.RecyclerViewTouchListener
@@ -37,6 +42,7 @@ import org.kodein.di.generic.instance
 class MainActivity : BaseActivity(),KodeinAware {
     override val kodein by kodein()
     private lateinit var homeViewModel:HomeViewModel
+    private lateinit var binding:ActivityMainBinding
 
     private val factory:HomeViewModelFactory by instance()
     var isHome:Boolean = true
@@ -44,7 +50,7 @@ class MainActivity : BaseActivity(),KodeinAware {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         homeViewModel = ViewModelProvider(this, factory).get(HomeViewModel::class.java)
         homeViewModel.setUser()
 
@@ -55,9 +61,9 @@ class MainActivity : BaseActivity(),KodeinAware {
     private fun initViews(){
         loadFragment(HomeFragment())
 
-        val token = Paper.book().read(Passparams.FCM_TOKEN,"")
-        Log.d("fcm_token",token)
-        Log.d("device_id",getDeviceUUID()!!)
+        val token = Paper.book().read(Passparams.FCM_TOKEN, "")
+        Log.d("fcm_token", token)
+        Log.d("device_id", getDeviceUUID()!!)
 
 
 
@@ -75,11 +81,11 @@ class MainActivity : BaseActivity(),KodeinAware {
                         homeViewModel.setUser()
                         loadFragment(HomeFragment())
                     }
-                    if (popupWindow!=null) {
+                    if (popupWindow != null) {
                         if (popupWindow?.isShowing == false) {
                             popUpWindow()
                         }
-                    }else{
+                    } else {
                         popUpWindow()
                     }
                     true
@@ -148,6 +154,9 @@ class MainActivity : BaseActivity(),KodeinAware {
             LinearLayout.LayoutParams.WRAP_CONTENT
         )
 
+        popupWindow?.isOutsideTouchable = false
+        //popupWindow?.dimBehind()
+
         val display = windowManager.defaultDisplay
         val size = Point()
         display.getSize(size)
@@ -171,16 +180,22 @@ class MainActivity : BaseActivity(),KodeinAware {
             it.adapter = SwitchProfileAdapter(homeViewModel.users.value!!)
         }
 
-        recyclerView.addOnItemTouchListener(RecyclerViewTouchListener(this,recyclerView,object :RecyclerViewTouchListener.ClickListener{
-            override fun onClick(view: View?, position: Int) {
-                homeViewModel.setCurrentItem(position)
-                popupWindow?.dismiss()
-            }
+        recyclerView.addOnItemTouchListener(
+            RecyclerViewTouchListener(
+                this,
+                recyclerView,
+                object : RecyclerViewTouchListener.ClickListener {
+                    override fun onClick(view: View?, position: Int) {
+                        //binding.frameContainer.setBackgroundColor(ContextCompat.getColor(this@MainActivity,android.R.color.transparent))
+                        homeViewModel.setCurrentItem(position)
+                        popupWindow?.dismiss()
+                    }
 
-            override fun onLongClick(view: View?, position: Int) {
+                    override fun onLongClick(view: View?, position: Int) {
 
-            }
-        }))
+                    }
+                })
+        )
 
         // If API level 23 or higher then execute the code
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
@@ -199,14 +214,45 @@ class MainActivity : BaseActivity(),KodeinAware {
         TransitionManager.beginDelayedTransition(container)
         popupWindow?.showAtLocation(
             container, // Location to display popup window
-            Gravity.CENTER_VERTICAL, // Exact position of layout to display popup
+            Gravity.BOTTOM, // Exact position of layout to display popup
             0, // X offset
-            bottom_navigation_view.height // Y offset
+            binding.bottomNavigationView.height // Y offset
         )
+
+        //binding.frameContainer.setBackgroundColor(ContextCompat.getColor(this, R.color.dim_background))
+
+        /*val windowManager = getSystemService(Context.WINDOW_SERVICE) as WindowManager
+        val windowManagerParams = view.layoutParams as WindowManager.LayoutParams
+        windowManagerParams.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND
+        windowManagerParams.dimAmount = 0.03f
+        windowManager.updateViewLayout(view, windowManagerParams);*/
     }
 
     override fun onBackPressed() {
         showAlertForExit()
+    }
+
+    fun PopupWindow.dimBehind() {
+        val container = contentView.rootView
+        val context = contentView.context
+        val wm = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+        //val p = container.layoutParams as WindowManager.LayoutParams
+        /*val p = WindowManager.LayoutParams(WindowManager.LayoutParams.WRAP_CONTENT,
+            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE or WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN or WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+        PixelFormat.TRANSLUCENT)*/
+        val p = WindowManager.LayoutParams(
+            WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
+            WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH,
+            PixelFormat.TRANSLUCENT
+        )
+        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            p.type = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
+        }else{
+            p.type = WindowManager.LayoutParams.TYPE_PHONE
+        }*/
+        p.flags = p.flags or WindowManager.LayoutParams.FLAG_DIM_BEHIND
+        p.dimAmount = 0.3f
+        wm.addView(container, p)
     }
 
     /*override fun onOptionsItemSelected(item: MenuItem): Boolean {

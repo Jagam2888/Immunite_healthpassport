@@ -44,6 +44,12 @@ interface PatientDao {
     @Query("SELECT privateKey FROM Dependent where subsId =:subsId")
     fun getDependentPrivateKey(subsId: String):String
 
+    /*@Query("SELECT dob FROM User WHERE parentSubscriberId =:subsId")
+    fun getPrinicipalDOB(subsId:String)
+
+    @Query("SELECT dob FROM Dependent WHERE subsId =:subsId")
+    fun getDependentDOB(subsId: String)*/
+
     @Update(onConflict = OnConflictStrategy.REPLACE)
     fun updateUser(user: User):Int
 
@@ -103,6 +109,15 @@ interface PatientDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertTestType(testType: TestType):Long
+
+    @Query("SELECT * FROM VaccineDetail")
+    fun getVaccineDetailList():List<VaccineDetail>
+
+    @Query("SELECT * FROM TestType")
+    fun getTestTypeList():List<TestType>
+
+    @Query("SELECT * FROM VaccineDetail WHERE vaccine_code =:vaccineCode")
+    fun getVaccineDetail(vaccineCode:String):VaccineDetail
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertVirus(virus: Virus):Long

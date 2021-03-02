@@ -43,7 +43,6 @@ class AddDependentActivity : BaseActivity(),KodeinAware,SimpleListener {
             arrayList.addAll(list)
             binding.spinnerPlaceBirth.adapter = CountryListAdapter(arrayList)
             binding.spinnerNationality.adapter = CountryListAdapter(arrayList)
-            viewModel.setCurrentCountry(getCurrentCountryName()!!)
         })
 
 
@@ -184,5 +183,10 @@ class AddDependentActivity : BaseActivity(),KodeinAware,SimpleListener {
     override fun onFailure(msg: String) {
         hide(binding.progressBar)
         toast(msg)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.setCurrentCountry(getCurrentCountryName()!!)
     }
 }
