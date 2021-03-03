@@ -321,8 +321,15 @@ class HomeViewModel(
                             if (!response.PrivateKey.isNullOrEmpty()){
                                 val tempDob = changeDateFormatForPrivateKeyDecrypt(getUser.dob!!)
                                 val tempPK = response.PrivateKey
-                                originalPrivateKey = decryptServerKey(tempPK,
-                                    tempDob!!)
+                                if (!decryptServerKey(tempPK,
+                                        tempDob!!).isNullOrEmpty()){
+                                    originalPrivateKey = decryptServerKey(tempPK,
+                                        tempDob!!)
+                                }else{
+                                    originalPrivateKey = response.PrivateKey
+                                    listener?.onFailure("Please Check ! API return Original Private Key Instead of Encrypt Private Key")
+                                }
+
                             }
                             getUser.privateKey = originalPrivateKey
                             repositary.updateUser(getUser)
@@ -362,8 +369,14 @@ class HomeViewModel(
                             if (!response.PrivateKey.isNullOrEmpty()){
                                 val tempDob = changeDateFormatForPrivateKeyDecrypt(getUser.dob!!)
                                 val tempPK = response.PrivateKey
-                                originalPrivateKey = decryptServerKey(tempPK,
-                                    tempDob!!)
+                                if (!decryptServerKey(tempPK,
+                                        tempDob!!).isNullOrEmpty()){
+                                    originalPrivateKey = decryptServerKey(tempPK,
+                                        tempDob!!)
+                                }else{
+                                    originalPrivateKey = response.PrivateKey
+                                    listener?.onFailure("Please Check ! API return Original Private Key Instead of Encrypt Private Key")
+                                }
                             }
                             getUser.privateKey = originalPrivateKey
                             repositary.updateDependent(getUser)

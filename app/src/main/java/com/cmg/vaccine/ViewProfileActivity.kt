@@ -50,6 +50,11 @@ class ViewProfileActivity : BaseActivity(),KodeinAware {
         binding.imgBack.setOnClickListener {
             finish()
         }
+        binding.txtSubmitPast.setOnClickListener {
+            Intent(this,ImmunizationHistoryActivity::class.java).also {
+                startActivity(it)
+            }
+        }
     }
 
 

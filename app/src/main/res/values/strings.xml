@@ -63,6 +63,30 @@
     <string name="my_key">My Key</string>
     <string name="remove_dependent">Remove Dependent</string>
 
+
+    <string name="immunisation_history">Immunisation History</string>
+    <string name="specimen">Specimen</string>
+    <string name="specimen_name">Specimen Name</string>
+    <string name="manufacture_brand">Manufacturer / Brand</string>
+    <string name="date_sample">Date Sample Collected</string>
+    <string name="time_sample">Time Sample Collected</string>
+    <string name="test_code">Test Code</string>
+    <string name="observation">Observation</string>
+    <string name="status_fina">Status Finalize</string>
+    <string name="performer">Performer</string>
+    <string name="medical_officer">Medical Officer / Administrator Name</string>
+    <string name="qualification">Qualification</string>
+    <string name="qualification_issuer_name">Qualification Issuer Name</string>
+    <string name="work_addres">Work Address</string>
+    <string name="address_line_1">Address Line 1</string>
+    <string name="address_line_2">Address Line 2</string>
+    <string name="city_town">City / Town</string>
+    <string name="state_province">State / Province</string>
+    <string name="zip_postcode">Zip / Postcode</string>
+    <string name="upload_document">Upload Document</string>
+    <string name="file_size_limit">File size limit (5MB) File formats (pdf, png, jpg)</string>
+    <string name="additional_docs">Add Additional Documents</string>
+
     <string name="prinicipal_info">Prinicpal Info</string>
     <string name="edit">Edit</string>
     <string name="dependent_info">Dependent Info</string>

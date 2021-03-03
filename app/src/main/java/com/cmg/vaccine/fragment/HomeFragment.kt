@@ -68,6 +68,7 @@ class HomeFragment : Fragment(),KodeinAware,SimpleListener {
             viewModel.loadTestReportList()
         }else{*/
             viewModel.setUser()
+        //viewModel.loadData()
         //}
         /*if (viewModel.vaccineList.value.isNullOrEmpty()) {
             viewModel.loadVaccineList()
@@ -117,6 +118,7 @@ class HomeFragment : Fragment(),KodeinAware,SimpleListener {
 
             override fun onPageSelected(position: Int) {
                 addBottomDots(position)
+                viewModel.setCurrentItem(position)
             }
 
             override fun onPageScrollStateChanged(state: Int) {
@@ -129,6 +131,7 @@ class HomeFragment : Fragment(),KodeinAware,SimpleListener {
             if (!listDashboard.isNullOrEmpty()) {
                 addBottomDots(it)
             }
+            Log.d("onresume","viewModel")
         })
 
         Log.d("server_key",decryptServerKey("zKTbKnBGBRZ7iW3/dsT23aHbYyBiAmTb28andAJfC0oS5s8pwNNFHfdfIlC5TYoP29+yQHWY7wX2wT24lIyqvckiLbMMPC6Tx6ZkKcmFZME=","2014-09-14")!!)
@@ -183,6 +186,7 @@ class HomeFragment : Fragment(),KodeinAware,SimpleListener {
 
      override fun onResume() {
         super.onResume()
+         Log.d("onresume","OnResume")
         viewModel.loadData()
     }
 

@@ -12,6 +12,8 @@ class SwitchProfileAdapter(
     private val listUser:List<SwitchProfile>
 ):RecyclerView.Adapter<SwitchProfileAdapter.MyViewHolder>() {
 
+    private var selectedItem:Int = 0
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int)= MyViewHolder(
         DataBindingUtil.inflate(
             LayoutInflater.from(parent.context),
@@ -21,7 +23,13 @@ class SwitchProfileAdapter(
         )
     )
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.switchProfileListItemBinding.switchprofile = listUser.get(position)
+        holder.switchProfileListItemBinding.switchprofile = listUser[position]
+
+        holder.switchProfileListItemBinding.checkbox.isChecked = position == selectedItem
+
+        /*holder.switchProfileListItemBinding.container.setOnClickListener {
+            changeItem(position)
+        }*/
     }
 
     override fun getItemCount() = listUser.size
@@ -29,4 +37,9 @@ class SwitchProfileAdapter(
     inner class MyViewHolder(
         val switchProfileListItemBinding: SwitchProfileListItemBinding
     ):RecyclerView.ViewHolder(switchProfileListItemBinding.root)
+
+    fun changeItem(position: Int){
+        selectedItem = position
+        notifyDataSetChanged()
+    }
 }

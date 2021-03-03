@@ -20,6 +20,7 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -32,8 +33,10 @@ import com.cmg.vaccine.util.RecyclerViewTouchListener
 import com.cmg.vaccine.util.getDeviceUUID
 import com.cmg.vaccine.viewmodel.HomeViewModel
 import com.cmg.vaccine.viewmodel.viewmodelfactory.HomeViewModelFactory
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import io.paperdb.Paper
 import kotlinx.android.synthetic.main.activity_main.*
+import my.com.immunitee.blockchainapi.utils.EncryptionUtils
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
@@ -55,8 +58,9 @@ class MainActivity : BaseActivity(),KodeinAware {
         homeViewModel.setUser()
 
         initViews()
-
     }
+
+
 
     private fun initViews(){
         loadFragment(HomeFragment())
@@ -81,13 +85,16 @@ class MainActivity : BaseActivity(),KodeinAware {
                         homeViewModel.setUser()
                         loadFragment(HomeFragment())
                     }
-                    if (popupWindow != null) {
+                    /*if (popupWindow != null) {
                         if (popupWindow?.isShowing == false) {
                             popUpWindow()
                         }
                     } else {
                         popUpWindow()
-                    }
+                    }*/
+                    /*val bottomSheet = SwitchProfileFragment()
+                    bottomSheet.show(supportFragmentManager,"switch")*/
+                    bottomDialog()
                     true
                 }
                 R.id.profile -> {
@@ -177,7 +184,7 @@ class MainActivity : BaseActivity(),KodeinAware {
             it.layoutManager = LinearLayoutManager(this)
             var itemDecoration = DividerItemDecoration(this, LinearLayout.VERTICAL)
             itemDecoration.setDrawable(getDrawable(R.drawable.recyclerview_item_decoration)!!)
-            it.adapter = SwitchProfileAdapter(homeViewModel.users.value!!)
+            it.adapter = SwitchProfileAdapter(homeViewModel.users.value!!,)
         }
 
         recyclerView.addOnItemTouchListener(
@@ -230,6 +237,50 @@ class MainActivity : BaseActivity(),KodeinAware {
 
     override fun onBackPressed() {
         showAlertForExit()
+    }
+
+    private fun bottomDialog(){
+        var switchAdapter:SwitchProfileAdapter?=null
+        val bottomSheet = layoutInflater.inflate(R.layout.switch_profile_popupwindow,null)
+        val bottomSheetDialog = BottomSheetDialog(this)
+        bottomSheetDialog.setContentView(bottomSheet)
+
+        val recyclerView = bottomSheet.findViewById<RecyclerView>(R.id.recycler_view_switch_profile)
+        val btnBack = bottomSheet.findViewById<ImageView>(R.id.img_close)
+
+        recyclerView.also {
+            it.layoutManager = LinearLayoutManager(this)
+            var itemDecoration = DividerItemDecoration(this, LinearLayout.VERTICAL)
+            itemDecoration.setDrawable(getDrawable(R.drawable.recyclerview_item_decoration)!!)
+            switchAdapter = SwitchProfileAdapter(homeViewModel.users.value!!)
+            it.adapter = switchAdapter
+        }
+
+        recyclerView.addOnItemTouchListener(
+            RecyclerViewTouchListener(
+                this,
+                recyclerView,
+                object : RecyclerViewTouchListener.ClickListener {
+                    override fun onClick(view: View?, position: Int) {
+                        homeViewModel.setCurrentItem(position)
+                        bottomSheetDialog.dismiss()
+                    }
+
+                    override fun onLongClick(view: View?, position: Int) {
+
+                    }
+                })
+        )
+
+        btnBack.setOnClickListener {
+            bottomSheetDialog.dismiss()
+        }
+        bottomSheetDialog.show()
+
+        homeViewModel.currentPagerPosition.observe(this, Observer {
+            switchAdapter?.changeItem(it)
+            Log.d("current_pos",it.toString())
+        })
     }
 
     fun PopupWindow.dimBehind() {

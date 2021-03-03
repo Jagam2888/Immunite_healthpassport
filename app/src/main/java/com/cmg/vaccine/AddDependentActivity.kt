@@ -220,12 +220,14 @@ class AddDependentActivity : BaseActivity(),KodeinAware,SimpleListener {
     override fun onSuccess(msg: String) {
         hide(binding.progressBar)
         toast(msg)
+        hideKeyBoard()
         finish()
     }
 
     override fun onFailure(msg: String) {
         hide(binding.progressBar)
         toast(msg)
+        hideKeyBoard()
     }
 
     override fun onResume() {
