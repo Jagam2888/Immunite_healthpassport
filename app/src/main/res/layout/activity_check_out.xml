@@ -180,7 +180,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Apply"
+                            android:text="@string/apply"
                             android:textSize="16sp"
                             android:textAppearance="@style/opens_bold"
                             android:layout_marginLeft="5dp"

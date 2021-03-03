@@ -96,20 +96,27 @@ fun Context.showDatePickerDialog(editText: EditText){
 }
 
 fun validateTime(time:String):Boolean{
+    if (time.isNullOrEmpty())
+        return false
     val timeArray = time.split(":")
+    if (timeArray.size > 1){
+        if (timeArray[0].isNullOrEmpty())
+            return false
+        if (timeArray[1].isNullOrEmpty())
+            return false
+    }else{
+        return false
+    }
     return (timeArray[0].toInt() <=23) and (timeArray[1].toInt() <= 59)
 }
 
-fun covertDateFormatFromISO(dateString: String){
-
-}
 
 fun validateDateFormat(date: String):Boolean{
-    //val formatPattern = "(0?[1-9]|1[012]) [/.-] (0?[1-9]|[12][0-9]|3[01]) [/.-] ((19|20)\\\\d\\\\d)"
-    val formatPattern = "^(1[0-9]|0[1-9]|3[0-1]|2[1-9])/(0[1-9]|1[0-2])/[0-9]{4}\$"
+    //val formatPattern = "^(1[0-9]|0[1-9]|3[0-1]|2[1-9])/(0[1-9]|1[0-2])/[0-9]{4}\$"
+    val formatPattern = "^(0?[1-9]|[12][0-9]|3[01])/(0?[1-9]|1[012])/((?:19|20)[0-9][0-9])"
     val pattern = Pattern.compile(formatPattern)
     val matcher = pattern.matcher(date)
-    if (date.isNullOrEmpty() or !matcher.matches()){
+    /*if (date.isNullOrEmpty() or !matcher.matches()){
         return false
     }
     val dateFormat = SimpleDateFormat("dd/MM/yyyy")
@@ -118,8 +125,41 @@ fun validateDateFormat(date: String):Boolean{
         true
     } catch (e: ParseException) {
         false
+    }*/
+    var result = false
+    if (date.isNullOrEmpty() or !matcher.matches()){
+        return result
+    }else{
+        result = true
+        val currentYear = Calendar.getInstance().get(Calendar.YEAR)
+        val year = matcher.group(3).toInt()
+        if (year > currentYear){
+            result = false
+        }
+        val month = matcher.group(2).toString()
+        val day = matcher.group(1).toString()
+
+        if ((month == "4" || month == "6" || month == "9" ||
+                    month == "04" || month == "06" || month == "09" ||
+                    month == "11") && day == "31"
+        ) {
+            result = false;
+        } else if (month == "2" || month == "02") {
+            if (day == "30" || day == "31") {
+                result = false;
+            } else if (day == "29") {  // leap year? feb 29 days.
+                if (!isLeapYear(year)) {
+                    result = false;
+                }
+            }
+        }
+        return result
     }
+    }
+fun isLeapYear(year:Int):Boolean {
+    return ((year % 4 == 0) and ((year % 100 != 0) or (year % 400 == 0)));
 }
+
 /*fun validateDateFormat(fromDate: String):Boolean{
     try {
         val calender = Calendar.getInstance()

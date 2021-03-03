@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Immunitee</string>
+    <string name="welcome_immunitee">Welcome to \nIMMUNITEE</string>
     <string name="full_name">Nama Penuh</string>
     <string name="full_name_passport">Full Name as per Passport</string>
     <string name="first_name">Nama Pertama</string>
@@ -76,6 +77,21 @@
     <string name="performer_name">Performer Name</string>
     <string name="performer_qualification_id">Performer Qualification ID</string>
     <string name="performer_qualification_issuer">Performer Qualification Issuer</string>
+
+    <string name="prinicipal_info">Prinicpal Info</string>
+    <string name="edit">Edit</string>
+    <string name="dependent_info">Dependent Info</string>
+    <string name="new_member">New Member</string>
+    <string name="existing_member">Existing Member</string>
+    <string name="profile_picture">Profile Picture</string>
+    <string name="clear_all">Clear All</string>
+    <string name="apply">Apply</string>
+    <string name="create_security_pin">Create Security PIN</string>
+    <string name="activation_code">Activation Code</string>
+    <string name="choose_plan">Choose Your Plan</string>
+    <string name="approve_account">You will be charges for the plan after the admin approves your account.</string>
+    <string name="no_world_entry">No World Entry Setup! \nAdd your favourite World \nEntry Destination by \nclicking “+”  sign.</string>
+    <string name="privacy">Privacy</string>
 
     <string name="yes">YA</string>
     <string name="no">TIADA</string>

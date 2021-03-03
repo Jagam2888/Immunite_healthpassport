@@ -52,7 +52,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Choose Your Plan"
+                    android:text="@string/choose_plan"
                     android:textSize="23sp"
                     android:textAppearance="@style/opens_bold"
                     android:textColor="@color/primary"
@@ -61,7 +61,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="You will be charges for the plan after the admin approves your account."
+                    android:text="@string/approve_account"
                     android:textSize="14sp"
                     android:textAppearance="@style/opens_regular"
                     android:textColor="@color/black"

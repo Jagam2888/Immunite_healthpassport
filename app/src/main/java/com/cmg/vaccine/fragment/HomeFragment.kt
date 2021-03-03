@@ -19,11 +19,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager.widget.ViewPager
 import com.cmg.vaccine.NotificationGroupListActivity
 import com.cmg.vaccine.R
+import com.cmg.vaccine.ViewPrivateKeyActivity
 import com.cmg.vaccine.adapter.MyViewPagerAdapter
 import com.cmg.vaccine.databinding.FragmentHomeBinding
 import com.cmg.vaccine.listener.SimpleListener
 import com.cmg.vaccine.model.Dashboard
 import com.cmg.vaccine.model.response.HomeResponse
+import com.cmg.vaccine.util.Passparams
 import com.cmg.vaccine.util.hide
 import com.cmg.vaccine.util.show
 import com.cmg.vaccine.util.toast
@@ -61,13 +63,12 @@ class HomeFragment : Fragment(),KodeinAware,SimpleListener {
         binding.lifecycleOwner = this
         viewModel.listener = this
 
-        if (!viewModel.getPrivateKey().isNullOrEmpty()) {
+        /*if (!viewModel.getPrivateKey().isNullOrEmpty()) {
             viewModel.loadVaccineList()
             viewModel.loadTestReportList()
-        }else{
+        }else{*/
             viewModel.setUser()
-            //viewModel.loadData()
-        }
+        //}
         /*if (viewModel.vaccineList.value.isNullOrEmpty()) {
             viewModel.loadVaccineList()
         }else if (viewModel.testReportList.value.isNullOrEmpty()){
@@ -82,15 +83,15 @@ class HomeFragment : Fragment(),KodeinAware,SimpleListener {
 
         //viewModel.loadVaccineDetail()
 
-        viewModel.users.observe(viewLifecycleOwner, Observer {
+        /*viewModel.users.observe(viewLifecycleOwner, Observer {
             viewModel.loadData()
-        })
+        })*/
 
 
         viewModel.listDashboard.observe(viewLifecycleOwner, Observer { list->
             listDashboard = list
             binding.sliderViewPager.also {
-                it.adapter = MyViewPagerAdapter(requireContext(),listDashboard!!)
+                it.adapter = MyViewPagerAdapter(requireContext(),listDashboard!!,viewModel)
                 if (!listDashboard.isNullOrEmpty()) {
                     addBottomDots(0)
                 }
@@ -164,10 +165,15 @@ class HomeFragment : Fragment(),KodeinAware,SimpleListener {
 
     override fun onSuccess(msg: String) {
         hide(binding.progressBar)
-        //context?.toast(msg)
-        //viewModel.users.observe(viewLifecycleOwner, Observer {
-            //viewModel.loadData()
-        //})
+        // this is for view private key screen purpose
+        val privateKeyArray = msg.split("|")
+        if ((!privateKeyArray.isNullOrEmpty()) and (privateKeyArray.size > 1)){
+            Intent(context,ViewPrivateKeyActivity::class.java).also {
+                it.putExtra(Passparams.PRIVATEKEY, privateKeyArray[0])
+                it.putExtra(Passparams.USER_NAME, privateKeyArray[1])
+                context?.startActivity(it)
+            }
+        }
     }
 
     override fun onFailure(msg: String) {
@@ -175,10 +181,10 @@ class HomeFragment : Fragment(),KodeinAware,SimpleListener {
         context?.toast(msg)
     }
 
-    /* override fun onResume() {
+     override fun onResume() {
         super.onResume()
         viewModel.loadData()
-    }*/
+    }
 
 
 }

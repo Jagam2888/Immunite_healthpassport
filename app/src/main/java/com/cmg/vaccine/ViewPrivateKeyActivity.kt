@@ -31,8 +31,12 @@ class ViewPrivateKeyActivity : BaseActivity(),KodeinAware,SimpleListener {
 
     private val factory:ViewPrivateKeyFactory by instance()
 
-    val WRITE_EXTERNAL_STORAGE:Int = 1
+
     var privateKey:String?=null
+
+    companion object{
+        const val WRITE_EXTERNAL_STORAGE:Int = 1
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,18 +64,22 @@ class ViewPrivateKeyActivity : BaseActivity(),KodeinAware,SimpleListener {
         val userName = intent.extras?.getString(Passparams.USER_NAME,"")
         viewModel._userName.value = userName
 
-        val relationShip = intent.extras?.getString(Passparams.RELATIONSHIP,"")
-        val subId = intent.extras?.getString(Passparams.SUBSID,"")
+        /*val relationShip = intent.extras?.getString(Passparams.RELATIONSHIP,"")
+        val subId = intent.extras?.getString(Passparams.SUBSID,"")*/
 
         privateKey = intent.extras?.getString(Passparams.PRIVATEKEY,"")
         if (!privateKey.isNullOrEmpty()) {
             val timeStamp = System.currentTimeMillis().toString()
-            val encryptMasterKeyValue = encryptMasterKey(timeStamp)
-            val encryptPrivateKey = resources.getString(R.string.app_name)+"|"+encryptMasterKeyValue+"|"+encryptPrivateKey(privateKey!!,timeStamp)!!
+            //val encryptMasterKeyValue = encryptMasterKey(timeStamp)
+            //val encryptPrivateKey = resources.getString(R.string.app_name)+"|"+encryptMasterKeyValue+"|"+encryptPrivateKey(privateKey!!,timeStamp)!!
+            val encryptPrivateKey = resources.getString(R.string.app_name)+"|"+encryptPrivateKey(privateKey!!,timeStamp)!!
             Log.d("encrypt_pk",encryptPrivateKey)
+            //val decryptValue = decryptPrivateKey(encryptPrivateKey)
+            //Log.d("decrypt_qr",decryptValue!!)
             generateQRCode(encryptPrivateKey)
         }else{
-            if (relationShip.equals(Passparams.PARENT,true)) {
+            toast("Your Private key is not generated")
+            /*if (relationShip.equals(Passparams.PARENT,true)) {
                 viewModel.getPatientPrivateKey()
             }else{
                 viewModel.getDependentPrivateKey(subId!!)
@@ -84,21 +92,9 @@ class ViewPrivateKeyActivity : BaseActivity(),KodeinAware,SimpleListener {
                     Log.d("encrypt_pk",encryptPrivateKey)
                     generateQRCode(encryptPrivateKey)
                 }
-            })
+            })*/
         }
-        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (checkPermission()) {
-                generateQRCode(privateKey!!)
-            } else {
-                requestPermission()
-            }
-        }*/
 
-        /*viewModel.privateKey.observe(this, Observer { privateKey->
-            if (!privateKey.isNullOrEmpty()){
-                generateQRCode(privateKey)
-            }
-        })*/
 
         binding.imgBack.setOnClickListener {
             finish()
@@ -110,17 +106,6 @@ class ViewPrivateKeyActivity : BaseActivity(),KodeinAware,SimpleListener {
 
         startTimer()
 
-
-        /*val decryptMasterKeyValue = decryptMasterKey(encrptMasterKeyValue!!)
-        Log.d("masterkey_1",encrptMasterKeyValue!!)
-        Log.d("masterkey_2",decryptMasterKeyValue!!)
-
-        Log.d("key_2",resources.getString(R.string.app_name)+"|"+encryptMasterKey(timeStamp)+"|"+encryptPrivateKey(timeStamp)!!)*/
-
-
-        /*Log.d("key_1",privateKey!!)
-        Log.d("key_2",encryptPrivateKey(privateKey!!)!!)
-        decryptionPrivateKey()*/
 
         Log.d("server_keyssssss",decryptPrivateKey("Immunitee|QK3SOL3xqq9uYtQoehi0Xg==|webkLzOOKXkLZWIACFcfg00HMQQmoKr0vI8JwUvF+7RV2GmG1u93fgvUr0OvxVVMmyRsNpy9o2bgsXVkTrayjmpItKU8wwIkYvOe3XeAUxTQdAqU4zo7too+DbVS8MSmuTMSoAxoTkr4iTfwlef7Xw==")!!)
     }
@@ -144,25 +129,6 @@ class ViewPrivateKeyActivity : BaseActivity(),KodeinAware,SimpleListener {
         return EncryptionUtils.decrypt(pkArray[2],masterKey)
     }
 
-   /* private fun decryptMasterKey(encryPtKey:String):String?{
-        return EncryptionUtils.decrypt(encryPtKey,"")
-    }*/
-
-    /*private fun decryptionPrivateKey(){
-        val minutes = 1614161650312
-        var decrypt = EncryptionUtils.decrypt(encryptPrivateKey(privateKey!!),"28071988")
-
-        if (decrypt.isNullOrEmpty())
-            decrypt = "null"
-        //val decrypt = EncryptionUtils.decrypt(encryptPrivateKey(privateKey!!),"1614161650312")
-        Log.d("key_3",decrypt)
-    }*/
-
-    /*fun decryptPKQrCode(key:String,dob: String):String?{
-        if (key.isNullOrEmpty())
-            return "InValid"
-        val finalDecryptedPrivateKey = EncryptionUtils.decrypt(key,dob)
-    }*/
 
     private fun startTimer(){
         val timer = object : CountDownTimer(300000,1000){
@@ -199,6 +165,7 @@ class ViewPrivateKeyActivity : BaseActivity(),KodeinAware,SimpleListener {
             try {
                 val bitmap = qrgEncoder.encodeAsBitmap()
                 binding.qrCodeGenerate.setImageBitmap(bitmap)
+
             }catch (e:WriterException){
                 e.printStackTrace()
             }

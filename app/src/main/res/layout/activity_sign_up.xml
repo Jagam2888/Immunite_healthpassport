@@ -212,7 +212,21 @@
                     android:textAppearance="@style/opens_regular"
                     android:textSize="14sp" />
 
-                <com.cmg.vaccine.util.CustomEditText
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/edittext_background"
+                    android:layout_marginTop="5dp">
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_dob_calender"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/calender_icon"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"/>
+
+                <com.vicmikhailau.maskededittext.MaskedEditText
                     android:id="@+id/edt_dob"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -222,20 +236,21 @@
                     android:cursorVisible="true"
                     android:focusable="true"
                     android:focusableInTouchMode="true"
-                    android:hint="ddmmyyyy"
+                    android:hint="dd/mm/yyyy"
                     app:mask="##/##/####"
                     android:inputType="number"
                     android:text="@={signupviewmodel.dob}"
-                    android:drawableRight="@drawable/calender_icon"
                     android:textColorHint="@color/gray"
                     android:textColor="@color/black"
-                    android:background="@drawable/edittext_background"
-                    android:layout_marginTop="5dp"
+                    android:background="@null"
                     android:paddingBottom="10dp"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
                     android:paddingTop="10dp"
-                    android:imeOptions="actionNext"/>
+                    android:imeOptions="actionNext"
+                    android:layout_toLeftOf="@id/btn_dob_calender"
+                    android:layout_marginRight="20dp"/>
+                </RelativeLayout>
 
                 <!--<com.msa.dateedittext.DateEditText
                     android:id="@+id/edt_dob"
@@ -366,7 +381,20 @@
                     android:layout_marginTop="10dp"
                     android:textAppearance="@style/opens_regular"
                     android:textSize="14sp" />
-                <com.cmg.vaccine.util.CustomEditText
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/edittext_background"
+                    android:layout_marginTop="5dp">
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_dob_time_calender"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/calender_icon"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"/>
+                <com.vicmikhailau.maskededittext.MaskedEditText
                     android:id="@+id/edt_dob_time"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -379,15 +407,16 @@
                     android:text="@={signupviewmodel.dobTime}"
                     android:textColorHint="@color/gray"
                     android:textColor="@color/black"
-                    android:background="@drawable/edittext_background"
-                    android:drawableRight="@drawable/calender_icon"
-                    android:layout_marginTop="5dp"
+                    android:background="@null"
                     android:paddingBottom="10dp"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
                     android:paddingTop="10dp"
                     android:focusable="true"
-                    android:imeOptions="actionNext"/>
+                    android:imeOptions="actionNext"
+                    android:layout_toLeftOf="@id/btn_dob_time_calender"
+                    android:layout_marginRight="20dp"/>
+                </RelativeLayout>
 
                 <TextView
                     android:layout_width="wrap_content"

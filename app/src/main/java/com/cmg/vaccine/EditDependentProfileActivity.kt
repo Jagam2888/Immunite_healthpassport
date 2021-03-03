@@ -58,9 +58,19 @@ class EditDependentProfileActivity : BaseActivity(),KodeinAware,SimpleListener {
             viewModel.loadProfileData(this,childPrivateKey!!)
         })
 
+        binding.btnDobCalender.setOnClickListener {
+            hideKeyBoard()
+            showDatePickerDialog(binding.edtDob)
+        }
+
+        binding.btnDobTimeCalender.setOnClickListener {
+            hideKeyBoard()
+            showTimepickerDialog(binding.edtDobTime, viewModel.dobTime.value!!)
+        }
+
         //binding.edtDob.listen()
 
-        binding.edtDob.setDrawableClickListener(object : DrawableClickListener {
+        /*binding.edtDob.setDrawableClickListener(object : DrawableClickListener {
             override fun onClick(target: DrawableClickListener.DrawablePosition?) {
                 when (target) {
                     DrawableClickListener.DrawablePosition.RIGHT -> {
@@ -80,6 +90,38 @@ class EditDependentProfileActivity : BaseActivity(),KodeinAware,SimpleListener {
                     }
                     else -> {
                     }
+                }
+            }
+        })*/
+
+        binding.edtDob.addTextChangedListener(object :TextWatcher{
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                if ((!validateDateFormat(binding.edtDob.text.toString())) and (binding.edtDob.text?.isNotEmpty() == true)){
+                    binding.edtDob.error = "Sorry! Invalid Date of Birth"
+                }else{
+                    binding.edtDob.error = null
+                }
+            }
+        })
+
+        binding.edtDobTime.addTextChangedListener(object :TextWatcher{
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                if ((!validateTime(binding.edtDobTime.text.toString())) and (binding.edtDobTime.text?.isNotEmpty() == true)){
+                    binding.edtDobTime.error = "Sorry! Invalid Birth Time"
+                }else{
+                    binding.edtDobTime.error = null
                 }
             }
         })

@@ -26,7 +26,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Create Security PIN"
+                android:text="@string/create_security_pin"
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 android:layout_centerInParent="true"

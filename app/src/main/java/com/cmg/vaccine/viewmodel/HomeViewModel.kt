@@ -15,10 +15,8 @@ import com.cmg.vaccine.model.DashboardVaccineData
 import com.cmg.vaccine.model.SwitchProfile
 import com.cmg.vaccine.model.response.*
 import com.cmg.vaccine.repositary.HomeRepositary
-import com.cmg.vaccine.util.APIException
-import com.cmg.vaccine.util.Couritnes
-import com.cmg.vaccine.util.NoInternetException
-import com.cmg.vaccine.util.Passparams
+import com.cmg.vaccine.util.*
+import my.com.immunitee.blockchainapi.utils.EncryptionUtils
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -104,21 +102,6 @@ class HomeViewModel(
         _users.value = listuser
     }
 
-   /* fun loaddummyVaccine(){
-        Couritnes.main {
-            val response = repositary.getAPI().getVaccineList("75F4B6C90564CD5D982FFD4D78178432BB441194469A00073C3FBC274AFF9814") as Call<GetVaccineBlockChainResponse>
-            response.enqueue(object :Callback<GetVaccineBlockChainResponse>{
-                override fun onResponse(call: Call<GetVaccineBlockChainResponse>, response: Response<GetVaccineBlockChainResponse>) {
-                    val responseCode = response.code()
-                    Log.d("response","code $responseCode")
-                }
-
-                override fun onFailure(call: Call<GetVaccineBlockChainResponse>, t: Throwable) {
-                    Log.d("erreor",t.message!!)
-                }
-            })
-        }
-    }*/
 
     fun loadVaccineList(){
         var vaccineList = repositary.getVaccineList()
@@ -205,38 +188,11 @@ class HomeViewModel(
                         testReportList = repositary.getTestReportList()
                         _testReportList.value = testReportList
                         setUser()
-                        listener?.onSuccess("success")
+                        listener?.onSuccess("")
                     }else{
                         listener?.onFailure(response.data.message)
                     }
-                    //val response = repositary.getTestReportList("60135720210213180206476394")
-                    /*if (!response.data.isNullOrEmpty()) {
-                        response.data.forEach { testReportListResponseData ->
-                            val testReport = TestReport(
-                                    testReportListResponseData.filePath,
-                                    testReportListResponseData.observationCodeSnomedCt,
-                                    testReportListResponseData.observationDateTime,
-                                    testReportListResponseData.observationResult,
-                                    testReportListResponseData.performerAddTxt,
-                                    testReportListResponseData.performerAddType,
-                                    testReportListResponseData.performerAddUse,
-                                    testReportListResponseData.performerContactTelecom,
-                                    testReportListResponseData.performerContactTelecomValue,
-                                    testReportListResponseData.performerName,
-                                    testReportListResponseData.performerQualificationIdentifier,
-                                    testReportListResponseData.performerQualificationIssuerName,
-                                    testReportListResponseData.performerType,
-                                    testReportListResponseData.specimenCode,
-                                    testReportListResponseData.specimenDateSampleCollected,
-                                    testReportListResponseData.specimenName,
-                                    testReportListResponseData.status,
-                                    testReportListResponseData.subsId,
-                                    testReportListResponseData.testCode,
-                                    testReportListResponseData.testSeqno,
-                            )
-                            repositary.insertTestReport(testReport)
-                        }
-                    }*/
+
 
                 } catch (e: APIException) {
                     listener?.onFailure(e.message!!)
@@ -347,29 +303,90 @@ class HomeViewModel(
         return repositary.getPrivateKey()
     }
 
-    /*fun loadVaccineDetail(){
+    private fun decryptServerKey(pk:String,dob:String):String?{
+        return EncryptionUtils.decrypt(pk,dob)
+    }
+
+    fun getPatientPrivateKey() {
+        val getPrivateKey = repositary.getPrivateKey()
+        var originalPrivateKey:String?=null
         listener?.onStarted()
-        Couritnes.main {
-            try {
-                _privateKey.value = repositary.getPrivateKey()
-                val response = repositary.getVaccineInfo(_privateKey.value!!)
-                if (!response.data.privateKey.isNullOrEmpty()){
-                    vaccineDate.value = response.data.vaccineDate
-                    expiryDate.value = response.data.item_expiry
-                    brandName.value = response.data.brandName
-                    isVaccine.set(true)
+        if (getPrivateKey.isNullOrEmpty()){
+            Couritnes.main {
+                try {
+                    val response = repositary.getParentPrivateKeyFromAPI()
+                    if (response.StatusCode == 1){
+                        val getUser = repositary.getUserData()
+                        if (getUser != null){
+                            if (!response.PrivateKey.isNullOrEmpty()){
+                                val tempDob = changeDateFormatForPrivateKeyDecrypt(getUser.dob!!)
+                                val tempPK = response.PrivateKey
+                                originalPrivateKey = decryptServerKey(tempPK,
+                                    tempDob!!)
+                            }
+                            getUser.privateKey = originalPrivateKey
+                            repositary.updateUser(getUser)
+                        }
+                        repositary.savePrivateKey(originalPrivateKey!!)
+                        _privateKey.value = originalPrivateKey
+                        listener?.onSuccess("$originalPrivateKey|${getUser.fullName}")
+                    }else{
+                        listener?.onFailure(response.Message)
+                    }
 
-
-                }else{
-                    isVaccine.set(false)
+                }catch (e: APIException) {
+                    listener?.onFailure(e.message!!)
+                } catch (e: NoInternetException) {
+                    listener?.onFailure(e.message!!)
+                } catch (e: SocketTimeoutException) {
+                    listener?.onFailure(e.message!!)
                 }
-            }catch (e: APIException){
-                listener?.onFailure(e.message!!)
-            }catch (e: NoInternetException){
-                listener?.onFailure(e.message!!)
-            }catch (e: SocketTimeoutException){
-                listener?.onFailure(e.message!!)
             }
+        }else{
+            listener?.onSuccess(getPrivateKey)
+            _privateKey.value = getPrivateKey
         }
-    }*/
+    }
+
+    fun getDependentPrivateKey(subId:String) {
+        val getPrivateKey = repositary.getDependentPrivateKey(subId)
+        var originalPrivateKey:String?=null
+        listener?.onStarted()
+        if (getPrivateKey.isNullOrEmpty()){
+            Couritnes.main {
+                try {
+                    val response = repositary.getDependentPrivateKeyFromAPI(subId)
+                    if (response.StatusCode == 1){
+                        val getUser = repositary.getDependentData(subId)
+                        if (getUser != null){
+                            if (!response.PrivateKey.isNullOrEmpty()){
+                                val tempDob = changeDateFormatForPrivateKeyDecrypt(getUser.dob!!)
+                                val tempPK = response.PrivateKey
+                                originalPrivateKey = decryptServerKey(tempPK,
+                                    tempDob!!)
+                            }
+                            getUser.privateKey = originalPrivateKey
+                            repositary.updateDependent(getUser)
+                        }
+                        //repositary.savePrivateKey(response.PrivateKey)
+                        _privateKey.value = originalPrivateKey
+                        listener?.onSuccess("$originalPrivateKey|${getUser.firstName}")
+                    }else{
+                        listener?.onFailure(response.Message)
+                    }
+
+                }catch (e: APIException) {
+                    listener?.onFailure(e.message!!)
+                } catch (e: NoInternetException) {
+                    listener?.onFailure(e.message!!)
+                } catch (e: SocketTimeoutException) {
+                    listener?.onFailure(e.message!!)
+                }
+            }
+        }else{
+            listener?.onSuccess(getPrivateKey)
+            _privateKey.value = getPrivateKey
+        }
+    }
+
 }

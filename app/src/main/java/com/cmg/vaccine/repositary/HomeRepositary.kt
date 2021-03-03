@@ -51,7 +51,7 @@ class HomeRepositary(
     }
 
     fun getPrivateKey():String?{
-        return preferenceProvider.getPrincipalPrivateKey()
+        return return database.getDao().getPrivateKey(preferenceProvider.getSubId()!!)
     }
 
     fun getDependentList():List<Dependent>?{
@@ -76,6 +76,38 @@ class HomeRepositary(
 
     fun getTestReportList():List<TestReport>{
         return database.getDao().getTestReportList()
+    }
+
+    fun getDependentPrivateKey(subId: String):String?{
+        return database.getDao().getDependentPrivateKey(subId)
+    }
+
+    fun savePrivateKey(privateKey:String){
+        return preferenceProvider.savePrincipalPrivateKey(privateKey)
+    }
+
+    suspend fun getParentPrivateKeyFromAPI():GetPrivateKeyResponse{
+        return apiRequest {
+            api.getParentPrivateKey(preferenceProvider.getSubId()!!)
+        }
+    }
+
+    suspend fun getDependentPrivateKeyFromAPI(subId:String):GetPrivateKeyResponse{
+        return apiRequest {
+            api.getDependentPrivateKey(subId)
+        }
+    }
+
+    fun updateUser(user: User):Int{
+        return database.getDao().updateUser(user)
+    }
+
+    fun getDependentData(subId: String):Dependent{
+        return database.getDao().getDependent(subId)
+    }
+
+    fun updateDependent(dependent: Dependent):Int{
+        return database.getDao().updateDependent(dependent)
     }
 
 }

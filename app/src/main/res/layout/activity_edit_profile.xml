@@ -59,7 +59,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Prinicpal Info"
+                    android:text="@string/prinicipal_info"
                     android:textSize="16sp"
                     android:textColor="@color/primary"
                     android:textAppearance="@style/opens_bold"/>
@@ -80,7 +80,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="*Profile Picture"
+                            android:text="@{`*`+@string/profile_picture}"
                             android:textAppearance="@style/opens_regular"
                             android:textSize="14sp"
                             android:textColor="@color/gray" />
@@ -161,46 +161,6 @@
                         android:layout_weight="1"
                         android:layout_gravity="center_vertical"/>
 
-                    <!--<RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:paddingBottom="10dp"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="10dp"
-                        android:paddingTop="10dp"
-                        android:layout_weight="2">
-
-                        <ImageView
-                            android:id="@+id/img_flag"
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:src="@drawable/malaysia_flag"
-                            android:layout_centerVertical="true" />
-
-                        <ImageView
-                            android:id="@+id/img_down_arrow1"
-                            android:layout_width="10dp"
-                            android:layout_height="10dp"
-                            android:layout_centerVertical="true"
-                            android:layout_alignParentRight="true"
-                            android:src="@drawable/down_arrow" />
-
-                        <Spinner
-                            android:id="@+id/postfield_category"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_toLeftOf="@id/img_down_arrow1"
-                            android:layout_toRightOf="@+id/img_flag"
-                            android:background="@null"
-                            android:entries="@array/code"
-                            android:minHeight="0dp"
-                            android:textSize="16sp" />
-
-
-                    </RelativeLayout>-->
-
                     <View
                         android:layout_width="1dp"
                         android:layout_height="match_parent"
@@ -277,28 +237,42 @@
                     android:layout_marginTop="5dp"
                     android:textAppearance="@style/opens_regular"
                     android:textSize="14sp" />
-                <com.cmg.vaccine.util.CustomEditText
-                    android:id="@+id/edt_dob"
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textAppearance="@style/opens_regular"
-                    android:textSize="14sp"
-                    android:maxLines="1"
-                    app:mask="##/##/####"
-                    android:hint="ddmmyyyy"
-                    android:inputType="number"
-                    android:text="@={profileviewmodel.dob}"
-                    android:textColorHint="@color/gray"
-                    android:textColor="@color/black"
                     android:background="@drawable/edittext_background"
-                    android:drawableRight="@drawable/calender_icon"
-                    android:drawablePadding="10dp"
-                    android:layout_marginTop="5dp"
-                    android:paddingBottom="10dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingTop="10dp"
-                    android:imeOptions="actionNext"/>
+                    android:layout_marginTop="5dp">
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btn_dob_calender"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:background="@drawable/calender_icon"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10dp"/>
+                    <com.vicmikhailau.maskededittext.MaskedEditText
+                        android:id="@+id/edt_dob"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/opens_regular"
+                        android:textSize="14sp"
+                        android:maxLines="1"
+                        app:mask="##/##/####"
+                        android:hint="dd/mm/yyyy"
+                        android:background="@null"
+                        android:inputType="number"
+                        android:text="@={profileviewmodel.dob}"
+                        android:textColorHint="@color/gray"
+                        android:textColor="@color/black"
+                        android:paddingBottom="10dp"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingTop="10dp"
+                        android:imeOptions="actionNext"
+                        android:layout_toLeftOf="@id/btn_dob_calender"
+                        android:layout_marginRight="20dp"/>
+
+                </RelativeLayout>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -308,7 +282,20 @@
                     android:layout_marginTop="10dp"
                     android:textAppearance="@style/opens_regular"
                     android:textSize="14sp" />
-                <com.cmg.vaccine.util.CustomEditText
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/edittext_background"
+                    android:layout_marginTop="5dp">
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_dob_time_calender"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/calender_icon"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"/>
+                <com.vicmikhailau.maskededittext.MaskedEditText
                     android:id="@+id/edt_dob_time"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -321,14 +308,15 @@
                     android:text="@={profileviewmodel.dobTime}"
                     android:textColorHint="@color/gray"
                     android:textColor="@color/black"
-                    android:background="@drawable/edittext_background"
-                    android:drawableRight="@drawable/calender_icon"
-                    android:layout_marginTop="5dp"
+                    android:background="@null"
                     android:paddingBottom="10dp"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
                     android:paddingTop="10dp"
-                    android:imeOptions="actionNext"/>
+                    android:imeOptions="actionNext"
+                    android:layout_toLeftOf="@id/btn_dob_time_calender"
+                    android:layout_marginRight="20dp"/>
+                </RelativeLayout>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -440,114 +428,6 @@
                     android:paddingRight="10dp"
                     android:paddingTop="10dp" />
 
-                <!--<TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@{`* `+@string/residential_address}"
-                    style="@style/opens_regular"
-                    android:textColor="@color/gray"
-                    android:layout_marginTop="5dp"/>
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/opens_regular"
-                    android:textColorHint="@color/gray"
-                    android:textColor="@color/black"
-                    android:maxLines="3"
-                    android:text="@={profileviewmodel.residentalAddress}"
-                    android:maxLength="300"
-                    android:minLines="3"
-                    android:gravity="top"
-                    android:background="@drawable/edittext_background"
-                    android:layout_marginTop="5dp"
-                    android:paddingBottom="10dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingTop="10dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@{`* `+@string/city}"
-                    style="@style/opens_regular"
-                    android:textColor="@color/gray"
-                    android:layout_marginTop="5dp"/>
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/opens_regular"
-                    android:text="@={profileviewmodel.city}"
-                    android:textColorHint="@color/gray"
-                    android:textColor="@color/black"
-                    android:maxLines="1"
-                    android:maxLength="100"
-                    android:background="@drawable/edittext_background"
-                    android:layout_marginTop="5dp"
-                    android:paddingBottom="10dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingTop="10dp" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@{`* `+@string/state}"
-                    style="@style/opens_regular"
-                    android:textColor="@color/gray"
-                    android:layout_marginTop="5dp"/>
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/opens_regular"
-                    android:text="@={profileviewmodel.state}"
-                    android:textColorHint="@color/gray"
-                    android:textColor="@color/black"
-                    android:maxLines="1"
-                    android:maxLength="100"
-                    android:background="@drawable/edittext_background"
-                    android:layout_marginTop="5dp"
-                    android:paddingBottom="10dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingTop="10dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/country"
-                    android:textColor="@color/gray"
-                    android:layout_marginTop="5dp"
-                    style="@style/opens_regular" />
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="56dp"
-                    android:background="@drawable/edittext_background"
-                    android:layout_marginTop="5dp"
-                    android:paddingBottom="10dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingTop="10dp">
-
-                    <Spinner
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="16sp"
-                        android:background="@null"
-                        android:minHeight="0dp"
-                        android:entries="@array/country"
-                        android:layout_centerVertical="true"/>
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_alignParentRight="true"
-                        android:src="@drawable/down_arrow"
-                        android:layout_marginRight="10dp" />
-                </RelativeLayout>-->
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -597,48 +477,7 @@
                     android:textColor="@color/gray"
                     android:layout_marginTop="5dp"/>
 
-                <!--<LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:orientation="horizontal"
-                    android:background="@drawable/edittext_background">
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:paddingBottom="10dp"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="10dp"
-                        android:paddingTop="10dp"
-                        android:layout_weight="1.7">
-
-                        <ImageView
-                            android:id="@+id/img_down_arrow"
-                            android:layout_width="10dp"
-                            android:layout_height="10dp"
-                            android:layout_centerVertical="true"
-                            android:layout_alignParentRight="true"
-                            android:src="@drawable/down_arrow" />
-
-                        <Spinner
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textSize="16sp"
-                            android:background="@null"
-                            android:minHeight="0dp"
-                            android:entries="@array/country_code"
-                            android:layout_toLeftOf="@id/img_down_arrow"
-                            android:layout_centerVertical="true"/>
-
-
-                    </RelativeLayout>
-
-                    <View
-                        android:layout_width="1dp"
-                        android:layout_height="match_parent"
-                        android:background="@color/gray" />-->
 
                 <EditText
                     android:layout_width="match_parent"

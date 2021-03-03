@@ -6,10 +6,10 @@ import android.graphics.Rect
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.view.MotionEvent
-import br.com.sapereaude.maskedEditText.MaskedEditText
+import androidx.appcompat.widget.AppCompatEditText
 
 
-class CustomEditText : MaskedEditText {
+class CustomEditText : AppCompatEditText {
     private var drawableRight: Drawable? = null
     private var drawableLeft: Drawable? = null
     private var drawableTop: Drawable? = null

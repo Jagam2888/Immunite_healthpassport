@@ -14,16 +14,25 @@ import androidx.viewpager.widget.PagerAdapter
 import com.cmg.vaccine.R
 import com.cmg.vaccine.TestReportDetailActivity
 import com.cmg.vaccine.ViewPrivateKeyActivity
+import com.cmg.vaccine.listener.SimpleListener
 import com.cmg.vaccine.model.Dashboard
 import com.cmg.vaccine.util.Passparams
 import com.cmg.vaccine.util.RecyclerViewTouchListener
+import com.cmg.vaccine.util.show
+import com.cmg.vaccine.util.toast
+import com.cmg.vaccine.viewmodel.HomeViewModel
 import com.google.gson.Gson
 
 class MyViewPagerAdapter(
     private val context: Context,
-private val layouts:List<Dashboard>
+private val layouts:List<Dashboard>,
+    private val viewModel:HomeViewModel
 ) : PagerAdapter() {
     private var layoutInflater:LayoutInflater?=null
+    private var privateKey:String?=null
+    private var fullName:String?=null
+    private var subId:String?=null
+    private var relationShip:String?=null
 
     override fun getCount(): Int {
         return layouts.size
@@ -104,24 +113,6 @@ private val layouts:List<Dashboard>
             }
         }))
 
-       /* btnVaccine.setOnClickListener {
-            if (recyclerViewVaccine.visibility == View.GONE){
-                recyclerViewTest.visibility = View.GONE
-                recyclerViewVaccine.visibility = View.VISIBLE
-            }
-            btnVaccine.setBackgroundResource(R.drawable.vaccine_btn_selected)
-            btnTest.setBackgroundResource(R.drawable.test_btn_unselected)
-        }
-
-        btnTest.setOnClickListener {
-            if (recyclerViewTest.visibility == View.GONE){
-                recyclerViewVaccine.visibility = View.GONE
-                recyclerViewTest.visibility = View.VISIBLE
-            }
-            btnTest.setBackgroundResource(R.drawable.test_btn_selected)
-            btnVaccine.setBackgroundResource(R.drawable.vaccine_btn_unselected_svg)
-        }*/
-
         radioGroup.setOnCheckedChangeListener { group, checkedId ->
             when(checkedId){
                 R.id.radio_vaccine ->{
@@ -140,12 +131,19 @@ private val layouts:List<Dashboard>
                 }
                 R.id.radio_mykey ->{
                     radioGroup.check(R.id.radio_vaccine)
-                    Intent(context,ViewPrivateKeyActivity::class.java).also {
-                        it.putExtra(Passparams.PRIVATEKEY, layouts[position].privateKey)
-                        it.putExtra(Passparams.USER_NAME, layouts[position].fullName)
-                        it.putExtra(Passparams.RELATIONSHIP, layouts[position].relationShip)
-                        it.putExtra(Passparams.SUBSID, layouts[position].subId)
-                        context.startActivity(it)
+                    privateKey = layouts[position].privateKey
+                    fullName = layouts[position].fullName
+                    subId = layouts[position].subId
+                    relationShip = layouts[position].relationShip
+                    if (layouts[position].privateKey.isNullOrEmpty()) {
+                        if (layouts[position].relationShip.equals(Passparams.PARENT, true)) {
+                            viewModel.getPatientPrivateKey()
+                        } else {
+                            viewModel.getDependentPrivateKey(layouts[position].subId!!)
+                        }
+                    }else{
+                        navigateToViewPrivateKey(context,privateKey,fullName,relationShip
+                        ,subId)
                     }
                 }
             }
@@ -159,4 +157,13 @@ private val layouts:List<Dashboard>
         container.removeView(view)
     }
 
+    private fun navigateToViewPrivateKey(context: Context,privateKey:String?,fullName:String?,relationShip:String?,subId:String?){
+        Intent(context,ViewPrivateKeyActivity::class.java).also {
+            it.putExtra(Passparams.PRIVATEKEY, privateKey)
+            it.putExtra(Passparams.USER_NAME, fullName)
+            /*it.putExtra(Passparams.RELATIONSHIP, relationShip)
+            it.putExtra(Passparams.SUBSID, subId)*/
+            context.startActivity(it)
+        }
+    }
 }

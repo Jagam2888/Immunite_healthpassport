@@ -60,7 +60,7 @@ class EditProfileActivity : BaseActivity(),KodeinAware,SimpleListener {
 
         //binding.edtDob.listen()
 
-        binding.edtDob.setDrawableClickListener(object : DrawableClickListener {
+        /*binding.edtDob.setDrawableClickListener(object : DrawableClickListener {
             override fun onClick(target: DrawableClickListener.DrawablePosition?) {
                 when (target) {
                     DrawableClickListener.DrawablePosition.RIGHT -> {
@@ -71,9 +71,14 @@ class EditProfileActivity : BaseActivity(),KodeinAware,SimpleListener {
                     }
                 }
             }
-        })
+        })*/
 
-        /*binding.edtDob.addTextChangedListener(object :TextWatcher{
+        binding.btnDobCalender.setOnClickListener {
+            hideKeyBoard()
+            showDatePickerDialog(binding.edtDob)
+        }
+
+        binding.edtDob.addTextChangedListener(object :TextWatcher{
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 
@@ -81,13 +86,29 @@ class EditProfileActivity : BaseActivity(),KodeinAware,SimpleListener {
             }
 
             override fun afterTextChanged(s: Editable?) {
-                if (s.toString().length > 1){
-                    if (!validateDateFormat(s.toString())){
-                        binding.edtDob.error = "Sorry! Invalid Date of Birth"
-                    }
+                if ((!validateDateFormat(binding.edtDob.text.toString())) and (binding.edtDob.text?.isNotEmpty() == true)){
+                    binding.edtDob.error = "Sorry! Invalid Date of Birth"
+                }else{
+                    binding.edtDob.error = null
                 }
             }
-        })*/
+        })
+
+        binding.edtDobTime.addTextChangedListener(object :TextWatcher{
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                if ((!validateTime(binding.edtDobTime.text.toString())) and (binding.edtDobTime.text?.isNotEmpty() == true)){
+                    binding.edtDobTime.error = "Sorry! Invalid Birth Time"
+                }else{
+                    binding.edtDobTime.error = null
+                }
+            }
+        })
 
         viewModel.countries.observe(this, Observer { list->
             val arrayList = arrayListOf<Country>()
@@ -96,7 +117,7 @@ class EditProfileActivity : BaseActivity(),KodeinAware,SimpleListener {
             binding.spinnerNationality.adapter = CountryListAdapter(arrayList)
         })
 
-        binding.edtDobTime.setDrawableClickListener(object : DrawableClickListener {
+        /*binding.edtDobTime.setDrawableClickListener(object : DrawableClickListener {
             override fun onClick(target: DrawableClickListener.DrawablePosition?) {
                 when (target) {
                     DrawableClickListener.DrawablePosition.RIGHT -> {
@@ -107,7 +128,12 @@ class EditProfileActivity : BaseActivity(),KodeinAware,SimpleListener {
                     }
                 }
             }
-        })
+        })*/
+
+        binding.btnDobTimeCalender.setOnClickListener {
+            hideKeyBoard()
+            showTimepickerDialog(binding.edtDobTime, viewModel.dobTime.value!!)
+        }
 
         binding.layoutImg.setOnClickListener {
             if (checkPermission()){

@@ -54,6 +54,17 @@ class SignUpActivity : BaseActivity(),KodeinAware,SimpleListener {
         binding.lifecycleOwner = this
         viewModel.listener = this
         viewModel.selectedItemContactCode.set(binding.ccpLoadCountryCode.selectedCountryCode)
+
+        binding.btnDobTimeCalender.setOnClickListener {
+            hideKeyBoard()
+            showTimepickerDialog(binding.edtDobTime, viewModel.dobTime.value!!)
+        }
+
+        binding.btnDobCalender.setOnClickListener {
+            hideKeyBoard()
+            showDatePickerDialog(binding.edtDob)
+        }
+
         //viewModel.loadYears()
         //viewModel.loadDays()
 
@@ -86,7 +97,7 @@ class SignUpActivity : BaseActivity(),KodeinAware,SimpleListener {
             }
         })
 
-        binding.edtDob.setDrawableClickListener(object : DrawableClickListener {
+        /*binding.edtDob.setDrawableClickListener(object : DrawableClickListener {
             override fun onClick(target: DrawablePosition?) {
                 when (target) {
                     DrawablePosition.RIGHT -> {
@@ -108,7 +119,7 @@ class SignUpActivity : BaseActivity(),KodeinAware,SimpleListener {
                     }
                 }
             }
-        })
+        })*/
 
         binding.edtMobile.setOnEditorActionListener(OnEditorActionListener { v, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_NEXT) {
@@ -132,6 +143,38 @@ class SignUpActivity : BaseActivity(),KodeinAware,SimpleListener {
                 return@OnEditorActionListener true
             }
             false
+        })
+
+        binding.edtDob.addTextChangedListener(object :TextWatcher{
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                if ((!validateDateFormat(binding.edtDob.text.toString())) and (binding.edtDob.text?.isNotEmpty() == true)){
+                    binding.edtDob.error = "Sorry! Invalid Date of Birth"
+                }else{
+                    binding.edtDob.error = null
+                }
+            }
+        })
+
+        binding.edtDobTime.addTextChangedListener(object :TextWatcher{
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                if ((!validateTime(binding.edtDobTime.text.toString())) and (binding.edtDobTime.text?.isNotEmpty() == true)){
+                    binding.edtDobTime.error = "Sorry! Invalid Birth Time"
+                }else{
+                    binding.edtDobTime.error = null
+                }
+            }
         })
 
         binding.ccpLoadCountryCode.registerCarrierNumberEditText(binding.edtMobile)

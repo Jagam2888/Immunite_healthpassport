@@ -51,20 +51,14 @@
                 tools:ignore="VectorDrawableCompat"
                 android:visibility="gone"/>
 
-            <ImageView
+            <Button
                 android:id="@+id/imgAdd"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="15dp"
-                android:layout_marginStart="100dp"
-                android:layout_marginEnd="25dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:src="@drawable/plus_icon"
-                tools:ignore="VectorDrawableCompat"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/plus_icon"
                 android:visibility="@{viewmodel.worldEntriesList.size() >=10?View.GONE:View.VISIBLE}"/>
         </RelativeLayout>
 
@@ -94,7 +88,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="No World Entry Setup! \nAdd your favourite World \nEntry Destination by \nclicking “+”  sign."
+            android:text="@string/no_world_entry"
             android:textAlignment="center"
             android:textColor="@color/gray"
             android:textSize="18sp"
