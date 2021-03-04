@@ -82,6 +82,8 @@ class ProfileViewModel(
 
     var userSubId:MutableLiveData<String> = MutableLiveData()
 
+    var profileImageUri = ObservableField<String>()
+
 
 
     val clicksListener = object : AdapterView.OnItemSelectedListener {
@@ -99,6 +101,14 @@ class ProfileViewModel(
        // countryList = repositary.getAllCountriesDB()
         countryList = World.getAllCountries()
         _countries.value = countryList
+    }
+
+    fun saveProfileImage(img:String){
+        repositary.setProfileImage(img)
+    }
+
+    fun getProfileImage():String?{
+        return repositary.getProfileImage()
     }
 
     fun loadParentData(){
@@ -283,6 +293,7 @@ class ProfileViewModel(
                                                 user.dobTime = dobTime.value
                                                 user.placeBirth = placeBirth
                                                 user.nationality = nationality
+                                                user.profileImage = profileImageUri.get()
                                                 repositary.updateUser(user)
                                                 //repositary.saveUser(user)
                                                 listener?.onSuccess(response.Message)

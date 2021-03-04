@@ -9,7 +9,7 @@ import com.cmg.vaccine.util.APIException
 import com.cmg.vaccine.util.Couritnes
 import com.cmg.vaccine.util.NoInternetException
 import com.cmg.vaccine.util.changeDateFormatForPrivateKeyDecrypt
-import my.com.immunitee.blockchainapi.utils.EncryptionUtils
+import immuniteeEncryption.EncryptionUtils
 
 import java.net.SocketTimeoutException
 

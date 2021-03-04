@@ -1,5 +1,6 @@
 package com.cmg.vaccine.adapter
 
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -25,6 +26,10 @@ class ChildListAdapter(
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.childItemBinding.model = list.get(position)
+        if (!list[position].profileImage.isNullOrEmpty()) {
+            val uri = Uri.parse(list[position].profileImage)
+            holder.childItemBinding.imgProfile.setImageURI(uri)
+        }
     }
 
     override fun getItemCount() = list.size

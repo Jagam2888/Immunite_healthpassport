@@ -50,4 +50,12 @@ class ProfileRepositary(
             api.updateProfile(updateProfileReq)
         }
     }
+
+    fun setProfileImage(uri:String){
+        preferenceProvider.saveProfileImage(uri)
+    }
+
+    fun getProfileImage():String?{
+        return database.getDao().getParentProfileImage(preferenceProvider.getSubId()!!)
+    }
 }

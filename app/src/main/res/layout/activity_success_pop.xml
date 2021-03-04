@@ -1,66 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/lite_yellow"
-    tools:context=".SuccessPopUpActivity"
-    android:paddingLeft="30dp"
-    android:paddingRight="30dp"
-    android:paddingTop="30dp"
-    android:paddingBottom="30dp">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
-        android:layout_width="280dp"
-        android:layout_height="330dp"
-        android:background="@drawable/white_frame"
-        android:orientation="vertical"
-        android:layout_marginTop="20dp"
-        android:paddingBottom="10dp"
-        android:paddingTop="10dp"
-        android:paddingRight="10dp"
-        android:paddingLeft="10dp"
-        android:layout_centerHorizontal="true">
+    <data>
 
-        <ImageView
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:src="@drawable/past_vaccine_success"
-            android:layout_gravity="center_horizontal"/>
+    </data>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/successfull_past_vaccine"
-            android:textColor="@color/black"
-            style="@style/opens_bold"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center_horizontal"
-            android:layout_marginTop="10dp"/>
-
-    </LinearLayout>
-
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="50dp">
+        android:layout_height="match_parent"
+        android:background="@color/lite_yellow"
+        tools:context=".SuccessPopUpActivity"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
+        android:paddingTop="30dp"
+        android:paddingBottom="30dp">
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_done"
+        <LinearLayout
+            android:layout_width="280dp"
+            android:layout_height="330dp"
+            android:background="@drawable/white_frame"
+            android:orientation="vertical"
+            android:layout_marginTop="20dp"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
+            android:layout_centerHorizontal="true">
+
+            <ImageView
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:src="@drawable/past_vaccine_success"
+                android:layout_gravity="center_horizontal" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/successfull_past_vaccine"
+                android:textColor="@color/black"
+                style="@style/opens_bold"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="10dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/done"
-            style="@style/opens_bold"
-            android:textColor="@color/white"
-            android:background="@drawable/button_green" />
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:background="#33448A8A"
-            android:layout_marginTop="20dp" />
-    </LinearLayout>
+            android:orientation="vertical"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="50dp">
 
-</RelativeLayout>
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_done"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/done"
+                style="@style/opens_bold"
+                android:textColor="@color/white"
+                android:background="@drawable/button_green" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="#33448A8A"
+                android:layout_marginTop="20dp" />
+        </LinearLayout>
+
+    </RelativeLayout>
+</layout>

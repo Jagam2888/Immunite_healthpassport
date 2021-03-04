@@ -16,6 +16,7 @@ data class Dependent(
         var masterSubsId: String?,
         var subsId: String?,
         var privateKey: String?,
+        var profileImage: String?,
         var mobileNumber: String?,
         var nationalityCountry: String?,
         var passportNo: String?,

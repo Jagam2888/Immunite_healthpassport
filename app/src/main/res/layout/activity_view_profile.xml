@@ -148,18 +148,18 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="20%"
+                    android:text="80%"
                     android:textSize="14sp"
                     android:textColor="#676871"
                     android:textAppearance="@style/opens_regular"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="incomplete"
+                    android:text="complete"
                     android:textSize="14sp"
                     android:textColor="#676871"
                     android:textAppearance="@style/opens_bold"
-                    android:layout_marginLeft="10dp"/>
+                    android:layout_marginLeft="5dp"/>
                 </LinearLayout>
                 <View
                     android:layout_width="match_parent"

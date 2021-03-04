@@ -2,10 +2,13 @@ package com.cmg.vaccine
 
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.SystemClock
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
@@ -33,7 +36,8 @@ class EditDependentProfileActivity : BaseActivity(),KodeinAware,SimpleListener {
     override val kodein by kodein()
     private lateinit var binding:ActivityEditDependentProfileBinding
     private lateinit var viewModel: DependentViewModel
-
+    var lastClickTimeDOB:Long = 0
+    var lastClickTimeDOBTime:Long = 0
     private val factory: DependentViewModelFactory by instance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,11 +63,21 @@ class EditDependentProfileActivity : BaseActivity(),KodeinAware,SimpleListener {
         })
 
         binding.btnDobCalender.setOnClickListener {
+            if (SystemClock.elapsedRealtime() - lastClickTimeDOB<1000){
+                return@setOnClickListener
+            }
+            Log.d("onclickdob","come here")
+            lastClickTimeDOB = SystemClock.elapsedRealtime()
             hideKeyBoard()
             showDatePickerDialog(binding.edtDob)
         }
 
         binding.btnDobTimeCalender.setOnClickListener {
+            if (SystemClock.elapsedRealtime() - lastClickTimeDOBTime<1000){
+                return@setOnClickListener
+            }
+            Log.d("onclick","come here")
+            lastClickTimeDOBTime = SystemClock.elapsedRealtime()
             hideKeyBoard()
             showTimepickerDialog(binding.edtDobTime, viewModel.dobTime.value!!)
         }
@@ -198,6 +212,11 @@ class EditDependentProfileActivity : BaseActivity(),KodeinAware,SimpleListener {
                 requestPermission()
             }
         }
+
+        if (!viewModel.getProfileImage(childPrivateKey!!).isNullOrEmpty()){
+            val uri = Uri.parse(viewModel.getProfileImage(childPrivateKey))
+            binding.headPicture.setImageURI(uri)
+        }
     }
     private fun cropImage() {
         CropImage.activity( )
@@ -248,8 +267,9 @@ class EditDependentProfileActivity : BaseActivity(),KodeinAware,SimpleListener {
             val result = CropImage.getActivityResult(data)
             if (resultCode === RESULT_OK) {
                 val resultUri = result.uri
+                viewModel.profileImageUri.set(resultUri.toString())
                 binding.headPicture.setImageURI(resultUri)
-                toast("You profile picture was successfully changed")
+                //toast("You profile picture was successfully changed")
             } else if (resultCode === CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 val error = result.error
                 error.message?.let { toast(it) }

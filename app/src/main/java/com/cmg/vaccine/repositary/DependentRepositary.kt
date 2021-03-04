@@ -52,4 +52,8 @@ class DependentRepositary(
     fun getParentSubId():String?{
         return preferenceProvider.getSubId()
     }
+
+    fun getProfileImage(subsId: String):String?{
+        return database.getDao().getDependentProfileImage(subsId)
+    }
 }

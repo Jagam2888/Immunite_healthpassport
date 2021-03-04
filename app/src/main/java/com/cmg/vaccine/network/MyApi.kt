@@ -2,6 +2,7 @@ package com.cmg.vaccine.network
 
 import android.content.Context
 import com.cmg.vaccine.model.request.DependentRegReq
+import com.cmg.vaccine.model.request.ImmunizationHistoryReq
 import com.cmg.vaccine.model.request.SignUpReq
 import com.cmg.vaccine.model.request.UpdateProfileReq
 import com.cmg.vaccine.model.response.*
@@ -73,6 +74,9 @@ interface MyApi {
 
     @GET(Passparams.GET_WORLD_ENTRIES_RULES)
     suspend fun getWorldEntryCountryRules(@Query("countryCode")countryCode:String):Response<WorldEntryRulesResponse>
+
+    @POST(Passparams.IMMUNIZATION_HISTORY)
+    suspend fun immunizationHistory(@Body immunizationHistoryReq: ImmunizationHistoryReq):Response<ImmunizationHistoryResponse>
 
     companion object{
         operator fun invoke(

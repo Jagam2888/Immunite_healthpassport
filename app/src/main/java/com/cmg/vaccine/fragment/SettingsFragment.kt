@@ -203,7 +203,7 @@ class SettingsFragment : Fragment(),KodeinAware,SimpleListener {
             val packageInfo = context?.packageManager?.getPackageInfo(context?.packageName!!, 0)
             val versionName = packageInfo?.versionName
             val alertDialogBuilder = AlertDialog.Builder(requireContext())
-            alertDialogBuilder.setMessage("Version : $versionName").setTitle(R.string.app_name)
+            alertDialogBuilder.setMessage("Version : $versionName \nDevelopment Server : ${Passparams.URL}").setTitle(R.string.app_name)
                     .setNegativeButton("CANCEL"
                     ) { dialog, which -> dialog?.dismiss() }
 

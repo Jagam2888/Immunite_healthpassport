@@ -16,7 +16,7 @@ import com.cmg.vaccine.model.SwitchProfile
 import com.cmg.vaccine.model.response.*
 import com.cmg.vaccine.repositary.HomeRepositary
 import com.cmg.vaccine.util.*
-import my.com.immunitee.blockchainapi.utils.EncryptionUtils
+import immuniteeEncryption.EncryptionUtils
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -86,6 +86,7 @@ class HomeViewModel(
 
         user.fullName = parent.fullName
         user.tyep = "Principal"
+        user.profileImg = parent.profileImage
         listuser = listOf(user)
 
         val dependent = repositary.getDependentList()
@@ -95,6 +96,7 @@ class HomeViewModel(
                 var getChild = SwitchProfile()
                 getChild.fullName = child.firstName
                 getChild.tyep = child.relationship
+                getChild.profileImg = child.profileImage
                 listuser = listuser?.plus(getChild)
             }
         }
@@ -280,6 +282,8 @@ class HomeViewModel(
         dashBoard.dataTest = testReportList.value
         dashBoard.relationShip = Passparams.PARENT
         dashBoard.subId = userData.parentSubscriberId
+        dashBoard.dob = userData.dob
+        dashBoard.profileImg = userData.profileImage
         _listDashboard.value = listOf(dashBoard)
 
         val dependentList = repositary.getDependentList()
@@ -294,6 +298,8 @@ class HomeViewModel(
                 dashboard1.privateKey = dependent.privateKey
                 dashboard1.dataTest = testReportList.value
                 dashboard1.subId = dependent.subsId
+                dashboard1.dob = dependent.dob
+                dashboard1.profileImg = dependent.profileImage
                 _listDashboard.value = _listDashboard.value!!.plus(dashboard1)
             }
         }
@@ -303,8 +309,8 @@ class HomeViewModel(
         return repositary.getPrivateKey()
     }
 
-    private fun decryptServerKey(pk:String,dob:String):String?{
-        return EncryptionUtils.decrypt(pk,dob)
+    private fun decryptServerKey(pk:String):String?{
+        return decryptBackupKey(pk)
     }
 
     fun getPatientPrivateKey() {
@@ -321,10 +327,8 @@ class HomeViewModel(
                             if (!response.PrivateKey.isNullOrEmpty()){
                                 val tempDob = changeDateFormatForPrivateKeyDecrypt(getUser.dob!!)
                                 val tempPK = response.PrivateKey
-                                if (!decryptServerKey(tempPK,
-                                        tempDob!!).isNullOrEmpty()){
-                                    originalPrivateKey = decryptServerKey(tempPK,
-                                        tempDob!!)
+                                if (!decryptServerKey(tempPK).isNullOrEmpty()){
+                                    originalPrivateKey = decryptServerKey(tempPK)
                                 }else{
                                     originalPrivateKey = response.PrivateKey
                                     listener?.onFailure("Please Check ! API return Original Private Key Instead of Encrypt Private Key")
@@ -336,7 +340,7 @@ class HomeViewModel(
                         }
                         repositary.savePrivateKey(originalPrivateKey!!)
                         _privateKey.value = originalPrivateKey
-                        listener?.onSuccess("$originalPrivateKey|${getUser.fullName}")
+                        listener?.onSuccess("$originalPrivateKey|${getUser.fullName}|${getUser.dob}")
                     }else{
                         listener?.onFailure(response.Message)
                     }
@@ -369,10 +373,8 @@ class HomeViewModel(
                             if (!response.PrivateKey.isNullOrEmpty()){
                                 val tempDob = changeDateFormatForPrivateKeyDecrypt(getUser.dob!!)
                                 val tempPK = response.PrivateKey
-                                if (!decryptServerKey(tempPK,
-                                        tempDob!!).isNullOrEmpty()){
-                                    originalPrivateKey = decryptServerKey(tempPK,
-                                        tempDob!!)
+                                if (!decryptServerKey(tempPK).isNullOrEmpty()){
+                                    originalPrivateKey = decryptServerKey(tempPK)
                                 }else{
                                     originalPrivateKey = response.PrivateKey
                                     listener?.onFailure("Please Check ! API return Original Private Key Instead of Encrypt Private Key")
@@ -383,7 +385,7 @@ class HomeViewModel(
                         }
                         //repositary.savePrivateKey(response.PrivateKey)
                         _privateKey.value = originalPrivateKey
-                        listener?.onSuccess("$originalPrivateKey|${getUser.firstName}")
+                        listener?.onSuccess("$originalPrivateKey|${getUser.firstName}|${getUser.dob}")
                     }else{
                         listener?.onFailure(response.Message)
                     }

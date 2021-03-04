@@ -224,6 +224,7 @@ class SignupViewModel(
                                 "",
                                 "",
                                 "",
+                                    null,
                                 "",
                                 "N"
                             )

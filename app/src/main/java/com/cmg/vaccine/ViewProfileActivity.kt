@@ -4,6 +4,8 @@ import android.content.Intent
 import android.graphics.Paint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.SystemClock
+import android.util.Log
 import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
@@ -21,6 +23,9 @@ class ViewProfileActivity : BaseActivity(),KodeinAware {
     private lateinit var viewModel:ProfileViewModel
     var user:String?=null
 
+    var lastClickEdit:Long = 0
+    var lastClickHistory:Long = 0
+
     private val factory:ProfileViewModelFactory by instance()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +39,10 @@ class ViewProfileActivity : BaseActivity(),KodeinAware {
 
 
         binding.txtEditProfile.setOnClickListener {
+            if (SystemClock.elapsedRealtime() - lastClickEdit<1000){
+                return@setOnClickListener
+            }
+            lastClickEdit = SystemClock.elapsedRealtime()
 
             if (user == Passparams.PARENT){
                 Intent(this,EditProfileActivity::class.java).also {
@@ -51,6 +60,10 @@ class ViewProfileActivity : BaseActivity(),KodeinAware {
             finish()
         }
         binding.txtSubmitPast.setOnClickListener {
+            if (SystemClock.elapsedRealtime() - lastClickHistory<1000){
+                return@setOnClickListener
+            }
+            lastClickHistory = SystemClock.elapsedRealtime()
             Intent(this,ImmunizationHistoryActivity::class.java).also {
                 startActivity(it)
             }

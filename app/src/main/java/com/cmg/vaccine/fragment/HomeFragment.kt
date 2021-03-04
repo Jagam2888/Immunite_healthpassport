@@ -3,6 +3,7 @@ package com.cmg.vaccine.fragment
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.SystemClock
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -31,7 +32,7 @@ import com.cmg.vaccine.util.show
 import com.cmg.vaccine.util.toast
 import com.cmg.vaccine.viewmodel.HomeViewModel
 import com.cmg.vaccine.viewmodel.viewmodelfactory.HomeViewModelFactory
-import my.com.immunitee.blockchainapi.utils.EncryptionUtils
+import immuniteeEncryption.EncryptionUtils
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
 import org.kodein.di.generic.instance
@@ -46,6 +47,7 @@ class HomeFragment : Fragment(),KodeinAware,SimpleListener {
     private val factory:HomeViewModelFactory by instance()
     val layouts = listOf("parent","child1","child2")
     var listDashboard:List<Dashboard>?=null
+    var lastClickTime:Long = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -68,6 +70,7 @@ class HomeFragment : Fragment(),KodeinAware,SimpleListener {
             viewModel.loadTestReportList()
         }else{*/
             viewModel.setUser()
+
         //viewModel.loadData()
         //}
         /*if (viewModel.vaccineList.value.isNullOrEmpty()) {
@@ -84,9 +87,9 @@ class HomeFragment : Fragment(),KodeinAware,SimpleListener {
 
         //viewModel.loadVaccineDetail()
 
-        /*viewModel.users.observe(viewLifecycleOwner, Observer {
+        viewModel.users.observe(viewLifecycleOwner, Observer {
             viewModel.loadData()
-        })*/
+        })
 
 
         viewModel.listDashboard.observe(viewLifecycleOwner, Observer { list->
@@ -102,6 +105,11 @@ class HomeFragment : Fragment(),KodeinAware,SimpleListener {
         })
 
         binding.notification.setOnClickListener {
+            if (SystemClock.elapsedRealtime() - lastClickTime<1000){
+                return@setOnClickListener
+            }
+            Log.d("onclick","come here")
+            lastClickTime = SystemClock.elapsedRealtime()
             Intent(context,NotificationGroupListActivity::class.java).also {
                 context?.startActivity(it)
             }
@@ -174,6 +182,7 @@ class HomeFragment : Fragment(),KodeinAware,SimpleListener {
             Intent(context,ViewPrivateKeyActivity::class.java).also {
                 it.putExtra(Passparams.PRIVATEKEY, privateKeyArray[0])
                 it.putExtra(Passparams.USER_NAME, privateKeyArray[1])
+                it.putExtra(Passparams.USER_DOB, privateKeyArray[2])
                 context?.startActivity(it)
             }
         }
@@ -187,7 +196,8 @@ class HomeFragment : Fragment(),KodeinAware,SimpleListener {
      override fun onResume() {
         super.onResume()
          Log.d("onresume","OnResume")
-        viewModel.loadData()
+         //viewModel.setCurrentItem(0)
+        //viewModel.loadData()
     }
 
 

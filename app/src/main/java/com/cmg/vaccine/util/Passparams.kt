@@ -7,6 +7,7 @@ object Passparams{
     const val ISSETTINGS = "isSettings"
     const val PRIVATEKEY = "private_key"
     const val USER_NAME = "user_name"
+    const val USER_DOB = "user_dob"
     const val SUBSID = "subsid"
     const val USER = "user"
     const val PARENT = "Principal"
@@ -42,6 +43,7 @@ object Passparams{
     const val GET_TEST_REPORT_LIST = "nhr-module-user/getalltestrecord"
     const val GET_WORLD_ENTRIES_LIST = "nhr-module-user/worldentry"
     const val GET_WORLD_ENTRIES_RULES = "nhr-module-user/worldentrybycountry"
+    const val IMMUNIZATION_HISTORY = "nhr-module-user/immuhistory"
 
     //Block Chain
     const val BLOCK_CHAIN_URL = "https://cashierbook.com.my:8081/blockchainapi/"

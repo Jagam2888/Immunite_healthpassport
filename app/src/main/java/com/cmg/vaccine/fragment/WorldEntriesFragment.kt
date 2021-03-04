@@ -2,6 +2,8 @@ package com.cmg.vaccine.fragment
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.SystemClock
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -48,6 +50,7 @@ class WorldEntriesFragment : Fragment(),KodeinAware {
 
 
         viewModel.getVaccineAndTestReportList()
+        var lastClickTime:Long = 0
 
 
         viewModel.worldEntriesList.observe(viewLifecycleOwner, Observer { list ->
@@ -58,6 +61,11 @@ class WorldEntriesFragment : Fragment(),KodeinAware {
         })
 
         binding.imgAdd.setOnClickListener {
+            if (SystemClock.elapsedRealtime() - lastClickTime<1000){
+                return@setOnClickListener
+            }
+            Log.d("onclick","come here")
+            lastClickTime = SystemClock.elapsedRealtime()
             Intent(context,AddWorldEntryActivity::class.java).also {
                 context?.startActivity(it)
             }
