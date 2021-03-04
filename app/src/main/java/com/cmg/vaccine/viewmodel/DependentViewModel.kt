@@ -82,6 +82,7 @@ class DependentViewModel(
     var currentMobile:String?=null
 
     var userSubId:MutableLiveData<String> = MutableLiveData()
+    var profileImageUri = ObservableField<String>()
 
     val clicksListener = object : AdapterView.OnItemSelectedListener {
         override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -91,6 +92,10 @@ class DependentViewModel(
         override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
             selectedItemNationalityCode.set(position)
         }
+    }
+
+    fun getProfileImage(subsId: String):String?{
+        return repositary.getProfileImage(subsId)
     }
 
     init {
@@ -205,6 +210,7 @@ class DependentViewModel(
                                                 repositary.getParentSubId(),
                                                 response.SubsId,
                                                 response.privateKey,
+                                                    null,
                                                 contactNumber.value?.trim(),
                                                 nationality,
                                                 passportNumber.value?.trim(),
@@ -387,6 +393,7 @@ class DependentViewModel(
                                                 dependent?.email = email.value?.trim()
                                                 dependent?.countryCode =
                                                     selectedItemContactCode.get()
+                                                dependent?.profileImage = profileImageUri.get()
 
                                                 repositary.updateDependent(dependent!!)
                                                 listener?.onSuccess(response.Message)

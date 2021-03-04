@@ -2,7 +2,6 @@ package com.cmg.vaccine
 
 import android.app.AlertDialog
 import android.content.Context
-import android.graphics.PixelFormat
 import android.graphics.Point
 import android.os.Build
 import android.os.Bundle
@@ -12,11 +11,9 @@ import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
-import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.PopupWindow
-import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
@@ -34,9 +31,9 @@ import com.cmg.vaccine.util.getDeviceUUID
 import com.cmg.vaccine.viewmodel.HomeViewModel
 import com.cmg.vaccine.viewmodel.viewmodelfactory.HomeViewModelFactory
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import immuniteeEncryption.EncryptionUtils
 import io.paperdb.Paper
 import kotlinx.android.synthetic.main.activity_main.*
-import my.com.immunitee.blockchainapi.utils.EncryptionUtils
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
@@ -50,6 +47,7 @@ class MainActivity : BaseActivity(),KodeinAware {
     private val factory:HomeViewModelFactory by instance()
     var isHome:Boolean = true
     var popupWindow:PopupWindow?=null
+    var switchProfilePos:Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,9 +56,8 @@ class MainActivity : BaseActivity(),KodeinAware {
         homeViewModel.setUser()
 
         initViews()
+
     }
-
-
 
     private fun initViews(){
         loadFragment(HomeFragment())
@@ -75,14 +72,16 @@ class MainActivity : BaseActivity(),KodeinAware {
             when(menuItem.itemId){
                 R.id.home -> {
                     isHome = true
-                    homeViewModel.setCurrentItem(0)
-                    isShowPopWindow()
+                    switchProfilePos = 0
+                    homeViewModel.setCurrentItem(switchProfilePos)
+                    //isShowPopWindow()
                     loadFragment(HomeFragment())
                     true
                 }
                 R.id.switch_profile -> {
                     if (!isHome) {
                         homeViewModel.setUser()
+                        //homeViewModel.setCurrentItem(0)
                         loadFragment(HomeFragment())
                     }
                     /*if (popupWindow != null) {
@@ -94,24 +93,25 @@ class MainActivity : BaseActivity(),KodeinAware {
                     }*/
                     /*val bottomSheet = SwitchProfileFragment()
                     bottomSheet.show(supportFragmentManager,"switch")*/
+                    homeViewModel.setCurrentItem(switchProfilePos)
                     bottomDialog()
                     true
                 }
                 R.id.profile -> {
                     isHome = false
-                    isShowPopWindow()
+                    //isShowPopWindow()
                     loadFragment(ProfileFragment())
                     true
                 }
                 R.id.world_entries -> {
                     isHome = false
-                    isShowPopWindow()
+                    //isShowPopWindow()
                     loadFragment(WorldEntriesFragment())
                     true
                 }
                 R.id.setting -> {
                     isHome = false
-                    isShowPopWindow()
+                    //isShowPopWindow()
                     loadFragment(SettingsFragment())
                     true
                 }else -> false
@@ -139,13 +139,13 @@ class MainActivity : BaseActivity(),KodeinAware {
         val alertDialogBuilder = AlertDialog.Builder(this)
         alertDialogBuilder.setMessage("Are you sure you want to Exit?")
             .setTitle(resources.getString(R.string.app_name)).setCancelable(false).setPositiveButton(
-                "YES"
-            ) { dialog, which ->
+                        "YES"
+                ) { dialog, which ->
                 finish()
 
             }.setNegativeButton(
-                "CANCEL"
-            ) { dialog, which -> dialog?.dismiss() }
+                        "CANCEL"
+                ) { dialog, which -> dialog?.dismiss() }
 
         val alertDialog = alertDialogBuilder.create()
         alertDialog.show()
@@ -156,9 +156,9 @@ class MainActivity : BaseActivity(),KodeinAware {
         // Inflate a custom view using layout inflater
         val view = inflater.inflate(R.layout.switch_profile_popupwindow, null)
         popupWindow = PopupWindow(
-            view,
-            LinearLayout.LayoutParams.MATCH_PARENT,
-            LinearLayout.LayoutParams.WRAP_CONTENT
+                view,
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
         )
 
         popupWindow?.isOutsideTouchable = false
@@ -184,24 +184,24 @@ class MainActivity : BaseActivity(),KodeinAware {
             it.layoutManager = LinearLayoutManager(this)
             var itemDecoration = DividerItemDecoration(this, LinearLayout.VERTICAL)
             itemDecoration.setDrawable(getDrawable(R.drawable.recyclerview_item_decoration)!!)
-            it.adapter = SwitchProfileAdapter(homeViewModel.users.value!!,)
+            it.adapter = SwitchProfileAdapter(homeViewModel.users.value!!)
         }
 
         recyclerView.addOnItemTouchListener(
-            RecyclerViewTouchListener(
-                this,
-                recyclerView,
-                object : RecyclerViewTouchListener.ClickListener {
-                    override fun onClick(view: View?, position: Int) {
-                        //binding.frameContainer.setBackgroundColor(ContextCompat.getColor(this@MainActivity,android.R.color.transparent))
-                        homeViewModel.setCurrentItem(position)
-                        popupWindow?.dismiss()
-                    }
+                RecyclerViewTouchListener(
+                        this,
+                        recyclerView,
+                        object : RecyclerViewTouchListener.ClickListener {
+                            override fun onClick(view: View?, position: Int) {
+                                //binding.frameContainer.setBackgroundColor(ContextCompat.getColor(this@MainActivity,android.R.color.transparent))
+                                homeViewModel.setCurrentItem(position)
+                                popupWindow?.dismiss()
+                            }
 
-                    override fun onLongClick(view: View?, position: Int) {
+                            override fun onLongClick(view: View?, position: Int) {
 
-                    }
-                })
+                            }
+                        })
         )
 
         // If API level 23 or higher then execute the code
@@ -220,28 +220,19 @@ class MainActivity : BaseActivity(),KodeinAware {
         // Finally, show the popup window on app
         TransitionManager.beginDelayedTransition(container)
         popupWindow?.showAtLocation(
-            container, // Location to display popup window
-            Gravity.BOTTOM, // Exact position of layout to display popup
-            0, // X offset
-            binding.bottomNavigationView.height // Y offset
+                container, // Location to display popup window
+                Gravity.BOTTOM, // Exact position of layout to display popup
+                0, // X offset
+                binding.bottomNavigationView.height // Y offset
         )
 
-        //binding.frameContainer.setBackgroundColor(ContextCompat.getColor(this, R.color.dim_background))
-
-        /*val windowManager = getSystemService(Context.WINDOW_SERVICE) as WindowManager
-        val windowManagerParams = view.layoutParams as WindowManager.LayoutParams
-        windowManagerParams.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND
-        windowManagerParams.dimAmount = 0.03f
-        windowManager.updateViewLayout(view, windowManagerParams);*/
     }
 
-    override fun onBackPressed() {
-        showAlertForExit()
-    }
+
 
     private fun bottomDialog(){
         var switchAdapter:SwitchProfileAdapter?=null
-        val bottomSheet = layoutInflater.inflate(R.layout.switch_profile_popupwindow,null)
+        val bottomSheet = layoutInflater.inflate(R.layout.switch_profile_popupwindow, null)
         val bottomSheetDialog = BottomSheetDialog(this)
         bottomSheetDialog.setContentView(bottomSheet)
 
@@ -257,19 +248,20 @@ class MainActivity : BaseActivity(),KodeinAware {
         }
 
         recyclerView.addOnItemTouchListener(
-            RecyclerViewTouchListener(
-                this,
-                recyclerView,
-                object : RecyclerViewTouchListener.ClickListener {
-                    override fun onClick(view: View?, position: Int) {
-                        homeViewModel.setCurrentItem(position)
-                        bottomSheetDialog.dismiss()
-                    }
+                RecyclerViewTouchListener(
+                        this,
+                        recyclerView,
+                        object : RecyclerViewTouchListener.ClickListener {
+                            override fun onClick(view: View?, position: Int) {
+                                switchProfilePos = position
+                                homeViewModel.setCurrentItem(switchProfilePos)
+                                bottomSheetDialog.dismiss()
+                            }
 
-                    override fun onLongClick(view: View?, position: Int) {
+                            override fun onLongClick(view: View?, position: Int) {
 
-                    }
-                })
+                            }
+                        })
         )
 
         btnBack.setOnClickListener {
@@ -279,40 +271,12 @@ class MainActivity : BaseActivity(),KodeinAware {
 
         homeViewModel.currentPagerPosition.observe(this, Observer {
             switchAdapter?.changeItem(it)
-            Log.d("current_pos",it.toString())
+            Log.d("current_pos", it.toString())
         })
     }
 
-    fun PopupWindow.dimBehind() {
-        val container = contentView.rootView
-        val context = contentView.context
-        val wm = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
-        //val p = container.layoutParams as WindowManager.LayoutParams
-        /*val p = WindowManager.LayoutParams(WindowManager.LayoutParams.WRAP_CONTENT,
-            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE or WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN or WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
-        PixelFormat.TRANSLUCENT)*/
-        val p = WindowManager.LayoutParams(
-            WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
-            WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH,
-            PixelFormat.TRANSLUCENT
-        )
-        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            p.type = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
-        }else{
-            p.type = WindowManager.LayoutParams.TYPE_PHONE
-        }*/
-        p.flags = p.flags or WindowManager.LayoutParams.FLAG_DIM_BEHIND
-        p.dimAmount = 0.3f
-        wm.addView(container, p)
+    override fun onBackPressed() {
+        showAlertForExit()
     }
 
-    /*override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
-            R.id.notification ->{
-                loadFragment(NotificationFragment())
-                return true
-            }
-        }
-        return super.onOptionsItemSelected(item)
-    }*/
 }

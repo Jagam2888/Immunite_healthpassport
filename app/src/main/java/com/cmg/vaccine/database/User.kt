@@ -23,6 +23,7 @@ data class User(
     var city:String?,
     var state:String?,
     var privateKey: String?,
+    var profileImage: String?,
     var parentSubscriberId: String?,
     var virifyStatus:String?
 ){

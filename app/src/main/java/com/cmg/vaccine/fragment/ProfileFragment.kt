@@ -3,7 +3,9 @@ package com.cmg.vaccine.fragment
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.SystemClock
 import android.text.Spanned
+import android.util.Log
 
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -33,6 +35,7 @@ class ProfileFragment : Fragment(),KodeinAware {
     private lateinit var viewModel:ProfileViewModel
 
     private val factory:ProfileViewModelFactory by instance()
+    var lastClickTime:Long = 0
 
 
     override fun onCreateView(
@@ -53,6 +56,9 @@ class ProfileFragment : Fragment(),KodeinAware {
 
 
 
+
+
+
         viewModel.dependentList.observe(viewLifecycleOwner, Observer {list ->
             binding.recyclerViewChild.also {
                 it.layoutManager = LinearLayoutManager(context)
@@ -70,6 +76,14 @@ class ProfileFragment : Fragment(),KodeinAware {
         }
 
         binding.btnAddDependent.setOnClickListener {
+
+            if (SystemClock.elapsedRealtime() - lastClickTime<1000){
+                return@setOnClickListener
+            }
+            Log.d("onclick","come here")
+            lastClickTime = SystemClock.elapsedRealtime()
+
+
             Intent(context,AddDependentActivity::class.java).also {
                 context?.startActivity(it)
             }
@@ -113,6 +127,8 @@ class ProfileFragment : Fragment(),KodeinAware {
         }*/
     }
 
+
+
     private fun sendEmail(receipent:String,subject:String,msgBody:Spanned){
         val mIntent = Intent(Intent.ACTION_SEND)
         mIntent.data = Uri.parse("mailto:")
@@ -141,6 +157,11 @@ class ProfileFragment : Fragment(),KodeinAware {
             if (binding.btnAddDependent.visibility == View.VISIBLE){
                 binding.btnAddDependent.visibility = View.GONE
             }
+        }
+
+        if (!viewModel.getProfileImage().isNullOrEmpty()){
+            val uri = Uri.parse(viewModel.getProfileImage())
+            binding.imgProfile.setImageURI(uri)
         }
     }
 

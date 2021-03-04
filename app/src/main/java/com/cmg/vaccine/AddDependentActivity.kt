@@ -2,8 +2,10 @@ package com.cmg.vaccine
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.SystemClock
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
@@ -27,6 +29,9 @@ class AddDependentActivity : BaseActivity(),KodeinAware,SimpleListener {
     private lateinit var binding:ActivityAddDependentBinding
     private lateinit var viewModel:DependentViewModel
 
+    var lastClickTimeDOB:Long = 0
+    var lastClickTimeDOBTime:Long = 0
+
     private val factory:DependentViewModelFactory by instance()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,11 +51,21 @@ class AddDependentActivity : BaseActivity(),KodeinAware,SimpleListener {
         })
 
         binding.btnDobCalender.setOnClickListener {
+            if (SystemClock.elapsedRealtime() - lastClickTimeDOB<1000){
+                return@setOnClickListener
+            }
+            Log.d("onclickdob","come here")
+            lastClickTimeDOB = SystemClock.elapsedRealtime()
             hideKeyBoard()
             showDatePickerDialog(binding.edtDob)
         }
 
         binding.btnDobTimeCalender.setOnClickListener {
+            if (SystemClock.elapsedRealtime() - lastClickTimeDOBTime<1000){
+                return@setOnClickListener
+            }
+            Log.d("onclick","come here")
+            lastClickTimeDOBTime = SystemClock.elapsedRealtime()
             hideKeyBoard()
             showTimepickerDialog(binding.edtDobTime, viewModel.dobTime.value!!)
         }

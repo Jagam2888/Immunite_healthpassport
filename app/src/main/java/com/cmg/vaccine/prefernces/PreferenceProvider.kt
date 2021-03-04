@@ -14,6 +14,7 @@ private const val USER_EMAIL = "user_email"
 private const val USER_SUB_ID = "user_sub_id"
 private const val PRINCIPAL_PRIVATE_KEY = "prinicipal_private_key"
 private const val FCM_TOKEN = "fcm_token"
+private const val PROFILE_IMAGE = "profile_image"
 class PreferenceProvider(
         context: Context
 ) {
@@ -64,6 +65,17 @@ class PreferenceProvider(
 
     fun getSubId():String?{
         return prefernece.getString(USER_SUB_ID,null)
+    }
+
+    fun saveProfileImage(img:String){
+        prefernece.edit().putString(
+                PROFILE_IMAGE,
+                img
+        ).apply()
+    }
+
+    fun getProfileImage():String?{
+        return prefernece.getString(PROFILE_IMAGE,null)
     }
 
     fun savePrincipalPrivateKey(privateKey:String){

@@ -1,5 +1,6 @@
 package com.cmg.vaccine.adapter
 
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -26,6 +27,11 @@ class SwitchProfileAdapter(
         holder.switchProfileListItemBinding.switchprofile = listUser[position]
 
         holder.switchProfileListItemBinding.checkbox.isChecked = position == selectedItem
+
+        if (!listUser[position].profileImg.isNullOrEmpty()){
+            val uri = Uri.parse(listUser[position].profileImg)
+            holder.switchProfileListItemBinding.imgProfile.setImageURI(uri)
+        }
 
         /*holder.switchProfileListItemBinding.container.setOnClickListener {
             changeItem(position)

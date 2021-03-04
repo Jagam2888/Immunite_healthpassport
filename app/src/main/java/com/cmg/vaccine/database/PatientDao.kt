@@ -35,6 +35,9 @@ interface PatientDao {
     @Query("SELECT * FROM User where parentSubscriberId = :subsId")
     fun getUserData(subsId:String):User
 
+    @Query("SELECT profileImage FROM User WHERE parentSubscriberId =:subsId")
+    fun getParentProfileImage(subsId: String):String
+
     /*@Update(onConflict = OnConflictStrategy.REPLACE)
     fun updatePrivateKey(user: User):Int*/
 
@@ -70,6 +73,9 @@ interface PatientDao {
 
     @Query("SELECT * FROM Dependent WHERE subsId =:subId")
     fun getDependent(subId:String):Dependent
+
+    @Query("SELECT profileImage FROM Dependent WHERE subsId =:subsId")
+    fun getDependentProfileImage(subsId: String):String
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertVaccineData(vaccine: Vaccine):Long

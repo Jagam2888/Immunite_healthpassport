@@ -19,7 +19,7 @@ import com.cmg.vaccine.util.*
 import com.cmg.vaccine.viewmodel.ViewPrivateKeyViewModel
 import com.cmg.vaccine.viewmodel.viewmodelfactory.ViewPrivateKeyFactory
 import com.google.zxing.WriterException
-import my.com.immunitee.blockchainapi.utils.EncryptionUtils
+import immuniteeEncryption.EncryptionUtils
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
@@ -63,6 +63,7 @@ class ViewPrivateKeyActivity : BaseActivity(),KodeinAware,SimpleListener {
 
         val userName = intent.extras?.getString(Passparams.USER_NAME,"")
         viewModel._userName.value = userName
+        val userDob = intent.extras?.getString(Passparams.USER_DOB,"")
 
         /*val relationShip = intent.extras?.getString(Passparams.RELATIONSHIP,"")
         val subId = intent.extras?.getString(Passparams.SUBSID,"")*/
@@ -72,10 +73,8 @@ class ViewPrivateKeyActivity : BaseActivity(),KodeinAware,SimpleListener {
             val timeStamp = System.currentTimeMillis().toString()
             //val encryptMasterKeyValue = encryptMasterKey(timeStamp)
             //val encryptPrivateKey = resources.getString(R.string.app_name)+"|"+encryptMasterKeyValue+"|"+encryptPrivateKey(privateKey!!,timeStamp)!!
-            val encryptPrivateKey = resources.getString(R.string.app_name)+"|"+encryptPrivateKey(privateKey!!,timeStamp)!!
-            Log.d("encrypt_pk",encryptPrivateKey)
-            //val decryptValue = decryptPrivateKey(encryptPrivateKey)
-            //Log.d("decrypt_qr",decryptValue!!)
+            val encryptPrivateKey = encryptPrivateKey(privateKey!!,changeDateFormatForPrivateKeyDecrypt(userDob!!)!!)
+            Log.d("encrypt_pk",encryptPrivateKey!!)
             generateQRCode(encryptPrivateKey)
         }else{
             toast("Your Private key is not generated")
@@ -105,30 +104,13 @@ class ViewPrivateKeyActivity : BaseActivity(),KodeinAware,SimpleListener {
         }
 
         startTimer()
-
-
-        Log.d("server_keyssssss",decryptPrivateKey("Immunitee|QK3SOL3xqq9uYtQoehi0Xg==|webkLzOOKXkLZWIACFcfg00HMQQmoKr0vI8JwUvF+7RV2GmG1u93fgvUr0OvxVVMmyRsNpy9o2bgsXVkTrayjmpItKU8wwIkYvOe3XeAUxTQdAqU4zo7too+DbVS8MSmuTMSoAxoTkr4iTfwlef7Xw==")!!)
     }
 
-    private fun decryptServerKey(pk:String,dob:String):String?{
-        return EncryptionUtils.decrypt(pk,dob)
+
+    private fun encryptPrivateKey(pKey: String,dob: String):String?{
+
+        return EncryptionUtils.encryptForQrCode(pKey,dob)
     }
-
-    private fun encryptPrivateKey(pKey: String,timeStamp: String):String?{
-
-        return EncryptionUtils.encrypt(pKey,timeStamp)
-    }
-
-    private fun encryptMasterKey(timeStamp:String):String?{
-        return EncryptionUtils.encrypt(timeStamp,"")
-    }
-
-    private fun decryptPrivateKey(key:String):String?{
-        val pkArray = key.split("|")
-        val masterKey = EncryptionUtils.decrypt(pkArray[1],"")
-        return EncryptionUtils.decrypt(pkArray[2],masterKey)
-    }
-
 
     private fun startTimer(){
         val timer = object : CountDownTimer(300000,1000){

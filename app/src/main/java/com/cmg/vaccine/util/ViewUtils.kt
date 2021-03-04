@@ -27,6 +27,7 @@ import com.cmg.vaccine.database.WorldEntryCountries
 import com.cmg.vaccine.model.response.WorldEntriesCountryListData
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import immuniteeEncryption.EncryptionUtils
 import java.io.UnsupportedEncodingException
 import java.lang.Exception
 import java.security.InvalidKeyException
@@ -160,27 +161,6 @@ fun isLeapYear(year:Int):Boolean {
     return ((year % 4 == 0) and ((year % 100 != 0) or (year % 400 == 0)));
 }
 
-/*fun validateDateFormat(fromDate: String):Boolean{
-    try {
-        val calender = Calendar.getInstance()
-        calender.isLenient = false
-        val simpleDateFormat = SimpleDateFormat("dd/MM/yyyy")
-        val currentDate = simpleDateFormat.format(Date())
-        val validateDate = simpleDateFormat.parse(fromDate)
-
-        calender.time = validateDate
-        calender.time
-        val lastDate = "01/01/1900"
-        return if (fromDate > currentDate){
-            false
-        }else (fromDate < currentDate) and (fromDate > lastDate)
-
-    }catch (e:Exception){
-        return false
-    }
-    return false
-}*/
-
 fun Context.showTimepickerDialog(editText: EditText, currentTime: String){
     val sdf = SimpleDateFormat("HHmm")
     val cal = Calendar.getInstance()
@@ -271,6 +251,17 @@ fun changeDateFormatForViewProfile(dateString: String):String?{
     }
     return ""
 }
+fun changeDateFormatISO8601(dateString: String):String?{
+    val currentDateFormat = SimpleDateFormat("dd/MM/yyyy HH:mm:ss")
+    val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
+    try {
+        val date = currentDateFormat.parse(dateString)
+        return simpleDateFormat.format(date)
+    }catch (e: ParseException){
+        e.printStackTrace()
+    }
+    return ""
+}
 fun changeDateFormatForPrivateKeyDecrypt(dateString:String):String?{
     val currentDateFormat = SimpleDateFormat("dd/MM/yyyy")
     val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd")
@@ -285,21 +276,30 @@ fun changeDateFormatForPrivateKeyDecrypt(dateString:String):String?{
 fun Context.getCurrentCountryName():String?{
     val locationManager = applicationContext.getSystemService(Context.LOCATION_SERVICE) as LocationManager
     var country:String = ""
-    val geocoder = Geocoder(applicationContext)
-    for (provider in locationManager.allProviders){
-        @SuppressWarnings("ResourceType")
-        val location = locationManager.getLastKnownLocation(provider)
-        if (location != null){
-            val address:List<Address> = geocoder.getFromLocation(
-                location.latitude,
-                location.longitude,
-                1
-            )
-            if (!address.isNullOrEmpty()){
-                country = address.get(0).countryName
+    Couritnes.main {
+        try {
+            val geocoder = Geocoder(applicationContext,Locale.getDefault())
+            for (provider in locationManager.allProviders){
+                @SuppressWarnings("ResourceType")
+                val location = locationManager.getLastKnownLocation(provider)
+                if (location != null){
+                    val address:List<Address> = geocoder.getFromLocation(
+                            location.latitude,
+                            location.longitude,
+                            1
+                    )
+                    if (!address.isNullOrEmpty()){
+                        country = address.get(0).countryName
+                    }
+                }
             }
+        }catch (e:Exception){
+            toast(e.message!!)
+        }catch (e:NoInternetException){
+            toast(e.message!!)
         }
     }
+
     return country
 }
 
@@ -320,6 +320,22 @@ fun Context.getLastLocation():Location? {
         }
     }
     return lastLocation
+}
+
+fun decryptBackupKey(encryptedKey: String): String? {
+    var encryptedKey = encryptedKey
+    return if (encryptedKey.isEmpty()) {
+        "invalid"
+    } else {
+        if (encryptedKey.contains(" ")) {
+            encryptedKey = encryptedKey.replace(' ', '+')
+        }
+        encryptedKey = encryptedKey.replace("IMMUNITEE|", "")
+        val dobHint = encryptedKey.substring(0, 8)
+        val finalToDecryptKey = encryptedKey.substring(8)
+        val finalDecryptedPrivateKey = EncryptionUtils.decrypt(finalToDecryptKey, dobHint)
+        finalDecryptedPrivateKey ?: "invalid"
+    }
 }
 
 fun genearteKey(secretKey: String): SecretKeySpec?{

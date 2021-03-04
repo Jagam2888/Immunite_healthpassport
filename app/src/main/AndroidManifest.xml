@@ -21,7 +21,9 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.Noactionbar"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true"
+        android:manageSpaceActivity=".LoginActivity">
+
         <activity android:name=".ImmunizationHistoryActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"></activity>

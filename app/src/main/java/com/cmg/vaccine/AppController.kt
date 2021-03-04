@@ -77,6 +77,9 @@ class AppController : Application(),KodeinAware {
         bind() from singleton { VaccineAndTestRepositary(instance()) }
         bind() from provider { VaccineAndTestModelFactory(instance()) }
 
+        bind() from singleton { ImmunizationHistoryRepositary(instance()) }
+        bind() from provider { ImmunizationHistoryViewModelFactory(instance()) }
+
         //bind() from provider { MyFirebaseInstanceIDService(instance()) }
 
     }

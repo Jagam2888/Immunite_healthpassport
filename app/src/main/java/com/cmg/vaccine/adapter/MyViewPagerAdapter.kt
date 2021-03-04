@@ -2,6 +2,7 @@ package com.cmg.vaccine.adapter
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,6 +23,7 @@ import com.cmg.vaccine.util.show
 import com.cmg.vaccine.util.toast
 import com.cmg.vaccine.viewmodel.HomeViewModel
 import com.google.gson.Gson
+import de.hdodenhof.circleimageview.CircleImageView
 
 class MyViewPagerAdapter(
     private val context: Context,
@@ -31,8 +33,7 @@ private val layouts:List<Dashboard>,
     private var layoutInflater:LayoutInflater?=null
     private var privateKey:String?=null
     private var fullName:String?=null
-    private var subId:String?=null
-    private var relationShip:String?=null
+    private var dob:String?=null
 
     override fun getCount(): Int {
         return layouts.size
@@ -50,10 +51,16 @@ private val layouts:List<Dashboard>,
         val txtPassportNo = view.findViewById<TextView>(R.id.txt_passport)
         val txtIdNo = view.findViewById<TextView>(R.id.txt_id_no)
         val txtNoData = view.findViewById<TextView>(R.id.txt_nodata)
+        val profilePic = view.findViewById<CircleImageView>(R.id.img_profile)
         val radioGroup = view.findViewById<RadioGroup>(R.id.dashboard_radio_group)
 
         val radioVaccine = view.findViewById<RadioButton>(R.id.radio_vaccine)
         val radioTest = view.findViewById<RadioButton>(R.id.radio_test)
+
+        if (!layouts[position].profileImg.isNullOrEmpty()){
+            val uri = Uri.parse(layouts[position].profileImg)
+            profilePic.setImageURI(uri)
+        }
 
         if (layouts[position].dataTest?.isNotEmpty() == true){
             radioTest.setBackgroundResource(R.drawable.test_data_btn_selector)
@@ -133,8 +140,8 @@ private val layouts:List<Dashboard>,
                     radioGroup.check(R.id.radio_vaccine)
                     privateKey = layouts[position].privateKey
                     fullName = layouts[position].fullName
-                    subId = layouts[position].subId
-                    relationShip = layouts[position].relationShip
+
+                    dob = layouts[position].dob
                     if (layouts[position].privateKey.isNullOrEmpty()) {
                         if (layouts[position].relationShip.equals(Passparams.PARENT, true)) {
                             viewModel.getPatientPrivateKey()
@@ -142,8 +149,7 @@ private val layouts:List<Dashboard>,
                             viewModel.getDependentPrivateKey(layouts[position].subId!!)
                         }
                     }else{
-                        navigateToViewPrivateKey(context,privateKey,fullName,relationShip
-                        ,subId)
+                        navigateToViewPrivateKey(context,privateKey,fullName,dob!!)
                     }
                 }
             }
@@ -157,10 +163,11 @@ private val layouts:List<Dashboard>,
         container.removeView(view)
     }
 
-    private fun navigateToViewPrivateKey(context: Context,privateKey:String?,fullName:String?,relationShip:String?,subId:String?){
+    private fun navigateToViewPrivateKey(context: Context,privateKey:String?,fullName:String?,dob:String){
         Intent(context,ViewPrivateKeyActivity::class.java).also {
             it.putExtra(Passparams.PRIVATEKEY, privateKey)
             it.putExtra(Passparams.USER_NAME, fullName)
+            it.putExtra(Passparams.USER_DOB, dob)
             /*it.putExtra(Passparams.RELATIONSHIP, relationShip)
             it.putExtra(Passparams.SUBSID, subId)*/
             context.startActivity(it)

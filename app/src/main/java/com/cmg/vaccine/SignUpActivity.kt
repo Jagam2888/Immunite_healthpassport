@@ -4,8 +4,10 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.os.SystemClock
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
@@ -39,6 +41,8 @@ class SignUpActivity : BaseActivity(),KodeinAware,SimpleListener {
     var current = ""
     val ddmmyyyy = "dd/mm/yy"
     val cal = Calendar.getInstance()
+    var lastClickTimeDOB:Long = 0
+    var lastClickTimeDOBTime:Long = 0
 
     companion object{
         const val LOCATION:Int = 1000
@@ -57,11 +61,21 @@ class SignUpActivity : BaseActivity(),KodeinAware,SimpleListener {
 
         binding.btnDobTimeCalender.setOnClickListener {
             hideKeyBoard()
+            if (SystemClock.elapsedRealtime() - lastClickTimeDOBTime<1000){
+                return@setOnClickListener
+            }
+            Log.d("onclickdob","come here")
+            lastClickTimeDOBTime = SystemClock.elapsedRealtime()
             showTimepickerDialog(binding.edtDobTime, viewModel.dobTime.value!!)
         }
 
         binding.btnDobCalender.setOnClickListener {
             hideKeyBoard()
+            if (SystemClock.elapsedRealtime() - lastClickTimeDOB<1000){
+                return@setOnClickListener
+            }
+            Log.d("onclick","come here")
+            lastClickTimeDOB = SystemClock.elapsedRealtime()
             showDatePickerDialog(binding.edtDob)
         }
 
