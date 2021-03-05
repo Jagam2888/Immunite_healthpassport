@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.cmg.vaccine">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -22,7 +23,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Noactionbar"
         android:usesCleartextTraffic="true"
-        android:manageSpaceActivity=".LoginActivity">
+        android:manageSpaceActivity=".LoginActivity"
+        tools:replace="android:allowBackup">
 
         <activity android:name=".ImmunizationHistoryActivity"
             android:screenOrientation="portrait"

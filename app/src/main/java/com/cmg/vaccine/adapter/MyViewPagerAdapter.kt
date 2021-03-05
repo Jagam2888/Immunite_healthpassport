@@ -142,15 +142,15 @@ private val layouts:List<Dashboard>,
                     fullName = layouts[position].fullName
 
                     dob = layouts[position].dob
-                    if (layouts[position].privateKey.isNullOrEmpty()) {
+                    //if (layouts[position].privateKey.isNullOrEmpty()) {
                         if (layouts[position].relationShip.equals(Passparams.PARENT, true)) {
                             viewModel.getPatientPrivateKey()
                         } else {
                             viewModel.getDependentPrivateKey(layouts[position].subId!!)
                         }
-                    }else{
+                    /*}else{
                         navigateToViewPrivateKey(context,privateKey,fullName,dob!!)
-                    }
+                    }*/
                 }
             }
         }
@@ -172,5 +172,14 @@ private val layouts:List<Dashboard>,
             it.putExtra(Passparams.SUBSID, subId)*/
             context.startActivity(it)
         }
+    }
+
+    fun refreshItem(newList:ArrayList<Dashboard>){
+        //viewModel.loadData()
+        /*val arrayList = arrayListOf<Dashboard>()
+        arrayList.addAll(newList)*/
+        /*layouts.clear()
+        layouts.addAll(newList)
+        notifyDataSetChanged()*/
     }
 }

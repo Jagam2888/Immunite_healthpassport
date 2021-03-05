@@ -104,11 +104,20 @@ class ProfileViewModel(
     }
 
     fun saveProfileImage(img:String){
-        repositary.setProfileImage(img)
+        val getUserData = repositary.getUserData()
+        if (!img.isNullOrEmpty()){
+            getUserData.profileImage = img
+            repositary.updateUser(getUserData)
+        }
+        //repositary.setProfileImage(img)
     }
 
     fun getProfileImage():String?{
         return repositary.getProfileImage()
+    }
+
+    fun getDependentProfileImage(subsId: String):String?{
+        return repositary.getDependentProfileImage(subsId)
     }
 
     fun loadParentData(){
@@ -293,7 +302,7 @@ class ProfileViewModel(
                                                 user.dobTime = dobTime.value
                                                 user.placeBirth = placeBirth
                                                 user.nationality = nationality
-                                                user.profileImage = profileImageUri.get()
+                                                //user.profileImage = profileImageUri.get()
                                                 repositary.updateUser(user)
                                                 //repositary.saveUser(user)
                                                 listener?.onSuccess(response.Message)

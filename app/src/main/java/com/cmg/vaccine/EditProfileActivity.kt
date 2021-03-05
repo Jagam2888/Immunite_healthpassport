@@ -290,7 +290,7 @@ class EditProfileActivity : BaseActivity(),KodeinAware,SimpleListener {
             if (resultCode === RESULT_OK) {
                 val resultUri = result.uri
                 viewModel.saveProfileImage(resultUri.toString())
-                viewModel.profileImageUri.set(resultUri.toString())
+                //viewModel.profileImageUri.set(resultUri.toString())
                 binding.headPicture.setImageURI(resultUri)
                 //toast("You profile picture was successfully changed")
             } else if (resultCode === CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {

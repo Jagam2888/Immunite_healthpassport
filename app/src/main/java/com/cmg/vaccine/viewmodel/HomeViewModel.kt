@@ -41,6 +41,8 @@ class HomeViewModel(
     val passportNumber:MutableLiveData<String> = MutableLiveData()
     val country:MutableLiveData<String> = MutableLiveData()
     val _privateKey:MutableLiveData<String> = MutableLiveData()
+    val privateKey:LiveData<String>
+    get() = _privateKey
 
     var isVaccine = ObservableBoolean()
 
@@ -74,13 +76,18 @@ class HomeViewModel(
     val testReportList:LiveData<List<TestReport>>
         get() = _testReportList
 
+    //for showing in qrcode screen
+    var _userName:MutableLiveData<String> = MutableLiveData()
+    val userName:LiveData<String>
+        get() = _userName
+    var listuser:List<SwitchProfile>?=null
+
 
     fun setCurrentItem(position:Int){
         _currentPagerPosition.value = position
     }
 
     fun setUser(){
-        var listuser:List<SwitchProfile>?=null
         val parent = repositary.getUserData()
         var user = SwitchProfile()
 
@@ -108,7 +115,7 @@ class HomeViewModel(
     fun loadVaccineList(){
         var vaccineList = repositary.getVaccineList()
 
-        if (vaccineList.isNullOrEmpty()) {
+        /*if (vaccineList.isNullOrEmpty()) {
             listener?.onStarted()
             Couritnes.main {
                 try {
@@ -149,14 +156,14 @@ class HomeViewModel(
                     listener?.onFailure(e.message!!)
                 }
             }
-        }else{
+        }else{*/
             _vaccineList.value = vaccineList
-        }
+        //}
     }
 
     fun loadTestReportList(){
         var testReportList = repositary.getTestReportList()
-        if (testReportList.isNullOrEmpty()) {
+        /*if (testReportList.isNullOrEmpty()) {
             Couritnes.main {
                 try {
                     val response = repositary.getTestReportList(repositary.getPrivateKey()!!)
@@ -204,68 +211,16 @@ class HomeViewModel(
                     listener?.onFailure(e.message!!)
                 }
             }
-        }else{
+        }else{*/
             setUser()
             listener?.onSuccess("success")
             _testReportList.value = testReportList
-        }
+        //}
 
     }
 
     fun loadData() {
         val userData = repositary.getUserData()
-/*
-
-        val dashboardData = DashboardVaccineData()
-
-        dashboardData.vaccineName = "Covid-19 Vaccine (Pfizer Dose 3)"
-        dashboardData.vaccineDate = "11/2/2021"
-        dashboardData.brandname = "Seeram"
-        dashboardData.manufacturer = "Pfizer Pvt Ltd"
-        dashboardData.clinic = "Americal Public Hospital"
-
-        val dashboardData1 = DashboardVaccineData()
-
-        dashboardData1.vaccineName = "Covid-19 Vaccine (Pfizer Dose 2)"
-        dashboardData1.vaccineDate = "11/2/2021"
-        dashboardData1.brandname = "Seeram"
-        dashboardData1.manufacturer = "Pfizer Pvt Ltd"
-        dashboardData1.clinic = "Americal Public Hospital"
-
-        val dashboardData2 = DashboardVaccineData()
-
-        dashboardData2.vaccineName = "Covid-19 Vaccine (Pfizer Dose 1)"
-        dashboardData2.vaccineDate = "11/2/2021"
-        dashboardData2.brandname = "Seeram"
-        dashboardData2.manufacturer = "Pfizer Pvt Ltd"
-        dashboardData2.clinic = "Americal Public Hospital"
-
-        val dashboardTestData = DashboardTestData()
-        dashboardTestData.vaccineName = "Covid-19 (rRT-PCR) test"
-        dashboardTestData.vaccineDate = "11/2/2021"
-        dashboardTestData.specimenDate = "23/5/2020"
-        dashboardTestData.takenBy = "Malaysia Lab"
-        dashboardTestData.testBy = "Malaysia Lab"
-        dashboardTestData.result = "Negative"
-
-        val dashboardTestData1 = DashboardTestData()
-        dashboardTestData1.vaccineName = "Covid-19 (rRT-PCR) test"
-        dashboardTestData1.vaccineDate = "11/2/2021"
-        dashboardTestData1.specimenDate = "23/5/2020"
-        dashboardTestData1.takenBy = "Malaysia Lab"
-        dashboardTestData1.testBy = "Malaysia Lab"
-        dashboardTestData1.result = "Positive"
-
-        val dashboardTestData2 = DashboardTestData()
-        dashboardTestData2.vaccineName = "Covid-19 (rRT-PCR) test"
-        dashboardTestData2.vaccineDate = "11/2/2021"
-        dashboardTestData2.specimenDate = "23/5/2020"
-        dashboardTestData2.takenBy = "Malaysia Lab"
-        dashboardTestData2.testBy = "Malaysia Lab"
-        dashboardTestData2.result = "Negative"
-
-        listDashboardData = listOf(dashboardData,dashboardData1,dashboardData2)
-        listDashboardTestData = listOf(dashboardTestData,dashboardTestData1,dashboardTestData2)*/
 
         if (userData != null) {
             fullName.value = userData.fullName
@@ -305,8 +260,12 @@ class HomeViewModel(
         }
     }
 
-    fun getPrivateKey():String?{
-        return repositary.getPrivateKey()
+    fun getParentPrivateKeyFromDb():String?{
+        return repositary.getParentPrivateKey()
+    }
+
+    fun getDependentPrivateKeyFromDb(subId: String):String?{
+        return repositary.getDependentPrivateKey(subId)
     }
 
     private fun decryptServerKey(pk:String):String?{
@@ -314,16 +273,30 @@ class HomeViewModel(
     }
 
     fun getPatientPrivateKey() {
-        val getPrivateKey = repositary.getPrivateKey()
+        //val getPrivateKey = repositary.getParentPrivateKey()
+        val getUser = repositary.getUserData()
         var originalPrivateKey:String?=null
         listener?.onStarted()
-        if (getPrivateKey.isNullOrEmpty()){
+        if (getUser.privateKey.isNullOrEmpty()){
             Couritnes.main {
                 try {
                     val response = repositary.getParentPrivateKeyFromAPI()
                     if (response.StatusCode == 1){
-                        val getUser = repositary.getUserData()
-                        if (getUser != null){
+
+                        if (!response.PrivateKey.isNullOrEmpty()){
+                            val tempPK = response.PrivateKey
+                            if (!decryptServerKey(tempPK).isNullOrEmpty()){
+                                originalPrivateKey = decryptServerKey(tempPK)
+                            }else{
+                                originalPrivateKey = response.PrivateKey
+                                listener?.onFailure("Please Check ! API return Original Private Key Instead of Encrypt Private Key")
+                            }
+                        }else{
+                            listener?.onFailure("PrivateKey return Empty")
+                            return@main
+                        }
+
+                        /*if (getUser != null){
                             if (!response.PrivateKey.isNullOrEmpty()){
                                 val tempDob = changeDateFormatForPrivateKeyDecrypt(getUser.dob!!)
                                 val tempPK = response.PrivateKey
@@ -337,7 +310,9 @@ class HomeViewModel(
                             }
                             getUser.privateKey = originalPrivateKey
                             repositary.updateUser(getUser)
-                        }
+                        }*/
+                        getUser.privateKey = originalPrivateKey
+                        repositary.updateUser(getUser)
                         repositary.savePrivateKey(originalPrivateKey!!)
                         _privateKey.value = originalPrivateKey
                         listener?.onSuccess("$originalPrivateKey|${getUser.fullName}|${getUser.dob}")
@@ -354,22 +329,36 @@ class HomeViewModel(
                 }
             }
         }else{
-            listener?.onSuccess(getPrivateKey)
-            _privateKey.value = getPrivateKey
+            if (getUser != null){
+                _privateKey.value = getUser.privateKey
+                listener?.onSuccess("${getUser.privateKey}|${getUser.fullName}|${getUser.dob}")
+            }
+
         }
     }
 
     fun getDependentPrivateKey(subId:String) {
-        val getPrivateKey = repositary.getDependentPrivateKey(subId)
+        //val getPrivateKey = repositary.getDependentPrivateKey(subId)
+        val getUser = repositary.getDependentData(subId)
         var originalPrivateKey:String?=null
         listener?.onStarted()
-        if (getPrivateKey.isNullOrEmpty()){
+        if (getUser.privateKey.isNullOrEmpty()){
             Couritnes.main {
                 try {
                     val response = repositary.getDependentPrivateKeyFromAPI(subId)
                     if (response.StatusCode == 1){
-                        val getUser = repositary.getDependentData(subId)
-                        if (getUser != null){
+
+                        if (!response.PrivateKey.isNullOrEmpty()){
+                            val tempPK = response.PrivateKey
+                            if (!decryptServerKey(tempPK).isNullOrEmpty()){
+                                originalPrivateKey = decryptServerKey(tempPK)
+                            }else{
+                                originalPrivateKey = response.PrivateKey
+                                listener?.onFailure("Please Check ! API return Original Private Key Instead of Encrypt Private Key")
+                            }
+                        }
+
+                        /*if (getUser != null){
                             if (!response.PrivateKey.isNullOrEmpty()){
                                 val tempDob = changeDateFormatForPrivateKeyDecrypt(getUser.dob!!)
                                 val tempPK = response.PrivateKey
@@ -382,8 +371,9 @@ class HomeViewModel(
                             }
                             getUser.privateKey = originalPrivateKey
                             repositary.updateDependent(getUser)
-                        }
-                        //repositary.savePrivateKey(response.PrivateKey)
+                        }*/
+                        getUser.privateKey = originalPrivateKey
+                        repositary.updateDependent(getUser)
                         _privateKey.value = originalPrivateKey
                         listener?.onSuccess("$originalPrivateKey|${getUser.firstName}|${getUser.dob}")
                     }else{
@@ -399,8 +389,8 @@ class HomeViewModel(
                 }
             }
         }else{
-            listener?.onSuccess(getPrivateKey)
-            _privateKey.value = getPrivateKey
+            _privateKey.value = getUser.privateKey
+            listener?.onSuccess("${getUser.privateKey}|${getUser.firstName}|${getUser.dob}")
         }
     }
 

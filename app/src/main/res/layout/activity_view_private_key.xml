@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewmodel"
-            type="com.cmg.vaccine.viewmodel.ViewPrivateKeyViewModel" />
+            type="com.cmg.vaccine.viewmodel.HomeViewModel" />
     </data>
 
     <RelativeLayout

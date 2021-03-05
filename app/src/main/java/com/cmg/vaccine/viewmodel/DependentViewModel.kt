@@ -94,6 +94,14 @@ class DependentViewModel(
         }
     }
 
+    fun saveProfileImage(imgUri:String,subsId: String){
+        val getDependent = repositary.getDependent(subsId)
+        if (getDependent != null){
+            getDependent.profileImage = imgUri
+            repositary.updateDependent(getDependent)
+        }
+    }
+
     fun getProfileImage(subsId: String):String?{
         return repositary.getProfileImage(subsId)
     }
@@ -393,7 +401,7 @@ class DependentViewModel(
                                                 dependent?.email = email.value?.trim()
                                                 dependent?.countryCode =
                                                     selectedItemContactCode.get()
-                                                dependent?.profileImage = profileImageUri.get()
+                                                //dependent?.profileImage = profileImageUri.get()
 
                                                 repositary.updateDependent(dependent!!)
                                                 listener?.onSuccess(response.Message)

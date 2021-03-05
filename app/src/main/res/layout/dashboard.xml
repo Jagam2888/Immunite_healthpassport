@@ -129,8 +129,7 @@
                         android:layout_width="110dp"
                         android:layout_height="157dp"
                         android:button="@null"
-                        android:background="@drawable/mykey_btn_unselected"
-                        />
+                        android:background="@drawable/mykey_btn_selector"/>
                 </RadioGroup>
             </RelativeLayout>
 

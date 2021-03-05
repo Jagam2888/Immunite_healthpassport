@@ -2,6 +2,7 @@ package com.cmg.vaccine
 
 import android.content.Intent
 import android.graphics.Paint
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.SystemClock
@@ -74,12 +75,22 @@ class ViewProfileActivity : BaseActivity(),KodeinAware {
     override fun onResume() {
         super.onResume()
         viewModel.user.value = user
+        var profileImage:Uri?=null
         if (user == Passparams.PARENT){
             if (binding.btnRemoveDependent.visibility == View.VISIBLE)
                 binding.btnRemoveDependent.visibility = View.GONE
             viewModel.loadParentData()
+            if (!viewModel.getProfileImage().isNullOrEmpty()) {
+                profileImage = Uri.parse(viewModel.getProfileImage())
+                binding.imgProfile.setImageURI(profileImage)
+            }
+
         }else if (user == Passparams.DEPENDENT){
             viewModel.loadDependentData(intent.extras?.getString(Passparams.DEPENDENT_SUBID,"")!!)
+            if (!viewModel.getDependentProfileImage(intent.extras?.getString(Passparams.DEPENDENT_SUBID,"")!!).isNullOrEmpty()) {
+                profileImage = Uri.parse(viewModel.getDependentProfileImage(intent.extras?.getString(Passparams.DEPENDENT_SUBID, "")!!))
+                binding.imgProfile.setImageURI(profileImage)
+            }
         }
         if (viewModel.countryCode.value != null)
             binding.phoneCode.setCountryForPhoneCode(viewModel.countryCode.value!!)

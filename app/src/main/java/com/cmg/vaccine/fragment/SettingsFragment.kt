@@ -1,9 +1,11 @@
 package com.cmg.vaccine.fragment
 
 import android.app.AlertDialog
+import android.app.ProgressDialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,19 +16,41 @@ import androidx.lifecycle.ViewModelProvider
 import com.cmg.vaccine.*
 import com.cmg.vaccine.databinding.FragmentSettingsBinding
 import com.cmg.vaccine.listener.SimpleListener
+import com.cmg.vaccine.services.DriveServiceHelper
 import com.cmg.vaccine.util.Passparams
 import com.cmg.vaccine.util.hide
 import com.cmg.vaccine.util.show
 import com.cmg.vaccine.util.toast
 import com.cmg.vaccine.viewmodel.SettingsViewModel
 import com.cmg.vaccine.viewmodel.viewmodelfactory.SettingsModelFactory
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.Scope
+import com.google.android.gms.tasks.OnFailureListener
+import com.google.android.gms.tasks.OnSuccessListener
+import com.google.api.client.extensions.android.http.AndroidHttp
+import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential
+import com.google.api.client.json.gson.GsonFactory
+import com.google.api.services.drive.Drive
+import com.google.api.services.drive.DriveScopes
 import com.zcw.togglebutton.ToggleButton.OnToggleChanged
+import immuniteeEncryption.EncryptionUtils
 import kotlinx.android.synthetic.main.about.*
+import kotlinx.android.synthetic.main.backup.*
+import kotlinx.android.synthetic.main.fragment_settings.*
+import kotlinx.android.synthetic.main.fragment_settings.layout_backup
+import kotlinx.android.synthetic.main.fragment_settings.view.*
 import kotlinx.android.synthetic.main.security_pin.*
 import kotlinx.android.synthetic.main.sync.*
+import org.apache.poi.hssf.usermodel.HSSFWorkbook
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
 import org.kodein.di.generic.instance
+import java.io.File
+import java.io.FileInputStream
+import java.io.FileOutputStream
+import java.io.IOException
+import java.util.*
 
 
 class SettingsFragment : Fragment(),KodeinAware,SimpleListener {
@@ -35,6 +59,17 @@ class SettingsFragment : Fragment(),KodeinAware,SimpleListener {
     private lateinit var viewModel:SettingsViewModel
 
     private val factory:SettingsModelFactory by instance()
+    private val GOOGLE_DRIVE_DB_LOCATION = "db"
+    private lateinit var driveServiceHelper: DriveServiceHelper
+
+    companion object{
+        var resultTitle: String? = null
+        var resultInfo: String? = null
+        var resultExtra: String? = null
+        const val REQUEST_CODE_SIGN_IN = 400
+        var FILE_NAME:String="/immunitees.xls"
+
+    }
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -77,6 +112,12 @@ class SettingsFragment : Fragment(),KodeinAware,SimpleListener {
         binding.layoutSync.setOnClickListener {
             hideMainLayout()
             binding.sync.visibility = View.VISIBLE
+        }
+
+        binding.layoutBackup.setOnClickListener {
+            hideMainLayout()
+            binding.backup.visibility = View.VISIBLE
+            requestSignIn()
         }
 
         binding.layoutChangePassword.setOnClickListener {
@@ -149,6 +190,10 @@ class SettingsFragment : Fragment(),KodeinAware,SimpleListener {
             viewModel.syncRecord()
         }
 
+        layout_google_drive.setOnClickListener {
+            sqliteToExcel()
+        }
+
 
     }
 
@@ -173,6 +218,8 @@ class SettingsFragment : Fragment(),KodeinAware,SimpleListener {
             binding.paymentMethod.visibility = View.GONE
         }else if (binding.sync.visibility == View.VISIBLE){
             binding.sync.visibility = View.GONE
+        }else if (binding.backup.visibility == View.VISIBLE){
+            binding.backup.visibility = View.GONE
         }
 
         binding.mainLayout.visibility = View.VISIBLE
@@ -229,4 +276,163 @@ class SettingsFragment : Fragment(),KodeinAware,SimpleListener {
         hide(binding.progressBar)
         context?.toast(msg)
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        when (requestCode) {
+            REQUEST_CODE_SIGN_IN -> data?.let { handleSignInResult(it) }
+        }
+
+        super.onActivityResult(requestCode, resultCode, data)
+    }
+
+    private fun requestSignIn() {
+        val signInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestEmail()
+            .requestScopes(Scope(DriveScopes.DRIVE_FILE))
+            .build()
+        val client = this.context?.let { GoogleSignIn.getClient(it, signInOptions) }
+
+        // The result of the sign-in Intent is handled in onActivityResult.ast
+        if (client != null) {
+            startActivityForResult(client.signInIntent, REQUEST_CODE_SIGN_IN)
+        }
+    }
+
+
+
+    private fun handleSignInResult(result: Intent) {
+        GoogleSignIn.getSignedInAccountFromIntent(result)
+            .addOnSuccessListener { googleAccount ->
+
+                // Use the authenticated account to sign in to the Drive service.
+                val credential = GoogleAccountCredential.usingOAuth2(
+                    this.context,
+                    Collections.singleton(DriveScopes.DRIVE_FILE),
+
+                    )
+                credential.selectedAccount = googleAccount.account
+                val googleDriveService = Drive.Builder(
+                    AndroidHttp.newCompatibleTransport(),
+                    GsonFactory(),
+                    credential
+                ).setApplicationName("ImmuniteeMedical")
+                    .build()
+
+                //Sets the drive api service on the view model and creates our apps folder
+                Log.e("Indicator", "Login In Success")
+                context?.toast("Login In Success")
+                driveServiceHelper= DriveServiceHelper(googleDriveService)
+            }
+            .addOnFailureListener { exception ->
+                Log.e("Indicator", "Fail to Login")
+                context?.toast("Fail to Login")
+            }
+    }
+
+    private fun sqliteToExcel() {
+
+        var progressDialog= ProgressDialog(this.context)
+        progressDialog.setTitle("Converting...to Excel")
+        progressDialog.setMessage("Please wait...")
+        progressDialog.show()
+
+
+        var directory_path:String = activity?.getExternalFilesDir(null).toString()
+        var database_path:String = activity?.getDatabasePath("immunitees.db")?.absolutePath.toString()
+        val sqliteToExcel = com.ajts.androidmads.library.SQLiteToExcel(this.context, database_path, directory_path)
+        sqliteToExcel.exportAllTables("/data.xls", object : com.ajts.androidmads.library.SQLiteToExcel.ExportListener {
+            override fun onStart() {
+
+            }
+
+            override fun onCompleted(filepath: String) {
+                progressDialog.dismiss()
+                //backupLocalDatabase()
+                encryptExcelFile()
+                Log.e("SQLite2Excel", "Success")
+            }
+
+            override fun onError(e: java.lang.Exception) {
+                progressDialog.dismiss()
+                Log.e("SQLite2Excel", "Fail")
+            }
+        })
+    }
+
+    fun encryptExcelFile()
+    {
+        var excelFilePath= activity?.getExternalFilesDir(null)?.absolutePath.toString()+ FILE_NAME
+        var dataPath= activity?.getExternalFilesDir(null)?.absolutePath.toString()+ "/data.xls"
+        val excelFile = FileInputStream(File(dataPath))
+        val workbook = HSSFWorkbook(excelFile)
+        var encrypt_wb=HSSFWorkbook()
+
+        var numberOfSheet=workbook.numberOfSheets-1
+
+        for(current in 0..numberOfSheet) {
+            val sheet = workbook.getSheetAt(current)
+
+            val rows = sheet.iterator()
+            while (rows.hasNext()) {
+                val currentRow = rows.next()
+                val cellsInRow = currentRow.iterator()
+                while (cellsInRow.hasNext()) {
+                    val currentCell = cellsInRow.next()
+                    Log.e("DOB", "1988-07-28")
+                    var encryptData = EncryptionUtils.encrypt(currentCell.stringCellValue, "1988-07-28")
+                    currentCell.setCellValue(encryptData)
+                    Log.e("Encrypted Format", currentCell.stringCellValue.toString())
+                }
+            }
+
+            encrypt_wb=workbook
+        }
+
+        val encrytedExcelPath = File(excelFilePath)
+        var outputStream: FileOutputStream? = null
+
+        try {
+            outputStream = FileOutputStream(encrytedExcelPath)
+            encrypt_wb.write(outputStream)
+            backupLocalDatabase()
+            Log.e("Encrypt", "Success")
+
+        } catch (e: IOException) {
+            e.printStackTrace()
+            Log.e("Encrypt", "Fail")
+            try {
+                outputStream?.close()
+            } catch (ex: IOException) {
+                ex.printStackTrace()
+            }
+        }
+
+        workbook.close()
+        excelFile.close()
+
+    }
+    private fun backupLocalDatabase()
+    {
+        var progressDialog= ProgressDialog(this.context)
+        progressDialog.setTitle("Backup to Google Drive")
+        progressDialog.setMessage("Please wait...")
+        progressDialog.show()
+
+        //var dataPath= activity?.getExternalFilesDir(null)?.absolutePath.toString()+ "/data.xls"
+        var excelPath= activity?.getExternalFilesDir(null)?.absolutePath.toString()+ FILE_NAME
+        driveServiceHelper.createFilePDF(excelPath)?.addOnSuccessListener(
+            OnSuccessListener {
+                progressDialog.dismiss()
+                Log.e("Upload", "Success")
+            }
+        )
+            ?.addOnFailureListener(
+                OnFailureListener {
+                    progressDialog.dismiss()
+                    Log.e("Upload", "Fail")
+                }
+            )
+    }
+
+
 }
