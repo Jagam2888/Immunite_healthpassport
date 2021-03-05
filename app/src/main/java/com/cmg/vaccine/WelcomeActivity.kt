@@ -38,5 +38,12 @@ class WelcomeActivity : BaseActivity() {
             }
         }
 
+        Log.d("decrypt",decryptKey("PFOdgH8XhsOMbROOpjgUADEWqchszqq7dvUIFLkYfen2aPuYIOut7FHin2bL+rOavZG/QydEQotq trP+KcPa0+9565jrKYp6CMp0wOp+zGw=")!!)
+
+
+    }
+
+    fun decryptKey(key:String):String?{
+        return EncryptionUtils.decryptBackupKey(key,"2015-09-14")
     }
 }

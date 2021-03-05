@@ -58,4 +58,7 @@ class ProfileRepositary(
     fun getProfileImage():String?{
         return database.getDao().getParentProfileImage(preferenceProvider.getSubId()!!)
     }
+    fun getDependentProfileImage(subsId: String):String?{
+        return database.getDao().getDependentProfileImage(subsId)
+    }
 }

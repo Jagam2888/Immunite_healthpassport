@@ -19,8 +19,8 @@ import javax.net.ssl.X509TrustManager
 fun createOkHttp(context: Context): OkHttpClient {
     return OkHttpClient.Builder()
             .addInterceptor(InternetConnectionInterceptor(context))
-            .connectTimeout(10, TimeUnit.SECONDS)
-            .readTimeout(30, TimeUnit.SECONDS)
+            .connectTimeout(100, TimeUnit.SECONDS)
+            .readTimeout(100, TimeUnit.SECONDS)
             .build()
 }
 

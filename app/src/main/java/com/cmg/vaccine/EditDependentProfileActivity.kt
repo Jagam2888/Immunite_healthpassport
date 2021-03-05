@@ -39,6 +39,7 @@ class EditDependentProfileActivity : BaseActivity(),KodeinAware,SimpleListener {
     var lastClickTimeDOB:Long = 0
     var lastClickTimeDOBTime:Long = 0
     private val factory: DependentViewModelFactory by instance()
+    var dependentSubId:String?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,7 +52,7 @@ class EditDependentProfileActivity : BaseActivity(),KodeinAware,SimpleListener {
 
 
 
-        val childPrivateKey = intent.extras?.getString(Passparams.DEPENDENT_SUBID,"")
+        dependentSubId = intent.extras?.getString(Passparams.DEPENDENT_SUBID,"")
 
 
         viewModel.countries.observe(this, Observer {list->
@@ -59,7 +60,7 @@ class EditDependentProfileActivity : BaseActivity(),KodeinAware,SimpleListener {
             arrayList.addAll(list)
             binding.spinnerPlaceBirth.adapter = CountryListAdapter(arrayList)
             binding.spinnerNationality.adapter = CountryListAdapter(arrayList)
-            viewModel.loadProfileData(this,childPrivateKey!!)
+            viewModel.loadProfileData(this,dependentSubId!!)
         })
 
         binding.btnDobCalender.setOnClickListener {
@@ -213,8 +214,8 @@ class EditDependentProfileActivity : BaseActivity(),KodeinAware,SimpleListener {
             }
         }
 
-        if (!viewModel.getProfileImage(childPrivateKey!!).isNullOrEmpty()){
-            val uri = Uri.parse(viewModel.getProfileImage(childPrivateKey))
+        if (!viewModel.getProfileImage(dependentSubId!!).isNullOrEmpty()){
+            val uri = Uri.parse(viewModel.getProfileImage(dependentSubId!!))
             binding.headPicture.setImageURI(uri)
         }
     }
@@ -267,7 +268,8 @@ class EditDependentProfileActivity : BaseActivity(),KodeinAware,SimpleListener {
             val result = CropImage.getActivityResult(data)
             if (resultCode === RESULT_OK) {
                 val resultUri = result.uri
-                viewModel.profileImageUri.set(resultUri.toString())
+                //viewModel.profileImageUri.set(resultUri.toString())
+                viewModel.saveProfileImage(resultUri.toString(),dependentSubId!!)
                 binding.headPicture.setImageURI(resultUri)
                 //toast("You profile picture was successfully changed")
             } else if (resultCode === CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {

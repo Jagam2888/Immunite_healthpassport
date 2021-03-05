@@ -16,7 +16,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.cmg.vaccine.databinding.ActivityViewPrivateKeyBinding
 import com.cmg.vaccine.listener.SimpleListener
 import com.cmg.vaccine.util.*
+import com.cmg.vaccine.viewmodel.HomeViewModel
 import com.cmg.vaccine.viewmodel.ViewPrivateKeyViewModel
+import com.cmg.vaccine.viewmodel.viewmodelfactory.HomeViewModelFactory
 import com.cmg.vaccine.viewmodel.viewmodelfactory.ViewPrivateKeyFactory
 import com.google.zxing.WriterException
 import immuniteeEncryption.EncryptionUtils
@@ -27,9 +29,9 @@ import org.kodein.di.generic.instance
 class ViewPrivateKeyActivity : BaseActivity(),KodeinAware,SimpleListener {
     override val kodein by kodein()
     private lateinit var binding:ActivityViewPrivateKeyBinding
-    private lateinit var viewModel:ViewPrivateKeyViewModel
+    private lateinit var viewModel:HomeViewModel
 
-    private val factory:ViewPrivateKeyFactory by instance()
+    private val factory:HomeViewModelFactory by instance()
 
 
     var privateKey:String?=null
@@ -41,11 +43,12 @@ class ViewPrivateKeyActivity : BaseActivity(),KodeinAware,SimpleListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_view_private_key)
-        viewModel = ViewModelProvider(this, factory).get(ViewPrivateKeyViewModel::class.java)
+        viewModel = ViewModelProvider(this, factory).get(HomeViewModel::class.java)
         binding.viewmodel = viewModel
-        binding.lifecycleOwner = this
+        //binding.lifecycleOwner = this
 
         viewModel.listener = this
+        //viewModel.loadData()
 
 
         /*viewModel.getPrivateKey()

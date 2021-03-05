@@ -57,7 +57,9 @@ class MainActivity : BaseActivity(),KodeinAware {
 
         initViews()
 
-    }
+            }
+
+
 
     private fun initViews(){
         loadFragment(HomeFragment())

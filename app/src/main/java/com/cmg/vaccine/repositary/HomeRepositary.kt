@@ -50,8 +50,8 @@ class HomeRepositary(
         return database.getDao().getUserData(preferenceProvider.getSubId()!!)
     }
 
-    fun getPrivateKey():String?{
-        return return database.getDao().getPrivateKey(preferenceProvider.getSubId()!!)
+    fun getParentPrivateKey():String?{
+        return database.getDao().getPrivateKey(preferenceProvider.getSubId()!!)
     }
 
     fun getDependentList():List<Dependent>?{

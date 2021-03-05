@@ -417,6 +417,10 @@
                     android:id="@+id/sync"
                     layout="@layout/sync"
                     android:visibility="gone"/>
+                <include
+                    android:id="@+id/backup"
+                    layout="@layout/backup"
+                    android:visibility="gone"/>
             </LinearLayout>
         </ScrollView>
 

@@ -48,6 +48,8 @@ class HomeFragment : Fragment(),KodeinAware,SimpleListener {
     val layouts = listOf("parent","child1","child2")
     var listDashboard:List<Dashboard>?=null
     var lastClickTime:Long = 0
+    var pagerAdapter:MyViewPagerAdapter?=null
+    var pagerPos:Int = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -65,11 +67,12 @@ class HomeFragment : Fragment(),KodeinAware,SimpleListener {
         binding.lifecycleOwner = this
         viewModel.listener = this
 
-        /*if (!viewModel.getPrivateKey().isNullOrEmpty()) {
+        if (!viewModel.privateKey.value.isNullOrEmpty()) {
             viewModel.loadVaccineList()
             viewModel.loadTestReportList()
-        }else{*/
+        }else {
             viewModel.setUser()
+        }
 
         //viewModel.loadData()
         //}
@@ -92,15 +95,20 @@ class HomeFragment : Fragment(),KodeinAware,SimpleListener {
         })
 
 
+
         viewModel.listDashboard.observe(viewLifecycleOwner, Observer { list->
+            /*listDashboard.clear()
+            listDashboard.addAll(list)*/
             listDashboard = list
             binding.sliderViewPager.also {
-                it.adapter = MyViewPagerAdapter(requireContext(),listDashboard!!,viewModel)
+                pagerAdapter = MyViewPagerAdapter(requireContext(),listDashboard!!,viewModel)
+                it.adapter = pagerAdapter
                 if (!listDashboard.isNullOrEmpty()) {
                     addBottomDots(0)
                 }
-
             }
+
+            //pagerAdapter?.refreshItem(listDashboard)
 
         })
 
@@ -126,6 +134,7 @@ class HomeFragment : Fragment(),KodeinAware,SimpleListener {
 
             override fun onPageSelected(position: Int) {
                 addBottomDots(position)
+                //pagerPos = position
                 viewModel.setCurrentItem(position)
             }
 
@@ -135,6 +144,7 @@ class HomeFragment : Fragment(),KodeinAware,SimpleListener {
 
 
         viewModel.currentPagerPosition.observe(viewLifecycleOwner, Observer {
+            pagerPos = it
             binding.sliderViewPager.setCurrentItem(it,true)
             if (!listDashboard.isNullOrEmpty()) {
                 addBottomDots(it)
@@ -179,6 +189,7 @@ class HomeFragment : Fragment(),KodeinAware,SimpleListener {
         // this is for view private key screen purpose
         val privateKeyArray = msg.split("|")
         if ((!privateKeyArray.isNullOrEmpty()) and (privateKeyArray.size > 1)){
+            //viewModel.loadData()
             Intent(context,ViewPrivateKeyActivity::class.java).also {
                 it.putExtra(Passparams.PRIVATEKEY, privateKeyArray[0])
                 it.putExtra(Passparams.USER_NAME, privateKeyArray[1])
@@ -196,6 +207,10 @@ class HomeFragment : Fragment(),KodeinAware,SimpleListener {
      override fun onResume() {
         super.onResume()
          Log.d("onresume","OnResume")
+         //viewModel.loadData()
+         //listDashboard.clear()
+         //listDashboard.addAll(viewModel.listDashboard.value!!)
+         //pagerAdapter?.refreshItem(viewModel.listDashboard.value!!)
          //viewModel.setCurrentItem(0)
         //viewModel.loadData()
     }

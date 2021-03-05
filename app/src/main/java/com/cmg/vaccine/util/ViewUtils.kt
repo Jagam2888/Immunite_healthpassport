@@ -36,6 +36,7 @@ import java.security.NoSuchAlgorithmException
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.regex.Matcher
 import java.util.regex.Pattern
 import javax.crypto.*
 import javax.crypto.spec.SecretKeySpec
@@ -54,8 +55,15 @@ fun hide(progressBar: ProgressBar){
         progressBar.visibility = View.GONE
 }
 
-fun isValidEmail(value: String):Boolean{
+/*fun isValidEmail(value: String):Boolean{
     return (!TextUtils.isEmpty(value) and Patterns.EMAIL_ADDRESS.matcher(value).matches())
+}*/
+
+fun isValidEmail(value: String):Boolean{
+    val regx = "^[\\w-\\.+]*[\\w-\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$"
+    val pattern = Pattern.compile(regx)
+    val matcher = pattern.matcher(value)
+    return matcher.matches()
 }
 
 fun isValidPassword(value: String):Boolean{
@@ -276,7 +284,7 @@ fun changeDateFormatForPrivateKeyDecrypt(dateString:String):String?{
 fun Context.getCurrentCountryName():String?{
     val locationManager = applicationContext.getSystemService(Context.LOCATION_SERVICE) as LocationManager
     var country:String = ""
-    Couritnes.main {
+    //Couritnes.main {
         try {
             val geocoder = Geocoder(applicationContext,Locale.getDefault())
             for (provider in locationManager.allProviders){
@@ -298,7 +306,7 @@ fun Context.getCurrentCountryName():String?{
         }catch (e:NoInternetException){
             toast(e.message!!)
         }
-    }
+    //}
 
     return country
 }
