@@ -3,6 +3,7 @@ package com.cmg.vaccine.adapter
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.SystemClock
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -44,6 +45,7 @@ private val layouts:List<Dashboard>,
     }
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
+        var countrolmulticlick:Long = 0
         layoutInflater = LayoutInflater.from(context)
         val view:View = layoutInflater!!.inflate(R.layout.dashboard,container,false)
         val txtName = view.findViewById<TextView>(R.id.txt_name)
@@ -137,6 +139,12 @@ private val layouts:List<Dashboard>,
                     return@setOnCheckedChangeListener
                 }
                 R.id.radio_mykey ->{
+
+                    if (SystemClock.elapsedRealtime() - countrolmulticlick<1000){
+                        return@setOnCheckedChangeListener
+                    }
+                    countrolmulticlick = SystemClock.elapsedRealtime()
+
                     radioGroup.check(R.id.radio_vaccine)
                     privateKey = layouts[position].privateKey
                     fullName = layouts[position].fullName

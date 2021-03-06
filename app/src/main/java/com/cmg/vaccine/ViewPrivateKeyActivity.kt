@@ -1,5 +1,8 @@
 package com.cmg.vaccine
 
+import android.app.AlertDialog
+import android.content.DialogInterface
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Point
 import android.os.Bundle
@@ -106,6 +109,10 @@ class ViewPrivateKeyActivity : BaseActivity(),KodeinAware,SimpleListener {
             finish()
         }
 
+        binding.btnScanMas.setOnClickListener {
+            showMASREquest()
+        }
+
         startTimer()
     }
 
@@ -198,6 +205,20 @@ class ViewPrivateKeyActivity : BaseActivity(),KodeinAware,SimpleListener {
                 }
             }
         }
+    }
+
+    fun showMASREquest(){
+        val alertDialogBuilder = AlertDialog.Builder(this)
+        alertDialogBuilder.setTitle(resources.getString(R.string.consent_agree))
+        alertDialogBuilder.setMessage(resources.getString(R.string.do_agree_consent))
+            .setNegativeButton(resources.getString(R.string.no)
+            ) { dialog, which -> dialog?.dismiss() }.setPositiveButton(resources.getString(R.string.yes)
+            ) { dialog, which -> Intent(this,ConsentAgreementActivity::class.java).also {
+                startActivity(it)
+            } }
+
+        val alertDialog = alertDialogBuilder.create()
+        alertDialog.show()
     }
 
     override fun onStarted() {

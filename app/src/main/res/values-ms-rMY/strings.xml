@@ -62,6 +62,10 @@
     <string name="enter_4_pin">Enter 4-Digits PIN</string>
     <string name="my_key">My Key</string>
     <string name="remove_dependent">Remove Dependent</string>
+    <string name="scan_qr_code">Scan QR Code</string>
+
+    <string name="consent_agree">Consent Agreement</string>
+    <string name="do_agree_consent">Do you agree to consent to share your personal information and your medical data</string>
 
     <string name="immunisation_history">Immunisation History</string>
     <string name="specimen">Specimen</string>

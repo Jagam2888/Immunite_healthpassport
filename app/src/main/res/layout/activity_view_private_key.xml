@@ -123,7 +123,19 @@
                     android:background="@drawable/button_green"
                     android:layout_marginTop="20dp"
                     android:paddingTop="10dp"
-                    android:layout_marginBottom="20dp"
+                    android:paddingBottom="10dp"/>
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_scan_mas"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Scan MAS Request"
+                    android:textSize="16sp"
+                    android:textColor="@color/white"
+                    android:textAppearance="@style/opens_bold"
+                    android:background="@drawable/button_green"
+                    android:layout_marginTop="20dp"
+                    android:paddingTop="10dp"
+                    android:layout_marginBottom="10dp"
                     android:paddingBottom="10dp"/>
 
             </LinearLayout>

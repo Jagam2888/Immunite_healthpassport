@@ -61,6 +61,7 @@ class SettingsFragment : Fragment(),KodeinAware,SimpleListener {
     private val factory:SettingsModelFactory by instance()
     private val GOOGLE_DRIVE_DB_LOCATION = "db"
     private lateinit var driveServiceHelper: DriveServiceHelper
+    var isGoogleSiginSuccess:Boolean = false
 
     companion object{
         var resultTitle: String? = null
@@ -191,7 +192,11 @@ class SettingsFragment : Fragment(),KodeinAware,SimpleListener {
         }
 
         layout_google_drive.setOnClickListener {
-            sqliteToExcel()
+            if (isGoogleSiginSuccess) {
+                sqliteToExcel()
+            }else{
+                context?.toast("Your Google Drive Access Failed")
+            }
         }
 
 
@@ -245,12 +250,13 @@ class SettingsFragment : Fragment(),KodeinAware,SimpleListener {
     }
 
     private fun showReleaseAppVersion(){
-
         try {
             val packageInfo = context?.packageManager?.getPackageInfo(context?.packageName!!, 0)
             val versionName = packageInfo?.versionName
+            //val version = "Version : $versionName \nDevelopment Server : ${Passparams.URL}"
+            val version = "Version : $versionName \nDevelopment Server"
             val alertDialogBuilder = AlertDialog.Builder(requireContext())
-            alertDialogBuilder.setMessage("Version : $versionName \nDevelopment Server : ${Passparams.URL}").setTitle(R.string.app_name)
+            alertDialogBuilder.setMessage(version).setTitle(R.string.app_name)
                     .setNegativeButton("CANCEL"
                     ) { dialog, which -> dialog?.dismiss() }
 
@@ -320,6 +326,7 @@ class SettingsFragment : Fragment(),KodeinAware,SimpleListener {
 
                 //Sets the drive api service on the view model and creates our apps folder
                 Log.e("Indicator", "Login In Success")
+                isGoogleSiginSuccess = true
                 context?.toast("Login In Success")
                 driveServiceHelper= DriveServiceHelper(googleDriveService)
             }
@@ -331,10 +338,12 @@ class SettingsFragment : Fragment(),KodeinAware,SimpleListener {
 
     private fun sqliteToExcel() {
 
-        var progressDialog= ProgressDialog(this.context)
+        /*var progressDialog= ProgressDialog(this.context)
         progressDialog.setTitle("Converting...to Excel")
         progressDialog.setMessage("Please wait...")
-        progressDialog.show()
+        progressDialog.show()*/
+
+        show(binding.progressBar)
 
 
         var directory_path:String = activity?.getExternalFilesDir(null).toString()
@@ -346,14 +355,14 @@ class SettingsFragment : Fragment(),KodeinAware,SimpleListener {
             }
 
             override fun onCompleted(filepath: String) {
-                progressDialog.dismiss()
+                //progressDialog.dismiss()
                 //backupLocalDatabase()
                 encryptExcelFile()
                 Log.e("SQLite2Excel", "Success")
             }
 
             override fun onError(e: java.lang.Exception) {
-                progressDialog.dismiss()
+                hide(binding.progressBar)
                 Log.e("SQLite2Excel", "Fail")
             }
         })
@@ -399,6 +408,8 @@ class SettingsFragment : Fragment(),KodeinAware,SimpleListener {
 
         } catch (e: IOException) {
             e.printStackTrace()
+            hide(binding.progressBar)
+            context?.toast("Your Backup is upload Failed cannot encrypt")
             Log.e("Encrypt", "Fail")
             try {
                 outputStream?.close()
@@ -413,22 +424,24 @@ class SettingsFragment : Fragment(),KodeinAware,SimpleListener {
     }
     private fun backupLocalDatabase()
     {
-        var progressDialog= ProgressDialog(this.context)
+        /*var progressDialog= ProgressDialog(this.context)
         progressDialog.setTitle("Backup to Google Drive")
         progressDialog.setMessage("Please wait...")
-        progressDialog.show()
+        progressDialog.show()*/
 
         //var dataPath= activity?.getExternalFilesDir(null)?.absolutePath.toString()+ "/data.xls"
         var excelPath= activity?.getExternalFilesDir(null)?.absolutePath.toString()+ FILE_NAME
         driveServiceHelper.createFilePDF(excelPath)?.addOnSuccessListener(
             OnSuccessListener {
-                progressDialog.dismiss()
+                hide(binding.progressBar)
+                context?.toast("Your Backup is Successfully uploaded")
                 Log.e("Upload", "Success")
             }
         )
             ?.addOnFailureListener(
                 OnFailureListener {
-                    progressDialog.dismiss()
+                    hide(binding.progressBar)
+                    context?.toast("Your Backup is upload Failed")
                     Log.e("Upload", "Fail")
                 }
             )

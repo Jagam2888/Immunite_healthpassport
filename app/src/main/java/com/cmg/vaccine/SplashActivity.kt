@@ -3,12 +3,14 @@ package com.cmg.vaccine
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.cmg.vaccine.repositary.SplashRepositary
 import com.cmg.vaccine.util.Passparams
 import com.cmg.vaccine.viewmodel.SplashViewModel
 import com.cmg.vaccine.viewmodel.viewmodelfactory.SplashModelFactory
+import immuniteeEncryption.EncryptionUtils
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
@@ -34,6 +36,10 @@ class SplashActivity() : BaseActivity(),KodeinAware{
                 }
             }
         })
+
+        Log.d("decrypt",
+            decryptKey("IMMUNITEE|Mi+bsqwIE9WU9eh7yeWkhUNnvNQQ4Wf120lgXlwAjkbAz8TlcafAe2qlVtILlrZoCYPck91Fiim2TPKGL0NVGcrc5rgL6XxYXD1QCoSjjWibOLGxpgueIpD261UJF/0FlgoBXsdsDtYd599y0OTx0LkSqzagTOzEUKFXPxK2+yI=")!!)
+
 
     }
     private fun navigateActivity(){
@@ -70,5 +76,9 @@ class SplashActivity() : BaseActivity(),KodeinAware{
                 }
             }
         }
+    }
+
+    fun decryptKey(key:String):String?{
+        return EncryptionUtils.decryptQrCode(key,5)
     }
 }

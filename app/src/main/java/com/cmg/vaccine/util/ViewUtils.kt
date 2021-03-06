@@ -272,7 +272,7 @@ fun changeDateFormatISO8601(dateString: String):String?{
 }
 fun changeDateFormatForPrivateKeyDecrypt(dateString:String):String?{
     val currentDateFormat = SimpleDateFormat("dd/MM/yyyy")
-    val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd")
+    val simpleDateFormat = SimpleDateFormat("yyyyMMdd")
     try {
         val date = currentDateFormat.parse(dateString)
         return simpleDateFormat.format(date)

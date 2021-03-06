@@ -21,8 +21,8 @@ android {
         applicationId "com.cmg.vaccine"
         minSdkVersion 23
         targetSdkVersion 30
-        versionCode 32
-        versionName "1.31"
+        versionCode 33
+        versionName "1.32"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -64,7 +64,8 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'com.google.android.material:material:1.2.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
-    implementation files('libs/encryptionUtils_new.jar')
+    //implementation files('libs/encryptionUtils_new.jar')
+    implementation files('libs/encryptionUtils-0.0.2.jar')
 
 
     implementation 'io.paperdb:paperdb:2.7.1'
@@ -74,7 +75,10 @@ dependencies {
     implementation 'io.paperdb:paperdb:2.7.1'
     implementation 'com.tubb.smrv:swipemenu-recyclerview:5.4.5'
 
+    //QR code Generator and scanner
     implementation 'androidmads.library.qrgenearator:QRGenearator:1.0.3'
+    implementation 'me.dm7.barcodescanner:zxing:1.9.13'
+
     implementation 'com.google.android.gms:play-services-location:16.0.0'
 
     implementation 'com.vicmikhailau:MaskedEditText:3.1.1'
