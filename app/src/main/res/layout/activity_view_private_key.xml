@@ -128,7 +128,7 @@
                     android:id="@+id/btn_scan_mas"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Scan MAS Request"
+                    android:text="@string/send_my_key"
                     android:textSize="16sp"
                     android:textColor="@color/white"
                     android:textAppearance="@style/opens_bold"

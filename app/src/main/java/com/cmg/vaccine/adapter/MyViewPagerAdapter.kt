@@ -51,6 +51,7 @@ private val layouts:List<Dashboard>,
         val txtName = view.findViewById<TextView>(R.id.txt_name)
         val txtRelationShip = view.findViewById<TextView>(R.id.txt_relationship)
         val txtPassportNo = view.findViewById<TextView>(R.id.txt_passport)
+        val txtNationality = view.findViewById<TextView>(R.id.txt_nationality)
         val txtIdNo = view.findViewById<TextView>(R.id.txt_id_no)
         val txtNoData = view.findViewById<TextView>(R.id.txt_nodata)
         val profilePic = view.findViewById<CircleImageView>(R.id.img_profile)
@@ -84,6 +85,7 @@ private val layouts:List<Dashboard>,
         txtRelationShip.text = layouts[position].relationShip+" Account"
         txtPassportNo.text = layouts[position].passportNo
         txtIdNo.text = layouts[position].idNo
+        txtNationality.text = layouts[position].nationality
 
         if (!layouts[position].data.isNullOrEmpty()) {
             recyclerViewVaccine.also {

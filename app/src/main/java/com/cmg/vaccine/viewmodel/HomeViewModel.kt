@@ -286,12 +286,12 @@ class HomeViewModel(
                         if (!response.PrivateKey.isNullOrEmpty()){
                             val tempPK = response.PrivateKey
                             val tempDob = changeDateFormatForPrivateKeyDecrypt(getUser.dob!!)
-                            /*if ((!decryptServerKey(tempPK,tempDob!!).isNullOrEmpty()) and (!response.PrivateKey.equals("invalid",true))){
+                            if ((!decryptServerKey(tempPK,tempDob!!).isNullOrEmpty()) and (!decryptServerKey(tempPK,tempDob!!).equals("invalid",true))){
                                 originalPrivateKey = decryptServerKey(tempPK,tempDob)
-                            }else{*/
+                            }else{
                                 originalPrivateKey = response.PrivateKey
-                            /*    listener?.onFailure("Please Check ! API return Original Private Key Instead of Encrypt Private Key")
-                            }*/
+                                listener?.onFailure("Please Check ! API return Original Private Key Instead of Encrypt Private Key")
+                            }
                         }else{
                             listener?.onFailure("PrivateKey return Empty")
                             return@main
@@ -336,28 +336,13 @@ class HomeViewModel(
                         if (!response.PrivateKey.isNullOrEmpty()){
                             val tempPK = response.PrivateKey
                             val tempDob = changeDateFormatForPrivateKeyDecrypt(getUser.dob!!)
-                           /* if ((!decryptServerKey(tempPK,tempDob!!).isNullOrEmpty()) and (!response.PrivateKey.equals("invalid",true))){
+                            if ((!decryptServerKey(tempPK,tempDob!!).isNullOrEmpty()) and (!decryptServerKey(tempPK,tempDob!!).equals("invalid",true))){
                                 originalPrivateKey = decryptServerKey(tempPK,tempDob)
-                            }else{*/
+                            }else{
                                 originalPrivateKey = response.PrivateKey
-                           /*     listener?.onFailure("Please Check ! API return Original Private Key Instead of Encrypt Private Key")
-                            }*/
-                        }
-
-                        /*if (getUser != null){
-                            if (!response.PrivateKey.isNullOrEmpty()){
-                                val tempDob = changeDateFormatForPrivateKeyDecrypt(getUser.dob!!)
-                                val tempPK = response.PrivateKey
-                                if (!decryptServerKey(tempPK).isNullOrEmpty()){
-                                    originalPrivateKey = decryptServerKey(tempPK)
-                                }else{
-                                    originalPrivateKey = response.PrivateKey
-                                    listener?.onFailure("Please Check ! API return Original Private Key Instead of Encrypt Private Key")
-                                }
+                                listener?.onFailure("Please Check ! API return Original Private Key Instead of Encrypt Private Key")
                             }
-                            getUser.privateKey = originalPrivateKey
-                            repositary.updateDependent(getUser)
-                        }*/
+                        }
                         getUser.privateKey = originalPrivateKey
                         repositary.updateDependent(getUser)
                         _privateKey.value = originalPrivateKey

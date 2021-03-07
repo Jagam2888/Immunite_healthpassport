@@ -283,7 +283,7 @@ fun changeDateFormatForPrivateKeyDecrypt(dateString:String):String?{
 }
 fun Context.getCurrentCountryName():String?{
     val locationManager = applicationContext.getSystemService(Context.LOCATION_SERVICE) as LocationManager
-    var country:String = ""
+    var country:String = "Malaysia"
     //Couritnes.main {
         try {
             val geocoder = Geocoder(applicationContext,Locale.getDefault())

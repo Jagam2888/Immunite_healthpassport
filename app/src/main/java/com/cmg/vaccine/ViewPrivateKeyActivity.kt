@@ -127,7 +127,9 @@ class ViewPrivateKeyActivity : BaseActivity(),KodeinAware,SimpleListener {
             override fun onTick(millisUntilFinished: Long) {
                 val value = millisUntilFinished / 1000
                 val formatted = "${(value / 60).toString().padStart(2, '0')} : ${(value % 60).toString().padStart(2, '0')}"
-                binding.txtTimer.text = formatted
+                if (!formatted.isNullOrEmpty()){
+                    binding.txtTimer.text = formatted
+                }
             }
 
             override fun onFinish() {
@@ -213,7 +215,9 @@ class ViewPrivateKeyActivity : BaseActivity(),KodeinAware,SimpleListener {
         alertDialogBuilder.setMessage(resources.getString(R.string.do_agree_consent))
             .setNegativeButton(resources.getString(R.string.no)
             ) { dialog, which -> dialog?.dismiss() }.setPositiveButton(resources.getString(R.string.yes)
-            ) { dialog, which -> Intent(this,ConsentAgreementActivity::class.java).also {
+            ) { dialog, which ->
+                    dialog.dismiss()
+                    Intent(this,ConsentAgreementActivity::class.java).also {
                 startActivity(it)
             } }
 

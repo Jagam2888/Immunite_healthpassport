@@ -4,10 +4,12 @@ import android.content.pm.PackageManager
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import com.cmg.vaccine.databinding.ActivityConsentAgreementBinding
+import com.cmg.vaccine.util.hideKeyBoard
 import com.cmg.vaccine.util.toast
 import com.google.zxing.Result
 import me.dm7.barcodescanner.zxing.ZXingScannerView
@@ -29,22 +31,73 @@ class ConsentAgreementActivity : AppCompatActivity(),ZXingScannerView.ResultHand
         mScannerView = ZXingScannerView(this)
 
         binding.imgBack.setOnClickListener {
-            finish()
-        }
+            if (binding.layoutForm.visibility == View.VISIBLE) {
+                finish()
+            }else if (binding.contentframe.visibility == View.VISIBLE){
+                if (mScannerView != null)
+                    mScannerView.stopCamera()
+                binding.contentframe.removeAllViews()
+                binding.contentframe.visibility = View.GONE
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-            if(checkPermission()){
-                binding.contentframe.addView(mScannerView)
-            }else{
-                requestPermission()
+
+                if (binding.layoutForm.visibility == View.GONE) {
+                    binding.layoutForm.visibility = View.VISIBLE
+                }
             }
         }
 
-        toast("Development under processing")
+
+
+        binding.btnCancel.setOnClickListener {
+            finish()
+        }
+
+        binding.btnScanQr.setOnClickListener {
+            hideKeyBoard()
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                if(checkPermission()){
+                    if (binding.layoutForm.visibility == View.VISIBLE)
+                        binding.layoutForm.visibility = View.GONE
+
+                    if (binding.contentframe.visibility == View.GONE) {
+                        binding.contentframe.visibility = View.VISIBLE
+                    }
+                    binding.contentframe.addView(mScannerView)
+
+                    if (mScannerView != null) {
+                        mScannerView.setResultHandler(this)
+                        mScannerView.startCamera()
+                    }
+                }else{
+                    requestPermission()
+                }
+            }
+        }
+
+        binding.btnSendMykey.setOnClickListener {
+            if (!binding.edtEcode.text.isNullOrEmpty()){
+                if(binding.edtEcode.text.length < 6){
+                    toast("Please check you eCode is Wrong")
+                }else {
+                    toast("Your request is being process...")
+                }
+            }else{
+                toast("Please enter your eCode")
+            }
+        }
+
+        //toast("Your request is being process...")
     }
 
     override fun handleResult(rawResult: Result?) {
-        toast("Development under processing")
+        toast("Your request is being process...")
+        if (binding.contentframe.visibility == View.VISIBLE) {
+            binding.contentframe.visibility = View.GONE
+        }
+        binding.layoutForm.visibility = View.VISIBLE
+        if (!rawResult.toString().isNullOrEmpty())
+            binding.edtEcode.setText(rawResult.toString())
+        //finish()
     }
 
     private fun checkPermission():Boolean{
@@ -65,9 +118,17 @@ class ConsentAgreementActivity : AppCompatActivity(),ZXingScannerView.ResultHand
                 if(grantResults.isNotEmpty()){
                     val cameraAccepted:Boolean = grantResults[0] == PackageManager.PERMISSION_GRANTED
                     if(cameraAccepted){
+                        binding.layoutForm.visibility = View.GONE
+                        if (binding.contentframe.visibility == View.GONE)
+                            binding.contentframe.visibility = View.VISIBLE
                         binding.contentframe.addView(mScannerView)
 
                     }else{
+                        if (binding.contentframe.visibility == View.VISIBLE) {
+                            binding.contentframe.visibility = View.GONE
+                        }
+                        if (binding.layoutForm.visibility == View.GONE)
+                            binding.layoutForm.visibility = View.VISIBLE
                         toast("Permission Denied, You cannot access and camera")
                         /*if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
                             if(shouldShowRequestPermissionRationale(android.Manifest.permission.CAMERA)) {

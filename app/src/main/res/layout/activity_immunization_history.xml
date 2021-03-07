@@ -385,6 +385,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:ccp_textSize="14sp"
+                        app:ccp_defaultNameCode="my"
                         app:ccp_hintExampleNumber="true"
                         android:layout_weight="1"
                         android:layout_gravity="center_vertical"/>

@@ -37,8 +37,8 @@ class SplashActivity() : BaseActivity(),KodeinAware{
             }
         })
 
-        Log.d("decrypt",
-            decryptKey("IMMUNITEE|Mi+bsqwIE9WU9eh7yeWkhUNnvNQQ4Wf120lgXlwAjkbAz8TlcafAe2qlVtILlrZoCYPck91Fiim2TPKGL0NVGcrc5rgL6XxYXD1QCoSjjWibOLGxpgueIpD261UJF/0FlgoBXsdsDtYd599y0OTx0LkSqzagTOzEUKFXPxK2+yI=")!!)
+        Log.d("decrypt_splash",
+            decryptKey("IMMUNITEE|7RkWR9YEVpOKxgxDwLTj7/gw3FWl3a/EYzWuNH7wHuecUU7oR/+bjIUDZWjGLfVlAPNjfTaz3uJqEwYmlQypxv35vTloLZRue51fgBYohI5JLW7UqD6JnYiTEANEDdI0W6fW8/yZClAr5NCGlODV4d6NBiYIbamhi8N+Whtjuzc=")!!)
 
 
     }
@@ -79,6 +79,6 @@ class SplashActivity() : BaseActivity(),KodeinAware{
     }
 
     fun decryptKey(key:String):String?{
-        return EncryptionUtils.decryptQrCode(key,5)
+        return EncryptionUtils.decryptQrCode(key,1000)
     }
 }
