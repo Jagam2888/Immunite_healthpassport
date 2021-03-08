@@ -19,6 +19,7 @@ object Passparams{
     const val FCM_TOKEN = "fcm_token"
     const val WORLD_ENTRY_SELECTED_COUNTRY_NAME = "world_entry_selected_country_name"
     const val WORLD_ENTRY_SELECTED_COUNTRY_CODE = "world_entry_selected_country_code"
+    const val QR_CODE_VALUE = "qr_code_value"
 
     //API
     const val URL = "http://47.254.238.145:7001/"
@@ -44,6 +45,7 @@ object Passparams{
     const val GET_WORLD_ENTRIES_LIST = "nhr-module-user/worldentry"
     const val GET_WORLD_ENTRIES_RULES = "nhr-module-user/worldentrybycountry"
     const val IMMUNIZATION_HISTORY = "nhr-module-user/immuhistory"
+    const val GET_Existing_USER = "nhr-module-user/gepatientprivatekey"
 
     //Block Chain
     const val BLOCK_CHAIN_URL = "https://cashierbook.com.my:8081/blockchainapi/"

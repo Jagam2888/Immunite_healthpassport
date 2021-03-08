@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Immunitee</string>
-    <string name="welcome_immunitee">Welcome to \nIMMUNITEE</string>
+    <string name="welcome_immunitee">Selamat Datang ke \nIMMUNITEE</string>
     <string name="full_name">Nama Penuh</string>
-    <string name="full_name_passport">Full Name as per Passport</string>
+    <string name="full_name_passport">Nama Penuh mengikut Pasport</string>
     <string name="first_name">Nama Pertama</string>
     <string name="last_name">Nama Terakhir</string>
     <string name="id_number">ID Nombor</string>
-    <string name="id_type">ID Jenis</string>
+    <string name="id_type">Jenis ID</string>
     <string name="email">E-mel</string>
     <string name="passport_number">Passport Number</string>
-    <string name="date_birth">Date of Birth</string>
-    <string name="birth_time">Birth Time</string>
-    <string name="birth_place">Place of Birth</string>
-    <string name="nationality">Nationality</string>
+    <string name="date_birth">Tarikh lahir</string>
+    <string name="birth_time">Masa Anda Lahir</string>
+    <string name="birth_place">Tempat Lahir</string>
+    <string name="nationality">Kewarganegaraan</string>
     <string name="email_address1">Alamat E-mel</string>
     <string name="email_address2">Alamat E-mel 2</string>
-    <string name="retype_email">Retype your Email address to confirm</string>
+    <string name="retype_email">Taip semula alamat E-mel anda untuk mengesahkan</string>
     <string name="contact_number">Nombor Telefon</string>
     <string name="gender">Jantina</string>
     <string name="login">LOG MASUK</string>
     <string name="signup">DAFTAR</string>
     <string name="next">SETERUSNYA</string>
-    <string name="confirm">SULIT</string>
+    <string name="confirm">MENGESAHKAN</string>
     <string name="done">Selesai</string>
     <string name="save_change">Simpan Perubahan</string>
     <string name="password">Kata Laluan</string>
@@ -31,19 +31,19 @@
     <string name="new_user">Pengguna baru? Daftar!</string>
     <string name="submit">Hantar</string>
     <string name="country">Negara</string>
-    <string name="city">Town/City</string>
-    <string name="state">Province/State</string>
+    <string name="city">Bandar</string>
+    <string name="state">Wilayah / Negeri</string>
     <string name="profile">Profil</string>
-    <string name="switch_profile">Switch Profile</string>
+    <string name="switch_profile">Tukar Profil</string>
     <string name="personal_info">Maklumat Peribadi</string>
-    <string name="edit_profile">Sunting profil</string>
+    <string name="edit_profile">Sunting Profil</string>
     <string name="home">Kediaman</string>
     <string name="setting">Tetapan</string>
     <string name="notification">Pemberitahuan</string>
     <string name="view_private_key">Lihat Kunci Peribadi</string>
     <string name="my_qr_code">KOD QR SAYA</string>
     <string name="view_report">Lihat Laporan</string>
-    <string name="world_entries">World Entries</string>
+    <string name="world_entries">Entri Dunia</string>
     <string name="change_password">Tukar kata laluan</string>
     <string name="change_language">Tukar Bahasa</string>
     <string name="language">Bahasa</string>
@@ -51,82 +51,101 @@
     <string name="private_key">Kunci Peribadi</string>
     <string name="upload_your_key">Muat Naik Kod Kunci Peribadi Anda</string>
     <string name="email_private_key">Kunci Peribadi E-mel</string>
-    <string name="existing_user">Existing User</string>
-    <string name="new_user_signup">New User Sign Up</string>
-    <string name="residential_address">Residential Address</string>
-    <string name="alternate_id">Alternate ID</string>
-    <string name="skip">Skip</string>
-    <string name="create_pin_now">Create PIN now</string>
-    <string name="create_pin">Create PINs</string>
-    <string name="update_pin">Update PINs</string>
-    <string name="enter_4_pin">Enter 4-Digits PIN</string>
+    <string name="existing_user">Pengguna Sedia Ada</string>
+    <string name="new_user_signup">Pendaftaran Pengguna Baru</string>
+    <string name="residential_address">Alamat kediaman</string>
+    <string name="alternate_id">ID ganti</string>
+    <string name="skip">Melangkau</string>
+    <string name="create_pin_now">Buat PIN sekarang</string>
+    <string name="create_pin">Buat PIN</string>
+    <string name="update_pin">Kemas kini PIN</string>
+    <string name="enter_4_pin">Masukkan PIN 4-Digit</string>
     <string name="my_key">MyKey</string>
-    <string name="remove_dependent">Remove Dependent</string>
-    <string name="scan_qr_code">Scan QR Code</string>
+    <string name="remove_dependent">Buang Tanggungan</string>
+    <string name="scan_qr_code">Imbas Kod QR</string>
 
-    <string name="consent_agree">Consent Agreement</string>
-    <string name="do_agree_consent">Do you consent to Malaysia Airlines Berhad (MAS) to access to your Personal Details and clinical data</string>
-    <string name="send_my_key">Send MyKey</string>
-    <string name="scan_ecode">Scan eCode</string>
-    <string name="enter_ecode_screen">Enter the eCode shown at your check-in screen.</string>
-    <string name="enter_ecode">Enter eCode</string>
-    <string name="cancel">Cancel</string>
+    <string name="restore">Restore</string>
+    <string name="restore_google_drive">Restore from Google Drive</string>
 
-    <string name="immunisation_history">Immunisation History</string>
-    <string name="specimen">Specimen</string>
-    <string name="specimen_name">Specimen Name</string>
-    <string name="manufacture_brand">Manufacturer / Brand</string>
-    <string name="date_sample">Date Sample Collected</string>
-    <string name="time_sample">Time Sample Collected</string>
-    <string name="test_code">Test Code</string>
-    <string name="observation">Observation</string>
-    <string name="status_fina">Status Finalize</string>
-    <string name="performer">Performer</string>
-    <string name="medical_officer">Medical Officer / Administrator Name</string>
-    <string name="qualification">Qualification</string>
-    <string name="qualification_issuer_name">Qualification Issuer Name</string>
-    <string name="work_addres">Work Address</string>
-    <string name="address_line_1">Address Line 1</string>
-    <string name="address_line_2">Address Line 2</string>
-    <string name="city_town">City / Town</string>
-    <string name="state_province">State / Province</string>
-    <string name="zip_postcode">Zip / Postcode</string>
-    <string name="upload_document">Upload Document</string>
-    <string name="file_size_limit">File size limit (5MB) File formats (pdf, png, jpg)</string>
-    <string name="additional_docs">Add Additional Documents</string>
 
-    <string name="immunization_detail">Immunization Detail</string>
-    <string name="vaccine_code">Vaccine Code</string>
-    <string name="vaccine_date_time">Vaccinated Date and Time</string>
-    <string name="vaccine_location">Vaccinated Location</string>
-    <string name="manufacture_type">Manufacturer Type</string>
-    <string name="manufacture_contact">Manufacturer Contact No</string>
-    <string name="manufacture_address">Manufacturer Address</string>
-    <string name="lot_no">Lot No</string>
-    <string name="expiry_date">Expiry Date</string>
-    <string name="gs1_code">Gs1 Code</string>
-    <string name="serial_no">Serial No</string>
-    <string name="performer_name">Performer Name</string>
-    <string name="performer_qualification_id">Performer Qualification ID</string>
-    <string name="performer_qualification_issuer">Performer Qualification Issuer</string>
+    <string name="account_restored">Account Restored</string>
+    <string name="congratulation_restored">Congratulations!\nYou Account has been \nRestored Successfully!</string>
+    <string name="your_account_restored">Your account has been restored, we recommend you to setup a security PIN to keep your personal data stored with Immunitee app protected against unauthorised access!</string>
+    <string name="skip_underline"><u>Skip</u></string>
 
-    <string name="prinicipal_info">Prinicpal Info</string>
+    <string name="invalid_private_key">Invalid Private Key</string>
+    <string name="sorry">Sorry!</string>
+    <string name="you_have_enter_invalid_pk">You have enter an invalid Private Key! \nWe are unable to restore your account. Please contact our helpdesk center at \n+60 113 545 3139 \nif you need further assistant.</string>
+    <string name="contact_immunite_helpdesk">Contact Immunitee Helpdesk</string>
+
+    <string name="consent_agree">Perjanjian Persetujuan</string>
+    <string name="do_agree_consent">Adakah anda bersetuju dengan Malaysia Airlines Berhad (MAS) untuk mengakses Maklumat Peribadi dan data klinikal anda</string>
+    <string name="send_my_key">Hantar MyKey</string>
+    <string name="scan_ecode">Imbas eCode</string>
+    <string name="enter_ecode_screen">Masukkan eCode yang ditunjukkan di skrin daftar masuk anda.</string>
+    <string name="enter_ecode">Masukkan eCode</string>
+    <string name="cancel">Batal</string>
+
+    <string name="close">Close</string>
+    <string name="thank_you_signup">Thank You for your interest to sign up with Immunitee.</string>
+    <string name="immunitee_welcome_content">Immunitee is built on trust and protecting privacy, thus we do not required copy of your confidential document such as Passport, ID or Bank Statement to confirm your credential. Signing up Immunitee has no use to you if the information provided are vary from your actual.</string>
+
+
+    <string name="immunisation_history">Sejarah Imunisasi</string>
+    <string name="specimen">Spesimen</string>
+    <string name="specimen_name">Nama Spesimen</string>
+    <string name="manufacture_brand">Pengilang / Jenama</string>
+    <string name="date_sample">Contoh Tarikh Dikumpulkan</string>
+    <string name="time_sample">Contoh Masa Yang Dikumpulkan</string>
+    <string name="test_code">Kod Ujian</string>
+    <string name="observation">Pemerhatian</string>
+    <string name="status_fina">Status Memuktamadkan</string>
+    <string name="performer">Pelaksana</string>
+    <string name="medical_officer">Nama Pegawai Perubatan / Pentadbir</string>
+    <string name="qualification">Kelayakan</string>
+    <string name="qualification_issuer_name">Nama Penerbit Kelayakan</string>
+    <string name="work_addres">Alamat Kerja</string>
+    <string name="address_line_1">Alamat Baris 1</string>
+    <string name="address_line_2">Alamat Baris 2</string>
+    <string name="city_town">Bandar</string>
+    <string name="state_province">Negeri / Wilayah</string>
+    <string name="zip_postcode">Poskod</string>
+    <string name="upload_document">Muat Naik Dokumen</string>
+    <string name="file_size_limit">Had saiz fail (5MB) Format fail (pdf, png, jpg)</string>
+    <string name="additional_docs">Tambah Dokumen Tambahan</string>
+
+    <string name="immunization_detail">Perincian Imunisasi</string>
+    <string name="vaccine_code">Kod Vaksin</string>
+    <string name="vaccine_date_time">Tarikh dan Masa Vaksinasi</string>
+    <string name="vaccine_location">Lokasi Vaksin</string>
+    <string name="manufacture_type">Jenis Pengilang</string>
+    <string name="manufacture_contact">No. Hubungan Pengilang</string>
+    <string name="manufacture_address">Alamat Pengilang</string>
+    <string name="lot_no">Lot No.</string>
+    <string name="expiry_date">Tarikh luput</string>
+    <string name="gs1_code">Kod Gs1</string>
+    <string name="serial_no">Siri No.</string>
+    <string name="performer_name">Nama Pelaksana</string>
+    <string name="performer_qualification_id">ID Kelayakan Pelaksana</string>
+    <string name="performer_qualification_issuer">Penerbit Kelayakan Pelaksana</string>
+
+    <string name="prinicipal_info">Maklumat Pengetua</string>
     <string name="edit">Edit</string>
-    <string name="dependent_info">Dependent Info</string>
-    <string name="new_member">New Member</string>
-    <string name="existing_member">Existing Member</string>
-    <string name="profile_picture">Profile Picture</string>
-    <string name="clear_all">Clear All</string>
-    <string name="apply">Apply</string>
-    <string name="create_security_pin">Create Security PIN</string>
-    <string name="activation_code">Activation Code</string>
-    <string name="choose_plan">Choose Your Plan</string>
-    <string name="approve_account">You will be charges for the plan after the admin approves your account.</string>
-    <string name="no_world_entry">No World Entry Setup! \nAdd your favourite World \nEntry Destination by \nclicking “+”  sign.</string>
-    <string name="privacy">Privacy</string>
+    <string name="dependent_info">Maklumat Tanggungan</string>
+    <string name="new_member">Ahli baru</string>
+    <string name="existing_member">Ahli Sedia Ada</string>
+    <string name="profile_picture">Gambar profil</string>
+    <string name="clear_all">Kosongkan semua</string>
+    <string name="apply">Memohon</string>
+    <string name="create_security_pin">Buat PIN Keselamatan</string>
+    <string name="activation_code">Kod pengaktifan</string>
+    <string name="choose_plan">Pilih Plan Anda</string>
+    <string name="approve_account">Anda akan dikenakan bayaran untuk plan tersebut setelah pentadbir meluluskan akaun anda.</string>
+    <string name="no_world_entry">Tiada Persediaan Kemasukan Dunia! \nTambah Dunia kegemaran anda \nMasuk Destinasi dengan \nKlik tanda "+"</string>
+    <string name="privacy">Privasi</string>
 
     <string name="yes">YA</string>
-    <string name="no">TIADA</string>
+    <string name="no">TIDAK</string>
     <string name="complete">Lengkap</string>
     <string name="name">Nama</string>
     <string name="brand">Jenama</string>
@@ -134,12 +153,12 @@
     <string name="manufacturer_name">Nama Pengilang</string>
     <string name="manufacturer">Pengilang</string>
     <string name="hospital">Hospital</string>
-    <string name="save">Jimat</string>
+    <string name="save">Simpan</string>
 
     <string name="report_detail">Perincian Laporan</string>
 
     <string name="submit_past_vaccine">Hantar Data Vaksinasi Yang Lalu</string>
-    <string name="submit_history">Submit Immunisation History</string>
+    <string name="submit_history">Hantar Sejarah Imunisasi</string>
 
     <string name="current_password">Kata Laluan Semasa</string>
     <string name="new_password">Kata laluan baharu</string>
@@ -149,24 +168,24 @@
     <string name="protest_again_covid">Dilindungi Terhadap Covid-19</string>
     <string name="no_vaccine">Tanpa Vaksin</string>
 
-    <string name="add_dependent">Add Dependent</string>
-    <string name="edit_dependent">Edit Dependent</string>
-    <string name="relationship">RelationShip</string>
-    <string name="principal">Principal</string>
-    <string name="same_principal_address">If same address as prinicipal,tick here</string>
+    <string name="add_dependent">Tambah Tanggungan</string>
+    <string name="edit_dependent">Edit Tanggungan</string>
+    <string name="relationship">Perhubungan</string>
+    <string name="principal">Utama</string>
+    <string name="same_principal_address">Sekiranya alamat yang sama dengan akaun utama, tandakan di sini</string>
 
-    <string name="security_pin">Security Pin</string>
-    <string name="payment_method">Payment Method</string>
-    <string name="advanced">Advanced</string>
-    <string name="help">Help</string>
-    <string name="about">About</string>
-    <string name="version_relase">Version Release</string>
-    <string name="terms_privacy_policy">Terms &amp; Privacy Policy</string>
-    <string name="change_security_pin">Change Security Pin</string>
+    <string name="security_pin">PIN Keselamatan</string>
+    <string name="payment_method">Kaedah Pembayaran</string>
+    <string name="advanced">Lanjutan</string>
+    <string name="help">Bantuan</string>
+    <string name="about">Mengenai</string>
+    <string name="version_relase">Keluaran Versi</string>
+    <string name="terms_privacy_policy">Syarat &amp; Dasar Privasi</string>
+    <string name="change_security_pin">Tukar Pin Keselamatan</string>
 
-    <string name="registered_email">Registered Email Address</string>
-    <string name="setup_manually">SetUp \nManually</string>
-    <string name="restore_backup">Restore from \nBackup</string>
+    <string name="registered_email">Alamat E-mel Berdaftar</string>
+    <string name="setup_manually">Tetapkan \nSecara manual</string>
+    <string name="restore_backup">Pulihkan dari \nSandaran</string>
 
     <string name="english">English</string>
     <string name="malay">Malay</string>
@@ -174,72 +193,73 @@
 
 
     <string name="terms_condition">Saya bersetuju dengan syarat dan dasar privasi.</string>
-    <string name="update_profile_terms">I hereby acknowledged confirm of the above changes and agreed to the terms and policy of Immunitee</string>
+    <string name="update_profile_terms">Dengan ini saya mengakui mengesahkan perubahan di atas dan bersetuju dengan syarat dan polisi Immunitee</string>
     <string name="already_have_account">Sudah mempunyai akaun? Log masuk.</string>
     <string name="sign_up_complete">Daftar Lengkap</string>
     <string name="thank_you_sign">Terima kasih kerana mendaftar dengan IMMUNITEE!</string>
-    <string name="check_your_mail">Check your email. A verification link has \nbeen sent to your email address. Click on \nit to verify your account.</string>
-    <string name="please_enter">Please enter the following information to retrieve your password.</string>
-    <string name="qr_text">Tunjukkan ini untuk membuktikan bahawa anda telah dilindungi dan anda selamat dalam perjalanan.</string>
+    <string name="check_your_mail">Periksa e-mel anda. Pautan pengesahan telah dihantar \nke alamat e-mel anda. Klik di atasnya \nuntuk mengesahkan akaun anda.</string>
+    <string name="please_enter">Sila masukkan maklumat berikut untuk mendapatkan kata laluan anda.</string>
+    <string name="qr_text">Dengan menunjukkan kod QR ini kepada seseorang, anda dengan ini mengesahkan memberi hak ini kepada orang ini untuk membaca sejarah perubatan peribadi anda.
+	Kod QR ini digunakan sekali sahaja dan habis dalam 5 minit.</string>
     <string name="tell_us_more">Ceritakan lebih banyak mengenai diri anda</string>
     <string name="have_you_done_vaccine">Adakah anda pernah melakukan vaksinasi?</string>
     <string name="past_vaccine_data">Data Vaksinasi Masa Lalu</string>
-    <string name="successfull_past_vaccine">Successfully Completed!\nPlease wait for your search result and your next steps of action</string>
-    <string name="please_verify_email">Please Verify the Email sent to you to receive an Activation Code to complete your setup!</string>
-    <string name="enter_act_code">Enter Activation Code</string>
-    <string name="your_account_activate">Your account has been activated, a Personal Private Key has been registered in your Immunitee!</string>
-    <string name="recomand_set_pin">We recommend you to setup an access PINs to keep your personal data stored with Immunitee protected against unauthorised access!</string>
-    <string name="manually_sync">Manually Sync Your Device</string>
-    <string name="disclaimer">Disclaimer</string>
-    <string name="disclaimer_desc">The verification for entry to a destination is done at our best knowledge. It is for reference and does not guarantee a entry to the destination desired. The right of entry to a destination is remained at the authority of entry owner.</string>
-    <string name="covid19_rrt_pcr_test">Covid-19 rRT-PCR Test</string>
-    <string name="enter_the_activate_code">Enter the 6-digit activation code sent to </string>
+    <string name="successfull_past_vaccine">Berjaya Selesai!\nTunggu hasil carian anda dan langkah tindakan seterusnya</string>
+    <string name="please_verify_email">Sila Sahkan E-mel yang dihantar kepada anda untuk menerima Kod Pengaktifan untuk menyelesaikan persediaan anda!</string>
+    <string name="enter_act_code">Masukkan Kod Pengaktifan</string>
+    <string name="your_account_activate">Akaun anda telah diaktifkan, Kunci Peribadi Peribadi telah didaftarkan di Immunitee anda!</string>
+    <string name="recomand_set_pin">Kami mengesyorkan anda menyediakan PIN akses untuk memastikan data peribadi anda disimpan dengan Immunitee dilindungi daripada pengguna akses tanpa dibenarkan!</string>
+    <string name="manually_sync">Sync Peranti Anda Secara Manual</string>
+    <string name="disclaimer">Penafian</string>
+    <string name="disclaimer_desc">Pengesahan untuk masuk ke destinasi dilakukan pada pengetahuan kami. Ini untuk rujukan dan tidak menjamin kemasukan ke destinasi yang diinginkan. Hak masuk ke destinasi tetap berada di bawah kuasa pemilik masuk.</string>
+    <string name="covid19_rrt_pcr_test">Ujian Covid-19 rRT-PCR</string>
+    <string name="enter_the_activate_code">Masukkan kod pengaktifan 6 digit yang dihantar ke </string>
 
 
 
 
     <string name="authorization">Kebenaran</string>
-    <string name="i_hereby_agree">I hereby agreed to let IMMUNITEE adminstration to search on behalf of my medication records.</string>
+    <string name="i_hereby_agree">Dengan ini saya bersetuju untuk membiarkan pentadbiran IMMUNITEE mencari atas nama rekod perubatan saya.</string>
     <string name="yes_i_agree">Ya, saya setuju.</string>
 
     <string name="vaccine_nam">Nama Vaksin</string>
-    <string name="hospital_clinic">Hospital / Clinic / Medical Facility</string>
+    <string name="hospital_clinic">Kemudahan Hospital / Klinik / Perubatan</string>
     <string name="doctor_name">Nama Doktor</string>
     <string name="injection_date">Tarikh Suntikan</string>
     <string name="vaccination_ref_number">Nombor Rujukan Vaksinasi</string>
     <string name="dose_type">Jenis Dos</string>
 
-    <string name="frequently_question">Frequently asked \nquestions</string>
-    <string name="got_a_question">Got a question? \nWe are here to answer :)</string>
+    <string name="frequently_question">Soalan yang \nsering diajukan</string>
+    <string name="got_a_question">Ada soalan? Kami di sini untuk menjawab :)</string>
     <string name="faq">FAQ</string>
-    <string name="travel_advisary">Travel Advisory</string>
-    <string name="search">Search</string>
-    <string name="select_country">Select Your Country</string>
+    <string name="travel_advisary">Nasihat Perjalanan</string>
+    <string name="search">Mencari</string>
+    <string name="select_country">Pilih Negara Anda</string>
 
-    <string name="subscription">Subscription</string>
-    <string name="checkout">Checkout</string>
-    <string name="payment_details">Payment Details</string>
-    <string name="standard_sub_charges">Standard Subscription Charges</string>
-    <string name="tax">Tax</string>
-    <string name="total_amount">Total Amount</string>
-    <string name="select_evoucher">Select eVoucher</string>
-    <string name="evoucher_foc">eVoucher-FOC for update changes</string>
-    <string name="payment_due">Payment Due</string>
-    <string name="proceed_to_pay">Proceed to Payment</string>
+    <string name="subscription">Langganan</string>
+    <string name="checkout">Daftar keluar</string>
+    <string name="payment_details">Butiran pembayaran</string>
+    <string name="standard_sub_charges">Caj Langganan Standard</string>
+    <string name="tax">Cukai</string>
+    <string name="total_amount">Jumlah Keseluruhan</string>
+    <string name="select_evoucher">Pilih eVoucher</string>
+    <string name="evoucher_foc">eVoucher-FOC untuk perubahan kemas kini</string>
+    <string name="payment_due">Bayaran yang perlu dibayar</string>
+    <string name="proceed_to_pay">Teruskan ke Pembayaran</string>
 
-    <string name="sync_now">Sync Now</string>
+    <string name="sync_now">Sync Sekarang</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <!--Notification-->
-    <string name="news">News Update</string>
-    <string name="regulatory">Regulatory Update</string>
-    <string name="advisory">Advisory Alert</string>
-    <string name="channel_name">Immunitee Channel</string>
-    <string name="channel_description">Immunitee Channel Description</string>
+    <string name="news">Kemas Kini Berita</string>
+    <string name="regulatory">Kemas Kini Peraturan</string>
+    <string name="advisory">Makluman Penasihat</string>
+    <string name="channel_name">Saluran Immunitee</string>
+    <string name="channel_description">Penerangan Saluran Immunitee</string>
 
-    <string name="add_entry">Add Entry Point</string>
+    <string name="add_entry">Tambah Titik Masuk</string>
 
 
     <string-array name="code">
@@ -268,15 +288,11 @@
     </string-array>
 
     <string-array name="relationships">
-        <item>Father</item>
-        <item>Mother</item>
-        <item>Wife</item>
-        <item>Son</item>
-        <item>Daughter</item>
-        <item>Brother</item>
-        <item>Sister</item>
-        <item>Grand Mother</item>
-        <item>Grand Father</item>
+        <item>Pasangan Suami Isteri</item>
+        <item>Anak-anak</item>
+        <item>Penjaga</item>
+        <item>IBuBapa</item>
+        <item>Datuk dan Nenek</item>
     </string-array>
 
     <string name="title_activity_f_a_q_travel_advisory">FAQTravelAdvisoryActivity</string>
@@ -287,4 +303,39 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
+    <string name="vaccine">Vaksin</string>
+    <string name="test">Ujian</string>
+    <string name="personal_profile_details">Maklumat Profil Peribadi</string>
+    <string name="description">telah mengehadkan kemasukan semua warganegara asing kecuali mereka yang mendapat persetujuan daripada kerajaan terlebih dahulu. Pelancong dengan persetujuan dari negara berisiko rendah akan diberikan SHN 7 hari SHN(Stay-Home-Notice), atau tidak ada SHN mulai 1 September.</string>
+    <string name="get_1_month_free_trail">Dapatkan Trail Percuma 1 Bulan</string>
+    <string name="enter_your_security_pin_to_login">Masukkan PIN keselamatan anda untuk log masuk!</string>
+
+    <string name="unread">Belum dibaca</string>
+    <string name="enter_your_4_digit_security_pin">Masukkan PIN Keselamatan 4 digit anda!</string>
+    <string name="re_enter_your_4_digit_security_pin">Masukkan semula PIN Keselamatan 4 digit anda!</string>
+    <string name="activation_immunitee">Pengaktifan Immunitee</string>
+    <string name="free_trail">Dapatkan Trail Percuma 1 Bulan</string>
+    <string name="process">Proses</string>
+    <string name="enable_debug_log">Dayakan Log Debug</string>
+    <string name="discontinue">Hentikan</string>
+    <string name="recent_report">Laporan Terkini</string>
+    <string name="passport_no">No. pasport :</string>
+    <string name="id_no">ID No. : </string>
+    <string name="nationality1">Kewarganegaraan : </string>
+    <string name="no_dependent_available">No. Tanggungan yang ada</string>
+    <string name="upgrade">Naik Taraf</string>
+    <string name="principle_account">Akaun Utama</string>
+    <string name="backup">Sandaran</string>
+    <string name="sync">Sync</string>
+    <string name="chat">Berbualan</string>
+    <string name="notification_message_sound">Suara Pemberitahuan / Mesej</string>
+    <string name="ringtone">Nada dering</string>
+    <string name="credit_card">Kad kredit</string>
+    <string name="tng">Touch `n Go</string>
+    <string name="ipay">iPay 88</string>
+    <string name="delete">Padam</string>
+    <string name="edit_principle_profile">Edit Profil Utama</string>
+    <string name="entry_requirement">Syarat Kemasukan</string>
+    <string name="search_here">Cari Di Sini</string>
 </resources>

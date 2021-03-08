@@ -29,6 +29,12 @@ interface PatientDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertSignUp(user:User):Long
 
+    @Query("SELECT * From User")
+    fun getUserCount():Int
+
+    @Query("DELETE FROM User")
+    fun deleteOldUser():Int
+
     /*@Query("SELECT * FROM User where email = :email AND password = :password")
     fun login(email:String,password:String):User*/
 

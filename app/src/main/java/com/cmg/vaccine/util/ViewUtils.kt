@@ -261,10 +261,21 @@ fun changeDateFormatForViewProfile(dateString: String):String?{
 }
 fun changeDateFormatISO8601(dateString: String):String?{
     val currentDateFormat = SimpleDateFormat("dd/MM/yyyy HH:mm:ss")
-    val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
+    val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
     try {
         val date = currentDateFormat.parse(dateString)
         return simpleDateFormat.format(date)
+    }catch (e: ParseException){
+        e.printStackTrace()
+    }
+    return ""
+}
+fun changeDateFormatNormal(dateString: String):String?{
+    val resultFormat = SimpleDateFormat("dd/MM/yyyy HH:mm:ss")
+    val isoFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
+    try {
+        val date = isoFormat.parse(dateString)
+        return resultFormat.format(date)
     }catch (e: ParseException){
         e.printStackTrace()
     }

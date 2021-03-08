@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="viewmodel"
+            type="com.cmg.vaccine.viewmodel.ExistingUserViewModel" />
     </data>
 
     <RelativeLayout
@@ -50,6 +52,7 @@
                         style="@style/opens_bold" />
 
                     <TextView
+                        android:id="@+id/btn_restore"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/restore_backup"
@@ -67,188 +70,142 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{`* `+@string/full_name_passport}"
-                    style="@style/opens_regular"
+                    android:text="@{`* `+@string/date_birth}"
                     android:textColor="@color/gray"
-                    android:layout_marginTop="20dp" />
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/full_name_passport"
-                    style="@style/opens_regular"
-                    android:textColorHint="@color/gray"
-                    android:textColor="@color/black"
-                    android:maxLines="1"
-                    android:maxLength="100"
-                    android:background="@drawable/edittext_background"
-                    android:layout_marginTop="5dp"
-                    android:paddingBottom="10dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingTop="10dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@{`* `+@string/contact_number}"
-                    style="@style/opens_regular"
-                    android:textColor="@color/gray"
-                    android:layout_marginTop="10dp" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:orientation="horizontal"
-                    android:background="@drawable/edittext_background">
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:paddingBottom="10dp"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="10dp"
-                        android:paddingTop="10dp"
-                        android:layout_weight="2">
-
-                        <ImageView
-                            android:id="@+id/img_flag"
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:src="@drawable/malaysia_flag"
-                            android:layout_centerVertical="true" />
-
-                        <ImageView
-                            android:id="@+id/img_down_arrow"
-                            android:layout_width="10dp"
-                            android:layout_height="10dp"
-                            android:layout_centerVertical="true"
-                            android:layout_alignParentRight="true"
-                            android:src="@drawable/down_arrow" />
-
-                        <Spinner
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textSize="16sp"
-                            android:background="@null"
-                            android:minHeight="0dp"
-                            android:entries="@array/code"
-                            android:layout_toRightOf="@+id/img_flag"
-                            android:layout_toLeftOf="@id/img_down_arrow"
-                            android:layout_centerVertical="true" />
-
-
-                    </RelativeLayout>
-
-                    <View
-                        android:layout_width="1dp"
-                        android:layout_height="match_parent"
-                        android:background="@color/gray" />
-
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/black"
-                        android:hint="0123456789"
-                        android:inputType="phone"
-                        android:maxLines="1"
-                        android:maxLength="15"
-                        style="@style/opens_regular"
-                        android:layout_weight="1"
-                        android:background="@android:color/transparent"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="10dp" />
-
-                </LinearLayout>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@{`* `+@string/registered_email}"
-                    android:textColor="@color/gray"
-                    android:layout_marginTop="10dp"
-                    style="@style/opens_regular" />
-
-                <EditText
-                    android:id="@+id/edt_email1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:maxLength="100"
-                    android:maxLines="1"
-                    android:textColorHint="@color/gray"
-                    android:inputType="textEmailAddress"
-                    android:textColor="@color/black"
-                    android:layout_marginTop="5dp"
-                    android:paddingBottom="5dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingTop="10dp"
-                    style="@style/opens_regular"
-                    android:background="@drawable/edittext_background" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/private_key"
-                    android:textColor="@color/green"
-                    android:layout_marginTop="10dp"
-                    style="@style/opens_bold" />
-
+                    android:layout_marginTop="20dp"
+                    android:textAppearance="@style/opens_regular"
+                    android:textSize="14sp" />
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/edittext_background"
                     android:layout_marginTop="5dp">
-
-                    <ImageView
-                        android:id="@+id/shield_icon"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/shield_icon"
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btn_dob_calender"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:background="@drawable/calender_icon"
+                        android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginLeft="10dp" />
-
-                    <EditText
+                        android:layout_marginRight="10dp"/>
+                    <com.vicmikhailau.maskededittext.MaskedEditText
+                        android:id="@+id/edt_dob"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/upload_your_key"
-                        android:textSize="12sp"
+                        android:textAppearance="@style/opens_regular"
+                        android:textSize="14sp"
+                        android:maxLines="1"
+                        app:mask="##/##/####"
+                        android:inputType="number"
                         android:textColorHint="@color/gray"
-                        android:layout_centerVertical="true"
-                        android:layout_toRightOf="@id/shield_icon"
-                        android:layout_marginLeft="10dp"
-                        android:background="@android:color/transparent" />
+                        android:textColor="@color/black"
+                        android:hint="dd/mm/yyyy"
+                        android:background="@null"
+                        android:paddingBottom="10dp"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingTop="10dp"
+                        android:imeOptions="actionNext"
+                        android:layout_toLeftOf="@id/btn_dob_calender"
+                        android:layout_marginRight="20dp"/>
+                </RelativeLayout>
 
-                    <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="42dp"
-                        android:background="@drawable/upload_background"
-                        android:layout_alignParentRight="true">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Encrypted Private Key"
+                    android:textColor="@color/primary"
+                    android:textSize="14sp"
+                    android:layout_marginTop="10dp"
+                    android:textAppearance="@style/opens_regular" />
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="110dp"
+                        android:orientation="horizontal"
+                        android:background="@drawable/edittext_background"
+                        android:layout_marginTop="5dp">
 
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/upload_icon"
-                            android:paddingRight="10dp"
-                            android:paddingLeft="10dp"
+                            android:src="@drawable/shield_icon"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginLeft="5dp"/>
+
+                        <EditText
+                            android:id="@+id/edt_qr_code"
+                            android:layout_width="244dp"
+                            android:layout_height="match_parent"
+                            android:background="@null"
+                            android:gravity="top"
+                            android:hint="Encrypted Private Key"
+                            android:maxLines="4"
+                            android:minLines="4"
+                            android:paddingLeft="5dp"
+                            android:paddingTop="10dp"
+                            android:paddingRight="5dp"
                             android:paddingBottom="10dp"
-                            android:paddingTop="10dp" />
-                    </RelativeLayout>
-                </RelativeLayout>
+                            android:textAppearance="@style/opens_regular"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/gray"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/btn_scan_qr"
+                        android:layout_width="wrap_content"
+                        android:layout_height="110dp"
+                        android:orientation="vertical"
+                        android:background="@drawable/scan_nfc_box"
+                        android:layout_gravity="right"
+                        android:layout_marginTop="5dp"
+                        android:gravity="center_vertical"
+                        android:paddingRight="10dp"
+                        android:paddingLeft="10dp"
+                        android:paddingBottom="10dp"
+                        android:paddingTop="10dp">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/qr_code_icon"
+                            android:layout_gravity="center_horizontal"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Scan Key"
+                            android:textSize="16sp"
+                            android:textAppearance="@style/opens_bold"
+                            android:layout_marginLeft="5dp"
+                            android:textColor="@color/white" />
+                    </LinearLayout>
+                </FrameLayout>
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btn_signup"
+                    android:id="@+id/btn_submit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/submit"
                     style="@style/opens_bold"
                     android:textColor="@color/white"
                     android:background="@drawable/button_background"
-                    android:layout_marginTop="30dp" />
+                    android:layout_marginTop="30dp"
+                    android:onClick="@{() -> viewmodel.onSubmit()}"/>
             </LinearLayout>
         </ScrollView>
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="gone"/>
 
     </RelativeLayout>
 </layout>

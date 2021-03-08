@@ -64,6 +64,9 @@
     <string name="remove_dependent">Remove Dependent</string>
     <string name="scan_qr_code">Scan QR Code</string>
 
+    <string name="restore">Restore</string>
+    <string name="restore_google_drive">Restore from Google Drive</string>
+
     <string name="consent_agree">Consent Agreement</string>
     <string name="do_agree_consent">Do you consent to Malaysia Airlines Berhad (MAS) to access to your Personal Details and clinical data</string>
     <string name="send_my_key">Send MyKey</string>
@@ -71,6 +74,10 @@
     <string name="enter_ecode_screen">Enter the eCode shown at your check-in screen.</string>
     <string name="enter_ecode">Enter eCode</string>
     <string name="cancel">Cancel</string>
+
+    <string name="close">Close</string>
+    <string name="thank_you_signup">Thank You for your interest to sign up with Immunitee.</string>
+    <string name="immunitee_welcome_content">Immunitee is built on trust and protecting privacy, thus we do not required copy of your confidential document such as Passport, ID or Bank Statement to confirm your credential. Signing up Immunitee has no use to you if the information provided are vary from your actual.</string>
 
 
     <string name="immunisation_history">Immunisation History</string>
@@ -96,7 +103,7 @@
     <string name="file_size_limit">File size limit (5MB) File formats (pdf, png, jpg)</string>
     <string name="additional_docs">Add Additional Documents</string>
 
-    <string name="prinicipal_info">Prinicpal Info</string>
+    <string name="prinicipal_info">Principle Info</string>
     <string name="edit">Edit</string>
     <string name="dependent_info">Dependent Info</string>
     <string name="new_member">New Member</string>
@@ -110,6 +117,17 @@
     <string name="approve_account">You will be charges for the plan after the admin approves your account.</string>
     <string name="no_world_entry">No World Entry Setup! \nAdd your favourite World \nEntry Destination by \nclicking “+”  sign.</string>
     <string name="privacy">Privacy</string>
+
+
+    <string name="account_restored">Account Restored</string>
+    <string name="congratulation_restored">Congratulations!\nYou Account has been \nRestored Successfully!</string>
+    <string name="your_account_restored">Your account has been restored, we recommend you to setup a security PIN to keep your personal data stored with Immunitee app protected against unauthorised access!</string>
+    <string name="skip_underline"><u>Skip</u></string>
+
+    <string name="invalid_private_key">Invalid Private Key</string>
+    <string name="sorry">Sorry!</string>
+    <string name="you_have_enter_invalid_pk">You have enter an invalid Private Key! \nWe are unable to restore your account. Please contact our helpdesk center at \n<b>+60 113 545 3139</b> \nif you need further assistant.</string>
+    <string name="contact_immunite_helpdesk">Contact Immunitee Helpdesk</string>
 
     <string name="immunization_detail">Immunization Detail</string>
     <string name="vaccine_code">Vaccine Code</string>
@@ -166,8 +184,8 @@
     <string name="add_dependent">Add Dependent</string>
     <string name="edit_dependent">Edit Dependent Profile</string>
     <string name="relationship">RelationShip</string>
-    <string name="principal">Principal</string>
-    <string name="same_principal_address">If same address as prinicipal,tick here</string>
+    <string name="principal">Principle</string>
+    <string name="same_principal_address">If same address as principle,tick here</string>
 
     <string name="english">English</string>
     <string name="malay">Malay</string>
@@ -210,7 +228,7 @@ This QR Code is one time use and it expires in 5 minutes.</string>
 
 
     <string name="authorization">Authorization</string>
-    <string name="i_hereby_agree">I hereby agreed to let IMMUNITEE adminstration to search on behalf of my medication records.</string>
+    <string name="i_hereby_agree">I hereby agreed to let IMMUNITEE administration to search on behalf of my medication records.</string>
     <string name="yes_i_agree">Yes, I agree.</string>
 
     <string name="vaccine_nam">Vaccine Name</string>
@@ -299,4 +317,40 @@ This QR Code is one time use and it expires in 5 minutes.</string>
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
+    <string name="vaccine">Vaccine</string>
+    <string name="test">Test</string>
+    <string name="personal_profile_details">Personal Profile Details</string>
+    <string name="description">has restricted the entry of all foreign nationals except those with prior approval from the government. Travelers with approval from low-risk countries will be issued with a 7-day SHN (Stay-Home-Notice), or no SHN from September 1.</string>
+    <string name="get_1_month_free_trail">Get 1 Month Free Trail</string>
+    <string name="enter_your_security_pin_to_login">Enter your security PIN to login!</string>
+
+
+    <string name="unread">Unread</string>
+    <string name="enter_your_4_digit_security_pin">Enter your 4-digit Security PIN!</string>
+    <string name="re_enter_your_4_digit_security_pin">Re-enter your 4-digit Security PIN!</string>
+    <string name="activation_immunitee">Activation Immunitee</string>
+    <string name="free_trail">Get 1 Month Free Trial</string>
+    <string name="process">Process</string>
+    <string name="enable_debug_log">Enable Debug Log</string>
+    <string name="discontinue">Discontinue</string>
+    <string name="recent_report">Recent Report</string>
+    <string name="passport_no">Passport No : </string>
+    <string name="id_no">ID No : </string>
+    <string name="nationality1">Nationality : </string>
+    <string name="no_dependent_available">No Dependent available</string>
+    <string name="upgrade">Upgrade</string>
+    <string name="principle_account">Principle Account</string>
+    <string name="backup">Backup</string>
+    <string name="sync">Sync</string>
+    <string name="chat">Chat</string>
+    <string name="notification_message_sound">Notification/Message Sound</string>
+    <string name="ringtone">Ringtone</string>
+    <string name="credit_card">Credit Card</string>
+    <string name="tng">Touch `n Go</string>
+    <string name="ipay">iPay 88</string>
+    <string name="delete">Delete</string>
+    <string name="edit_principle_profile">Edit Principle Profile</string>
+    <string name="entry_requirement">Entry Requirement</string>
+    <string name="search_here">Search Here</string>
 </resources>

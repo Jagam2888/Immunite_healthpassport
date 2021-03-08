@@ -28,7 +28,12 @@ class DriveServiceHelper(var mDriveService: Drive?) {
             val mediaContent = FileContent("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", file)
             var myFile: File? = null
             try {
-                myFile = mDriveService?.files()?.create(fileMetaData, mediaContent)?.execute()
+                backupFileID=getFileIdBasedFilename(DATABASE_FILENAME)
+                if (backupFileID.isNullOrEmpty()) {
+                    myFile = mDriveService?.files()?.create(fileMetaData, mediaContent)?.execute()
+                }else{
+                    myFile=mDriveService?.files()?.update(backupFileID,fileMetaData,mediaContent)?.execute()
+                }
 
             } catch (e: Exception) {
                 e.printStackTrace()

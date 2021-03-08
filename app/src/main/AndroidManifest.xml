@@ -30,8 +30,19 @@
         android:theme="@style/Theme.Noactionbar"
         android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup">
-        <activity android:name=".ConsentAgreementActivity"
-            android:screenOrientation="portrait"></activity>
+        <activity android:name=".RestoredBackupOptionList"></activity>
+        <activity
+            android:name=".InvalidPrivateKeyActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SuccessAccountRestoredActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SacnQRActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ConsentAgreementActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ImmunizationHistoryActivity"
             android:screenOrientation="portrait"

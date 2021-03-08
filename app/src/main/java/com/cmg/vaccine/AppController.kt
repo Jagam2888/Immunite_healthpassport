@@ -80,6 +80,9 @@ class AppController : Application(),KodeinAware {
         bind() from singleton { ImmunizationHistoryRepositary(instance()) }
         bind() from provider { ImmunizationHistoryViewModelFactory(instance()) }
 
+        bind() from singleton { ExistingUserRepositary(instance(),instance(),instance()) }
+        bind() from provider { ExistingUserViewModelFactory(instance()) }
+
         //bind() from provider { MyFirebaseInstanceIDService(instance()) }
 
     }

@@ -14,7 +14,7 @@ import com.cmg.vaccine.util.toast
 import com.google.zxing.Result
 import me.dm7.barcodescanner.zxing.ZXingScannerView
 
-class ConsentAgreementActivity : AppCompatActivity(),ZXingScannerView.ResultHandler {
+class ConsentAgreementActivity : BaseActivity(),ZXingScannerView.ResultHandler {
 
     private lateinit var binding:ActivityConsentAgreementBinding
     private lateinit var mScannerView: ZXingScannerView
@@ -34,15 +34,7 @@ class ConsentAgreementActivity : AppCompatActivity(),ZXingScannerView.ResultHand
             if (binding.layoutForm.visibility == View.VISIBLE) {
                 finish()
             }else if (binding.contentframe.visibility == View.VISIBLE){
-                if (mScannerView != null)
-                    mScannerView.stopCamera()
-                binding.contentframe.removeAllViews()
-                binding.contentframe.visibility = View.GONE
-
-
-                if (binding.layoutForm.visibility == View.GONE) {
-                    binding.layoutForm.visibility = View.VISIBLE
-                }
+                showMainLayout()
             }
         }
 
@@ -56,18 +48,7 @@ class ConsentAgreementActivity : AppCompatActivity(),ZXingScannerView.ResultHand
             hideKeyBoard()
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
                 if(checkPermission()){
-                    if (binding.layoutForm.visibility == View.VISIBLE)
-                        binding.layoutForm.visibility = View.GONE
-
-                    if (binding.contentframe.visibility == View.GONE) {
-                        binding.contentframe.visibility = View.VISIBLE
-                    }
-                    binding.contentframe.addView(mScannerView)
-
-                    if (mScannerView != null) {
-                        mScannerView.setResultHandler(this)
-                        mScannerView.startCamera()
-                    }
+                    showQRFrame()
                 }else{
                     requestPermission()
                 }
@@ -86,18 +67,41 @@ class ConsentAgreementActivity : AppCompatActivity(),ZXingScannerView.ResultHand
             }
         }
 
-        //toast("Your request is being process...")
     }
 
     override fun handleResult(rawResult: Result?) {
         toast("Your request is being process...")
-        if (binding.contentframe.visibility == View.VISIBLE) {
-            binding.contentframe.visibility = View.GONE
-        }
-        binding.layoutForm.visibility = View.VISIBLE
+        showMainLayout()
         if (!rawResult.toString().isNullOrEmpty())
             binding.edtEcode.setText(rawResult.toString())
         //finish()
+    }
+
+    private fun showMainLayout(){
+
+        if (binding.contentframe.visibility == View.VISIBLE) {
+            if (mScannerView != null)
+                mScannerView.stopCamera()
+            binding.contentframe.removeAllViews()
+            binding.contentframe.visibility = View.GONE
+        }
+        binding.layoutForm.visibility = View.VISIBLE
+    }
+
+    private fun showQRFrame(){
+        if (binding.layoutForm.visibility == View.VISIBLE)
+            binding.layoutForm.visibility = View.GONE
+
+        if (binding.contentframe.visibility == View.GONE) {
+            binding.contentframe.visibility = View.VISIBLE
+            binding.contentframe.addView(mScannerView)
+
+            if (mScannerView != null) {
+                mScannerView.setResultHandler(this)
+                mScannerView.startCamera()
+            }
+        }
+
     }
 
     private fun checkPermission():Boolean{
@@ -118,26 +122,11 @@ class ConsentAgreementActivity : AppCompatActivity(),ZXingScannerView.ResultHand
                 if(grantResults.isNotEmpty()){
                     val cameraAccepted:Boolean = grantResults[0] == PackageManager.PERMISSION_GRANTED
                     if(cameraAccepted){
-                        binding.layoutForm.visibility = View.GONE
-                        if (binding.contentframe.visibility == View.GONE)
-                            binding.contentframe.visibility = View.VISIBLE
-                        binding.contentframe.addView(mScannerView)
+                        showQRFrame()
 
                     }else{
-                        if (binding.contentframe.visibility == View.VISIBLE) {
-                            binding.contentframe.visibility = View.GONE
-                        }
-                        if (binding.layoutForm.visibility == View.GONE)
-                            binding.layoutForm.visibility = View.VISIBLE
+                        showMainLayout()
                         toast("Permission Denied, You cannot access and camera")
-                        /*if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-                            if(shouldShowRequestPermissionRationale(android.Manifest.permission.CAMERA)) {
-                                showMessageOKCancel(
-                                        "You need to allow access to both the permissions",
-                                        DialogInterface.OnClickListener(function = positiveButtonClick)
-                                )
-                            }
-                        }*/
                     }
                 }
             }
@@ -158,6 +147,8 @@ class ConsentAgreementActivity : AppCompatActivity(),ZXingScannerView.ResultHand
 
         mScannerView.setResultHandler(this)
         mScannerView.startCamera()
+
+
     }
 
     override fun onDestroy() {

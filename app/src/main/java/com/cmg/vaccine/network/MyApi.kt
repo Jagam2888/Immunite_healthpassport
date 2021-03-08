@@ -7,6 +7,7 @@ import com.cmg.vaccine.model.request.SignUpReq
 import com.cmg.vaccine.model.request.UpdateProfileReq
 import com.cmg.vaccine.model.response.*
 import com.cmg.vaccine.util.Passparams
+import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -29,6 +30,9 @@ interface MyApi {
 
     @POST(Passparams.EDIT_DEPENDENT_PROFILE)
     suspend fun updateDependentProfile(@Body updateProfileReq: UpdateProfileReq):Response<DependentRegResponse>
+
+    @GET(Passparams.GET_Existing_USER)
+    suspend fun getExistingUser(@Query("privateKey") privateKey:String):Response<ResponseBody>
 
     @GET(Passparams.SEARCH_PRIVATE_KEY)
     suspend fun searchPatientVaccine(@Query("privateKey") key:String ):Response<VaccineResponse>

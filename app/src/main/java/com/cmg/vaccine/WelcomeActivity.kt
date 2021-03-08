@@ -7,6 +7,7 @@ import android.os.SystemClock
 import android.util.Log
 import androidx.databinding.DataBindingUtil
 import com.cmg.vaccine.databinding.ActivityWelcomeBinding
+import com.cmg.vaccine.fragment.WelcomeDialogFragment
 import immuniteeEncryption.EncryptionUtils
 
 class WelcomeActivity : BaseActivity() {
@@ -17,6 +18,8 @@ class WelcomeActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this,R.layout.activity_welcome)
+
+        WelcomeDialogFragment().show(supportFragmentManager,"Welcome")
 
         binding.btnNewUser.setOnClickListener {
             if (SystemClock.elapsedRealtime() - lastClickSignup<1000){
