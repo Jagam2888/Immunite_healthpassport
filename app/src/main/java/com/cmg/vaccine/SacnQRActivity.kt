@@ -1,7 +1,6 @@
 package com.cmg.vaccine
 
 import android.content.pm.PackageManager
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -65,7 +64,7 @@ class SacnQRActivity : BaseActivity(),ZXingScannerView.ResultHandler {
         grantResults: IntArray
     ) {
         when(requestCode){
-            ConsentAgreementActivity.REQUEST_CAMERA -> {
+            REQUEST_CAMERA -> {
                 if(grantResults.isNotEmpty()){
                     val cameraAccepted:Boolean = grantResults[0] == PackageManager.PERMISSION_GRANTED
                     if(cameraAccepted){

@@ -388,7 +388,7 @@ class SettingsFragment : Fragment(),KodeinAware,SimpleListener {
                 while (cellsInRow.hasNext()) {
                     val currentCell = cellsInRow.next()
                     Log.e("DOB", "1988-07-28")
-                    var encryptData = EncryptionUtils.encrypt(currentCell.stringCellValue, "1988-07-28")
+                    var encryptData = EncryptionUtils.encrypt(currentCell.stringCellValue, viewModel.dob.get())
                     currentCell.setCellValue(encryptData)
                     Log.e("Encrypted Format", currentCell.stringCellValue.toString())
                 }

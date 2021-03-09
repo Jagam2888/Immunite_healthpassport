@@ -1,9 +1,11 @@
 package com.cmg.vaccine.viewmodel
 
 import android.util.Log
+import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import androidx.lifecycle.ViewModel
 import com.cmg.vaccine.database.User
+import com.cmg.vaccine.database.WorldEntryCountries
 import com.cmg.vaccine.listener.SimpleListener
 import com.cmg.vaccine.repositary.ExistingUserRepositary
 import com.cmg.vaccine.util.APIException
@@ -26,7 +28,27 @@ class ExistingUserViewModel(
     var dob:String?=null
     var dobTime:String?=null
 
+    var dobTxt = ObservableField<String>()
+
+    var isRestoreForSync = ObservableBoolean()
+
     fun onSubmit(){
+        if (!isRestoreForSync.get()){
+            if (!privateKey.get().isNullOrEmpty()) {
+                getSyncManually()
+            }else{
+                listener?.onFailure("Please Enter or Scan Your Private key")
+            }
+        }else{
+            if (dobTxt.get().isNullOrEmpty()){
+                listener?.onFailure("Please Check your Date of Birth, Maybe Wrong or Empty")
+            }else {
+                listener?.onSuccess("restore")
+            }
+        }
+    }
+
+    private fun getSyncManually(){
         Log.d("enter","yes")
         Log.d("private_key",privateKey.get()!!)
         Couritnes.main {
@@ -57,26 +79,26 @@ class ExistingUserViewModel(
                 }
 
                 val user = User(
-                    jsonBodySecond.getString("firstName"),
-                    jsonBodySecond.getString("email"),
-                    jsonBodySecond.getString("email"),
-                    jsonBodySecond.getString("mobileNumber"),
-                    passportNo,
-                    jsonBodySecond.getString("idType"),
-                    patientIdNo,
-                    jsonBodySecond.getString("countryCode"),
-                    jsonBodySecond.getString("placeOfBirth"),
-                    jsonBodySecond.getString("gender"),
-                    jsonBodySecond.getString("nationalityCountry"),
-                    dob,
-                    dobTime,
-                    "",
-                    "",
-                    "",
-                    privateKey.get(),
-                    "",
-                    jsonBodySecond.getString("subsId"),
-                    "Y"
+                        jsonBodySecond.getString("firstName"),
+                        jsonBodySecond.getString("email"),
+                        jsonBodySecond.getString("email"),
+                        jsonBodySecond.getString("mobileNumber"),
+                        passportNo,
+                        jsonBodySecond.getString("idType"),
+                        patientIdNo,
+                        jsonBodySecond.getString("countryCode"),
+                        jsonBodySecond.getString("placeOfBirth"),
+                        jsonBodySecond.getString("gender"),
+                        jsonBodySecond.getString("nationalityCountry"),
+                        dob,
+                        dobTime,
+                        "",
+                        "",
+                        "",
+                        privateKey.get(),
+                        "",
+                        jsonBodySecond.getString("subsId"),
+                        "Y"
                 )
 
                 if (repositary.getUserCount() > 0){
@@ -87,7 +109,7 @@ class ExistingUserViewModel(
                 if (!jsonBodySecond.getString("subsId").isNullOrEmpty()) {
                     repositary.savePatientSubId(jsonBodySecond.getString("subsId"))
                 }
-                listener?.onSuccess("Restored Success")
+                listener?.onSuccess("Setup Manually Success")
 
 
                 Log.d("response_body",responseBody)
@@ -100,6 +122,38 @@ class ExistingUserViewModel(
                 listener?.onFailure(e.message!!)
             }catch (e:JSONException){
                 listener?.onFailure("invalid")
+            }
+        }
+    }
+
+    //this is the purpose of create database structure
+    fun loadWorldEntries(){
+        val getWorldEntries = repositary.getWorldEntryCountries()
+        if (getWorldEntries.isNullOrEmpty()) {
+            listener?.onStarted()
+            Couritnes.main {
+                try {
+                    val response = repositary.getWorldEntriesCountryList()
+                    if (response.data.isNotEmpty()){
+                        response.data.forEach {
+                            val worldEntryCountries = WorldEntryCountries(
+                                    it.countryName,
+                                    it.countryCodeAlpha,
+                                    it.countryMstrSeqno
+                            )
+                            repositary.insertWorldEntryCountries(worldEntryCountries)
+                        }
+                    }
+                    listener?.onSuccess("")
+                }catch (e:APIException){
+                    listener?.onFailure(e.message!!)
+                }catch (e:NoInternetException){
+                    listener?.onFailure(e.message!!)
+                }catch (e:SocketTimeoutException){
+                    listener?.onFailure(e.message!!)
+                }catch (e:JSONException){
+                    listener?.onFailure("invalid")
+                }
             }
         }
     }

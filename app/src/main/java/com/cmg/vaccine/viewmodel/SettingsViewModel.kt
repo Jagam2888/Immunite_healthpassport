@@ -1,5 +1,6 @@
 package com.cmg.vaccine.viewmodel
 
+import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,6 +13,7 @@ import com.cmg.vaccine.repositary.SettingsRepositary
 import com.cmg.vaccine.util.APIException
 import com.cmg.vaccine.util.Couritnes
 import com.cmg.vaccine.util.NoInternetException
+import com.cmg.vaccine.util.changeDateFormatForPrivateKeyDecrypt
 import java.net.SocketTimeoutException
 
 class SettingsViewModel(
@@ -21,6 +23,8 @@ class SettingsViewModel(
     val _loginPinEnable:MutableLiveData<String> = MutableLiveData()
     val loginPinEnable:LiveData<String>
     get() = _loginPinEnable
+
+    var dob = ObservableField<String>()
 
 
     var listener:SimpleListener?=null
@@ -37,6 +41,11 @@ class SettingsViewModel(
         if (loginPin != null) {
             loginPin.enable = "N"
             repositary.updateLoginPin(loginPin)
+        }
+
+        val user = repositary.getUserData()
+        if (user != null){
+            dob.set(changeDateFormatForPrivateKeyDecrypt(user.dob!!))
         }
     }
 

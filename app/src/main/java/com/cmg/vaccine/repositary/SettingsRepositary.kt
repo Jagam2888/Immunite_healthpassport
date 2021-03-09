@@ -1,9 +1,6 @@
 package com.cmg.vaccine.repositary
 
-import com.cmg.vaccine.database.AppDatabase
-import com.cmg.vaccine.database.LoginPin
-import com.cmg.vaccine.database.TestReport
-import com.cmg.vaccine.database.Vaccine
+import com.cmg.vaccine.database.*
 import com.cmg.vaccine.model.response.*
 import com.cmg.vaccine.network.MyApi
 import com.cmg.vaccine.network.SafeAPIRequest
@@ -62,7 +59,11 @@ class SettingsRepositary(
     }
 
     fun getPrivateKey():String?{
-        return preferenceProvider.getPrincipalPrivateKey()
+        return database.getDao().getPrivateKey(preferenceProvider.getSubId()!!)
+    }
+
+    fun getUserData():User{
+        return database.getDao().getUserData(preferenceProvider.getSubId()!!)
     }
 
     /*suspend fun getTestReportList(subsId:String): TestReportListResponse {

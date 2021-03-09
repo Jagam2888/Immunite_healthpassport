@@ -32,31 +32,36 @@
                 android:paddingRight="20dp"
                 android:paddingLeft="20dp">
 
-                <LinearLayout
+                <RadioGroup
+                    android:id="@+id/radio_group"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:checkedButton="@id/radio_manually"
                     android:orientation="horizontal">
 
-                    <TextView
+                    <RadioButton
+                        android:id="@+id/radio_manually"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/setup_manually"
-                        android:background="@drawable/backup_bg"
-                        android:textColor="@color/white"
+                        android:button="@null"
+                        android:background="@drawable/existing_user_radio_btn"
                         android:paddingLeft="20dp"
                         android:paddingRight="20dp"
                         android:paddingBottom="20dp"
                         android:paddingTop="20dp"
                         android:layout_weight="1"
                         android:gravity="center_horizontal"
-                        style="@style/opens_bold" />
+                        style="@style/opens_bold"
+                        android:textColor="@color/radio_button_text_color"/>
 
-                    <TextView
-                        android:id="@+id/btn_restore"
+                    <RadioButton
+                        android:id="@+id/radio_restore"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/restore_backup"
-                        android:background="@drawable/backup_outline_bg"
+                        android:button="@null"
+                        android:background="@drawable/existing_user_radio_btn"
                         android:paddingLeft="20dp"
                         android:paddingRight="20dp"
                         android:paddingBottom="20dp"
@@ -64,8 +69,9 @@
                         android:layout_weight="1"
                         android:layout_marginLeft="20dp"
                         android:gravity="center_horizontal"
-                        style="@style/opens_bold" />
-                </LinearLayout>
+                        style="@style/opens_bold"
+                        android:textColor="@color/radio_button_text_color"/>
+                </RadioGroup>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -99,6 +105,7 @@
                         android:inputType="number"
                         android:textColorHint="@color/gray"
                         android:textColor="@color/black"
+
                         android:hint="dd/mm/yyyy"
                         android:background="@null"
                         android:paddingBottom="10dp"

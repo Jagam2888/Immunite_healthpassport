@@ -83,6 +83,9 @@ class AppController : Application(),KodeinAware {
         bind() from singleton { ExistingUserRepositary(instance(),instance(),instance()) }
         bind() from provider { ExistingUserViewModelFactory(instance()) }
 
+        bind() from singleton { RestoreBackupOptionListRepositary(instance(),instance()) }
+        bind() from provider { RestoreBackupOptionListViewModelFactory(instance()) }
+
         //bind() from provider { MyFirebaseInstanceIDService(instance()) }
 
     }

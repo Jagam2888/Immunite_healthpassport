@@ -29,11 +29,12 @@ class DriveServiceHelper(var mDriveService: Drive?) {
             var myFile: File? = null
             try {
                 backupFileID=getFileIdBasedFilename(DATABASE_FILENAME)
-                if (backupFileID.isNullOrEmpty()) {
+                    myFile = mDriveService?.files()?.create(fileMetaData, mediaContent)?.execute()
+                /*if (backupFileID.isNullOrEmpty()) {
                     myFile = mDriveService?.files()?.create(fileMetaData, mediaContent)?.execute()
                 }else{
                     myFile=mDriveService?.files()?.update(backupFileID,fileMetaData,mediaContent)?.execute()
-                }
+                }*/
 
             } catch (e: Exception) {
                 e.printStackTrace()

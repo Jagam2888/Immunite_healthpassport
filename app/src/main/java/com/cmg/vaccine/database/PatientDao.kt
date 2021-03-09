@@ -41,6 +41,9 @@ interface PatientDao {
     @Query("SELECT * FROM User where parentSubscriberId = :subsId")
     fun getUserData(subsId:String):User
 
+    @Query("SELECT * FROM User")
+    fun getExistingUserData():User
+
     @Query("SELECT profileImage FROM User WHERE parentSubscriberId =:subsId")
     fun getParentProfileImage(subsId: String):String
 

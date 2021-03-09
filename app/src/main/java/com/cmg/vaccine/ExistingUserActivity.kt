@@ -5,18 +5,30 @@ import android.os.Bundle
 import android.os.SystemClock
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.cmg.vaccine.databinding.ActivityExistingUserBinding
+import com.cmg.vaccine.fragment.SettingsFragment
 import com.cmg.vaccine.listener.SimpleListener
+import com.cmg.vaccine.services.DriveServiceHelper
 import com.cmg.vaccine.util.*
 import com.cmg.vaccine.viewmodel.ExistingUserViewModel
 import com.cmg.vaccine.viewmodel.viewmodelfactory.ExistingUserViewModelFactory
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.Scope
+import com.google.api.client.extensions.android.http.AndroidHttp
+import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential
+import com.google.api.client.json.gson.GsonFactory
+import com.google.api.services.drive.Drive
+import com.google.api.services.drive.DriveScopes
 import immuniteeEncryption.EncryptionUtils
 import io.paperdb.Paper
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
+import java.util.*
 
 class ExistingUserActivity : BaseActivity(),KodeinAware,SimpleListener {
     override val kodein by kodein()
@@ -25,8 +37,12 @@ class ExistingUserActivity : BaseActivity(),KodeinAware,SimpleListener {
     var lastClickTimeDOB:Long = 0
     var lastClickTimeQr:Long = 0
     var qrCodeValue = ""
+    var isRestoreFromBackup = false
+
 
     private val factory:ExistingUserViewModelFactory by instance()
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,6 +59,10 @@ class ExistingUserActivity : BaseActivity(),KodeinAware,SimpleListener {
 
     private fun initViews(){
         Paper.book().write(Passparams.QR_CODE_VALUE,"")
+        viewModel.isRestoreForSync.set(false)
+
+
+
         binding.btnDobCalender.setOnClickListener {
             if (SystemClock.elapsedRealtime() - lastClickTimeDOB<1000){
                 return@setOnClickListener
@@ -63,7 +83,9 @@ class ExistingUserActivity : BaseActivity(),KodeinAware,SimpleListener {
 
                 if ((!validateDateFormat(binding.edtDob.text.toString())) and (binding.edtDob.text?.isNotEmpty() == true)){
                     binding.edtDob.error = "Sorry! Invalid Date of Birth"
+                    viewModel.dobTxt.set("")
                 }else{
+                    viewModel.dobTxt.set(binding.edtDob.text.toString())
                     binding.edtDob.error = null
                 }
             }
@@ -85,15 +107,29 @@ class ExistingUserActivity : BaseActivity(),KodeinAware,SimpleListener {
             }
         }
 
+        binding.radioGroup.setOnCheckedChangeListener { group, checkedId ->
+            when(checkedId){
+                R.id.radio_restore ->{
+                    isRestoreFromBackup = true
+                    viewModel.isRestoreForSync.set(true)
+                    viewModel.loadWorldEntries()
+                    true
+                }
+                R.id.radio_manually ->{
+                    isRestoreFromBackup = false
+                    viewModel.isRestoreForSync.set(false)
+                    true
+                }
+        }
+        }
+
         /*binding.btnSubmit.setOnClickListener {
             Log.d("decrypt_email",decryptQRValue(qrCodeValue, changeDateFormatForPrivateKeyDecrypt(binding.edtDob.text.toString())!!)!!)
         }*/
 
-        binding.btnRestore.setOnClickListener {
-            Intent(this,RestoredBackupOptionList::class.java).also {
-                startActivity(it)
-            }
-        }
+        /*binding.btnRestore.setOnClickListener {
+            viewModel.loadWorldEntries()
+        }*/
     }
 
     fun decryptQRValue(key:String,dob:String):String?{
@@ -116,9 +152,19 @@ class ExistingUserActivity : BaseActivity(),KodeinAware,SimpleListener {
 
     override fun onSuccess(msg: String) {
         hide(binding.progressBar)
-        Intent(this,SuccessAccountRestoredActivity::class.java).also {
-            it.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-            startActivity(it)
+        if (!msg.isNullOrEmpty()) {
+            if (msg.equals("restore", true)) {
+                Intent(this, RestoredBackupOptionList::class.java).also {
+                    it.putExtra(Passparams.USER_DOB, changeDateFormatForPrivateKeyDecrypt(viewModel.dobTxt.get()!!))
+                    startActivity(it)
+                }
+            } else {
+                toast(msg)
+                Intent(this, SuccessAccountRestoredActivity::class.java).also {
+                    it.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                    startActivity(it)
+                }
+            }
         }
     }
 
