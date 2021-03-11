@@ -30,6 +30,7 @@ class TellUsMoreViewModel(
     var city:MutableLiveData<String> = MutableLiveData()
     var state:MutableLiveData<String> = MutableLiveData()
     var passportNo:MutableLiveData<String> = MutableLiveData()
+    var passportExpDate:MutableLiveData<String> = MutableLiveData()
     var idNo:MutableLiveData<String> = MutableLiveData()
     var idType:MutableLiveData<String> = MutableLiveData()
     var selectedItemNationalityCode = ObservableInt()

@@ -107,7 +107,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/button_background"
-                    android:text="Get 1 Month Free Trial"
+                    android:text="@string/get_1_month_free_trail"
                     android:textColor="@color/white"
                     android:textSize="16sp"
                     android:textAppearance="@style/opens_bold"

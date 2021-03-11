@@ -109,6 +109,10 @@ class HomeViewModel(
         }
 
         _users.value = listuser
+
+        if (!parent.privateKey.isNullOrEmpty()){
+            _privateKey.value = parent.privateKey
+        }
     }
 
 
@@ -249,9 +253,9 @@ class HomeViewModel(
                 dashboard1.passportNo = dependent.passportNo
                 dashboard1.idNo = dependent.idNo
                 dashboard1.relationShip = dependent.relationship
-                dashboard1.data = vaccineList.value
+                //dashboard1.data = vaccineList.value
                 dashboard1.privateKey = dependent.privateKey
-                dashboard1.dataTest = testReportList.value
+                //dashboard1.dataTest = testReportList.value
                 dashboard1.subId = dependent.subsId
                 dashboard1.dob = dependent.dob
                 dashboard1.profileImg = dependent.profileImage
@@ -362,6 +366,25 @@ class HomeViewModel(
         }else{
             _privateKey.value = getUser.privateKey
             listener?.onSuccess("${getUser.privateKey}|${getUser.firstName}|${getUser.dob}")
+        }
+    }
+
+    fun updatePrivateKeyStatus(subId: String,status:String){
+        Couritnes.main {
+            try {
+                val response = repositary.updatePrivateKeyStatus(subId,status)
+                if (response.StatusCode == 1){
+                    listener?.onSuccess(response.Message)
+                }else{
+                    listener?.onFailure(response.Message)
+                }
+            }catch (e: APIException) {
+                listener?.onFailure(e.message!!)
+            } catch (e: NoInternetException) {
+                listener?.onFailure(e.message!!)
+            } catch (e: SocketTimeoutException) {
+                listener?.onFailure(e.message!!)
+            }
         }
     }
 

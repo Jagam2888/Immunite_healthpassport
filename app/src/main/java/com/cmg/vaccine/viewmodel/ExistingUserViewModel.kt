@@ -1,6 +1,7 @@
 package com.cmg.vaccine.viewmodel
 
 import android.util.Log
+import android.view.View
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import androidx.lifecycle.ViewModel
@@ -8,10 +9,7 @@ import com.cmg.vaccine.database.User
 import com.cmg.vaccine.database.WorldEntryCountries
 import com.cmg.vaccine.listener.SimpleListener
 import com.cmg.vaccine.repositary.ExistingUserRepositary
-import com.cmg.vaccine.util.APIException
-import com.cmg.vaccine.util.Couritnes
-import com.cmg.vaccine.util.NoInternetException
-import com.cmg.vaccine.util.changeDateFormatNormal
+import com.cmg.vaccine.util.*
 import org.json.JSONException
 import org.json.JSONObject
 import java.net.SocketTimeoutException
@@ -32,10 +30,10 @@ class ExistingUserViewModel(
 
     var isRestoreForSync = ObservableBoolean()
 
-    fun onSubmit(){
+    fun onSubmit(view:View){
         if (!isRestoreForSync.get()){
             if (!privateKey.get().isNullOrEmpty()) {
-                getSyncManually()
+                getSyncManually(view)
             }else{
                 listener?.onFailure("Please Enter or Scan Your Private key")
             }
@@ -48,7 +46,29 @@ class ExistingUserViewModel(
         }
     }
 
-    private fun getSyncManually(){
+    private fun updateUUID(view: View){
+        Couritnes.main {
+            try {
+                val response = repositary.updateUUID(repositary.getPatientSubId()!!,view.context.getDeviceUUID()!!)
+                if (response.StatusCode == 1){
+                    listener?.onSuccess(response.Message)
+                    listener?.onSuccess("Setup Manually Success")
+                }else{
+                    listener?.onFailure(response.Message)
+                }
+            }catch (e:APIException){
+                listener?.onFailure(e.message!!)
+            }catch (e:NoInternetException){
+                listener?.onFailure(e.message!!)
+            }catch (e:SocketTimeoutException){
+                listener?.onFailure(e.message!!)
+            }catch (e:JSONException){
+                listener?.onFailure("invalid")
+            }
+        }
+    }
+
+    private fun getSyncManually(view: View){
         Log.d("enter","yes")
         Log.d("private_key",privateKey.get()!!)
         Couritnes.main {
@@ -108,8 +128,11 @@ class ExistingUserViewModel(
                 repositary.insertUserLocalDb(user)
                 if (!jsonBodySecond.getString("subsId").isNullOrEmpty()) {
                     repositary.savePatientSubId(jsonBodySecond.getString("subsId"))
+                    updateUUID(view)
+                }else{
+                    listener?.onFailure("Sub id missing")
                 }
-                listener?.onSuccess("Setup Manually Success")
+                //listener?.onSuccess("Setup Manually Success")
 
 
                 Log.d("response_body",responseBody)

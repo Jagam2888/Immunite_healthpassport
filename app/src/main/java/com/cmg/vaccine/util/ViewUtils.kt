@@ -42,7 +42,7 @@ import javax.crypto.*
 import javax.crypto.spec.SecretKeySpec
 
 fun Context.toast(message: String){
-    Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+    Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
 }
 
 fun show(progressBar: ProgressBar){
@@ -104,6 +104,26 @@ fun Context.showDatePickerDialog(editText: EditText){
     datePicker.show()
 }
 
+fun Context.showDatePickerDialogForPassport(editText: EditText){
+    val calender = Calendar.getInstance()
+    val year = calender.get(Calendar.YEAR)
+    val month = calender.get(Calendar.MONTH)
+    val day = calender.get(Calendar.DAY_OF_MONTH)
+    val format = SimpleDateFormat("ddMMyyyy")
+
+    val datePicker = DatePickerDialog(
+            this,
+            DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+                calender.set(year, month, dayOfMonth)
+                val dateDob = format.format(calender.time)
+                editText.setText(dateDob)
+            }, year, month, day
+    )
+    datePicker.datePicker.minDate = System.currentTimeMillis()
+
+    datePicker.show()
+}
+
 fun validateTime(time:String):Boolean{
     if (time.isNullOrEmpty())
         return false
@@ -121,32 +141,24 @@ fun validateTime(time:String):Boolean{
 
 
 fun validateDateFormat(date: String):Boolean{
-    //val formatPattern = "^(1[0-9]|0[1-9]|3[0-1]|2[1-9])/(0[1-9]|1[0-2])/[0-9]{4}\$"
     val formatPattern = "^(0?[1-9]|[12][0-9]|3[01])/(0?[1-9]|1[012])/((?:19|20)[0-9][0-9])"
     val pattern = Pattern.compile(formatPattern)
     val matcher = pattern.matcher(date)
-    /*if (date.isNullOrEmpty() or !matcher.matches()){
-        return false
-    }
-    val dateFormat = SimpleDateFormat("dd/MM/yyyy")
-    return try {
-        dateFormat.parse(date)
-        true
-    } catch (e: ParseException) {
-        false
-    }*/
     var result = false
     if (date.isNullOrEmpty() or !matcher.matches()){
         return result
     }else{
         result = true
         val currentYear = Calendar.getInstance().get(Calendar.YEAR)
+
         val year = matcher.group(3).toInt()
         if (year > currentYear){
             result = false
         }
         val month = matcher.group(2).toString()
         val day = matcher.group(1).toString()
+
+
 
         if ((month == "4" || month == "6" || month == "9" ||
                     month == "04" || month == "06" || month == "09" ||
@@ -168,6 +180,52 @@ fun validateDateFormat(date: String):Boolean{
 fun isLeapYear(year:Int):Boolean {
     return ((year % 4 == 0) and ((year % 100 != 0) or (year % 400 == 0)));
 }
+
+fun validateDateFormatForPassport(date: String):Boolean{
+    val formatPattern = "^(0?[1-9]|[12][0-9]|3[01])/(0?[1-9]|1[012])/((?:19|20)[0-9][0-9])"
+    val pattern = Pattern.compile(formatPattern)
+    val matcher = pattern.matcher(date)
+    var result = false
+    if (date.isNullOrEmpty() or !matcher.matches()){
+        return result
+    }else{
+        result = true
+        val currentYear = Calendar.getInstance().get(Calendar.YEAR)
+        val currentMonth=Calendar.getInstance().get(Calendar.MONTH)+1
+        val currentDay=Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
+
+        val year = matcher.group(3).toInt()
+        val month = matcher.group(2).toString()
+        val day = matcher.group(1).toString()
+
+
+        if (year < currentYear) {
+            result = false
+        }
+        if(year <= currentYear && month.toInt() < currentMonth)
+        {
+            result = false
+        }
+        if(year <= currentYear && month.toInt() <= currentMonth && day.toInt()< currentDay)
+        {
+            result = false
+        }
+
+        if ((month == "4" || month == "6" || month == "9" || month == "04" || month == "06" || month == "09" || month == "11") && day == "31") {
+            result = false;
+        } else if (month == "2" || month == "02") {
+            if (day == "30" || day == "31") {
+                result = false;
+            } else if (day == "29") {  // leap year? feb 29 days.
+                if (!isLeapYear(year)) {
+                    result = false;
+                }
+            }
+        }
+        return result
+    }
+}
+
 
 fun Context.showTimepickerDialog(editText: EditText, currentTime: String){
     val sdf = SimpleDateFormat("HHmm")
@@ -271,8 +329,19 @@ fun changeDateFormatISO8601(dateString: String):String?{
     return ""
 }
 fun changeDateFormatNormal(dateString: String):String?{
-    val resultFormat = SimpleDateFormat("dd/MM/yyyy HH:mm:ss")
+    val resultFormat = SimpleDateFormat("dd/MM/yyyy HH:mm")
     val isoFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
+    try {
+        val date = isoFormat.parse(dateString)
+        return resultFormat.format(date)
+    }catch (e: ParseException){
+        e.printStackTrace()
+    }
+    return ""
+}
+fun changeDateFormatBC(dateString: String):String?{
+    val resultFormat = SimpleDateFormat("dd/MM/yyyy HH:mm")
+    val isoFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
     try {
         val date = isoFormat.parse(dateString)
         return resultFormat.format(date)
@@ -320,6 +389,10 @@ fun Context.getCurrentCountryName():String?{
     //}
 
     return country
+}
+
+fun decryptQRValue(key:String,dob:String):String?{
+    return EncryptionUtils.decryptBackupKey(key,dob)
 }
 
 fun Context.getLastLocation():Location? {

@@ -62,6 +62,7 @@ class SettingsFragment : Fragment(),KodeinAware,SimpleListener {
     private val GOOGLE_DRIVE_DB_LOCATION = "db"
     private lateinit var driveServiceHelper: DriveServiceHelper
     var isGoogleSiginSuccess:Boolean = false
+    var dateOfBirth:String?=null
 
     companion object{
         var resultTitle: String? = null
@@ -88,6 +89,9 @@ class SettingsFragment : Fragment(),KodeinAware,SimpleListener {
         binding.lifecycleOwner = this
 
         viewModel.listener = this
+
+        dateOfBirth = viewModel.dob.get()
+        Log.d("dob",dateOfBirth!!)
 
         binding.layoutAbout.setOnClickListener {
             hideMainLayout()
@@ -116,8 +120,7 @@ class SettingsFragment : Fragment(),KodeinAware,SimpleListener {
         }
 
         binding.layoutBackup.setOnClickListener {
-            hideMainLayout()
-            binding.backup.visibility = View.VISIBLE
+
             requestSignIn()
         }
 
@@ -153,6 +156,7 @@ class SettingsFragment : Fragment(),KodeinAware,SimpleListener {
 
         layout_version_relase.setOnClickListener {
             showReleaseAppVersion()
+
         }
 
         viewModel.loginPinEnable.observe(viewLifecycleOwner, Observer { status ->
@@ -329,6 +333,8 @@ class SettingsFragment : Fragment(),KodeinAware,SimpleListener {
                 isGoogleSiginSuccess = true
                 context?.toast("Login In Success")
                 driveServiceHelper= DriveServiceHelper(googleDriveService)
+                hideMainLayout()
+                binding.backup.visibility = View.VISIBLE
             }
             .addOnFailureListener { exception ->
                 Log.e("Indicator", "Fail to Login")
@@ -388,7 +394,7 @@ class SettingsFragment : Fragment(),KodeinAware,SimpleListener {
                 while (cellsInRow.hasNext()) {
                     val currentCell = cellsInRow.next()
                     Log.e("DOB", "1988-07-28")
-                    var encryptData = EncryptionUtils.encrypt(currentCell.stringCellValue, viewModel.dob.get())
+                    var encryptData = EncryptionUtils.encrypt(currentCell.stringCellValue, dateOfBirth)
                     currentCell.setCellValue(encryptData)
                     Log.e("Encrypted Format", currentCell.stringCellValue.toString())
                 }
@@ -431,7 +437,7 @@ class SettingsFragment : Fragment(),KodeinAware,SimpleListener {
 
         //var dataPath= activity?.getExternalFilesDir(null)?.absolutePath.toString()+ "/data.xls"
         var excelPath= activity?.getExternalFilesDir(null)?.absolutePath.toString()+ FILE_NAME
-        driveServiceHelper.createFilePDF(excelPath)?.addOnSuccessListener(
+        driveServiceHelper.backUpFile(excelPath)?.addOnSuccessListener(
             OnSuccessListener {
                 hide(binding.progressBar)
                 context?.toast("Your Backup is Successfully uploaded")

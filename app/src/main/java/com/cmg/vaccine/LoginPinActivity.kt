@@ -37,6 +37,8 @@ class LoginPinActivity : BaseActivity(),KodeinAware,SimpleListener {
 
         viewModel.listener = this
 
+        binding.edtTxt.requestFocus()
+
 
 
         loginStatus = intent.extras?.getString(Passparams.ISCREATE,"")
@@ -116,10 +118,10 @@ class LoginPinActivity : BaseActivity(),KodeinAware,SimpleListener {
                         if (editable.length == 4){
                             //if (!isDoneReEnter) {
                                 if (viewModel.getPin.value!!.pin.equals(editable.toString())){
+                                    hideKeyBoard()
                                 Intent(this@LoginPinActivity,MainActivity::class.java).also {
                                     it.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                                     startActivity(it)
-                                    finish()
                                 }
                                 }else{
                                     toast("Incorrect PIN")

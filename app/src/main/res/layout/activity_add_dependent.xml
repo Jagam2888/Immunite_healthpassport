@@ -491,6 +491,54 @@
                     android:textSize="14sp"
                     android:background="@drawable/edittext_background"
                     android:inputType="text"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/passport_expiry_date"
+                        android:textColor="@color/gray"
+                        android:layout_marginTop="10dp"
+                        android:textAppearance="@style/opens_regular"
+                        android:textSize="14sp" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/edittext_background"
+                        android:layout_marginTop="5dp">
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/btn_date_calender"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:background="@drawable/calender_icon"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="10dp"/>
+
+                        <com.vicmikhailau.maskededittext.MaskedEditText
+                            android:id="@+id/edt_passport_exp_date"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="@style/opens_regular"
+                            android:textSize="14sp"
+                            android:maxLines="1"
+                            android:cursorVisible="true"
+                            android:focusable="true"
+                            android:focusableInTouchMode="true"
+                            android:hint="dd/mm/yyyy"
+                            app:mask="##/##/####"
+                            android:inputType="number"
+                            android:text="@={dependentViewModel.passportExpDate}"
+                            android:textColorHint="@color/gray"
+                            android:textColor="@color/black"
+                            android:background="@null"
+                            android:paddingBottom="10dp"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp"
+                            android:paddingTop="10dp"
+                            android:imeOptions="actionNext"
+                            android:layout_toLeftOf="@id/btn_date_calender"
+                            android:layout_marginRight="20dp"/>
+                    </RelativeLayout>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -610,27 +658,41 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp">
 
-                        <EditText
-                            android:id="@+id/edt_voucher"
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="110dp"
-                            android:textColor="@color/black"
-                            android:hint="Encrypted Private Key"
-                            android:textColorHint="@color/blue"
-                            android:textAppearance="@style/opens_regular"
-                            android:textSize="14sp"
-                            android:drawableLeft="@drawable/shield_icon"
+                            android:orientation="horizontal"
                             android:background="@drawable/edittext_background"
-                            android:maxLines="4"
-                            android:minLines="4"
-                            android:paddingRight="10dp"
-                            android:paddingLeft="10dp"
-                            android:paddingBottom="10dp"
-                            android:paddingTop="10dp"
-                            android:layout_marginTop="5dp" />
+                            android:layout_marginTop="5dp">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/shield_icon"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginLeft="5dp"/>
+
+                            <EditText
+                                android:id="@+id/edt_qr_code"
+                                android:layout_width="244dp"
+                                android:layout_height="match_parent"
+                                android:background="@null"
+                                android:gravity="top"
+                                android:hint="Encrypted Private Key"
+                                android:maxLines="4"
+                                android:minLines="4"
+                                android:paddingLeft="5dp"
+                                android:paddingTop="10dp"
+                                android:paddingRight="5dp"
+                                android:paddingBottom="10dp"
+                                android:textAppearance="@style/opens_regular"
+                                android:textColor="@color/black"
+                                android:textColorHint="@color/gray"
+                                android:textSize="14sp" />
+                        </LinearLayout>
 
                         <LinearLayout
-                            android:id="@+id/btn_nfc"
+                            android:id="@+id/btn_scan_qr"
                             android:layout_width="wrap_content"
                             android:layout_height="110dp"
                             android:orientation="vertical"

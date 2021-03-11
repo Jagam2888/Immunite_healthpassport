@@ -1,6 +1,7 @@
 package com.cmg.vaccine.viewmodel
 
 import android.content.Context
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import androidx.databinding.ObservableBoolean
@@ -23,6 +24,8 @@ import com.cmg.vaccine.model.request.UpdateProfileReq
 import com.cmg.vaccine.model.request.UpdateProfileReqData
 import com.cmg.vaccine.repositary.DependentRepositary
 import com.cmg.vaccine.util.*
+import org.json.JSONException
+import org.json.JSONObject
 import java.net.SocketTimeoutException
 import kotlin.concurrent.fixedRateTimer
 
@@ -39,6 +42,7 @@ class DependentViewModel(
     var city = ObservableField<String>()
     var state = ObservableField<String>()
     var passportNumber:MutableLiveData<String> = MutableLiveData()
+    var passportExpDate:MutableLiveData<String> = MutableLiveData()
     var country:MutableLiveData<String> = MutableLiveData()
     var gender:MutableLiveData<String> = MutableLiveData()
     var idNo:MutableLiveData<String> = MutableLiveData()
@@ -83,6 +87,8 @@ class DependentViewModel(
 
     var userSubId:MutableLiveData<String> = MutableLiveData()
     var profileImageUri = ObservableField<String>()
+
+    var existingUserprivateKey = ObservableField<String>()
 
     val clicksListener = object : AdapterView.OnItemSelectedListener {
         override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -256,6 +262,101 @@ class DependentViewModel(
             }
         }else{
             listener?.onFailure("Please accept Terms and conditions")
+        }
+    }
+
+    private fun getSyncManually(view: View){
+        Log.d("enter","yes")
+        Log.d("private_key",existingUserprivateKey.get()!!)
+        Couritnes.main {
+            try {
+                listener?.onStarted()
+                val response = repositary.getExistingUser(existingUserprivateKey.get()!!)
+
+                val responseBody = response.string()
+                val jsonBody = JSONObject(responseBody)
+                val jsonBodyFirst = jsonBody.getJSONObject("data")
+                val jsonBodySecond = jsonBodyFirst.getJSONObject("data")
+
+                if (jsonBodySecond.has("passportNo")) {
+                    passportNumber.value = jsonBodySecond.optString("passportNo")
+                }
+
+                if (jsonBodySecond.has("idNo")) {
+                    idNo.value = jsonBodySecond.optString("idNo")
+                }
+
+                fullName.value = jsonBodySecond.getString("firstName")
+                email.value = jsonBodySecond.getString("email")
+                contactNumber.value = jsonBodySecond.getString("mobileNumber")
+                selectedItemContactCode.set(jsonBodySecond.getString("countryCode"))
+                jsonBodySecond.getString("gender").run {
+                    genderEnum = when(this){
+                        "M" -> Gender.M
+                        "F" -> Gender.F
+                        else -> Gender.O
+                    }
+                }
+                selectedItemNationalityCode.set(selectedCountryName(jsonBodySecond.getString("nationalityCountry"),countryList!!))
+                selectedItemBirthPlaceCode.set(selectedCountryName(jsonBodySecond.getString("placeOfBirth"),countryList!!))
+                idType.value = jsonBodySecond.getString("idType")
+
+                if (jsonBodySecond.has("dob")){
+                    if (!jsonBodySecond.getString("dob").isNullOrEmpty()) {
+                        val isoFormat = changeDateFormatNormal(jsonBodySecond.getString("dob"))
+                        var dobFormatArray = isoFormat?.split(" ")
+                        dob.value = dobFormatArray?.get(0)
+                        dobTime.value = dobFormatArray?.get(1)
+                    }
+                }
+
+                onClick(view)
+
+                /*val user = User(
+                    jsonBodySecond.getString("firstName"),
+                    jsonBodySecond.getString("email"),
+                    jsonBodySecond.getString("email"),
+                    jsonBodySecond.getString("mobileNumber"),
+                    passportNo,
+                    jsonBodySecond.getString("idType"),
+                    patientIdNo,
+                    jsonBodySecond.getString("countryCode"),
+                    jsonBodySecond.getString("placeOfBirth"),
+                    jsonBodySecond.getString("gender"),
+                    jsonBodySecond.getString("nationalityCountry"),
+                    dob,
+                    dobTime,
+                    "",
+                    "",
+                    "",
+                    existingUserprivateKey.get(),
+                    "",
+                    jsonBodySecond.getString("subsId"),
+                    "Y"
+                )
+
+                if (repositary.getUserCount() > 0){
+                    repositary.deleteOldUser()
+                }
+
+                repositary.insertUserLocalDb(user)
+                if (!jsonBodySecond.getString("subsId").isNullOrEmpty()) {
+                    repositary.savePatientSubId(jsonBodySecond.getString("subsId"))
+                }*/
+                listener?.onSuccess("Setup Manually Success")
+
+
+                Log.d("response_body",responseBody)
+
+            }catch (e:APIException){
+                listener?.onFailure(e.message!!)
+            }catch (e:NoInternetException){
+                listener?.onFailure(e.message!!)
+            }catch (e:SocketTimeoutException){
+                listener?.onFailure(e.message!!)
+            }catch (e: JSONException){
+                listener?.onFailure("invalid")
+            }
         }
     }
 

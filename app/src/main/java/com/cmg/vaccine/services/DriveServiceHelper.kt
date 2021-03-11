@@ -19,7 +19,7 @@ class DriveServiceHelper(var mDriveService: Drive?) {
     private val DATABASE_FILENAME="immunitees"
       var backupFileID:String?=null
 
-    fun createFilePDF(filePath: String?): Task<String>? {
+    fun backUpFile(filePath: String?): Task<String>? {
         return Tasks.call(mExecutor, {
 
             val fileMetaData = File()
@@ -29,12 +29,12 @@ class DriveServiceHelper(var mDriveService: Drive?) {
             var myFile: File? = null
             try {
                 backupFileID=getFileIdBasedFilename(DATABASE_FILENAME)
-                    myFile = mDriveService?.files()?.create(fileMetaData, mediaContent)?.execute()
-                /*if (backupFileID.isNullOrEmpty()) {
+                    //myFile = mDriveService?.files()?.create(fileMetaData, mediaContent)?.execute()
+                if (backupFileID.isNullOrEmpty()) {
                     myFile = mDriveService?.files()?.create(fileMetaData, mediaContent)?.execute()
                 }else{
                     myFile=mDriveService?.files()?.update(backupFileID,fileMetaData,mediaContent)?.execute()
-                }*/
+                }
 
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -48,34 +48,29 @@ class DriveServiceHelper(var mDriveService: Drive?) {
 
 
     fun downloadFile(fileSaveLocation: java.io.File?): Task<Void?>? {
-        return Tasks.call(mExecutor, object : Callable<Void?> {
-            @Throws(java.lang.Exception::class)
-            override fun call(): Void? {
-                // Retrieve the metadata as a File object.
-                var id = getFileIdBasedFilename(DATABASE_FILENAME)
-                Log.e("id", id.toString())
-                Log.e("path", fileSaveLocation.toString())
-                val outputStream: OutputStream = FileOutputStream(fileSaveLocation)
-                mDriveService?.files()?.get(id)?.executeMediaAndDownloadTo(outputStream)
-                return null
-            }
+        return Tasks.call(mExecutor, {
+            // Retrieve the metadata as a File object.
+            var id = getFileIdBasedFilename(DATABASE_FILENAME)
+            Log.e("id", id.toString())
+            Log.e("path", fileSaveLocation.toString())
+            val outputStream: OutputStream = FileOutputStream(fileSaveLocation)
+            mDriveService?.files()?.get(id)?.executeMediaAndDownloadTo(outputStream)
+            null
         })
     }
 
 
-    fun getFileIdBasedFilename(name: String): String? {
-        val result = mDriveService?.files()?.list()?.execute()
-        if (result != null) {
-            for (file in result.files) {
-                if(file.name==name)
-                {
-                    Log.e("File exist", "Found with " + file.id)
-                    return file.id
-                }
+    private fun getFileIdBasedFilename(name: String): String? {
+        val result = mDriveService?.files()?.list()?.setQ("trashed = false")?.execute()
+        result?.files?.forEach {
+            Log.d("drive_file_name",it.name)
+            if (it.name.equals(name)){
+                Log.d("File exist", "Found with " + it.id)
+                return it.id
             }
         }
 
-        Log.e("File exist", "Not Found")
+        Log.d("File exist", "Not Found")
         return null
     }
 

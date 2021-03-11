@@ -10,6 +10,7 @@ import com.cmg.vaccine.model.response.DependentRegResponse
 import com.cmg.vaccine.network.MyApi
 import com.cmg.vaccine.network.SafeAPIRequest
 import com.cmg.vaccine.prefernces.PreferenceProvider
+import okhttp3.ResponseBody
 
 class DependentRepositary(
     private val api: MyApi,
@@ -55,5 +56,11 @@ class DependentRepositary(
 
     fun getProfileImage(subsId: String):String?{
         return database.getDao().getDependentProfileImage(subsId)
+    }
+
+    suspend fun getExistingUser(privateKey:String): ResponseBody {
+        return apiRequest {
+            api.getExistingUser(privateKey)
+        }
     }
 }

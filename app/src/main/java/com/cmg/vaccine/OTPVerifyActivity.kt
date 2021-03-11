@@ -4,6 +4,8 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
@@ -127,6 +129,22 @@ class OTPVerifyActivity : BaseActivity(),KodeinAware,SimpleListener{
             startTimer()
             binding.txtResendOtp.visibility = View.GONE
         }
+
+        binding.edtTxt.addTextChangedListener(object :TextWatcher{
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(editable: Editable?) {
+                if (!editable.isNullOrEmpty()) {
+                    if (editable.length == 6) {
+                        viewModel.onClick()
+                    }
+                }
+            }
+        })
 
         binding.btnActivate.setOnEditorActionListener(TextView.OnEditorActionListener { v, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {

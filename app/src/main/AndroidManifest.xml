@@ -106,7 +106,8 @@
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".LoginPinActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateVisible"/>
         <activity
             android:name=".OTPVerifyActivity"
             android:screenOrientation="portrait"

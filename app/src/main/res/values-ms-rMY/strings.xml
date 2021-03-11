@@ -10,6 +10,7 @@
     <string name="id_type">Jenis ID</string>
     <string name="email">E-mel</string>
     <string name="passport_number">Passport Number</string>
+    <string name="passport_expiry_date">Passport Expiry Date</string>
     <string name="date_birth">Tarikh lahir</string>
     <string name="birth_time">Masa Anda Lahir</string>
     <string name="birth_place">Tempat Lahir</string>
@@ -140,6 +141,7 @@
     <string name="create_security_pin">Buat PIN Keselamatan</string>
     <string name="activation_code">Kod pengaktifan</string>
     <string name="choose_plan">Pilih Plan Anda</string>
+    <string name="subscribe">SubScribe</string>
     <string name="approve_account">Anda akan dikenakan bayaran untuk plan tersebut setelah pentadbir meluluskan akaun anda.</string>
     <string name="no_world_entry">Tiada Persediaan Kemasukan Dunia! \nTambah Dunia kegemaran anda \nMasuk Destinasi dengan \nKlik tanda "+"</string>
     <string name="privacy">Privasi</string>

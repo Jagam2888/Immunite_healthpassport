@@ -5,6 +5,7 @@ import com.cmg.vaccine.database.User
 import com.cmg.vaccine.database.WorldEntryCountries
 import com.cmg.vaccine.database.WorldEntryRulesByCountry
 import com.cmg.vaccine.model.response.GetExistingUserResponse
+import com.cmg.vaccine.model.response.UpdateUUIDResponse
 import com.cmg.vaccine.model.response.WorldEntriesCountryList
 import com.cmg.vaccine.network.MyApi
 import com.cmg.vaccine.network.SafeAPIRequest
@@ -32,6 +33,10 @@ class ExistingUserRepositary(
         preferenceProvider.saveSubId(subId)
     }
 
+    fun getPatientSubId():String?{
+        return preferenceProvider.getSubId()
+    }
+
     fun deleteOldUser(){
         database.getDao().deleteOldUser()
     }
@@ -43,6 +48,12 @@ class ExistingUserRepositary(
     suspend fun getWorldEntriesCountryList(): WorldEntriesCountryList {
         return apiRequest {
             api.getWorldEntriesCountryList()
+        }
+    }
+
+    suspend fun updateUUID(subId: String,uuid:String):UpdateUUIDResponse{
+        return apiRequest {
+            api.updateUUID(subId,uuid)
         }
     }
 

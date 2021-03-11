@@ -44,6 +44,7 @@ class ProfileViewModel(
     var genderIcon:MutableLiveData<Int> = MutableLiveData()
     var privateKey:MutableLiveData<String> = MutableLiveData()
     var passportNumber:MutableLiveData<String> = MutableLiveData()
+    var passportExpDate:MutableLiveData<String> = MutableLiveData()
     var countryCode:MutableLiveData<Int> = MutableLiveData()
     var user:MutableLiveData<String> = MutableLiveData()
     var idNo:MutableLiveData<String> = MutableLiveData()

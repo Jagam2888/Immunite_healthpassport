@@ -10,6 +10,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.cmg.vaccine.databinding.ActivityRestoredBackupOptionListBinding
 import com.cmg.vaccine.fragment.SettingsFragment
+import com.cmg.vaccine.listener.SimpleListener
 import com.cmg.vaccine.services.DriveServiceHelper
 import com.cmg.vaccine.util.*
 import com.cmg.vaccine.viewmodel.RestoreBackupOptionListViewModel
@@ -34,7 +35,7 @@ import java.io.IOException
 import java.lang.Exception
 import java.util.*
 
-class RestoredBackupOptionList : BaseActivity(),KodeinAware {
+class RestoredBackupOptionList : BaseActivity(),KodeinAware,SimpleListener {
     override val kodein by kodein()
     private lateinit var binding:ActivityRestoredBackupOptionListBinding
     private lateinit var viewModel:RestoreBackupOptionListViewModel
@@ -56,6 +57,8 @@ class RestoredBackupOptionList : BaseActivity(),KodeinAware {
         binding.viewmodel = viewModel
 
         binding.lifecycleOwner = this
+
+        viewModel.listener = this
 
         dob = intent.extras?.getString(Passparams.USER_DOB,"")
 
@@ -199,7 +202,8 @@ class RestoredBackupOptionList : BaseActivity(),KodeinAware {
 
         for (current in 0..numberOfSheet) {
             val sheet = workbook.getSheetAt(current)
-            if (sheet.sheetName != "room_master_table" && sheet.sheetName != "sqlite_sequence") {
+            //because worldentrycountries already loaded from api
+            if (sheet.sheetName != "room_master_table" && sheet.sheetName != "sqlite_sequence" && sheet.sheetName != "WorldEntryCountries") {
                 val firstrow = sheet.iterator()
 
                 var q1: StringBuilder = java.lang.StringBuilder("INSERT INTO " + sheet.sheetName)
@@ -241,18 +245,19 @@ class RestoredBackupOptionList : BaseActivity(),KodeinAware {
                         try {
                             database.execSQL(full_query.toString())
                         }catch (e:SQLiteException){
-                            toast("Invalid Private Key")
+                            //toast("Invalid Private Key")
+                            Log.e("sqlite_error",e.printStackTrace().toString())
                         }
                         data_value=""
                     }
                 }
             }
         }
-        hide(binding.progressBar)
+        //hide(binding.progressBar)
         toast("Databse insert done")
-        viewModel.getUser()
+        viewModel.getUser(this)
 
-        viewModel.userData.observe(this, androidx.lifecycle.Observer {
+        /*viewModel.userData.observe(this, androidx.lifecycle.Observer {
             if (it.virifyStatus.equals("Y",true)){
                 if (viewModel.loginPin.value != null){
                     Intent(this, LoginPinActivity::class.java).also {intentValue->
@@ -269,34 +274,37 @@ class RestoredBackupOptionList : BaseActivity(),KodeinAware {
             }else{
                 toast("sorry Your account not active")
             }
-        })
+        })*/
         //viewModel.setUserSubId()
     }
 
-    /*fun excelToSqlite() {
+    override fun onStarted() {
+        TODO("Not yet implemented")
+    }
 
-
-        var directory_path:String = getExternalFilesDir(null).toString()+"/data.xls"
-        var database_path:String = getDatabasePath("immunitees.db")?.absolutePath.toString()
-        Log.e("Database Path", database_path)
-
-        val excelToSQLite = com.ajts.androidmads.library.ExcelToSQLite(this, database_path)
-        excelToSQLite.importFromFile(directory_path, object : com.ajts.androidmads.library.ExcelToSQLite.ImportListener {
-            override fun onStart()
-            {
-
+    override fun onSuccess(msg: String) {
+        toast(msg)
+        hide(binding.progressBar)
+        if (viewModel.userData.value?.virifyStatus.equals("Y",true)){
+            if (viewModel.loginPin.value != null){
+                Intent(this, LoginPinActivity::class.java).also {intentValue->
+                    intentValue.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    intentValue.putExtra(Passparams.ISCREATE,"")
+                    startActivity(intentValue)
+                }
+            }else{
+                Intent(this, MainActivity::class.java).also {intentValue->
+                    intentValue.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    startActivity(intentValue)
+                }
             }
-            override fun onCompleted(filepath: String) {
-                hide(binding.progressBar)
-                toast("Databse insert done")
-                Log.e("Excel2Local", "Success")
-            }
+        }else{
+            toast("sorry Your account not active")
+        }
+    }
 
-            override fun onError(e: java.lang.Exception) {
-                hide(binding.progressBar)
-                Log.e("Excel2Local", "Fail")
-            }
-        })
-    }*/
-
+    override fun onFailure(msg: String) {
+        toast(msg)
+        hide(binding.progressBar)
+    }
 }

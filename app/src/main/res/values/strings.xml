@@ -18,6 +18,7 @@
     <string name="retype_email">Retype your Email address to confirm</string>
     <string name="contact_number">Contact Number</string>
     <string name="passport_number">Passport Number</string>
+    <string name="passport_expiry_date">Passport Expiry Date</string>
     <string name="gender">Gender</string>
     <string name="login">LOGIN</string>
     <string name="signup">Sign up</string>
@@ -114,6 +115,7 @@
     <string name="create_security_pin">Create Security PIN</string>
     <string name="activation_code">Activation Code</string>
     <string name="choose_plan">Choose Your Plan</string>
+    <string name="subscribe">SubScribe</string>
     <string name="approve_account">You will be charges for the plan after the admin approves your account.</string>
     <string name="no_world_entry">No World Entry Setup! \nAdd your favourite World \nEntry Destination by \nclicking “+”  sign.</string>
     <string name="privacy">Privacy</string>

@@ -31,7 +31,7 @@ interface MyApi {
     @POST(Passparams.EDIT_DEPENDENT_PROFILE)
     suspend fun updateDependentProfile(@Body updateProfileReq: UpdateProfileReq):Response<DependentRegResponse>
 
-    @GET(Passparams.GET_Existing_USER)
+    @GET(Passparams.GET_EXISTING_USER)
     suspend fun getExistingUser(@Query("privateKey") privateKey:String):Response<ResponseBody>
 
     @GET(Passparams.SEARCH_PRIVATE_KEY)
@@ -81,6 +81,15 @@ interface MyApi {
 
     @POST(Passparams.IMMUNIZATION_HISTORY)
     suspend fun immunizationHistory(@Body immunizationHistoryReq: ImmunizationHistoryReq):Response<ImmunizationHistoryResponse>
+
+    @GET(Passparams.GET_VACCINE_TEST_REF)
+    suspend fun getVaccineTestRef(@Query("privateKey")testRef:String):Response<ResponseBody>
+
+    @POST(Passparams.UPDATE_UUID)
+    suspend fun updateUUID(@Query("subsId")subId:String,@Query("uuid") uuid:String):Response<UpdateUUIDResponse>
+
+    @POST(Passparams.UPDATE_PRIVATE_KEY_STATUS)
+    suspend fun updatePrivateKeyStatus(@Query("subsId")subId:String,@Query("status") uuid:String):Response<UpdateUUIDResponse>
 
     companion object{
         operator fun invoke(

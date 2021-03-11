@@ -1,5 +1,7 @@
 package com.cmg.vaccine
 
+import android.content.Intent
+import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.SystemClock
@@ -10,6 +12,8 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -20,6 +24,7 @@ import com.cmg.vaccine.listener.SimpleListener
 import com.cmg.vaccine.util.*
 import com.cmg.vaccine.viewmodel.DependentViewModel
 import com.cmg.vaccine.viewmodel.viewmodelfactory.DependentViewModelFactory
+import io.paperdb.Paper
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
@@ -31,8 +36,16 @@ class AddDependentActivity : BaseActivity(),KodeinAware,SimpleListener {
 
     var lastClickTimeDOB:Long = 0
     var lastClickTimeDOBTime:Long = 0
+    var lastClickTimeQr:Long = 0
+
+    var qrCodeValue = ""
 
     private val factory:DependentViewModelFactory by instance()
+
+    companion object{
+        const val LOCATION:Int = 1000
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this,R.layout.activity_add_dependent)
@@ -48,6 +61,11 @@ class AddDependentActivity : BaseActivity(),KodeinAware,SimpleListener {
             arrayList.addAll(list)
             binding.spinnerPlaceBirth.adapter = CountryListAdapter(arrayList)
             binding.spinnerNationality.adapter = CountryListAdapter(arrayList)
+            if (checkPermission()) {
+                viewModel.setCurrentCountry(getCurrentCountryName()!!)
+            } else {
+                requestPermission()
+            }
         })
 
         binding.btnDobCalender.setOnClickListener {
@@ -70,45 +88,26 @@ class AddDependentActivity : BaseActivity(),KodeinAware,SimpleListener {
             showTimepickerDialog(binding.edtDobTime, viewModel.dobTime.value!!)
         }
 
+        binding.btnDateCalender.setOnClickListener {
+            showDatePickerDialogForPassport(binding.edtPassportExpDate)
+        }
 
+        binding.edtPassportExpDate.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
 
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
 
-        //binding.edtDob.listen()
-
-        /*binding.edtDob.setDrawableClickListener(object : DrawableClickListener {
-            override fun onClick(target: DrawableClickListener.DrawablePosition?) {
-                when (target) {
-                    DrawableClickListener.DrawablePosition.RIGHT -> {
-                        showDatePickerDialog(binding.edtDob)
-                    }
-                    else -> {
-                    }
+            override fun afterTextChanged(s: Editable?) {
+                if ((!validateDateFormatForPassport(binding.edtPassportExpDate.text.toString())) and (binding.edtPassportExpDate.text?.isNotEmpty() == true)){
+                    binding.edtPassportExpDate.error = "Sorry! Invalid Date"
+                }else{
+                    binding.edtPassportExpDate.error = null
                 }
             }
         })
 
-        binding.edtDobTime.setDrawableClickListener(object : DrawableClickListener {
-            override fun onClick(target: DrawableClickListener.DrawablePosition?) {
-                when (target) {
-                    DrawableClickListener.DrawablePosition.RIGHT -> {
-                        showTimepickerDialog(binding.edtDobTime, viewModel.dobTime.value!!)
-                    }
-                    else -> {
-                    }
-                }
-            }
-        })*/
-
-        /*binding.addressCheckbox.setOnCheckedChangeListener { buttonView, isChecked ->
-
-            if (isChecked){
-                viewModel.address.set(viewModel.parentAddress)
-                viewModel.city.set(viewModel.parentcity)
-                viewModel.state.set(viewModel.parentState)
-            }else{
-                viewModel.address.set("")
-            }
-        }*/
         if (viewModel.countryCode.value != null)
             binding.ccpLoadCountryCode.setCountryForPhoneCode(viewModel.countryCode.value!!)
         viewModel.selectedItemContactCode.set(binding.ccpLoadCountryCode.selectedCountryCode)
@@ -226,6 +225,58 @@ class AddDependentActivity : BaseActivity(),KodeinAware,SimpleListener {
             }
         })
 
+        binding.btnScanQr.setOnClickListener {
+            if (SystemClock.elapsedRealtime() - lastClickTimeQr<1000){
+                return@setOnClickListener
+            }
+            lastClickTimeQr = SystemClock.elapsedRealtime()
+            hideKeyBoard()
+            if (!binding.edtDob.text.toString().isNullOrEmpty()) {
+                Paper.book().write(Passparams.QR_CODE_VALUE, "")
+                Intent(this, SacnQRActivity::class.java).also {
+                    startActivity(it)
+                }
+            }else{
+                toast("Please enter your Date of Birth")
+            }
+        }
+
+    }
+
+    private fun checkPermission():Boolean{
+        return ((ContextCompat.checkSelfPermission(
+            this,
+            android.Manifest.permission.ACCESS_FINE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED))
+    }
+
+    private fun requestPermission(){
+        ActivityCompat.requestPermissions(
+            this,
+            arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
+            SignUpActivity.LOCATION
+        )
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        when(requestCode){
+            SignUpActivity.LOCATION -> {
+                if (grantResults.isNotEmpty()) {
+                    val locationAccepted: Boolean =
+                        grantResults[0] == PackageManager.PERMISSION_GRANTED
+                    if (locationAccepted) {
+                        viewModel.setCurrentCountry(getCurrentCountryName()!!)
+                        //toast(getCurrentCountryName()!!)
+                    } else {
+                        toast("Permission Denied, You cannot get Location")
+                    }
+                }
+            }
+        }
     }
 
     override fun onStarted() {
@@ -247,6 +298,11 @@ class AddDependentActivity : BaseActivity(),KodeinAware,SimpleListener {
 
     override fun onResume() {
         super.onResume()
-        viewModel.setCurrentCountry(getCurrentCountryName()!!)
+        binding.edtQrCode.setText("")
+        qrCodeValue = Paper.book().read(Passparams.QR_CODE_VALUE,"")
+        if (!qrCodeValue.isNullOrEmpty()){
+            viewModel.existingUserprivateKey.set(decryptQRValue(qrCodeValue,changeDateFormatForPrivateKeyDecrypt(binding.edtDob.text.toString())!!))
+            binding.edtQrCode.setText(qrCodeValue)
+        }
     }
 }

@@ -69,8 +69,8 @@ class SacnQRActivity : BaseActivity(),ZXingScannerView.ResultHandler {
                     val cameraAccepted:Boolean = grantResults[0] == PackageManager.PERMISSION_GRANTED
                     if(cameraAccepted){
                         binding.qrFrame.addView(mScannerView)
-                        mScannerView.setResultHandler(this)
-                        mScannerView.startCamera()
+                        /*mScannerView.setResultHandler(this)
+                        mScannerView.startCamera()*/
 
                     }else{
                         toast("Permission Denied, You cannot access and camera")

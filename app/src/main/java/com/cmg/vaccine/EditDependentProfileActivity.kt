@@ -82,32 +82,25 @@ class EditDependentProfileActivity : BaseActivity(),KodeinAware,SimpleListener {
             hideKeyBoard()
             showTimepickerDialog(binding.edtDobTime, viewModel.dobTime.value!!)
         }
+        binding.btnDateCalender.setOnClickListener {
+            showDatePickerDialogForPassport(binding.edtPassportExpDate)
+        }
 
-        //binding.edtDob.listen()
+        binding.edtPassportExpDate.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
 
-        /*binding.edtDob.setDrawableClickListener(object : DrawableClickListener {
-            override fun onClick(target: DrawableClickListener.DrawablePosition?) {
-                when (target) {
-                    DrawableClickListener.DrawablePosition.RIGHT -> {
-                        showDatePickerDialog(binding.edtDob)
-                    }
-                    else -> {
-                    }
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                if ((!validateDateFormatForPassport(binding.edtPassportExpDate.text.toString())) and (binding.edtPassportExpDate.text?.isNotEmpty() == true)){
+                    binding.edtPassportExpDate.error = "Sorry! Invalid Date"
+                }else{
+                    binding.edtPassportExpDate.error = null
                 }
             }
         })
-
-        binding.edtDobTime.setDrawableClickListener(object : DrawableClickListener {
-            override fun onClick(target: DrawableClickListener.DrawablePosition?) {
-                when (target) {
-                    DrawableClickListener.DrawablePosition.RIGHT -> {
-                        showTimepickerDialog(binding.edtDobTime, viewModel.dobTime.value!!)
-                    }
-                    else -> {
-                    }
-                }
-            }
-        })*/
 
         binding.edtDob.addTextChangedListener(object :TextWatcher{
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {

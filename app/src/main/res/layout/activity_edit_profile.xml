@@ -498,6 +498,55 @@
                     android:paddingTop="10dp"
                     android:inputType="text"/>
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/passport_expiry_date"
+                    android:textColor="@color/gray"
+                    android:layout_marginTop="10dp"
+                    android:textAppearance="@style/opens_regular"
+                    android:textSize="14sp" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/edittext_background"
+                    android:layout_marginTop="5dp">
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btn_date_calender"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:background="@drawable/calender_icon"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10dp"/>
+
+                    <com.vicmikhailau.maskededittext.MaskedEditText
+                        android:id="@+id/edt_passport_exp_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/opens_regular"
+                        android:textSize="14sp"
+                        android:maxLines="1"
+                        android:cursorVisible="true"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:hint="dd/mm/yyyy"
+                        app:mask="##/##/####"
+                        android:inputType="number"
+                        android:text="@={profileviewmodel.passportExpDate}"
+                        android:textColorHint="@color/gray"
+                        android:textColor="@color/black"
+                        android:background="@null"
+                        android:paddingBottom="10dp"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingTop="10dp"
+                        android:imeOptions="actionNext"
+                        android:layout_toLeftOf="@id/btn_date_calender"
+                        android:layout_marginRight="20dp"/>
+                </RelativeLayout>
+
                <!-- </LinearLayout>-->
                 <TextView
                     android:layout_width="wrap_content"

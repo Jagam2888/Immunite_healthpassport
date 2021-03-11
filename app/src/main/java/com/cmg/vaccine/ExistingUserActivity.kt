@@ -132,9 +132,7 @@ class ExistingUserActivity : BaseActivity(),KodeinAware,SimpleListener {
         }*/
     }
 
-    fun decryptQRValue(key:String,dob:String):String?{
-        return EncryptionUtils.decryptBackupKey(key,dob)
-    }
+
 
     override fun onResume() {
         super.onResume()

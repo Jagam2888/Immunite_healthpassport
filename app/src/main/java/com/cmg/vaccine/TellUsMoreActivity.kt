@@ -4,6 +4,8 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.blongho.country_data.Country
@@ -46,6 +48,26 @@ class TellUsMoreActivity : BaseActivity(),KodeinAware,SimpleListener {
                 startActivity(it)
             }
         }*/
+
+        binding.btnDateCalender.setOnClickListener {
+            showDatePickerDialogForPassport(binding.edtPassportExpDate)
+        }
+
+        binding.edtPassportExpDate.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                if ((!validateDateFormatForPassport(binding.edtPassportExpDate.text.toString())) and (binding.edtPassportExpDate.text?.isNotEmpty() == true)){
+                    binding.edtPassportExpDate.error = "Sorry! Invalid Date"
+                }else{
+                    binding.edtPassportExpDate.error = null
+                }
+            }
+        })
     }
 
     override fun onStarted() {

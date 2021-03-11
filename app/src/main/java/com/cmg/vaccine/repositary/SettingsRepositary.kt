@@ -5,6 +5,7 @@ import com.cmg.vaccine.model.response.*
 import com.cmg.vaccine.network.MyApi
 import com.cmg.vaccine.network.SafeAPIRequest
 import com.cmg.vaccine.prefernces.PreferenceProvider
+import okhttp3.ResponseBody
 
 class SettingsRepositary(
     private val database: AppDatabase,
@@ -64,6 +65,12 @@ class SettingsRepositary(
 
     fun getUserData():User{
         return database.getDao().getUserData(preferenceProvider.getSubId()!!)
+    }
+
+    suspend fun getVaccineTestRef(testRef:String):ResponseBody{
+        return apiRequest {
+            api.getVaccineTestRef(testRef)
+        }
     }
 
     /*suspend fun getTestReportList(subsId:String): TestReportListResponse {

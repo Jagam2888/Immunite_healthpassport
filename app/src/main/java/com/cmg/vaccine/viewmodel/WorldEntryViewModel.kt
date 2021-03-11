@@ -226,7 +226,7 @@ class WorldEntryViewModel(
                     var status = "false"
                     var successTestReport:String = ""
                     testReportList.value?.forEach { test->
-                        if (worldEntryRulesByCountry.woen_test_code.equals(test.codeSystem)){
+                        if (worldEntryRulesByCountry.woen_test_code.equals(test.dateDisplayTitle)){
                             status = "true"
                             val gson = Gson()
                             successTestReport = gson.toJson(test)
