@@ -87,7 +87,7 @@ class ProfileViewModel(
 
 
 
-    val clicksListener = object : AdapterView.OnItemSelectedListener {
+    /*val clicksListener = object : AdapterView.OnItemSelectedListener {
         override fun onNothingSelected(parent: AdapterView<*>?) {
 
         }
@@ -95,7 +95,7 @@ class ProfileViewModel(
         override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
             selectedItemNationalityCode.set(position)
         }
-    }
+    }*/
 
     init {
         //val countries = World.
@@ -169,11 +169,16 @@ class ProfileViewModel(
 
             dob.value = user.dob?.replace("/","")
 
-            if (!placeBirth.value.isNullOrEmpty())
-                placeBirthViewFormat.value = getCountryNameUsingCode(placeBirth.value!!,countryList!!)
+            if (!placeBirth.value.isNullOrEmpty()) {
+                placeBirthViewFormat.value = World.getCountryFrom(placeBirth.value!!).name
+                //placeBirthViewFormat.value = getCountryNameUsingCode(placeBirth.value!!,countryList!!)
+            }
 
-            if (!country.value.isNullOrEmpty())
-                nationalityViewFormat.value = getCountryNameUsingCode(country.value!!,countryList!!)
+            if (!country.value.isNullOrEmpty()){
+                nationalityViewFormat.value = World.getCountryFrom(country.value!!).name
+
+            }
+                //nationalityViewFormat.value = getCountryNameUsingCode(country.value!!,countryList!!)
 
             currentEmail = email1.value
             currentMobile = contactNumber.value
@@ -212,11 +217,15 @@ class ProfileViewModel(
             if (!dob.value.isNullOrEmpty())
                 dobViewFormat.value = changeDateFormatForViewProfile(dob.value!!)
 
-            if (!dependent?.placeOfBirth.isNullOrEmpty())
-                placeBirthViewFormat.value = getCountryNameUsingCode(dependent?.placeOfBirth!!,countryList!!)
+            if (!dependent?.placeOfBirth.isNullOrEmpty()) {
+                placeBirthViewFormat.value = World.getCountryFrom(dependent?.placeOfBirth!!).name
+            }
+                //placeBirthViewFormat.value = getCountryNameUsingCode(dependent?.placeOfBirth!!,countryList!!)
 
-            if (!dependent?.nationalityCountry.isNullOrEmpty())
-                nationalityViewFormat.value = getCountryNameUsingCode(dependent?.nationalityCountry!!,countryList!!)
+            if (!dependent?.nationalityCountry.isNullOrEmpty()){
+                nationalityViewFormat.value = World.getCountryFrom(dependent?.nationalityCountry!!).name
+            }
+                //nationalityViewFormat.value = getCountryNameUsingCode(dependent?.nationalityCountry!!,countryList!!)
         }
     }
 
@@ -229,6 +238,32 @@ class ProfileViewModel(
     }
 
     fun onClick(view:View){
+
+
+        var placeBirth = ""
+        if (!countryList.isNullOrEmpty()) {
+            placeBirth =
+                    countryList?.get(selectedItemBirthPlaceCode.get())?.alpha3!!
+        }
+
+        var nationality = ""
+        if (!countryList.isNullOrEmpty()) {
+            nationality =
+                    countryList?.get(selectedItemNationalityCode.get())?.alpha3!!
+        }
+
+        val idTypeList =
+                view.context.resources.getStringArray(R.array.id_type)
+        idType.value = idTypeList[selectedItemIdTYpe.get()]
+
+        //remove first char if zero
+        if (!contactNumber.value.isNullOrEmpty()) {
+            if (contactNumber.value!!.startsWith("0")) {
+                contactNumber.value =
+                        contactNumber.value!!.drop(1)
+            }
+        }
+
         listener?.onStarted()
         isAllow = !(!currentEmail.equals(email1.value) and !currentMobile.equals(contactNumber.value))
         Couritnes.main {
@@ -240,29 +275,6 @@ class ProfileViewModel(
                                 if (isValidEmail(email1.value!!)) {
                                     if (validateDateFormat(dob.value!!)) {
                                         if (validateTime(dobTime.value!!)) {
-                                            var placeBirth = ""
-                                            if (!countryList.isNullOrEmpty()) {
-                                                placeBirth =
-                                                    countryList?.get(selectedItemBirthPlaceCode.get())?.alpha3!!
-                                            }
-
-                                            var nationality = ""
-                                            if (!countryList.isNullOrEmpty()) {
-                                                nationality =
-                                                    countryList?.get(selectedItemNationalityCode.get())?.alpha3!!
-                                            }
-
-                                            val idTypeList =
-                                                view.context.resources.getStringArray(R.array.id_type)
-                                            idType.value = idTypeList[selectedItemIdTYpe.get()]
-
-                                            //remove first char if zero
-                                            if (!contactNumber.value.isNullOrEmpty()) {
-                                                if (contactNumber.value!!.startsWith("0")) {
-                                                    contactNumber.value =
-                                                        contactNumber.value!!.drop(1)
-                                                }
-                                            }
 
                                             var user = repositary.getUserData()
 
@@ -303,6 +315,7 @@ class ProfileViewModel(
                                                 user.dobTime = dobTime.value
                                                 user.placeBirth = placeBirth
                                                 user.nationality = nationality
+                                                user.patientIdType = idType.value
                                                 //user.profileImage = profileImageUri.get()
                                                 repositary.updateUser(user)
                                                 //repositary.saveUser(user)

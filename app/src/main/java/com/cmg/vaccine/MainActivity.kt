@@ -2,6 +2,7 @@ package com.cmg.vaccine
 
 import android.app.AlertDialog
 import android.content.Context
+import android.content.Intent
 import android.graphics.Point
 import android.os.Build
 import android.os.Bundle
@@ -70,7 +71,7 @@ class MainActivity : BaseActivity(),KodeinAware {
 
 
 
-        bottom_navigation_view.setOnNavigationItemSelectedListener { menuItem->
+        binding.bottomNavigationView.setOnNavigationItemSelectedListener { menuItem->
             when(menuItem.itemId){
                 R.id.home -> {
                     isHome = true
@@ -99,12 +100,12 @@ class MainActivity : BaseActivity(),KodeinAware {
                     bottomDialog()
                     true
                 }
-                R.id.profile -> {
+                /*R.id.profile -> {
                     isHome = false
                     //isShowPopWindow()
                     loadFragment(ProfileFragment())
                     true
-                }
+                }*/
                 R.id.world_entries -> {
                     isHome = false
                     //isShowPopWindow()
@@ -117,6 +118,12 @@ class MainActivity : BaseActivity(),KodeinAware {
                     loadFragment(SettingsFragment())
                     true
                 }else -> false
+            }
+        }
+
+        binding.qrFab.setOnClickListener {
+            Intent(this,ScanQRActivity::class.java).also {
+                startActivity(it)
             }
         }
     }

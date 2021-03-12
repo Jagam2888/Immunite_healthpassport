@@ -334,8 +334,7 @@
                         android:background="@null"
                         android:minHeight="0dp"
                         android:layout_centerVertical="true"
-                        android:selectedItemPosition="@={dependentViewModel.selectedItemBirthPlaceCode}"
-                        tools:setOnItemSelectedListener="@{dependentViewModel.clicksListener}"/>
+                        android:selectedItemPosition="@={dependentViewModel.selectedItemBirthPlaceCode}" />
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -402,116 +401,6 @@
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
                     android:paddingTop="10dp" />
-
-                <!--<TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@{`* `+@string/residential_address}"
-                    style="@style/opens_regular"
-                    android:textColor="@color/gray"
-                    android:layout_marginTop="5dp"/>
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/opens_regular"
-                    android:textColorHint="@color/gray"
-                    android:textColor="@color/black"
-                    android:maxLines="3"
-                    android:text="@={profileviewmodel.residentalAddress}"
-                    android:maxLength="300"
-                    android:minLines="3"
-                    android:gravity="top"
-                    android:background="@drawable/edittext_background"
-                    android:layout_marginTop="5dp"
-                    android:paddingBottom="10dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingTop="10dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@{`* `+@string/city}"
-                    style="@style/opens_regular"
-                    android:textColor="@color/gray"
-                    android:layout_marginTop="5dp"/>
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/opens_regular"
-                    android:text="@={profileviewmodel.city}"
-                    android:textColorHint="@color/gray"
-                    android:textColor="@color/black"
-                    android:maxLines="1"
-                    android:maxLength="100"
-                    android:background="@drawable/edittext_background"
-                    android:layout_marginTop="5dp"
-                    android:paddingBottom="10dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingTop="10dp" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@{`* `+@string/state}"
-                    style="@style/opens_regular"
-                    android:textColor="@color/gray"
-                    android:layout_marginTop="5dp"/>
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/opens_regular"
-                    android:text="@={profileviewmodel.state}"
-                    android:textColorHint="@color/gray"
-                    android:textColor="@color/black"
-                    android:maxLines="1"
-                    android:maxLength="100"
-                    android:background="@drawable/edittext_background"
-                    android:layout_marginTop="5dp"
-                    android:paddingBottom="10dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingTop="10dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/country"
-                    android:textColor="@color/gray"
-                    android:layout_marginTop="5dp"
-                    style="@style/opens_regular" />
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="56dp"
-                    android:background="@drawable/edittext_background"
-                    android:layout_marginTop="5dp"
-                    android:paddingBottom="10dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingTop="10dp">
-
-                    <Spinner
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="16sp"
-                        android:background="@null"
-                        android:minHeight="0dp"
-                        android:entries="@array/country"
-                        android:layout_centerVertical="true"/>
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_alignParentRight="true"
-                        android:src="@drawable/down_arrow"
-                        android:layout_marginRight="10dp" />
-                </RelativeLayout>-->
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

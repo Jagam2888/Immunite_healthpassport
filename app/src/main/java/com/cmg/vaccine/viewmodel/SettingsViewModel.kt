@@ -13,6 +13,7 @@ import com.cmg.vaccine.repositary.SettingsRepositary
 import com.cmg.vaccine.util.*
 import com.google.gson.JsonObject
 import org.json.JSONObject
+import java.lang.Exception
 import java.net.SocketTimeoutException
 
 class SettingsViewModel(
@@ -52,14 +53,32 @@ class SettingsViewModel(
 
     }
 
-    private fun getVaccineTestRef(){
-        //listener?.onStarted()
-        var privateKey = repositary.getPrivateKey()
-        //var privateKey = "CB28F1B9F2BE4C115D42E725FD92514A99AB2E70175B794D47CC76F5CB68A424"
+    fun syncRecord(){
+        listener?.onStarted()
+        repositary.deleteVaccine()
+        repositary.deleteTestReport()
+
+        getVaccineTestRef(repositary.getPrivateKey()!!,"Prinicipal")
+
+        val dependent = repositary.getAllDependent()
+
+        if (!dependent.isNullOrEmpty()){
+            dependent.forEach {
+                if (!it.privateKey.isNullOrEmpty()){
+                    getVaccineTestRef(it.privateKey!!,"Dependent ${it.firstName}")
+                }
+            }
+        }
+
+        //getVaccineFromAPI()
+    }
+
+    private fun getVaccineTestRef(privateKey:String,user:String){
 
         Couritnes.main {
             try {
-                val response = repositary.getVaccineTestRef(privateKey!!)
+                val response = repositary.getVaccineTestRef(privateKey)
+                //val response = repositary.getVaccineTestRef("CB28F1B9F2BE4C115D42E725FD92514A99AB2E70175B794D47CC76F5CB68A424")
                 if (response != null){
                     val jsonBody = JSONObject(response.string())
                     val jsonBodyData = jsonBody.getJSONArray("data")
@@ -105,10 +124,12 @@ class SettingsViewModel(
                                 displayName = jsonSpecimenMethodCodingArray.getString("display")
 
                                 if (!dateSampleCollected.isNullOrEmpty()) {
-                                    val isoFormat = changeDateFormatBC(dateSampleCollected)
+                                    val isoFormat = changeDateFormatNormal(dateSampleCollected)
                                     var dobFormatArray = isoFormat?.split(" ")
-                                    sampleCollectedDate = dobFormatArray?.get(0).toString()
-                                    sampleCollectedTime = dobFormatArray?.get(1).toString()
+                                    if (dobFormatArray?.size!! > 1) {
+                                        sampleCollectedDate = dobFormatArray?.get(0).toString()
+                                        sampleCollectedTime = dobFormatArray?.get(1).toString()
+                                    }
                                     //sampleCollectedDate = dateSampleCollected
                                 }
 
@@ -119,12 +140,12 @@ class SettingsViewModel(
                                     takenBy = jsonSpecimenCollectionCollector.getString("name")
                                 }
 
-                                if (jsonSpecimen.has("receivedTime"))
+                                /*if (jsonSpecimen.has("receivedTime"))
                                     if (!jsonSpecimen.getString("receivedTime").isNullOrEmpty() and !jsonSpecimen.getString("receivedTime").equals("null")){
-                                        val isoFormat = changeDateFormatBC(jsonSpecimen.getString("receivedTime"))
+                                        val isoFormat = changeDateFormatNormal(jsonSpecimen.getString("receivedTime"))
                                         var formatArray = isoFormat?.split(" ")
                                         dateSampleReceived = formatArray?.get(0).toString()
-                                    }
+                                    }*/
 
 
 
@@ -132,7 +153,7 @@ class SettingsViewModel(
 
                             if (jsonArrayBody.has("observation")){
                                 val jsonObservation = jsonArrayBody.getJSONObject("observation")
-                                issueDate = jsonObservation.getString("issued")
+                                //issueDate = jsonObservation.getString("issued")
                                 statusFinalized = jsonObservation.getString("status")
                                 val jsonPerformer = jsonObservation.getJSONObject("performer")
 
@@ -201,6 +222,16 @@ class SettingsViewModel(
                                 if (jsonOrganization.has("name")){
                                     testBy = jsonOrganization.getString("name")
                                 }
+
+                                if (jsonObservation.has("issued")){
+                                    if (!jsonObservation.getString("issued").isNullOrEmpty() and !jsonObservation.getString("issued").equals("null")){
+                                        val isoFormat = changeDateFormatNormal(jsonObservation.getString("issued"))
+                                        var formatArray = isoFormat?.split(" ")
+                                        dateSampleReceived = formatArray?.get(0).toString()
+                                        issueDate = formatArray?.get(0).toString()
+                                    }
+                                    //val jsonObservationIssueDate = jsonObservation.getString("issued")
+                                }
                             }
 
                             val testReport = TestReport(
@@ -232,7 +263,7 @@ class SettingsViewModel(
                         }
                         listener?.onSuccess(jsonBody.getString("reason"))
                     }else{
-                        listener?.onFailure(jsonBody.getString("reason"))
+                        listener?.onFailure(jsonBody.getString("reason")+" : "+user)
                     }
                 }
             }catch (e: APIException) {
@@ -240,6 +271,8 @@ class SettingsViewModel(
             } catch (e: NoInternetException) {
                 listener?.onFailure(e.message!!)
             } catch (e: SocketTimeoutException) {
+                listener?.onFailure(e.message!!)
+            } catch (e:Exception){
                 listener?.onFailure(e.message!!)
             }
         }
@@ -255,15 +288,7 @@ class SettingsViewModel(
         return loginPin
     }
 
-    fun syncRecord(){
-        listener?.onStarted()
-        val countVaccine = repositary.deleteVaccine()
-        val countTestReport = repositary.deleteTestReport()
 
-        getVaccineTestRef()
-
-        //getVaccineFromAPI()
-    }
 
     private fun getVaccineFromAPI(){
         if (!repositary.getPrivateKey().isNullOrEmpty()) {
@@ -290,51 +315,6 @@ class SettingsViewModel(
                             repositary.insertVaccine(vaccine)
                         }
                     }
-                    getTestReportListFromAPI()
-                } catch (e: APIException) {
-                    listener?.onFailure(e.message!!)
-                } catch (e: NoInternetException) {
-                    listener?.onFailure(e.message!!)
-                } catch (e: SocketTimeoutException) {
-                    listener?.onFailure(e.message!!)
-                }
-            }
-        }else{
-            listener?.onFailure("Private key not generated yet")
-        }
-    }
-
-    private fun getTestReportListFromAPI(){
-        if (!repositary.getPrivateKey().isNullOrEmpty()) {
-            Couritnes.main {
-                try {
-                    val response = repositary.getTestReportList(repositary.getPrivateKey()!!)
-                    if (!response.data.data.isNullOrEmpty()) {
-                        response.data.data.forEach { report ->
-                            /*val testReport = TestReport(
-                                    report.codeDisplay,
-                                    report.codeSystem,
-                                    report.collectedDateTime,
-                                    report.conceptCode,
-                                    report.conceptName,
-                                    report.contactAddressText,
-                                    report.contactAddressType,
-                                    report.contactAddressUse,
-                                    report.contactTelecom,
-                                    report.contactTelecomValue,
-                                    report.effectiveDateTime,
-                                    report.name,
-                                    report.qualificationIssuerName,
-                                    report.qualitificationIdentifier,
-                                    report.recordId,
-                                    report.status,
-                                    report.type
-                            )
-                            repositary.insertTestReport(testReport)*/
-                        }
-
-                    }
-                    listener?.onSuccess("Sync Successfully")
                 } catch (e: APIException) {
                     listener?.onFailure(e.message!!)
                 } catch (e: NoInternetException) {

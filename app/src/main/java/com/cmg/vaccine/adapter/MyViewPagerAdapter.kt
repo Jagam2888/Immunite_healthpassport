@@ -13,15 +13,13 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.PagerAdapter
+import com.blongho.country_data.World
 import com.cmg.vaccine.R
 import com.cmg.vaccine.TestReportDetailActivity
 import com.cmg.vaccine.ViewPrivateKeyActivity
 import com.cmg.vaccine.listener.SimpleListener
 import com.cmg.vaccine.model.Dashboard
-import com.cmg.vaccine.util.Passparams
-import com.cmg.vaccine.util.RecyclerViewTouchListener
-import com.cmg.vaccine.util.show
-import com.cmg.vaccine.util.toast
+import com.cmg.vaccine.util.*
 import com.cmg.vaccine.viewmodel.HomeViewModel
 import com.google.gson.Gson
 import de.hdodenhof.circleimageview.CircleImageView
@@ -85,7 +83,9 @@ private val layouts:List<Dashboard>,
         txtRelationShip.text = layouts[position].relationShip+" Account"
         txtPassportNo.text = layouts[position].passportNo
         txtIdNo.text = layouts[position].idNo
-        txtNationality.text = layouts[position].nationality
+        if (!layouts[position].nationality.isNullOrEmpty()) {
+            txtNationality.text = World.getCountryFrom(layouts[position].nationality!!).name
+        }
 
         if (!layouts[position].data.isNullOrEmpty()) {
             recyclerViewVaccine.also {

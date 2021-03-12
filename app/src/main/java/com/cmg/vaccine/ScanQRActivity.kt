@@ -12,7 +12,7 @@ import com.google.zxing.Result
 import io.paperdb.Paper
 import me.dm7.barcodescanner.zxing.ZXingScannerView
 
-class SacnQRActivity : BaseActivity(),ZXingScannerView.ResultHandler {
+class ScanQRActivity : BaseActivity(),ZXingScannerView.ResultHandler {
 
     private lateinit var binding:ActivitySacnQRBinding
     private lateinit var mScannerView: ZXingScannerView

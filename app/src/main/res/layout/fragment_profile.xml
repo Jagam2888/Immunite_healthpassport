@@ -23,6 +23,15 @@
             android:orientation="horizontal"
             android:background="@color/white">
 
+            <ImageView
+                android:id="@+id/img_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/left_arrow"
+                app:tint="@color/black" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -31,11 +40,12 @@
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:layout_centerInParent="true" />
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_add_dependent"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:background="@drawable/plus_icon"
+                app:tint="@color/gray"
                 android:layout_marginRight="20dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"/>

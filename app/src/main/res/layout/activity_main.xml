@@ -18,20 +18,46 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="56dp"
-            android:background="@color/lite_yellow" />
+            android:background="@color/white" />
 
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bottom_navigation_view"
+        <com.google.android.material.bottomappbar.BottomAppBar
+            android:id="@+id/bottom_app_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:menu="@menu/bottom_appbar"
-            android:layout_marginStart="0dp"
-            android:layout_marginEnd="0dp"
-            app:labelVisibilityMode="unlabeled"
-            android:background="@drawable/background_transperent"
             android:layout_gravity="bottom"
-            app:itemTextColor="@color/bottom_navigation_icon_state"
-            app:itemIconTint="@color/bottom_navigation_icon_state" />
+            app:hideOnScroll="true"
+            app:fabAnimationMode="slide"
+            app:fabCradleRoundedCornerRadius="15dp"
+            app:fabCradleVerticalOffset="5dp"
+            app:contentInsetStart="0dp"
+            app:contentInsetStartWithNavigation="0dp">
+            <com.google.android.material.bottomnavigation.BottomNavigationView
+                android:id="@+id/bottom_navigation_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:menu="@menu/bottom_appbar"
+                android:layout_marginStart="0dp"
+                android:layout_marginEnd="0dp"
+                app:labelVisibilityMode="unlabeled"
+                android:background="@drawable/background_transperent"
+                app:itemTextColor="@color/bottom_navigation_icon_state"
+                app:itemIconTint="@color/bottom_navigation_icon_state" />
+        </com.google.android.material.bottomappbar.BottomAppBar>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/qr_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_anchor="@id/bottom_app_bar"
+            app:tint="@color/white"
+            app:srcCompat="@drawable/qr_code_icon"
+            app:fabSize="normal"
+            android:elevation="2dp"
+            app:elevation="0dp"
+            app:borderWidth="0dp"
+            android:backgroundTint="@color/red"
+            app:backgroundTint="@color/red"
+            style="@style/Widget.MaterialComponents.FloatingActionButton"/>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

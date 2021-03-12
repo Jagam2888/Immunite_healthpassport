@@ -300,7 +300,8 @@
                             android:minHeight="0dp"
                             android:entries="@array/id_type"
                             android:layout_toLeftOf="@id/img_down_arrow_id"
-                            android:layout_centerVertical="true"/>
+                            android:layout_centerVertical="true"
+                            android:selectedItemPosition="@={tellusviewmodel.selectedItemIdTYpe}"/>
 
 
                     </RelativeLayout>

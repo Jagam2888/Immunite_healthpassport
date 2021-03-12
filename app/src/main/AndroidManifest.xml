@@ -30,7 +30,10 @@
         android:theme="@style/Theme.Noactionbar"
         android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup">
-        <activity android:name=".RestoredBackupOptionList"></activity>
+        <activity android:name=".RestoredBackupOptionList"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ProfileListActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".InvalidPrivateKeyActivity"
             android:screenOrientation="portrait" />
@@ -38,7 +41,7 @@
             android:name=".SuccessAccountRestoredActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".SacnQRActivity"
+            android:name=".ScanQRActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ConsentAgreementActivity"

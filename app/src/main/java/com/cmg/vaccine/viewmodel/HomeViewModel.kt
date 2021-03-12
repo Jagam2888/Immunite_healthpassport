@@ -237,6 +237,7 @@ class HomeViewModel(
         dashBoard.passportNo = userData.passportNumber
         dashBoard.idNo = userData.patientIdNo
         dashBoard.privateKey = userData.privateKey
+        dashBoard.nationality = userData.nationality
         dashBoard.data = vaccineList.value
         dashBoard.dataTest = testReportList.value
         dashBoard.relationShip = Passparams.PARENT
@@ -253,6 +254,7 @@ class HomeViewModel(
                 dashboard1.passportNo = dependent.passportNo
                 dashboard1.idNo = dependent.idNo
                 dashboard1.relationShip = dependent.relationship
+                dashboard1.nationality = dependent.nationalityCountry
                 //dashboard1.data = vaccineList.value
                 dashboard1.privateKey = dependent.privateKey
                 //dashboard1.dataTest = testReportList.value

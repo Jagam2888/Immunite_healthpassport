@@ -2,13 +2,11 @@ package com.cmg.vaccine
 
 import android.content.Intent
 import android.content.pm.PackageManager
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.SystemClock
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
@@ -41,6 +39,7 @@ class AddDependentActivity : BaseActivity(),KodeinAware,SimpleListener {
     var qrCodeValue = ""
 
     private val factory:DependentViewModelFactory by instance()
+
 
     companion object{
         const val LOCATION:Int = 1000
@@ -233,13 +232,36 @@ class AddDependentActivity : BaseActivity(),KodeinAware,SimpleListener {
             hideKeyBoard()
             if (!binding.edtDob.text.toString().isNullOrEmpty()) {
                 Paper.book().write(Passparams.QR_CODE_VALUE, "")
-                Intent(this, SacnQRActivity::class.java).also {
+                Intent(this, ScanQRActivity::class.java).also {
                     startActivity(it)
                 }
             }else{
                 toast("Please enter your Date of Birth")
             }
         }
+
+        /*binding.spinnerPlaceBirth.onItemSelectedListener = object :AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                toast(position.toString())
+                viewModel.selectedItemBirthPlaceCode.set(position)
+                if (isFirstTimeSelectPlaceBirth)
+                    viewModel.selectedItemNationalityCode.set(position)
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+        }
+
+        binding.spinnerNationality.onItemSelectedListener = object :AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                toast(position.toString())
+                viewModel.selectedItemNationalityCode.set(position)
+                isFirstTimeSelectPlaceBirth = false
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+        }*/
 
     }
 

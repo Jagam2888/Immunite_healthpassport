@@ -64,64 +64,6 @@ class OTPVerifyActivity : BaseActivity(),KodeinAware,SimpleListener{
             requestPermission()
         }
 
-        /*viewModel.txtOTP.observe(this, Observer { message ->
-            if (!message.isNullOrEmpty()) {
-                val code = parseCode(message)
-                //viewModel._txtOTP.value = "Your OTP is $code"
-                binding.txtOtp.text = "Your OTP is $code"
-                //toast(code!!)
-            }
-        })*/
-
-
-        /*binding.btnOne.setOnClickListener {
-            appendTxt(binding.btnOne.text.toString())
-        }
-
-        binding.btnTwo.setOnClickListener {
-            appendTxt(binding.btnTwo.text.toString())
-        }
-
-        binding.btnThree.setOnClickListener {
-            appendTxt(binding.btnThree.text.toString())
-        }
-        binding.btnFour.setOnClickListener {
-            appendTxt(binding.btnFour.text.toString())
-        }
-        binding.btnFive.setOnClickListener {
-            appendTxt(binding.btnFive.text.toString())
-        }
-        binding.btnSix.setOnClickListener {
-            appendTxt(binding.btnSix.text.toString())
-        }
-        binding.btnSeven.setOnClickListener {
-            appendTxt(binding.btnSeven.text.toString())
-        }
-        binding.btnEight.setOnClickListener {
-            appendTxt(binding.btnEight.text.toString())
-        }
-        binding.btnNine.setOnClickListener {
-            appendTxt(binding.btnNine.text.toString())
-        }
-        binding.btnZero.setOnClickListener {
-            appendTxt(binding.btnZero.text.toString())
-        }
-
-        binding.btnX.setOnClickListener {
-            removePin()
-        }*/
-
-        /*binding.btnActivate.setOnClickListener {
-            Log.d("text",binding.edtTxt.text.toString())
-            if (binding.edtTxt.text.toString()!!.isNotEmpty()) {
-                if (binding.edtTxt.text.toString()!! == "123456") {
-
-                }else{
-                    toast("OTP is Wrong")
-                }
-            }
-        }*/
-
         startTimer()
 
         binding.txtResendOtp.setOnClickListener {

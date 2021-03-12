@@ -67,15 +67,13 @@ class SettingsRepositary(
         return database.getDao().getUserData(preferenceProvider.getSubId()!!)
     }
 
-    suspend fun getVaccineTestRef(testRef:String):ResponseBody{
+    suspend fun getVaccineTestRef(privateKey:String):ResponseBody{
         return apiRequest {
-            api.getVaccineTestRef(testRef)
+            api.getVaccineTestRef(privateKey)
         }
     }
 
-    /*suspend fun getTestReportList(subsId:String): TestReportListResponse {
-        return apiRequest {
-            api.searchTestReportList(subsId)
-        }
-    }*/
+    fun getAllDependent():List<Dependent>{
+        return database.getDao().getDependentList(preferenceProvider.getSubId()!!)
+    }
 }

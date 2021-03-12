@@ -130,6 +130,12 @@ class SettingsFragment : Fragment(),KodeinAware,SimpleListener {
             }
         }
 
+        binding.layoutProfile.setOnClickListener {
+            Intent(context, ProfileListActivity::class.java).also {
+                context?.startActivity(it)
+            }
+        }
+
         binding.layoutChangeLanguage.setOnClickListener {
             Intent(context, ChangeLanguageActivity::class.java).also {
                 context?.startActivity(it)

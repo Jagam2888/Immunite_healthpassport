@@ -87,14 +87,14 @@ class OTPVerifyViewModel(
                                 userData.virifyStatus = "Y"
                                 repositary.updateVerifyStatus(userData)
                             }
-                        }else{
+                        }/*else{
                             var alreadyStored = repositary.getUserDataPref()
                             val gson = Gson()
                             val type: Type = object : TypeToken<User>() {}.type
                             var userData = gson.fromJson<User>(alreadyStored, type)
                             repositary.updateUser(userData)
 
-                        }
+                        }*/
                         listener?.onSuccess(response.message)
                     }else{
                         listener?.onFailure(response.message)

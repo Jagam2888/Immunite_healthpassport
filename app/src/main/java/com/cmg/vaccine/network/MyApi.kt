@@ -83,7 +83,7 @@ interface MyApi {
     suspend fun immunizationHistory(@Body immunizationHistoryReq: ImmunizationHistoryReq):Response<ImmunizationHistoryResponse>
 
     @GET(Passparams.GET_VACCINE_TEST_REF)
-    suspend fun getVaccineTestRef(@Query("privateKey")testRef:String):Response<ResponseBody>
+    suspend fun getVaccineTestRef(@Query("privateKey")privateKey:String):Response<ResponseBody>
 
     @POST(Passparams.UPDATE_UUID)
     suspend fun updateUUID(@Query("subsId")subId:String,@Query("uuid") uuid:String):Response<UpdateUUIDResponse>

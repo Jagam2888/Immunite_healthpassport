@@ -89,7 +89,7 @@ interface PatientDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertVaccineData(vaccine: Vaccine):Long
 
-    @Query("SELECT * FROM Vaccine")
+    @Query("SELECT * FROM Vaccine ORDER BY id DESC")
     fun getVaccineList():List<Vaccine>
 
     @Query("SELECT * FROM Vaccine WHERE id =:id")
@@ -101,7 +101,7 @@ interface PatientDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertTestReport(testReport: TestReport):Long
 
-    @Query("SELECT * FROM TestReport")
+    @Query("SELECT * FROM TestReport ORDER BY id DESC")
     fun getTestReportList():List<TestReport>
 
     @Query("SELECT * FROM TestReport WHERE id =:id")

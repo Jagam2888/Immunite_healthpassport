@@ -90,13 +90,30 @@ class DependentViewModel(
 
     var existingUserprivateKey = ObservableField<String>()
 
-    val clicksListener = object : AdapterView.OnItemSelectedListener {
+    var isFirstTimeSelectPlaceBirth:Boolean?=null
+
+    val clicksListenerPlaceBirth = object : AdapterView.OnItemSelectedListener {
+        override fun onNothingSelected(parent: AdapterView<*>?) {
+
+        }
+
+        override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+            selectedItemBirthPlaceCode.set(position)
+
+            if (isFirstTimeSelectPlaceBirth == true)
+                selectedItemNationalityCode.set(position)
+        }
+    }
+
+    val clicksListenerNationality = object : AdapterView.OnItemSelectedListener {
         override fun onNothingSelected(parent: AdapterView<*>?) {
 
         }
 
         override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
             selectedItemNationalityCode.set(position)
+            isFirstTimeSelectPlaceBirth = false
+
         }
     }
 
@@ -113,6 +130,9 @@ class DependentViewModel(
     }
 
     init {
+
+        isFirstTimeSelectPlaceBirth = true
+
         val parentUser = repositary.getUserData()
         if (parentUser != null) {
             masterPrivateKey = parentUser.privateKey
@@ -140,6 +160,11 @@ class DependentViewModel(
         countryList = World.getAllCountries()
         if (!countryList.isNullOrEmpty()){
             val pos = getCurrentCountry(country,countryList!!)
+            val pos1 = World.getCountryFrom(country)
+
+            Log.d("country_pos",pos.toString())
+            Log.d("country_pos1",pos1.toString())
+
             selectedItemBirthPlaceCode.set(pos)
             selectedItemNationalityCode.set(pos)
             //selectedItemNationalityCode.set(5)
@@ -265,101 +290,6 @@ class DependentViewModel(
         }
     }
 
-    private fun getSyncManually(view: View){
-        Log.d("enter","yes")
-        Log.d("private_key",existingUserprivateKey.get()!!)
-        Couritnes.main {
-            try {
-                listener?.onStarted()
-                val response = repositary.getExistingUser(existingUserprivateKey.get()!!)
-
-                val responseBody = response.string()
-                val jsonBody = JSONObject(responseBody)
-                val jsonBodyFirst = jsonBody.getJSONObject("data")
-                val jsonBodySecond = jsonBodyFirst.getJSONObject("data")
-
-                if (jsonBodySecond.has("passportNo")) {
-                    passportNumber.value = jsonBodySecond.optString("passportNo")
-                }
-
-                if (jsonBodySecond.has("idNo")) {
-                    idNo.value = jsonBodySecond.optString("idNo")
-                }
-
-                fullName.value = jsonBodySecond.getString("firstName")
-                email.value = jsonBodySecond.getString("email")
-                contactNumber.value = jsonBodySecond.getString("mobileNumber")
-                selectedItemContactCode.set(jsonBodySecond.getString("countryCode"))
-                jsonBodySecond.getString("gender").run {
-                    genderEnum = when(this){
-                        "M" -> Gender.M
-                        "F" -> Gender.F
-                        else -> Gender.O
-                    }
-                }
-                selectedItemNationalityCode.set(selectedCountryName(jsonBodySecond.getString("nationalityCountry"),countryList!!))
-                selectedItemBirthPlaceCode.set(selectedCountryName(jsonBodySecond.getString("placeOfBirth"),countryList!!))
-                idType.value = jsonBodySecond.getString("idType")
-
-                if (jsonBodySecond.has("dob")){
-                    if (!jsonBodySecond.getString("dob").isNullOrEmpty()) {
-                        val isoFormat = changeDateFormatNormal(jsonBodySecond.getString("dob"))
-                        var dobFormatArray = isoFormat?.split(" ")
-                        dob.value = dobFormatArray?.get(0)
-                        dobTime.value = dobFormatArray?.get(1)
-                    }
-                }
-
-                onClick(view)
-
-                /*val user = User(
-                    jsonBodySecond.getString("firstName"),
-                    jsonBodySecond.getString("email"),
-                    jsonBodySecond.getString("email"),
-                    jsonBodySecond.getString("mobileNumber"),
-                    passportNo,
-                    jsonBodySecond.getString("idType"),
-                    patientIdNo,
-                    jsonBodySecond.getString("countryCode"),
-                    jsonBodySecond.getString("placeOfBirth"),
-                    jsonBodySecond.getString("gender"),
-                    jsonBodySecond.getString("nationalityCountry"),
-                    dob,
-                    dobTime,
-                    "",
-                    "",
-                    "",
-                    existingUserprivateKey.get(),
-                    "",
-                    jsonBodySecond.getString("subsId"),
-                    "Y"
-                )
-
-                if (repositary.getUserCount() > 0){
-                    repositary.deleteOldUser()
-                }
-
-                repositary.insertUserLocalDb(user)
-                if (!jsonBodySecond.getString("subsId").isNullOrEmpty()) {
-                    repositary.savePatientSubId(jsonBodySecond.getString("subsId"))
-                }*/
-                listener?.onSuccess("Setup Manually Success")
-
-
-                Log.d("response_body",responseBody)
-
-            }catch (e:APIException){
-                listener?.onFailure(e.message!!)
-            }catch (e:NoInternetException){
-                listener?.onFailure(e.message!!)
-            }catch (e:SocketTimeoutException){
-                listener?.onFailure(e.message!!)
-            }catch (e: JSONException){
-                listener?.onFailure("invalid")
-            }
-        }
-    }
-
     fun loadProfileData(context: Context,subsId:String){
         dependentPrivateKey = subsId
         dependent = repositary.getDependent(subsId!!)
@@ -413,6 +343,28 @@ class DependentViewModel(
 
     fun updateProfile(view: View){
         isAllow = !(!currentEmail.equals(email.value) and !currentMobile.equals(contactNumber.value))
+        val relationShips =
+                view.context.resources.getStringArray(R.array.relationships)
+        val relationShip =
+                relationShips.get(relationshipItemPos.get())
+
+        var placeBirth = ""
+        if (!countryList.isNullOrEmpty()) {
+            placeBirth =
+                    countryList?.get(selectedItemBirthPlaceCode.get())?.alpha3!!
+            //placeBirth = World.getCountryFrom(selectedItemBirthPlaceCode.get()).alpha3
+        }
+
+        var nationality = ""
+        if (!countryList.isNullOrEmpty()) {
+            nationality =
+                    countryList?.get(selectedItemNationalityCode.get())?.alpha3!!
+        }
+
+        val idTypeList =
+                view.context.resources.getStringArray(R.array.id_type)
+        idType.value = idTypeList[selectedItemIdTYpe.get()]
+
         if (isChecked.get()){
             if (!fullName.value.isNullOrEmpty() and !email.value.isNullOrEmpty() and !contactNumber.value.isNullOrEmpty()) {
                 if (isAllow) {
@@ -423,29 +375,6 @@ class DependentViewModel(
                                     listener?.onStarted()
                                     Couritnes.main {
                                         try {
-
-                                            val relationShips =
-                                                view.context.resources.getStringArray(R.array.relationships)
-                                            val relationShip =
-                                                relationShips.get(relationshipItemPos.get())
-
-                                            var placeBirth = ""
-                                            if (!countryList.isNullOrEmpty()) {
-                                                placeBirth =
-                                                    countryList?.get(selectedItemBirthPlaceCode.get())?.alpha3!!
-                                            }
-
-                                            var nationality = ""
-                                            if (!countryList.isNullOrEmpty()) {
-                                                nationality =
-                                                    countryList?.get(selectedItemNationalityCode.get())?.alpha3!!
-                                            }
-
-                                            val idTypeList =
-                                                view.context.resources.getStringArray(R.array.id_type)
-                                            idType.value = idTypeList[selectedItemIdTYpe.get()]
-
-
                                             val updateProfileReq = UpdateProfileReq()
                                             val updateProfileReqData = UpdateProfileReqData()
 

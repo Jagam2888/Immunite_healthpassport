@@ -18,10 +18,10 @@
         android:icon="@drawable/world_entries_icon"
         app:showAsAction="always"/>
 
-    <item android:id="@+id/profile"
+    <!--<item android:id="@+id/profile"
         android:title="@string/profile"
         android:icon="@drawable/user_icon_circle"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="ifRoom"/>-->
 
     <item android:id="@+id/setting"
         android:title="@string/setting"

@@ -5,25 +5,13 @@ import android.os.Bundle
 import android.os.SystemClock
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.cmg.vaccine.databinding.ActivityExistingUserBinding
-import com.cmg.vaccine.fragment.SettingsFragment
 import com.cmg.vaccine.listener.SimpleListener
-import com.cmg.vaccine.services.DriveServiceHelper
 import com.cmg.vaccine.util.*
 import com.cmg.vaccine.viewmodel.ExistingUserViewModel
 import com.cmg.vaccine.viewmodel.viewmodelfactory.ExistingUserViewModelFactory
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.common.api.Scope
-import com.google.api.client.extensions.android.http.AndroidHttp
-import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential
-import com.google.api.client.json.gson.GsonFactory
-import com.google.api.services.drive.Drive
-import com.google.api.services.drive.DriveScopes
-import immuniteeEncryption.EncryptionUtils
 import io.paperdb.Paper
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
@@ -99,7 +87,7 @@ class ExistingUserActivity : BaseActivity(),KodeinAware,SimpleListener {
             hideKeyBoard()
             if (!binding.edtDob.text.toString().isNullOrEmpty()) {
                 Paper.book().write(Passparams.QR_CODE_VALUE, "")
-                Intent(this, SacnQRActivity::class.java).also {
+                Intent(this, ScanQRActivity::class.java).also {
                     startActivity(it)
                 }
             }else{

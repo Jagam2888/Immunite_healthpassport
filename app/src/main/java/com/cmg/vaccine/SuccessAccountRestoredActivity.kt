@@ -8,7 +8,7 @@ import androidx.databinding.DataBindingUtil
 import com.cmg.vaccine.databinding.ActivitySuccessAccountRestoredBinding
 import com.cmg.vaccine.util.Passparams
 
-class SuccessAccountRestoredActivity : AppCompatActivity() {
+class SuccessAccountRestoredActivity : BaseActivity() {
 
     private lateinit var binding:ActivitySuccessAccountRestoredBinding
 

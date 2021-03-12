@@ -51,7 +51,7 @@
                 tools:ignore="VectorDrawableCompat"
                 android:visibility="gone"/>
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/imgAdd"
                 android:layout_width="25dp"
                 android:layout_height="25dp"

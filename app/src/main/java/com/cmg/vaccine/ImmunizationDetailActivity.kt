@@ -1,6 +1,5 @@
 package com.cmg.vaccine
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
@@ -12,7 +11,7 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
 
-class ImmunizationDetailActivity : AppCompatActivity(),KodeinAware {
+class ImmunizationDetailActivity : BaseActivity(),KodeinAware {
     override val kodein by kodein()
     private lateinit var binding:ActivityImmunizationDetailBinding
     private lateinit var viewModel:WorldEntryViewModel

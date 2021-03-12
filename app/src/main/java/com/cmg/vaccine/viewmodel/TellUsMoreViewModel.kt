@@ -89,10 +89,6 @@ class TellUsMoreViewModel(
                 userData.patientIdType = idType.value!!
                 userData.nationality = nationality
 
-
-
-
-
                 val signUpReq = SignUpReq()
                 var signUpReqData = SignUpReqData()
 
@@ -111,7 +107,6 @@ class TellUsMoreViewModel(
                 signUpReqData.imeId = view.context.getDeviceUUID()
 
                 signUpReq.data = signUpReqData
-
                 Couritnes.main {
                     try {
                         val response = repositary.signUp(signUpReq)

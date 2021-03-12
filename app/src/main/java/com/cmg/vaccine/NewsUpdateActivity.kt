@@ -1,6 +1,5 @@
 package com.cmg.vaccine
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import com.cmg.vaccine.databinding.ActivityNewsUpdateBinding
