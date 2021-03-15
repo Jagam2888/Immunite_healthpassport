@@ -84,6 +84,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:paddingTop="5dp"
                     android:orientation="horizontal"
                     android:background="@drawable/edittext_background">
 
@@ -96,46 +98,6 @@
                         app:ccp_defaultNameCode="my"
                         android:layout_weight="1"
                         android:layout_gravity="center_vertical"/>
-
-                    <!--<RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:paddingBottom="10dp"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="10dp"
-                        android:paddingTop="10dp"
-                        android:layout_weight="2">
-
-                        <ImageView
-                            android:id="@+id/img_flag"
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:src="@drawable/malaysia_flag"
-                            android:layout_centerVertical="true" />
-
-                        <ImageView
-                            android:id="@+id/img_down_arrow"
-                            android:layout_width="10dp"
-                            android:layout_height="10dp"
-                            android:layout_centerVertical="true"
-                            android:layout_alignParentRight="true"
-                            android:src="@drawable/down_arrow" />
-
-                        <Spinner
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textSize="16sp"
-                            android:background="@null"
-                            android:minHeight="0dp"
-                            android:entries="@array/code"
-                            android:layout_toRightOf="@+id/img_flag"
-                            android:layout_toLeftOf="@id/img_down_arrow"
-                            android:layout_centerVertical="true"
-                            android:selectedItemPosition="@={signupviewmodel.selectedItemContactCode}"/>
-
-
-                    </RelativeLayout>-->
 
                     <View
                         android:layout_width="1dp"
@@ -180,27 +142,30 @@
 
                     <RadioButton
                         android:id="@+id/btn_male"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:button="@null"
                         android:checked="true"
+                        android:layout_weight="1"
                         android:background="@drawable/male_radio_selector" />
 
                     <RadioButton
                         android:id="@+id/btn_female"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:button="@null"
+                        android:layout_weight="1"
                         android:background="@drawable/female_radio_selector"
-                        android:layout_marginLeft="20dp" />
+                        android:layout_marginLeft="10dp" />
 
                     <RadioButton
                         android:id="@+id/btn_other"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:button="@null"
+                        android:layout_weight="1"
                         android:background="@drawable/other_radio_selector"
-                        android:layout_marginLeft="20dp" />
+                        android:layout_marginLeft="10dp" />
                 </RadioGroup>
 
                 <TextView
@@ -251,127 +216,6 @@
                     android:layout_toLeftOf="@id/btn_dob_calender"
                     android:layout_marginRight="20dp"/>
                 </RelativeLayout>
-
-                <!--<com.msa.dateedittext.DateEditText
-                    android:id="@+id/edt_dob"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/opens_regular"
-                    android:maxLines="1"
-                    app:dateFormat="ddMMyyyy"
-                    app:dividerCharacter="slash"
-                    app:maxDate="01/12/2100"
-                    app:minDate="01/12/1900"
-                    app:helperTextEnabled="true"
-                    android:hint="dd/mm/yyyy"
-                    android:text="@={signupviewmodel.dob}"
-                    android:drawableRight="@drawable/calender_icon"
-                    android:drawablePadding="10dp"
-                    android:textColorHint="@color/gray"
-                    android:textColor="@color/black"
-                    android:background="@drawable/edittext_background"
-                    android:layout_marginTop="5dp"
-                    android:paddingBottom="10dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingTop="10dp"/>-->
-
-                <!--<LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="5dp">
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="56dp"
-                        android:background="@drawable/spinner_background"
-                        android:layout_marginTop="5dp"
-                        android:paddingBottom="5dp"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="10dp"
-                        android:paddingTop="5dp"
-                        android:layout_weight="1.2"
-                        android:layout_marginLeft="10dp">
-
-                        <Spinner
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textSize="16sp"
-                            android:background="@null"
-                            android:minHeight="0dp"
-                            android:entries="@{signupviewmodel.days}"
-                            android:layout_centerVertical="true"
-                            tools:setOnItemSelectedListener="@{signupviewmodel.clicksListenerDay}"/>
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_alignParentRight="true"
-                            android:src="@drawable/down_arrow"
-                            android:layout_marginRight="10dp" />
-                    </RelativeLayout>
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="56dp"
-                        android:background="@drawable/spinner_background"
-                        android:layout_marginTop="5dp"
-                        android:paddingBottom="5dp"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="10dp"
-                        android:paddingTop="5dp"
-                        android:layout_weight="1.2"
-                        android:layout_marginLeft="10dp">
-
-                        <Spinner
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textSize="16sp"
-                            android:background="@null"
-                            android:minHeight="0dp"
-                            android:entries="@array/month"
-                            android:layout_centerVertical="true"
-                            tools:setOnItemSelectedListener="@{signupviewmodel.clicksListenerMonth}"/>
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_alignParentRight="true"
-                            android:src="@drawable/down_arrow"
-                            android:layout_marginRight="10dp" />
-                    </RelativeLayout>
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="56dp"
-                        android:background="@drawable/spinner_background"
-                        android:layout_marginTop="5dp"
-                        android:paddingBottom="5dp"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="10dp"
-                        android:paddingTop="5dp"
-                        android:layout_weight="1"
-                        android:layout_marginLeft="10dp">
-
-                        <Spinner
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textSize="16sp"
-                            android:background="@null"
-                            android:minHeight="0dp"
-                            android:entries="@{signupviewmodel.years}"
-                            android:layout_centerVertical="true"
-                            tools:setOnItemSelectedListener="@{signupviewmodel.clicksListenerYears}"/>
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_alignParentRight="true"
-                            android:src="@drawable/down_arrow"
-                            android:layout_marginRight="10dp" />
-                    </RelativeLayout>
-                </LinearLayout>-->
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -478,7 +322,7 @@
                         android:inputType="textEmailAddress"
                         android:textColor="@color/black"
                         android:layout_marginTop="5dp"
-                        android:paddingBottom="5dp"
+                        android:paddingBottom="10dp"
                         android:paddingLeft="10dp"
                         android:paddingRight="10dp"
                         android:paddingTop="10dp"
@@ -506,7 +350,7 @@
                     android:inputType="textEmailAddress"
                     android:textColor="@color/black"
                     android:layout_marginTop="5dp"
-                    android:paddingBottom="5dp"
+                    android:paddingBottom="10dp"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
                     android:paddingTop="10dp"

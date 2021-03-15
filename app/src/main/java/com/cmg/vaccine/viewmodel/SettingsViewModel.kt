@@ -60,7 +60,7 @@ class SettingsViewModel(
 
         getVaccineTestRef(repositary.getPrivateKey()!!,"Prinicipal")
 
-        val dependent = repositary.getAllDependent()
+        /*val dependent = repositary.getAllDependent()
 
         if (!dependent.isNullOrEmpty()){
             dependent.forEach {
@@ -68,7 +68,7 @@ class SettingsViewModel(
                     getVaccineTestRef(it.privateKey!!,"Dependent ${it.firstName}")
                 }
             }
-        }
+        }*/
 
         //getVaccineFromAPI()
     }
@@ -77,11 +77,12 @@ class SettingsViewModel(
 
         Couritnes.main {
             try {
-                val response = repositary.getVaccineTestRef(privateKey)
-                //val response = repositary.getVaccineTestRef("CB28F1B9F2BE4C115D42E725FD92514A99AB2E70175B794D47CC76F5CB68A424")
+                //val response = repositary.getVaccineTestRef(privateKey)
+                val response = repositary.getVaccineTestRef("05DEAF767A16D61A5D08FE00890C43910D8CAFF6B4C963A7F39DD040C0AEF9E0")
                 if (response != null){
                     val jsonBody = JSONObject(response.string())
-                    val jsonBodyData = jsonBody.getJSONArray("data")
+                    val jsonBodayDataObject = jsonBody.getJSONObject("data")
+                    val jsonBodyData = jsonBodayDataObject.getJSONArray("data")
                     if (jsonBodyData.length() > 0) {
                         for (i in 0 until jsonBodyData.length()) {
                             var sampleCollectedDate = ""
@@ -261,9 +262,9 @@ class SettingsViewModel(
 
                             repositary.insertTestReport(testReport)
                         }
-                        listener?.onSuccess(jsonBody.getString("reason"))
+                        listener?.onSuccess(jsonBodayDataObject.getString("reason"))
                     }else{
-                        listener?.onFailure(jsonBody.getString("reason")+" : "+user)
+                        listener?.onFailure(jsonBodayDataObject.getString("reason")+" : "+user)
                     }
                 }
             }catch (e: APIException) {

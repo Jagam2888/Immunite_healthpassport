@@ -55,20 +55,24 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@{model.nameDisplayTitle}"
-                        android:textSize="14sp"
-                        android:textColor="@color/black"
-                        android:textAppearance="@style/opens_bold" />
-
                     <ImageView
                         android:id="@+id/btn_sucess"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/process_icon"
                         android:layout_alignParentRight="true" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@{model.nameDisplayTitle}"
+                        android:textSize="14sp"
+                        android:textColor="@color/black"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:textAppearance="@style/opens_bold"
+                        android:layout_toLeftOf="@id/btn_sucess"/>
+
                 </RelativeLayout>
 
                 <TextView

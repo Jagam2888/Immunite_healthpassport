@@ -98,4 +98,13 @@ class WorldEntryRepositary(
     fun getVaccineDetail(vaccineCode:String):VaccineDetail{
         return database.getDao().getVaccineDetail(vaccineCode)
     }
+
+    fun updateWEOrder(countryName:String,order:Int)
+    {
+        database.getDao().updateWEOrder(countryName,order)
+    }
+
+    fun getCurrentCount():Int{
+        return database.getDao().getCurrentCount()
+    }
 }

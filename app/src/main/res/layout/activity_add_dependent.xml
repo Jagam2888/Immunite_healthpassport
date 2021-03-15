@@ -172,7 +172,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:orientation="horizontal"
-                    android:background="@drawable/edittext_background">
+                    android:background="@drawable/edittext_background"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp">
 
                     <com.hbb20.CountryCodePicker
                         android:id="@+id/ccp_loadCountryCode"
@@ -225,27 +227,30 @@
 
                     <RadioButton
                         android:id="@+id/btn_male"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:button="@null"
                         android:checked="true"
+                        android:layout_weight="1"
                         android:background="@drawable/male_radio_selector" />
 
                     <RadioButton
                         android:id="@+id/btn_female"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:button="@null"
+                        android:layout_weight="1"
                         android:background="@drawable/female_radio_selector"
-                        android:layout_marginLeft="20dp" />
+                        android:layout_marginLeft="10dp" />
 
                     <RadioButton
                         android:id="@+id/btn_other"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:button="@null"
+                        android:layout_weight="1"
                         android:background="@drawable/other_radio_selector"
-                        android:layout_marginLeft="20dp" />
+                        android:layout_marginLeft="10dp" />
                 </RadioGroup>
                 <TextView
                     android:layout_width="wrap_content"
@@ -430,7 +435,7 @@
                     android:inputType="textEmailAddress"
                     android:textColor="@color/black"
                     android:layout_marginTop="5dp"
-                    android:paddingBottom="5dp"
+                    android:paddingBottom="10dp"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
                     android:paddingTop="10dp"
@@ -494,7 +499,7 @@
                     android:textColorHint="@color/gray"
                     android:textColor="@color/black"
                     android:layout_marginTop="5dp"
-                    android:paddingBottom="5dp"
+                    android:paddingBottom="10dp"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
                     android:paddingTop="10dp"

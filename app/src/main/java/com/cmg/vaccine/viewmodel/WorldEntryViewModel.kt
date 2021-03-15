@@ -117,7 +117,8 @@ class WorldEntryViewModel(
                     country,
                     countryCode,
                     "G",
-                    "Y"
+                    "Y",
+                repositary.getCurrentCount()
             )
             repositary.insertWorldEntry(addEntry)
 
@@ -395,6 +396,12 @@ class WorldEntryViewModel(
             _testTypeList.value = getTestTypeList
             listener?.onSuccess("")
         }
+    }
+
+    fun changeOrder(countryName:String,newOrder:Int)
+    {
+        repositary.updateWEOrder(countryName,newOrder)
+
     }
 
 

@@ -8,7 +8,8 @@ data class AddWorldEntries(
     var countryName:String?,
     var countryCodeAlpha:String?,
     var countryIndicator:String?,
-    var status:String?
+    var status:String?,
+    var order:Int=0
 ){
     @PrimaryKey(autoGenerate = true)
     var id:Int = 0

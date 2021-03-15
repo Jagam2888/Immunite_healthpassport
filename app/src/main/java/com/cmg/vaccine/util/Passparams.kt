@@ -47,10 +47,11 @@ object Passparams{
     const val IMMUNIZATION_HISTORY = "nhr-module-user/immuhistory"
     const val GET_EXISTING_USER = "nhr-module-user/gepatientprivatekey"
 
-    const val GET_VACCINE_TEST_REF = "blockchainapi/getAllTestRecord"
-    //const val GET_VACCINE_TEST_REF = "nhr-module-user/getalltestrecord"
+    //const val GET_VACCINE_TEST_REF = "blockchainapi/getAllTestRecord"
+    const val GET_VACCINE_TEST_REF = "nhr-module-user/getalltestrecord"
     const val UPDATE_UUID = "nhr-module-user/updateuuid"
     const val UPDATE_PRIVATE_KEY_STATUS = "nhr-module-user/updatePrivateKeyStatus"
+    const val UPDATE_FCM_TOKEN = "nhr-module-user/updatetoken"
 
     //Block Chain
     const val BLOCK_CHAIN_URL = "https://cashierbook.com.my:8081/blockchainapi/"

@@ -3,14 +3,18 @@ package com.cmg.vaccine.services
 import android.content.SharedPreferences
 import android.util.Log
 import androidx.preference.PreferenceManager
+import com.cmg.vaccine.network.MyApi
 import com.cmg.vaccine.prefernces.PreferenceProvider
+import com.cmg.vaccine.util.Couritnes
 import com.cmg.vaccine.util.Passparams
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import io.paperdb.Paper
+import java.lang.Exception
 
 class MyFirebaseInstanceIDService():FirebaseMessagingService() {
     //val prefernece:PreferenceProvider = PreferenceProvider(this)
+    //val api = MyApi(applicationContext)
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         super.onMessageReceived(remoteMessage)
         val notificationService = NotificationService(applicationContext)
@@ -28,6 +32,16 @@ class MyFirebaseInstanceIDService():FirebaseMessagingService() {
             Paper.book().write(Passparams.FCM_TOKEN,token)
         }
         Log.d("Firebase", "Refreshed token: $token")
+    }
+
+    private fun updateToken(token: String){
+        Couritnes.main {
+            try {
+
+            }catch (e:Exception){
+                e.printStackTrace()
+            }
+        }
     }
 
    /* fun saveFCMToken(token:String){

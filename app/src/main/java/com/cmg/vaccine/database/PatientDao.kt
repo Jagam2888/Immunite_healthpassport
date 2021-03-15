@@ -113,8 +113,8 @@ interface PatientDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAddWorldEntry(addWorldEntries: AddWorldEntries):Long
 
-    @Query("SELECT * FROM AddWorldEntries")
-    fun getWorldEntries():List<AddWorldEntries>
+    /*@Query("SELECT * FROM AddWorldEntries")
+    fun getWorldEntries():List<AddWorldEntries>*/
 
     @Query("SELECT * FROM AddWorldEntries WHERE countryName =:countryName")
     fun getCountryExists(countryName:String):Int
@@ -145,5 +145,15 @@ interface PatientDao {
 
     @Query("SELECT * FROM WorldEntryRulesByCountry WHERE woen_country_code =:countryCode")
     fun getWorldEntryRuleByCountry(countryCode:String):List<WorldEntryRulesByCountry>
+
+    @Query("UPDATE AddWorldEntries SET `order`=:order WHERE countryName=:countryName")
+    fun updateWEOrder(countryName:String,order:Int)
+
+    //These two used for world entries save the order
+    @Query("SELECT COUNT(id) FROM AddWorldEntries")
+    fun getCurrentCount():Int
+
+    @Query("SELECT * FROM AddWorldEntries ORDER BY `order`")
+    fun getWorldEntries():List<AddWorldEntries>
 
 }

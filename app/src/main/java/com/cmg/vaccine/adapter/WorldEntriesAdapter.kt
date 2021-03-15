@@ -19,6 +19,8 @@ import com.cmg.vaccine.viewmodel.WorldEntryViewModel
 import com.tubb.smrv.SwipeHorizontalMenuLayout
 import com.tubb.smrv.SwipeMenuLayout
 import com.tubb.smrv.listener.SwipeSwitchListener
+import java.util.*
+import kotlin.collections.ArrayList
 
 class WorldEntriesAdapter(
     private val countryList:ArrayList<AddWorldEntries>,
@@ -116,5 +118,34 @@ class WorldEntriesAdapter(
 
         val alertDialog = alertDialogBuilder.create()
         alertDialog.show()
+    }
+
+    fun onRowMoved(fromPosition: Int, toPosition: Int) {
+        // var tempList=countryList
+        //Collections.swap(countryList, fromPosition, toPosition )
+        if (fromPosition < toPosition) {
+            for (i in fromPosition until toPosition) {
+                Collections.swap(countryList, i, i + 1)
+            }
+        } else {
+            for (i in fromPosition downTo toPosition + 1) {
+                Collections.swap(countryList, i, i - 1)
+            }
+        }
+        notifyItemMoved(fromPosition, toPosition)
+        updateOrder()
+    }
+
+    private fun updateOrder()
+    {
+        var array=ArrayList<AddWorldEntries>()
+        var data: AddWorldEntries? =null
+
+
+        for( i in countryList.indices)
+        {
+            viewModel.changeOrder(countryList.get(i).countryName.toString(),i)
+        }
+
     }
 }

@@ -91,6 +91,9 @@ interface MyApi {
     @POST(Passparams.UPDATE_PRIVATE_KEY_STATUS)
     suspend fun updatePrivateKeyStatus(@Query("subsId")subId:String,@Query("status") uuid:String):Response<UpdateUUIDResponse>
 
+    @POST(Passparams.UPDATE_FCM_TOKEN)
+    suspend fun updateFCMToken(@Query("subsId")subid:String,@Query("token")token:String):Response<UpdateFCMTokenResponse>
+
     companion object{
         operator fun invoke(
             context: Context

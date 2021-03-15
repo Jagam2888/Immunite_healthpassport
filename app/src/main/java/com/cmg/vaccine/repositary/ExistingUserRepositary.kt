@@ -5,6 +5,7 @@ import com.cmg.vaccine.database.User
 import com.cmg.vaccine.database.WorldEntryCountries
 import com.cmg.vaccine.database.WorldEntryRulesByCountry
 import com.cmg.vaccine.model.response.GetExistingUserResponse
+import com.cmg.vaccine.model.response.UpdateFCMTokenResponse
 import com.cmg.vaccine.model.response.UpdateUUIDResponse
 import com.cmg.vaccine.model.response.WorldEntriesCountryList
 import com.cmg.vaccine.network.MyApi
@@ -54,6 +55,12 @@ class ExistingUserRepositary(
     suspend fun updateUUID(subId: String,uuid:String):UpdateUUIDResponse{
         return apiRequest {
             api.updateUUID(subId,uuid)
+        }
+    }
+
+    suspend fun updateFCMToken(subId: String,token:String):UpdateFCMTokenResponse{
+        return apiRequest {
+            api.updateFCMToken(subId,token)
         }
     }
 
