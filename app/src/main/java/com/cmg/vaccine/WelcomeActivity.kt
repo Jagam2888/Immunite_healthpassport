@@ -1,14 +1,11 @@
 package com.cmg.vaccine
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.SystemClock
-import android.util.Log
 import androidx.databinding.DataBindingUtil
 import com.cmg.vaccine.databinding.ActivityWelcomeBinding
-import com.cmg.vaccine.fragment.WelcomeDialogFragment
-import immuniteeEncryption.EncryptionUtils
+import com.cmg.vaccine.DialogFragment.WelcomeDialogFragment
 
 class WelcomeActivity : BaseActivity() {
 

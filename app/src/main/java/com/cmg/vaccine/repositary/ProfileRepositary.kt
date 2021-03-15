@@ -61,4 +61,8 @@ class ProfileRepositary(
     fun getDependentProfileImage(subsId: String):String?{
         return database.getDao().getDependentProfileImage(subsId)
     }
+
+    fun removeDependent(subId: String){
+        database.getDao().deleteDependent(subId)
+    }
 }

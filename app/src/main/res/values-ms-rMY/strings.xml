@@ -87,6 +87,9 @@
     <string name="enter_ecode">Masukkan eCode</string>
     <string name="cancel">Batal</string>
 
+    <string name="sure_remove_dependent">Are you sure want to remove Dependent?</string>
+    <string name="remove">Remove</string>
+
     <string name="close">Close</string>
     <string name="thank_you_signup">Thank You for your interest to sign up with Immunitee.</string>
     <string name="immunitee_welcome_content">Immunitee is built on trust and protecting privacy, thus we do not required copy of your confidential document such as Passport, ID or Bank Statement to confirm your credential. Signing up Immunitee has no use to you if the information provided are vary from your actual.</string>

@@ -187,6 +187,10 @@ class ProfileViewModel(
         }
     }
 
+    fun removeDependent(subId: String){
+        repositary.removeDependent(subId)
+    }
+
 
     fun loadDependentData(subId:String){
         val dependent = repositary.getDependent(subId)
@@ -231,7 +235,7 @@ class ProfileViewModel(
 
     fun loadChildList(){
         val dependentList = repositary.getDependentList(repositary.getSubId()!!)
-        if (dependentList != null && dependentList.isNotEmpty()){
+        if (dependentList != null){
             _dependentList.value = dependentList
             dependentListCount.set(dependentList.size)
         }

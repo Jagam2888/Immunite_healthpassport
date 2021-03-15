@@ -86,6 +86,9 @@ interface PatientDao {
     @Query("SELECT profileImage FROM Dependent WHERE subsId =:subsId")
     fun getDependentProfileImage(subsId: String):String
 
+    @Query("DELETE FROM Dependent WHERE subsId =:subsId")
+    fun deleteDependent(subsId: String)
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertVaccineData(vaccine: Vaccine):Long
 

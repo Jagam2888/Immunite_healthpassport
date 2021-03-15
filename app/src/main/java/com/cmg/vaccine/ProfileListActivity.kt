@@ -25,6 +25,7 @@ class ProfileListActivity:BaseActivity(),KodeinAware {
     override val kodein by kodein()
     private lateinit var binding: FragmentProfileBinding
     private lateinit var viewModel: ProfileViewModel
+    var childListAdapter:ChildListAdapter?=null
 
     private val factory: ProfileViewModelFactory by instance()
     var lastClickTime:Long = 0
@@ -38,9 +39,10 @@ class ProfileListActivity:BaseActivity(),KodeinAware {
         binding.lifecycleOwner = this
 
         viewModel.dependentList.observe(this, Observer {list ->
+            childListAdapter = ChildListAdapter(list)
             binding.recyclerViewChild.also {
                 it.layoutManager = LinearLayoutManager(this)
-                it.adapter = ChildListAdapter(list)
+                it.adapter = childListAdapter
             }
         })
 
@@ -91,6 +93,7 @@ class ProfileListActivity:BaseActivity(),KodeinAware {
         super.onResume()
         viewModel.loadParentData()
         viewModel.loadChildList()
+        childListAdapter?.notifyDataSetChanged()
         if (viewModel.dependentListCount.get() >= 4) {
             if (binding.btnAddDependent.visibility == View.VISIBLE){
                 binding.btnAddDependent.visibility = View.GONE

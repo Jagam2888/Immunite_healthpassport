@@ -1,4 +1,4 @@
-package com.cmg.vaccine.fragment
+package com.cmg.vaccine.DialogFragment
 
 import android.os.Bundle
 import android.view.LayoutInflater

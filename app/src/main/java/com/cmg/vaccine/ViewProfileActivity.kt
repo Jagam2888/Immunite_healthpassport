@@ -1,5 +1,6 @@
 package com.cmg.vaccine
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Paint
 import android.net.Uri
@@ -8,10 +9,12 @@ import android.os.Bundle
 import android.os.SystemClock
 import android.util.Log
 import android.view.View
+import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.cmg.vaccine.databinding.ActivityViewProfileBinding
 import com.cmg.vaccine.util.Passparams
+import com.cmg.vaccine.util.toast
 import com.cmg.vaccine.viewmodel.ProfileViewModel
 import com.cmg.vaccine.viewmodel.viewmodelfactory.ProfileViewModelFactory
 import org.kodein.di.KodeinAware
@@ -69,6 +72,24 @@ class ViewProfileActivity : BaseActivity(),KodeinAware {
                 startActivity(it)
             }
         }
+
+        binding.btnRemoveDependent.setOnClickListener {
+            showAlertForRemoveDependent()
+        }
+    }
+
+    private fun showAlertForRemoveDependent(){
+        val alertDialog = AlertDialog.Builder(this)
+        alertDialog.setTitle(resources.getString(R.string.app_name)).setMessage(resources.getString(R.string.sure_remove_dependent)).setPositiveButton(resources.getString(R.string.remove)
+        ) { dialog, which ->
+            dialog?.dismiss()
+            viewModel.removeDependent(intent.extras?.getString(Passparams.DEPENDENT_SUBID, "")!!)
+            toast("Removed Successfully")
+            finish()
+        }.setNegativeButton(resources.getString(R.string.no)
+        ) { dialog, which -> dialog?.dismiss() }
+
+        alertDialog.show()
     }
 
 

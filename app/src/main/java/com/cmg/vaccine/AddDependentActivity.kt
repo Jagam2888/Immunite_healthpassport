@@ -16,6 +16,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.blongho.country_data.Country
+import com.cmg.vaccine.DialogFragment.DependentDialogFragment
 import com.cmg.vaccine.adapter.CountryListAdapter
 import com.cmg.vaccine.databinding.ActivityAddDependentBinding
 import com.cmg.vaccine.listener.SimpleListener
@@ -310,6 +311,7 @@ class AddDependentActivity : BaseActivity(),KodeinAware,SimpleListener {
         toast(msg)
         hideKeyBoard()
         finish()
+        DependentDialogFragment().show(supportFragmentManager,"Add")
     }
 
     override fun onFailure(msg: String) {

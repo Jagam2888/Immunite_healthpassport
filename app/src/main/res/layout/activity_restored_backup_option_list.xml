@@ -90,7 +90,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/gray"
+            android:background="@color/underline_gray"
             android:layout_below="@id/layout_google_drive"
             android:layout_marginTop="20dp" />
 
