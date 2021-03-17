@@ -173,7 +173,7 @@ class OTPVerifyActivity : BaseActivity(),KodeinAware,SimpleListener{
         hide(binding.progressBar)
         toast(msg)
         if (!isExistUser!!) {
-            Intent(this, SubscriptionActivity::class.java).also {
+            Intent(this, SignupCompleteActivity::class.java).also {
                 it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(it)
             }

@@ -65,6 +65,8 @@
     <string name="remove_dependent">Remove Dependent</string>
     <string name="scan_qr_code">Scan QR Code</string>
 
+    <string name="departure_verify">Departure Verification</string>
+
     <string name="restore">Restore</string>
     <string name="restore_google_drive">Restore from Google Drive</string>
 

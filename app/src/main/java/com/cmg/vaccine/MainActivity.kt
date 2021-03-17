@@ -122,7 +122,9 @@ class MainActivity : BaseActivity(),KodeinAware {
         }
 
         binding.qrFab.setOnClickListener {
+            Paper.book().write(Passparams.QR_CODE_VALUE, "")
             Intent(this,ScanQRActivity::class.java).also {
+                it.putExtra(Passparams.NAVIGATE_TO,Passparams.DEPARTURE_VERIFICATION)
                 startActivity(it)
             }
         }

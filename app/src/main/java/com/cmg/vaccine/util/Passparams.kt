@@ -20,6 +20,9 @@ object Passparams{
     const val WORLD_ENTRY_SELECTED_COUNTRY_NAME = "world_entry_selected_country_name"
     const val WORLD_ENTRY_SELECTED_COUNTRY_CODE = "world_entry_selected_country_code"
     const val QR_CODE_VALUE = "qr_code_value"
+    const val NAVIGATE_TO = "navigate_to"
+    const val EXISTING_USER = "existing_user"
+    const val DEPARTURE_VERIFICATION = "departure_verification"
 
     //API
     const val URL = "http://47.254.238.145:7001/"
@@ -52,9 +55,13 @@ object Passparams{
     const val UPDATE_UUID = "nhr-module-user/updateuuid"
     const val UPDATE_PRIVATE_KEY_STATUS = "nhr-module-user/updatePrivateKeyStatus"
     const val UPDATE_FCM_TOKEN = "nhr-module-user/updatetoken"
+    const val DOWNLOAD_TEST_REPORT_FILE = "gp-module-lab/ext/labpdf"
 
     //Block Chain
     const val BLOCK_CHAIN_URL = "https://cashierbook.com.my:8081/blockchainapi/"
+
+    //Download file
+    const val ICARE_URL = "http://10.1.1.150:6001/"
 
     const val GET_VACCINE_LIST_BLOCK_CHAIN = "getAllVaccineRecord"
     const val GET_TEST_REPORT_LIST_BLOCK_CHAIN = "getAllTestRecord"

@@ -74,7 +74,7 @@ class AppController : Application(),KodeinAware {
         bind() from singleton { WorldEntryRepositary(instance(),instance(),instance()) }
         bind() from provider { WorldEntryViewModelFactory(instance()) }
 
-        bind() from singleton { VaccineAndTestRepositary(instance()) }
+        bind() from singleton { VaccineAndTestRepositary(instance(),instance()) }
         bind() from provider { VaccineAndTestModelFactory(instance()) }
 
         bind() from singleton { ImmunizationHistoryRepositary(instance()) }
@@ -85,6 +85,9 @@ class AppController : Application(),KodeinAware {
 
         bind() from singleton { RestoreBackupOptionListRepositary(instance(),instance(),instance()) }
         bind() from provider { RestoreBackupOptionListViewModelFactory(instance()) }
+
+        bind() from singleton { DepartureVerificationRepositary(instance(),instance()) }
+        bind() from provider { DepartureVerificationModelFactory(instance()) }
 
         //bind() from provider { MyFirebaseInstanceIDService(instance()) }
 

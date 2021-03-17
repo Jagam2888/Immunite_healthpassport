@@ -1,5 +1,6 @@
 package com.cmg.vaccine
 
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.core.app.ActivityCompat
@@ -41,7 +42,14 @@ class ScanQRActivity : BaseActivity(),ZXingScannerView.ResultHandler {
     override fun handleResult(rawResult: Result?) {
         if (!rawResult.toString().isNullOrEmpty()){
             Paper.book().write(Passparams.QR_CODE_VALUE,rawResult.toString())
-            finish()
+            if (intent.extras?.getString(Passparams.NAVIGATE_TO).equals(Passparams.EXISTING_USER)) {
+                finish()
+            }else if (intent.extras?.getString(Passparams.NAVIGATE_TO).equals(Passparams.DEPARTURE_VERIFICATION)){
+                Intent(this,DepartureVerificationActivity::class.java).also {
+                    startActivity(it)
+                    finish()
+                }
+            }
         }else{
             toast("Your QR code invalid")
             mScannerView.resumeCameraPreview(this)

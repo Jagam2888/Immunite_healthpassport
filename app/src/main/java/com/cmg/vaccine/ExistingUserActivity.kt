@@ -88,6 +88,7 @@ class ExistingUserActivity : BaseActivity(),KodeinAware,SimpleListener {
             if (!binding.edtDob.text.toString().isNullOrEmpty()) {
                 Paper.book().write(Passparams.QR_CODE_VALUE, "")
                 Intent(this, ScanQRActivity::class.java).also {
+                    it.putExtra(Passparams.NAVIGATE_TO,Passparams.EXISTING_USER)
                     startActivity(it)
                 }
             }else{

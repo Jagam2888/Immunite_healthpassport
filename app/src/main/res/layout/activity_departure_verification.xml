@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.cmg.vaccine.viewmodel.DepartureVerificationViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".DepartureVerificationActivity"
+        android:background="@color/lite_yellow">
+
+        <RelativeLayout
+            android:id="@+id/action_bar"
+            android:layout_width="match_parent"
+            android:layout_height="?android:attr/actionBarSize"
+            android:orientation="horizontal"
+            android:background="@color/white">
+
+            <ImageView
+                android:id="@+id/img_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/left_arrow"
+                app:tint="@color/black"
+                android:layout_marginLeft="10dp"
+                android:layout_centerVertical="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/departure_verify"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:layout_centerInParent="true"
+                style="@style/opens_regular" />
+        </RelativeLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/action_bar">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingTop="5dp">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/img_profile"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/user_icon"
+                        android:layout_gravity="center_vertical" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginLeft="10dp">
+
+                        <TextView
+                            android:id="@+id/txt_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{viewModel.fullName}"
+                            android:textColor="@color/black"
+                            android:textSize="18sp"
+                            android:textAppearance="@style/opens_bold" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Passport No : " />
+
+                            <TextView
+                                android:id="@+id/txt_passport"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@{viewModel.passportNo}" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="ID No : " />
+
+                            <TextView
+                                android:id="@+id/txt_id_no"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@{viewModel.idNo}" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:elevation="4dp"
+                    app:cardElevation="6dp"
+                    app:cardCornerRadius="6dp"
+                    app:cardUseCompatPadding="true"
+                    app:cardBackgroundColor="@color/white">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:paddingRight="20dp"
+                        android:paddingLeft="20dp"
+                        android:paddingBottom="20dp"
+                        android:paddingTop="20dp">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@{viewModel.flightNo}"
+                                android:textColor="@color/black"
+                                android:textAppearance="@style/opens_bold"
+                                android:textSize="20sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@{viewModel.airLine}"
+                                android:textColor="@color/black"
+                                android:textAppearance="@style/opens_bold"
+                                android:textSize="20sp"
+                                android:layout_alignParentRight="true" />
+                        </RelativeLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="20sp"
+                            android:background="@color/underline_gray" />
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <LinearLayout
+                                android:id="@+id/layout_departure"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@{viewModel.departureDestination}"
+                                    android:textSize="24sp"
+                                    android:textColor="@color/blue1"
+                                    android:textAppearance="@style/opens_bold" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@{viewModel.departureTime}"
+                                    android:textSize="18sp"
+                                    android:textColor="@color/black"
+                                    android:textAppearance="@style/opens_bold" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@{viewModel.departureDate}"
+                                    android:textSize="18sp"
+                                    android:textColor="#545454"
+                                    android:paddingLeft="10dp"
+                                    android:paddingRight="10dp"
+                                    android:paddingTop="5dp"
+                                    android:paddingBottom="5dp"
+                                    android:background="@drawable/mas_gray_txt_view_bg"
+                                    android:textAppearance="@style/opens_bold"
+                                    android:layout_marginTop="10dp" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/layout_destination"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:layout_alignParentRight="true">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@{viewModel.arrivalDestination}"
+                                    android:textSize="24sp"
+                                    android:textColor="@color/blue1"
+                                    android:textAppearance="@style/opens_bold"
+                                    android:layout_gravity="right" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@{viewModel.arrivalTime}"
+                                    android:textSize="18sp"
+                                    android:textColor="@color/black"
+                                    android:textAppearance="@style/opens_bold"
+                                    android:layout_gravity="right" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@{viewModel.arrivalDate}"
+                                    android:textSize="18sp"
+                                    android:textColor="#545454"
+                                    android:paddingLeft="10dp"
+                                    android:paddingRight="10dp"
+                                    android:paddingTop="5dp"
+                                    android:paddingBottom="5dp"
+                                    android:background="@drawable/mas_gray_txt_view_bg"
+                                    android:textAppearance="@style/opens_bold"
+                                    android:layout_marginTop="10dp" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginTop="30dp">
+
+                                <ImageView
+                                    android:layout_width="12dp"
+                                    android:layout_height="12dp"
+                                    android:src="@drawable/oval_gray_outline" />
+
+                                <View
+                                    android:background="@drawable/verticle_dotted_line"
+                                    android:layout_width="120dp"
+                                    android:layout_height="2dp"
+                                    android:layerType="software"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_marginRight="5dp" />
+
+                                <ImageView
+                                    android:layout_width="12dp"
+                                    android:layout_height="12dp"
+                                    android:src="@drawable/oval_blue" />
+
+                            </LinearLayout>
+                        </RelativeLayout>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="20dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@{viewModel.status?@drawable/mas_user_status_success:@drawable/mas_user_status_fail}" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginLeft="20dp">
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:layout_width="217dp"
+                            android:layout_height="wrap_content"
+                            android:text="@{viewModel.status?`PASS`:`REJECT`}"
+                            android:textSize="24sp"
+                            android:textColor="@color/white"
+                            android:textAppearance="@style/opens_bold"
+                            android:background="@{viewModel.status?@drawable/mas_user_satus_pass_btn_bg:@drawable/mas_user_status_fail_btn_bg}" />
+
+                        <TextView
+                            android:id="@+id/txt_timer"
+                            android:layout_width="217dp"
+                            android:layout_height="wrap_content"
+                            android:text="00:15"
+                            android:textSize="18sp"
+                            android:textColor="@color/dark_gray"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp"
+                            android:paddingTop="5dp"
+                            android:paddingBottom="5dp"
+                            android:gravity="center_horizontal"
+                            android:background="@drawable/mas_gray_txt_view_bg"
+                            android:textAppearance="@style/opens_bold"
+                            android:layout_marginTop="10dp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:elevation="4dp"
+                    app:cardElevation="6dp"
+                    app:cardCornerRadius="6dp"
+                    app:cardUseCompatPadding="true"
+                    app:cardBackgroundColor="@color/white"
+                    android:layout_marginTop="20dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:paddingRight="20dp"
+                        android:paddingLeft="20dp"
+                        android:paddingBottom="20dp"
+                        android:paddingTop="20dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Staff on Duty"
+                            android:textColor="@color/dark_gray"
+                            android:textSize="16sp"
+                            android:textAppearance="@style/opens_regular" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{viewModel.staffName}"
+                            android:textColor="@color/black"
+                            android:textSize="18sp"
+                            android:textAppearance="@style/opens_bold" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+        </ScrollView>
+
+    </RelativeLayout>
+</layout>

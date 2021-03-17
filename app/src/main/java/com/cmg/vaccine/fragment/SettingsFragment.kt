@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.cmg.vaccine.*
+import com.cmg.vaccine.DialogFragment.BackupSuccessDialogFragment
 import com.cmg.vaccine.databinding.FragmentSettingsBinding
 import com.cmg.vaccine.listener.SimpleListener
 import com.cmg.vaccine.services.DriveServiceHelper
@@ -446,7 +447,8 @@ class SettingsFragment : Fragment(),KodeinAware,SimpleListener {
         driveServiceHelper.backUpFile(excelPath)?.addOnSuccessListener(
             OnSuccessListener {
                 hide(binding.progressBar)
-                context?.toast("Your Backup is Successfully uploaded")
+                //context?.toast("Your Backup is Successfully uploaded")
+                BackupSuccessDialogFragment().show(childFragmentManager,"TAG")
                 Log.e("Upload", "Success")
             }
         )
@@ -458,6 +460,7 @@ class SettingsFragment : Fragment(),KodeinAware,SimpleListener {
                 }
             )
     }
+
 
 
 }

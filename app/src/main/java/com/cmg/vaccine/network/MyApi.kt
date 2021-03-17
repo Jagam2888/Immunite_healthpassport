@@ -8,11 +8,9 @@ import com.cmg.vaccine.model.request.UpdateProfileReq
 import com.cmg.vaccine.model.response.*
 import com.cmg.vaccine.util.Passparams
 import okhttp3.ResponseBody
+import retrofit2.Call
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface MyApi {
 
@@ -93,6 +91,11 @@ interface MyApi {
 
     @POST(Passparams.UPDATE_FCM_TOKEN)
     suspend fun updateFCMToken(@Query("subsId")subid:String,@Query("token")token:String):Response<UpdateFCMTokenResponse>
+
+    @Streaming
+    @GET
+    fun downLoadDynamicUrl(@Url fileUrl:String): Response<ResponseBody>
+
 
     companion object{
         operator fun invoke(

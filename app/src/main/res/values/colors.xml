@@ -24,6 +24,8 @@
     <color name="blue">#3293C9</color>
     <color name="text_color">#00172D</color>
     <color name="underline_gray">#E8E6E3</color>
+    <color name="blue1">#5CA2FF</color>
+    <color name="txt_view_background">#F2F2F2</color>
 
     <color name="dim_background">#CC000000</color>
 </resources>

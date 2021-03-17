@@ -3,6 +3,7 @@ package com.cmg.vaccine.network
 import android.content.Context
 import com.cmg.vaccine.util.NoInternetException
 import com.cmg.vaccine.util.Passparams
+import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
@@ -28,6 +29,7 @@ fun RetrofitClientInstance(context: Context) : Retrofit {
     return Retrofit.Builder()
             .baseUrl(Passparams.URL)
             .addConverterFactory(GsonConverterFactory.create())
+        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .client(createOkHttp(context))
             .build()
 
@@ -73,9 +75,9 @@ fun getUnSafeOkkHttpClient(): OkHttpClient {
 
 fun RetrofitBlockChainClientInstance(context: Context) : Retrofit {
     return Retrofit.Builder()
-        .baseUrl(Passparams.BLOCK_CHAIN_URL)
+        .baseUrl(Passparams.ICARE_URL)
         .addConverterFactory(GsonConverterFactory.create())
-        .client(getUnSafeOkkHttpClient())
+        .client(createOkHttp(context))
         .build()
 
 }

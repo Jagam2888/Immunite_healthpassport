@@ -9,7 +9,11 @@
             type="com.cmg.vaccine.viewmodel.VaccineAndTestViewModel" />
     </data>
 
-    <LinearLayout
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -377,6 +381,7 @@
                         android:layout_marginTop="5dp" />
 
                     <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btn_file_download"
                         android:layout_width="53dp"
                         android:layout_height="53dp"
                         android:background="@drawable/pdf_file_btn"
@@ -399,4 +404,11 @@
         </ScrollView>
 
     </LinearLayout>
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="gone"/>
+    </RelativeLayout>
 </layout>
