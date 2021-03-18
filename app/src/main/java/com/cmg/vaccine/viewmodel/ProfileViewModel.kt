@@ -22,6 +22,7 @@ import com.cmg.vaccine.model.request.UpdateProfileReq
 import com.cmg.vaccine.model.request.UpdateProfileReqData
 import com.cmg.vaccine.repositary.ProfileRepositary
 import com.cmg.vaccine.util.*
+import java.lang.Exception
 import java.net.SocketTimeoutException
 
 class ProfileViewModel(
@@ -270,7 +271,6 @@ class ProfileViewModel(
 
         listener?.onStarted()
         isAllow = !(!currentEmail.equals(email1.value) and !currentMobile.equals(contactNumber.value))
-        Couritnes.main {
             try {
                 if (!firstName.value.isNullOrEmpty() and !contactNumber.value.isNullOrEmpty() and !email1.value.isNullOrEmpty()) {
                     if (isAllow) {
@@ -302,31 +302,8 @@ class ProfileViewModel(
 
 
                                             updateProfileReq.data = updateProfileReqData
-
-                                            val response =
-                                                repositary.updateProfile(updateProfileReq)
-                                            if (response.StatusCode == 1) {
-                                                user.state = state.value
-                                                user.city = city.value
-                                                user.address = residentalAddress.value
-                                                user.gender = genderEnum.name
-                                                user.fullName = firstName.value!!.trim()
-                                                user.mobileNumber = contactNumber.value!!.trim()
-                                                user.passportNumber = passportNumber.value?.trim()
-                                                user.patientIdNo = idNo.value?.trim()
-                                                user.dob = dob.value
-                                                user.email = email1.value!!.trim()
-                                                user.dobTime = dobTime.value
-                                                user.placeBirth = placeBirth
-                                                user.nationality = nationality
-                                                user.patientIdType = idType.value
-                                                //user.profileImage = profileImageUri.get()
-                                                repositary.updateUser(user)
-                                                //repositary.saveUser(user)
-                                                listener?.onSuccess(response.Message)
-                                            } else {
-                                                listener?.onFailure(response.Message)
-                                            }
+                                            repositary.saveEditProfileReq(updateProfileReq)
+                                            listener?.onSuccess("")
                                         }else{
                                             listener?.onFailure("Sorry! Invalid Birth Time")
                                         }
@@ -348,13 +325,8 @@ class ProfileViewModel(
                 }else{
                     listener?.onFailure("Please fill all Mandatory fields")
                 }
-            }catch (e:APIException){
-                listener?.onFailure(e.message!!)
-            }catch (e:NoInternetException){
-                listener?.onFailure(e.message!!)
-            }catch (e:SocketTimeoutException){
+            }catch (e:Exception){
                 listener?.onFailure(e.message!!)
             }
-        }
     }
 }

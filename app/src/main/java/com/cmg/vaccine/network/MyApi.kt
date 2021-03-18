@@ -20,13 +20,13 @@ interface MyApi {
     @POST(Passparams.PATIENT_REGISTRATION)
     suspend fun signUp(@Body signUpReq: SignUpReq):Response<PatientRegResponse>
 
-    @POST(Passparams.EDIT_PATIENT_PROFILE)
+    @POST(Passparams.EDIT_PATIENT_PROFILE_API)
     suspend fun updateProfile(@Body updateProfileReq: UpdateProfileReq):Response<UpdatePatientResponse>
 
     @POST(Passparams.DEPENDENT_REGISTRATION)
     suspend fun dependentSignUp(@Body dependentRegReq: DependentRegReq):Response<DependentRegResponse>
 
-    @POST(Passparams.EDIT_DEPENDENT_PROFILE)
+    @POST(Passparams.EDIT_DEPENDENT_PROFILE_API)
     suspend fun updateDependentProfile(@Body updateProfileReq: UpdateProfileReq):Response<DependentRegResponse>
 
     @GET(Passparams.GET_EXISTING_USER)

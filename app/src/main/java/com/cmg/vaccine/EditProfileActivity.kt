@@ -339,9 +339,9 @@ class EditProfileActivity : BaseActivity(),KodeinAware,SimpleListener {
 
     override fun onSuccess(msg: String) {
         hide(binding.progressBar)
-        toast(msg)
+        //toast(msg)
         Intent(this, OTPVerifyActivity::class.java).also {
-            it.putExtra("IsExistUser", true)
+            it.putExtra(Passparams.NAVIGATE_FROM, Passparams.EDIT_PROFILE)
             it.putExtra(Passparams.SUBSID, viewModel.userSubId.value)
             startActivity(it)
             finish()

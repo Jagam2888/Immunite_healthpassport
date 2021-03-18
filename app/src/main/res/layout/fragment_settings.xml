@@ -232,7 +232,7 @@
                         android:paddingRight="30dp"
                         android:paddingLeft="30dp"/>
 
-                        <RelativeLayout
+                        <!--<RelativeLayout
                             android:id="@+id/layout_change_password"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -254,7 +254,7 @@
                                 style="@style/opens_bold"
                                 android:textSize="13sp"
                                 android:layout_centerVertical="true"/>
-                        </RelativeLayout>
+                        </RelativeLayout>-->
 
                         <View
                             android:layout_width="match_parent"

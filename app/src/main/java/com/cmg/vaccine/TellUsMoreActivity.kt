@@ -78,7 +78,7 @@ class TellUsMoreActivity : BaseActivity(),KodeinAware,SimpleListener {
         hide(binding.progressTellus)
         toast(msg)
         Intent(this,OTPVerifyActivity::class.java).also {
-            it.putExtra("IsExistUser",false)
+            it.putExtra(Passparams.NAVIGATE_FROM,Passparams.SIGNUP)
             it.putExtra(Passparams.SUBSID, viewModel.userSubId.value)
             it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(it)

@@ -32,6 +32,9 @@ class LoginPinViewModel(
 
 
 
+    fun getSubId():String?{
+        return repositary.getPatientSubId()
+    }
 
 
     fun loadValues(context: Context){
@@ -54,7 +57,6 @@ class LoginPinViewModel(
 
     fun onLogin(){
         if (!pin.value.isNullOrEmpty()) {
-            //Couritnes.main {
                 try {
                     if (isDoneReEnter) {
                         if (tempPin.value == pin.value) {
@@ -89,7 +91,6 @@ class LoginPinViewModel(
                     listener?.onFailure(e.message!!)
                 }
 
-            //}
         }
 
     }

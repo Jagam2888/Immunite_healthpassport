@@ -20,4 +20,8 @@ class LoginPinRepositary(
     fun updateLoginPin(loginPin: LoginPin):Int{
         return database.getDao().updateLoginPin(loginPin)
     }
+
+    fun getPatientSubId():String?{
+        return preferenceProvider.getSubId()
+    }
 }

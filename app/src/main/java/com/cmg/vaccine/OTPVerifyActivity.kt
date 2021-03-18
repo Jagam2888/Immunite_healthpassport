@@ -17,10 +17,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.cmg.vaccine.databinding.ActivityOTPVerifyBinding
 import com.cmg.vaccine.listener.SimpleListener
 import com.cmg.vaccine.receiver.OTPReceiver
-import com.cmg.vaccine.util.Passparams
-import com.cmg.vaccine.util.hide
-import com.cmg.vaccine.util.show
-import com.cmg.vaccine.util.toast
+import com.cmg.vaccine.util.*
 import com.cmg.vaccine.viewmodel.OTPVerifyViewModel
 import com.cmg.vaccine.viewmodel.viewmodelfactory.OTPVerifyModelFactory
 
@@ -34,7 +31,8 @@ class OTPVerifyActivity : BaseActivity(),KodeinAware,SimpleListener{
     override val kodein by kodein()
     private lateinit var binding:ActivityOTPVerifyBinding
     private lateinit var viewModel:OTPVerifyViewModel
-    var isExistUser:Boolean?=null
+    //var isExistUser:Boolean?=null
+    var navigateFrom:String?=null
 
     private val factory:OTPVerifyModelFactory by instance()
 
@@ -50,8 +48,8 @@ class OTPVerifyActivity : BaseActivity(),KodeinAware,SimpleListener{
         binding.lifecycleOwner = this
         viewModel.listener = this
 
-        isExistUser = intent.extras?.getBoolean("IsExistUser")
-        viewModel.isExistUser.value = isExistUser
+        navigateFrom = intent.extras?.getString(Passparams.NAVIGATE_FROM,"")
+        viewModel.navigateFrom.set(navigateFrom)
 
         val subsId = intent.extras?.getString(Passparams.SUBSID,"")
         viewModel.userSubId.value = subsId
@@ -67,7 +65,7 @@ class OTPVerifyActivity : BaseActivity(),KodeinAware,SimpleListener{
         startTimer()
 
         binding.txtResendOtp.setOnClickListener {
-            viewModel.onResendTac()
+            viewModel.callOTPTac()
             startTimer()
             binding.txtResendOtp.visibility = View.GONE
         }
@@ -82,6 +80,7 @@ class OTPVerifyActivity : BaseActivity(),KodeinAware,SimpleListener{
             override fun afterTextChanged(editable: Editable?) {
                 if (!editable.isNullOrEmpty()) {
                     if (editable.length == 6) {
+                        hideKeyBoard()
                         viewModel.onClick()
                     }
                 }
@@ -172,8 +171,14 @@ class OTPVerifyActivity : BaseActivity(),KodeinAware,SimpleListener{
     override fun onSuccess(msg: String) {
         hide(binding.progressBar)
         toast(msg)
-        if (!isExistUser!!) {
+        if (navigateFrom.equals(Passparams.SIGNUP)) {
             Intent(this, SignupCompleteActivity::class.java).also {
+                it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(it)
+            }
+        }else if(navigateFrom.equals(Passparams.FORGOT_PIN)){
+            Intent(this, LoginPinActivity::class.java).also {
+                it.putExtra(Passparams.ISCREATE,"create")
                 it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(it)
             }

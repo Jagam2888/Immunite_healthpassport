@@ -4,12 +4,16 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
 import com.cmg.vaccine.database.User
+import com.cmg.vaccine.model.request.DependentRegReq
+import com.cmg.vaccine.model.request.UpdateProfileReq
 import com.google.gson.Gson
 
 import io.paperdb.Paper
 
 private const val KEY_SAVE_URL = "key_save_url"
 private const val USER_DATA_REGISTER_REQ = "user_req"
+private const val EDIT_PROFILE_REQ = "edit_profile_req"
+private const val ADD_DEPENDENT_PROFILE_REQ = "add_dependent_profile_req"
 private const val USER_EMAIL = "user_email"
 private const val USER_SUB_ID = "user_sub_id"
 private const val PRINCIPAL_PRIVATE_KEY = "prinicipal_private_key"
@@ -100,5 +104,30 @@ class PreferenceProvider(
 
     fun getUserReqData():String?{
         return prefernece.getString(USER_DATA_REGISTER_REQ,"")
+    }
+
+    fun saveEditProfileReq(updateProfileReq: UpdateProfileReq){
+        val gson = Gson()
+        val value:String = gson.toJson(updateProfileReq)
+        prefernece.edit().putString(
+                EDIT_PROFILE_REQ,
+                value
+        ).apply()
+    }
+
+    fun getEditProfileReq():String?{
+        return prefernece.getString(EDIT_PROFILE_REQ,"")
+    }
+    fun saveaddDependentReq(dependentRegReq: DependentRegReq){
+        val gson = Gson()
+        val value:String = gson.toJson(dependentRegReq)
+        prefernece.edit().putString(
+                ADD_DEPENDENT_PROFILE_REQ,
+                value
+        ).apply()
+    }
+
+    fun getaddDependentReq():String?{
+        return prefernece.getString(ADD_DEPENDENT_PROFILE_REQ,"")
     }
 }

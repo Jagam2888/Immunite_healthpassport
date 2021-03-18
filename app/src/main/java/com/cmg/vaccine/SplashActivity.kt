@@ -62,6 +62,7 @@ class SplashActivity() : BaseActivity(),KodeinAware{
                             startActivity(it)
                             finish()
                         }
+
                     }
                 }else{
                     Intent(this, MainActivity::class.java).also {

@@ -373,7 +373,6 @@ class DependentViewModel(
                             if (validateDateFormat(dob.value!!)) {
                                 if (validateTime(dobTime.value!!)) {
                                     listener?.onStarted()
-                                    Couritnes.main {
                                         try {
                                             val updateProfileReq = UpdateProfileReq()
                                             val updateProfileReqData = UpdateProfileReqData()
@@ -397,56 +396,14 @@ class DependentViewModel(
                                             updateProfileReqData.mobileNumber =
                                                 contactNumber.value?.trim()
                                             updateProfileReqData.idType = idType.value
-                                            /*updateProfileReqData.residentialAddress = address.get()
-                    updateProfileReqData.townCity = city.get()
-                    updateProfileReqData.provinceState = state.get()*/
 
                                             updateProfileReq.data = updateProfileReqData
+                                            repositary.saveEditProfileReq(updateProfileReq)
+                                            listener?.onSuccess("")
 
-                                            val response =
-                                                repositary.updateDependentProfile(updateProfileReq)
-                                            if (response.StatusCode == 1) {
-                                                var dependent =
-                                                    repositary.getDependent(dependentPrivateKey!!)
-                                                val relationShipList =
-                                                    view.context.resources.getStringArray(R.array.relationships)
-                                                val relationShip =
-                                                    relationShipList.get(relationshipItemPos.get())
-
-                                                //dependent?.residentialAddress = address.get()
-                                                //dependent?.townCity = city.get()
-                                                //dependent?.provinceState = state.get()
-                                                dependent?.dob = dob.value
-                                                dependent?.dobTime = dobTime.value
-                                                dependent?.firstName = fullName.value?.trim()
-                                                dependent?.idNo = idNo.value?.trim()
-                                                dependent?.idType = idType.value
-                                                dependent?.passportNo = passportNumber.value?.trim()
-                                                dependent?.mobileNumber =
-                                                    contactNumber.value?.trim()
-                                                dependent?.relationship = relationShip
-                                                dependent?.gender = genderEnum.name
-                                                dependent?.placeOfBirth = placeBirth
-                                                dependent?.nationalityCountry = nationality
-                                                dependent?.email = email.value?.trim()
-                                                dependent?.countryCode =
-                                                    selectedItemContactCode.get()
-                                                //dependent?.profileImage = profileImageUri.get()
-
-                                                repositary.updateDependent(dependent!!)
-                                                listener?.onSuccess(response.Message)
-                                            } else {
-                                                listener?.onFailure(response.Message)
-                                            }
-
-                                        } catch (e: APIException) {
-                                            listener?.onFailure(e.message!!)
-                                        } catch (e: NoInternetException) {
-                                            listener?.onFailure(e.message!!)
-                                        } catch (e: SocketTimeoutException) {
+                                        } catch (e: Exception) {
                                             listener?.onFailure(e.message!!)
                                         }
-                                    }
                                 }else{
                                     listener?.onFailure("Sorry! Invalid Birth Time")
                                 }

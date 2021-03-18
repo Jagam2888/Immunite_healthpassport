@@ -1,19 +1,14 @@
 package com.cmg.vaccine.viewmodel
 
-import android.content.Intent
-import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.cmg.vaccine.LoginActivity
 import com.cmg.vaccine.database.LoginPin
 import com.cmg.vaccine.database.User
 import com.cmg.vaccine.repositary.SplashRepositary
 import com.cmg.vaccine.util.Couritnes
 import com.cmg.vaccine.util.NoInternetException
-import io.paperdb.Paper
 import kotlinx.coroutines.delay
-import java.lang.StringBuilder
 
 class SplashViewModel(
     private val repositary: SplashRepositary

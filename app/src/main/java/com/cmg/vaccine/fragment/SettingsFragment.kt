@@ -125,11 +125,11 @@ class SettingsFragment : Fragment(),KodeinAware,SimpleListener {
             requestSignIn()
         }
 
-        binding.layoutChangePassword.setOnClickListener {
+        /*binding.layoutChangePassword.setOnClickListener {
             Intent(context, ChangePasswordActivity::class.java).also {
                 context?.startActivity(it)
             }
-        }
+        }*/
 
         binding.layoutProfile.setOnClickListener {
             Intent(context, ProfileListActivity::class.java).also {

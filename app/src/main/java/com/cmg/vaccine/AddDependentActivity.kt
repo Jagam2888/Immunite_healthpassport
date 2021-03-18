@@ -311,7 +311,7 @@ class AddDependentActivity : BaseActivity(),KodeinAware,SimpleListener {
         toast(msg)
         hideKeyBoard()
         finish()
-        DependentDialogFragment().show(supportFragmentManager,"Add")
+        //DependentDialogFragment().show(supportFragmentManager,"Add")
     }
 
     override fun onFailure(msg: String) {

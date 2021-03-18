@@ -44,11 +44,19 @@ class DependentRepositary(
         return database.getDao().getAllCountries()
     }
 
-    suspend fun updateDependentProfile(updateProfileReq: UpdateProfileReq):DependentRegResponse{
+    /*suspend fun updateDependentProfile(updateProfileReq: UpdateProfileReq):DependentRegResponse{
         return apiRequest {
             api.updateDependentProfile(updateProfileReq)
         }
+    }*/
+
+    fun saveEditProfileReq(updateProfileReq: UpdateProfileReq){
+        preferenceProvider.saveEditProfileReq(updateProfileReq)
     }
+
+    /*fun saveDependentReq(dependentRegReq: DependentRegReq){
+        preferenceProvider.saveaddDependentReq(dependentRegReq)
+    }*/
 
     fun getParentSubId():String?{
         return preferenceProvider.getSubId()

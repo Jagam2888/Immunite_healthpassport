@@ -45,10 +45,14 @@ class ProfileRepositary(
         return database.getDao().getAllCountries()
     }
 
-    suspend fun updateProfile(updateProfileReq: UpdateProfileReq): UpdatePatientResponse {
+    /*suspend fun updateProfile(updateProfileReq: UpdateProfileReq): UpdatePatientResponse {
         return apiRequest {
             api.updateProfile(updateProfileReq)
         }
+    }*/
+
+    fun saveEditProfileReq(updateProfileReq: UpdateProfileReq){
+        preferenceProvider.saveEditProfileReq(updateProfileReq)
     }
 
     fun setProfileImage(uri:String){

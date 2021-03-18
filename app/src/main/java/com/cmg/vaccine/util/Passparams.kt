@@ -20,17 +20,26 @@ object Passparams{
     const val WORLD_ENTRY_SELECTED_COUNTRY_NAME = "world_entry_selected_country_name"
     const val WORLD_ENTRY_SELECTED_COUNTRY_CODE = "world_entry_selected_country_code"
     const val QR_CODE_VALUE = "qr_code_value"
+
+
     const val NAVIGATE_TO = "navigate_to"
     const val EXISTING_USER = "existing_user"
     const val DEPARTURE_VERIFICATION = "departure_verification"
+
+    const val NAVIGATE_FROM = "navigate_from"
+    const val SIGNUP = "signup"
+    const val EDIT_PROFILE = "edit_profile"
+    const val EDIT_DEPENDENT_PROFILE = "edit_dependent_profile"
+    const val ADD_DEPENDENT_PROFILE = "add_dependent_profile"
+    const val FORGOT_PIN = "forgot_pin"
 
     //API
     const val URL = "http://47.254.238.145:7001/"
     const val PATIENT_REGISTRATION = "nhr-module-user/patientreg"
     const val DEPENDENT_REGISTRATION = "nhr-module-user/patientdependentreg"
 
-    const val EDIT_PATIENT_PROFILE = "nhr-module-user/editpatientprofile"
-    const val EDIT_DEPENDENT_PROFILE = "nhr-module-user/editdependentProfile"
+    const val EDIT_PATIENT_PROFILE_API = "nhr-module-user/editpatientprofile"
+    const val EDIT_DEPENDENT_PROFILE_API = "nhr-module-user/editdependentProfile"
 
     const val SEARCH_PRIVATE_KEY = "nhr-module-user/searchPrivateKey"
     const val GET_PATIENT_PRIVATE_KEY = "nhr-module-user/privateKeyBySubsId"

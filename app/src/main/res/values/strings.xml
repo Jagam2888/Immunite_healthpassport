@@ -67,6 +67,8 @@
 
     <string name="departure_verify">Departure Verification</string>
 
+    <string name="forget_pin"><u>Forget PIN</u></string>
+
     <string name="restore">Restore</string>
     <string name="restore_google_drive">Restore from Google Drive</string>
 

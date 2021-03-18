@@ -117,7 +117,8 @@
                     android:textColor="@color/gray"
                     android:textSize="14sp"
                     android:layout_marginTop="5dp"
-                    style="@style/opens_bold" />
+                    style="@style/opens_bold"
+                    android:visibility="gone"/>
 
 
                 <TextView
@@ -133,9 +134,10 @@
                     android:id="@+id/btn_activate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@{viewmodel.isExistUser() ? `Confirm`:`Activate Immunitee`}"
+                    android:text="@{viewmodel.navigateFrom.equals(`signup`) ? `Activate Immunitee`:`Confirm`}"
                     android:textColor="@color/white"
-                    style="@style/opens_bold"
+                    android:textAppearance="@style/opens_bold"
+                    android:textSize="16sp"
                     android:background="@drawable/button_background"
                     android:layout_marginTop="20dp"
                     android:onClick="@{() -> viewmodel.onClick()}"

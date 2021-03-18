@@ -26,6 +26,7 @@ class LoginPinActivity : BaseActivity(),KodeinAware,SimpleListener {
 
     private val factory:LoginPinViewFactory by instance()
     private var loginStatus:String?=null
+    var userSubId:String?=null
     //private var isComeFromSettings:Boolean = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,6 +46,9 @@ class LoginPinActivity : BaseActivity(),KodeinAware,SimpleListener {
         viewModel.status.set(loginStatus)
 
         if (loginStatus.isNullOrEmpty()){
+            binding.txtForgotpin.visibility = View.VISIBLE
+            userSubId = viewModel.getSubId()
+
             if (binding.actionBar1.visibility == View.VISIBLE)
                 binding.actionBar1.visibility = View.GONE
 
@@ -65,6 +69,15 @@ class LoginPinActivity : BaseActivity(),KodeinAware,SimpleListener {
         initViews()
 
         binding.edtTxt.requestFocus()
+
+        binding.txtForgotpin.setOnClickListener {
+            Intent(this, OTPVerifyActivity::class.java).also {
+                it.putExtra(Passparams.NAVIGATE_FROM, Passparams.FORGOT_PIN)
+                it.putExtra(Passparams.SUBSID, userSubId)
+                startActivity(it)
+
+            }
+        }
     }
 
     private fun initViews(){
