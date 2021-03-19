@@ -36,7 +36,7 @@ class HomeRepositary(
         }
     }*/
 
-    suspend fun getTestReportList(privateKey: String):TestReportResponseBlockChain{
+    suspend fun getTestReportListFromAPI(privateKey: String):TestReportResponseBlockChain{
         return apiRequest {
             api.getTestReportList(privateKey)
         }
@@ -80,8 +80,8 @@ class HomeRepositary(
         return database.getDao().getVaccineList()
     }
 
-    fun getTestReportList():List<TestReport>{
-        return database.getDao().getTestReportList()
+    fun getTestReportList(privateKey: String):List<TestReport>{
+        return database.getDao().getTestReportList(privateKey)
     }
 
     fun getDependentPrivateKey(subId: String):String?{

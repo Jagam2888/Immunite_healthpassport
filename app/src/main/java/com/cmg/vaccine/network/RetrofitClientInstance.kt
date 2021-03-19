@@ -29,7 +29,7 @@ fun RetrofitClientInstance(context: Context) : Retrofit {
     return Retrofit.Builder()
             .baseUrl(Passparams.URL)
             .addConverterFactory(GsonConverterFactory.create())
-        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+        /*.addCallAdapterFactory(RxJava2CallAdapterFactory.create())*/
             .client(createOkHttp(context))
             .build()
 

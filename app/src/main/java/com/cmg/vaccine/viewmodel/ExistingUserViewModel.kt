@@ -29,22 +29,27 @@ class ExistingUserViewModel(
     var dobTime:String?=null
 
     var dobTxt = ObservableField<String>()
+    var edttxtQR = ObservableField<String>()
 
     var isRestoreForSync = ObservableBoolean()
 
     fun onSubmit(view:View){
+        if (dobTxt.get().isNullOrEmpty()){
+            listener?.onFailure("Please Check your Date of Birth, Maybe Wrong or Empty")
+            return
+        }
         if (!isRestoreForSync.get()){
             if (!privateKey.get().isNullOrEmpty()) {
+                getSyncManually(view)
+            }else if((!edttxtQR.get().isNullOrEmpty()) and privateKey.get().isNullOrEmpty()){
+                privateKey.set(decryptQRValue(edttxtQR.get()!!,changeDateFormatForPrivateKeyDecrypt(dobTxt.get()!!)!!))
                 getSyncManually(view)
             }else{
                 listener?.onFailure("Please Enter or Scan Your Private key")
             }
         }else{
-            if (dobTxt.get().isNullOrEmpty()){
-                listener?.onFailure("Please Check your Date of Birth, Maybe Wrong or Empty")
-            }else {
                 listener?.onSuccess("restore")
-            }
+
         }
     }
 

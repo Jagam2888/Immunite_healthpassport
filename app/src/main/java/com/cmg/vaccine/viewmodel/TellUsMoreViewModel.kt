@@ -104,7 +104,7 @@ class TellUsMoreViewModel(
                 signUpReqData.idType = userData.patientIdType
                 signUpReqData.nationalityCountry = userData.nationality
                 signUpReqData.token = token
-                signUpReqData.imeId = view.context.getDeviceUUID()
+                signUpReqData.mobileUniqueId = view.context.getDeviceUUID()
 
                 signUpReq.data = signUpReqData
                 Couritnes.main {

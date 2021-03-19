@@ -59,6 +59,7 @@ class SettingsViewModel(
         repositary.deleteTestReport()
 
         getVaccineTestRef(repositary.getPrivateKey()!!,"Prinicipal")
+        //getVaccineTestRef("5874C4015510CE5786D9CFD40F14B7BB89E996DC0D8BF29DAFE875DF8D532536","Prinicipal")
 
         val dependent = repositary.getAllDependent()
 
@@ -66,6 +67,7 @@ class SettingsViewModel(
             dependent.forEach {
                 if (!it.privateKey.isNullOrEmpty()){
                     getVaccineTestRef(it.privateKey!!,"Dependent ${it.firstName}")
+                    //getVaccineTestRef("5B9137D189F408B754C75E84F3C60FA92FE098173D60D6516D1233EC672A6475","Dependent ${it.firstName}")
                 }
             }
         }
@@ -78,7 +80,6 @@ class SettingsViewModel(
         Couritnes.main {
             try {
                 val response = repositary.getVaccineTestRef(privateKey)
-                //val response = repositary.getVaccineTestRef("5874C4015510CE5786D9CFD40F14B7BB89E996DC0D8BF29DAFE875DF8D532536")
                 if (response != null){
                     val jsonBody = JSONObject(response.string())
                     val jsonBodayDataObject = jsonBody.getJSONObject("data")
@@ -106,6 +107,7 @@ class SettingsViewModel(
                             var testCodeName = ""
                             var observationCode = ""
                             var observationResult = ""
+                            var recordId = ""
 
                             val jsonArrayBody = jsonBodyData.getJSONObject(i)
                             if ((jsonArrayBody.has("specimen")) and (jsonArrayBody.has("observation"))) {
@@ -236,9 +238,14 @@ class SettingsViewModel(
                                         }
                                         //val jsonObservationIssueDate = jsonObservation.getString("issued")
                                     }
+                                    if (jsonObservation.has("basedOn")){
+                                        val jsonObservationBasedOn = jsonObservation.getJSONObject("basedOn")
+                                        recordId = jsonObservationBasedOn.getString("value")
+                                    }
                                 }
 
                                 val testReport = TestReport(
+                                        recordId,
                                         privateKey,
                                         displayName,
                                         dateSampleReceived,

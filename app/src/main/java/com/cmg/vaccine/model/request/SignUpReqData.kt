@@ -13,5 +13,5 @@ class SignUpReqData {
     var passportNo: String?=null
     var placeOfBirth: String?=null
     var token:String?=null
-    var imeId:String?=null
+    var mobileUniqueId:String?=null
 }

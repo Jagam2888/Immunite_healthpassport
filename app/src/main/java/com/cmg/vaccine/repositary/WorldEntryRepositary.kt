@@ -41,8 +41,12 @@ class WorldEntryRepositary(
         return database.getDao().getVaccineList()
     }
 
-    fun getTestReportList():List<TestReport>{
-        return database.getDao().getTestReportList()
+    fun getTestReportList(privateKey:String):List<TestReport>{
+        return database.getDao().getTestReportList(privateKey)
+    }
+
+    fun getParentPrivateKey():String?{
+        return database.getDao().getPrivateKey(preferenceProvider.getSubId()!!)
     }
 
     fun getUserData():User{

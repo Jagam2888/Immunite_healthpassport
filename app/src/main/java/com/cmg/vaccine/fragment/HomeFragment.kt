@@ -67,12 +67,13 @@ class HomeFragment : Fragment(),KodeinAware,SimpleListener {
         binding.lifecycleOwner = this
         viewModel.listener = this
 
-        if (!viewModel.privateKey.value.isNullOrEmpty()) {
+        /*if (!viewModel.privateKey.value.isNullOrEmpty()) {
             viewModel.loadVaccineList()
             viewModel.loadTestReportList()
         }else {
             viewModel.setUser()
-        }
+        }*/
+        viewModel.setUser()
 
         //viewModel.loadData()
         //}

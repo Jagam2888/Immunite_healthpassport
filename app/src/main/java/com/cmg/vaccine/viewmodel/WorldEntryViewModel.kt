@@ -144,8 +144,10 @@ class WorldEntryViewModel(
     fun getVaccineAndTestReportList(){
         val vaccineList = repositary.getVaccineList()
         _vaccineList.value = vaccineList
-        val testReportList = repositary.getTestReportList()
-        _testReportList.value = testReportList
+        if (!repositary.getParentPrivateKey().isNullOrEmpty()) {
+            val testReportList = repositary.getTestReportList(repositary.getParentPrivateKey()!!)
+            _testReportList.value = testReportList
+        }
     }
 
     /*val _worldEntriesData:MutableLiveData<LinkedHashMap<String, List<String>>>{

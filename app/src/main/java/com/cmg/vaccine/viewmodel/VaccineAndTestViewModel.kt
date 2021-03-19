@@ -15,10 +15,15 @@ import com.cmg.vaccine.util.Couritnes
 import com.cmg.vaccine.util.NoInternetException
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import okhttp3.Dispatcher
 import okhttp3.ResponseBody
 import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
@@ -36,6 +41,8 @@ class VaccineAndTestViewModel(
     var listener:SimpleListener?=null
     var inputStream:MutableLiveData<InputStream> = MutableLiveData()
 
+    var recorId:MutableLiveData<String> = MutableLiveData()
+
     fun loadData(value:String){
         /*val data = repositary.gettestReport(id)
         if (data != null){
@@ -45,25 +52,39 @@ class VaccineAndTestViewModel(
         val type: Type = object : TypeToken<TestReport>() {}.type
         var testReportData = gson.fromJson<TestReport>(value, type)
         _testReport.value = testReportData
+
+        recorId.value = testReportData.recordId
     }
 
-    fun download(){
+    fun download(view: View){
         listener?.onStarted()
         //DownloadManager.Request("dasda/")
-        val recordId = "LAB_A06M100004"
+        //val recordId = "LAB_A06M100006"
+
         Couritnes.main {
             try {
-                //val response =  repositary.downloadFile(recordId)
-                    val response = repositary.downloadFile("http://10.1.1.150:6001/gp-module-lab/ext/labpdf?labOrderTxn=LAB_A06M100004")
-                Log.d("download_file",response.string())
-                    //val response = repositary.downLoadDynamic("http://10.1.1.150:6001/gp-module-lab/ext/labpdf?labOrderTxn=LAB_A06M100004")
-                //if (response.bytes().isNotEmpty())
-                /*val body = response.body()?.byteStream()
-                inputStream.value = body*/
-                //writeFile(view,body,recordId)
-                /*if (response.bytes().isNotEmpty()) {
-                    listener?.onSuccess("success")
+                /*val response =  repositary.downLoadDynamic(recordId)
+                if (response != null){
+                    saveFile(response,view,recordId)
                 }*/
+                    val downloadCall = repositary.getApi().downLoadDynamicUrl("http://10.1.1.150:6001/gp-module-lab/ext/labpdf?labOrderTxn=LAB_A06M100004")
+                downloadCall.enqueue(object :Callback<ResponseBody>{
+                    override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                        if (response.isSuccessful){
+                            Log.d("download_file",response.body()?.byteStream().toString())
+
+                            saveFile(response.body(),view,recorId.value!!)
+                        }else{
+                            Log.d("download_file_errorbody",response.body().toString())
+                            listener?.onFailure("errorbody")
+                        }
+                    }
+
+                    override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                        Log.d("download_file_error",t.toString())
+                        listener?.onFailure("error")
+                    }
+                })
 
             }catch (e:APIException){
                 listener?.onFailure(e.message!!)
@@ -75,40 +96,38 @@ class VaccineAndTestViewModel(
         }
     }
 
-    private fun writePdf(body:InputStream,fileName: String){
+    fun saveFile(body: ResponseBody?,view: View,fileName:String):String{
+        if (body==null)
+            return ""
+        var input: InputStream? = null
         try {
-            var fileOutputStream:FileOutputStream?=null
-            val oriFileName = "$fileName.pdf"
-           // fileOutputStream = openFileOutput(oriFileName, Context.MODE_PRIVATE)
-
-        }catch (e:Exception){
-            e.printStackTrace()
-        }
-    }
-
-    private fun writeFile(view: View,input: InputStream,fileName:String) {
-        //Couritnes.main {
-            val directory = File(view.context.filesDir,"files")
+            var path = view.context.filesDir.absolutePath.toString()+"/TestReport"
+            val directory = File(path)
             if (!directory.exists())
                 directory.mkdir()
 
-            try {
-                val makeFile = File(directory, "$fileName.pdf")
-                val fos = FileOutputStream(makeFile)
-                fos.use {output->
-                    val buffer = ByteArray(4 * 1024) // or other buffer size
-                    var read: Int
-                    while (input.read(buffer).also { read = it } != -1) {
-                        output.write(buffer, 0, read)
-                    }
-                    output.flush()
-                    fos.close()
+            var savePath= "$path/$fileName.pdf"
+            //download and save file to internal
+            input = body.byteStream()
+            //val file = File(getCacheDir(), "cacheFileAppeal.srl")
+            val fos = FileOutputStream(savePath)
+            fos.use { output ->
+                val buffer = ByteArray(4 * 1024) // or other buffer size
+                var read: Int
+                while (input.read(buffer).also { read = it } != -1) {
+                    output.write(buffer, 0, read)
                 }
-                listener?.onSuccess("success")
-            }catch (e:Exception){
-                listener?.onFailure(e.message!!)
+                output.flush()
             }
-        //}
-
+            listener?.onSuccess("success")
+            return savePath
+        }catch (e:Exception){
+            Log.e("saveFile",e.toString())
+        }
+        finally {
+            input?.close()
+        }
+        return ""
     }
+
 }

@@ -17,11 +17,11 @@ class VaccineAndTestRepositary(
         return database.getDao().getTestReport(id)
     }
 
-    suspend fun downloadFile(recordId:String):ResponseBody{
+    /*suspend fun downloadFile(recordId:String):ResponseBody{
         return apiRequest {
             api.downLoadDynamicUrl(recordId)
         }
-    }
+    }*/
 
     /*suspend fun downLoadDynamic(url:String):ResponseBody{
         return apiRequest {

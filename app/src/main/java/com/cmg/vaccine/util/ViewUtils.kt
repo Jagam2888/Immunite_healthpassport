@@ -5,6 +5,7 @@ import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Address
 import android.location.Geocoder
@@ -21,13 +22,16 @@ import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
+import androidx.core.content.FileProvider
 import com.blongho.country_data.Country
+import com.cmg.vaccine.BuildConfig
 import com.cmg.vaccine.database.Countries
 import com.cmg.vaccine.database.WorldEntryCountries
 import com.cmg.vaccine.model.response.WorldEntriesCountryListData
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import immuniteeEncryption.EncryptionUtils
+import java.io.File
 import java.io.UnsupportedEncodingException
 import java.lang.Exception
 import java.security.InvalidKeyException
@@ -401,6 +405,24 @@ fun Context.getCurrentCountryName():String?{
     //}
 
     return country
+}
+
+fun Context.openPdf(fileName:String,file: File){
+
+    if(file.exists()) {
+        Intent(Intent.ACTION_VIEW).apply {
+            setDataAndType(FileProvider.getUriForFile(this@openPdf, BuildConfig.APPLICATION_ID+".provider", file), "application/pdf")
+            flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            try {
+                startActivity(this)
+            } catch (e: Exception) {
+                toast(e.message!!)
+            }
+        }
+    } else {
+        toast("File does not exists")
+    }
 }
 
 fun decryptQRValue(key:String,dob:String):String?{

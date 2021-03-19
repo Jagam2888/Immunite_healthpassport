@@ -22,6 +22,7 @@ data class TestReport(
         var recordId: String?,
         var status: String?,
         var type: String?*/
+        var recordId:String?,
         var privateKey:String?,
         var NameDisplayTitle:String?,
         var dateDisplayTitle:String?,

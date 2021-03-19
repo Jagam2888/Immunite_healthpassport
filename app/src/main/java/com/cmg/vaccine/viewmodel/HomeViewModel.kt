@@ -165,8 +165,8 @@ class HomeViewModel(
         //}
     }
 
-    fun loadTestReportList(){
-        var testReportList = repositary.getTestReportList()
+    fun loadTestReportList(privateKey:String){
+        var testReportList = repositary.getTestReportList(privateKey)
         /*if (testReportList.isNullOrEmpty()) {
             Couritnes.main {
                 try {
@@ -223,6 +223,14 @@ class HomeViewModel(
 
     }
 
+    private fun getTestReportList(privateKey: String):List<TestReport>{
+        var tempTestReportList = repositary.getTestReportList(privateKey)
+        if (tempTestReportList.isNotEmpty()){
+            _testReportList.value = tempTestReportList
+        }
+        return tempTestReportList
+    }
+
     fun loadData() {
         val userData = repositary.getUserData()
 
@@ -239,7 +247,10 @@ class HomeViewModel(
         dashBoard.privateKey = userData.privateKey
         dashBoard.nationality = userData.nationality
         dashBoard.data = vaccineList.value
-        dashBoard.dataTest = testReportList.value
+        //dashBoard.dataTest = testReportList.value
+        if (!userData.privateKey.isNullOrEmpty()) {
+            dashBoard.dataTest = getTestReportList(userData.privateKey!!)
+        }
         dashBoard.relationShip = Passparams.PARENT
         dashBoard.subId = userData.parentSubscriberId
         dashBoard.dob = userData.dob
@@ -258,6 +269,9 @@ class HomeViewModel(
                 //dashboard1.data = vaccineList.value
                 dashboard1.privateKey = dependent.privateKey
                 //dashboard1.dataTest = testReportList.value
+                if (!dependent.privateKey.isNullOrEmpty()) {
+                    dashboard1.dataTest = getTestReportList(dependent.privateKey!!)
+                }
                 dashboard1.subId = dependent.subsId
                 dashboard1.dob = dependent.dob
                 dashboard1.profileImg = dependent.profileImage

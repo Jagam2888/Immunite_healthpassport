@@ -125,11 +125,12 @@ class ExistingUserActivity : BaseActivity(),KodeinAware,SimpleListener {
 
     override fun onResume() {
         super.onResume()
-        binding.edtQrCode.setText("")
+        //binding.edtQrCode.setText("")
         qrCodeValue = Paper.book().read(Passparams.QR_CODE_VALUE,"")
         if (!qrCodeValue.isNullOrEmpty()){
+            viewModel.edttxtQR.set(qrCodeValue)
             viewModel.privateKey.set(decryptQRValue(qrCodeValue,changeDateFormatForPrivateKeyDecrypt(binding.edtDob.text.toString())!!))
-            binding.edtQrCode.setText(qrCodeValue)
+            //binding.edtQrCode.setText(qrCodeValue)
         }
     }
 

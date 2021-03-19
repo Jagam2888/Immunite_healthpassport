@@ -92,9 +92,9 @@ interface MyApi {
     @POST(Passparams.UPDATE_FCM_TOKEN)
     suspend fun updateFCMToken(@Query("subsId")subid:String,@Query("token")token:String):Response<UpdateFCMTokenResponse>
 
-    @Streaming
     @GET
-    fun downLoadDynamicUrl(@Url fileUrl:String): Response<ResponseBody>
+    @Streaming
+    fun downLoadDynamicUrl(@Url fileUrl:String): Call<ResponseBody>
 
 
     companion object{
