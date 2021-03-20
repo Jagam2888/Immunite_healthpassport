@@ -614,6 +614,7 @@
                         android:hint="@string/upload_document"
                         android:textColorHint="@color/gray"
                         android:inputType="text"
+                        android:text="@={viewmodel.fileName}"
                         android:drawableLeft="@drawable/attach_icon"
                         android:drawablePadding="10dp"
                         android:background="@drawable/edittext_background"

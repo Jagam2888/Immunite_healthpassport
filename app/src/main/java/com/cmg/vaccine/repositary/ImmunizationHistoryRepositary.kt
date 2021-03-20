@@ -4,14 +4,15 @@ import com.cmg.vaccine.model.request.ImmunizationHistoryReq
 import com.cmg.vaccine.model.response.ImmunizationHistoryResponse
 import com.cmg.vaccine.network.MyApi
 import com.cmg.vaccine.network.SafeAPIRequest
+import okhttp3.MultipartBody
 
 class ImmunizationHistoryRepositary(
         private val api: MyApi,
 ):SafeAPIRequest() {
 
-    suspend fun immunizationHistory(immunizationHistoryReq: ImmunizationHistoryReq):ImmunizationHistoryResponse{
+    suspend fun immunizationHistory(file:MultipartBody.Part,immunizationHistoryReq: ImmunizationHistoryReq):ImmunizationHistoryResponse{
         return apiRequest {
-            api.immunizationHistory(immunizationHistoryReq)
+            api.immunizationHistory(file,immunizationHistoryReq)
         }
     }
 }

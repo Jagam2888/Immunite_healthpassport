@@ -69,6 +69,11 @@ class ViewProfileActivity : BaseActivity(),KodeinAware {
             }
             lastClickHistory = SystemClock.elapsedRealtime()
             Intent(this,ImmunizationHistoryActivity::class.java).also {
+                if (user.equals(Passparams.PARENT)){
+                    it.putExtra(Passparams.SUBSID,viewModel.userSubId.value)
+                }else{
+                    it.putExtra(Passparams.SUBSID,intent.extras?.getString(Passparams.DEPENDENT_SUBID,""))
+                }
                 startActivity(it)
             }
         }

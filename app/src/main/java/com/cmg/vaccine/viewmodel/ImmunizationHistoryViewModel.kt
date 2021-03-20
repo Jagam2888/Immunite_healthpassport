@@ -1,5 +1,6 @@
 package com.cmg.vaccine.viewmodel
 
+import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -11,7 +12,12 @@ import com.cmg.vaccine.util.APIException
 import com.cmg.vaccine.util.Couritnes
 import com.cmg.vaccine.util.NoInternetException
 import com.cmg.vaccine.util.changeDateFormatISO8601
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import java.io.File
 import java.net.SocketTimeoutException
+
 
 class ImmunizationHistoryViewModel(
         private val repositary: ImmunizationHistoryRepositary
@@ -39,7 +45,12 @@ class ImmunizationHistoryViewModel(
     var zipCode:MutableLiveData<String> = MutableLiveData()
     var selectedItemContactCode = ObservableField<String>()
 
+    var filePath:MutableLiveData<String> = MutableLiveData()
+    var fileName:MutableLiveData<String> = MutableLiveData()
+
     var listener:SimpleListener?=null
+
+    var userSubId:MutableLiveData<String> = MutableLiveData()
 
     fun onSubmitClick(){
         listener?.onStarted()
@@ -65,7 +76,7 @@ class ImmunizationHistoryViewModel(
         immunizationHistoryReqData.performerQualiIssuer = qualificationIssuerName.value
         immunizationHistoryReqData.performerType = type.value
         immunizationHistoryReqData.performerAddType = "Work"
-        immunizationHistoryReqData.subId = "A000000453"
+        immunizationHistoryReqData.subId = userSubId.value
         immunizationHistoryReqData.performerContactTelecomValue = selectedItemContactCode.get()+contactNumber.value
         immunizationHistoryReqData.performerAddText = address1.value
         immunizationHistoryReqData.status = statusFinal.value
@@ -78,13 +89,27 @@ class ImmunizationHistoryViewModel(
 
         Couritnes.main {
             try {
-                val response = repositary.immunizationHistory(immunizationHistoryReq)
+                // MultipartBody.Part is used to send also the actual file name
+
+                // MultipartBody.Part is used to send also the actual file name
+                val file = File(filePath.value)
+                var filename = file.name
+                val filenameArray = filename.split(".")
+                if (!filename.isNullOrEmpty()) {
+                    if (filenameArray?.size!! > 1) {
+                        filename = filenameArray?.get(0) + "_" + System.currentTimeMillis() + ".pdf"
+                    }
+                }
+                val requestFile: RequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file)
+                val body = MultipartBody.Part.createFormData("file", filename, requestFile)
+                val response = repositary.immunizationHistory(body, immunizationHistoryReq)
+                Log.d("response",response.Message)
                 listener?.onSuccess(response.Message)
-            }catch (e:APIException){
+            }catch (e: APIException){
                 listener?.onFailure(e.message!!)
-            }catch (e:NoInternetException){
+            }catch (e: NoInternetException){
                 listener?.onFailure(e.message!!)
-            }catch (e:SocketTimeoutException){
+            }catch (e: SocketTimeoutException){
                 listener?.onFailure(e.message!!)
             }
         }

@@ -4,10 +4,7 @@ import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.cmg.vaccine.database.Countries
-import com.cmg.vaccine.database.LoginPin
-import com.cmg.vaccine.database.TestReport
-import com.cmg.vaccine.database.Vaccine
+import com.cmg.vaccine.database.*
 import com.cmg.vaccine.listener.SimpleListener
 import com.cmg.vaccine.repositary.SettingsRepositary
 import com.cmg.vaccine.util.*
@@ -57,7 +54,14 @@ class SettingsViewModel(
         listener?.onStarted()
         repositary.deleteVaccine()
         repositary.deleteTestReport()
+        repositary.deleteWorldEntryCountries()
 
+        getWorldEntryCountries()
+
+
+    }
+
+    private fun getVaccineCall(){
         getVaccineTestRef(repositary.getPrivateKey()!!,"Prinicipal")
         //getVaccineTestRef("5874C4015510CE5786D9CFD40F14B7BB89E996DC0D8BF29DAFE875DF8D532536","Prinicipal")
 
@@ -73,6 +77,33 @@ class SettingsViewModel(
         }
 
         //getVaccineFromAPI()
+    }
+
+    private fun getWorldEntryCountries(){
+        Couritnes.main {
+            try {
+                val worldEntryCountries = repositary.getWorldEntriesCountryList()
+                if (!worldEntryCountries.data.isNullOrEmpty()) {
+                    worldEntryCountries.data.forEach { data->
+                        val worldEntryCountries = WorldEntryCountries(
+                                data.countryName,
+                                data.countryCodeAlpha,
+                                data.countryMstrSeqno
+                        )
+                        repositary.insertWorldEntryCountries(worldEntryCountries)
+                    }
+                    //listener?.onSuccess("")
+                }
+                getVaccineCall()
+            }catch (e:Exception){
+                listener?.onFailure(e.message!!)
+            }catch (e:NoInternetException){
+                listener?.onFailure(e.message!!)
+            }catch (e:SocketTimeoutException){
+                listener?.onFailure(e.message!!)
+            }
+
+        }
     }
 
     private fun getVaccineTestRef(privateKey:String,user:String){

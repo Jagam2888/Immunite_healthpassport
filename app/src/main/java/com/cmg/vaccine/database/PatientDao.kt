@@ -17,6 +17,9 @@ interface PatientDao {
     @Query("SELECT * FROM WorldEntryCountries")
     fun getAllWorldCountries():List<WorldEntryCountries>
 
+    @Query("DELETE FROM WorldEntryCountries")
+    fun deleteAllWorldCountries()
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertLoginPin(loginPin: LoginPin):Long
 

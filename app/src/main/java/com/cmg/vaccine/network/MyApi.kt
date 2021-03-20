@@ -7,6 +7,7 @@ import com.cmg.vaccine.model.request.SignUpReq
 import com.cmg.vaccine.model.request.UpdateProfileReq
 import com.cmg.vaccine.model.response.*
 import com.cmg.vaccine.util.Passparams
+import okhttp3.MultipartBody
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Response
@@ -77,8 +78,12 @@ interface MyApi {
     @GET(Passparams.GET_WORLD_ENTRIES_RULES)
     suspend fun getWorldEntryCountryRules(@Query("countryCode")countryCode:String):Response<WorldEntryRulesResponse>
 
+    /*@POST(Passparams.IMMUNIZATION_HISTORY)
+    suspend fun immunizationHistory(@Body immunizationHistoryReq: ImmunizationHistoryReq):Response<ImmunizationHistoryResponse>*/
+
+    @Multipart
     @POST(Passparams.IMMUNIZATION_HISTORY)
-    suspend fun immunizationHistory(@Body immunizationHistoryReq: ImmunizationHistoryReq):Response<ImmunizationHistoryResponse>
+    suspend fun immunizationHistory(@Part file:MultipartBody.Part,@Part("form") immunizationHistoryReq: ImmunizationHistoryReq):Response<ImmunizationHistoryResponse>
 
     @GET(Passparams.GET_VACCINE_TEST_REF)
     suspend fun getVaccineTestRef(@Query("privateKey")privateKey:String):Response<ResponseBody>

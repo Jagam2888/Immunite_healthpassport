@@ -56,7 +56,8 @@ object Passparams{
     const val GET_TEST_REPORT_LIST = "nhr-module-user/getalltestrecord"
     const val GET_WORLD_ENTRIES_LIST = "nhr-module-user/worldentry"
     const val GET_WORLD_ENTRIES_RULES = "nhr-module-user/worldentrybycountry"
-    const val IMMUNIZATION_HISTORY = "nhr-module-user/immuhistory"
+    //const val IMMUNIZATION_HISTORY = "nhr-module-user/immuhistory"
+    const val IMMUNIZATION_HISTORY = "nhr-module-user/upload"
     const val GET_EXISTING_USER = "nhr-module-user/gepatientprivatekey"
 
     //const val GET_VACCINE_TEST_REF = "blockchainapi/getAllTestRecord"

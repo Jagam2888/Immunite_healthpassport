@@ -76,4 +76,18 @@ class SettingsRepositary(
     fun getAllDependent():List<Dependent>{
         return database.getDao().getDependentList(preferenceProvider.getSubId()!!)
     }
+
+    fun insertWorldEntryCountries(worldEntryCountries: WorldEntryCountries){
+        database.getDao().insertWorldCountries(worldEntryCountries)
+    }
+
+    fun deleteWorldEntryCountries(){
+        database.getDao().deleteAllWorldCountries()
+    }
+
+    suspend fun getWorldEntriesCountryList():WorldEntriesCountryList{
+        return apiRequest {
+            api.getWorldEntriesCountryList()
+        }
+    }
 }
