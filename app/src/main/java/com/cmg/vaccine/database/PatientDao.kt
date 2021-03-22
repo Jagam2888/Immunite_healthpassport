@@ -162,4 +162,13 @@ interface PatientDao {
     @Query("SELECT * FROM AddWorldEntries ORDER BY `order`")
     fun getWorldEntries():List<AddWorldEntries>
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertAirportCitiesName(airportCitiesName: AirportCitiesName):Long
+
+    @Query("SELECT * FROM AirportCitiesName WHERE cityCode =:cityCode")
+    fun getAirportCityByCode(cityCode:String):AirportCitiesName
+
+    @Query("DELETE FROM AirportCitiesName")
+    fun deleteAllAirportCities()
+
 }

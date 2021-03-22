@@ -102,7 +102,7 @@
                         android:textSize="14sp"
                         android:maxLines="1"
                         app:mask="##/##/####"
-                        android:inputType="number"
+                        android:inputType="number|textNoSuggestions"
                         android:textColorHint="@color/gray"
                         android:textColor="@color/black"
 

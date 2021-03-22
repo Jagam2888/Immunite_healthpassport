@@ -90,4 +90,18 @@ class SettingsRepositary(
             api.getWorldEntriesCountryList()
         }
     }
+
+    suspend fun getAllAirportCities():GetAllAirportCitiesResponse{
+        return apiRequest {
+            api.getAllAirportCities()
+        }
+    }
+
+    fun insertAirportCitiesMaster(airportCitiesName: AirportCitiesName){
+        database.getDao().insertAirportCitiesName(airportCitiesName)
+    }
+
+    fun deleteAllAirportCities(){
+        database.getDao().deleteAllAirportCities()
+    }
 }

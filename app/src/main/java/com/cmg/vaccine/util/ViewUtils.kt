@@ -356,8 +356,8 @@ fun changeDateFormatNormal(dateString: String):String?{
     return ""
 }
 fun changeDateFormatBC(dateString: String):String?{
-    val resultFormat = SimpleDateFormat("dd/MM/yyyy HH:mm")
-    val isoFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
+    val resultFormat = SimpleDateFormat("dd/MM/yyyy HH:mm:ss")
+    val isoFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
     try {
         val date = isoFormat.parse(dateString)
         return resultFormat.format(date)
@@ -376,6 +376,18 @@ fun changeDateFormatForPrivateKeyDecrypt(dateString:String):String?{
         e.printStackTrace()
     }
     return ""
+}
+fun changeDateToTimeStamp(dateString: String):Long?{
+    val currentDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
+    val date = currentDateFormat.parse(dateString) as Date
+    return date.time
+}
+fun calculateHours(timeStamp:Long,currentTimeStamp:Long):Long{
+    val differnce = timeStamp - currentTimeStamp
+    val seconds = differnce / 1000
+    val minutes = seconds / 60
+    val hours = minutes / 60
+    return hours
 }
 fun Context.getCurrentCountryName():String?{
     val locationManager = applicationContext.getSystemService(Context.LOCATION_SERVICE) as LocationManager

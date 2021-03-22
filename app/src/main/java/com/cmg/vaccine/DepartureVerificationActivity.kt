@@ -31,7 +31,7 @@ class DepartureVerificationActivity : BaseActivity(),KodeinAware {
         binding.lifecycleOwner = this
 
         val qrCodeValue = Paper.book().read<String>(Passparams.QR_CODE_VALUE,"")
-        viewModel.qrCodeValue.value = qrCodeValue
+        viewModel.qrCodeValue.value = qrCodeValue.replace("\\n","\n")
 
         viewModel.loadData()
 

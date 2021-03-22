@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.os.SystemClock
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.cmg.vaccine.databinding.ActivityExistingUserBinding
@@ -70,7 +71,8 @@ class ExistingUserActivity : BaseActivity(),KodeinAware,SimpleListener {
             override fun afterTextChanged(s: Editable?) {
 
                 if ((!validateDateFormat(binding.edtDob.text.toString())) and (binding.edtDob.text?.isNotEmpty() == true)){
-                    binding.edtDob.error = "Sorry! Invalid Date of Birth"
+                    //binding.edtDob.error = "Sorry! Invalid Date of Birth"
+                    binding.edtDob.error = "dd/MM/yyyy"
                     viewModel.dobTxt.set("")
                 }else{
                     viewModel.dobTxt.set(binding.edtDob.text.toString())
@@ -129,6 +131,9 @@ class ExistingUserActivity : BaseActivity(),KodeinAware,SimpleListener {
         qrCodeValue = Paper.book().read(Passparams.QR_CODE_VALUE,"")
         if (!qrCodeValue.isNullOrEmpty()){
             viewModel.edttxtQR.set(qrCodeValue)
+            qrCodeValue = qrCodeValue.replace("\\n","\n")
+            Log.d("private_key",qrCodeValue)
+            Log.d("private_key_dob",changeDateFormatForPrivateKeyDecrypt(binding.edtDob.text.toString())!!)
             viewModel.privateKey.set(decryptQRValue(qrCodeValue,changeDateFormatForPrivateKeyDecrypt(binding.edtDob.text.toString())!!))
             //binding.edtQrCode.setText(qrCodeValue)
         }

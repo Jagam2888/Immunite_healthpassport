@@ -218,7 +218,8 @@ class AddDependentActivity : BaseActivity(),KodeinAware,SimpleListener {
 
             override fun afterTextChanged(s: Editable?) {
                 if ((!validateTime(binding.edtDobTime.text.toString())) and (binding.edtDobTime.text?.isNotEmpty() == true)){
-                    binding.edtDobTime.error = "Sorry! Invalid Birth Time"
+                    //binding.edtDobTime.error = "Sorry! Invalid Birth Time"
+                    binding.edtDobTime.error = "dd/MM/yyyy"
                 }else{
                     binding.edtDobTime.error = null
                 }

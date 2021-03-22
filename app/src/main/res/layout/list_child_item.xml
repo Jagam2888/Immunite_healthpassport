@@ -45,7 +45,7 @@
                 android:layout_height="wrap_content"
                 android:text="@{model.relationship+` Account`}"
                 android:textSize="12sp"
-                android:textColor="@color/white"
+                android:textColor="@color/dark_gray"
                 android:background="@drawable/gray_background"
                 android:textAppearance="@style/opens_regular"
                 android:layout_alignParentRight="true"

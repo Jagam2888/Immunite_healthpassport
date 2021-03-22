@@ -97,6 +97,9 @@ interface MyApi {
     @POST(Passparams.UPDATE_FCM_TOKEN)
     suspend fun updateFCMToken(@Query("subsId")subid:String,@Query("token")token:String):Response<UpdateFCMTokenResponse>
 
+    @GET(Passparams.GET_ALL_AIRPORT_CITIES)
+    suspend fun getAllAirportCities():Response<GetAllAirportCitiesResponse>
+
     @GET
     @Streaming
     fun downLoadDynamicUrl(@Url fileUrl:String): Call<ResponseBody>

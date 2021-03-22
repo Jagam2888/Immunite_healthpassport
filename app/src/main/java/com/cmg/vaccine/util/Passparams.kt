@@ -11,7 +11,7 @@ object Passparams{
     const val SUBSID = "subsid"
     const val USER = "user"
     const val PARENT = "Principal"
-    const val DEPENDENT = "Dependant"
+    const val DEPENDENT = "Dependent"
     const val RELATIONSHIP = "relation_ship"
     const val DEPENDENT_SUBID = "dependant_sub_id"
     const val TEST_REPORT_ID = "test_report_id"
@@ -35,6 +35,10 @@ object Passparams{
 
     //API
     const val URL = "http://47.254.238.145:7001/"
+
+    //Production API
+    //const val URL = "http://47.254.236.183:7001/"
+
     const val PATIENT_REGISTRATION = "nhr-module-user/patientreg"
     const val DEPENDENT_REGISTRATION = "nhr-module-user/patientdependentreg"
 
@@ -59,6 +63,7 @@ object Passparams{
     //const val IMMUNIZATION_HISTORY = "nhr-module-user/immuhistory"
     const val IMMUNIZATION_HISTORY = "nhr-module-user/upload"
     const val GET_EXISTING_USER = "nhr-module-user/gepatientprivatekey"
+    const val GET_ALL_AIRPORT_CITIES = "nhr-module-integration/searchairportcities"
 
     //const val GET_VACCINE_TEST_REF = "blockchainapi/getAllTestRecord"
     const val GET_VACCINE_TEST_REF = "nhr-module-user/getalltestrecord"

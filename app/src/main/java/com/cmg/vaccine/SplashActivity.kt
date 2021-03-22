@@ -8,6 +8,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.cmg.vaccine.repositary.SplashRepositary
 import com.cmg.vaccine.util.Passparams
+import com.cmg.vaccine.util.calculateHours
+import com.cmg.vaccine.util.changeDateToTimeStamp
 import com.cmg.vaccine.viewmodel.SplashViewModel
 import com.cmg.vaccine.viewmodel.viewmodelfactory.SplashModelFactory
 import immuniteeEncryption.EncryptionUtils
@@ -38,8 +40,9 @@ class SplashActivity() : BaseActivity(),KodeinAware{
         })
 
         Log.d("decrypt_splash",
-            decryptKey("WNRlovVmatnJqIZegkHupcKKBY6Omzhc31EMpJZooqxb/0N6YGxEL/oLM1fxTuGEPc8GO4uwh18fnPQ7g0DyAQe9565jrKYp6CMp0wOp+zGw=","20140914")!!)
+            decryptKey("uVavFdRLVIG5hMxlyAhr\\/mQTV4v8\\/htWDwnQoP7YYwtRtpPzP2HxsFwtvQY\\/2GuJVlxcs7ckrjvC\n9WN4q5lcNRzVYq6ZV7i16P9fHe6S1RQP3+qrXzsA6MAw\\/3DfsVZuH8bCMLSssAgCBYRenDedlef9\nHPQ0wDfUUrPqap3OXDgjZ7+SDrQ7HB4yt0r5\\/1IquUAtbPrSwo7pOOuUqq7RoWGTEDau+jpvQijZ\n2ot2sdp4OOicgcPWQYeuA8QyWEkhEfHVd43J5Zr5lIGoUm3NwAFarNuDmg9dDoY4gVpg1Xtntdz+\nWG38KaVl5bMwtp5joEcqcmnDY3X7An4hkjbLlQ==","20210327")!!)
 
+        Log.d("timestamp", calculateHours(changeDateToTimeStamp("2021-03-27T19:55:00+0800")!!,System.currentTimeMillis()).toString())
 
     }
     private fun navigateActivity(){

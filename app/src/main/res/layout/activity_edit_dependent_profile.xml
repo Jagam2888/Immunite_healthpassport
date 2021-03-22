@@ -101,6 +101,44 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="@{`* `+@string/relationship}"
+                    android:layout_marginTop="5dp"
+                    android:textColor="@color/gray"
+                    android:textSize="14sp"
+                    android:textAppearance="@style/opens_regular"/>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:background="@drawable/edittext_background"
+                    android:layout_marginTop="5dp"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="10dp">
+
+                    <Spinner
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:textAppearance="@style/opens_regular"
+                        android:background="@null"
+                        android:minHeight="0dp"
+                        android:entries="@array/relationships"
+                        android:layout_centerVertical="true"
+                        android:selectedItemPosition="@={dependentViewModel.relationshipItemPos}"/>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        android:src="@drawable/down_arrow"
+                        android:layout_marginRight="10dp" />
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:text="@{`* `+@string/full_name_passport}"
                     android:textSize="14sp"
                     android:textAppearance="@style/opens_regular"
@@ -255,7 +293,7 @@
                     android:maxLines="1"
                     app:mask="##/##/####"
                     android:hint="dd/mm/yyyy"
-                    android:inputType="number"
+                    android:inputType="number|textNoSuggestions"
                     android:text="@={dependentViewModel.dob}"
                     android:textColorHint="@color/gray"
                     android:textColor="@color/black"
@@ -297,7 +335,7 @@
                     android:textSize="14sp"
                     android:textAppearance="@style/opens_regular"
                     android:maxLines="1"
-                    android:inputType="number"
+                    android:inputType="number|textNoSuggestions"
                     app:mask="##:##"
                     android:hint="HH:MM"
                     android:text="@={dependentViewModel.dobTime}"

@@ -70,6 +70,10 @@ class RestoredBackupOptionList : BaseActivity(),KodeinAware,SimpleListener {
                 toast(e.message!!)
             }
         }
+
+        binding.imgBack.setOnClickListener {
+            finish()
+        }
     }
 
     private fun requestSignIn() {

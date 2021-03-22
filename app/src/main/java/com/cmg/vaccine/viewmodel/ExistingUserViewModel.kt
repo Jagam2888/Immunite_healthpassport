@@ -25,6 +25,7 @@ class ExistingUserViewModel(
 
     var passportNo:String?=null
     var patientIdNo:String?=null
+    var patientIdType:String?=null
     var dob:String?=null
     var dobTime:String?=null
 
@@ -42,7 +43,8 @@ class ExistingUserViewModel(
             if (!privateKey.get().isNullOrEmpty()) {
                 getSyncManually(view)
             }else if((!edttxtQR.get().isNullOrEmpty()) and privateKey.get().isNullOrEmpty()){
-                privateKey.set(decryptQRValue(edttxtQR.get()!!,changeDateFormatForPrivateKeyDecrypt(dobTxt.get()!!)!!))
+                val qrCodeValue = edttxtQR.get()?.replace("\\n","\n")
+                privateKey.set(decryptQRValue(qrCodeValue!!,changeDateFormatForPrivateKeyDecrypt(dobTxt.get()!!)!!))
                 getSyncManually(view)
             }else{
                 listener?.onFailure("Please Enter or Scan Your Private key")
@@ -117,13 +119,29 @@ class ExistingUserViewModel(
                 val jsonBodyFirst = jsonBody.getJSONObject("data")
                 val jsonBodySecond = jsonBodyFirst.getJSONObject("data")
 
-                if (jsonBodySecond.has("passportNo")) {
+                if (jsonBodySecond.has("IDTypes")){
+                    val jsonIdTypeArray = jsonBodySecond.getJSONArray("IDTypes")
+                    for (i in 0 until jsonIdTypeArray.length()){
+                        val item = jsonIdTypeArray.getJSONObject(i)
+                        if (item.has("IdType")) {
+                            if (item.getString("IdType").equals("PPN",false)) {
+                                passportNo = item.getString("idNo")
+                            }else{
+                                patientIdType = item.getString("IdType")
+                                patientIdNo = item.getString("idNo")
+                            }
+                        }
+
+                    }
+                }
+
+                /*if (jsonBodySecond.has("passportNo")) {
                     passportNo = jsonBodySecond.optString("passportNo")
                 }
 
                 if (jsonBodySecond.has("idNo")) {
                     patientIdNo = jsonBodySecond.optString("idNo")
-                }
+                }*/
 
                 if (jsonBodySecond.has("dob")){
                     if (!jsonBodySecond.getString("dob").isNullOrEmpty()) {
@@ -135,12 +153,12 @@ class ExistingUserViewModel(
                 }
 
                 val user = User(
-                        jsonBodySecond.getString("firstName"),
+                        jsonBodySecond.getString("fullName"),
                         jsonBodySecond.getString("email"),
                         jsonBodySecond.getString("email"),
                         jsonBodySecond.getString("mobileNumber"),
                         passportNo,
-                        jsonBodySecond.getString("idType"),
+                        patientIdType,
                         patientIdNo,
                         jsonBodySecond.getString("countryCode"),
                         jsonBodySecond.getString("placeOfBirth"),

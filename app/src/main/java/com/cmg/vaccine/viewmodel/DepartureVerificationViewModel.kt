@@ -5,8 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.cmg.vaccine.model.MASResponseStatic
 import com.cmg.vaccine.repositary.DepartureVerificationRepositary
-import com.cmg.vaccine.util.changeDateFormatForViewProfile
-import com.cmg.vaccine.util.removeSeconds
+import com.cmg.vaccine.util.*
+import immuniteeEncryption.EncryptionUtils
 import org.json.JSONException
 import org.json.JSONObject
 import retrofit2.Response
@@ -37,6 +37,8 @@ class DepartureVerificationViewModel(
 
     var status = ObservableBoolean()
 
+    var hours:Long = 72
+
     fun loadData(){
         val userData = repositary.getUserData()
         if (userData != null){
@@ -59,39 +61,67 @@ class DepartureVerificationViewModel(
             try {
 
                 val jsonObject = JSONObject(qrCodeValue.value)
-                if (jsonObject.has("status")) {
+                /*if (jsonObject.has("status")) {
                     if (jsonObject.getString("status").equals("yes", false)) {
                         status.set(true)
                     } else {
                         status.set(false)
                     }
-                }
+                }*/
                 if (jsonObject.has("data")) {
-                    val data = jsonObject.getJSONObject("data")
+                    val getData = jsonObject.getString("data")
+                    val decryptData = EncryptionUtils.decryptBackupKey(getData,"20210327")
+                    val data = JSONObject(decryptData)
+
                     departureDestination.value = data.getString("reqDepatureDestination")
                     arrivalDestination.value = data.getString("reqArrivalDestination")
+
                     etdTime.value = data.getString("reqEtdTime")
                     etaTime.value = data.getString("reqEtaTime")
                     staffName.value = data.getString("reqStaffName")
                     flightNo.value = data.getString("reqFlightNo")
                     airLine.value = data.getString("reqAirline")
 
-                    val etdDate = data.getString("reqEtdTime")
-                    val etaDate = data.getString("reqEtaTime")
+                    val getAirportValues = repositary.getAirportCityByCode(arrivalDestination.value!!)
 
-                    val edtDateArray = etdDate.split(" ")
+                    val worldEntryRule = repositary.getWorldEnteryRuleByCountry(getAirportValues.countryCode!!)
 
-                    if (edtDateArray.size > 1) {
-                        departureDate.value = changeDateFormatForViewProfile(edtDateArray[0])
+                    worldEntryRule.forEach {
+                        when(it.woen_rule_match_criteria){
+                            "T" ->{
+                                hours = it.woen_duration_hours?.toLong()!!
+                            }
+                        }
+                    }
+
+
+                    val calculateHours = calculateHours(changeDateToTimeStamp(etaTime.value!!)!!,System.currentTimeMillis())
+
+                    if (calculateHours != null) {
+                        if (calculateHours <= hours){
+                            status.set(true)
+                        }else{
+                            status.set(false)
+                        }
+                    }
+
+
+                    val etdDate = changeDateFormatBC(data.getString("reqEtdTime"))
+                    val etaDate = changeDateFormatBC(data.getString("reqEtaTime"))
+
+                    val edtDateArray = etdDate?.split(" ")
+
+                    if (edtDateArray?.size!! > 1) {
+                        departureDate.value = changeDateFormatForViewProfile(edtDateArray?.get(0)!!)
                         departureTime.value = removeSeconds(edtDateArray[1])
                     }else{
                         departureDate.value = etdDate
                     }
 
-                    val etaDateArray = etaDate.split(" ")
+                    val etaDateArray = etaDate?.split(" ")
 
-                    if (etaDateArray.size > 1) {
-                        arrivalDate.value = changeDateFormatForViewProfile(etaDateArray[0])
+                    if (etaDateArray?.size!! > 1) {
+                        arrivalDate.value = changeDateFormatForViewProfile(etaDateArray?.get(0)!!)
                         arrivalTime.value = removeSeconds(etaDateArray[1])
                     }else{
                         arrivalDate.value = etaDate

@@ -55,8 +55,9 @@ class SettingsViewModel(
         repositary.deleteVaccine()
         repositary.deleteTestReport()
         repositary.deleteWorldEntryCountries()
+        repositary.deleteAllAirportCities()
 
-        getWorldEntryCountries()
+        getAllAirportCities()
 
 
     }
@@ -77,6 +78,36 @@ class SettingsViewModel(
         }
 
         //getVaccineFromAPI()
+    }
+
+    private fun getAllAirportCities(){
+        Couritnes.main {
+            try {
+                val getAllAirportCities = repositary.getAllAirportCities()
+                if ((getAllAirportCities != null) and (getAllAirportCities.data.isNotEmpty())){
+                    getAllAirportCities.data.forEach {
+                        val airportCitiesName = AirportCitiesName(
+                                it.airportName,
+                                it.cityCode,
+                                it.countryCode,
+                                it.countryName,
+                                it.id
+                        )
+                        repositary.insertAirportCitiesMaster(airportCitiesName)
+                    }
+                }
+                getWorldEntryCountries()
+            }catch (e:Exception){
+                listener?.onFailure(e.message!!)
+            }catch (e:NoInternetException){
+                listener?.onFailure(e.message!!)
+            }catch (e:SocketTimeoutException){
+                listener?.onFailure(e.message!!)
+            }catch (e:Exception){
+                listener?.onFailure(e.message!!)
+            }
+
+        }
     }
 
     private fun getWorldEntryCountries(){
@@ -100,6 +131,8 @@ class SettingsViewModel(
             }catch (e:NoInternetException){
                 listener?.onFailure(e.message!!)
             }catch (e:SocketTimeoutException){
+                listener?.onFailure(e.message!!)
+            }catch (e:Exception){
                 listener?.onFailure(e.message!!)
             }
 
