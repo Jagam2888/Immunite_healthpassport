@@ -97,6 +97,20 @@ class SettingsRepositary(
         }
     }
 
+    suspend fun getAllWorldEntryCountryRules():WorldEntryRulesResponse{
+        return apiRequest {
+            api.getAllWorldEntryCountryRules()
+        }
+    }
+
+    fun insertWorldEntryRuleByCountry(worldEntryRulesByCountry: WorldEntryRulesByCountry){
+        database.getDao().insertWorldEntryRulesByCountry(worldEntryRulesByCountry)
+    }
+
+    fun deleteAllWorldEntryRuleByCountry(){
+        database.getDao().deleteAllWorldEntryRuleByCountry()
+    }
+
     fun insertAirportCitiesMaster(airportCitiesName: AirportCitiesName){
         database.getDao().insertAirportCitiesName(airportCitiesName)
     }

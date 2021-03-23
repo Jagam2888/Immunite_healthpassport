@@ -13,14 +13,14 @@
         <ImageView
             android:layout_width="75dp"
             android:layout_height="75dp"
-            android:src="@drawable/success_icon_green"
+            android:src="@drawable/success_msg_icon"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="20sp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Dependent Added!"
+            android:text="@string/dependent_added"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textAppearance="@style/opens_bold"
@@ -30,7 +30,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="You can now manage your dependent account."
+            android:text="@string/you_can_now_manage_dependent"
             android:textColor="@color/gray"
             android:textSize="14sp"
             android:textAppearance="@style/opens_regular"

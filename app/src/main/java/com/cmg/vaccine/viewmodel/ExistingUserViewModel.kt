@@ -85,12 +85,12 @@ class ExistingUserViewModel(
         Couritnes.main {
             try {
                 val response = repositary.updateFCMToken(repositary.getPatientSubId()!!,token)
-                if (response.StatusCode == 1){
+                //if (response.StatusCode == 1){
                     //listener?.onSuccess(response.Message)
                     listener?.onSuccess("Setup Manually Success")
-                }else{
+                /*}else{
                     listener?.onFailure(response.Message)
-                }
+                }*/
             }catch (e:APIException){
                 listener?.onFailure(e.message!!)
             }catch (e:NoInternetException){
@@ -125,10 +125,15 @@ class ExistingUserViewModel(
                         val item = jsonIdTypeArray.getJSONObject(i)
                         if (item.has("IdType")) {
                             if (item.getString("IdType").equals("PPN",false)) {
-                                passportNo = item.getString("idNo")
+                                if (item.has("idNo")) {
+                                    passportNo = item.getString("idNo")
+                                }
                             }else{
                                 patientIdType = item.getString("IdType")
-                                patientIdNo = item.getString("idNo")
+
+                                if (item.has("idNo")) {
+                                    patientIdNo = item.getString("idNo")
+                                }
                             }
                         }
 

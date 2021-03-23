@@ -10,6 +10,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.cmg.vaccine.DialogFragment.DependentDialogFragment
 import com.cmg.vaccine.adapter.ChildListAdapter
 import com.cmg.vaccine.databinding.FragmentProfileBinding
 import com.cmg.vaccine.listener.SimpleListener
@@ -17,6 +18,7 @@ import com.cmg.vaccine.util.Passparams
 import com.cmg.vaccine.util.RecyclerViewTouchListener
 import com.cmg.vaccine.viewmodel.ProfileViewModel
 import com.cmg.vaccine.viewmodel.viewmodelfactory.ProfileViewModelFactory
+import io.paperdb.Paper
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
@@ -103,6 +105,12 @@ class ProfileListActivity:BaseActivity(),KodeinAware {
         if (!viewModel.getProfileImage().isNullOrEmpty()){
             val uri = Uri.parse(viewModel.getProfileImage())
             binding.imgProfile.setImageURI(uri)
+        }
+
+        val isDoneAddDependent = Paper.book().read<Boolean>(Passparams.ADD_DEPENDENT_SUCCESS,false)
+        if (isDoneAddDependent){
+            Paper.book().write(Passparams.ADD_DEPENDENT_SUCCESS,false)
+            DependentDialogFragment().show(supportFragmentManager,"Add")
         }
     }
 

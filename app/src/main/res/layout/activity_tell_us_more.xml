@@ -327,15 +327,28 @@
                         android:layout_marginLeft="10dp" />
 
                 </LinearLayout>
-                <androidx.appcompat.widget.AppCompatCheckBox
-                    android:layout_width="wrap_content"
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/terms_condition"
-                    android:buttonTint="@color/blue"
-                    android:textColor="@color/blue"
-                    android:layout_marginTop="20dp"
-                    android:checked="@={tellusviewmodel.isChecked()}"
-                    style="@style/opens_regular" />
+                    android:orientation="horizontal"
+                    android:layout_marginTop="20dp">
+                    <CheckBox
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:buttonTint="@color/blue"
+                        android:layout_marginRight="-15dp"
+                        android:checked="@={tellusviewmodel.isChecked()}"/>
+                    <TextView
+                        android:id="@+id/checkbox_terms"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/terms_condition"
+                        android:textColor="@color/blue"
+                        android:textSize="14sp"
+                        android:textAppearance="@style/opens_regular"/>
+                </LinearLayout>
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btn_signup"

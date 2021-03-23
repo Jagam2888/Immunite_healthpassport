@@ -78,6 +78,9 @@ interface MyApi {
     @GET(Passparams.GET_WORLD_ENTRIES_RULES)
     suspend fun getWorldEntryCountryRules(@Query("countryCode")countryCode:String):Response<WorldEntryRulesResponse>
 
+    @GET(Passparams.GET_ALL_WORLD_ENTRY_RULE)
+    suspend fun getAllWorldEntryCountryRules():Response<WorldEntryRulesResponse>
+
     /*@POST(Passparams.IMMUNIZATION_HISTORY)
     suspend fun immunizationHistory(@Body immunizationHistoryReq: ImmunizationHistoryReq):Response<ImmunizationHistoryResponse>*/
 

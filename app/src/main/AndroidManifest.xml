@@ -25,13 +25,16 @@
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:manageSpaceActivity=".LoginActivity"
+        android:manageSpaceActivity=".SplashActivity"
         android:supportsRtl="true"
         android:theme="@style/Theme.Noactionbar"
         android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup">
-        <activity android:name=".DepartureVerificationActivity"
+        <activity android:name=".TermsOfUseActivity"
             android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".DepartureVerificationActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".RestoredBackupOptionList"
             android:screenOrientation="portrait" />
@@ -99,7 +102,6 @@
         <activity
             android:name=".TestReportDetailActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ExistingUserActivity"
             android:screenOrientation="portrait"
@@ -123,7 +125,6 @@
         <activity
             android:name=".WelcomeActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".EditProfileActivity"
             android:screenOrientation="portrait"
@@ -152,7 +153,6 @@
         <activity
             android:name=".ChangeLanguageActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".NotificationDetailActivity"
             android:screenOrientation="portrait" />
@@ -172,7 +172,6 @@
             android:name=".SignUpActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
-
         <activity
             android:name=".MainActivity"
             android:label="Home"

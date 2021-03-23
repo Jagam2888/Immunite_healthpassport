@@ -283,7 +283,6 @@ class RestoredBackupOptionList : BaseActivity(),KodeinAware,SimpleListener {
     }
 
     override fun onStarted() {
-        TODO("Not yet implemented")
     }
 
     override fun onSuccess(msg: String) {

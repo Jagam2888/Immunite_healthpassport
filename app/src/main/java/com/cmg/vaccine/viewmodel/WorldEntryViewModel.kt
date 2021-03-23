@@ -165,17 +165,17 @@ class WorldEntryViewModel(
                         response.data.forEach {data->
                             val worldEntryRulesByCountry = WorldEntryRulesByCountry(
                                     data.woenSeqNo,
-                                    data.woen_country_code,
-                                    data.woen_duration_hours,
-                                    data.woen_end_date,
-                                    data.woen_points,
-                                    data.woen_rule_description,
-                                    data.woen_rule_match_criteria,
-                                    data.woen_rule_seq_no,
-                                    data.woen_start_date,
-                                    data.woen_status,
-                                    data.woen_test_code,
-                                    data.woen_vaccine_code
+                                    data.woenCountryCode,
+                                    data.woenDurationHours,
+                                    data.woenEnddate,
+                                    data.woenPoints,
+                                    data.woenRuleDescription,
+                                    data.woenRuleMatchCriteria,
+                                    data.woenRuleSeqNo,
+                                    data.woenStartdate,
+                                    data.woenStatus,
+                                    data.woenTestCode,
+                                    data.woenVaccineCode
 
                             )
                             repositary.insertWorldEntryRuleByCountry(worldEntryRulesByCountry)

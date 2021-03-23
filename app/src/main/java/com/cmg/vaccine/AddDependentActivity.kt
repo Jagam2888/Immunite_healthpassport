@@ -101,7 +101,8 @@ class AddDependentActivity : BaseActivity(),KodeinAware,SimpleListener {
 
             override fun afterTextChanged(s: Editable?) {
                 if ((!validateDateFormatForPassport(binding.edtPassportExpDate.text.toString())) and (binding.edtPassportExpDate.text?.isNotEmpty() == true)){
-                    binding.edtPassportExpDate.error = "Sorry! Invalid Date"
+                    //binding.edtPassportExpDate.error = "Sorry! Invalid Date"
+                    binding.edtPassportExpDate.error = "dd/MM/yyyy"
                 }else{
                     binding.edtPassportExpDate.error = null
                 }
@@ -202,7 +203,7 @@ class AddDependentActivity : BaseActivity(),KodeinAware,SimpleListener {
             override fun afterTextChanged(s: Editable?) {
 
                 if ((!validateDateFormat(binding.edtDob.text.toString())) and (binding.edtDob.text?.isNotEmpty() == true)){
-                    binding.edtDob.error = "Sorry! Invalid Date of Birth"
+                    binding.edtDob.error = "dd/MM/yyyy"
                 }else{
                     binding.edtDob.error = null
                 }
@@ -218,8 +219,7 @@ class AddDependentActivity : BaseActivity(),KodeinAware,SimpleListener {
 
             override fun afterTextChanged(s: Editable?) {
                 if ((!validateTime(binding.edtDobTime.text.toString())) and (binding.edtDobTime.text?.isNotEmpty() == true)){
-                    //binding.edtDobTime.error = "Sorry! Invalid Birth Time"
-                    binding.edtDobTime.error = "dd/MM/yyyy"
+                    binding.edtDobTime.error = "Sorry! Invalid Birth Time"
                 }else{
                     binding.edtDobTime.error = null
                 }
@@ -309,8 +309,9 @@ class AddDependentActivity : BaseActivity(),KodeinAware,SimpleListener {
 
     override fun onSuccess(msg: String) {
         hide(binding.progressBar)
-        toast(msg)
+        //toast(msg)
         hideKeyBoard()
+        Paper.book().write(Passparams.ADD_DEPENDENT_SUCCESS,true)
         finish()
         //DependentDialogFragment().show(supportFragmentManager,"Add")
     }

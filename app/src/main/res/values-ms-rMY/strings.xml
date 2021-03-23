@@ -93,6 +93,8 @@
 
     <string name="sure_remove_dependent">Are you sure want to remove Dependent?</string>
     <string name="remove">Remove</string>
+    <string name="dependent_added">Dependent Added!</string>
+    <string name="you_can_now_manage_dependent">You can now manage your dependent account.</string>
 
     <string name="close">Close</string>
     <string name="thank_you_signup">Thank You for your interest to sign up with Immunitee.</string>
@@ -199,6 +201,8 @@
     <string name="english">English</string>
     <string name="malay">Malay</string>
     <string name="chinese">中文</string>
+
+    <string name="not_support_google">Immunitee won\'t run without Google Play Services, which are not supported by your device.</string>
 
 
     <string name="terms_condition">Saya bersetuju dengan syarat dan dasar privasi.</string>

@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.text.method.LinkMovementMethod
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.blongho.country_data.Country
@@ -33,6 +34,14 @@ class TellUsMoreActivity : BaseActivity(),KodeinAware,SimpleListener {
         binding.lifecycleOwner = this
 
         viewModel.listener = this
+
+        binding.checkboxTerms.movementMethod = LinkMovementMethod.getInstance()
+
+        binding.checkboxTerms.setOnClickListener {
+            Intent(this,TermsOfUseActivity::class.java).also {
+                startActivity(it)
+            }
+        }
 
         viewModel.countries.observe(this, androidx.lifecycle.Observer {list->
             val arrayList = arrayListOf<Country>()

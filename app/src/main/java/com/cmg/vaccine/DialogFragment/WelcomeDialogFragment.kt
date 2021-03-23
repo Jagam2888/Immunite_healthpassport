@@ -1,5 +1,6 @@
 package com.cmg.vaccine.DialogFragment
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import com.cmg.vaccine.R
 import com.cmg.vaccine.databinding.WelcomeDialogBinding
+import com.cmg.vaccine.util.checkGoogleServices
+import com.cmg.vaccine.util.toast
 
 class WelcomeDialogFragment:DialogFragment() {
 
@@ -24,6 +27,11 @@ class WelcomeDialogFragment:DialogFragment() {
         binding.btnClose.setOnClickListener {
             dismiss()
         }
+    }
+
+    override fun onDismiss(dialog: DialogInterface) {
+        super.onDismiss(dialog)
+        context?.checkGoogleServices()
     }
 
     override fun onStart() {

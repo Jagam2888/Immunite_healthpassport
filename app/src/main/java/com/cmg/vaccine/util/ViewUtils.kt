@@ -5,6 +5,7 @@ import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Address
@@ -21,13 +22,16 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.FileProvider
 import com.blongho.country_data.Country
-import com.cmg.vaccine.BuildConfig
+import com.cmg.vaccine.R
 import com.cmg.vaccine.database.Countries
 import com.cmg.vaccine.database.WorldEntryCountries
 import com.cmg.vaccine.model.response.WorldEntriesCountryListData
+import com.google.android.gms.common.ConnectionResult
+import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import immuniteeEncryption.EncryptionUtils
@@ -423,7 +427,7 @@ fun Context.openPdf(fileName:String,file: File){
 
     if(file.exists()) {
         Intent(Intent.ACTION_VIEW).apply {
-            setDataAndType(FileProvider.getUriForFile(this@openPdf, BuildConfig.APPLICATION_ID+".provider", file), "application/pdf")
+            setDataAndType(FileProvider.getUriForFile(this@openPdf, "com.cmg.vaccine.provider", file), "application/pdf")
             flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
             addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
             try {
@@ -519,19 +523,20 @@ private fun diceCoefficientOptimized(s: String?, t: String?): Double {
     return matches.toDouble() / (n + m)
 }
 
-fun decryptBackupKey(encryptedKey: String): String? {
-    var encryptedKey = encryptedKey
-    return if (encryptedKey.isEmpty()) {
-        "invalid"
-    } else {
-        if (encryptedKey.contains(" ")) {
-            encryptedKey = encryptedKey.replace(' ', '+')
-        }
-        encryptedKey = encryptedKey.replace("IMMUNITEE|", "")
-        val dobHint = encryptedKey.substring(0, 8)
-        val finalToDecryptKey = encryptedKey.substring(8)
-        val finalDecryptedPrivateKey = EncryptionUtils.decrypt(finalToDecryptKey, dobHint)
-        finalDecryptedPrivateKey ?: "invalid"
+fun Context.showSuccessOrFailedAlert(title:String,msg:String,status:Boolean){
+    val alertDialog = AlertDialog.Builder(this)
+
+}
+
+fun Context.checkGoogleServices(){
+    val googleApiAvailability = GoogleApiAvailability.getInstance()
+    val resultCode = googleApiAvailability.isGooglePlayServicesAvailable(this)
+    if (resultCode != ConnectionResult.SUCCESS){
+        val alertDialog = AlertDialog.Builder(this)
+        alertDialog.setTitle(resources.getString(R.string.app_name)).setMessage(resources.getString(R.string.not_support_google))
+            .setNegativeButton("OK"
+            ) { dialog, which -> dialog.dismiss() }
+        alertDialog.show()
     }
 }
 

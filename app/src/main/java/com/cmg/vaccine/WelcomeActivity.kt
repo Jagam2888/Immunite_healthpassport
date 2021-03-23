@@ -6,6 +6,7 @@ import android.os.SystemClock
 import androidx.databinding.DataBindingUtil
 import com.cmg.vaccine.databinding.ActivityWelcomeBinding
 import com.cmg.vaccine.DialogFragment.WelcomeDialogFragment
+import com.cmg.vaccine.util.checkGoogleServices
 
 class WelcomeActivity : BaseActivity() {
 

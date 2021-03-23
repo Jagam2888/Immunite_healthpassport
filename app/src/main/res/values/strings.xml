@@ -82,6 +82,8 @@
 
     <string name="sure_remove_dependent">Are you sure want to remove Dependent?</string>
     <string name="remove">Remove</string>
+    <string name="dependent_added">Dependent Added!</string>
+    <string name="you_can_now_manage_dependent">You can now manage your dependent account.</string>
 
     <string name="close">Close</string>
     <string name="thank_you_signup">Thank You for your interest to sign up with Immunitee.</string>
@@ -211,8 +213,10 @@
     <string name="payment_due">Payment Due</string>
     <string name="proceed_to_pay">Proceed to Payment</string>
 
+    <string name="not_support_google">Immunitee won\'t run without Google Play Services, which are not supported by your device.</string>
 
-    <string name="terms_condition">I agree to the terms and privacy policy.</string>
+
+    <string name="terms_condition">I agree to the <a href='com.cmg.vaccine.TellUsMoreActivity' >terms and privacy policy</a>.</string>
     <string name="update_profile_terms">I hereby acknowledged confirm of the above changes and agreed to the terms and policy of Immunitee</string>
     <string name="already_have_account">Already have an account? Login.</string>
     <string name="sign_up_complete">Sign Up Complete</string>

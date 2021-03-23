@@ -152,6 +152,9 @@ interface PatientDao {
     @Query("SELECT * FROM WorldEntryRulesByCountry WHERE woen_country_code =:countryCode")
     fun getWorldEntryRuleByCountry(countryCode:String):List<WorldEntryRulesByCountry>
 
+    @Query("DELETE FROM WorldEntryRulesByCountry")
+    fun deleteAllWorldEntryRuleByCountry()
+
     @Query("UPDATE AddWorldEntries SET `order`=:order WHERE countryName=:countryName")
     fun updateWEOrder(countryName:String,order:Int)
 

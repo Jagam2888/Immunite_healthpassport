@@ -9,6 +9,7 @@ import com.cmg.vaccine.listener.SimpleListener
 import com.cmg.vaccine.repositary.SettingsRepositary
 import com.cmg.vaccine.util.*
 import com.google.gson.JsonObject
+import io.reactivex.Observable
 import org.json.JSONObject
 import java.lang.Exception
 import java.net.SocketTimeoutException
@@ -56,8 +57,9 @@ class SettingsViewModel(
         repositary.deleteTestReport()
         repositary.deleteWorldEntryCountries()
         repositary.deleteAllAirportCities()
+        repositary.deleteAllWorldEntryRuleByCountry()
 
-        getAllAirportCities()
+        getAllWorldEntryCountryRules()
 
 
     }
@@ -107,6 +109,43 @@ class SettingsViewModel(
                 listener?.onFailure(e.message!!)
             }
 
+        }
+    }
+
+    private fun getAllWorldEntryCountryRules(){
+        Couritnes.main {
+            try {
+                val worlentryRules = repositary.getAllWorldEntryCountryRules()
+                if (!worlentryRules.data.isNullOrEmpty()){
+                    worlentryRules.data.forEach {data->
+                        val worldEntryRulesByCountry = WorldEntryRulesByCountry(
+                            data.woenSeqNo,
+                            data.woenCountryCode,
+                            data.woenDurationHours,
+                            data.woenEnddate,
+                            data.woenPoints,
+                            data.woenRuleDescription,
+                            data.woenRuleMatchCriteria,
+                            data.woenRuleSeqNo,
+                            data.woenStartdate,
+                            data.woenStatus,
+                            data.woenTestCode,
+                            data.woenVaccineCode
+
+                        )
+                        repositary.insertWorldEntryRuleByCountry(worldEntryRulesByCountry)
+                    }
+                }
+                getAllAirportCities()
+            }catch (e:Exception){
+                listener?.onFailure(e.message!!)
+            }catch (e:NoInternetException){
+                listener?.onFailure(e.message!!)
+            }catch (e:SocketTimeoutException){
+                listener?.onFailure(e.message!!)
+            }catch (e:Exception){
+                listener?.onFailure(e.message!!)
+            }
         }
     }
 

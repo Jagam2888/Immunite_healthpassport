@@ -42,6 +42,7 @@ class ExistingUserActivity : BaseActivity(),KodeinAware,SimpleListener {
 
         viewModel.listener = this
 
+
         initViews()
     }
 
@@ -135,6 +136,7 @@ class ExistingUserActivity : BaseActivity(),KodeinAware,SimpleListener {
             Log.d("private_key",qrCodeValue)
             Log.d("private_key_dob",changeDateFormatForPrivateKeyDecrypt(binding.edtDob.text.toString())!!)
             viewModel.privateKey.set(decryptQRValue(qrCodeValue,changeDateFormatForPrivateKeyDecrypt(binding.edtDob.text.toString())!!))
+            //toast(viewModel.privateKey.get()!!)
             //binding.edtQrCode.setText(qrCodeValue)
         }
     }

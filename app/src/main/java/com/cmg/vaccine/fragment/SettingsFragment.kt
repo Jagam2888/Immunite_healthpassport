@@ -202,6 +202,12 @@ class SettingsFragment : Fragment(),KodeinAware,SimpleListener {
             viewModel.syncRecord()
         }
 
+        layout_terms.setOnClickListener {
+            Intent(context,TermsOfUseActivity::class.java).also {
+                context?.startActivity(it)
+            }
+        }
+
         layout_google_drive.setOnClickListener {
             if (isGoogleSiginSuccess) {
                 sqliteToExcel()
@@ -266,6 +272,7 @@ class SettingsFragment : Fragment(),KodeinAware,SimpleListener {
             val versionName = packageInfo?.versionName
             //val version = "Version : $versionName \nDevelopment Server : ${Passparams.URL}"
             val version = "Version : $versionName \nDevelopment Server"
+            //val version = "Version : $versionName \nProduction Server"
             val alertDialogBuilder = AlertDialog.Builder(requireContext())
             alertDialogBuilder.setMessage(version).setTitle(R.string.app_name)
                     .setNegativeButton("CANCEL"
