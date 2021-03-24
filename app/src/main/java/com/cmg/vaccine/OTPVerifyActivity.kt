@@ -100,7 +100,7 @@ class OTPVerifyActivity : BaseActivity(),KodeinAware,SimpleListener{
 
 
     private fun startTimer(){
-        val timer = object :CountDownTimer(300000, 1000){
+        val timer = object :CountDownTimer(60000, 1000){
             override fun onTick(millisUntilFinished: Long) {
                 val value = millisUntilFinished / 1000
                 val formatted = "${(value / 60).toString().padStart(2, '0')} : ${(value % 60).toString().padStart(

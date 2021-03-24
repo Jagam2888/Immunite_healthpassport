@@ -13,7 +13,7 @@ class TermsOfUseActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this,R.layout.activity_terms_of_use)
 
-        binding.webView.loadUrl("http://stapi.immunitee.com/immunitee_tnc.html")
+        binding.webView.loadUrl("http://stapi.immunitee.com:8088/immunitee_tnc.html")
         val webViewSettings = binding.webView.settings
 
         webViewSettings.javaScriptEnabled = true

@@ -227,6 +227,7 @@ class DependentViewModel(
                                 dependentRegReqData.idType = idType.value
 
                                 dependentRegReqData.passportNo = passportNumber.value?.trim()
+                                dependentRegReqData.passportExpiryDate = passportExpDate.value?.trim()
                                 dependentRegReqData.idNo = idNo.value?.trim()
                                 dependentRegReqData.masterSubsId = repositary.getParentSubId()
 
@@ -253,6 +254,7 @@ class DependentViewModel(
                                                 contactNumber.value?.trim(),
                                                 nationality,
                                                 passportNumber.value?.trim(),
+                                                passportExpDate.value,
                                                 placeBirth,
                                                 relationShip
                                             )
@@ -305,6 +307,7 @@ class DependentViewModel(
             //city.set(dependent?.townCity)
             //state.set(dependent?.provinceState)
             passportNumber.value = dependent?.passportNo
+            passportExpDate.value = dependent?.passportExpiryDate
             idNo.value = dependent?.idNo
             idType.value = dependent?.idType
             dob.value = dependent?.dob?.replace("/","")
@@ -386,6 +389,7 @@ class DependentViewModel(
                                                 selectedItemContactCode.get()
                                             updateProfileReqData.passportNo =
                                                 passportNumber.value?.trim()
+                                            updateProfileReqData.passportExpiryDate = passportExpDate.value
                                             updateProfileReqData.gender = genderEnum.name
                                             updateProfileReqData.idNo = idNo.value?.trim()
                                             updateProfileReqData.subsId = dependent?.subsId

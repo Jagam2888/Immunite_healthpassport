@@ -33,6 +33,7 @@ import com.cmg.vaccine.util.toast
 import com.cmg.vaccine.viewmodel.HomeViewModel
 import com.cmg.vaccine.viewmodel.viewmodelfactory.HomeViewModelFactory
 import immuniteeEncryption.EncryptionUtils
+import io.paperdb.Paper
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
 import org.kodein.di.generic.instance
@@ -106,6 +107,7 @@ class HomeFragment : Fragment(),KodeinAware,SimpleListener {
                 it.adapter = pagerAdapter
                 if (!listDashboard.isNullOrEmpty()) {
                     addBottomDots(0)
+                    Paper.book().write(Passparams.CURRENT_USER_SUBSID, listDashboard!!.get(0))
                 }
             }
 
@@ -135,6 +137,7 @@ class HomeFragment : Fragment(),KodeinAware,SimpleListener {
 
             override fun onPageSelected(position: Int) {
                 addBottomDots(position)
+                Paper.book().write(Passparams.CURRENT_USER_SUBSID,listDashboard?.get(position))
                 //pagerPos = position
                 viewModel.setCurrentItem(position)
             }

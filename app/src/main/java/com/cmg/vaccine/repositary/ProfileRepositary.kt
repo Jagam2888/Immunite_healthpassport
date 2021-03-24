@@ -1,9 +1,6 @@
 package com.cmg.vaccine.repositary
 
-import com.cmg.vaccine.database.AppDatabase
-import com.cmg.vaccine.database.Countries
-import com.cmg.vaccine.database.Dependent
-import com.cmg.vaccine.database.User
+import com.cmg.vaccine.database.*
 import com.cmg.vaccine.model.request.UpdateProfileReq
 import com.cmg.vaccine.model.response.PatientRegResponse
 import com.cmg.vaccine.model.response.UpdatePatientResponse
@@ -68,5 +65,9 @@ class ProfileRepositary(
 
     fun removeDependent(subId: String){
         database.getDao().deleteDependent(subId)
+    }
+
+    fun getTestReportList(privateKey: String):List<TestReport>{
+        return database.getDao().getTestReportList(privateKey)
     }
 }

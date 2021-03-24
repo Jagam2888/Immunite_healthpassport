@@ -169,7 +169,7 @@ class SignUpActivity : BaseActivity(),KodeinAware,SimpleListener {
             override fun afterTextChanged(s: Editable?) {
                 if ((!validateDateFormat(binding.edtDob.text.toString())) and (binding.edtDob.text?.isNotEmpty() == true)){
                     //binding.edtDob.error = "Sorry! Invalid Date of Birth"
-                    binding.edtDob.error = "dd/MM/yyyy"
+                    binding.edtDob.error = Passparams.DATE_FORMAT
                 }else{
                     binding.edtDob.error = null
                 }

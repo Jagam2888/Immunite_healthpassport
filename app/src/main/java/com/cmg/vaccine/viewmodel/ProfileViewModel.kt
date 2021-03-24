@@ -74,10 +74,12 @@ class ProfileViewModel(
     var selectedItemContactCode = ObservableField<String>()
 
     var dobViewFormat:MutableLiveData<String> = MutableLiveData()
+    var passportDateViewFormat:MutableLiveData<String> = MutableLiveData()
     var placeBirthViewFormat:MutableLiveData<String> = MutableLiveData()
     var nationalityViewFormat:MutableLiveData<String> = MutableLiveData()
 
     var isAllow:Boolean = true
+    var isAllowUserAlreadyTest = false
 
     var currentEmail:String?=null
     var currentMobile:String?=null
@@ -133,6 +135,7 @@ class ProfileViewModel(
             dobTime.value = user.dobTime?.replace(":","")
             country.value = user.nationality
             passportNumber.value = user.passportNumber
+            passportExpDate.value = user.passportExpiryDate
             idNo.value = user.patientIdNo
             idType.value = user.patientIdType
             email1.value = user.email
@@ -157,6 +160,10 @@ class ProfileViewModel(
                 gender.value = "Other"
                 genderIcon.value = 0
             }
+
+
+            if (!passportExpDate.value.isNullOrEmpty())
+                passportDateViewFormat.value = changeDateFormatForViewProfile(passportExpDate.value!!)
 
 
             selectedItemNationalityCode.set(selectedCountryName(user.nationality,countryList!!))
@@ -201,6 +208,7 @@ class ProfileViewModel(
             dob.value = dependent.dob
             country.value = dependent.countryCode
             passportNumber.value = dependent.passportNo
+            passportExpDate.value = dependent.passportExpiryDate
             idNo.value = dependent.idNo
             idType.value = dependent.idType
             email1.value = dependent.email
@@ -215,6 +223,9 @@ class ProfileViewModel(
                 gender.value = "Other"
                 genderIcon.value = 0
             }
+
+            if (!passportExpDate.value.isNullOrEmpty())
+                passportDateViewFormat.value = changeDateFormatForViewProfile(passportExpDate.value!!)
 
             if (!dependent.countryCode.isNullOrEmpty())
                 countryCode.value = dependent.countryCode!!.toInt()
@@ -243,7 +254,19 @@ class ProfileViewModel(
     }
 
     fun onClick(view:View){
-
+        listener?.onStarted()
+        var user = repositary.getUserData()
+        if (user != null) {
+            if (!user.privateKey.isNullOrEmpty()) {
+                val testReportList = repositary.getTestReportList(user.privateKey!!)
+                if (testReportList.isNotEmpty()){
+                    if ((user.fullName == firstName.value) or (user.dob == dob.value) or (user.patientIdNo == idNo.value)){
+                        listener?.onFailure("Sorry You are not allowed to change your Name,DOB and MyKad")
+                        return
+                    }
+                }
+            }
+        }
 
         var placeBirth = ""
         if (!countryList.isNullOrEmpty()) {
@@ -268,8 +291,6 @@ class ProfileViewModel(
                         contactNumber.value!!.drop(1)
             }
         }
-
-        listener?.onStarted()
         isAllow = !(!currentEmail.equals(email1.value) and !currentMobile.equals(contactNumber.value))
             try {
                 if (!firstName.value.isNullOrEmpty() and !contactNumber.value.isNullOrEmpty() and !email1.value.isNullOrEmpty()) {
@@ -280,8 +301,6 @@ class ProfileViewModel(
                                     if (validateDateFormat(dob.value!!)) {
                                         if (validateTime(dobTime.value!!)) {
 
-                                            var user = repositary.getUserData()
-
                                             val updateProfileReq = UpdateProfileReq()
                                             val updateProfileReqData = UpdateProfileReqData()
 
@@ -291,6 +310,7 @@ class ProfileViewModel(
                                                 dob.value + " " + dobTime.value + ":00"
                                             updateProfileReqData.subsId = user.parentSubscriberId
                                             updateProfileReqData.passportNo = passportNumber.value
+                                            updateProfileReqData.passportExpiryDate = passportExpDate.value
                                             updateProfileReqData.gender = genderEnum.name
                                             updateProfileReqData.idNo = idNo.value
                                             updateProfileReqData.idType = idType.value

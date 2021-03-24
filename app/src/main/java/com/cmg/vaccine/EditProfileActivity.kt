@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.os.SystemClock
 import android.text.Editable
 import android.text.TextWatcher
+import android.text.method.LinkMovementMethod
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
@@ -79,6 +80,14 @@ class EditProfileActivity : BaseActivity(),KodeinAware,SimpleListener {
             }
         })*/
 
+        binding.checkboxTerms.movementMethod = LinkMovementMethod.getInstance()
+
+        binding.checkboxTerms.setOnClickListener {
+            Intent(this,TermsOfUseActivity::class.java).also {
+                startActivity(it)
+            }
+        }
+
         binding.btnDobCalender.setOnClickListener {
             if (SystemClock.elapsedRealtime() - lastClickTimeDOB<1000){
                 return@setOnClickListener
@@ -99,7 +108,7 @@ class EditProfileActivity : BaseActivity(),KodeinAware,SimpleListener {
             override fun afterTextChanged(s: Editable?) {
                 if ((!validateDateFormat(binding.edtDob.text.toString())) and (binding.edtDob.text?.isNotEmpty() == true)){
                     //binding.edtDob.error = "Sorry! Invalid Date of Birth"
-                    binding.edtDob.error = "dd/MM/yyyy"
+                    binding.edtDob.error = Passparams.DATE_FORMAT
                 }else{
                     binding.edtDob.error = null
                 }
@@ -119,7 +128,7 @@ class EditProfileActivity : BaseActivity(),KodeinAware,SimpleListener {
 
             override fun afterTextChanged(s: Editable?) {
                 if ((!validateDateFormatForPassport(binding.edtPassportExpDate.text.toString())) and (binding.edtPassportExpDate.text?.isNotEmpty() == true)){
-                    binding.edtPassportExpDate.error = "Sorry! Invalid Date"
+                    binding.edtPassportExpDate.error = Passparams.DATE_FORMAT
                 }else{
                     binding.edtPassportExpDate.error = null
                 }

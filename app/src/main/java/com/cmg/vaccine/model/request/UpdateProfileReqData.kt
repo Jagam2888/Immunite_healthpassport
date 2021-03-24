@@ -11,6 +11,7 @@ class UpdateProfileReqData {
     var mobileNumber: String?=null
     var nationalityCountry: String?=null
     var passportNo: String?=null
+    var passportExpiryDate:String?=null
     var placeOfBirth: String?=null
     var subsId: String?=null
     var masterSubsId: String?=null

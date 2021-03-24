@@ -141,6 +141,7 @@ class OTPVerifyViewModel(
                     user.fullName = editProfileData.data?.firstName.toString()
                     user.mobileNumber = editProfileData.data?.mobileNumber.toString()
                     user.passportNumber = editProfileData.data?.passportNo.toString()
+                    user.passportExpiryDate = editProfileData.data?.passportExpiryDate
                     user.patientIdNo = editProfileData.data?.idNo.toString()
                     user.dob = dob
                     user.email = editProfileData.data?.email.toString()
@@ -189,6 +190,7 @@ class OTPVerifyViewModel(
                     dependent?.idNo = editProfileData.data?.idNo
                     dependent?.idType = editProfileData.data?.idType
                     dependent?.passportNo = editProfileData.data?.passportNo
+                    dependent?.passportExpiryDate = editProfileData.data?.passportExpiryDate
                     dependent?.mobileNumber = editProfileData.data?.mobileNumber
                     dependent?.relationship = editProfileData.data?.relationship
                     dependent?.gender = editProfileData.data?.gender

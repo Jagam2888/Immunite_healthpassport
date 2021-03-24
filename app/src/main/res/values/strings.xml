@@ -86,8 +86,10 @@
     <string name="you_can_now_manage_dependent">You can now manage your dependent account.</string>
 
     <string name="close">Close</string>
-    <string name="thank_you_signup">Thank You for your interest to sign up with Immunitee.</string>
-    <string name="immunitee_welcome_content">Immunitee is built on trust and protecting privacy, thus we do not required copy of your confidential document such as Passport, ID or Bank Statement to confirm your credential. Signing up Immunitee has no use to you if the information provided are vary from your actual.</string>
+    <!--<string name="thank_you_signup">Thank You for your interest to sign up with Immunitee.</string>-->
+    <string name="thank_you_signup">WELCOME TO IMMUNITEE</string>
+    <!--<string name="immunitee_welcome_content">Immunitee is built on trust and protecting privacy, thus we do not required copy of your confidential document such as Passport, ID or Bank Statement to confirm your credential. Signing up Immunitee has no use to you if the information provided are vary from your actual.</string>-->
+    <string name="immunitee_welcome_content">Immunite is a trusted platform for Digital Health Passport. Your clinical data is kept at secured blockchain with unique Private Key that only owned by you. Your clinical data Will only be shared with your consent.</string>
 
 
     <string name="immunisation_history">Immunisation History</string>
@@ -182,7 +184,7 @@
     <string name="report_detail">Report Details</string>
 
     <string name="submit_past_vaccine"><u>Submit Past Vaccination Data</u></string>
-    <string name="submit_history">Submit Immunisation History</string>
+    <string name="submit_history">Submit your previous lab result</string>
 
     <string name="current_password">Current Password</string>
     <string name="new_password">New Password</string>
@@ -217,7 +219,7 @@
 
 
     <string name="terms_condition">I agree to the <a href='com.cmg.vaccine.TellUsMoreActivity' >terms and privacy policy</a>.</string>
-    <string name="update_profile_terms">I hereby acknowledged confirm of the above changes and agreed to the terms and policy of Immunitee</string>
+    <string name="update_profile_terms">I hereby acknowledged confirm of the above changes and agreed to the <a href='com.cmg.vaccine.TellUsMoreActivity'>terms and policy of Immunitee</a></string>
     <string name="already_have_account">Already have an account? Login.</string>
     <string name="sign_up_complete">Sign Up Complete</string>
     <string name="thank_you_sign">Thank you for signing \n up with IMMUNITEE!</string>
@@ -231,13 +233,17 @@ This QR Code is one time use and it expires in 5 minutes.</string>
     <string name="successfull_past_vaccine">Successfully Completed!\nPlease wait for your search result and your next steps of action</string>
     <string name="please_verify_email">Please Verify the Mobile sent to you to receive an Activation Code to complete your setup!</string>
     <string name="enter_act_code">Enter Activation Code</string>
-    <string name="your_account_activate">Your account has been activated, a Personal Private Key has been registered in your Immunitee!</string>
-    <string name="recomand_set_pin">We recommend you to setup an access PINs to keep your personal data stored with Immunitee protected against unauthorised access!</string>
+    <string name="your_account_activate">Your account is activated. You shall receive a Personal Private Key at your registered email.</string>
+    <string name="recomand_set_pin">For security purpose, we encourage you to create 4 digit PIN against unauthorized access.</string>
     <string name="manually_sync">Manually Sync Your Device</string>
     <string name="disclaimer">Disclaimer</string>
     <string name="disclaimer_desc">The verification for entry to a destination is done at our best knowledge. It is for reference and does not guarantee a entry to the destination desired. The right of entry to a destination is remained at the authority of entry owner.</string>
     <string name="covid19_rrt_pcr_test">Covid-19 rRT-PCR Test</string>
     <string name="enter_the_activate_code">Enter the 6-digit activation code sent to </string>
+
+    <string name="no_data">Currently no data is available. \nPlease subscribe to obtain your digital
+clinical data and complete your clinical test at Immunitee clinic.
+        \nClick to see <a href=''>Immunitee</a> Clinic.\n<a href=''>Subscription</a></string>
 
 
     <string name="authorization">Authorization</string>

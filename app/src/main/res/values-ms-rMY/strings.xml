@@ -169,7 +169,7 @@
     <string name="report_detail">Perincian Laporan</string>
 
     <string name="submit_past_vaccine">Hantar Data Vaksinasi Yang Lalu</string>
-    <string name="submit_history">Hantar Sejarah Imunisasi</string>
+    <string name="submit_history">Submit your previous lab result</string>
 
     <string name="current_password">Kata Laluan Semasa</string>
     <string name="new_password">Kata laluan baharu</string>
@@ -220,15 +220,17 @@
     <string name="successfull_past_vaccine">Berjaya Selesai!\nTunggu hasil carian anda dan langkah tindakan seterusnya</string>
     <string name="please_verify_email">Sila Sahkan E-mel yang dihantar kepada anda untuk menerima Kod Pengaktifan untuk menyelesaikan persediaan anda!</string>
     <string name="enter_act_code">Masukkan Kod Pengaktifan</string>
-    <string name="your_account_activate">Akaun anda telah diaktifkan, Kunci Peribadi Peribadi telah didaftarkan di Immunitee anda!</string>
-    <string name="recomand_set_pin">Kami mengesyorkan anda menyediakan PIN akses untuk memastikan data peribadi anda disimpan dengan Immunitee dilindungi daripada pengguna akses tanpa dibenarkan!</string>
+    <string name="your_account_activate">Your account is activated. You shall receive a Personal Private Key at your registered email.</string>
+    <string name="recomand_set_pin">For security purpose, we encourage you to create 4 digit PIN against unauthorized access.</string>
     <string name="manually_sync">Sync Peranti Anda Secara Manual</string>
     <string name="disclaimer">Penafian</string>
     <string name="disclaimer_desc">Pengesahan untuk masuk ke destinasi dilakukan pada pengetahuan kami. Ini untuk rujukan dan tidak menjamin kemasukan ke destinasi yang diinginkan. Hak masuk ke destinasi tetap berada di bawah kuasa pemilik masuk.</string>
     <string name="covid19_rrt_pcr_test">Ujian Covid-19 rRT-PCR</string>
     <string name="enter_the_activate_code">Masukkan kod pengaktifan 6 digit yang dihantar ke </string>
 
-
+    <string name="no_data">Currently no data is available. \nPlease subscribe to obtain your digital
+clinical data and complete your clinical test at Immunitee clinic.
+        \n.Click to see <a href=''>Immunitee</a> Clinic\n<a href=''>Subscription</a> </string>
 
 
     <string name="authorization">Kebenaran</string>

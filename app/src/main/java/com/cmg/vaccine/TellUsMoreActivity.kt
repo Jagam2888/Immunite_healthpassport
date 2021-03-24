@@ -71,7 +71,8 @@ class TellUsMoreActivity : BaseActivity(),KodeinAware,SimpleListener {
 
             override fun afterTextChanged(s: Editable?) {
                 if ((!validateDateFormatForPassport(binding.edtPassportExpDate.text.toString())) and (binding.edtPassportExpDate.text?.isNotEmpty() == true)){
-                    binding.edtPassportExpDate.error = "Sorry! Invalid Date"
+                    //binding.edtPassportExpDate.error = "Sorry! Invalid Date"
+                    binding.edtPassportExpDate.error = Passparams.DATE_FORMAT
                 }else{
                     binding.edtPassportExpDate.error = null
                 }

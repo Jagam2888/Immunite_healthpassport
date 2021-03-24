@@ -59,7 +59,11 @@
                 android:layout_height="wrap_content"
                 android:text="@{switchprofile.tyep+` Account`}"
                 android:textSize="12sp"
-                android:textColor="@color/white"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:paddingRight="20dp"
+                android:paddingLeft="20dp"
+                android:textColor="@color/dark_gray"
                 android:textAppearance="@style/opens_regular"
                 android:background="@drawable/gray_background"/>
         </LinearLayout>

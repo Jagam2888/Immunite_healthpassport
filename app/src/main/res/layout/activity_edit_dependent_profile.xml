@@ -403,6 +403,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/email_address1"
                     android:textSize="14sp"
+                    android:importantForAutofill="no"
                     android:textAppearance="@style/opens_regular"
                     android:text="@={dependentViewModel.email}"
                     android:maxLines="1"
@@ -431,6 +432,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/email_address1"
                     android:textSize="14sp"
+                    android:importantForAutofill="no"
                     android:textAppearance="@style/opens_regular"
                     android:text="@={dependentViewModel.reTypeEmail}"
                     android:maxLines="1"
@@ -630,7 +632,30 @@
 
                 </LinearLayout>
 
-                <androidx.appcompat.widget.AppCompatCheckBox
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
+                    <androidx.appcompat.widget.AppCompatCheckBox
+                        android:id="@+id/checkbox"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:buttonTint="@color/blue"
+                        android:layout_marginRight="-15dp"
+                        android:gravity="top"
+                        android:checked="@={dependentViewModel.isChecked()}"/>
+                    <TextView
+                        android:id="@+id/checkbox_terms"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/update_profile_terms"
+                        android:textColor="@color/blue"
+                        android:textSize="14sp"
+                        android:textAppearance="@style/opens_regular"
+                        android:layout_toRightOf="@id/checkbox"/>
+                </RelativeLayout>
+
+                <!--<androidx.appcompat.widget.AppCompatCheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/update_profile_terms"
@@ -640,7 +665,7 @@
                     android:textSize="12sp"
                     android:textAppearance="@style/opens_regular"
                     android:gravity="top"
-                    android:checked="@={dependentViewModel.isChecked()}"/>
+                    android:checked="@={dependentViewModel.isChecked()}"/>-->
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btn_signup"

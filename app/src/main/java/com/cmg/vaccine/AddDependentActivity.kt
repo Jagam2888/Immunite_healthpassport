@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.os.SystemClock
 import android.text.Editable
 import android.text.TextWatcher
+import android.text.method.LinkMovementMethod
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
@@ -56,6 +57,14 @@ class AddDependentActivity : BaseActivity(),KodeinAware,SimpleListener {
         binding.lifecycleOwner = this
         viewModel.listener = this
 
+        binding.checkboxTerms.movementMethod = LinkMovementMethod.getInstance()
+
+        binding.checkboxTerms.setOnClickListener {
+            Intent(this,TermsOfUseActivity::class.java).also {
+                startActivity(it)
+            }
+        }
+
         viewModel.countries.observe(this, Observer {list->
             val arrayList = arrayListOf<Country>()
             arrayList.addAll(list)
@@ -102,7 +111,7 @@ class AddDependentActivity : BaseActivity(),KodeinAware,SimpleListener {
             override fun afterTextChanged(s: Editable?) {
                 if ((!validateDateFormatForPassport(binding.edtPassportExpDate.text.toString())) and (binding.edtPassportExpDate.text?.isNotEmpty() == true)){
                     //binding.edtPassportExpDate.error = "Sorry! Invalid Date"
-                    binding.edtPassportExpDate.error = "dd/MM/yyyy"
+                    binding.edtPassportExpDate.error = Passparams.DATE_FORMAT
                 }else{
                     binding.edtPassportExpDate.error = null
                 }
@@ -203,7 +212,7 @@ class AddDependentActivity : BaseActivity(),KodeinAware,SimpleListener {
             override fun afterTextChanged(s: Editable?) {
 
                 if ((!validateDateFormat(binding.edtDob.text.toString())) and (binding.edtDob.text?.isNotEmpty() == true)){
-                    binding.edtDob.error = "dd/MM/yyyy"
+                    binding.edtDob.error = Passparams.DATE_FORMAT
                 }else{
                     binding.edtDob.error = null
                 }

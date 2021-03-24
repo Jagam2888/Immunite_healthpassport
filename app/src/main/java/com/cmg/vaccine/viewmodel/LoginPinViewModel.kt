@@ -38,8 +38,12 @@ class LoginPinViewModel(
 
 
     fun loadValues(context: Context){
-        labelTxt.value = "Enter your 4-digit Security PIN!"
         _getPin.value = repositary.getLoginPin()
+        if (getPin.value?.pin.isNullOrEmpty()) {
+            labelTxt.value = "Enter your 4-digit Security PIN!"
+        }else{
+            labelTxt.value = "Enter your New 4-digit Security PIN!"
+        }
         if (status.get() == ""){
             isCreateOrUpdate.set(false)
             labelTxt.value = "Enter your Security PIN to login!"

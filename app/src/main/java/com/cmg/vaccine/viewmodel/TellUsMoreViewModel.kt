@@ -85,6 +85,7 @@ class TellUsMoreViewModel(
                 idType.value = idTypeList[selectedItemIdTYpe.get()]
 
                 userData.passportNumber = passportNo.value?.trim()
+                userData.passportExpiryDate = passportExpDate.value
                 userData.patientIdNo = idNo.value?.trim()
                 userData.patientIdType = idType.value!!
                 userData.nationality = nationality
@@ -100,6 +101,7 @@ class TellUsMoreViewModel(
                 signUpReqData.countryCode = userData.countryCode
                 signUpReqData.placeOfBirth = userData.placeBirth
                 signUpReqData.passportNo = userData.passportNumber
+                signUpReqData.passportExpiryDate = userData.passportExpiryDate
                 signUpReqData.idNo = userData.patientIdNo
                 signUpReqData.idType = userData.patientIdType
                 signUpReqData.nationalityCountry = userData.nationality

@@ -11,6 +11,7 @@ data class User(
     var backupEmail: String?,
     var mobileNumber: String,
     var passportNumber:String?,
+    var passportExpiryDate:String?,
     var patientIdType:String?,
     var patientIdNo:String?,
     var countryCode: String,

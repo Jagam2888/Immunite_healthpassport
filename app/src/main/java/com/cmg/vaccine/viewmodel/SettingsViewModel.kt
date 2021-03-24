@@ -99,7 +99,7 @@ class SettingsViewModel(
                     }
                 }
                 getWorldEntryCountries()
-            }catch (e:Exception){
+            }catch (e:APIException){
                 listener?.onFailure(e.message!!)
             }catch (e:NoInternetException){
                 listener?.onFailure(e.message!!)
@@ -137,7 +137,7 @@ class SettingsViewModel(
                     }
                 }
                 getAllAirportCities()
-            }catch (e:Exception){
+            }catch (e:APIException){
                 listener?.onFailure(e.message!!)
             }catch (e:NoInternetException){
                 listener?.onFailure(e.message!!)
@@ -165,7 +165,7 @@ class SettingsViewModel(
                     //listener?.onSuccess("")
                 }
                 getVaccineCall()
-            }catch (e:Exception){
+            }catch (e:APIException){
                 listener?.onFailure(e.message!!)
             }catch (e:NoInternetException){
                 listener?.onFailure(e.message!!)

@@ -361,7 +361,8 @@ fun changeDateFormatNormal(dateString: String):String?{
 }
 fun changeDateFormatBC(dateString: String):String?{
     val resultFormat = SimpleDateFormat("dd/MM/yyyy HH:mm:ss")
-    val isoFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
+    //val isoFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
+    val isoFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
     try {
         val date = isoFormat.parse(dateString)
         return resultFormat.format(date)

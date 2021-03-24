@@ -20,6 +20,7 @@ data class Dependent(
         var mobileNumber: String?,
         var nationalityCountry: String?,
         var passportNo: String?,
+        var passportExpiryDate:String?,
         var placeOfBirth: String?,
         var relationship: String?
 ){

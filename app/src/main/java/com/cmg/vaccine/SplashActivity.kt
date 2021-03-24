@@ -39,8 +39,7 @@ class SplashActivity() : BaseActivity(),KodeinAware{
             }
         })
 
-        Log.d("decrypt_splash",
-            decryptKey("uVavFdRLVIG5hMxlyAhr\\/mQTV4v8\\/htWDwnQoP7YYwtRtpPzP2HxsFwtvQY\\/2GuJVlxcs7ckrjvC\n9WN4q5lcNRzVYq6ZV7i16P9fHe6S1RQP3+qrXzsA6MAw\\/3DfsVZuH8bCMLSssAgCBYRenDedlef9\nHPQ0wDfUUrPqap3OXDgjZ7+SDrQ7HB4yt0r5\\/1IquUAtbPrSwo7pOOuUqq7RoWGTEDau+jpvQijZ\n2ot2sdp4OOicgcPWQYeuA8QyWEkhEfHVd43J5Zr5lIGoUm3NwAFarNuDmg9dDoY4gVpg1Xtntdz+\nWG38KaVl5bMwtp5joEcqcmnDY3X7An4hkjbLlQ==","20210327")!!)
+        //Log.d("decrypt_splash",decryptKey("uVavFdRLVIG5hMxlyAhr\/mQTV4v8\/htWDwnQoP7YYwsF56IBKnGSOea\/g1maoRypMcB7kMMdf9OC\ntpVTlPhIomqVcXtIGaJ6ASNH1dK+ApeVWWg400Pbx2lHRP0zZmA4LgIhWyU7\/AUHxVvmM8rxYqxw\nmSFi8ef2TE2pkH+a+SRgR5N\/TExlCWUyV7Ufj06teFTHX3lgRVKN8v8jIGNT6z3gx3nj9I7QnH9c\nSGCuFrqhIV7OhCj\/4Xz\/UP2H6\/RehBnfEJWUbxqoKvuTf0kuJwBsU3KstzKY09h1jGJ7Ut2wLR\/P\nOQ6tu7JiCJJWuajAqcB0vpPgxseY\/HCnNC1ZzqMM4JThoOfv94D1Vjyt29A=","20210327")!!)
 
         Log.d("timestamp", calculateHours(changeDateToTimeStamp("2021-03-27T19:55:00+0800")!!,System.currentTimeMillis()).toString())
 

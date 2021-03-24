@@ -6,7 +6,9 @@ import android.os.CountDownTimer
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.cmg.vaccine.databinding.ActivityDepartureVerificationBinding
+import com.cmg.vaccine.listener.SimpleListener
 import com.cmg.vaccine.util.Passparams
+import com.cmg.vaccine.util.toast
 import com.cmg.vaccine.viewmodel.DepartureVerificationViewModel
 import com.cmg.vaccine.viewmodel.viewmodelfactory.DepartureVerificationModelFactory
 import io.paperdb.Paper
@@ -14,7 +16,7 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
 
-class DepartureVerificationActivity : BaseActivity(),KodeinAware {
+class DepartureVerificationActivity : BaseActivity(),KodeinAware,SimpleListener {
     override val kodein by kodein()
     private lateinit var binding:ActivityDepartureVerificationBinding
     private lateinit var viewModel:DepartureVerificationViewModel
@@ -29,6 +31,8 @@ class DepartureVerificationActivity : BaseActivity(),KodeinAware {
 
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
+
+        viewModel.listener = this
 
         val qrCodeValue = Paper.book().read<String>(Passparams.QR_CODE_VALUE,"")
         viewModel.qrCodeValue.value = qrCodeValue.replace("\\n","\n")
@@ -58,5 +62,17 @@ class DepartureVerificationActivity : BaseActivity(),KodeinAware {
             }
         }
         timer.start()
+    }
+
+    override fun onStarted() {
+        TODO("Not yet implemented")
+    }
+
+    override fun onSuccess(msg: String) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onFailure(msg: String) {
+        toast(msg)
     }
 }

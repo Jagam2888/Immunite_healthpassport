@@ -12,6 +12,7 @@ class DependentRegReqData {
     var mobileNumber: String?=null
     var nationalityCountry: String?=null
     var passportNo: String?=null
+    var passportExpiryDate:String?=null
     var placeOfBirth: String?=null
     var relationship: String?=null
 }

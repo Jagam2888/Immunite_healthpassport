@@ -3,10 +3,13 @@ package com.cmg.vaccine.viewmodel
 import androidx.databinding.ObservableBoolean
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.cmg.vaccine.listener.SimpleListener
+import com.cmg.vaccine.model.Dashboard
 import com.cmg.vaccine.model.MASResponseStatic
 import com.cmg.vaccine.repositary.DepartureVerificationRepositary
 import com.cmg.vaccine.util.*
 import immuniteeEncryption.EncryptionUtils
+import io.paperdb.Paper
 import org.json.JSONException
 import org.json.JSONObject
 import retrofit2.Response
@@ -38,20 +41,22 @@ class DepartureVerificationViewModel(
     var status = ObservableBoolean()
 
     var hours:Long = 72
+    var listener:SimpleListener?=null
 
     fun loadData(){
-        val userData = repositary.getUserData()
+        //val userData = repositary.getUserData()
+        val userData = Paper.book().read<Dashboard>(Passparams.CURRENT_USER_SUBSID,null)
         if (userData != null){
             if (!userData.fullName.isNullOrEmpty()){
                 fullName.value = userData.fullName
             }
 
-            if (!userData.passportNumber.isNullOrEmpty()){
-                passportNo.value = userData.passportNumber
+            if (!userData.passportNo.isNullOrEmpty()){
+                passportNo.value = userData.passportNo
             }
 
-            if (!userData.patientIdNo.isNullOrEmpty()){
-                idNo.value = userData.patientIdNo
+            if (!userData.idNo.isNullOrEmpty()){
+                idNo.value = userData.idNo
             }
         }
 
@@ -82,30 +87,6 @@ class DepartureVerificationViewModel(
                     flightNo.value = data.getString("reqFlightNo")
                     airLine.value = data.getString("reqAirline")
 
-                    val getAirportValues = repositary.getAirportCityByCode(arrivalDestination.value!!)
-
-                    val worldEntryRule = repositary.getWorldEnteryRuleByCountry(getAirportValues.countryCode!!)
-
-                    worldEntryRule.forEach {
-                        when(it.woen_rule_match_criteria){
-                            "T" ->{
-                                hours = it.woen_duration_hours?.toLong()!!
-                            }
-                        }
-                    }
-
-
-                    val calculateHours = calculateHours(changeDateToTimeStamp(etaTime.value!!)!!,System.currentTimeMillis())
-
-                    if (calculateHours != null) {
-                        if (calculateHours <= hours){
-                            status.set(true)
-                        }else{
-                            status.set(false)
-                        }
-                    }
-
-
                     val etdDate = changeDateFormatBC(data.getString("reqEtdTime"))
                     val etaDate = changeDateFormatBC(data.getString("reqEtaTime"))
 
@@ -126,12 +107,36 @@ class DepartureVerificationViewModel(
                     }else{
                         arrivalDate.value = etaDate
                     }
+
+
+
+                    val getAirportValues = repositary.getAirportCityByCode(arrivalDestination.value!!)
+
+                    val worldEntryRule = repositary.getWorldEnteryRuleByCountry(getAirportValues.countryCode!!)
+
+                    worldEntryRule.forEach {
+                        when(it.woen_rule_match_criteria){
+                            "T" ->{
+                                hours = it.woen_duration_hours?.toLong()!!
+                            }
+                        }
+                    }
+                    val calculateHours = calculateHours(changeDateToTimeStamp(etdTime.value!!)!!,System.currentTimeMillis())
+
+                    if (calculateHours != null) {
+                        if (calculateHours <= hours){
+                            status.set(true)
+                        }else{
+                            status.set(false)
+                        }
+                    }
+
                 }
 
             }catch (e:JSONException){
-                e.printStackTrace()
+                listener?.onFailure(e.message!!)
             }catch (e:Exception){
-                e.printStackTrace()
+                listener?.onFailure(e.message!!)
             }
 
         }

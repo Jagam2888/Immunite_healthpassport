@@ -107,8 +107,6 @@
                     </LinearLayout>
                 </RelativeLayout>
 
-
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -377,6 +375,7 @@
                     android:hint="@string/email_address1"
                     android:textAppearance="@style/opens_regular"
                     android:textSize="14sp"
+                    android:importantForAutofill="no"
                     android:text="@={profileviewmodel.email1}"
                     android:maxLines="1"
                     android:maxLength="30"
@@ -405,6 +404,7 @@
                     android:hint="@string/retype_email"
                     android:textAppearance="@style/opens_regular"
                     android:textSize="14sp"
+                    android:importantForAutofill="no"
                     android:text="@={profileviewmodel.reTypeEmail}"
                     android:maxLines="1"
                     android:maxLength="30"
@@ -610,17 +610,28 @@
 
                 </LinearLayout>
 
-                <androidx.appcompat.widget.AppCompatCheckBox
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/update_profile_terms"
-                    android:buttonTint="@color/blue"
-                    android:textColor="@color/blue"
-                    android:layout_marginTop="20dp"
-                    android:textAppearance="@style/opens_regular"
-                    android:textSize="12sp"
-                    android:gravity="top"
-                    android:checked="@={profileviewmodel.isChecked()}"/>
+                    android:layout_marginTop="10dp">
+                    <androidx.appcompat.widget.AppCompatCheckBox
+                        android:id="@+id/checkbox"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:buttonTint="@color/blue"
+                        android:layout_marginRight="-15dp"
+                        android:gravity="top"
+                        android:checked="@={profileviewmodel.isChecked()}"/>
+                    <TextView
+                        android:id="@+id/checkbox_terms"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/update_profile_terms"
+                        android:textColor="@color/blue"
+                        android:textSize="14sp"
+                        android:textAppearance="@style/opens_regular"
+                        android:layout_toRightOf="@id/checkbox"/>
+                </RelativeLayout>
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btn_signup"
@@ -628,7 +639,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/save_change"
                     android:textAppearance="@style/opens_bold"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     android:textColor="@color/white"
                     android:background="@drawable/button_background"
                     android:layout_marginTop="30dp"

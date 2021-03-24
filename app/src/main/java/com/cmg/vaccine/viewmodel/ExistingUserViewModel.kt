@@ -24,6 +24,7 @@ class ExistingUserViewModel(
     var listener:SimpleListener?=null
 
     var passportNo:String?=null
+    var passportExpType:String?=null
     var patientIdNo:String?=null
     var patientIdType:String?=null
     var dob:String?=null
@@ -119,6 +120,11 @@ class ExistingUserViewModel(
                 val jsonBodyFirst = jsonBody.getJSONObject("data")
                 val jsonBodySecond = jsonBodyFirst.getJSONObject("data")
 
+                /*if (jsonBodySecond.has("passportExpiryDate")){
+
+
+                }*/
+
                 if (jsonBodySecond.has("IDTypes")){
                     val jsonIdTypeArray = jsonBodySecond.getJSONArray("IDTypes")
                     for (i in 0 until jsonIdTypeArray.length()){
@@ -163,6 +169,7 @@ class ExistingUserViewModel(
                         jsonBodySecond.getString("email"),
                         jsonBodySecond.getString("mobileNumber"),
                         passportNo,
+                    "",
                         patientIdType,
                         patientIdNo,
                         jsonBodySecond.getString("countryCode"),

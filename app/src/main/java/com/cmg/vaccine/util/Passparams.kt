@@ -20,6 +20,8 @@ object Passparams{
     const val WORLD_ENTRY_SELECTED_COUNTRY_NAME = "world_entry_selected_country_name"
     const val WORLD_ENTRY_SELECTED_COUNTRY_CODE = "world_entry_selected_country_code"
     const val QR_CODE_VALUE = "qr_code_value"
+    const val DATE_FORMAT = "dd/mm/yyyy"
+    const val CURRENT_USER_SUBSID = "current_user_subid"
 
     const val ADD_DEPENDENT_SUCCESS = "add_dependent_success"
 
@@ -62,11 +64,11 @@ object Passparams{
     const val GET_TEST_REPORT_LIST = "nhr-module-user/getalltestrecord"
     const val GET_WORLD_ENTRIES_LIST = "nhr-module-user/worldentry"
     const val GET_WORLD_ENTRIES_RULES = "nhr-module-user/worldentrybycountry"
-    //const val IMMUNIZATION_HISTORY = "nhr-module-user/immuhistory"
-    const val IMMUNIZATION_HISTORY = "nhr-module-user/upload"
+    const val IMMUNIZATION_HISTORY = "nhr-module-user/immuhistory"
+    //const val IMMUNIZATION_HISTORY = "nhr-module-user/upload"
     const val GET_EXISTING_USER = "nhr-module-user/gepatientprivatekey"
-    const val GET_ALL_AIRPORT_CITIES = "nhr-module-integration/searchairportcities"
-    const val GET_ALL_WORLD_ENTRY_RULE = "nhr-module-integration/searchworldentry"
+    const val GET_ALL_AIRPORT_CITIES = "nhr-module-user/searchairportcities"
+    const val GET_ALL_WORLD_ENTRY_RULE = "nhr-module-user/searchworldentry"
 
     //const val GET_VACCINE_TEST_REF = "blockchainapi/getAllTestRecord"
     const val GET_VACCINE_TEST_REF = "nhr-module-user/getalltestrecord"
