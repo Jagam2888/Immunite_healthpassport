@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import com.cmg.vaccine.data.setOnSingleClickListener
 import com.cmg.vaccine.databinding.ActivityRestoredBackupOptionListBinding
 import com.cmg.vaccine.fragment.SettingsFragment
 import com.cmg.vaccine.listener.SimpleListener
@@ -63,7 +64,7 @@ class RestoredBackupOptionList : BaseActivity(),KodeinAware,SimpleListener {
         dob = intent.extras?.getString(Passparams.USER_DOB,"")
 
 
-        binding.layoutGoogleDrive.setOnClickListener {
+        binding.layoutGoogleDrive.setOnSingleClickListener {
             try {
                 requestSignIn()
             }catch (e:NoInternetException){

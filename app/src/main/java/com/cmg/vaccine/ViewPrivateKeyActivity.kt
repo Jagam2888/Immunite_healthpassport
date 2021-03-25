@@ -48,56 +48,23 @@ class ViewPrivateKeyActivity : BaseActivity(),KodeinAware,SimpleListener {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_view_private_key)
         viewModel = ViewModelProvider(this, factory).get(HomeViewModel::class.java)
         binding.viewmodel = viewModel
-        //binding.lifecycleOwner = this
 
         viewModel.listener = this
-        //viewModel.loadData()
-
-
-        /*viewModel.getPrivateKey()
-
-        viewModel.privateKey.observe(this, Observer { key ->
-            privateKey = key
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                if (checkPermission()) {
-                    generateQRCode(privateKey!!)
-                } else {
-                    requestPermission()
-                }
-            }
-        })*/
 
         val userName = intent.extras?.getString(Passparams.USER_NAME,"")
         viewModel._userName.value = userName
         val userDob = intent.extras?.getString(Passparams.USER_DOB,"")
 
-        /*val relationShip = intent.extras?.getString(Passparams.RELATIONSHIP,"")
-        val subId = intent.extras?.getString(Passparams.SUBSID,"")*/
 
         privateKey = intent.extras?.getString(Passparams.PRIVATEKEY,"")
         if (!privateKey.isNullOrEmpty()) {
             val timeStamp = System.currentTimeMillis().toString()
-            //val encryptMasterKeyValue = encryptMasterKey(timeStamp)
-            //val encryptPrivateKey = resources.getString(R.string.app_name)+"|"+encryptMasterKeyValue+"|"+encryptPrivateKey(privateKey!!,timeStamp)!!
             val encryptPrivateKey = encryptPrivateKey(privateKey!!,changeDateFormatForPrivateKeyDecrypt(userDob!!)!!)
             Log.d("encrypt_pk",encryptPrivateKey!!)
             generateQRCode(encryptPrivateKey)
+            viewModel.getVaccineTestRef(privateKey!!)
         }else{
             toast("Your Private key is not generated")
-            /*if (relationShip.equals(Passparams.PARENT,true)) {
-                viewModel.getPatientPrivateKey()
-            }else{
-                viewModel.getDependentPrivateKey(subId!!)
-            }
-            viewModel.privateKey.observe(this, Observer { privateKey->
-                if (!privateKey.isNullOrEmpty()){
-                    val timeStamp = System.currentTimeMillis().toString()
-                    val encryptMasterKeyValue = encryptMasterKey(timeStamp)
-                    val encryptPrivateKey = resources.getString(R.string.app_name)+"|"+encryptMasterKeyValue+"|"+encryptPrivateKey(privateKey,timeStamp)!!
-                    Log.d("encrypt_pk",encryptPrivateKey)
-                    generateQRCode(encryptPrivateKey)
-                }
-            })*/
         }
 
 
@@ -195,14 +162,6 @@ class ViewPrivateKeyActivity : BaseActivity(),KodeinAware,SimpleListener {
 
                     } else {
                         toast("Permission Denied, You cannot access and camera")
-                        /*if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-                            if(shouldShowRequestPermissionRationale(android.Manifest.permission.CAMERA)) {
-                                showMessageOKCancel(
-                                        "You need to allow access to both the permissions",
-                                        DialogInterface.OnClickListener(function = positiveButtonClick)
-                                )
-                            }
-                        }*/
                     }
                 }
             }

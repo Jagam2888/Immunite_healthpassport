@@ -150,7 +150,13 @@ interface PatientDao {
     fun insertWorldEntryRulesByCountry(worldEntryRulesByCountry: WorldEntryRulesByCountry)
 
     @Query("SELECT * FROM WorldEntryRulesByCountry WHERE woen_country_code =:countryCode")
-    fun getWorldEntryRuleByCountry(countryCode:String):List<WorldEntryRulesByCountry>
+    fun getWorldEntryRuleByCountryByCode(countryCode:String):List<WorldEntryRulesByCountry>
+
+    @Query("SELECT * FROM WorldEntryRulesByCountry WHERE woen_country_code='SGP' AND woen_rule_match_criteria='T' AND woen_status='A'")
+    fun getWorldEntryRuleForMAS():List<WorldEntryRulesByCountry>
+
+    @Query("SELECT * FROM WorldEntryRulesByCountry")
+    fun getAllWorldEntryRuleByCountry():List<WorldEntryRulesByCountry>
 
     @Query("DELETE FROM WorldEntryRulesByCountry")
     fun deleteAllWorldEntryRuleByCountry()
@@ -168,10 +174,40 @@ interface PatientDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAirportCitiesName(airportCitiesName: AirportCitiesName):Long
 
+    @Query("SELECT * FROM AirportCitiesName")
+    fun getAllAirportCities():List<AirportCitiesName>
+
     @Query("SELECT * FROM AirportCitiesName WHERE cityCode =:cityCode")
     fun getAirportCityByCode(cityCode:String):AirportCitiesName
 
     @Query("DELETE FROM AirportCitiesName")
     fun deleteAllAirportCities()
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertTestCodes(testCodes: TestCodes):Long
+
+    @Query("SELECT * FROM TestCodes")
+    fun getAllTestCodes():List<TestCodes>
+
+    @Query("DELETE FROM TestCodes")
+    fun deleteAllTestCodes()
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertWorldPriority(worldPriority: WorldPriority):Long
+
+    @Query("DELETE FROM WorldPriority")
+    fun deleteAllWorldPriority()
+
+    @Query("SELECT * FROM WorldPriority")
+    fun getAllWorldPriority():List<WorldPriority>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertIdentifierType(identifierType: IdentifierType):Long
+
+    @Query("SELECT * FROM IdentifierType")
+    fun getAllIdentifierType():List<IdentifierType>
+
+    @Query("DELETE FROM IdentifierType")
+    fun deleteAllIdentifierType()
 
 }

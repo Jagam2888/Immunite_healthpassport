@@ -63,7 +63,7 @@ class WorldEntryRepositary(
     }
 
     fun getWorldEntryRulesByCountry(countryCode:String):List<WorldEntryRulesByCountry>{
-        return database.getDao().getWorldEntryRuleByCountry(countryCode)
+        return database.getDao().getWorldEntryRuleByCountryByCode(countryCode)
     }
 
     suspend fun getWorldEntryRulesByCountryFromAPI(countryCode: String):WorldEntryRulesResponse{
@@ -111,4 +111,30 @@ class WorldEntryRepositary(
     fun getCurrentCount():Int{
         return database.getDao().getCurrentCount()
     }
+
+    suspend fun getAllAirportCitiesFromAPI():GetAllAirportCitiesResponse{
+        return apiRequest {
+            api.getAllAirportCities()
+        }
+    }
+
+    fun insertAirportCitiesMaster(airportCitiesName: AirportCitiesName){
+        database.getDao().insertAirportCitiesName(airportCitiesName)
+    }
+
+    fun getAllAirportCities():List<AirportCitiesName>{
+        return database.getDao().getAllAirportCities()
+    }
+
+    suspend fun getAllWorldEntryCountryRulesFromAPI():WorldEntryRulesResponse{
+        return apiRequest {
+            api.getAllWorldEntryCountryRules()
+        }
+    }
+
+    fun getAllWorldEntryRulesByCountry():List<WorldEntryRulesByCountry>{
+        return database.getDao().getAllWorldEntryRuleByCountry()
+    }
+
+
 }

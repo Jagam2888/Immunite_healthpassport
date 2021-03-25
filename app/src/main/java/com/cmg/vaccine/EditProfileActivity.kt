@@ -23,6 +23,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.blongho.country_data.Country
 import com.blongho.country_data.World
 import com.cmg.vaccine.adapter.CountryListAdapter
+import com.cmg.vaccine.data.setOnSingleClickListener
 import com.cmg.vaccine.databinding.ActivityEditProfileBinding
 import com.cmg.vaccine.listener.SimpleListener
 import com.cmg.vaccine.util.*
@@ -82,18 +83,23 @@ class EditProfileActivity : BaseActivity(),KodeinAware,SimpleListener {
 
         binding.checkboxTerms.movementMethod = LinkMovementMethod.getInstance()
 
-        binding.checkboxTerms.setOnClickListener {
+        binding.checkboxTerms.setOnSingleClickListener{
             Intent(this,TermsOfUseActivity::class.java).also {
                 startActivity(it)
             }
         }
 
-        binding.btnDobCalender.setOnClickListener {
+        /*binding.btnDobCalender.setOnClickListener {
             if (SystemClock.elapsedRealtime() - lastClickTimeDOB<1000){
                 return@setOnClickListener
             }
             Log.d("onclickdob","come here")
             lastClickTimeDOB = SystemClock.elapsedRealtime()
+            hideKeyBoard()
+            showDatePickerDialog(binding.edtDob)
+        }*/
+
+        binding.btnDobCalender.setOnSingleClickListener{
             hideKeyBoard()
             showDatePickerDialog(binding.edtDob)
         }
@@ -115,9 +121,14 @@ class EditProfileActivity : BaseActivity(),KodeinAware,SimpleListener {
             }
         })
 
-        binding.btnDateCalender.setOnClickListener {
+        binding.btnDateCalender.setOnSingleClickListener{
+            hideKeyBoard()
             showDatePickerDialogForPassport(binding.edtPassportExpDate)
         }
+
+        /*binding.btnDateCalender.setOnClickListener {
+            showDatePickerDialogForPassport(binding.edtPassportExpDate)
+        }*/
 
         binding.edtPassportExpDate.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -171,7 +182,7 @@ class EditProfileActivity : BaseActivity(),KodeinAware,SimpleListener {
             }
         })*/
 
-        binding.btnDobTimeCalender.setOnClickListener {
+        /*binding.btnDobTimeCalender.setOnClickListener {
             if (SystemClock.elapsedRealtime() - lastClickTimeDOBTime<1000){
                 return@setOnClickListener
             }
@@ -179,9 +190,14 @@ class EditProfileActivity : BaseActivity(),KodeinAware,SimpleListener {
             lastClickTimeDOBTime = SystemClock.elapsedRealtime()
             hideKeyBoard()
             showTimepickerDialog(binding.edtDobTime, viewModel.dobTime.value!!)
+        }*/
+
+        binding.btnDobTimeCalender.setOnSingleClickListener{
+            hideKeyBoard()
+            showTimepickerDialog(binding.edtDobTime, viewModel.dobTime.value!!)
         }
 
-        binding.layoutImg.setOnClickListener {
+        binding.layoutImg.setOnSingleClickListener{
             if (checkPermission()){
                 //pickImageFromGallery()
                 cropImage()

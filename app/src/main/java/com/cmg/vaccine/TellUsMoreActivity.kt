@@ -11,6 +11,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.blongho.country_data.Country
 import com.cmg.vaccine.adapter.CountryListAdapter
+import com.cmg.vaccine.data.setOnSingleClickListener
 import com.cmg.vaccine.databinding.ActivityTellUsMoreBinding
 import com.cmg.vaccine.listener.SimpleListener
 import com.cmg.vaccine.util.*
@@ -37,7 +38,7 @@ class TellUsMoreActivity : BaseActivity(),KodeinAware,SimpleListener {
 
         binding.checkboxTerms.movementMethod = LinkMovementMethod.getInstance()
 
-        binding.checkboxTerms.setOnClickListener {
+        binding.checkboxTerms.setOnSingleClickListener {
             Intent(this,TermsOfUseActivity::class.java).also {
                 startActivity(it)
             }
@@ -58,7 +59,8 @@ class TellUsMoreActivity : BaseActivity(),KodeinAware,SimpleListener {
             }
         }*/
 
-        binding.btnDateCalender.setOnClickListener {
+        binding.btnDateCalender.setOnSingleClickListener {
+            hideKeyBoard()
             showDatePickerDialogForPassport(binding.edtPassportExpDate)
         }
 

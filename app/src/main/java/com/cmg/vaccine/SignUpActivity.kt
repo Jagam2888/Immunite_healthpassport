@@ -18,6 +18,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.blongho.country_data.Country
 import com.cmg.vaccine.adapter.CountryListAdapter
+import com.cmg.vaccine.data.setOnSingleClickListener
 import com.cmg.vaccine.databinding.ActivitySignUpBinding
 import com.cmg.vaccine.listener.SimpleListener
 import com.cmg.vaccine.util.*
@@ -59,23 +60,13 @@ class SignUpActivity : BaseActivity(),KodeinAware,SimpleListener {
         viewModel.listener = this
         viewModel.selectedItemContactCode.set(binding.ccpLoadCountryCode.selectedCountryCode)
 
-        binding.btnDobTimeCalender.setOnClickListener {
+        binding.btnDobTimeCalender.setOnSingleClickListener {
             hideKeyBoard()
-            if (SystemClock.elapsedRealtime() - lastClickTimeDOBTime<1000){
-                return@setOnClickListener
-            }
-            Log.d("onclickdob","come here")
-            lastClickTimeDOBTime = SystemClock.elapsedRealtime()
             showTimepickerDialog(binding.edtDobTime, viewModel.dobTime.value!!)
         }
 
-        binding.btnDobCalender.setOnClickListener {
+        binding.btnDobCalender.setOnSingleClickListener {
             hideKeyBoard()
-            if (SystemClock.elapsedRealtime() - lastClickTimeDOB<1000){
-                return@setOnClickListener
-            }
-            Log.d("onclick","come here")
-            lastClickTimeDOB = SystemClock.elapsedRealtime()
             showDatePickerDialog(binding.edtDob)
         }
 

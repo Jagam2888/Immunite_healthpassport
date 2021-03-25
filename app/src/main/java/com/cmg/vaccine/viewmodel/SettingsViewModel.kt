@@ -58,8 +58,18 @@ class SettingsViewModel(
         repositary.deleteWorldEntryCountries()
         repositary.deleteAllAirportCities()
         repositary.deleteAllWorldEntryRuleByCountry()
+        repositary.deleteIdentifierType()
+        repositary.deleteTestCodes()
+        repositary.deleteWorldPriority()
 
+
+        getWorldPriorities()
+        getIdentifierType()
+        getAllTestCodes()
         getAllWorldEntryCountryRules()
+        getWorldEntryCountries()
+        getAllAirportCities()
+        getVaccineCall()
 
 
     }
@@ -82,6 +92,82 @@ class SettingsViewModel(
         //getVaccineFromAPI()
     }
 
+    private fun getWorldPriorities(){
+        Couritnes.main {
+            try {
+                val response = repositary.getWorldPriority()
+                if (!response.data.isNullOrEmpty()){
+                    response.data.forEach {
+                        val worldPriority = WorldPriority(
+                            it.prioRuleCountry,
+                            it.prioRuleCriteria,
+                            it.prioRuleNo,
+                            it.prioSeqNo
+                        )
+                        repositary.insertWorldPriority(worldPriority)
+                    }
+                }
+            }catch (e:APIException){
+                listener?.onFailure(e.message!!)
+            }catch (e:NoInternetException){
+                listener?.onFailure(e.message!!)
+            }catch (e:Exception){
+                listener?.onFailure(e.message!!)
+            }
+        }
+    }
+
+    private fun getAllTestCodes(){
+        Couritnes.main {
+            try {
+                val response = repositary.getTestCodeFromApi()
+                if (!response.data.isNullOrEmpty()){
+                    response.data.forEach {
+                        val testCodes = TestCodes(
+                            it.wetstCountryCode,
+                            it.wetstSeqNo,
+                            it.wetstTestCode,
+                            it.wetstTestcategory
+                        )
+                        repositary.insertTestCodes(testCodes)
+                    }
+                }
+            }catch (e:APIException){
+                listener?.onFailure(e.message!!)
+            }catch (e:NoInternetException){
+                listener?.onFailure(e.message!!)
+            }catch (e:Exception){
+                listener?.onFailure(e.message!!)
+            }
+        }
+    }
+
+    private fun getIdentifierType(){
+        Couritnes.main {
+            try {
+                val response = repositary.getIdentifierTypeFromAPI()
+                if (!response.data.isNullOrEmpty()){
+                    response.data.forEach {
+                        val identifierType = IdentifierType(
+                            it.identifierCode,
+                            it.identifierDisplay,
+                            it.identifierSeqno,
+                            it.identifierStatus
+                        )
+                        repositary.insertIdentifierType(identifierType)
+                    }
+
+                }
+            }catch (e:APIException){
+                listener?.onFailure(e.message!!)
+            }catch (e:NoInternetException){
+                listener?.onFailure(e.message!!)
+            }catch (e:Exception){
+                listener?.onFailure(e.message!!)
+            }
+        }
+    }
+
     private fun getAllAirportCities(){
         Couritnes.main {
             try {
@@ -98,7 +184,7 @@ class SettingsViewModel(
                         repositary.insertAirportCitiesMaster(airportCitiesName)
                     }
                 }
-                getWorldEntryCountries()
+                //getWorldEntryCountries()
             }catch (e:APIException){
                 listener?.onFailure(e.message!!)
             }catch (e:NoInternetException){
@@ -136,7 +222,7 @@ class SettingsViewModel(
                         repositary.insertWorldEntryRuleByCountry(worldEntryRulesByCountry)
                     }
                 }
-                getAllAirportCities()
+                //getAllAirportCities()
             }catch (e:APIException){
                 listener?.onFailure(e.message!!)
             }catch (e:NoInternetException){
@@ -164,7 +250,7 @@ class SettingsViewModel(
                     }
                     //listener?.onSuccess("")
                 }
-                getVaccineCall()
+                //getVaccineCall()
             }catch (e:APIException){
                 listener?.onFailure(e.message!!)
             }catch (e:NoInternetException){

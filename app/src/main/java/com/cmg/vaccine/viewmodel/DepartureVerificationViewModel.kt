@@ -94,7 +94,8 @@ class DepartureVerificationViewModel(
 
                     if (edtDateArray?.size!! > 1) {
                         departureDate.value = changeDateFormatForViewProfile(edtDateArray?.get(0)!!)
-                        departureTime.value = removeSeconds(edtDateArray[1])
+                        //departureTime.value = removeSeconds(edtDateArray[1])
+                        departureTime.value = edtDateArray[1]
                     }else{
                         departureDate.value = etdDate
                     }
@@ -103,7 +104,8 @@ class DepartureVerificationViewModel(
 
                     if (etaDateArray?.size!! > 1) {
                         arrivalDate.value = changeDateFormatForViewProfile(etaDateArray?.get(0)!!)
-                        arrivalTime.value = removeSeconds(etaDateArray[1])
+                        //arrivalTime.value = removeSeconds(etaDateArray[1])
+                        arrivalTime.value = etaDateArray[1]
                     }else{
                         arrivalDate.value = etaDate
                     }
@@ -121,15 +123,23 @@ class DepartureVerificationViewModel(
                             }
                         }
                     }
-                    val calculateHours = calculateHours(changeDateToTimeStamp(etdTime.value!!)!!,System.currentTimeMillis())
+                    if (!userData.privateKey.isNullOrEmpty()) {
+                        var getTestReport = repositary.getTestReportList(userData.privateKey!!)
 
-                    if (calculateHours != null) {
-                        if (calculateHours <= hours){
-                            status.set(true)
-                        }else{
-                            status.set(false)
+                        var getSampleCollectedDate = changeDateFormatNewISO8601(getTestReport[0].dateSampleCollected+" "+getTestReport[0].timeSampleCollected+":00")
+
+                        val calculateHours = calculateHours(changeDateToTimeStamp(etdTime.value!!)!!, changeDateToTimeStamp(getSampleCollectedDate!!)!!)
+
+                        if (calculateHours != null) {
+                            if (calculateHours <= hours){
+                                status.set(true)
+                            }else{
+                                status.set(false)
+                            }
                         }
                     }
+
+
 
                 }
 

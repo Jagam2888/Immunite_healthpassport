@@ -598,7 +598,7 @@
                             android:textSize="16sp"
                             android:background="@null"
                             android:minHeight="0dp"
-                            android:entries="@array/id_type"
+                            android:entries="@{dependentViewModel.identifierTypeList}"
                             android:layout_toLeftOf="@id/img_down_arrow_id"
                             android:layout_centerVertical="true"
                             android:selectedItemPosition="@={dependentViewModel.selectedItemIdTYpe}"/>
@@ -784,7 +784,7 @@
                     android:textColor="@color/white"
                     android:background="@drawable/button_background"
                     android:layout_marginTop="30dp"
-                    android:onClick="@{(v) -> dependentViewModel.onClick(v)}"/>
+                    app:onSingleClick="@{(v) -> dependentViewModel.onClick(v)}"/>
 
             </LinearLayout>
         </ScrollView>

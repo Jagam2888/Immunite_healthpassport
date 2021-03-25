@@ -8,6 +8,7 @@ import android.text.TextWatcher
 import android.util.Log
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import com.cmg.vaccine.data.setOnSingleClickListener
 import com.cmg.vaccine.databinding.ActivityExistingUserBinding
 import com.cmg.vaccine.listener.SimpleListener
 import com.cmg.vaccine.util.*
@@ -23,8 +24,7 @@ class ExistingUserActivity : BaseActivity(),KodeinAware,SimpleListener {
     override val kodein by kodein()
     private lateinit var binding:ActivityExistingUserBinding
     private lateinit var viewModel:ExistingUserViewModel
-    var lastClickTimeDOB:Long = 0
-    var lastClickTimeQr:Long = 0
+
     var qrCodeValue = ""
     var isRestoreFromBackup = false
 
@@ -52,12 +52,7 @@ class ExistingUserActivity : BaseActivity(),KodeinAware,SimpleListener {
         viewModel.isRestoreForSync.set(false)
 
 
-
-        binding.btnDobCalender.setOnClickListener {
-            if (SystemClock.elapsedRealtime() - lastClickTimeDOB<1000){
-                return@setOnClickListener
-            }
-            lastClickTimeDOB = SystemClock.elapsedRealtime()
+        binding.btnDobCalender.setOnSingleClickListener{
             hideKeyBoard()
             showDatePickerDialog(binding.edtDob)
         }
@@ -82,11 +77,7 @@ class ExistingUserActivity : BaseActivity(),KodeinAware,SimpleListener {
             }
         })
 
-        binding.btnScanQr.setOnClickListener {
-            if (SystemClock.elapsedRealtime() - lastClickTimeQr<1000){
-                return@setOnClickListener
-            }
-            lastClickTimeQr = SystemClock.elapsedRealtime()
+        binding.btnScanQr.setOnSingleClickListener{
             hideKeyBoard()
             if (!binding.edtDob.text.toString().isNullOrEmpty()) {
                 Paper.book().write(Passparams.QR_CODE_VALUE, "")

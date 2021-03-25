@@ -21,6 +21,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.blongho.country_data.Country
 import com.cmg.vaccine.adapter.CountryListAdapter
+import com.cmg.vaccine.data.setOnSingleClickListener
 import com.cmg.vaccine.databinding.ActivityEditDependentProfileBinding
 import com.cmg.vaccine.listener.SimpleListener
 import com.cmg.vaccine.util.*
@@ -54,7 +55,7 @@ class EditDependentProfileActivity : BaseActivity(),KodeinAware,SimpleListener {
 
         binding.checkboxTerms.movementMethod = LinkMovementMethod.getInstance()
 
-        binding.checkboxTerms.setOnClickListener {
+        binding.checkboxTerms.setOnSingleClickListener{
             Intent(this,TermsOfUseActivity::class.java).also {
                 startActivity(it)
             }
@@ -71,7 +72,7 @@ class EditDependentProfileActivity : BaseActivity(),KodeinAware,SimpleListener {
             viewModel.loadProfileData(this,dependentSubId!!)
         })
 
-        binding.btnDobCalender.setOnClickListener {
+        /*binding.btnDobCalender.setOnClickListener {
             if (SystemClock.elapsedRealtime() - lastClickTimeDOB<1000){
                 return@setOnClickListener
             }
@@ -91,6 +92,20 @@ class EditDependentProfileActivity : BaseActivity(),KodeinAware,SimpleListener {
             showTimepickerDialog(binding.edtDobTime, viewModel.dobTime.value!!)
         }
         binding.btnDateCalender.setOnClickListener {
+            showDatePickerDialogForPassport(binding.edtPassportExpDate)
+        }*/
+        binding.btnDobCalender.setOnSingleClickListener{
+            hideKeyBoard()
+            showDatePickerDialog(binding.edtDob)
+        }
+
+        binding.btnDobTimeCalender.setOnSingleClickListener{
+            hideKeyBoard()
+            showTimepickerDialog(binding.edtDobTime, viewModel.dobTime.value!!)
+        }
+
+        binding.btnDateCalender.setOnSingleClickListener{
+            hideKeyBoard()
             showDatePickerDialogForPassport(binding.edtPassportExpDate)
         }
 
@@ -208,7 +223,7 @@ class EditDependentProfileActivity : BaseActivity(),KodeinAware,SimpleListener {
             false
         })
 
-        binding.layoutImg.setOnClickListener {
+        binding.layoutImg.setOnSingleClickListener {
             if (checkPermission()){
                 cropImage()
             }else{

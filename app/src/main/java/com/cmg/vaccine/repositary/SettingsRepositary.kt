@@ -118,4 +118,42 @@ class SettingsRepositary(
     fun deleteAllAirportCities(){
         database.getDao().deleteAllAirportCities()
     }
+
+    suspend fun getIdentifierTypeFromAPI():IdentifierTypeResponse{
+        return apiRequest {
+            api.getIdentifierType()
+        }
+    }
+    fun insertIdentifierType(identifierType: IdentifierType){
+        database.getDao().insertIdentifierType(identifierType)
+    }
+
+    fun deleteIdentifierType(){
+        database.getDao().deleteAllIdentifierType()
+    }
+
+    suspend fun getTestCodeFromApi():GetTestCodeResponse{
+        return apiRequest {
+            api.getTestCodes()
+        }
+    }
+    fun insertTestCodes(testCodes: TestCodes){
+        database.getDao().insertTestCodes(testCodes)
+    }
+    fun deleteTestCodes(){
+        database.getDao().deleteAllTestCodes()
+    }
+
+    suspend fun getWorldPriority():GetWorldPriorityListResponse{
+        return apiRequest {
+            api.getWorldPriorityList()
+        }
+    }
+    fun insertWorldPriority(worldPriority: WorldPriority){
+        database.getDao().insertWorldPriority(worldPriority)
+    }
+
+    fun deleteWorldPriority(){
+        database.getDao().deleteAllWorldPriority()
+    }
 }

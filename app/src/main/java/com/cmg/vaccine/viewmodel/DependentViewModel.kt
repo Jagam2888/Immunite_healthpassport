@@ -16,6 +16,7 @@ import com.cmg.vaccine.R
 import com.cmg.vaccine.data.Gender
 import com.cmg.vaccine.database.Countries
 import com.cmg.vaccine.database.Dependent
+import com.cmg.vaccine.database.IdentifierType
 import com.cmg.vaccine.database.User
 import com.cmg.vaccine.listener.SimpleListener
 import com.cmg.vaccine.model.request.DependentRegReq
@@ -89,8 +90,13 @@ class DependentViewModel(
     var profileImageUri = ObservableField<String>()
 
     var existingUserprivateKey = ObservableField<String>()
+    var isUserNotAlreadyTest = ObservableBoolean()
 
     var isFirstTimeSelectPlaceBirth:Boolean?=null
+
+    var _identifierTypeList:MutableLiveData<List<IdentifierType>> = MutableLiveData()
+    val identifierTypeList:LiveData<List<IdentifierType>>
+        get() = _identifierTypeList
 
     val clicksListenerPlaceBirth = object : AdapterView.OnItemSelectedListener {
         override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -130,7 +136,7 @@ class DependentViewModel(
     }
 
     init {
-
+        isUserNotAlreadyTest.set(true)
         isFirstTimeSelectPlaceBirth = true
 
         val parentUser = repositary.getUserData()
@@ -142,9 +148,6 @@ class DependentViewModel(
             if (!parentUser?.countryCode.isNullOrEmpty())
                 countryCode.value = parentUser?.countryCode?.toInt()
             principalName.value = parentUser.fullName
-
-
-
         }
         /*countryList = repositary.getAllCountriesDB()
         _countries.value = countryList*/
@@ -152,6 +155,23 @@ class DependentViewModel(
         _countries.value = countryList
 
         dobTime.value = "1200"
+
+        if (!parentUser.privateKey.isNullOrEmpty()) {
+            val dependent = repositary.getDependent(parentUser.parentSubscriberId!!)
+            if (dependent != null){
+                if (!dependent.privateKey.isNullOrEmpty()) {
+                    val testReportList = repositary.getTestReportList(dependent.privateKey!!)
+                    if (testReportList.isNotEmpty()){
+                        isUserNotAlreadyTest.set(false)
+                    }
+                }
+            }
+        }
+
+        val getAllIdentifierType = repositary.getAllIdentifierType()
+        if (!getAllIdentifierType.isNullOrEmpty()){
+            _identifierTypeList.value = getAllIdentifierType
+        }
 
     }
 
@@ -200,9 +220,10 @@ class DependentViewModel(
                                         countryList?.get(selectedItemNationalityCode.get())?.alpha3!!
                                 }
 
-                                val idTypeList =
+                                /*val idTypeList =
                                     view.context.resources.getStringArray(R.array.id_type)
-                                idType.value = idTypeList[selectedItemIdTYpe.get()]
+                                idType.value = idTypeList[selectedItemIdTYpe.get()]*/
+                                idType.value = identifierTypeList.value?.get(selectedItemIdTYpe.get())?.identifierCode
 
                                 //remove first char if zero
                                 if (!contactNumber.value.isNullOrEmpty()) {
@@ -321,6 +342,7 @@ class DependentViewModel(
 
             selectedItemNationalityCode.set(selectedCountryName(dependent?.nationalityCountry!!,countryList!!))
             selectedItemBirthPlaceCode.set(selectedCountryName(dependent?.placeOfBirth!!,countryList!!))
+            selectedItemIdTYpe.set(selectedIdType(dependent?.idType!!,identifierTypeList.value!!))
 
             dependent?.gender.run {
                 genderEnum = when(this){
@@ -364,9 +386,10 @@ class DependentViewModel(
                     countryList?.get(selectedItemNationalityCode.get())?.alpha3!!
         }
 
-        val idTypeList =
+        /*val idTypeList =
                 view.context.resources.getStringArray(R.array.id_type)
-        idType.value = idTypeList[selectedItemIdTYpe.get()]
+        idType.value = idTypeList[selectedItemIdTYpe.get()]*/
+        idType.value = identifierTypeList.value?.get(selectedItemIdTYpe.get())?.identifierCode
 
         if (isChecked.get()){
             if (!fullName.value.isNullOrEmpty() and !email.value.isNullOrEmpty() and !contactNumber.value.isNullOrEmpty()) {

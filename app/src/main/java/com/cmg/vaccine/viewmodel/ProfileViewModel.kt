@@ -13,10 +13,7 @@ import com.blongho.country_data.Country
 import com.blongho.country_data.World
 import com.cmg.vaccine.R
 import com.cmg.vaccine.data.Gender
-import com.cmg.vaccine.database.AppDatabase
-import com.cmg.vaccine.database.Countries
-import com.cmg.vaccine.database.Dependent
-import com.cmg.vaccine.database.User
+import com.cmg.vaccine.database.*
 import com.cmg.vaccine.listener.SimpleListener
 import com.cmg.vaccine.model.request.UpdateProfileReq
 import com.cmg.vaccine.model.request.UpdateProfileReqData
@@ -79,7 +76,7 @@ class ProfileViewModel(
     var nationalityViewFormat:MutableLiveData<String> = MutableLiveData()
 
     var isAllow:Boolean = true
-    var isAllowUserAlreadyTest = false
+    var isUserNotAlreadyTest = ObservableBoolean()
 
     var currentEmail:String?=null
     var currentMobile:String?=null
@@ -87,6 +84,11 @@ class ProfileViewModel(
     var userSubId:MutableLiveData<String> = MutableLiveData()
 
     var profileImageUri = ObservableField<String>()
+
+    var _identifierTypeList:MutableLiveData<List<IdentifierType>> = MutableLiveData()
+    val identifierTypeList:LiveData<List<IdentifierType>>
+        get() = _identifierTypeList
+
 
 
 
@@ -105,6 +107,25 @@ class ProfileViewModel(
        // countryList = repositary.getAllCountriesDB()
         countryList = World.getAllCountries()
         _countries.value = countryList
+
+        var user = repositary.getUserData()
+        isUserNotAlreadyTest.set(true)
+        if (user != null) {
+            if (!user.privateKey.isNullOrEmpty()) {
+                val testReportList = repositary.getTestReportList(user.privateKey!!)
+                if (testReportList.isNotEmpty()){
+                    //if ((user.fullName == firstName.value) or (user.dob == dob.value) or (user.patientIdNo == idNo.value)){
+                        isUserNotAlreadyTest.set(false)
+                    //}
+                }
+            }
+        }
+
+        val getAllIdentifierType = repositary.getAllIdentifierType()
+        if (!getAllIdentifierType.isNullOrEmpty()){
+            _identifierTypeList.value = getAllIdentifierType
+        }
+
     }
 
     fun saveProfileImage(img:String){
@@ -168,6 +189,7 @@ class ProfileViewModel(
 
             selectedItemNationalityCode.set(selectedCountryName(user.nationality,countryList!!))
             selectedItemBirthPlaceCode.set(selectedCountryName(user.placeBirth,countryList!!))
+            selectedItemIdTYpe.set(selectedIdType(user.patientIdType!!,identifierTypeList.value!!))
 
             if (!user.countryCode.isNullOrEmpty())
                 countryCode.value = user.countryCode.toInt()
@@ -256,17 +278,6 @@ class ProfileViewModel(
     fun onClick(view:View){
         listener?.onStarted()
         var user = repositary.getUserData()
-        if (user != null) {
-            if (!user.privateKey.isNullOrEmpty()) {
-                val testReportList = repositary.getTestReportList(user.privateKey!!)
-                if (testReportList.isNotEmpty()){
-                    if ((user.fullName == firstName.value) or (user.dob == dob.value) or (user.patientIdNo == idNo.value)){
-                        listener?.onFailure("Sorry You are not allowed to change your Name,DOB and MyKad")
-                        return
-                    }
-                }
-            }
-        }
 
         var placeBirth = ""
         if (!countryList.isNullOrEmpty()) {
@@ -280,9 +291,10 @@ class ProfileViewModel(
                     countryList?.get(selectedItemNationalityCode.get())?.alpha3!!
         }
 
-        val idTypeList =
+        /*val idTypeList =
                 view.context.resources.getStringArray(R.array.id_type)
-        idType.value = idTypeList[selectedItemIdTYpe.get()]
+        idType.value = idTypeList[selectedItemIdTYpe.get()]*/
+        idType.value = identifierTypeList.value?.get(selectedItemIdTYpe.get())?.identifierCode
 
         //remove first char if zero
         if (!contactNumber.value.isNullOrEmpty()) {

@@ -8,6 +8,7 @@ import android.text.TextWatcher
 import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import com.cmg.vaccine.data.setOnSingleClickListener
 import com.cmg.vaccine.databinding.ActivityLoginPinBinding
 import com.cmg.vaccine.listener.SimpleListener
 import com.cmg.vaccine.util.Passparams
@@ -70,7 +71,7 @@ class LoginPinActivity : BaseActivity(),KodeinAware,SimpleListener {
 
         binding.edtTxt.requestFocus()
 
-        binding.txtForgotpin.setOnClickListener {
+        binding.txtForgotpin.setOnSingleClickListener {
             Intent(this, OTPVerifyActivity::class.java).also {
                 it.putExtra(Passparams.NAVIGATE_FROM, Passparams.FORGOT_PIN)
                 it.putExtra(Passparams.SUBSID, userSubId)

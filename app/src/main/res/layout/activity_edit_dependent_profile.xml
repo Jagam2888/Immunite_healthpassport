@@ -161,7 +161,8 @@
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
                     android:paddingTop="10dp"
-                    android:inputType="text"/>
+                    android:inputType="text"
+                    android:focusable="@{dependentViewModel.isUserNotAlreadyTest()}"/>
 
 
                 <TextView
@@ -304,7 +305,8 @@
                     android:paddingTop="10dp"
                     android:imeOptions="actionNext"
                     android:layout_toLeftOf="@id/btn_dob_calender"
-                    android:layout_marginRight="20dp"/>
+                    android:layout_marginRight="20dp"
+                    android:focusable="@{dependentViewModel.isUserNotAlreadyTest()}"/>
                 </RelativeLayout>
 
                 <TextView
@@ -346,7 +348,8 @@
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
                     android:paddingTop="10dp"
-                    android:imeOptions="actionNext"/>
+                    android:imeOptions="actionNext"
+                    android:focusable="@{dependentViewModel.isUserNotAlreadyTest()}"/>
                 </RelativeLayout>
 
                 <TextView
@@ -601,7 +604,7 @@
                             android:textAppearance="@style/opens_regular"
                             android:background="@null"
                             android:minHeight="0dp"
-                            android:entries="@array/id_type"
+                            android:entries="@{dependentViewModel.identifierTypeList}"
                             android:layout_toLeftOf="@id/img_down_arrow_id"
                             android:layout_centerVertical="true"
                             android:selectedItemPosition="@={dependentViewModel.selectedItemIdTYpe}"/>
@@ -628,7 +631,8 @@
                         android:layout_weight="1"
                         android:background="@android:color/transparent"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="10dp" />
+                        android:layout_marginLeft="10dp"
+                        android:focusable="@{dependentViewModel.isUserNotAlreadyTest()}"/>
 
                 </LinearLayout>
 
@@ -677,7 +681,7 @@
                     android:textColor="@color/white"
                     android:background="@drawable/button_background"
                     android:layout_marginTop="30dp"
-                    android:onClick="@{(v) -> dependentViewModel.updateProfile(v)}"/>
+                    app:onSingleClick="@{(v) -> dependentViewModel.updateProfile(v)}"/>
             </LinearLayout>
         </ScrollView>
         <ProgressBar

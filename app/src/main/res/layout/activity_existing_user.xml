@@ -203,7 +203,7 @@
                     android:textColor="@color/white"
                     android:background="@drawable/button_background"
                     android:layout_marginTop="30dp"
-                    android:onClick="@{(v) -> viewmodel.onSubmit(v)}"/>
+                    app:onSingleClick="@{(v) -> viewmodel.onSubmit(v)}"/>
             </LinearLayout>
         </ScrollView>
 

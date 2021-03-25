@@ -107,6 +107,15 @@ interface MyApi {
     @Streaming
     fun downLoadDynamicUrl(@Url fileUrl:String): Call<ResponseBody>
 
+    @GET(Passparams.GET_IDENTIFIER_TYPE)
+    suspend fun getIdentifierType():Response<IdentifierTypeResponse>
+
+    @GET(Passparams.GET_TEST_CODES)
+    suspend fun getTestCodes():Response<GetTestCodeResponse>
+
+    @GET(Passparams.GET_WORLD_PRIORITY_LIST)
+    suspend fun getWorldPriorityList():Response<GetWorldPriorityListResponse>
+
 
     companion object{
         operator fun invoke(

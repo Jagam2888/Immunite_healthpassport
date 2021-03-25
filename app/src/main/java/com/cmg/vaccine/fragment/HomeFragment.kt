@@ -22,6 +22,7 @@ import com.cmg.vaccine.NotificationGroupListActivity
 import com.cmg.vaccine.R
 import com.cmg.vaccine.ViewPrivateKeyActivity
 import com.cmg.vaccine.adapter.MyViewPagerAdapter
+import com.cmg.vaccine.data.setOnSingleClickListener
 import com.cmg.vaccine.databinding.FragmentHomeBinding
 import com.cmg.vaccine.listener.SimpleListener
 import com.cmg.vaccine.model.Dashboard
@@ -68,39 +69,13 @@ class HomeFragment : Fragment(),KodeinAware,SimpleListener {
         binding.lifecycleOwner = this
         viewModel.listener = this
 
-        /*if (!viewModel.privateKey.value.isNullOrEmpty()) {
-            viewModel.loadVaccineList()
-            viewModel.loadTestReportList()
-        }else {
-            viewModel.setUser()
-        }*/
         viewModel.setUser()
-
-        //viewModel.loadData()
-        //}
-        /*if (viewModel.vaccineList.value.isNullOrEmpty()) {
-            viewModel.loadVaccineList()
-        }else if (viewModel.testReportList.value.isNullOrEmpty()){
-            viewModel.loadTestReportList()
-        }*/
-
-
-        //this function only for refersh page
-        //viewModel.setUser()
-
-
-
-        //viewModel.loadVaccineDetail()
 
         viewModel.users.observe(viewLifecycleOwner, Observer {
             viewModel.loadData()
         })
 
-
-
         viewModel.listDashboard.observe(viewLifecycleOwner, Observer { list->
-            /*listDashboard.clear()
-            listDashboard.addAll(list)*/
             listDashboard = list
             binding.sliderViewPager.also {
                 pagerAdapter = MyViewPagerAdapter(requireContext(),listDashboard!!,viewModel)
@@ -111,16 +86,21 @@ class HomeFragment : Fragment(),KodeinAware,SimpleListener {
                 }
             }
 
-            //pagerAdapter?.refreshItem(listDashboard)
 
         })
 
-        binding.notification.setOnClickListener {
+        /*binding.notification.setOnClickListener {
             if (SystemClock.elapsedRealtime() - lastClickTime<1000){
                 return@setOnClickListener
             }
             Log.d("onclick","come here")
             lastClickTime = SystemClock.elapsedRealtime()
+            Intent(context,NotificationGroupListActivity::class.java).also {
+                context?.startActivity(it)
+            }
+        }*/
+
+        binding.notification.setOnSingleClickListener{
             Intent(context,NotificationGroupListActivity::class.java).also {
                 context?.startActivity(it)
             }
@@ -211,12 +191,6 @@ class HomeFragment : Fragment(),KodeinAware,SimpleListener {
      override fun onResume() {
         super.onResume()
          Log.d("onresume","OnResume")
-         //viewModel.loadData()
-         //listDashboard.clear()
-         //listDashboard.addAll(viewModel.listDashboard.value!!)
-         //pagerAdapter?.refreshItem(viewModel.listDashboard.value!!)
-         //viewModel.setCurrentItem(0)
-        //viewModel.loadData()
     }
 
 

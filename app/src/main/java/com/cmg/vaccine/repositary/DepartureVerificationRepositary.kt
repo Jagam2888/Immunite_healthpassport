@@ -1,9 +1,6 @@
 package com.cmg.vaccine.repositary
 
-import com.cmg.vaccine.database.AirportCitiesName
-import com.cmg.vaccine.database.AppDatabase
-import com.cmg.vaccine.database.User
-import com.cmg.vaccine.database.WorldEntryRulesByCountry
+import com.cmg.vaccine.database.*
 import com.cmg.vaccine.prefernces.PreferenceProvider
 
 class DepartureVerificationRepositary(
@@ -16,10 +13,14 @@ class DepartureVerificationRepositary(
     }
 
     fun getWorldEnteryRuleByCountry(countryCode:String):List<WorldEntryRulesByCountry>{
-        return database.getDao().getWorldEntryRuleByCountry(countryCode)
+        return database.getDao().getWorldEntryRuleByCountryByCode(countryCode)
     }
 
     fun getAirportCityByCode(cityCode:String): AirportCitiesName {
         return database.getDao().getAirportCityByCode(cityCode)
+    }
+
+    fun getTestReportList(privateKey:String):List<TestReport>{
+        return database.getDao().getTestReportList(privateKey)
     }
 }

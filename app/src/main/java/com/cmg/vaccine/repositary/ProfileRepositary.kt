@@ -70,4 +70,8 @@ class ProfileRepositary(
     fun getTestReportList(privateKey: String):List<TestReport>{
         return database.getDao().getTestReportList(privateKey)
     }
+
+    fun getAllIdentifierType():List<IdentifierType>{
+        return database.getDao().getAllIdentifierType()
+    }
 }

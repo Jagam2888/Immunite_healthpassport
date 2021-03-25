@@ -15,6 +15,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.cmg.vaccine.*
 import com.cmg.vaccine.DialogFragment.BackupSuccessDialogFragment
+import com.cmg.vaccine.data.setOnSingleClickListener
 import com.cmg.vaccine.databinding.FragmentSettingsBinding
 import com.cmg.vaccine.listener.SimpleListener
 import com.cmg.vaccine.services.DriveServiceHelper
@@ -94,33 +95,33 @@ class SettingsFragment : Fragment(),KodeinAware,SimpleListener {
         dateOfBirth = viewModel.dob.get()
         Log.d("dob",dateOfBirth!!)
 
-        binding.layoutAbout.setOnClickListener {
+        binding.layoutAbout.setOnSingleClickListener {
             hideMainLayout()
             binding.about.visibility = View.VISIBLE
 
         }
 
-        binding.layoutSecurityPin.setOnClickListener {
+        binding.layoutSecurityPin.setOnSingleClickListener {
             hideMainLayout()
             binding.tested.visibility = View.VISIBLE
         }
 
-        binding.layoutHelp.setOnClickListener {
+        binding.layoutHelp.setOnSingleClickListener {
             hideMainLayout()
             binding.help.visibility = View.VISIBLE
         }
 
-        binding.layoutAdvanced.setOnClickListener {
+        binding.layoutAdvanced.setOnSingleClickListener {
             hideMainLayout()
             binding.advanced.visibility = View.VISIBLE
         }
 
-        binding.layoutSync.setOnClickListener {
+        binding.layoutSync.setOnSingleClickListener {
             hideMainLayout()
             binding.sync.visibility = View.VISIBLE
         }
 
-        binding.layoutBackup.setOnClickListener {
+        binding.layoutBackup.setOnSingleClickListener {
 
             requestSignIn()
         }
@@ -131,37 +132,37 @@ class SettingsFragment : Fragment(),KodeinAware,SimpleListener {
             }
         }*/
 
-        binding.layoutProfile.setOnClickListener {
+        binding.layoutProfile.setOnSingleClickListener {
             Intent(context, ProfileListActivity::class.java).also {
                 context?.startActivity(it)
             }
         }
 
-        binding.layoutChangeLanguage.setOnClickListener {
+        binding.layoutChangeLanguage.setOnSingleClickListener {
             Intent(context, ChangeLanguageActivity::class.java).also {
                 context?.startActivity(it)
             }
         }
 
-        binding.layoutNotification.setOnClickListener {
+        binding.layoutNotification.setOnSingleClickListener {
             hideMainLayout()
             binding.notification.visibility = View.VISIBLE
         }
 
-        binding.layoutPaymentMethod.setOnClickListener {
+        binding.layoutPaymentMethod.setOnSingleClickListener {
             hideMainLayout()
             binding.paymentMethod.visibility = View.VISIBLE
         }
 
-        binding.layoutLogout.setOnClickListener {
+        binding.layoutLogout.setOnSingleClickListener {
             showAlertForLogout()
         }
 
-        binding.imgBack.setOnClickListener {
+        binding.imgBack.setOnSingleClickListener {
             showMainLayout()
         }
 
-        layout_version_relase.setOnClickListener {
+        layout_version_relase.setOnSingleClickListener {
             showReleaseAppVersion()
 
         }
@@ -189,7 +190,7 @@ class SettingsFragment : Fragment(),KodeinAware,SimpleListener {
             }
         })
 
-        layout_change_pin.setOnClickListener {
+        layout_change_pin.setOnSingleClickListener {
             Intent(context,LoginPinActivity::class.java).also {
                 it.putExtra(Passparams.ISCREATE,"update")
                 //it.putExtra(Passparams.ISSETTINGS,true)
@@ -198,17 +199,17 @@ class SettingsFragment : Fragment(),KodeinAware,SimpleListener {
         }
 
 
-        btn_sync.setOnClickListener {
+        btn_sync.setOnSingleClickListener {
             viewModel.syncRecord()
         }
 
-        layout_terms.setOnClickListener {
+        layout_terms.setOnSingleClickListener {
             Intent(context,TermsOfUseActivity::class.java).also {
                 context?.startActivity(it)
             }
         }
 
-        layout_google_drive.setOnClickListener {
+        layout_google_drive.setOnSingleClickListener {
             if (isGoogleSiginSuccess) {
                 sqliteToExcel()
             }else{
@@ -271,8 +272,8 @@ class SettingsFragment : Fragment(),KodeinAware,SimpleListener {
             val packageInfo = context?.packageManager?.getPackageInfo(context?.packageName!!, 0)
             val versionName = packageInfo?.versionName
             //val version = "Version : $versionName \nDevelopment Server : ${Passparams.URL}"
-            val version = "Version : $versionName \nDevelopment Server"
-            //val version = "Version : $versionName \nProduction Server"
+            //val version = "Version : $versionName \nDevelopment Server"
+            val version = "Version : $versionName \nProduction Server"
             val alertDialogBuilder = AlertDialog.Builder(requireContext())
             alertDialogBuilder.setMessage(version).setTitle(R.string.app_name)
                     .setNegativeButton("CANCEL"

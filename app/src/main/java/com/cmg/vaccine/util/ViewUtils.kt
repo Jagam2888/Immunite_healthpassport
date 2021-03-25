@@ -28,6 +28,7 @@ import androidx.core.content.FileProvider
 import com.blongho.country_data.Country
 import com.cmg.vaccine.R
 import com.cmg.vaccine.database.Countries
+import com.cmg.vaccine.database.IdentifierType
 import com.cmg.vaccine.database.WorldEntryCountries
 import com.cmg.vaccine.model.response.WorldEntriesCountryListData
 import com.google.android.gms.common.ConnectionResult
@@ -45,6 +46,7 @@ import java.text.DecimalFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.concurrent.atomic.AtomicBoolean
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 import javax.crypto.*
@@ -274,12 +276,23 @@ fun selectedRelationShipPosition(state: String, relationShipList: List<String>):
 fun selectedCountryName(country: String, countries: List<Country>):Int{
     var pos:Int = 0
     for (i in countries.indices!!){
-        if(country.equals(countries.get(i).alpha3, false)){
+        if(country.equals(countries[i].alpha3, false)){
             return i
         }
     }
     return pos
 }
+
+fun selectedIdType(idType: String, idTypeList: List<IdentifierType>):Int{
+    var pos:Int = 0
+    for (i in idTypeList.indices!!){
+        if(idType.equals(idTypeList[i].identifierCode, false)){
+            return i
+        }
+    }
+    return pos
+}
+
 fun getCurrentCountry(country: String, countries: List<Country>):Int{
     var pos:Int = 0
     for (i in countries.indices!!){
@@ -289,6 +302,8 @@ fun getCurrentCountry(country: String, countries: List<Country>):Int{
     }
     return pos
 }
+
+
 
 fun getCountryNameUsingCode(code: String, countries: List<Country>):String?{
 
@@ -348,6 +363,17 @@ fun changeDateFormatISO8601(dateString: String):String?{
     }
     return ""
 }
+fun changeDateFormatNewISO8601(dateString: String):String?{
+    val currentDateFormat = SimpleDateFormat("dd/MM/yyyy HH:mm:ss")
+    val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
+    try {
+        val date = currentDateFormat.parse(dateString)
+        return simpleDateFormat.format(date)
+    }catch (e: ParseException){
+        e.printStackTrace()
+    }
+    return ""
+}
 fun changeDateFormatNormal(dateString: String):String?{
     val resultFormat = SimpleDateFormat("dd/MM/yyyy HH:mm")
     val isoFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
@@ -360,7 +386,7 @@ fun changeDateFormatNormal(dateString: String):String?{
     return ""
 }
 fun changeDateFormatBC(dateString: String):String?{
-    val resultFormat = SimpleDateFormat("dd/MM/yyyy HH:mm:ss")
+    val resultFormat = SimpleDateFormat("dd/MM/yyyy HH:mm")
     //val isoFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
     val isoFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
     try {
@@ -383,7 +409,7 @@ fun changeDateFormatForPrivateKeyDecrypt(dateString:String):String?{
     return ""
 }
 fun changeDateToTimeStamp(dateString: String):Long?{
-    val currentDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
+    val currentDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
     val date = currentDateFormat.parse(dateString) as Date
     return date.time
 }
@@ -614,3 +640,27 @@ fun encryptToString(secretKey: String, jsonValues: String): String? {
     }
     return null
 }
+
+/*fun View.setOnSingleClickListener(clickListener: View.OnClickListener?) {
+    clickListener?.also {
+        setOnClickListener(OnSingleClickListener(it))
+    } ?: setOnClickListener(null)
+}
+
+class OnSingleClickListener(
+        private val clickListener: View.OnClickListener,
+        private val intervalMs: Long = 1000L
+) : View.OnClickListener {
+    private var canClick = AtomicBoolean(true)
+
+    override fun onClick(v: View?) {
+        if (canClick.getAndSet(false)) {
+            v?.run {
+                postDelayed({
+                    canClick.set(true)
+                }, intervalMs)
+                clickListener.onClick(v)
+            }
+        }
+    }
+}*/

@@ -5,6 +5,7 @@ import android.graphics.Paint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
+import com.cmg.vaccine.data.setOnSingleClickListener
 import com.cmg.vaccine.databinding.ActivitySuccessAccountRestoredBinding
 import com.cmg.vaccine.util.Passparams
 
@@ -21,7 +22,7 @@ class SuccessAccountRestoredActivity : BaseActivity() {
 
     private fun initViews() {
 
-        binding.btnLoginPin.setOnClickListener {
+        binding.btnLoginPin.setOnSingleClickListener{
             Intent(this,LoginPinActivity::class.java).also {
                 it.putExtra(Passparams.ISCREATE,"create")
                 it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -30,11 +31,12 @@ class SuccessAccountRestoredActivity : BaseActivity() {
             }
         }
 
-        binding.txtSkip.setOnClickListener {
+        binding.txtSkip.setOnSingleClickListener{
             Intent(this,MainActivity::class.java).also {
                 it.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                 startActivity(it)
             }
         }
+
     }
 }

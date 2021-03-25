@@ -13,6 +13,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import com.cmg.vaccine.data.setOnSingleClickListener
 import com.cmg.vaccine.databinding.ActivityImmunizationHistoryBinding
 import com.cmg.vaccine.listener.SimpleListener
 import com.cmg.vaccine.util.*
@@ -50,7 +51,7 @@ class ImmunizationHistoryActivity : BaseActivity(),KodeinAware,SimpleListener {
 
         viewModel.userSubId.value = intent.extras?.getString(Passparams.SUBSID,"")
 
-        binding.btnNfc.setOnClickListener {
+        binding.btnNfc.setOnSingleClickListener() {
             if (checkPermission()){
                 openPDFFile()
             }else{
@@ -95,23 +96,13 @@ class ImmunizationHistoryActivity : BaseActivity(),KodeinAware,SimpleListener {
             }
         })
 
-        binding.btnDobCalender.setOnClickListener {
+        binding.btnDobCalender.setOnSingleClickListener {
             hideKeyBoard()
-            if (SystemClock.elapsedRealtime() - lastClickTimeDOB<1000){
-                return@setOnClickListener
-            }
-            Log.d("onclick", "come here")
-            lastClickTimeDOB = SystemClock.elapsedRealtime()
             showDatePickerDialog(binding.edtDob)
         }
 
-        binding.btnDobTimeCalender.setOnClickListener {
+        binding.btnDobTimeCalender.setOnSingleClickListener() {
             hideKeyBoard()
-            if (SystemClock.elapsedRealtime() - lastClickTimeDOBTime<1000){
-                return@setOnClickListener
-            }
-            Log.d("onclickdob", "come here")
-            lastClickTimeDOBTime = SystemClock.elapsedRealtime()
             showTimepickerDialog(binding.edtDobTime, "1200")
         }
 

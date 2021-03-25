@@ -14,6 +14,7 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.cmg.vaccine.data.setOnSingleClickListener
 import com.cmg.vaccine.databinding.ActivityOTPVerifyBinding
 import com.cmg.vaccine.listener.SimpleListener
 import com.cmg.vaccine.receiver.OTPReceiver
@@ -64,7 +65,7 @@ class OTPVerifyActivity : BaseActivity(),KodeinAware,SimpleListener{
 
         startTimer()
 
-        binding.txtResendOtp.setOnClickListener {
+        binding.txtResendOtp.setOnSingleClickListener {
             viewModel.callOTPTac()
             startTimer()
             binding.txtResendOtp.visibility = View.GONE

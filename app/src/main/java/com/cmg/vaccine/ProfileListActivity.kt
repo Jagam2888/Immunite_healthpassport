@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cmg.vaccine.DialogFragment.DependentDialogFragment
 import com.cmg.vaccine.adapter.ChildListAdapter
+import com.cmg.vaccine.data.setOnSingleClickListener
 import com.cmg.vaccine.databinding.FragmentProfileBinding
 import com.cmg.vaccine.listener.SimpleListener
 import com.cmg.vaccine.util.Passparams
@@ -57,7 +58,13 @@ class ProfileListActivity:BaseActivity(),KodeinAware {
             }
         }
 
-        binding.btnAddDependent.setOnClickListener {
+        binding.btnAddDependent.setOnSingleClickListener{
+            Intent(this,AddDependentActivity::class.java).also {
+                startActivity(it)
+            }
+        }
+
+        /*binding.btnAddDependent.setOnClickListener {
 
             if (SystemClock.elapsedRealtime() - lastClickTime<1000){
                 return@setOnClickListener
@@ -69,7 +76,7 @@ class ProfileListActivity:BaseActivity(),KodeinAware {
             Intent(this,AddDependentActivity::class.java).also {
                 startActivity(it)
             }
-        }
+        }*/
 
         binding.recyclerViewChild.addOnItemTouchListener(RecyclerViewTouchListener(this,binding.recyclerViewChild,object :
             RecyclerViewTouchListener.ClickListener{

@@ -133,8 +133,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical"
-                        android:paddingRight="20dp"
-                        android:paddingLeft="20dp"
+                        android:paddingRight="10dp"
+                        android:paddingLeft="10dp"
                         android:paddingBottom="20dp"
                         android:paddingTop="20dp">
 
@@ -188,7 +188,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="@{viewModel.departureTime}"
-                                    android:textSize="18sp"
+                                    android:textSize="16sp"
                                     android:textColor="@color/black"
                                     android:textAppearance="@style/opens_bold" />
 
@@ -196,7 +196,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="@{viewModel.departureDate}"
-                                    android:textSize="18sp"
+                                    android:textSize="16sp"
                                     android:textColor="#545454"
                                     android:paddingLeft="10dp"
                                     android:paddingRight="10dp"
@@ -227,7 +227,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="@{viewModel.arrivalTime}"
-                                    android:textSize="18sp"
+                                    android:textSize="16sp"
                                     android:textColor="@color/black"
                                     android:textAppearance="@style/opens_bold"
                                     android:layout_gravity="right" />
@@ -236,7 +236,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="@{viewModel.arrivalDate}"
-                                    android:textSize="18sp"
+                                    android:textSize="16sp"
                                     android:textColor="#545454"
                                     android:paddingLeft="10dp"
                                     android:paddingRight="10dp"

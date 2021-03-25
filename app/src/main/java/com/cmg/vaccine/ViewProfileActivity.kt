@@ -12,6 +12,7 @@ import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import com.cmg.vaccine.data.setOnSingleClickListener
 import com.cmg.vaccine.databinding.ActivityViewProfileBinding
 import com.cmg.vaccine.util.Passparams
 import com.cmg.vaccine.util.toast
@@ -42,11 +43,7 @@ class ViewProfileActivity : BaseActivity(),KodeinAware {
 
 
 
-        binding.txtEditProfile.setOnClickListener {
-            if (SystemClock.elapsedRealtime() - lastClickEdit<1000){
-                return@setOnClickListener
-            }
-            lastClickEdit = SystemClock.elapsedRealtime()
+        binding.txtEditProfile.setOnSingleClickListener {
 
             if (user == Passparams.PARENT){
                 Intent(this,EditProfileActivity::class.java).also {
@@ -63,11 +60,7 @@ class ViewProfileActivity : BaseActivity(),KodeinAware {
         binding.imgBack.setOnClickListener {
             finish()
         }
-        binding.txtSubmitPast.setOnClickListener {
-            if (SystemClock.elapsedRealtime() - lastClickHistory<1000){
-                return@setOnClickListener
-            }
-            lastClickHistory = SystemClock.elapsedRealtime()
+        binding.txtSubmitPast.setOnSingleClickListener {
             Intent(this,ImmunizationHistoryActivity::class.java).also {
                 if (user.equals(Passparams.PARENT)){
                     it.putExtra(Passparams.SUBSID,viewModel.userSubId.value)
@@ -78,7 +71,7 @@ class ViewProfileActivity : BaseActivity(),KodeinAware {
             }
         }
 
-        binding.btnRemoveDependent.setOnClickListener {
+        binding.btnRemoveDependent.setOnSingleClickListener {
             showAlertForRemoveDependent()
         }
     }

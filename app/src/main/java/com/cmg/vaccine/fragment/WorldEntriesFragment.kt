@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.cmg.vaccine.AddWorldEntryActivity
 import com.cmg.vaccine.R
 import com.cmg.vaccine.adapter.WorldEntriesAdapter
+import com.cmg.vaccine.data.setOnSingleClickListener
 import com.cmg.vaccine.database.AddWorldEntries
 import com.cmg.vaccine.databinding.FragmentWorldEntriesBinding
 import com.cmg.vaccine.viewmodel.WorldEntryViewModel
@@ -55,6 +56,7 @@ class WorldEntriesFragment : Fragment(),KodeinAware {
 
 
         viewModel.getVaccineAndTestReportList()
+        viewModel.loadAPIs()
         var lastClickTime:Long = 0
 
 
@@ -102,12 +104,8 @@ class WorldEntriesFragment : Fragment(),KodeinAware {
 
         worldEntriesAdapter?.notifyDataSetChanged()
 
-        binding.imgAdd.setOnClickListener {
-            if (SystemClock.elapsedRealtime() - lastClickTime<1000){
-                return@setOnClickListener
-            }
-            Log.d("onclick","come here")
-            lastClickTime = SystemClock.elapsedRealtime()
+        binding.imgAdd.setOnSingleClickListener {
+
             Intent(context,AddWorldEntryActivity::class.java).also {
                 context?.startActivity(it)
             }

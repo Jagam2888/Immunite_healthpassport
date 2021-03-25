@@ -10,6 +10,7 @@ import com.blongho.country_data.Country
 import com.blongho.country_data.World
 import com.cmg.vaccine.R
 import com.cmg.vaccine.database.Countries
+import com.cmg.vaccine.database.IdentifierType
 import com.cmg.vaccine.database.User
 import com.cmg.vaccine.listener.SimpleListener
 import com.cmg.vaccine.model.request.SignUpReq
@@ -19,6 +20,7 @@ import com.cmg.vaccine.util.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import io.paperdb.Paper
+import java.lang.Exception
 import java.lang.reflect.Type
 import java.net.SocketTimeoutException
 
@@ -50,11 +52,50 @@ class TellUsMoreViewModel(
 
     var userSubId:MutableLiveData<String> = MutableLiveData()
 
+    var _identifierTypeList:MutableLiveData<List<IdentifierType>> = MutableLiveData()
+    val identifierTypeList:LiveData<List<IdentifierType>>
+    get() = _identifierTypeList
+
     init {
         //val countries = repositary.getAllCountriesDB()
         val countries = World.getAllCountries()
         if (!countries.isNullOrEmpty()){
             _countries.value = countries
+        }
+
+        val getAllIdentifierType = repositary.getAllIdentifierType()
+        if (getAllIdentifierType.isNullOrEmpty()){
+            getIdentifierType()
+        }else{
+            _identifierTypeList.value = getAllIdentifierType
+        }
+
+    }
+
+    private fun getIdentifierType(){
+        Couritnes.main {
+            try {
+                val response = repositary.getIdentifierTypeFromAPI()
+                if (!response.data.isNullOrEmpty()){
+                    response.data.forEach {
+                        val identifierType = IdentifierType(
+                            it.identifierCode,
+                            it.identifierDisplay,
+                            it.identifierSeqno,
+                            it.identifierStatus
+                        )
+                        repositary.insertIdentifierType(identifierType)
+                    }
+                    val getAllIdentifierType = repositary.getAllIdentifierType()
+                    _identifierTypeList.value = getAllIdentifierType
+                }
+            }catch (e:APIException){
+                listener?.onFailure(e.message!!)
+            }catch (e:NoInternetException){
+                listener?.onFailure(e.message!!)
+            }catch (e: Exception){
+                listener?.onFailure(e.message!!)
+            }
         }
     }
 
@@ -81,8 +122,9 @@ class TellUsMoreViewModel(
                     nationality = countries.value?.get(selectedItemNationalityCode.get())?.alpha3!!
                 }
 
-                val idTypeList = view.context.resources.getStringArray(R.array.id_type)
-                idType.value = idTypeList[selectedItemIdTYpe.get()]
+                /*val idTypeList = view.context.resources.getStringArray(R.array.id_type)
+                idType.value = idTypeList[selectedItemIdTYpe.get()]*/
+                idType.value = identifierTypeList.value?.get(selectedItemIdTYpe.get())?.identifierCode
 
                 userData.passportNumber = passportNo.value?.trim()
                 userData.passportExpiryDate = passportExpDate.value

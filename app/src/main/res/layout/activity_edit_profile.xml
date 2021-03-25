@@ -131,7 +131,8 @@
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
                     android:paddingTop="10dp"
-                    android:inputType="text"/>
+                    android:inputType="text"
+                    android:focusable="@{profileviewmodel.isUserNotAlreadyTest()}"/>
 
 
                 <TextView
@@ -273,7 +274,8 @@
                         android:paddingTop="10dp"
                         android:imeOptions="actionNext"
                         android:layout_toLeftOf="@id/btn_dob_calender"
-                        android:layout_marginRight="20dp"/>
+                        android:layout_marginRight="20dp"
+                        android:focusable="@{profileviewmodel.isUserNotAlreadyTest()}"/>
 
                 </RelativeLayout>
 
@@ -318,7 +320,8 @@
                     android:paddingTop="10dp"
                     android:imeOptions="actionNext"
                     android:layout_toLeftOf="@id/btn_dob_time_calender"
-                    android:layout_marginRight="20dp"/>
+                    android:layout_marginRight="20dp"
+                    android:focusable="@{profileviewmodel.isUserNotAlreadyTest()}"/>
                 </RelativeLayout>
 
                 <TextView
@@ -579,7 +582,7 @@
                             android:textSize="14sp"
                             android:background="@null"
                             android:minHeight="0dp"
-                            android:entries="@array/id_type"
+                            android:entries="@{profileviewmodel.identifierTypeList}"
                             android:layout_toLeftOf="@id/img_down_arrow_id"
                             android:layout_centerVertical="true"
                             android:selectedItemPosition="@={profileviewmodel.selectedItemIdTYpe}"/>
@@ -606,7 +609,8 @@
                         android:layout_weight="1"
                         android:background="@android:color/transparent"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="10dp" />
+                        android:layout_marginLeft="10dp"
+                        android:focusable="@{profileviewmodel.isUserNotAlreadyTest()}"/>
 
                 </LinearLayout>
 
@@ -643,7 +647,7 @@
                     android:textColor="@color/white"
                     android:background="@drawable/button_background"
                     android:layout_marginTop="30dp"
-                    android:onClick="@{(v) -> profileviewmodel.onClick(v)}"/>
+                    app:onSingleClick="@{(v) -> profileviewmodel.onClick(v)}"/>
             </LinearLayout>
         </ScrollView>
 

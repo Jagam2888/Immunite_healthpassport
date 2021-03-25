@@ -24,6 +24,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cmg.vaccine.adapter.SwitchProfileAdapter
+import com.cmg.vaccine.data.setOnSingleClickListener
 import com.cmg.vaccine.databinding.ActivityMainBinding
 import com.cmg.vaccine.fragment.*
 import com.cmg.vaccine.util.Passparams
@@ -121,7 +122,15 @@ class MainActivity : BaseActivity(),KodeinAware {
             }
         }
 
-        binding.qrFab.setOnClickListener {
+        /*binding.qrFab.setOnClickListener {
+            Paper.book().write(Passparams.QR_CODE_VALUE, "")
+            Intent(this,ScanQRActivity::class.java).also {
+                it.putExtra(Passparams.NAVIGATE_TO,Passparams.DEPARTURE_VERIFICATION)
+                startActivity(it)
+            }
+        }*/
+
+        binding.qrFab.setOnSingleClickListener {
             Paper.book().write(Passparams.QR_CODE_VALUE, "")
             Intent(this,ScanQRActivity::class.java).also {
                 it.putExtra(Passparams.NAVIGATE_TO,Passparams.DEPARTURE_VERIFICATION)

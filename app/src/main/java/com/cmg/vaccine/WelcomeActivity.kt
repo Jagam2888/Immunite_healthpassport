@@ -3,9 +3,11 @@ package com.cmg.vaccine
 import android.content.Intent
 import android.os.Bundle
 import android.os.SystemClock
+import android.view.View
 import androidx.databinding.DataBindingUtil
 import com.cmg.vaccine.databinding.ActivityWelcomeBinding
 import com.cmg.vaccine.DialogFragment.WelcomeDialogFragment
+import com.cmg.vaccine.data.setOnSingleClickListener
 import com.cmg.vaccine.util.checkGoogleServices
 
 class WelcomeActivity : BaseActivity() {
@@ -19,7 +21,19 @@ class WelcomeActivity : BaseActivity() {
 
         WelcomeDialogFragment().show(supportFragmentManager,"Welcome")
 
-        binding.btnNewUser.setOnClickListener {
+        binding.btnNewUser.setOnSingleClickListener {
+            Intent(this,SignUpActivity::class.java).also {
+                startActivity(it)
+            }
+        }
+
+        binding.btnExistingUser.setOnSingleClickListener {
+            Intent(this,ExistingUserActivity::class.java).also {
+                startActivity(it)
+            }
+        }
+
+        /*binding.btnNewUser.setOnClickListener {
             if (SystemClock.elapsedRealtime() - lastClickSignup<1000){
                 return@setOnClickListener
             }
@@ -37,7 +51,7 @@ class WelcomeActivity : BaseActivity() {
             Intent(this,ExistingUserActivity::class.java).also {
                 startActivity(it)
             }
-        }
+        }*/
 
 
 

@@ -17,9 +17,11 @@ import com.cmg.vaccine.model.response.*
 import com.cmg.vaccine.repositary.HomeRepositary
 import com.cmg.vaccine.util.*
 import immuniteeEncryption.EncryptionUtils
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.lang.Exception
 import java.net.SocketTimeoutException
 
 class HomeViewModel(
@@ -116,41 +118,199 @@ class HomeViewModel(
     }
 
 
-    fun loadVaccineList(){
-        var vaccineList = repositary.getVaccineList()
+    fun getVaccineTestRef(privateKey:String){
 
-        /*if (vaccineList.isNullOrEmpty()) {
-            listener?.onStarted()
+        if (getTestReportList(privateKey).isEmpty()) {
             Couritnes.main {
                 try {
+                    val response = repositary.getVaccineTestRef(privateKey)
+                    if (response != null) {
+                        val jsonBody = JSONObject(response.string())
+                        val jsonBodayDataObject = jsonBody.getJSONObject("data")
+                        val jsonBodyData = jsonBodayDataObject.getJSONArray("data")
+                        if (jsonBodyData.length() > 0) {
+                            for (i in 0 until jsonBodyData.length()) {
+                                var sampleCollectedDate = ""
+                                var sampleCollectedTime = "00:00:00"
+                                var testCode = ""
+                                var qualificationIdentifier = ""
+                                var qualificationIssuerName = ""
+                                var phone = ""
+                                var workAddress = ""
+                                var performerName = ""
+                                var type = ""
+                                var testBy = ""
+                                var takenBy = ""
+                                var displayName = ""
+                                var specimenCode = ""
+                                var specimenName = ""
+                                var dateSampleCollected = ""
+                                var dateSampleReceived = ""
+                                var issueDate = ""
+                                var statusFinalized = ""
+                                var testCodeName = ""
+                                var observationCode = ""
+                                var observationResult = ""
+                                var recordId = ""
 
-                    val response = repositary.getVaccineListNew(repositary.getPrivateKey()!!)
-                    //val response = repositary.getVaccineListNew("1C5C2D93ECF5DCB7ECD20531145D17F46CF3095F50A0AE5E7AC37C21C07E73AE")
-                    if (response.data.statusCode == 1) {
-                        if (!response.data.data.isNullOrEmpty()) {
-                            response.data.data.forEach { vaccineData ->
-                                val vaccine = Vaccine(
-                                        vaccineData.GITN,
-                                        vaccineData.NFCTag,
-                                        vaccineData.brandName,
-                                        vaccineData.facilityname,
-                                        vaccineData.gsicodeSerialCode,
-                                        vaccineData.itemBatch,
-                                        vaccineData.malNo,
-                                        vaccineData.manufacturerName,
-                                        vaccineData.manufacturerNo,
-                                        vaccineData.recordId,
-                                        vaccineData.status,
-                                        vaccineData.uuidTagNo,
-                                        vaccineData.vaccinetype
-                                )
-                                repositary.insertVaccine(vaccine)
+                                val jsonArrayBody = jsonBodyData.getJSONObject(i)
+                                if ((jsonArrayBody.has("specimen")) and (jsonArrayBody.has("observation"))) {
+                                    if (jsonArrayBody.has("specimen")) {
+                                        val jsonSpecimen = jsonArrayBody.getJSONObject("specimen")
+                                        val jsonspecimenType = jsonSpecimen.getJSONObject("type")
+                                        val jsonSpecimenCoding = jsonspecimenType.getJSONArray("coding")
+
+                                        val codeArray = jsonSpecimenCoding.getJSONObject(0)
+                                        specimenCode = codeArray.getString("code")
+                                        specimenName = codeArray.getString("display")
+                                        dateSampleCollected = jsonSpecimen.getString("collectedDateTime")
+
+                                        val jsonspecimenMethod = jsonSpecimen.getJSONObject("method")
+                                        val jsonSpecimenMethodCoding = jsonspecimenMethod.getJSONArray("coding")
+
+                                        val jsonSpecimenMethodCodingArray = jsonSpecimenMethodCoding.getJSONObject(0)
+                                        displayName = jsonSpecimenMethodCodingArray.getString("display")
+
+                                        if (!dateSampleCollected.isNullOrEmpty()) {
+                                            val isoFormat = changeDateFormatNormal(dateSampleCollected)
+                                            var dobFormatArray = isoFormat?.split(" ")
+                                            if (dobFormatArray?.size!! > 1) {
+                                                sampleCollectedDate = dobFormatArray?.get(0).toString()
+                                                sampleCollectedTime = dobFormatArray?.get(1).toString()
+                                            }
+                                        }
+
+                                        val jsonSpecimenCollection = jsonSpecimen.getJSONObject("collection")
+                                        val jsonSpecimenCollectionCollector = jsonSpecimenCollection.getJSONObject("collector")
+
+                                        if (jsonSpecimenCollectionCollector.has("name")) {
+                                            takenBy = jsonSpecimenCollectionCollector.getString("name")
+                                        }
+
+
+                                    }
+
+                                    if (jsonArrayBody.has("observation")) {
+                                        val jsonObservation = jsonArrayBody.getJSONObject("observation")
+                                        statusFinalized = jsonObservation.getString("status")
+                                        val jsonPerformer = jsonObservation.getJSONObject("performer")
+
+                                        val jsontestCodeMethod = jsonObservation.getJSONObject("code")
+                                        val jsontestCodeMethodCoding = jsontestCodeMethod.getJSONArray("coding")
+                                        if (jsontestCodeMethodCoding.length() > 1) {
+                                            val jsontestCodeMethodCodeArray =
+                                                    jsontestCodeMethodCoding.getJSONObject(1)
+                                            testCodeName =
+                                                    jsontestCodeMethodCodeArray.getString("display")
+
+                                            if (jsontestCodeMethodCodeArray.has("code")) {
+                                                testCode = jsontestCodeMethodCodeArray.getString("code")
+                                            }
+                                        }
+                                        val jsonObservation_interpretation = jsonObservation.getJSONArray("interpretation")
+                                        val jsonObservation_interpretationArray = jsonObservation_interpretation.getJSONObject(0)
+                                        val jsonObservation_interpretation_valueCodeableConcept = jsonObservation_interpretationArray.getJSONObject("valueCodeableConcept")
+                                        val jsonObservation_interpretation_valueCodeableConcept_coding = jsonObservation_interpretation_valueCodeableConcept.getJSONArray("coding")
+                                        val jsonObservation_interpretation_valueCodeableConcept_codingArray = jsonObservation_interpretation_valueCodeableConcept_coding.getJSONObject(0)
+                                        observationCode = jsonObservation_interpretation_valueCodeableConcept_codingArray.getString("code")
+                                        observationResult = jsonObservation_interpretation_valueCodeableConcept_codingArray.getString("display")
+
+                                        val jsonPerformerName = jsonPerformer.getJSONArray("name")
+                                        val jsonPerformerNameArray = jsonPerformerName.getJSONObject(0)
+
+                                        if (jsonPerformerNameArray.has("text")) {
+                                            performerName = jsonPerformerNameArray.getString("text")
+                                        }
+
+                                        val jsonQualification = jsonPerformer.getJSONArray("qualification")
+                                        if (jsonQualification.length() > 0) {
+                                            val jsonQualificationArray = jsonQualification.getJSONObject(0)
+                                            if (jsonQualificationArray.has("identifier")) {
+                                                qualificationIdentifier = jsonQualificationArray.getString("identifier")
+                                            }
+                                            if (jsonQualificationArray.has("issuer")) {
+                                                qualificationIssuerName = jsonQualificationArray.getString("issuer")
+                                            }
+                                        }
+
+                                        val jsonOrganization = jsonPerformer.getJSONObject("organization")
+                                        val jsonOrganizationContact = jsonOrganization.getJSONObject("contact")
+
+                                        if (jsonOrganizationContact.has("telecom")) {
+
+                                            val jsonTelecom = jsonOrganizationContact.getJSONArray("telecom")
+                                            if (jsonTelecom.length() > 0) {
+                                                val jsonTelecomArray = jsonTelecom.getJSONObject(0)
+                                                if (jsonTelecomArray.has("value")) {
+                                                    phone = jsonTelecomArray.getString("value")
+                                                }
+
+                                            }
+                                        }
+
+                                        if (jsonOrganizationContact.has("address")) {
+
+                                            val jsonAddress = jsonOrganizationContact.getJSONObject("address")
+                                            if (jsonAddress.has("text")) {
+                                                workAddress = jsonAddress.getString("text")
+                                            }
+                                        }
+
+                                        if (jsonOrganization.has("type")) {
+                                            type = jsonOrganization.getString("type")
+                                        }
+
+                                        if (jsonOrganization.has("name")) {
+                                            testBy = jsonOrganization.getString("name")
+                                        }
+
+                                        if (jsonObservation.has("issued")) {
+                                            if (!jsonObservation.getString("issued").isNullOrEmpty() and !jsonObservation.getString("issued").equals("null")) {
+                                                val isoFormat = changeDateFormatNormal(jsonObservation.getString("issued"))
+                                                var formatArray = isoFormat?.split(" ")
+                                                dateSampleReceived = formatArray?.get(0).toString()
+                                                issueDate = formatArray?.get(0).toString()
+                                            }
+                                        }
+                                        if (jsonObservation.has("basedOn")) {
+                                            val jsonObservationBasedOn = jsonObservation.getJSONObject("basedOn")
+                                            recordId = jsonObservationBasedOn.getString("value")
+                                        }
+                                    }
+
+                                    val testReport = TestReport(
+                                            recordId,
+                                            privateKey,
+                                            displayName,
+                                            dateSampleReceived,
+                                            specimenCode,
+                                            specimenName,
+                                            sampleCollectedDate,
+                                            sampleCollectedTime,
+                                            testCode,
+                                            testCodeName,
+                                            observationCode,
+                                            observationResult,
+                                            issueDate,
+                                            statusFinalized,
+                                            performerName,
+                                            qualificationIdentifier,
+                                            qualificationIssuerName,
+                                            type,
+                                            phone,
+                                            workAddress,
+                                            testBy,
+                                            takenBy,
+                                            ""
+                                    )
+
+                                    repositary.insertTestReport(testReport)
+                                }
                             }
+                            //listener?.onSuccess(jsonBodayDataObject.getString("reason"))
+                        } else {
+                            //listener?.onFailure(jsonBodayDataObject.getString("reason"))
                         }
-                        vaccineList = repositary.getVaccineList()
-                        _vaccineList.value = vaccineList
-                    }else{
-                        listener?.onFailure(response.data.message)
                     }
                 } catch (e: APIException) {
                     listener?.onFailure(e.message!!)
@@ -158,69 +318,11 @@ class HomeViewModel(
                     listener?.onFailure(e.message!!)
                 } catch (e: SocketTimeoutException) {
                     listener?.onFailure(e.message!!)
-                }
-            }
-        }else{*/
-            _vaccineList.value = vaccineList
-        //}
-    }
-
-    fun loadTestReportList(privateKey:String){
-        var testReportList = repositary.getTestReportList(privateKey)
-        /*if (testReportList.isNullOrEmpty()) {
-            Couritnes.main {
-                try {
-                    val response = repositary.getTestReportList(repositary.getPrivateKey()!!)
-                    //val response = repositary.getTestReportList("1C5C2D93ECF5DCB7ECD20531145D17F46CF3095F50A0AE5E7AC37C21C07E73AE")
-                    if (response.data.statusCode == 1) {
-                        if (!response.data.data.isNullOrEmpty()) {
-                            response.data.data.forEach { report ->
-                                val testReport = TestReport(
-                                        report.codeDisplay,
-                                        report.codeSystem,
-                                        report.collectedDateTime,
-                                        report.conceptCode,
-                                        report.conceptName,
-                                        report.contactAddressText,
-                                        report.contactAddressType,
-                                        report.contactAddressUse,
-                                        report.contactTelecom,
-                                        report.contactTelecomValue,
-                                        report.effectiveDateTime,
-                                        report.name,
-                                        report.qualificationIssuerName,
-                                        report.qualitificationIdentifier,
-                                        report.recordId,
-                                        report.status,
-                                        report.type
-                                )
-                                repositary.insertTestReport(testReport)
-                            }
-
-                        }
-                        testReportList = repositary.getTestReportList()
-                        _testReportList.value = testReportList
-                        setUser()
-                        listener?.onSuccess("")
-                    }else{
-                        listener?.onFailure(response.data.message)
-                    }
-
-
-                } catch (e: APIException) {
-                    listener?.onFailure(e.message!!)
-                } catch (e: NoInternetException) {
-                    listener?.onFailure(e.message!!)
-                } catch (e: SocketTimeoutException) {
+                } catch (e: Exception) {
                     listener?.onFailure(e.message!!)
                 }
             }
-        }else{*/
-            setUser()
-            listener?.onSuccess("success")
-            _testReportList.value = testReportList
-        //}
-
+        }
     }
 
     private fun getTestReportList(privateKey: String):List<TestReport>{

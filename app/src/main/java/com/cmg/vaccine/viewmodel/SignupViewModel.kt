@@ -13,11 +13,13 @@ import com.blongho.country_data.Country
 import com.blongho.country_data.World
 import com.cmg.vaccine.data.Gender
 import com.cmg.vaccine.database.Countries
+import com.cmg.vaccine.database.IdentifierType
 import com.cmg.vaccine.database.User
 import com.cmg.vaccine.listener.SimpleListener
 import com.cmg.vaccine.repositary.SignUpRepositary
 import com.cmg.vaccine.util.*
 import com.hbb20.CountryCodePicker
+import java.lang.Exception
 import java.net.SocketTimeoutException
 import java.time.YearMonth
 import java.util.*
@@ -182,6 +184,34 @@ class SignupViewModel(
         }*/
 
         dobTime.value = "1200"
+
+        getIdentifierType()
+    }
+
+    private fun getIdentifierType(){
+        Couritnes.main {
+            try {
+                val response = signUpRepositary.getIdentifierTypeFromAPI()
+                if (!response.data.isNullOrEmpty()){
+                    response.data.forEach {
+                        val identifierType = IdentifierType(
+                            it.identifierCode,
+                            it.identifierDisplay,
+                            it.identifierSeqno,
+                            it.identifierStatus
+                        )
+                        signUpRepositary.insertIdentifierType(identifierType)
+                    }
+
+                }
+            }catch (e:APIException){
+                listener?.onFailure(e.message!!)
+            }catch (e:NoInternetException){
+                listener?.onFailure(e.message!!)
+            }catch (e:Exception){
+                listener?.onFailure(e.message!!)
+            }
+        }
     }
 
     fun onSignUp(){

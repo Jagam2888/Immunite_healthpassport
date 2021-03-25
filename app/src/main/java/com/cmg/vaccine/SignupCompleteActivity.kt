@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
+import com.cmg.vaccine.data.setOnSingleClickListener
 import com.cmg.vaccine.databinding.ActivitySignupCompleteBinding
 import com.cmg.vaccine.util.Passparams
 
@@ -13,7 +14,7 @@ class SignupCompleteActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this,R.layout.activity_signup_complete)
 
-        binding.btnSkip.setOnClickListener {
+        binding.btnSkip.setOnSingleClickListener {
             Intent(this,MainActivity::class.java).also {
                 it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(it)
@@ -21,7 +22,7 @@ class SignupCompleteActivity : BaseActivity() {
             }
         }
 
-        binding.btnCreatePin.setOnClickListener {
+        binding.btnCreatePin.setOnSingleClickListener {
             Intent(this,LoginPinActivity::class.java).also {
                 it.putExtra(Passparams.ISCREATE,"create")
                 //it.putExtra(Passparams.ISSETTINGS,false)

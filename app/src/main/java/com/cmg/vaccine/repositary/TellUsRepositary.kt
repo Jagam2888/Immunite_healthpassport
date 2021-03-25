@@ -2,8 +2,10 @@ package com.cmg.vaccine.repositary
 
 import com.cmg.vaccine.database.AppDatabase
 import com.cmg.vaccine.database.Countries
+import com.cmg.vaccine.database.IdentifierType
 import com.cmg.vaccine.database.User
 import com.cmg.vaccine.model.request.SignUpReq
+import com.cmg.vaccine.model.response.IdentifierTypeResponse
 import com.cmg.vaccine.model.response.PatientRegResponse
 import com.cmg.vaccine.network.MyApi
 import com.cmg.vaccine.network.SafeAPIRequest
@@ -43,5 +45,18 @@ class TellUsRepositary(
 
     fun getFCMToken():String?{
         return preferenceProvider.getFCMTOKEN()
+    }
+
+    suspend fun getIdentifierTypeFromAPI(): IdentifierTypeResponse {
+        return apiRequest {
+            api.getIdentifierType()
+        }
+    }
+    fun insertIdentifierType(identifierType: IdentifierType){
+        database.getDao().insertIdentifierType(identifierType)
+    }
+
+    fun getAllIdentifierType():List<IdentifierType>{
+        return database.getDao().getAllIdentifierType()
     }
 }

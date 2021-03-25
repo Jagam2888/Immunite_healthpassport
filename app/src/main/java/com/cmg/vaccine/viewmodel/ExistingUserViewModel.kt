@@ -156,7 +156,7 @@ class ExistingUserViewModel(
 
                 if (jsonBodySecond.has("dob")){
                     if (!jsonBodySecond.getString("dob").isNullOrEmpty()) {
-                        val isoFormat = changeDateFormatNormal(jsonBodySecond.getString("dob"))
+                        val isoFormat = changeDateFormatBC(jsonBodySecond.getString("dob"))
                         var dobFormatArray = isoFormat?.split(" ")
                         dob = dobFormatArray?.get(0)
                         dobTime = dobFormatArray?.get(1)

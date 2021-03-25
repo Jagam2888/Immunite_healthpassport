@@ -9,10 +9,7 @@ import com.cmg.vaccine.listener.SimpleListener
 import com.cmg.vaccine.model.FlagModel
 import com.cmg.vaccine.model.response.WorldEntriesCountryListData
 import com.cmg.vaccine.repositary.WorldEntryRepositary
-import com.cmg.vaccine.util.Couritnes
-import com.cmg.vaccine.util.NoInternetException
-import com.cmg.vaccine.util.getCountryNameUsingCode
-import com.cmg.vaccine.util.getWorldEntryCountryNameUsingCode
+import com.cmg.vaccine.util.*
 import com.google.gson.Gson
 import java.lang.Exception
 import java.lang.reflect.Array.get
@@ -69,6 +66,85 @@ class WorldEntryViewModel(
     var _vaccineDetail:MutableLiveData<VaccineDetail> = MutableLiveData()
     val vaccineDetail:LiveData<VaccineDetail>
         get() = _vaccineDetail
+
+    fun loadAPIs() {
+        getAllAirportCities()
+        getAllWorldEntryCountryRules()
+        loadWorldEntryCountries()
+    }
+
+    private fun getAllAirportCities(){
+        val getAllAirportCitiesDB = repositary.getAllAirportCities()
+        if (getAllAirportCitiesDB.isNullOrEmpty()) {
+            Couritnes.main {
+                try {
+                    val getAllAirportCities = repositary.getAllAirportCitiesFromAPI()
+                    if ((getAllAirportCities != null) and (getAllAirportCities.data.isNotEmpty())) {
+                        getAllAirportCities.data.forEach {
+                            val airportCitiesName = AirportCitiesName(
+                                    it.airportName,
+                                    it.cityCode,
+                                    it.countryCode,
+                                    it.countryName,
+                                    it.id
+                            )
+                            repositary.insertAirportCitiesMaster(airportCitiesName)
+                        }
+                    }
+                    //getWorldEntryCountries()
+                } catch (e: APIException) {
+                    listener?.onFailure(e.message!!)
+                } catch (e: NoInternetException) {
+                    listener?.onFailure(e.message!!)
+                } catch (e: SocketTimeoutException) {
+                    listener?.onFailure(e.message!!)
+                } catch (e: Exception) {
+                    listener?.onFailure(e.message!!)
+                }
+
+            }
+        }
+    }
+
+    private fun getAllWorldEntryCountryRules(){
+        val getAllWorldEntries = repositary.getAllWorldEntryRulesByCountry()
+        if (getAllWorldEntries.isNullOrEmpty()) {
+            Couritnes.main {
+                try {
+                    val worlentryRules = repositary.getAllWorldEntryCountryRulesFromAPI()
+                    if (!worlentryRules.data.isNullOrEmpty()) {
+                        worlentryRules.data.forEach { data ->
+                            val worldEntryRulesByCountry = WorldEntryRulesByCountry(
+                                    data.woenSeqNo,
+                                    data.woenCountryCode,
+                                    data.woenDurationHours,
+                                    data.woenEnddate,
+                                    data.woenPoints,
+                                    data.woenRuleDescription,
+                                    data.woenRuleMatchCriteria,
+                                    data.woenRuleSeqNo,
+                                    data.woenStartdate,
+                                    data.woenStatus,
+                                    data.woenTestCode,
+                                    data.woenVaccineCode
+
+                            )
+                            repositary.insertWorldEntryRuleByCountry(worldEntryRulesByCountry)
+                        }
+                    }
+                    //getAllAirportCities()
+                } catch (e: APIException) {
+                    listener?.onFailure(e.message!!)
+                } catch (e: NoInternetException) {
+                    listener?.onFailure(e.message!!)
+                } catch (e: SocketTimeoutException) {
+                    listener?.onFailure(e.message!!)
+                } catch (e: Exception) {
+                    listener?.onFailure(e.message!!)
+                }
+            }
+        }
+    }
 
 
     fun loadWorldEntryCountries() {
@@ -253,48 +329,6 @@ class WorldEntryViewModel(
             }
 
         }
-
-        //val userData = repositary.getUserData()
-
-
-        //entryRequirement.add("API not ready")
-
-
-
-        /*if (vaccineList.value?.isNotEmpty() == true) {
-            vaccineList.value?.forEach { vaccine ->
-
-                //why i need to pass entire data, currently don't have id for vaccine and testreport from API
-                val gson = Gson()
-                val value: String = gson.toJson(vaccine)
-                vaccineArrayList.add(value)
-            }
-        }
-
-        if (testReportList.value?.isNotEmpty() == true) {
-            testReportList.value?.forEach { testReport ->
-                //why i need to pass entire data, currently don't have id for vaccine and testreport from API
-                val gson = Gson()
-                val value: String = gson.toJson(testReport)
-                testReportArrayList.add(value)
-            }
-        }*/
-
-
-
-
-        //personalData.add(getWorldEntryCountryNameUsingCode(userData.nationality,countryList.value!!)!!)
-
-        /*var colorIndicator = "red"
-        if ((vaccineList.value?.isEmpty() == true) and (testReportList.value?.isEmpty() == true)){
-            colorIndicator = "red"
-        }else if ((vaccineList.value?.isNotEmpty() == true) and (testReportList.value?.isNotEmpty() == true)){
-            colorIndicator = "green"
-        }else if ((vaccineList.value?.isNotEmpty() == true) and (testReportList.value?.isEmpty() == true)){
-            colorIndicator = "green"
-        }else if ((vaccineList.value?.isEmpty() == true) and (testReportList.value?.isNotEmpty() == true)){
-            colorIndicator = "yellow"
-        }*/
 
         expandableListDetail["Entry Requirements"] = entryRequirement
         expandableListDetail["Test"] = testReportArrayList

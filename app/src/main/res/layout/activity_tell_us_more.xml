@@ -298,7 +298,7 @@
                             android:textSize="16sp"
                             android:background="@null"
                             android:minHeight="0dp"
-                            android:entries="@array/id_type"
+                            android:entries="@{tellusviewmodel.identifierTypeList}"
                             android:layout_toLeftOf="@id/img_down_arrow_id"
                             android:layout_centerVertical="true"
                             android:selectedItemPosition="@={tellusviewmodel.selectedItemIdTYpe}"/>

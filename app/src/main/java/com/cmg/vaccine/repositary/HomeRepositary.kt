@@ -5,6 +5,7 @@ import com.cmg.vaccine.model.response.*
 import com.cmg.vaccine.network.MyApi
 import com.cmg.vaccine.network.SafeAPIRequest
 import com.cmg.vaccine.prefernces.PreferenceProvider
+import okhttp3.ResponseBody
 
 class HomeRepositary(
     private val api: MyApi,
@@ -36,7 +37,7 @@ class HomeRepositary(
         }
     }*/
 
-    suspend fun getTestReportListFromAPI(privateKey: String):TestReportResponseBlockChain{
+    /*suspend fun getTestReportListFromAPI(privateKey: String):TestReportResponseBlockChain{
         return apiRequest {
             api.getTestReportList(privateKey)
         }
@@ -44,6 +45,12 @@ class HomeRepositary(
     suspend fun getVaccineListNew(privateKey: String):VaccineResponseBlockChain{
         return apiRequest {
             api.getVaccineList(privateKey)
+        }
+    }*/
+
+    suspend fun getVaccineTestRef(privateKey:String): ResponseBody {
+        return apiRequest {
+            api.getVaccineTestRef(privateKey)
         }
     }
 

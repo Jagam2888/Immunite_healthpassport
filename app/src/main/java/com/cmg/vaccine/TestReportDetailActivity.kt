@@ -6,6 +6,7 @@ import android.os.StrictMode
 
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import com.cmg.vaccine.data.setOnSingleClickListener
 import com.cmg.vaccine.databinding.ActivityTestReportDetailBinding
 import com.cmg.vaccine.listener.SimpleListener
 import com.cmg.vaccine.util.*
@@ -57,7 +58,7 @@ class TestReportDetailActivity : BaseActivity(),KodeinAware,SimpleListener {
             finish()
         }
 
-        binding.btnFileDownload.setOnClickListener {
+        binding.btnFileDownload.setOnSingleClickListener {
             //viewModel.download(it)
             val fileName = viewModel.recorId.value!!
             val filePath = filesDir.absolutePath.toString()+"/TestReport"
