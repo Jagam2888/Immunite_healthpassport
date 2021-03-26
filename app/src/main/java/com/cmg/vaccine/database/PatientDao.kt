@@ -113,6 +113,9 @@ interface PatientDao {
     @Query("SELECT * FROM TestReport WHERE id =:id")
     fun getTestReport(id:Int):TestReport
 
+    @Query("SELECT * FROM TestReport WHERE testCode =:testCode")
+    fun getTestReportByTestCode(testCode:String):TestReport
+
     @Query("DELETE FROM TestReport")
     fun deleteAllTestReport():Int
 
@@ -152,8 +155,11 @@ interface PatientDao {
     @Query("SELECT * FROM WorldEntryRulesByCountry WHERE woen_country_code =:countryCode")
     fun getWorldEntryRuleByCountryByCode(countryCode:String):List<WorldEntryRulesByCountry>
 
-    @Query("SELECT * FROM WorldEntryRulesByCountry WHERE woen_country_code='SGP' AND woen_rule_match_criteria='T' AND woen_status='A'")
-    fun getWorldEntryRuleForMAS():List<WorldEntryRulesByCountry>
+    @Query("SELECT * FROM WorldEntryRulesByCountry WHERE woen_country_code =:countryCode AND woen_rule_match_criteria =:criteria AND woen_status='A'")
+    fun getWorldEntryRuleForMAS(countryCode:String,criteria:String):List<WorldEntryRulesByCountry>
+
+    @Query("SELECT max(woen_duration_hours) FROM WorldEntryRulesByCountry WHERE woen_country_code =:countryCode AND woen_rule_match_criteria =:criteria AND woen_status='A' AND woen_rule_seq_no =:ruleSeqNo")
+    fun getMaxHoursWorldEntryRuleForMAS(countryCode:String,criteria:String,ruleSeqNo:String):String
 
     @Query("SELECT * FROM WorldEntryRulesByCountry")
     fun getAllWorldEntryRuleByCountry():List<WorldEntryRulesByCountry>
@@ -189,6 +195,9 @@ interface PatientDao {
     @Query("SELECT * FROM TestCodes")
     fun getAllTestCodes():List<TestCodes>
 
+    @Query("SELECT * FROM TestCodes WHERE wetstTestcategory =:category AND wetstCountryCode =:countryCode")
+    fun getAllTestCodesByCategory(category:String,countryCode: String):List<TestCodes>
+
     @Query("DELETE FROM TestCodes")
     fun deleteAllTestCodes()
 
@@ -200,6 +209,9 @@ interface PatientDao {
 
     @Query("SELECT * FROM WorldPriority")
     fun getAllWorldPriority():List<WorldPriority>
+
+    @Query("SELECT * FROM WorldPriority WHERE prioRuleNo =:ruleNo AND prioRuleCountry =:countryCode")
+    fun getAllWorldPriorityByRuleNo(ruleNo:String,countryCode: String):WorldPriority
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertIdentifierType(identifierType: IdentifierType):Long

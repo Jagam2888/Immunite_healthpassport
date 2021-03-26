@@ -84,6 +84,7 @@ class ProfileViewModel(
     var userSubId:MutableLiveData<String> = MutableLiveData()
 
     var profileImageUri = ObservableField<String>()
+    var calculateProgressBar = ObservableInt()
 
     var _identifierTypeList:MutableLiveData<List<IdentifierType>> = MutableLiveData()
     val identifierTypeList:LiveData<List<IdentifierType>>
@@ -213,8 +214,9 @@ class ProfileViewModel(
             currentEmail = email1.value
             currentMobile = contactNumber.value
             userSubId.value = user.parentSubscriberId
-
         }
+
+        calculateProgressBar.set(calculateProgressBar())
     }
 
     fun removeDependent(subId: String){
@@ -265,6 +267,7 @@ class ProfileViewModel(
             }
                 //nationalityViewFormat.value = getCountryNameUsingCode(dependent?.nationalityCountry!!,countryList!!)
         }
+        calculateProgressBar.set(calculateProgressBar())
     }
 
     fun loadChildList(){
@@ -360,5 +363,47 @@ class ProfileViewModel(
             }catch (e:Exception){
                 listener?.onFailure(e.message!!)
             }
+    }
+
+    fun calculateProgressBar():Int
+    {
+        var filled=0
+
+        //Log.e("firstname",firstName.value.toString())
+        if(!firstName.value.isNullOrBlank())
+            filled+=1
+        if(!contactNumber.value.isNullOrBlank())
+            filled+=1
+        if(!gender.value.isNullOrBlank())
+            filled+=1
+        if(!email1.value.isNullOrBlank())
+            filled+=1
+        if(!nationalityViewFormat.value.isNullOrBlank())
+            filled+=1
+        if(!passportNumber.value.isNullOrBlank())
+            filled+=1
+        if(!passportDateViewFormat.value.isNullOrBlank())
+            filled+=1
+        if(!idNo.value.isNullOrBlank())
+            filled+=1
+        if(!placeBirthViewFormat.value.isNullOrBlank())
+            filled+=1
+        if(!country.value.isNullOrBlank())
+            filled+=1
+
+        Log.e("Value",firstName.value.toString())
+        Log.e("Value",contactNumber.value.toString())
+        Log.e("Value",gender.value.toString())
+        Log.e("Value",email1.value.toString())
+        Log.e("Value",nationalityViewFormat.value.toString())
+        Log.e("Value",passportNumber.value.toString())
+        Log.e("Value",passportExpDate.toString())
+        Log.e("Value",idNo.value.toString())
+        Log.e("Value",placeBirthViewFormat.value.toString())
+        Log.e("Value",country.value.toString())
+
+        Log.e("filled", (filled*100 / 10 ).toString())
+
+        return (filled*100 / 10 )
     }
 }

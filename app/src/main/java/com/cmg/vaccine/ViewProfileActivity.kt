@@ -113,5 +113,6 @@ class ViewProfileActivity : BaseActivity(),KodeinAware {
         }
         if (viewModel.countryCode.value != null)
             binding.phoneCode.setCountryForPhoneCode(viewModel.countryCode.value!!)
+
     }
 }
