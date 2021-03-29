@@ -5,7 +5,6 @@ import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Address
@@ -13,10 +12,8 @@ import android.location.Geocoder
 import android.location.Location
 import android.location.LocationManager
 import android.provider.Settings
-import android.text.TextUtils
 import android.util.Base64
 import android.util.Log
-import android.util.Patterns
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
@@ -24,17 +21,20 @@ import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.fragment.app.FragmentManager
+import com.akexorcist.snaptimepicker.SnapTimePickerDialog
+import com.akexorcist.snaptimepicker.TimeValue
 import com.blongho.country_data.Country
 import com.cmg.vaccine.R
-import com.cmg.vaccine.database.Countries
 import com.cmg.vaccine.database.IdentifierType
 import com.cmg.vaccine.database.WorldEntryCountries
-import com.cmg.vaccine.model.response.WorldEntriesCountryListData
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.niwattep.materialslidedatepicker.SlideDatePickerDialog
 import immuniteeEncryption.EncryptionUtils
 import java.io.File
 import java.io.UnsupportedEncodingException
@@ -46,8 +46,6 @@ import java.text.DecimalFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
-import java.util.concurrent.atomic.AtomicBoolean
-import java.util.regex.Matcher
 import java.util.regex.Pattern
 import javax.crypto.*
 import javax.crypto.spec.SecretKeySpec
@@ -235,6 +233,45 @@ fun validateDateFormatForPassport(date: String):Boolean{
         }
         return result
     }
+}
+
+fun Context.showSliderDatePickerDialog(
+    text:String,
+    fragmentManager:FragmentManager,
+    startDate: Calendar,
+    endDate:Calendar){
+    SlideDatePickerDialog.Builder()
+        .setLocale(Locale("en"))
+        .setThemeColor(ContextCompat.getColor(this,R.color.primary))
+        .setHeaderDateFormat("EEE dd MMM")
+        .setShowYear(true)
+        .setCancelText("Cancel")
+        .setConfirmText("Confirm")
+        .setStartDate(startDate)
+        .setEndDate(endDate)
+        .build()
+        .show(fragmentManager, text)
+
+}
+
+fun Context.showSnapTimePickerDialog(hour:Int,minute:Int): SnapTimePickerDialog {
+    return SnapTimePickerDialog.Builder().apply {
+        setTitle(R.string.time_picker_title)
+        setTitleColor(R.color.white)
+        setThemeColor(R.color.primary)
+        setNegativeButtonColor(R.color.primary)
+        setPositiveButtonColor(R.color.primary)
+        setPreselectedTime(TimeValue(hour, minute))
+        setPositiveButtonText(R.string.confirm)
+        setNegativeButtonText(R.string.dialog_btn_cancel)
+        setButtonTextAllCaps(true)
+    }.build()
+}
+
+fun Context.onTimePicked(selectedHour: Int, selectedMinute: Int,editText: EditText) {
+    val hour = selectedHour.toString().padStart(2, '0')
+    val minute = selectedMinute.toString().padStart(2, '0')
+    editText.setText(String.format(getString(R.string.selected_time_format, hour, minute)))
 }
 
 

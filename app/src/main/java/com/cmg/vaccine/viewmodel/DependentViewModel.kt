@@ -81,6 +81,12 @@ class DependentViewModel(
     var selectedItemIdTYpe = ObservableInt()
     var countryCode:MutableLiveData<Int> = MutableLiveData()
 
+    var birthPlaceCountryCode:MutableLiveData<String> = MutableLiveData()
+    var nationalityCountryCode:MutableLiveData<String> = MutableLiveData()
+
+    var birthPlaceCountryFlag:MutableLiveData<Int> = MutableLiveData()
+    var nationalityCountryFlag:MutableLiveData<Int> = MutableLiveData()
+
     var isAllow:Boolean = true
 
     var currentEmail:String?=null
@@ -187,6 +193,8 @@ class DependentViewModel(
 
             selectedItemBirthPlaceCode.set(pos)
             selectedItemNationalityCode.set(pos)
+
+            //birthPlaceCountryCode.set(World.getCountryFrom(country).)
             //selectedItemNationalityCode.set(5)
         }
     }
@@ -208,7 +216,7 @@ class DependentViewModel(
                                     dobTime.value = "00:00"
                                 }
 
-                                var placeBirth = ""
+                                /*var placeBirth = ""
                                 if (!countryList.isNullOrEmpty()) {
                                     placeBirth =
                                         countryList?.get(selectedItemBirthPlaceCode.get())?.alpha3!!
@@ -218,7 +226,7 @@ class DependentViewModel(
                                 if (!countryList.isNullOrEmpty()) {
                                     nationality =
                                         countryList?.get(selectedItemNationalityCode.get())?.alpha3!!
-                                }
+                                }*/
 
                                 /*val idTypeList =
                                     view.context.resources.getStringArray(R.array.id_type)
@@ -241,10 +249,10 @@ class DependentViewModel(
                                 dependentRegReqData.mobileNumber = contactNumber.value?.trim()
                                 dependentRegReqData.email = email.value?.trim()
                                 dependentRegReqData.relationship = relationShip
-                                dependentRegReqData.nationalityCountry = nationality
+                                dependentRegReqData.nationalityCountry = World.getCountryFrom(nationalityCountryCode.value).alpha3
                                 dependentRegReqData.gender = genderEnum.name
                                 dependentRegReqData.dob = dob.value + " " + dobTime.value + ":00"
-                                dependentRegReqData.placeOfBirth = placeBirth
+                                dependentRegReqData.placeOfBirth = World.getCountryFrom(birthPlaceCountryCode.value).alpha3
                                 dependentRegReqData.idType = idType.value
 
                                 dependentRegReqData.passportNo = passportNumber.value?.trim()
@@ -273,10 +281,10 @@ class DependentViewModel(
                                                 response.privateKey,
                                                     null,
                                                 contactNumber.value?.trim(),
-                                                nationality,
+                                                World.getCountryFrom(nationalityCountryCode.value).alpha3,
                                                 passportNumber.value?.trim(),
                                                 passportExpDate.value,
-                                                placeBirth,
+                                                World.getCountryFrom(birthPlaceCountryCode.value).alpha3,
                                                 relationShip
                                             )
                                             repositary.insertDependentSignUp(dependent)
@@ -340,8 +348,14 @@ class DependentViewModel(
             if (!dependent?.countryCode.isNullOrEmpty())
                 countryCode.value = dependent?.countryCode?.toInt()
 
-            selectedItemNationalityCode.set(selectedCountryName(dependent?.nationalityCountry!!,countryList!!))
-            selectedItemBirthPlaceCode.set(selectedCountryName(dependent?.placeOfBirth!!,countryList!!))
+            nationalityCountryCode.value = World.getCountryFrom(dependent?.nationalityCountry).name
+            birthPlaceCountryCode.value = World.getCountryFrom(dependent?.placeOfBirth).name
+
+            nationalityCountryFlag.value = World.getCountryFrom(dependent?.nationalityCountry).flagResource
+            birthPlaceCountryFlag.value = World.getCountryFrom(dependent?.placeOfBirth).flagResource
+
+            /*selectedItemNationalityCode.set(selectedCountryName(dependent?.nationalityCountry!!,countryList!!))
+            selectedItemBirthPlaceCode.set(selectedCountryName(dependent?.placeOfBirth!!,countryList!!))*/
             selectedItemIdTYpe.set(selectedIdType(dependent?.idType!!,identifierTypeList.value!!))
 
             dependent?.gender.run {
@@ -373,7 +387,7 @@ class DependentViewModel(
         val relationShip =
                 relationShips.get(relationshipItemPos.get())
 
-        var placeBirth = ""
+        /*var placeBirth = ""
         if (!countryList.isNullOrEmpty()) {
             placeBirth =
                     countryList?.get(selectedItemBirthPlaceCode.get())?.alpha3!!
@@ -384,7 +398,7 @@ class DependentViewModel(
         if (!countryList.isNullOrEmpty()) {
             nationality =
                     countryList?.get(selectedItemNationalityCode.get())?.alpha3!!
-        }
+        }*/
 
         /*val idTypeList =
                 view.context.resources.getStringArray(R.array.id_type)
@@ -404,10 +418,10 @@ class DependentViewModel(
                                             val updateProfileReqData = UpdateProfileReqData()
 
                                             updateProfileReqData.firstName = fullName.value?.trim()
-                                            updateProfileReqData.nationalityCountry = nationality
+                                            updateProfileReqData.nationalityCountry = World.getCountryFrom(nationalityCountryCode.value).alpha3
                                             updateProfileReqData.dob =
                                                 dob.value + " " + dobTime.value + ":00"
-                                            updateProfileReqData.placeOfBirth = placeBirth
+                                            updateProfileReqData.placeOfBirth = World.getCountryFrom(birthPlaceCountryCode.value).alpha3
                                             updateProfileReqData.countryCode =
                                                 selectedItemContactCode.get()
                                             updateProfileReqData.passportNo =

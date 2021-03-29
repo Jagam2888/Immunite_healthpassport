@@ -281,7 +281,30 @@
                     android:paddingRight="10dp"
                     android:paddingTop="10dp">
 
-                    <Spinner
+                    <LinearLayout
+                        android:id="@+id/layout_pob"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_centerVertical="true">
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/img_country_flag_pob"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@{signupviewmodel.birthPlaceCountryFlag}"
+                            android:layout_marginLeft="10dp" />
+                        <TextView
+                            android:id="@+id/txt_country_name_pob"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="16sp"
+                            android:text="@={signupviewmodel.birthPlaceCountryCode}"
+                            android:layout_marginLeft="20dp"
+                            android:textColor="@color/black"
+                            android:textAppearance="@style/opens_bold" />
+                    </LinearLayout>
+
+                    <!--<Spinner
                         android:id="@+id/spinner_place_birth"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -290,7 +313,7 @@
                         android:background="@null"
                         android:minHeight="0dp"
                         android:layout_centerVertical="true"
-                        android:selectedItemPosition="@={signupviewmodel.selectedItemNationalityCode}"/>
+                        android:selectedItemPosition="@={signupviewmodel.selectedItemNationalityCode}"/>-->
 
                     <ImageView
                         android:layout_width="wrap_content"

@@ -19,7 +19,10 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.akexorcist.snaptimepicker.SnapTimePickerDialog
 import com.blongho.country_data.Country
+import com.blongho.country_data.World
+import com.cmg.vaccine.DialogFragment.CountryListDialogFragment
 import com.cmg.vaccine.adapter.CountryListAdapter
 import com.cmg.vaccine.data.setOnSingleClickListener
 import com.cmg.vaccine.databinding.ActivityEditDependentProfileBinding
@@ -27,13 +30,17 @@ import com.cmg.vaccine.listener.SimpleListener
 import com.cmg.vaccine.util.*
 import com.cmg.vaccine.viewmodel.DependentViewModel
 import com.cmg.vaccine.viewmodel.viewmodelfactory.DependentViewModelFactory
+import com.niwattep.materialslidedatepicker.SlideDatePickerDialogCallback
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.math.min
 
-class EditDependentProfileActivity : BaseActivity(),KodeinAware,SimpleListener {
+class EditDependentProfileActivity : BaseActivity(),KodeinAware,SimpleListener,SlideDatePickerDialogCallback {
 
     override val kodein by kodein()
     private lateinit var binding:ActivityEditDependentProfileBinding
@@ -42,6 +49,7 @@ class EditDependentProfileActivity : BaseActivity(),KodeinAware,SimpleListener {
     var lastClickTimeDOBTime:Long = 0
     private val factory: DependentViewModelFactory by instance()
     var dependentSubId:String?=null
+    var isDOBPicker:Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,15 +70,35 @@ class EditDependentProfileActivity : BaseActivity(),KodeinAware,SimpleListener {
         }
 
         dependentSubId = intent.extras?.getString(Passparams.DEPENDENT_SUBID,"")
+        viewModel.loadProfileData(this,dependentSubId!!)
 
-
-        viewModel.countries.observe(this, Observer {list->
+        /*viewModel.countries.observe(this, Observer {list->
             val arrayList = arrayListOf<Country>()
             arrayList.addAll(list)
             binding.spinnerPlaceBirth.adapter = CountryListAdapter(arrayList)
             binding.spinnerNationality.adapter = CountryListAdapter(arrayList)
             viewModel.loadProfileData(this,dependentSubId!!)
-        })
+        })*/
+
+        binding.layoutNationality.setOnSingleClickListener{
+            var myDialogFragment= CountryListDialogFragment()
+            var data=Bundle()
+            data.putString("type","nation")
+            data.putString("from","edit_dep")
+            myDialogFragment.arguments=data
+            myDialogFragment.show(supportFragmentManager,"Place of Birth")
+
+        }
+
+        binding.layoutPob.setOnSingleClickListener{
+            var myDialogFragment= CountryListDialogFragment()
+            var data=Bundle()
+            data.putString("type","pob")
+            data.putString("from","edit_dep")
+            myDialogFragment.arguments=data
+            myDialogFragment.show(supportFragmentManager,"Place of Birth")
+
+        }
 
         /*binding.btnDobCalender.setOnClickListener {
             if (SystemClock.elapsedRealtime() - lastClickTimeDOB<1000){
@@ -96,17 +124,37 @@ class EditDependentProfileActivity : BaseActivity(),KodeinAware,SimpleListener {
         }*/
         binding.btnDobCalender.setOnSingleClickListener{
             hideKeyBoard()
-            showDatePickerDialog(binding.edtDob)
+            isDOBPicker = true
+            showSliderDatePickerDialog("DOB",supportFragmentManager,
+                Calendar.getInstance().apply {
+                    set(Calendar.YEAR,1900)
+                }, Calendar.getInstance())
+            //showDatePickerDialog(binding.edtDob)
         }
 
         binding.btnDobTimeCalender.setOnSingleClickListener{
             hideKeyBoard()
-            showTimepickerDialog(binding.edtDobTime, viewModel.dobTime.value!!)
+            var hour = 12
+            var minute = 0
+            if (!viewModel.dobTime.value.isNullOrEmpty()){
+                val dobTimeArray = viewModel.dobTime.value!!.split(":")
+                if (dobTimeArray.size > 1){
+                    hour = dobTimeArray[0].toInt()
+                    minute = dobTimeArray[1].toInt()
+                }
+            }
+            showSnapTimePickerDialog(hour, minute).apply {
+                setListener { hour, minute -> onTimePicked(hour, minute,binding.edtDobTime) }
+            }.show(supportFragmentManager, SnapTimePickerDialog.TAG)
+            //showTimepickerDialog(binding.edtDobTime, viewModel.dobTime.value!!)
         }
 
         binding.btnDateCalender.setOnSingleClickListener{
             hideKeyBoard()
-            showDatePickerDialogForPassport(binding.edtPassportExpDate)
+            isDOBPicker = false
+            showSliderDatePickerDialog("passport",supportFragmentManager,
+                Calendar.getInstance(), Calendar.getInstance().apply { add(Calendar.YEAR,10) })
+            //showDatePickerDialogForPassport(binding.edtPassportExpDate)
         }
 
         binding.edtPassportExpDate.addTextChangedListener(object : TextWatcher {
@@ -236,6 +284,8 @@ class EditDependentProfileActivity : BaseActivity(),KodeinAware,SimpleListener {
             binding.headPicture.setImageURI(uri)
         }
     }
+
+
     private fun cropImage() {
         CropImage.activity( )
             .setGuidelines(CropImageView.Guidelines.ON)
@@ -296,6 +346,38 @@ class EditDependentProfileActivity : BaseActivity(),KodeinAware,SimpleListener {
         }
 
     }
+
+    override fun onPositiveClick(day: Int, month: Int, year: Int, calendar: Calendar) {
+        if (isDOBPicker) {
+            binding.edtDob.setText(SimpleDateFormat("dd/MM/yyyy").format(calendar.time))
+            binding.edtDob.setSelection(binding.edtDob.length())
+        }else{
+            binding.edtPassportExpDate.setText( SimpleDateFormat("dd/MM/yyyy").format(calendar.time))
+            binding.edtPassportExpDate.setSelection(binding.edtPassportExpDate.length())
+        }
+    }
+
+    fun setNation(countryCode:String)
+    {
+        //hideKeyBoard()
+        viewModel.nationalityCountryCode.value = World.getCountryFrom(countryCode).name
+        //selected_nation.country_name.text = country
+        //binding.txtCountryNameNationality.text = World.getCountryFrom(countryCode).name
+        viewModel.nationalityCountryFlag.value = World.getFlagOf(countryCode)
+        //binding.imgCountryFlagNationlity.setImageResource(World.getFlagOf(countryCode))
+
+    }
+
+    fun setPOB(countryCode:String)
+    {
+        //hideKeyBoard()
+        viewModel.birthPlaceCountryCode.value = World.getCountryFrom(countryCode).name
+        //binding.txtCountryNamePob.text = World.getCountryFrom(countryCode).name
+        viewModel.birthPlaceCountryFlag.value = World.getFlagOf(countryCode)
+        //binding.imgCountryFlagPob.setImageResource(World.getFlagOf(countryCode))
+
+    }
+
     override fun onStarted() {
         show(binding.progressBar)
     }

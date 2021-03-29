@@ -38,9 +38,9 @@ class SignupViewModel(
     var selectedItemContactCode = ObservableField<String>()
     var selectedItemNationalityCode = ObservableInt()
 
-    var selectedYearsItem = ObservableField<String>()
-    var selectedYearsMonth = ObservableField<String>()
-    var selectedYearsDay = ObservableField<String>()
+    var birthPlaceCountryCode:MutableLiveData<String> = MutableLiveData()
+
+    var birthPlaceCountryFlag:MutableLiveData<Int> = MutableLiveData()
 
     var listener:SimpleListener?=null
 
@@ -216,10 +216,10 @@ class SignupViewModel(
 
     fun onSignUp(){
         listener?.onStarted()
-        var placeBirth = ""
+        /*var placeBirth = ""
         if (!countryList.isNullOrEmpty()){
             placeBirth = countryList?.get(selectedItemNationalityCode.get())?.alpha3!!
-        }
+        }*/
         if(!fullName.value.isNullOrEmpty()and !email.value.isNullOrEmpty() and !contactNumber.value.isNullOrEmpty()) {
             if (email.value.equals(reTypeEmail.value)) {
                 if (dobTime.value.isNullOrEmpty()){
@@ -246,7 +246,7 @@ class SignupViewModel(
                                 "",
                                 "",
                                 selectedItemContactCode.get()!!,
-                                placeBirth,
+                                World.getCountryFrom(birthPlaceCountryCode.value).alpha3,
                                 gender.name,
                                 "",
                                 dob.value,

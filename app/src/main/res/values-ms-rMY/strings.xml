@@ -310,6 +310,12 @@ clinical data and complete your clinical test at Immunitee clinic.
         <item>Datuk dan Nenek</item>
     </string-array>
 
+    <string name="time_picker_title">Please Select Your Birth Time</string>
+    <string name="selected_time_format">%1$s:%2$s</string>
+    <string name="time_prefix">&gt;&gt;</string>
+    <string name="time_suffix">&lt;&lt;</string>
+
+
     <string name="title_activity_f_a_q_travel_advisory">FAQTravelAdvisoryActivity</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>

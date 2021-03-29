@@ -22,7 +22,7 @@ android {
         minSdkVersion 23
         targetSdkVersion 30
         versionCode 34
-        versionName "1.33"
+        versionName "1.33(13)"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -144,6 +144,14 @@ dependencies {
             }
     implementation 'com.google.http-client:google-http-client-gson:1.26.0'
     implementation 'com.google.android.gms:play-services-auth:19.0.0'
+
+    //datePicker
+    implementation 'com.github.niwattep:material-slide-date-picker:v2.0.0'
+    //timePicker
+    implementation 'com.akexorcist:snap-time-picker:1.0.3'
+
+//Fast scrollview
+    implementation 'com.github.kapilmhr:AlphabetIndexFastScrollRecyclerview:1.0.0'
 
 
 

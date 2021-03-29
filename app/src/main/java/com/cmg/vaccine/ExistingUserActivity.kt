@@ -14,13 +14,15 @@ import com.cmg.vaccine.listener.SimpleListener
 import com.cmg.vaccine.util.*
 import com.cmg.vaccine.viewmodel.ExistingUserViewModel
 import com.cmg.vaccine.viewmodel.viewmodelfactory.ExistingUserViewModelFactory
+import com.niwattep.materialslidedatepicker.SlideDatePickerDialogCallback
 import io.paperdb.Paper
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
+import java.text.SimpleDateFormat
 import java.util.*
 
-class ExistingUserActivity : BaseActivity(),KodeinAware,SimpleListener {
+class ExistingUserActivity : BaseActivity(),KodeinAware,SimpleListener,SlideDatePickerDialogCallback {
     override val kodein by kodein()
     private lateinit var binding:ActivityExistingUserBinding
     private lateinit var viewModel:ExistingUserViewModel
@@ -54,7 +56,11 @@ class ExistingUserActivity : BaseActivity(),KodeinAware,SimpleListener {
 
         binding.btnDobCalender.setOnSingleClickListener{
             hideKeyBoard()
-            showDatePickerDialog(binding.edtDob)
+            showSliderDatePickerDialog("DOB",supportFragmentManager,
+                Calendar.getInstance().apply {
+                    set(Calendar.YEAR,1900)
+                }, Calendar.getInstance())
+            //showDatePickerDialog(binding.edtDob)
         }
 
         binding.edtDob.addTextChangedListener(object : TextWatcher {
@@ -130,6 +136,11 @@ class ExistingUserActivity : BaseActivity(),KodeinAware,SimpleListener {
             //toast(viewModel.privateKey.get()!!)
             //binding.edtQrCode.setText(qrCodeValue)
         }
+    }
+
+    override fun onPositiveClick(day: Int, month: Int, year: Int, calendar: Calendar) {
+        binding.edtDob.setText(SimpleDateFormat("dd/MM/yyyy").format(calendar.time))
+        binding.edtDob.setSelection(binding.edtDob.length())
     }
 
     override fun onStarted() {

@@ -15,8 +15,12 @@ import android.widget.TextView.OnEditorActionListener
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import androidx.databinding.adapters.ViewGroupBindingAdapter.setListener
 import androidx.lifecycle.ViewModelProvider
+import com.akexorcist.snaptimepicker.SnapTimePickerDialog
 import com.blongho.country_data.Country
+import com.blongho.country_data.World
+import com.cmg.vaccine.DialogFragment.CountryListDialogFragment
 import com.cmg.vaccine.adapter.CountryListAdapter
 import com.cmg.vaccine.data.setOnSingleClickListener
 import com.cmg.vaccine.databinding.ActivitySignUpBinding
@@ -27,13 +31,15 @@ import com.cmg.vaccine.viewmodel.SignupViewModel
 import com.cmg.vaccine.viewmodel.viewmodelfactory.SignUpModelFactory
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.niwattep.materialslidedatepicker.SlideDatePickerDialogCallback
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
+import java.text.SimpleDateFormat
 import java.util.*
 
 
-class SignUpActivity : BaseActivity(),KodeinAware,SimpleListener {
+class SignUpActivity : BaseActivity(),KodeinAware,SimpleListener,SlideDatePickerDialogCallback {
     override val kodein by kodein()
     private lateinit var binding:ActivitySignUpBinding
     private lateinit var viewModel:SignupViewModel
@@ -62,12 +68,36 @@ class SignUpActivity : BaseActivity(),KodeinAware,SimpleListener {
 
         binding.btnDobTimeCalender.setOnSingleClickListener {
             hideKeyBoard()
-            showTimepickerDialog(binding.edtDobTime, viewModel.dobTime.value!!)
+            //showTimepickerDialog(binding.edtDobTime, viewModel.dobTime.value!!)
+            showSnapTimePickerDialog(12,0).apply {
+                setListener { hour, minute -> onTimePicked(hour, minute,binding.edtDobTime) }
+            }.show(supportFragmentManager, SnapTimePickerDialog.TAG)
         }
 
         binding.btnDobCalender.setOnSingleClickListener {
             hideKeyBoard()
-            showDatePickerDialog(binding.edtDob)
+            //showDatePickerDialog(binding.edtDob)
+            showSliderDatePickerDialog("DOB",supportFragmentManager,
+            Calendar.getInstance().apply {
+                                         set(Calendar.YEAR,1900)
+            }, Calendar.getInstance())
+        }
+
+        binding.layoutPob.setOnSingleClickListener{
+            var myDialogFragment= CountryListDialogFragment()
+            var data=Bundle()
+            data.putString("type","pob")
+            data.putString("from","sign_up")
+            myDialogFragment.arguments=data
+            myDialogFragment.show(supportFragmentManager,"Place of Birth")
+
+        }
+
+        if (checkPermission()) {
+            //viewModel.setCurrentCountry(getCurrentCountryName()!!)
+            setCurrentCountry()
+        } else {
+            requestPermission()
         }
 
         //viewModel.loadYears()
@@ -87,7 +117,7 @@ class SignUpActivity : BaseActivity(),KodeinAware,SimpleListener {
 
         //binding.edtDob.listen()
 
-        viewModel.countries.observe(this, androidx.lifecycle.Observer {list->
+        /*viewModel.countries.observe(this, androidx.lifecycle.Observer {list->
             val arrayList = arrayListOf<Country>()
             arrayList.addAll(list)
             binding.spinnerPlaceBirth.adapter = CountryListAdapter(arrayList)
@@ -100,7 +130,7 @@ class SignUpActivity : BaseActivity(),KodeinAware,SimpleListener {
                     requestPermission()
                 }
             }
-        })
+        })*/
 
         /*binding.edtDob.setDrawableClickListener(object : DrawableClickListener {
             override fun onClick(target: DrawablePosition?) {
@@ -243,6 +273,13 @@ class SignUpActivity : BaseActivity(),KodeinAware,SimpleListener {
 
     }
 
+    private fun setCurrentCountry(){
+        viewModel.birthPlaceCountryCode.value = getCurrentCountryName()
+
+        viewModel.birthPlaceCountryFlag.value = World.getCountryFrom(getCurrentCountryName()).flagResource
+
+    }
+
     private fun checkPermission():Boolean{
         return ((ContextCompat.checkSelfPermission(
             this,
@@ -269,7 +306,8 @@ class SignUpActivity : BaseActivity(),KodeinAware,SimpleListener {
                     val locationAccepted: Boolean =
                         grantResults[0] == PackageManager.PERMISSION_GRANTED
                     if (locationAccepted) {
-                        viewModel.setCurrentCountry(getCurrentCountryName()!!)
+                        setCurrentCountry()
+                        //viewModel.setCurrentCountry(getCurrentCountryName()!!)
                         //toast(getCurrentCountryName()!!)
                     } else {
                         toast("Permission Denied, You cannot get Location")
@@ -278,6 +316,25 @@ class SignUpActivity : BaseActivity(),KodeinAware,SimpleListener {
             }
         }
     }
+
+    fun setPOB(countryCode:String)
+    {
+        viewModel.birthPlaceCountryCode.value = World.getCountryFrom(countryCode).name
+        viewModel.birthPlaceCountryFlag.value = World.getFlagOf(countryCode)
+
+    }
+
+    override fun onPositiveClick(day: Int, month: Int, year: Int, calendar: Calendar) {
+        binding.edtDob.setText( SimpleDateFormat("dd/MM/yyyy").format(calendar.time))
+        binding.edtDob.setSelection(binding.edtDob.length())
+    }
+
+    /*private fun onTimePicked(selectedHour: Int, selectedMinute: Int) {
+        val hour = selectedHour.toString().padStart(2, '0')
+        val minute = selectedMinute.toString().padStart(2, '0')
+        binding.edtDobTime.setText(String.format(getString(R.string.selected_time_format, hour, minute)))
+    }*/
+
 
     override fun onStarted() {
         show(binding.progressBar)

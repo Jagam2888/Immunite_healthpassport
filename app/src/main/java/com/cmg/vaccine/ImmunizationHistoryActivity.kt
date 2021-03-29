@@ -19,13 +19,16 @@ import com.cmg.vaccine.listener.SimpleListener
 import com.cmg.vaccine.util.*
 import com.cmg.vaccine.viewmodel.ImmunizationHistoryViewModel
 import com.cmg.vaccine.viewmodel.viewmodelfactory.ImmunizationHistoryViewModelFactory
+import com.niwattep.materialslidedatepicker.SlideDatePickerDialogCallback
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
 import java.io.File
+import java.text.SimpleDateFormat
+import java.util.*
 
 
-class ImmunizationHistoryActivity : BaseActivity(),KodeinAware,SimpleListener {
+class ImmunizationHistoryActivity : BaseActivity(),KodeinAware,SimpleListener,SlideDatePickerDialogCallback {
     override val kodein by kodein()
 
 
@@ -98,7 +101,11 @@ class ImmunizationHistoryActivity : BaseActivity(),KodeinAware,SimpleListener {
 
         binding.btnDobCalender.setOnSingleClickListener {
             hideKeyBoard()
-            showDatePickerDialog(binding.edtDob)
+            showSliderDatePickerDialog("DOB",supportFragmentManager,
+                Calendar.getInstance().apply {
+                    set(Calendar.YEAR,1900)
+                }, Calendar.getInstance())
+            //showDatePickerDialog(binding.edtDob)
         }
 
         binding.btnDobTimeCalender.setOnSingleClickListener() {
@@ -176,6 +183,11 @@ class ImmunizationHistoryActivity : BaseActivity(),KodeinAware,SimpleListener {
                 }
             }
         }
+    }
+
+    override fun onPositiveClick(day: Int, month: Int, year: Int, calendar: Calendar) {
+        binding.edtDob.setText(SimpleDateFormat("dd/MM/yyyy").format(calendar.time))
+        binding.edtDob.setSelection(binding.edtDob.length())
     }
 
     override fun onStarted() {

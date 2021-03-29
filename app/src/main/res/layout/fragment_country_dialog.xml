@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="10dp">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/close_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/close"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textAppearance="@style/opens_bold"
+            android:background="@drawable/button_red"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingRight="20dp"
+            android:paddingLeft="20dp"
+            android:orientation="vertical"
+            android:layout_above="@id/close_btn"
+            android:layout_marginBottom="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="Select a Country"
+                android:textColor="@color/black"
+                android:textSize="24sp"
+                android:textAppearance="@style/opens_bold" />
+
+            <SearchView
+                android:id="@+id/country_sv"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:iconifiedByDefault="false"
+                android:queryHint="Search Here"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/gray_background_outline" />
+
+            <fastscroll.app.fastscrollalphabetindex.AlphabetIndexFastScrollRecyclerView
+                android:id="@+id/country_rv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="10dp"
+                android:background="@null"
+                android:minHeight="0dp"
+                android:textAppearance="@style/opens_regular"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+</layout>

@@ -16,7 +16,10 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.akexorcist.snaptimepicker.SnapTimePickerDialog
 import com.blongho.country_data.Country
+import com.blongho.country_data.World
+import com.cmg.vaccine.DialogFragment.CountryListDialogFragment
 import com.cmg.vaccine.DialogFragment.DependentDialogFragment
 import com.cmg.vaccine.adapter.CountryListAdapter
 import com.cmg.vaccine.data.setOnSingleClickListener
@@ -25,12 +28,15 @@ import com.cmg.vaccine.listener.SimpleListener
 import com.cmg.vaccine.util.*
 import com.cmg.vaccine.viewmodel.DependentViewModel
 import com.cmg.vaccine.viewmodel.viewmodelfactory.DependentViewModelFactory
+import com.niwattep.materialslidedatepicker.SlideDatePickerDialogCallback
 import io.paperdb.Paper
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
+import java.text.SimpleDateFormat
+import java.util.*
 
-class AddDependentActivity : BaseActivity(),KodeinAware,SimpleListener {
+class AddDependentActivity : BaseActivity(),KodeinAware,SimpleListener,SlideDatePickerDialogCallback {
     override val kodein by kodein()
     private lateinit var binding:ActivityAddDependentBinding
     private lateinit var viewModel:DependentViewModel
@@ -40,6 +46,7 @@ class AddDependentActivity : BaseActivity(),KodeinAware,SimpleListener {
     var lastClickTimeQr:Long = 0
 
     var qrCodeValue = ""
+    var isDOBPicker:Boolean = false
 
     private val factory:DependentViewModelFactory by instance()
 
@@ -66,7 +73,34 @@ class AddDependentActivity : BaseActivity(),KodeinAware,SimpleListener {
             }
         }
 
-        viewModel.countries.observe(this, Observer {list->
+        binding.layoutNationality.setOnSingleClickListener{
+            var myDialogFragment= CountryListDialogFragment()
+            var data=Bundle()
+            data.putString("type","nation")
+            data.putString("from","add_dep")
+            myDialogFragment.arguments=data
+            myDialogFragment.show(supportFragmentManager,"Place of Birth")
+
+        }
+
+        binding.layoutPob.setOnSingleClickListener{
+            var myDialogFragment= CountryListDialogFragment()
+            var data=Bundle()
+            data.putString("type","pob")
+            data.putString("from","add_dep")
+            myDialogFragment.arguments=data
+            myDialogFragment.show(supportFragmentManager,"Place of Birth")
+
+        }
+
+        if (checkPermission()) {
+            //viewModel.setCurrentCountry(getCurrentCountryName()!!)
+            setCurrentCountry()
+        } else {
+            requestPermission()
+        }
+
+        /*viewModel.countries.observe(this, Observer {list->
             val arrayList = arrayListOf<Country>()
             arrayList.addAll(list)
             binding.spinnerPlaceBirth.adapter = CountryListAdapter(arrayList)
@@ -76,45 +110,32 @@ class AddDependentActivity : BaseActivity(),KodeinAware,SimpleListener {
             } else {
                 requestPermission()
             }
-        })
-
-        /*binding.btnDobCalender.setOnClickListener {
-            if (SystemClock.elapsedRealtime() - lastClickTimeDOB<1000){
-                return@setOnClickListener
-            }
-            Log.d("onclickdob","come here")
-            lastClickTimeDOB = SystemClock.elapsedRealtime()
-            hideKeyBoard()
-            showDatePickerDialog(binding.edtDob)
-        }
-
-        binding.btnDobTimeCalender.setOnClickListener {
-            if (SystemClock.elapsedRealtime() - lastClickTimeDOBTime<1000){
-                return@setOnClickListener
-            }
-            Log.d("onclick","come here")
-            lastClickTimeDOBTime = SystemClock.elapsedRealtime()
-            hideKeyBoard()
-            showTimepickerDialog(binding.edtDobTime, viewModel.dobTime.value!!)
-        }
-
-        binding.btnDateCalender.setOnClickListener {
-            showDatePickerDialogForPassport(binding.edtPassportExpDate)
-        }*/
+        })*/
 
         binding.btnDobCalender.setOnSingleClickListener{
+            isDOBPicker = true
             hideKeyBoard()
-            showDatePickerDialog(binding.edtDob)
+            showSliderDatePickerDialog("DOB",supportFragmentManager,
+                Calendar.getInstance().apply {
+                    set(Calendar.YEAR,1900)
+                }, Calendar.getInstance())
+            //showDatePickerDialog(binding.edtDob)
         }
 
         binding.btnDobTimeCalender.setOnSingleClickListener{
             hideKeyBoard()
-            showTimepickerDialog(binding.edtDobTime, viewModel.dobTime.value!!)
+            showSnapTimePickerDialog(12,0).apply {
+                setListener { hour, minute -> onTimePicked(hour, minute,binding.edtDobTime) }
+            }.show(supportFragmentManager, SnapTimePickerDialog.TAG)
+            //showTimepickerDialog(binding.edtDobTime, viewModel.dobTime.value!!)
         }
 
         binding.btnDateCalender.setOnSingleClickListener{
+            isDOBPicker = false
             hideKeyBoard()
-            showDatePickerDialogForPassport(binding.edtPassportExpDate)
+            showSliderDatePickerDialog("passport",supportFragmentManager,
+                Calendar.getInstance(), Calendar.getInstance().apply { add(Calendar.YEAR,10) })
+            //showDatePickerDialogForPassport(binding.edtPassportExpDate)
         }
 
         binding.edtPassportExpDate.addTextChangedListener(object : TextWatcher {
@@ -267,29 +288,21 @@ class AddDependentActivity : BaseActivity(),KodeinAware,SimpleListener {
             }
         }
 
-        /*binding.spinnerPlaceBirth.onItemSelectedListener = object :AdapterView.OnItemSelectedListener{
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                toast(position.toString())
-                viewModel.selectedItemBirthPlaceCode.set(position)
-                if (isFirstTimeSelectPlaceBirth)
-                    viewModel.selectedItemNationalityCode.set(position)
-            }
 
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-            }
-        }
+    }
 
-        binding.spinnerNationality.onItemSelectedListener = object :AdapterView.OnItemSelectedListener{
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                toast(position.toString())
-                viewModel.selectedItemNationalityCode.set(position)
-                isFirstTimeSelectPlaceBirth = false
-            }
+    private fun setCurrentCountry(){
+        viewModel.birthPlaceCountryCode.value = getCurrentCountryName()
+        viewModel.nationalityCountryCode.value = getCurrentCountryName()
 
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-            }
-        }*/
+        viewModel.birthPlaceCountryFlag.value = World.getCountryFrom(getCurrentCountryName()).flagResource
+        viewModel.nationalityCountryFlag.value = World.getCountryFrom(getCurrentCountryName()).flagResource
 
+        /*binding.imgCountryFlagPob.setImageResource(World.getCountryFrom(getCurrentCountryName()).flagResource)
+        binding.imgCountryFlagNationlity.setImageResource(World.getCountryFrom(getCurrentCountryName()).flagResource)*/
+
+        /*viewModel.birthPlaceCountryCode.set(World.getCountryFrom(getCurrentCountryName()).alpha3)
+        viewModel.nationalityCountryCode.set(World.getCountryFrom(getCurrentCountryName()).alpha3)*/
     }
 
     private fun checkPermission():Boolean{
@@ -303,7 +316,7 @@ class AddDependentActivity : BaseActivity(),KodeinAware,SimpleListener {
         ActivityCompat.requestPermissions(
             this,
             arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
-            SignUpActivity.LOCATION
+            LOCATION
         )
     }
 
@@ -313,12 +326,13 @@ class AddDependentActivity : BaseActivity(),KodeinAware,SimpleListener {
         grantResults: IntArray
     ) {
         when(requestCode){
-            SignUpActivity.LOCATION -> {
+            LOCATION -> {
                 if (grantResults.isNotEmpty()) {
                     val locationAccepted: Boolean =
                         grantResults[0] == PackageManager.PERMISSION_GRANTED
                     if (locationAccepted) {
-                        viewModel.setCurrentCountry(getCurrentCountryName()!!)
+                        //viewModel.setCurrentCountry(getCurrentCountryName()!!)
+                        setCurrentCountry()
                         //toast(getCurrentCountryName()!!)
                     } else {
                         toast("Permission Denied, You cannot get Location")
@@ -327,6 +341,38 @@ class AddDependentActivity : BaseActivity(),KodeinAware,SimpleListener {
             }
         }
     }
+
+    override fun onPositiveClick(day: Int, month: Int, year: Int, calendar: Calendar) {
+        if (isDOBPicker) {
+            binding.edtDob.setText(SimpleDateFormat("dd/MM/yyyy").format(calendar.time))
+            binding.edtDob.setSelection(binding.edtDob.length())
+        }else{
+            binding.edtPassportExpDate.setText( SimpleDateFormat("dd/MM/yyyy").format(calendar.time))
+            binding.edtPassportExpDate.setSelection(binding.edtPassportExpDate.length())
+        }
+    }
+
+    fun setNation(countryCode:String)
+    {
+        hideKeyBoard()
+        viewModel.nationalityCountryCode.value = World.getCountryFrom(countryCode).name
+        //selected_nation.country_name.text = country
+        //binding.txtCountryNameNationality.text = World.getCountryFrom(countryCode).name
+        viewModel.nationalityCountryFlag.value = World.getFlagOf(countryCode)
+        //binding.imgCountryFlagNationlity.setImageResource(World.getFlagOf(countryCode))
+
+    }
+
+    fun setPOB(countryCode:String)
+    {
+        hideKeyBoard()
+        viewModel.birthPlaceCountryCode.value = World.getCountryFrom(countryCode).name
+        //binding.txtCountryNamePob.text = World.getCountryFrom(countryCode).name
+        viewModel.birthPlaceCountryFlag.value = World.getFlagOf(countryCode)
+        //binding.imgCountryFlagPob.setImageResource(World.getFlagOf(countryCode))
+
+    }
+
 
     override fun onStarted() {
         show(binding.progressBar)

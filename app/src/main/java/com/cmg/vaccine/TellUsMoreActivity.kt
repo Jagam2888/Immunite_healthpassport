@@ -10,6 +10,8 @@ import android.text.method.LinkMovementMethod
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.blongho.country_data.Country
+import com.blongho.country_data.World
+import com.cmg.vaccine.DialogFragment.CountryListDialogFragment
 import com.cmg.vaccine.adapter.CountryListAdapter
 import com.cmg.vaccine.data.setOnSingleClickListener
 import com.cmg.vaccine.databinding.ActivityTellUsMoreBinding
@@ -17,11 +19,14 @@ import com.cmg.vaccine.listener.SimpleListener
 import com.cmg.vaccine.util.*
 import com.cmg.vaccine.viewmodel.TellUsMoreViewModel
 import com.cmg.vaccine.viewmodel.viewmodelfactory.TellUsViewModelFactory
+import com.niwattep.materialslidedatepicker.SlideDatePickerDialogCallback
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
+import java.text.SimpleDateFormat
+import java.util.*
 
-class TellUsMoreActivity : BaseActivity(),KodeinAware,SimpleListener {
+class TellUsMoreActivity : BaseActivity(),KodeinAware,SimpleListener,SlideDatePickerDialogCallback {
     override val kodein by kodein()
     private lateinit var binding:ActivityTellUsMoreBinding
     private lateinit var viewModel:TellUsMoreViewModel
@@ -44,12 +49,24 @@ class TellUsMoreActivity : BaseActivity(),KodeinAware,SimpleListener {
             }
         }
 
-        viewModel.countries.observe(this, androidx.lifecycle.Observer {list->
+        /*viewModel.countries.observe(this, androidx.lifecycle.Observer {list->
             val arrayList = arrayListOf<Country>()
             arrayList.addAll(list)
             binding.spinnerNationality.adapter = CountryListAdapter(arrayList)
             viewModel.getPlaceOfBirthPos()
-        })
+        })*/
+
+        viewModel.getPlaceOfBirthPos()
+
+        binding.layoutNationality.setOnSingleClickListener{
+            var myDialogFragment= CountryListDialogFragment()
+            var data=Bundle()
+            data.putString("type","nation")
+            data.putString("from","tell_us")
+            myDialogFragment.arguments=data
+            myDialogFragment.show(supportFragmentManager,"Place of Birth")
+
+        }
 
         //viewModel.setPlaceOfBirthToNationality()
 
@@ -61,7 +78,9 @@ class TellUsMoreActivity : BaseActivity(),KodeinAware,SimpleListener {
 
         binding.btnDateCalender.setOnSingleClickListener {
             hideKeyBoard()
-            showDatePickerDialogForPassport(binding.edtPassportExpDate)
+            //showDatePickerDialogForPassport(binding.edtPassportExpDate)
+            showSliderDatePickerDialog("passport",supportFragmentManager,
+                Calendar.getInstance(), Calendar.getInstance().apply { add(Calendar.YEAR,10) })
         }
 
         binding.edtPassportExpDate.addTextChangedListener(object : TextWatcher {
@@ -80,6 +99,19 @@ class TellUsMoreActivity : BaseActivity(),KodeinAware,SimpleListener {
                 }
             }
         })
+    }
+
+    override fun onPositiveClick(day: Int, month: Int, year: Int, calendar: Calendar) {
+        binding.edtPassportExpDate.setText( SimpleDateFormat("dd/MM/yyyy").format(calendar.time))
+        binding.edtPassportExpDate.setSelection(binding.edtPassportExpDate.length())
+    }
+
+    fun setNation(countryCode:String)
+    {
+        hideKeyBoard()
+        viewModel.nationalityCountryCode.value = World.getCountryFrom(countryCode).name
+        viewModel.nationalityCountryFlag.value = World.getFlagOf(countryCode)
+
     }
 
     override fun onStarted() {

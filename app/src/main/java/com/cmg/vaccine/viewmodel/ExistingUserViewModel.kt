@@ -61,12 +61,13 @@ class ExistingUserViewModel(
             try {
                 val response = repositary.updateUUID(repositary.getPatientSubId()!!,view.context.getDeviceUUID()!!)
                 if (response.StatusCode == 1){
-                    updateFCMToken()
+                    //updateFCMToken()
                     //listener?.onSuccess(response.Message)
 
                 }else{
                     listener?.onFailure(response.Message)
                 }
+                updateFCMToken()
             }catch (e:APIException){
                 listener?.onFailure(e.message!!)
             }catch (e:NoInternetException){

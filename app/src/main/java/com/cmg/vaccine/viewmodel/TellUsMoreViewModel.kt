@@ -56,6 +56,9 @@ class TellUsMoreViewModel(
     val identifierTypeList:LiveData<List<IdentifierType>>
     get() = _identifierTypeList
 
+    var nationalityCountryCode:MutableLiveData<String> = MutableLiveData()
+    var nationalityCountryFlag:MutableLiveData<Int> = MutableLiveData()
+
     init {
         //val countries = repositary.getAllCountriesDB()
         val countries = World.getAllCountries()
@@ -104,8 +107,10 @@ class TellUsMoreViewModel(
         val gson = Gson()
         val type: Type = object : TypeToken<User>() {}.type
         var userData = gson.fromJson<User>(alreadyStored, type)
-        val pos = selectedCountryName(userData.placeBirth,countries.value!!)
-        selectedItemNationalityCode.set(pos)
+        nationalityCountryCode.value = World.getCountryFrom(userData.placeBirth).name
+        nationalityCountryFlag.value = World.getFlagOf(userData.placeBirth)
+        /*val pos = selectedCountryName(userData.placeBirth,countries.value!!)
+        selectedItemNationalityCode.set(pos)*/
     }
 
     fun onRegister(view:View){
@@ -117,10 +122,10 @@ class TellUsMoreViewModel(
                 val type: Type = object : TypeToken<User>() {}.type
                 var userData = gson.fromJson<User>(alreadyStored, type)
 
-                var nationality = ""
+                /*var nationality = ""
                 if (!countries.value.isNullOrEmpty()){
                     nationality = countries.value?.get(selectedItemNationalityCode.get())?.alpha3!!
-                }
+                }*/
 
                 /*val idTypeList = view.context.resources.getStringArray(R.array.id_type)
                 idType.value = idTypeList[selectedItemIdTYpe.get()]*/
@@ -130,7 +135,7 @@ class TellUsMoreViewModel(
                 userData.passportExpiryDate = passportExpDate.value
                 userData.patientIdNo = idNo.value?.trim()
                 userData.patientIdType = idType.value!!
-                userData.nationality = nationality
+                userData.nationality = World.getCountryFrom(nationalityCountryCode.value).alpha3
 
                 val signUpReq = SignUpReq()
                 var signUpReqData = SignUpReqData()

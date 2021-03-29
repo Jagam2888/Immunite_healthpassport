@@ -70,6 +70,12 @@ class ProfileViewModel(
     var selectedItemBirthPlaceCode = ObservableInt()
     var selectedItemContactCode = ObservableField<String>()
 
+    var birthPlaceCountryCode:MutableLiveData<String> = MutableLiveData()
+    var nationalityCountryCode:MutableLiveData<String> = MutableLiveData()
+
+    var birthPlaceCountryFlag:MutableLiveData<Int> = MutableLiveData()
+    var nationalityCountryFlag:MutableLiveData<Int> = MutableLiveData()
+
     var dobViewFormat:MutableLiveData<String> = MutableLiveData()
     var passportDateViewFormat:MutableLiveData<String> = MutableLiveData()
     var placeBirthViewFormat:MutableLiveData<String> = MutableLiveData()
@@ -192,6 +198,12 @@ class ProfileViewModel(
             selectedItemBirthPlaceCode.set(selectedCountryName(user.placeBirth,countryList!!))
             selectedItemIdTYpe.set(selectedIdType(user.patientIdType!!,identifierTypeList.value!!))
 
+            nationalityCountryCode.value = World.getCountryFrom(user?.nationality).name
+            birthPlaceCountryCode.value = World.getCountryFrom(user?.placeBirth).name
+
+            nationalityCountryFlag.value = World.getCountryFrom(user?.nationality).flagResource
+            birthPlaceCountryFlag.value = World.getCountryFrom(user?.placeBirth).flagResource
+
             if (!user.countryCode.isNullOrEmpty())
                 countryCode.value = user.countryCode.toInt()
 
@@ -282,7 +294,7 @@ class ProfileViewModel(
         listener?.onStarted()
         var user = repositary.getUserData()
 
-        var placeBirth = ""
+        /*var placeBirth = ""
         if (!countryList.isNullOrEmpty()) {
             placeBirth =
                     countryList?.get(selectedItemBirthPlaceCode.get())?.alpha3!!
@@ -292,7 +304,7 @@ class ProfileViewModel(
         if (!countryList.isNullOrEmpty()) {
             nationality =
                     countryList?.get(selectedItemNationalityCode.get())?.alpha3!!
-        }
+        }*/
 
         /*val idTypeList =
                 view.context.resources.getStringArray(R.array.id_type)
@@ -320,7 +332,7 @@ class ProfileViewModel(
                                             val updateProfileReqData = UpdateProfileReqData()
 
                                             updateProfileReqData.firstName = firstName.value
-                                            updateProfileReqData.nationalityCountry = nationality
+                                            updateProfileReqData.nationalityCountry = World.getCountryFrom(nationalityCountryCode.value).alpha3
                                             updateProfileReqData.dob =
                                                 dob.value + " " + dobTime.value + ":00"
                                             updateProfileReqData.subsId = user.parentSubscriberId
@@ -329,7 +341,7 @@ class ProfileViewModel(
                                             updateProfileReqData.gender = genderEnum.name
                                             updateProfileReqData.idNo = idNo.value
                                             updateProfileReqData.idType = idType.value
-                                            updateProfileReqData.placeOfBirth = placeBirth
+                                            updateProfileReqData.placeOfBirth = World.getCountryFrom(birthPlaceCountryCode.value).alpha3
                                             updateProfileReqData.countryCode =
                                                 selectedItemContactCode.get()!!
                                             updateProfileReqData.email = email1.value
