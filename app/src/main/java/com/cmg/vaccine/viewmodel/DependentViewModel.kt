@@ -104,28 +104,21 @@ class DependentViewModel(
     val identifierTypeList:LiveData<List<IdentifierType>>
         get() = _identifierTypeList
 
-    val clicksListenerPlaceBirth = object : AdapterView.OnItemSelectedListener {
+    var patientIdNoCharLength = ObservableInt()
+
+    val clicksListener = object : AdapterView.OnItemSelectedListener {
         override fun onNothingSelected(parent: AdapterView<*>?) {
 
         }
 
         override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-            selectedItemBirthPlaceCode.set(position)
-
-            if (isFirstTimeSelectPlaceBirth == true)
-                selectedItemNationalityCode.set(position)
-        }
-    }
-
-    val clicksListenerNationality = object : AdapterView.OnItemSelectedListener {
-        override fun onNothingSelected(parent: AdapterView<*>?) {
-
-        }
-
-        override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-            selectedItemNationalityCode.set(position)
-            isFirstTimeSelectPlaceBirth = false
-
+            selectedItemIdTYpe.set(position)
+            if (!identifierTypeList.value?.isNullOrEmpty()!!){
+                if (identifierTypeList.value!![position].identifierCode.equals("NNMYS")){
+                    idNo.value = ""
+                    patientIdNoCharLength.set(12)
+                }
+            }
         }
     }
 
@@ -162,7 +155,7 @@ class DependentViewModel(
 
         dobTime.value = "1200"
 
-        if (!parentUser.privateKey.isNullOrEmpty()) {
+        /*if (!parentUser.privateKey.isNullOrEmpty()) {
             val dependent = repositary.getDependent(parentUser.parentSubscriberId!!)
             if (dependent != null){
                 if (!dependent.privateKey.isNullOrEmpty()) {
@@ -172,12 +165,14 @@ class DependentViewModel(
                     }
                 }
             }
-        }
+        }*/
 
         val getAllIdentifierType = repositary.getAllIdentifierType()
         if (!getAllIdentifierType.isNullOrEmpty()){
             _identifierTypeList.value = getAllIdentifierType
         }
+
+        patientIdNoCharLength.set(15)
 
     }
 

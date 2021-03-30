@@ -134,7 +134,7 @@ class AddDependentActivity : BaseActivity(),KodeinAware,SimpleListener,SlideDate
             isDOBPicker = false
             hideKeyBoard()
             showSliderDatePickerDialog("passport",supportFragmentManager,
-                Calendar.getInstance(), Calendar.getInstance().apply { add(Calendar.YEAR,10) })
+                Calendar.getInstance().apply { add(Calendar.DATE,1) }, Calendar.getInstance().apply { add(Calendar.YEAR,10) })
             //showDatePickerDialogForPassport(binding.edtPassportExpDate)
         }
 

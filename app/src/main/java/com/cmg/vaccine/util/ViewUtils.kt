@@ -215,7 +215,7 @@ fun validateDateFormatForPassport(date: String):Boolean{
         {
             result = false
         }
-        if(year <= currentYear && month.toInt() <= currentMonth && day.toInt()< currentDay)
+        if(year <= currentYear && month.toInt() <= currentMonth && day.toInt()<= currentDay)
         {
             result = false
         }

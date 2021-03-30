@@ -162,7 +162,7 @@
                     android:paddingRight="10dp"
                     android:paddingTop="10dp"
                     android:inputType="text"
-                    android:focusable="@{dependentViewModel.isUserNotAlreadyTest()}"/>
+                    android:focusable="false"/>
 
 
                 <TextView
@@ -305,8 +305,7 @@
                     android:paddingTop="10dp"
                     android:imeOptions="actionNext"
                     android:layout_toLeftOf="@id/btn_dob_calender"
-                    android:layout_marginRight="20dp"
-                    android:focusable="@{dependentViewModel.isUserNotAlreadyTest()}"/>
+                    android:layout_marginRight="20dp" />
                 </RelativeLayout>
 
                 <TextView
@@ -348,8 +347,7 @@
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
                     android:paddingTop="10dp"
-                    android:imeOptions="actionNext"
-                    android:focusable="@{dependentViewModel.isUserNotAlreadyTest()}"/>
+                    android:imeOptions="actionNext"/>
                 </RelativeLayout>
 
                 <TextView
@@ -678,7 +676,7 @@
                         android:background="@android:color/transparent"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="10dp"
-                        android:focusable="@{dependentViewModel.isUserNotAlreadyTest()}"/>
+                        android:focusable="false"/>
 
                 </LinearLayout>
 

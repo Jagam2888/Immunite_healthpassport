@@ -185,7 +185,7 @@ class SignupViewModel(
 
         dobTime.value = "1200"
 
-        getIdentifierType()
+
     }
 
     private fun getIdentifierType(){
@@ -204,6 +204,7 @@ class SignupViewModel(
                     }
 
                 }
+                listener?.onSuccess("success")
             }catch (e:APIException){
                 listener?.onFailure(e.message!!)
             }catch (e:NoInternetException){
@@ -262,7 +263,14 @@ class SignupViewModel(
 
 
                             signUpRepositary.saveUser(user)
-                            listener?.onSuccess("success")
+                            val getAllIdentifierType = signUpRepositary.getAllIdentifierType()
+                            if (getAllIdentifierType.isNullOrEmpty()){
+                                getIdentifierType()
+                            }else{
+                                listener?.onSuccess("success")
+                            }
+
+
                         }else{
                             listener?.onFailure("Sorry! Invalid Birth Time")
                         }

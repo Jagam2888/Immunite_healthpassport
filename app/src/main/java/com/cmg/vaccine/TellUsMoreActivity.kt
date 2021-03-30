@@ -80,7 +80,7 @@ class TellUsMoreActivity : BaseActivity(),KodeinAware,SimpleListener,SlideDatePi
             hideKeyBoard()
             //showDatePickerDialogForPassport(binding.edtPassportExpDate)
             showSliderDatePickerDialog("passport",supportFragmentManager,
-                Calendar.getInstance(), Calendar.getInstance().apply { add(Calendar.YEAR,10) })
+                Calendar.getInstance().apply { add(Calendar.DATE,1) }, Calendar.getInstance().apply { add(Calendar.YEAR,10) })
         }
 
         binding.edtPassportExpDate.addTextChangedListener(object : TextWatcher {

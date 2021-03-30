@@ -1,13 +1,7 @@
 package com.cmg.vaccine.repositary
 
-import com.cmg.vaccine.database.AppDatabase
-import com.cmg.vaccine.database.User
-import com.cmg.vaccine.database.WorldEntryCountries
-import com.cmg.vaccine.database.WorldEntryRulesByCountry
-import com.cmg.vaccine.model.response.GetExistingUserResponse
-import com.cmg.vaccine.model.response.UpdateFCMTokenResponse
-import com.cmg.vaccine.model.response.UpdateUUIDResponse
-import com.cmg.vaccine.model.response.WorldEntriesCountryList
+import com.cmg.vaccine.database.*
+import com.cmg.vaccine.model.response.*
 import com.cmg.vaccine.network.MyApi
 import com.cmg.vaccine.network.SafeAPIRequest
 import com.cmg.vaccine.prefernces.PreferenceProvider
@@ -70,5 +64,14 @@ class ExistingUserRepositary(
 
     fun getWorldEntryCountries():List<WorldEntryCountries>{
         return database.getDao().getAllWorldCountries()
+    }
+
+    suspend fun getIdentifierTypeFromAPI(): IdentifierTypeResponse {
+        return apiRequest {
+            api.getIdentifierType()
+        }
+    }
+    fun insertIdentifierType(identifierType: IdentifierType){
+        database.getDao().insertIdentifierType(identifierType)
     }
 }

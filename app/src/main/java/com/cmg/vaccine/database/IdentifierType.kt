@@ -14,6 +14,6 @@ data class IdentifierType(
     var id:Int = 0
 
     override fun toString(): String {
-        return identifierCode!!
+        return identifierDisplay!!
     }
 }

@@ -40,6 +40,9 @@ class SignUpRepositary(
             api.getIdentifierType()
         }
     }
+    fun getAllIdentifierType():List<IdentifierType>{
+        return database.getDao().getAllIdentifierType()
+    }
     fun insertIdentifierType(identifierType: IdentifierType){
         database.getDao().insertIdentifierType(identifierType)
     }

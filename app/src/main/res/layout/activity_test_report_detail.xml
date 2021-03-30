@@ -62,11 +62,21 @@
                     android:paddingRight="20dp"
                     android:paddingLeft="20dp">
 
-                    <LinearLayout
+                    <ImageView
+                        android:id="@+id/img_success"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:src="@drawable/success_icon_green"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:layout_centerVertical="true">
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@id/img_success"
+                        android:layout_marginRight="10dp">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -91,12 +101,7 @@
                             android:layout_marginTop="5dp" />
                     </LinearLayout>
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/success_icon_green"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true" />
+
                 </RelativeLayout>
 
                 <LinearLayout

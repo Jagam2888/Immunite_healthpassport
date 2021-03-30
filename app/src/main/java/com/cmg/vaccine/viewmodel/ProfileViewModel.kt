@@ -98,17 +98,6 @@ class ProfileViewModel(
 
 
 
-
-    /*val clicksListener = object : AdapterView.OnItemSelectedListener {
-        override fun onNothingSelected(parent: AdapterView<*>?) {
-
-        }
-
-        override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-            selectedItemNationalityCode.set(position)
-        }
-    }*/
-
     init {
         //val countries = World.
        // countryList = repositary.getAllCountriesDB()
@@ -116,22 +105,21 @@ class ProfileViewModel(
         _countries.value = countryList
 
         var user = repositary.getUserData()
-        isUserNotAlreadyTest.set(true)
+        /*isUserNotAlreadyTest.set(true)
         if (user != null) {
             if (!user.privateKey.isNullOrEmpty()) {
                 val testReportList = repositary.getTestReportList(user.privateKey!!)
                 if (testReportList.isNotEmpty()){
-                    //if ((user.fullName == firstName.value) or (user.dob == dob.value) or (user.patientIdNo == idNo.value)){
                         isUserNotAlreadyTest.set(false)
-                    //}
                 }
             }
-        }
+        }*/
 
         val getAllIdentifierType = repositary.getAllIdentifierType()
         if (!getAllIdentifierType.isNullOrEmpty()){
             _identifierTypeList.value = getAllIdentifierType
         }
+
 
     }
 
@@ -196,7 +184,9 @@ class ProfileViewModel(
 
             selectedItemNationalityCode.set(selectedCountryName(user.nationality,countryList!!))
             selectedItemBirthPlaceCode.set(selectedCountryName(user.placeBirth,countryList!!))
-            selectedItemIdTYpe.set(selectedIdType(user.patientIdType!!,identifierTypeList.value!!))
+            if (!identifierTypeList.value.isNullOrEmpty()) {
+                selectedItemIdTYpe.set(selectedIdType(user.patientIdType!!, identifierTypeList.value!!))
+            }
 
             nationalityCountryCode.value = World.getCountryFrom(user?.nationality).name
             birthPlaceCountryCode.value = World.getCountryFrom(user?.placeBirth).name

@@ -324,7 +324,7 @@
                             android:entries="@{tellusviewmodel.identifierTypeList}"
                             android:layout_toLeftOf="@id/img_down_arrow_id"
                             android:layout_centerVertical="true"
-                            android:selectedItemPosition="@={tellusviewmodel.selectedItemIdTYpe}"/>
+                            tools:setOnItemSelectedListener="@{tellusviewmodel.clicksListener}"/>
 
 
                     </RelativeLayout>
@@ -342,7 +342,7 @@
                         android:text="@={tellusviewmodel.idNo}"
                         android:inputType="number"
                         android:maxLines="1"
-                        android:maxLength="15"
+                        android:maxLength="@{tellusviewmodel.patientIdNoCharLength}"
                         style="@style/opens_regular"
                         android:layout_weight="1"
                         android:background="@android:color/transparent"

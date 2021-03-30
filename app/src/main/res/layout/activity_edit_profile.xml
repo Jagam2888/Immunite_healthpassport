@@ -132,7 +132,7 @@
                     android:paddingRight="10dp"
                     android:paddingTop="10dp"
                     android:inputType="text"
-                    android:focusable="@{profileviewmodel.isUserNotAlreadyTest()}"/>
+                    android:focusable="false"/>
 
 
                 <TextView
@@ -274,8 +274,7 @@
                         android:paddingTop="10dp"
                         android:imeOptions="actionNext"
                         android:layout_toLeftOf="@id/btn_dob_calender"
-                        android:layout_marginRight="20dp"
-                        android:focusable="@{profileviewmodel.isUserNotAlreadyTest()}"/>
+                        android:layout_marginRight="20dp" />
 
                 </RelativeLayout>
 
@@ -320,8 +319,7 @@
                     android:paddingTop="10dp"
                     android:imeOptions="actionNext"
                     android:layout_toLeftOf="@id/btn_dob_time_calender"
-                    android:layout_marginRight="20dp"
-                    android:focusable="@{profileviewmodel.isUserNotAlreadyTest()}"/>
+                    android:layout_marginRight="20dp" />
                 </RelativeLayout>
 
                 <TextView
@@ -632,7 +630,7 @@
                             android:entries="@{profileviewmodel.identifierTypeList}"
                             android:layout_toLeftOf="@id/img_down_arrow_id"
                             android:layout_centerVertical="true"
-                            android:selectedItemPosition="@={profileviewmodel.selectedItemIdTYpe}"/>
+                            android:selectedItemPosition="@={profileviewmodel.selectedItemIdTYpe}" />
 
 
                     </RelativeLayout>
@@ -657,7 +655,7 @@
                         android:background="@android:color/transparent"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="10dp"
-                        android:focusable="@{profileviewmodel.isUserNotAlreadyTest()}"/>
+                        android:focusable="false"/>
 
                 </LinearLayout>
 

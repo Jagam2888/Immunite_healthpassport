@@ -1,6 +1,7 @@
 package com.cmg.vaccine.viewmodel
 
 import android.view.View
+import android.widget.AdapterView
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableInt
 import androidx.lifecycle.LiveData
@@ -59,6 +60,27 @@ class TellUsMoreViewModel(
     var nationalityCountryCode:MutableLiveData<String> = MutableLiveData()
     var nationalityCountryFlag:MutableLiveData<Int> = MutableLiveData()
 
+    var patientIdNoCharLength = ObservableInt()
+
+
+
+
+    val clicksListener = object : AdapterView.OnItemSelectedListener {
+        override fun onNothingSelected(parent: AdapterView<*>?) {
+
+        }
+
+        override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+            selectedItemIdTYpe.set(position)
+            if (!identifierTypeList.value?.isNullOrEmpty()!!){
+                if (identifierTypeList.value!![position].identifierCode.equals("NNMYS")){
+                    idNo.value = ""
+                    patientIdNoCharLength.set(12)
+                }
+            }
+        }
+    }
+
     init {
         //val countries = repositary.getAllCountriesDB()
         val countries = World.getAllCountries()
@@ -67,41 +89,13 @@ class TellUsMoreViewModel(
         }
 
         val getAllIdentifierType = repositary.getAllIdentifierType()
-        if (getAllIdentifierType.isNullOrEmpty()){
-            getIdentifierType()
-        }else{
+        if (!getAllIdentifierType.isNullOrEmpty()){
             _identifierTypeList.value = getAllIdentifierType
         }
 
-    }
+        patientIdNoCharLength.set(15)
 
-    private fun getIdentifierType(){
-        Couritnes.main {
-            try {
-                val response = repositary.getIdentifierTypeFromAPI()
-                if (!response.data.isNullOrEmpty()){
-                    response.data.forEach {
-                        val identifierType = IdentifierType(
-                            it.identifierCode,
-                            it.identifierDisplay,
-                            it.identifierSeqno,
-                            it.identifierStatus
-                        )
-                        repositary.insertIdentifierType(identifierType)
-                    }
-                    val getAllIdentifierType = repositary.getAllIdentifierType()
-                    _identifierTypeList.value = getAllIdentifierType
-                }
-            }catch (e:APIException){
-                listener?.onFailure(e.message!!)
-            }catch (e:NoInternetException){
-                listener?.onFailure(e.message!!)
-            }catch (e: Exception){
-                listener?.onFailure(e.message!!)
-            }
-        }
     }
-
     fun getPlaceOfBirthPos(){
         var alreadyStored = repositary.getUserData()
         val gson = Gson()

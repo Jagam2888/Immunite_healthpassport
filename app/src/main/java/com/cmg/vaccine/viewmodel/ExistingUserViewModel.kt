@@ -5,6 +5,7 @@ import android.view.View
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import androidx.lifecycle.ViewModel
+import com.cmg.vaccine.database.IdentifierType
 import com.cmg.vaccine.database.User
 import com.cmg.vaccine.database.WorldEntryCountries
 import com.cmg.vaccine.listener.SimpleListener
@@ -56,6 +57,33 @@ class ExistingUserViewModel(
         }
     }
 
+    private fun getIdentifierType(){
+        Couritnes.main {
+            try {
+                val response = repositary.getIdentifierTypeFromAPI()
+                if (!response.data.isNullOrEmpty()){
+                    response.data.forEach {
+                        val identifierType = IdentifierType(
+                                it.identifierCode,
+                                it.identifierDisplay,
+                                it.identifierSeqno,
+                                it.identifierStatus
+                        )
+                        repositary.insertIdentifierType(identifierType)
+                    }
+
+                }
+                listener?.onSuccess("Setup Manually Success")
+            }catch (e:APIException){
+                listener?.onFailure(e.message!!)
+            }catch (e:NoInternetException){
+                listener?.onFailure(e.message!!)
+            }catch (e:Exception){
+                listener?.onFailure(e.message!!)
+            }
+        }
+    }
+
     private fun updateUUID(view: View){
         Couritnes.main {
             try {
@@ -89,7 +117,8 @@ class ExistingUserViewModel(
                 val response = repositary.updateFCMToken(repositary.getPatientSubId()!!,token)
                 //if (response.StatusCode == 1){
                     //listener?.onSuccess(response.Message)
-                    listener?.onSuccess("Setup Manually Success")
+                getIdentifierType()
+
                 /*}else{
                     listener?.onFailure(response.Message)
                 }*/

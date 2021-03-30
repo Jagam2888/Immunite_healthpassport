@@ -648,7 +648,7 @@
                             android:entries="@{dependentViewModel.identifierTypeList}"
                             android:layout_toLeftOf="@id/img_down_arrow_id"
                             android:layout_centerVertical="true"
-                            android:selectedItemPosition="@={dependentViewModel.selectedItemIdTYpe}"/>
+                            tools:setOnItemSelectedListener="@{dependentViewModel.clicksListener}"/>
 
 
                     </RelativeLayout>
@@ -666,7 +666,7 @@
                         android:text="@={dependentViewModel.idNo}"
                         android:inputType="number"
                         android:maxLines="1"
-                        android:maxLength="15"
+                        android:maxLength="@{dependentViewModel.patientIdNoCharLength}"
                         android:textAppearance="@style/opens_regular"
                         android:textSize="14sp"
                         android:layout_weight="1"
