@@ -102,6 +102,7 @@ class SettingsViewModel(
                             it.prioRuleCountry,
                             it.prioRuleCriteria,
                             it.prioRuleNo,
+                                it.prioRulePair,
                             it.prioSeqNo
                         )
                         repositary.insertWorldPriority(worldPriority)
@@ -127,7 +128,8 @@ class SettingsViewModel(
                             it.wetstCountryCode,
                             it.wetstSeqNo,
                             it.wetstTestCode,
-                            it.wetstTestcategory
+                            it.wetstTestcategory,
+                                it.wetstObservationStatusCode
                         )
                         repositary.insertTestCodes(testCodes)
                     }

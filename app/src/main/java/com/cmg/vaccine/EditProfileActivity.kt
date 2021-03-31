@@ -51,6 +51,13 @@ class EditProfileActivity : BaseActivity(),KodeinAware,SimpleListener,SlideDateP
     var lastClickTimeDOBTime:Long = 0
     var isDOBPicker:Boolean = false
 
+    companion object{
+        //image pick code
+        private val IMAGE_PICK_CODE = 1000;
+        //Permission code
+        private val PERMISSION_CODE = 1001;
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -320,6 +327,8 @@ class EditProfileActivity : BaseActivity(),KodeinAware,SimpleListener,SlideDateP
             }
         })
 
+
+
         if (!viewModel.getProfileImage().isNullOrEmpty()){
             val uri = Uri.parse(viewModel.getProfileImage())
             binding.headPicture.setImageURI(uri)
@@ -344,12 +353,7 @@ class EditProfileActivity : BaseActivity(),KodeinAware,SimpleListener,SlideDateP
         startActivityForResult(intent, IMAGE_PICK_CODE)
     }
 
-    companion object{
-        //image pick code
-        private val IMAGE_PICK_CODE = 1000;
-        //Permission code
-        private val PERMISSION_CODE = 1001;
-    }
+
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         when (requestCode) {

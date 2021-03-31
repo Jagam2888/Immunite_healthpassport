@@ -125,7 +125,7 @@
                     android:maxLength="100"
                     android:textColorHint="@color/gray"
                     android:textColor="@color/black"
-                    android:background="@drawable/edittext_background"
+                    android:background="@drawable/edittext_disable_background"
                     android:layout_marginTop="5dp"
                     android:paddingBottom="10dp"
                     android:paddingLeft="10dp"
@@ -600,7 +600,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:orientation="horizontal"
-                    android:background="@drawable/edittext_background">
+                    android:background="@drawable/edittext_disable_background">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -627,7 +627,9 @@
                             android:textSize="14sp"
                             android:background="@null"
                             android:minHeight="0dp"
-                            android:entries="@{profileviewmodel.identifierTypeList}"
+                            android:clickable="false"
+                            android:enabled='false'
+                            android:entries="@{profileviewmodel.nationalityCountryCode.equals(`Malaysia`)?profileviewmodel.identifierTypeListForMYS:profileviewmodel.identifierTypeList}"
                             android:layout_toLeftOf="@id/img_down_arrow_id"
                             android:layout_centerVertical="true"
                             android:selectedItemPosition="@={profileviewmodel.selectedItemIdTYpe}" />

@@ -7,6 +7,7 @@ data class WorldPriority(
         var prioRuleCountry: String?,
         var prioRuleCriteria: String?,
         var prioRuleNo: String?,
+        var prioRulePair: String?,
         var prioSeqNo: Int?
 ){
     @PrimaryKey(autoGenerate = true)

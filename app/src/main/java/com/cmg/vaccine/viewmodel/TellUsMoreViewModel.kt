@@ -57,6 +57,10 @@ class TellUsMoreViewModel(
     val identifierTypeList:LiveData<List<IdentifierType>>
     get() = _identifierTypeList
 
+    var _identifierTypeListForMYS:MutableLiveData<ArrayList<IdentifierType>> = MutableLiveData()
+    val identifierTypeListForMYS:LiveData<ArrayList<IdentifierType>>
+        get() = _identifierTypeListForMYS
+
     var nationalityCountryCode:MutableLiveData<String> = MutableLiveData()
     var nationalityCountryFlag:MutableLiveData<Int> = MutableLiveData()
 
@@ -65,7 +69,7 @@ class TellUsMoreViewModel(
 
 
 
-    val clicksListener = object : AdapterView.OnItemSelectedListener {
+    val clicksListenerIdType = object : AdapterView.OnItemSelectedListener {
         override fun onNothingSelected(parent: AdapterView<*>?) {
 
         }
@@ -83,6 +87,7 @@ class TellUsMoreViewModel(
 
     init {
         //val countries = repositary.getAllCountriesDB()
+        var identifierTypeForMYS = ArrayList<IdentifierType>()
         val countries = World.getAllCountries()
         if (!countries.isNullOrEmpty()){
             _countries.value = countries
@@ -91,6 +96,14 @@ class TellUsMoreViewModel(
         val getAllIdentifierType = repositary.getAllIdentifierType()
         if (!getAllIdentifierType.isNullOrEmpty()){
             _identifierTypeList.value = getAllIdentifierType
+
+            getAllIdentifierType.forEach {
+                if (it.identifierCode.equals("NNMYS",false)){
+                    identifierTypeForMYS.add(it)
+                }
+            }
+            _identifierTypeListForMYS.value = identifierTypeForMYS
+
         }
 
         patientIdNoCharLength.set(15)
@@ -109,8 +122,32 @@ class TellUsMoreViewModel(
 
     fun onRegister(view:View){
         listener?.onStarted()
-        //if(!passportNo.value.isNullOrEmpty()) {
+        //if((!passportNo.value.isNullOrEmpty()) or (!idNo.value.isNullOrEmpty())) {
             if (isChecked.get()) {
+
+                if (nationalityCountryCode.value.equals("Malaysia")){
+                    if (idNo.value.isNullOrEmpty()){
+                        listener?.onFailure("Malaysian should be enter Your Id number")
+                        return
+                    }
+                }
+
+                if (!nationalityCountryCode.value.equals("Malaysia")){
+                    if((passportNo.value.isNullOrEmpty()) and (idNo.value.isNullOrEmpty())) {
+                        listener?.onFailure("Passport Number or Id number either one Mandatory")
+                        return
+                    }
+                }
+
+                if (!passportNo.value.isNullOrEmpty()){
+                    if (passportExpDate.value.isNullOrEmpty()){
+                        listener?.onFailure("Please Enter Your Passport Expiry Date")
+                        return
+                    }
+                }
+
+
+
                 var alreadyStored = repositary.getUserData()
                 val gson = Gson()
                 val type: Type = object : TypeToken<User>() {}.type
@@ -175,7 +212,7 @@ class TellUsMoreViewModel(
                 listener?.onFailure("Please Read Terms and Condtition")
             }
         /*}else{
-            listener?.onFailure("Passport Number Mandatory")
+            listener?.onFailure("Passport Number or Id number Mandatory")
         }*/
     }
 }

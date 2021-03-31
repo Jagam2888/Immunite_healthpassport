@@ -96,6 +96,10 @@ class ProfileViewModel(
     val identifierTypeList:LiveData<List<IdentifierType>>
         get() = _identifierTypeList
 
+    var _identifierTypeListForMYS:MutableLiveData<ArrayList<IdentifierType>> = MutableLiveData()
+    val identifierTypeListForMYS:LiveData<ArrayList<IdentifierType>>
+        get() = _identifierTypeListForMYS
+
 
 
     init {
@@ -114,10 +118,17 @@ class ProfileViewModel(
                 }
             }
         }*/
-
+        var identifierTypeForMYS = ArrayList<IdentifierType>()
         val getAllIdentifierType = repositary.getAllIdentifierType()
         if (!getAllIdentifierType.isNullOrEmpty()){
             _identifierTypeList.value = getAllIdentifierType
+
+            getAllIdentifierType.forEach {
+                if (it.identifierCode.equals("NNMYS",false)){
+                    identifierTypeForMYS.add(it)
+                }
+            }
+            _identifierTypeListForMYS.value = identifierTypeForMYS
         }
 
 
@@ -184,7 +195,7 @@ class ProfileViewModel(
 
             selectedItemNationalityCode.set(selectedCountryName(user.nationality,countryList!!))
             selectedItemBirthPlaceCode.set(selectedCountryName(user.placeBirth,countryList!!))
-            if (!identifierTypeList.value.isNullOrEmpty()) {
+            if ((!identifierTypeList.value.isNullOrEmpty()) and (!user.patientIdType.isNullOrEmpty())) {
                 selectedItemIdTYpe.set(selectedIdType(user.patientIdType!!, identifierTypeList.value!!))
             }
 
@@ -216,6 +227,10 @@ class ProfileViewModel(
             currentEmail = email1.value
             currentMobile = contactNumber.value
             userSubId.value = user.parentSubscriberId
+
+
+            
+
         }
 
         calculateProgressBar.set(calculateProgressBar())
@@ -313,6 +328,29 @@ class ProfileViewModel(
                 if (!firstName.value.isNullOrEmpty() and !contactNumber.value.isNullOrEmpty() and !email1.value.isNullOrEmpty()) {
                     if (isAllow) {
                         if (email1.value.equals(reTypeEmail.value)) {
+
+                            if (nationalityCountryCode.value.equals("Malaysia")){
+                                if (idNo.value.isNullOrEmpty()){
+                                    listener?.onFailure("Malaysian should be enter Your Id number")
+                                    return
+                                }
+                            }
+
+                            if (!nationalityCountryCode.value.equals("Malaysia")){
+                                if((passportNumber.value.isNullOrEmpty()) and (idNo.value.isNullOrEmpty())) {
+                                    listener?.onFailure("Passport Number or Id number either one Mandatory")
+                                    return
+                                }
+                            }
+
+                            if (!passportNumber.value.isNullOrEmpty()){
+                                if (passportExpDate.value.isNullOrEmpty()){
+                                    listener?.onFailure("Please Enter Your Passport Expiry Date")
+                                    return
+                                }
+                            }
+
+
                             if (isChecked.get()) {
                                 if (isValidEmail(email1.value!!)) {
                                     if (validateDateFormat(dob.value!!)) {

@@ -106,6 +106,10 @@ class DependentViewModel(
 
     var patientIdNoCharLength = ObservableInt()
 
+    var _identifierTypeListForMYS:MutableLiveData<ArrayList<IdentifierType>> = MutableLiveData()
+    val identifierTypeListForMYS:LiveData<ArrayList<IdentifierType>>
+        get() = _identifierTypeListForMYS
+
     val clicksListener = object : AdapterView.OnItemSelectedListener {
         override fun onNothingSelected(parent: AdapterView<*>?) {
 
@@ -166,10 +170,17 @@ class DependentViewModel(
                 }
             }
         }*/
-
+        var identifierTypeForMYS = ArrayList<IdentifierType>()
         val getAllIdentifierType = repositary.getAllIdentifierType()
         if (!getAllIdentifierType.isNullOrEmpty()){
             _identifierTypeList.value = getAllIdentifierType
+
+            getAllIdentifierType.forEach {
+                if (it.identifierCode.equals("NNMYS",false)){
+                    identifierTypeForMYS.add(it)
+                }
+            }
+            _identifierTypeListForMYS.value = identifierTypeForMYS
         }
 
         patientIdNoCharLength.set(15)
@@ -202,6 +213,28 @@ class DependentViewModel(
                         if (validateDateFormat(dob.value!!)) {
                             if (validateTime(dobTime.value!!)) {
                                 listener?.onStarted()
+
+
+                                if (nationalityCountryCode.value.equals("Malaysia")){
+                                    if (idNo.value.isNullOrEmpty()){
+                                        listener?.onFailure("Malaysian should be enter Your Id number")
+                                        return
+                                    }
+                                }
+
+                                if (!nationalityCountryCode.value.equals("Malaysia")){
+                                    if((passportNumber.value.isNullOrEmpty()) and (idNo.value.isNullOrEmpty())) {
+                                        listener?.onFailure("Passport Number or Id number either one Mandatory")
+                                        return
+                                    }
+                                }
+
+                                if (!passportNumber.value.isNullOrEmpty()){
+                                    if (passportExpDate.value.isNullOrEmpty()){
+                                        listener?.onFailure("Please Enter Your Passport Expiry Date")
+                                        return
+                                    }
+                                }
 
                                 val relationShips =
                                     view.context.resources.getStringArray(R.array.relationships)
@@ -408,6 +441,27 @@ class DependentViewModel(
                             if (validateDateFormat(dob.value!!)) {
                                 if (validateTime(dobTime.value!!)) {
                                     listener?.onStarted()
+
+                                    if (nationalityCountryCode.value.equals("Malaysia")){
+                                        if (idNo.value.isNullOrEmpty()){
+                                            listener?.onFailure("Malaysian should be enter Your Id number")
+                                            return
+                                        }
+                                    }
+
+                                    if (!nationalityCountryCode.value.equals("Malaysia")){
+                                        if((passportNumber.value.isNullOrEmpty()) and (idNo.value.isNullOrEmpty())) {
+                                            listener?.onFailure("Passport Number or Id number either one Mandatory")
+                                            return
+                                        }
+                                    }
+
+                                    if (!passportNumber.value.isNullOrEmpty()){
+                                        if (passportExpDate.value.isNullOrEmpty()){
+                                            listener?.onFailure("Please Enter Your Passport Expiry Date")
+                                            return
+                                        }
+                                    }
                                         try {
                                             val updateProfileReq = UpdateProfileReq()
                                             val updateProfileReqData = UpdateProfileReqData()

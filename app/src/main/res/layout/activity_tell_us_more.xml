@@ -321,10 +321,10 @@
                             android:textSize="16sp"
                             android:background="@null"
                             android:minHeight="0dp"
-                            android:entries="@{tellusviewmodel.identifierTypeList}"
+                            android:entries="@{tellusviewmodel.nationalityCountryCode.equals(`Malaysia`)?tellusviewmodel.identifierTypeListForMYS:tellusviewmodel.identifierTypeList}"
                             android:layout_toLeftOf="@id/img_down_arrow_id"
                             android:layout_centerVertical="true"
-                            tools:setOnItemSelectedListener="@{tellusviewmodel.clicksListener}"/>
+                            tools:setOnItemSelectedListener="@{tellusviewmodel.clicksListenerIdType}"/>
 
 
                     </RelativeLayout>

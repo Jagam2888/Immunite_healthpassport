@@ -8,6 +8,7 @@ data class TestCodes(
         var wetstCountryCode: String?,
         var wetstSeqNo: Int?,
         var wetstTestCode: String?,
+        var wetstObservationStatusCode: String?,
         var wetstTestcategory: String?
 ){
     @PrimaryKey(autoGenerate = true)
