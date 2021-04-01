@@ -18,6 +18,7 @@ import org.json.JSONException
 import org.json.JSONObject
 import retrofit2.Response
 import java.lang.Exception
+import java.lang.StringBuilder
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -123,116 +124,98 @@ class DepartureVerificationViewModel(
                     val getAirportValues = repositary.getAirportCityByCode(arrivalDestination.value!!)
 
                     if (getAirportValues != null) {
-                        val worldEntryRule = repositary.getWorldEnteryRuleByCountry(getAirportValues.countryCode!!,"T")
+                        if (!getAirportValues.countryCode.isNullOrEmpty()){
+                            val worldEntryRule = repositary.getJoinWorldEntryRuleAndPriority(getAirportValues.countryCode!!)
 
-                        var worldPriorityList:ArrayList<WorldPriority> = ArrayList()
-                        var testCodesList:ArrayList<TestCodes> = ArrayList()
-                        var listRuleSeqNo:ArrayList<String> = ArrayList()
-                        var listTestCodeByCategory:ArrayList<String> = ArrayList()
-                        var listTestReportByTestCode:ArrayList<TestReport> = ArrayList()
-                        worldEntryRule.forEach {
-                            val worldPriority = repositary.getWorldPriorityByRuleNo(
-                                it.woen_rule_seq_no!!,
-                                it.woen_country_code!!
-                            )
-                            if (worldPriority != null) {
-                                worldPriorityList.add(worldPriority)
-                                listRuleSeqNo.add(it.woen_rule_seq_no!!)
 
-                                val testCodes = repositary.getTestCodesByCategory(
-                                    it.woen_test_code!!,
-                                    it.woen_country_code!!
-                                )
-                                if (!testCodes.isNullOrEmpty()) {
-                                    testCodes.forEach { testCode ->
-                                        listTestCodeByCategory.add(testCode.wetstTestCode!!)
 
-                                        val testReport =
-                                            repositary.getTestReportByTestCode(testCode.wetstTestCode!!)
-                                        listTestReportByTestCode.add(testReport)
+                            var listTestReportFilterByHours:ArrayList<TestReport> = ArrayList()
+
+                            var observationCode = ArrayList<String>()
+
+                            val testReport = repositary.getTestReportList(userData.privateKey!!)
+
+                            worldEntryRule.forEach {
+                                when(it.woen_rule_match_criteria){
+                                    "T" ->{
+                                        if (it.prioRuleCriteria.equals("Mandatory",false)) {
+                                            hours = it.woen_duration_hours?.toLong()!!
+
+                                            observationCode.add(it.woen_test_code!!)
+                                        }
+                                        if (it.prioRuleCriteria.equals("Selective",false)) {
+                                            hours = it.woen_duration_hours?.toLong()!!
+                                            observationCode.add(it.woen_test_code!!)
+                                        }
                                     }
+                                }
 
+
+                            }
+                            testReport.forEach {
+                                if ((!it.dateSampleCollected.isNullOrEmpty()) and (!it.timeSampleCollected.isNullOrEmpty())){
+                                    val sampleDate = changeDateFormatNewISO8601(it.dateSampleCollected + " " + it.timeSampleCollected + ":00")
+                                    val calculateHours = calculateHours(changeDateToTimeStamp(etdTime.value!!)!!,changeDateToTimeStamp(sampleDate!!)!!)
+                                    if (calculateHours != null){
+                                        if (calculateHours <= hours) {
+                                            listTestReportFilterByHours.add(it)
+                                        }
+
+                                    }
                                 }
                             }
 
-                            hours = it.woen_duration_hours?.toLong()!!
-                            /*when(it.woen_rule_match_criteria){
-                            "T" ->{
-                                hours = it.woen_duration_hours?.toLong()!!
+                            var testCodesFilterByTestReport = ArrayList<TestCodes>()
+
+                            val testCodes = repositary.getTestCodesByCategory(observationCode,getAirportValues.countryCode!!)
+                            for (i in testCodes.indices){
+                                for (j in testReport.indices){
+                                    if (testCodes[i].wetstTestCode.equals(testReport[j].testCode)){
+                                        testCodesFilterByTestReport.add(testCodes[i])
+                                    }
+                                }
                             }
-                        }*/
+                            if (testCodesFilterByTestReport.size > 0){
+                                testCodesFilterByTestReport.forEach {
+                                    if (it.wetstObservationStatusCode.equals("PCR", false)) {
+                                        if ((it.wetstTestcategory.equals("260385009")) or (it.wetstTestcategory.equals("260415000"))) {
+                                            status.set(true)
+                                            return
+                                        } else if (it.wetstTestcategory.equals("260385009 | 260415000")) {
+                                            status.set(true)
+                                            return
+                                        } else {
+                                            status.set(false)
+                                            return
+                                        }
+                                    }else if (it.wetstObservationStatusCode.equals("ANTIGEN", false)){
+                                        if (it.wetstTestcategory.equals("10828004")) {
+                                            status.set(true)
+                                            return
+                                        } else {
+                                            status.set(false)
+                                            return
+                                        }
+                                    }else if (it.wetstObservationStatusCode.equals("ANTIBODY", false)){
+                                        if (it.wetstTestcategory.equals("10828004")) {
+                                            status.set(true)
+                                            return
+                                        } else {
+                                            status.set(false)
+                                            return
+                                        }
+                                    }
+                                }
+                            }
+                        }else{
+                            listener?.onFailure("Database Error, Country Code return Null or Empty")
+                            status.set(false)
                         }
-                        val dateFormat = SimpleDateFormat("dd/MM/yyyy HH:mm")
-                        if (!listTestReportByTestCode.isNullOrEmpty()) {
-                            if (listTestReportByTestCode.size == 1) {
-                                var getSampleCollectedDate =
-                                    changeDateFormatNewISO8601(listTestReportByTestCode[0].dateSampleCollected + " " + listTestReportByTestCode[0].timeSampleCollected + ":00")
 
-                                val calculateHours = calculateHours(
-                                    changeDateToTimeStamp(etdTime.value!!)!!,
-                                    changeDateToTimeStamp(getSampleCollectedDate!!)!!
-                                )
-
-                                if (calculateHours != null) {
-                                    if (calculateHours <= hours) {
-                                        status.set(true)
-                                    } else {
-                                        status.set(false)
-                                    }
-                                }
-                            } else {
-                                val listDate: ArrayList<Date> = ArrayList()
-                                listTestReportByTestCode.forEach {
-                                    val date =
-                                        dateFormat.parse(it.dateSampleCollected + " " + it.timeSampleCollected)
-                                    listDate.add(date)
-                                }
-
-                                maxDate = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                                    listDate.stream().max(Date::compareTo).get()
-                                } else {
-                                    Collections.max(listDate)
-                                }
-
-                                var getSampleCollectedDate =
-                                    changeDateFormatNewISO8601(dateFormat.format(maxDate) + ":00")
-
-                                val calculateHours = calculateHours(
-                                    changeDateToTimeStamp(etdTime.value!!)!!,
-                                    changeDateToTimeStamp(getSampleCollectedDate!!)!!
-                                )
-
-                                if (calculateHours != null) {
-                                    if (calculateHours <= hours) {
-                                        status.set(true)
-                                    } else {
-                                        status.set(false)
-                                    }
-                                }
-
-                            }
-                        }
                     }else{
                         listener?.onFailure("Please Sync your Data, your TestReport Empty")
                         status.set(false)
                     }
-                    /*if (!userData.privateKey.isNullOrEmpty()) {
-                        var getTestReport = repositary.getTestReportList(userData.privateKey!!)
-
-                        var getSampleCollectedDate = changeDateFormatNewISO8601(getTestReport[0].dateSampleCollected+" "+getTestReport[0].timeSampleCollected+":00")
-
-                        val calculateHours = calculateHours(changeDateToTimeStamp(etdTime.value!!)!!, changeDateToTimeStamp(getSampleCollectedDate!!)!!)
-
-                        if (calculateHours != null) {
-                            if (calculateHours <= hours){
-                                status.set(true)
-                            }else{
-                                status.set(false)
-                            }
-                        }
-                    }*/
-
-
 
                 }
 

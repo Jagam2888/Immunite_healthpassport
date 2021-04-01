@@ -110,6 +110,10 @@ class DependentViewModel(
     val identifierTypeListForMYS:LiveData<ArrayList<IdentifierType>>
         get() = _identifierTypeListForMYS
 
+    var _identifierTypeListForOthers:MutableLiveData<ArrayList<IdentifierType>> = MutableLiveData()
+    val identifierTypeListForOthers:LiveData<ArrayList<IdentifierType>>
+        get() = _identifierTypeListForOthers
+
     val clicksListener = object : AdapterView.OnItemSelectedListener {
         override fun onNothingSelected(parent: AdapterView<*>?) {
 
@@ -171,6 +175,7 @@ class DependentViewModel(
             }
         }*/
         var identifierTypeForMYS = ArrayList<IdentifierType>()
+        var identifierTypeForOthers = ArrayList<IdentifierType>()
         val getAllIdentifierType = repositary.getAllIdentifierType()
         if (!getAllIdentifierType.isNullOrEmpty()){
             _identifierTypeList.value = getAllIdentifierType
@@ -178,9 +183,12 @@ class DependentViewModel(
             getAllIdentifierType.forEach {
                 if (it.identifierCode.equals("NNMYS",false)){
                     identifierTypeForMYS.add(it)
+                }else{
+                    identifierTypeForOthers.add(it)
                 }
             }
             _identifierTypeListForMYS.value = identifierTypeForMYS
+            _identifierTypeListForOthers.value = identifierTypeForOthers
         }
 
         patientIdNoCharLength.set(15)

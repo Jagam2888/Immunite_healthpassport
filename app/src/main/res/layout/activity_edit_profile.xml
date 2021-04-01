@@ -600,7 +600,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:orientation="horizontal"
-                    android:background="@drawable/edittext_disable_background">
+                    android:background="@{profileviewmodel.nationalityCountryCode == null ? @drawable/edittext_background:@drawable/edittext_disable_background}">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -657,7 +657,7 @@
                         android:background="@android:color/transparent"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="10dp"
-                        android:focusable="false"/>
+                        android:focusable="@{profileviewmodel.nationalityCountryCode == null?true:false}"/>
 
                 </LinearLayout>
 

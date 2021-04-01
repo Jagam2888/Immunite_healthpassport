@@ -38,10 +38,10 @@ object Passparams{
     const val FORGOT_PIN = "forgot_pin"
 
     //API
-    const val URL = "http://47.254.238.145:7001/"
+    //const val URL = "http://47.254.238.145:7001/"
 
     //Production API
-    //const val URL = "http://47.254.236.183:7001/"
+    const val URL = "http://47.254.236.183:7001/"
 
     const val PATIENT_REGISTRATION = "nhr-module-user/patientreg"
     const val DEPENDENT_REGISTRATION = "nhr-module-user/patientdependentreg"

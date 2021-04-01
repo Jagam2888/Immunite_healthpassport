@@ -61,6 +61,10 @@ class TellUsMoreViewModel(
     val identifierTypeListForMYS:LiveData<ArrayList<IdentifierType>>
         get() = _identifierTypeListForMYS
 
+    var _identifierTypeListForOthers:MutableLiveData<ArrayList<IdentifierType>> = MutableLiveData()
+    val identifierTypeListForOthers:LiveData<ArrayList<IdentifierType>>
+        get() = _identifierTypeListForOthers
+
     var nationalityCountryCode:MutableLiveData<String> = MutableLiveData()
     var nationalityCountryFlag:MutableLiveData<Int> = MutableLiveData()
 
@@ -88,6 +92,7 @@ class TellUsMoreViewModel(
     init {
         //val countries = repositary.getAllCountriesDB()
         var identifierTypeForMYS = ArrayList<IdentifierType>()
+        var identifierTypeForOthers = ArrayList<IdentifierType>()
         val countries = World.getAllCountries()
         if (!countries.isNullOrEmpty()){
             _countries.value = countries
@@ -100,9 +105,12 @@ class TellUsMoreViewModel(
             getAllIdentifierType.forEach {
                 if (it.identifierCode.equals("NNMYS",false)){
                     identifierTypeForMYS.add(it)
+                }else{
+                    identifierTypeForOthers.add(it)
                 }
             }
             _identifierTypeListForMYS.value = identifierTypeForMYS
+            _identifierTypeListForOthers.value = identifierTypeForOthers
 
         }
 

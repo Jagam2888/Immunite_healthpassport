@@ -1,6 +1,7 @@
 package com.cmg.vaccine.repositary
 
 import com.cmg.vaccine.database.*
+import com.cmg.vaccine.model.JoinWorldEntryRuleAndPriority
 import com.cmg.vaccine.prefernces.PreferenceProvider
 
 class DepartureVerificationRepositary(
@@ -28,7 +29,7 @@ class DepartureVerificationRepositary(
         return database.getDao().getAllWorldPriorityByRuleNo(ruleNo,countryCode)
     }
 
-    fun getTestCodesByCategory(category:String,countryCode: String):List<TestCodes>{
+    fun getTestCodesByCategory(category:ArrayList<String>,countryCode: String):List<TestCodes>{
         return database.getDao().getAllTestCodesByCategory(category,countryCode)
     }
 
@@ -38,6 +39,10 @@ class DepartureVerificationRepositary(
 
     fun getMaxHoursFromWorldEntryRulePriority(countryCode:String,criteria:String,ruleSeqno:String):String{
         return database.getDao().getMaxHoursWorldEntryRuleForMAS(countryCode,criteria,ruleSeqno)
+    }
+
+    fun getJoinWorldEntryRuleAndPriority(countryCode: String):List<JoinWorldEntryRuleAndPriority>{
+        return database.getDao().getJoinWorldEntryRuleAndPriority(countryCode)
     }
 
 }
