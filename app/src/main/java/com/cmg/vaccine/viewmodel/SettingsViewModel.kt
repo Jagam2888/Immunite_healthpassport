@@ -128,8 +128,9 @@ class SettingsViewModel(
                             it.wetstCountryCode,
                             it.wetstSeqNo,
                             it.wetstTestCode,
-                            it.wetstTestcategory,
-                                it.wetstObservationStatusCode
+                                it.wetstObservationStatusCode,
+                            it.wetstTestcategory
+
                         )
                         repositary.insertTestCodes(testCodes)
                     }

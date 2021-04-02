@@ -2,6 +2,7 @@ package com.cmg.vaccine.repositary
 
 import com.cmg.vaccine.database.*
 import com.cmg.vaccine.model.JoinWorldEntryRuleAndPriority
+import com.cmg.vaccine.model.TestCodeFilterByReport
 import com.cmg.vaccine.prefernces.PreferenceProvider
 
 class DepartureVerificationRepositary(
@@ -43,6 +44,10 @@ class DepartureVerificationRepositary(
 
     fun getJoinWorldEntryRuleAndPriority(countryCode: String):List<JoinWorldEntryRuleAndPriority>{
         return database.getDao().getJoinWorldEntryRuleAndPriority(countryCode)
+    }
+
+    fun getFilterTestCodeByReport(privateKey: String,countryCode: String):List<TestCodeFilterByReport>{
+        return database.getDao().getFilterTestCodeByReport(privateKey,countryCode)
     }
 
 }

@@ -64,7 +64,7 @@ class EditProfileActivity : BaseActivity(),KodeinAware,SimpleListener,SlideDateP
         binding = DataBindingUtil.setContentView(this, R.layout.activity_edit_profile)
         viewModel = ViewModelProvider(this, factory).get(ProfileViewModel::class.java)
         binding.profileviewmodel = viewModel
-        //binding.lifecycleOwner = this
+        binding.lifecycleOwner = this
         viewModel.listener = this
         viewModel.loadParentData()
         //viewModel.setCurrentCountry(getCurrentCountryName()!!)

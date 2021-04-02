@@ -600,7 +600,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:orientation="horizontal"
-                    android:background="@{profileviewmodel.nationalityCountryCode == null ? @drawable/edittext_background:@drawable/edittext_disable_background}">
+                    android:background="@{profileviewmodel.isIdnoExists() ? @drawable/edittext_disable_background : @drawable/edittext_background}">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -629,7 +629,7 @@
                             android:minHeight="0dp"
                             android:clickable="false"
                             android:enabled='false'
-                            android:entries="@{profileviewmodel.nationalityCountryCode.equals(`Malaysia`)?profileviewmodel.identifierTypeListForMYS:profileviewmodel.identifierTypeList}"
+                            android:entries="@{profileviewmodel.nationalityCountryCode.equals(`Malaysia`)?profileviewmodel.identifierTypeListForMYS:profileviewmodel.identifierTypeListForOthers}"
                             android:layout_toLeftOf="@id/img_down_arrow_id"
                             android:layout_centerVertical="true"
                             android:selectedItemPosition="@={profileviewmodel.selectedItemIdTYpe}" />
@@ -657,7 +657,7 @@
                         android:background="@android:color/transparent"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="10dp"
-                        android:focusable="@{profileviewmodel.nationalityCountryCode == null?true:false}"/>
+                        android:focusable="@{profileviewmodel.isIdnoExists()?false:true}"/>
 
                 </LinearLayout>
 

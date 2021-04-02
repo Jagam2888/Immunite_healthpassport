@@ -2,6 +2,7 @@ package com.cmg.vaccine.database
 
 import androidx.room.*
 import com.cmg.vaccine.model.JoinWorldEntryRuleAndPriority
+import com.cmg.vaccine.model.TestCodeFilterByReport
 
 @Dao
 interface PatientDao {
@@ -196,7 +197,7 @@ interface PatientDao {
     @Query("SELECT * FROM TestCodes")
     fun getAllTestCodes():List<TestCodes>
 
-    @Query("SELECT * FROM TestCodes WHERE wetstObservationStatusCode IN (:category) AND wetstCountryCode =:countryCode")
+    @Query("SELECT * FROM TestCodes WHERE wetstTestcategory IN (:category) AND wetstCountryCode =:countryCode")
     fun getAllTestCodesByCategory(category:ArrayList<String>,countryCode: String):List<TestCodes>
 
     @Query("DELETE FROM TestCodes")
@@ -225,5 +226,8 @@ interface PatientDao {
 
     @Query("SELECT a.woen_rule_match_criteria,a.woen_country_code,b.prioRuleCountry, a.woen_rule_seq_no,a.woen_test_code,a.woen_duration_hours,b.prioRuleNo,b.prioRuleCriteria,b.prioRulePair FROM WorldEntryRulesByCountry a,WorldPriority b WHERE a.woen_country_code =:countryCode and a.woen_rule_match_criteria in ('T','P','V') and a.woen_rule_seq_no = b.prioRuleNo and a.woen_country_code = b.prioRuleCountry")
     fun getJoinWorldEntryRuleAndPriority(countryCode: String):List<JoinWorldEntryRuleAndPriority>
+
+    @Query("SELECT a.testCode,a.observationCode,a.dateSampleCollected,a.timeSampleCollected,b.wetstObservationStatusCode FROM TestReport a,TestCodes b WHERE a.privateKey =:privateKey AND b.wetstCountryCode=:countryCode AND b.wetstTestCode=a.testCode")
+    fun getFilterTestCodeByReport(privateKey: String,countryCode: String):List<TestCodeFilterByReport>
 
 }

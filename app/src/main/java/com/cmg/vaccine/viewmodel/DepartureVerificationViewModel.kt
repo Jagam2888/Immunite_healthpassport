@@ -75,149 +75,188 @@ class DepartureVerificationViewModel(
             try {
 
                 val jsonObject = JSONObject(qrCodeValue.value)
-                /*if (jsonObject.has("status")) {
-                    if (jsonObject.getString("status").equals("yes", false)) {
-                        status.set(true)
-                    } else {
-                        status.set(false)
-                    }
-                }*/
-                if (jsonObject.has("data")) {
-                    val getData = jsonObject.getString("data")
-                    val decryptData = EncryptionUtils.decryptBackupKey(getData,"20210327")
-                    val data = JSONObject(decryptData)
 
-                    departureDestination.value = data.getString("reqDepatureDestination")
-                    arrivalDestination.value = data.getString("reqArrivalDestination")
+                if (jsonObject.has("purpose")){
+                    if (jsonObject.getString("purpose").equals("Counter Check-In",false)){
+                        if (jsonObject.has("data")) {
+                            val getData = jsonObject.getString("data")
+                            val decryptData = EncryptionUtils.decryptBackupKey(getData,"20210327")
+                            val data = JSONObject(decryptData)
 
-                    etdTime.value = data.getString("reqEtdTime")
-                    etaTime.value = data.getString("reqEtaTime")
-                    staffName.value = data.getString("reqStaffName")
-                    flightNo.value = data.getString("reqFlightNo")
-                    airLine.value = data.getString("reqAirline")
+                            departureDestination.value = data.getString("reqDepatureDestination")
+                            arrivalDestination.value = data.getString("reqArrivalDestination")
 
-                    val etdDate = changeDateFormatBC(data.getString("reqEtdTime"))
-                    val etaDate = changeDateFormatBC(data.getString("reqEtaTime"))
+                            etdTime.value = data.getString("reqEtdTime")
+                            etaTime.value = data.getString("reqEtaTime")
+                            staffName.value = data.getString("reqStaffName")
+                            flightNo.value = data.getString("reqFlightNo")
+                            airLine.value = data.getString("reqAirline")
 
-                    val edtDateArray = etdDate?.split(" ")
+                            val etdDate = changeDateFormatBC(data.getString("reqEtdTime"))
+                            val etaDate = changeDateFormatBC(data.getString("reqEtaTime"))
 
-                    if (edtDateArray?.size!! > 1) {
-                        departureDate.value = changeDateFormatForViewProfile(edtDateArray?.get(0)!!)
-                        //departureTime.value = removeSeconds(edtDateArray[1])
-                        departureTime.value = edtDateArray[1]
-                    }else{
-                        departureDate.value = etdDate
-                    }
+                            val edtDateArray = etdDate?.split(" ")
 
-                    val etaDateArray = etaDate?.split(" ")
-
-                    if (etaDateArray?.size!! > 1) {
-                        arrivalDate.value = changeDateFormatForViewProfile(etaDateArray?.get(0)!!)
-                        //arrivalTime.value = removeSeconds(etaDateArray[1])
-                        arrivalTime.value = etaDateArray[1]
-                    }else{
-                        arrivalDate.value = etaDate
-                    }
-
-
-
-                    val getAirportValues = repositary.getAirportCityByCode(arrivalDestination.value!!)
-
-                    if (getAirportValues != null) {
-                        if (!getAirportValues.countryCode.isNullOrEmpty()){
-                            val worldEntryRule = repositary.getJoinWorldEntryRuleAndPriority(getAirportValues.countryCode!!)
-
-
-
-                            var listTestReportFilterByHours:ArrayList<TestReport> = ArrayList()
-
-                            var observationCode = ArrayList<String>()
-
-                            val testReport = repositary.getTestReportList(userData.privateKey!!)
-
-                            worldEntryRule.forEach {
-                                when(it.woen_rule_match_criteria){
-                                    "T" ->{
-                                        if (it.prioRuleCriteria.equals("Mandatory",false)) {
-                                            hours = it.woen_duration_hours?.toLong()!!
-
-                                            observationCode.add(it.woen_test_code!!)
-                                        }
-                                        if (it.prioRuleCriteria.equals("Selective",false)) {
-                                            hours = it.woen_duration_hours?.toLong()!!
-                                            observationCode.add(it.woen_test_code!!)
-                                        }
-                                    }
-                                }
-
-
-                            }
-                            testReport.forEach {
-                                if ((!it.dateSampleCollected.isNullOrEmpty()) and (!it.timeSampleCollected.isNullOrEmpty())){
-                                    val sampleDate = changeDateFormatNewISO8601(it.dateSampleCollected + " " + it.timeSampleCollected + ":00")
-                                    val calculateHours = calculateHours(changeDateToTimeStamp(etdTime.value!!)!!,changeDateToTimeStamp(sampleDate!!)!!)
-                                    if (calculateHours != null){
-                                        if (calculateHours <= hours) {
-                                            listTestReportFilterByHours.add(it)
-                                        }
-
-                                    }
-                                }
+                            if (edtDateArray?.size!! > 1) {
+                                departureDate.value = changeDateFormatForViewProfile(edtDateArray?.get(0)!!)
+                                //departureTime.value = removeSeconds(edtDateArray[1])
+                                departureTime.value = edtDateArray[1]
+                            }else{
+                                departureDate.value = etdDate
                             }
 
-                            var testCodesFilterByTestReport = ArrayList<TestCodes>()
+                            val etaDateArray = etaDate?.split(" ")
 
-                            val testCodes = repositary.getTestCodesByCategory(observationCode,getAirportValues.countryCode!!)
-                            for (i in testCodes.indices){
-                                for (j in testReport.indices){
-                                    if (testCodes[i].wetstTestCode.equals(testReport[j].testCode)){
-                                        testCodesFilterByTestReport.add(testCodes[i])
-                                    }
-                                }
+                            if (etaDateArray?.size!! > 1) {
+                                arrivalDate.value = changeDateFormatForViewProfile(etaDateArray?.get(0)!!)
+                                //arrivalTime.value = removeSeconds(etaDateArray[1])
+                                arrivalTime.value = etaDateArray[1]
+                            }else{
+                                arrivalDate.value = etaDate
                             }
-                            if (testCodesFilterByTestReport.size > 0){
-                                testCodesFilterByTestReport.forEach {
-                                    if (it.wetstObservationStatusCode.equals("PCR", false)) {
-                                        if ((it.wetstTestcategory.equals("260385009")) or (it.wetstTestcategory.equals("260415000"))) {
-                                            status.set(true)
-                                            return
-                                        } else if (it.wetstTestcategory.equals("260385009 | 260415000")) {
-                                            status.set(true)
-                                            return
-                                        } else {
-                                            status.set(false)
-                                            return
-                                        }
-                                    }else if (it.wetstObservationStatusCode.equals("ANTIGEN", false)){
-                                        if (it.wetstTestcategory.equals("10828004")) {
-                                            status.set(true)
-                                            return
-                                        } else {
-                                            status.set(false)
-                                            return
-                                        }
-                                    }else if (it.wetstObservationStatusCode.equals("ANTIBODY", false)){
-                                        if (it.wetstTestcategory.equals("10828004")) {
-                                            status.set(true)
-                                            return
-                                        } else {
-                                            status.set(false)
-                                            return
+
+
+
+                            val getAirportValues = repositary.getAirportCityByCode(arrivalDestination.value!!)
+
+                            if (getAirportValues != null) {
+                                if (!getAirportValues.countryCode.isNullOrEmpty()){
+                                    val worldEntryRule = repositary.getJoinWorldEntryRuleAndPriority(getAirportValues.countryCode!!)
+
+
+
+                                    var listTestReportFilterByHours:ArrayList<TestReport> = ArrayList()
+
+                                    var observationCode = ArrayList<String>()
+
+                                    val testReport = repositary.getTestReportList(userData.privateKey!!)
+
+                                    worldEntryRule.forEach {
+                                        when(it.woen_rule_match_criteria){
+                                            "T" ->{
+                                                if (it.prioRuleCriteria.equals("Mandatory",false)) {
+                                                    hours = it.woen_duration_hours?.toLong()!!
+
+                                                    observationCode.add(it.woen_test_code!!)
+                                                }
+                                                if (it.prioRuleCriteria.equals("Selective",false)) {
+                                                    hours = it.woen_duration_hours?.toLong()!!
+                                                    observationCode.add(it.woen_test_code!!)
+                                                }
+                                            }
                                         }
                                     }
+                                    testReport.forEach {
+                                        if ((!it.dateSampleCollected.isNullOrEmpty()) and (!it.timeSampleCollected.isNullOrEmpty())){
+                                            val sampleDate = changeDateFormatNewISO8601(it.dateSampleCollected + " " + it.timeSampleCollected + ":00")
+                                            val calculateHours = calculateHours(changeDateToTimeStamp(etdTime.value!!)!!,changeDateToTimeStamp(sampleDate!!)!!)
+                                            if (calculateHours != null){
+                                                if (calculateHours <= hours) {
+                                                    listTestReportFilterByHours.add(it)
+                                                }
+
+                                            }
+                                        }
+                                    }
+
+                                    var testCodesFilterByTestReport = ArrayList<TestCodes>()
+
+                                    val testCodes = repositary.getTestCodesByCategory(observationCode,getAirportValues.countryCode!!)
+                                    for (i in testCodes.indices){
+                                        for (j in listTestReportFilterByHours.indices){
+                                            if (testCodes[i].wetstTestCode.equals(listTestReportFilterByHours[j].testCode)){
+                                                testCodesFilterByTestReport.add(testCodes[i])
+                                            }
+                                        }
+                                    }
+
+                                    if ((!listTestReportFilterByHours.isNullOrEmpty()) and (!testCodesFilterByTestReport.isNullOrEmpty())){
+                                        for (i in testCodesFilterByTestReport.indices){
+                                            for (j in listTestReportFilterByHours.indices){
+                                                if (!listTestReportFilterByHours[j].observationCode.isNullOrEmpty()){
+                                                    val observationStatusCode = testCodesFilterByTestReport[i].wetstObservationStatusCode
+                                                    val observationStatusCodeArray = observationStatusCode?.split("|")
+                                                    if (observationStatusCodeArray?.contains(listTestReportFilterByHours[j].observationCode!!) == true){
+                                                        status.set(true)
+                                                        return
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                    status.set(false)
+                                    /*val testCodeFileterByReport = repositary.getFilterTestCodeByReport(userData.privateKey!!,getAirportValues.countryCode)
+                                    testCodeFileterByReport.forEach {
+                                        val observationStatusCode = it.wetstObservationStatusCode
+                                        val observationStatusCodeArray = observationStatusCode?.split("|")
+                                        if (observationStatusCodeArray?.contains(it.testCode!!)){
+                                            status.set(true)
+                                            return
+                                        }
+                                    }*/
+
+                                    /*if ((!testCodesFilterByTestReport.isNullOrEmpty()) and (!listTestReportFilterByHours.isNullOrEmpty())){
+                                        for (i in testCodesFilterByTestReport.indices){
+                                            for (j in listTestReportFilterByHours.indices){
+
+                                            }
+                                        }
+                                    }*/
+
+                                    /*if (testCodesFilterByTestReport.size > 0){
+                                        testCodesFilterByTestReport.forEach {
+                                            if (it.wetstObservationStatusCode.equals("PCR", false)) {
+                                                if ((it.wetstTestcategory.equals("260385009")) or (it.wetstTestcategory.equals("260415000"))) {
+                                                    status.set(true)
+                                                    return
+                                                } else if (it.wetstTestcategory.equals("260385009 | 260415000")) {
+                                                    status.set(true)
+                                                    return
+                                                } else {
+                                                    status.set(false)
+                                                    return
+                                                }
+                                            }else if (it.wetstObservationStatusCode.equals("ANTIGEN", false)){
+                                                if (it.wetstTestcategory.equals("10828004")) {
+                                                    status.set(true)
+                                                    return
+                                                } else {
+                                                    status.set(false)
+                                                    return
+                                                }
+                                            }else if (it.wetstObservationStatusCode.equals("ANTIBODY", false)){
+                                                if (it.wetstTestcategory.equals("10828004")) {
+                                                    status.set(true)
+                                                    return
+                                                } else {
+                                                    status.set(false)
+                                                    return
+                                                }
+                                            }
+                                        }
+                                    }*/
+                                }else{
+                                    listener?.onFailure("Database Error, Country Code return Null or Empty")
+                                    status.set(false)
                                 }
+
+                            }else{
+                                listener?.onFailure("Please Sync your Data, your TestReport Empty")
+                                status.set(false)
                             }
-                        }else{
-                            listener?.onFailure("Database Error, Country Code return Null or Empty")
-                            status.set(false)
+
                         }
-
-                    }else{
-                        listener?.onFailure("Please Sync your Data, your TestReport Empty")
-                        status.set(false)
+                    }else if (jsonObject.getString("purpose").equals("Email Check-In",false)){
+                        if (jsonObject.has("data")){
+                            val getData = jsonObject.getString("data")
+                            val decryptData = EncryptionUtils.decryptBackupKey(getData,"20210327")
+                            val data = JSONObject(decryptData)
+                            listener?.onSuccess("Ecode is missing")
+                        }
                     }
-
                 }
+
+
 
             }catch (e:JSONException){
                 listener?.onFailure(e.message!!)

@@ -69,7 +69,8 @@ class DepartureVerificationActivity : BaseActivity(),KodeinAware,SimpleListener 
     }
 
     override fun onSuccess(msg: String) {
-        TODO("Not yet implemented")
+        toast(msg)
+        finish()
     }
 
     override fun onFailure(msg: String) {

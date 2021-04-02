@@ -82,7 +82,7 @@ class ProfileViewModel(
     var nationalityViewFormat:MutableLiveData<String> = MutableLiveData()
 
     var isAllow:Boolean = true
-    var isUserNotAlreadyTest = ObservableBoolean()
+    var isIdnoExists = ObservableBoolean()
 
     var currentEmail:String?=null
     var currentMobile:String?=null
@@ -99,6 +99,10 @@ class ProfileViewModel(
     var _identifierTypeListForMYS:MutableLiveData<ArrayList<IdentifierType>> = MutableLiveData()
     val identifierTypeListForMYS:LiveData<ArrayList<IdentifierType>>
         get() = _identifierTypeListForMYS
+
+    var _identifierTypeListForOthers:MutableLiveData<ArrayList<IdentifierType>> = MutableLiveData()
+    val identifierTypeListForOthers:LiveData<ArrayList<IdentifierType>>
+        get() = _identifierTypeListForOthers
 
 
 
@@ -118,6 +122,7 @@ class ProfileViewModel(
                 }
             }
         }*/
+        var identifierTypeForOthers = ArrayList<IdentifierType>()
         var identifierTypeForMYS = ArrayList<IdentifierType>()
         val getAllIdentifierType = repositary.getAllIdentifierType()
         if (!getAllIdentifierType.isNullOrEmpty()){
@@ -126,9 +131,12 @@ class ProfileViewModel(
             getAllIdentifierType.forEach {
                 if (it.identifierCode.equals("NNMYS",false)){
                     identifierTypeForMYS.add(it)
+                }else{
+                    identifierTypeForOthers.add(it)
                 }
             }
             _identifierTypeListForMYS.value = identifierTypeForMYS
+            _identifierTypeListForOthers.value = identifierTypeForOthers
         }
 
 
@@ -164,7 +172,14 @@ class ProfileViewModel(
             passportNumber.value = user.passportNumber
             passportExpDate.value = user.passportExpiryDate
             idNo.value = user.patientIdNo
-            idType.value = user.patientIdType
+            if (idNo.value.isNullOrEmpty()){
+                isIdnoExists.set(false)
+            }else{
+                isIdnoExists.set(true)
+            }
+            if ((!user.patientIdType.isNullOrEmpty()) and (!identifierTypeList.value.isNullOrEmpty())) {
+                idType.value = identifierTypeList.value?.get(selectedIdType(user.patientIdType!!, identifierTypeList.value!!))?.identifierDisplay
+            }
             email1.value = user.email
             reTypeEmail.value = user.email
             privateKey.value = user.privateKey
@@ -251,7 +266,9 @@ class ProfileViewModel(
             passportNumber.value = dependent.passportNo
             passportExpDate.value = dependent.passportExpiryDate
             idNo.value = dependent.idNo
-            idType.value = dependent.idType
+            if ((!dependent.idType.isNullOrEmpty()) and (!identifierTypeList.value.isNullOrEmpty())) {
+                idType.value = identifierTypeList.value?.get(selectedIdType(dependent.idType!!, identifierTypeList.value!!))?.identifierDisplay
+            }
             email1.value = dependent.email
 
             if (dependent.gender == "M"){

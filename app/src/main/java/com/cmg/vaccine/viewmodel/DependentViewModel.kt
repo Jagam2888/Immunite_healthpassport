@@ -97,6 +97,7 @@ class DependentViewModel(
 
     var existingUserprivateKey = ObservableField<String>()
     var isUserNotAlreadyTest = ObservableBoolean()
+    var isIdnoExists = ObservableBoolean()
 
     var isFirstTimeSelectPlaceBirth:Boolean?=null
 
@@ -374,6 +375,11 @@ class DependentViewModel(
             passportNumber.value = dependent?.passportNo
             passportExpDate.value = dependent?.passportExpiryDate
             idNo.value = dependent?.idNo
+            if (idNo.value.isNullOrEmpty()){
+                isIdnoExists.set(false)
+            }else{
+                isIdnoExists.set(true)
+            }
             idType.value = dependent?.idType
             dob.value = dependent?.dob?.replace("/","")
             dobTime.value = dependent?.dobTime?.replace(":","")
