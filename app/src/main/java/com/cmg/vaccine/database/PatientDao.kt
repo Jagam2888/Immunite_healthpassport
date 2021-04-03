@@ -13,6 +13,9 @@ interface PatientDao {
     @Query("SELECT * FROM Countries")
     fun getAllCountries():List<Countries>
 
+    @Query("DELETE FROM Countries")
+    fun deleteAllCountries()
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertWorldCountries(worldEntryCountries: WorldEntryCountries):Long
 

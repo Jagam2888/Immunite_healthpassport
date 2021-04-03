@@ -156,4 +156,18 @@ class SettingsRepositary(
     fun deleteWorldPriority(){
         database.getDao().deleteAllWorldPriority()
     }
+
+    suspend fun getCountriesFromAPI():CountryResponse{
+        return apiRequest {
+            api.getAllCountries()
+        }
+    }
+
+    fun insertCountries(countries: Countries){
+        database.getDao().insertCountries(countries)
+    }
+
+    fun deleteAllCountries(){
+        database.getDao().deleteAllCountries()
+    }
 }

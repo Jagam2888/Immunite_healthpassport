@@ -61,8 +61,10 @@ class SettingsViewModel(
         repositary.deleteIdentifierType()
         repositary.deleteTestCodes()
         repositary.deleteWorldPriority()
+        repositary.deleteAllCountries()
 
 
+        getAllCountries()
         getWorldPriorities()
         getIdentifierType()
         getAllTestCodes()
@@ -72,6 +74,31 @@ class SettingsViewModel(
         getVaccineCall()
 
 
+    }
+
+    private fun getAllCountries(){
+        Couritnes.main {
+            try {
+                val response = repositary.getCountriesFromAPI()
+                if (!response.data.isNullOrEmpty()){
+                    response.data.forEach {
+                        val countries = Countries(
+                                it.countryCodeAlpha,
+                                it.countryMstrSeqno,
+                                it.countryName
+                        )
+                        repositary.insertCountries(countries)
+                    }
+
+                }
+            }catch (e:APIException){
+                listener?.onFailure(e.message!!)
+            }catch (e:NoInternetException){
+                listener?.onFailure(e.message!!)
+            }catch (e:Exception){
+                listener?.onFailure(e.message!!)
+            }
+        }
     }
 
     private fun getVaccineCall(){

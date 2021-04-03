@@ -7,10 +7,11 @@ import android.widget.BaseAdapter
 import androidx.databinding.DataBindingUtil
 import com.blongho.country_data.Country
 import com.cmg.vaccine.R
+import com.cmg.vaccine.database.Countries
 import com.cmg.vaccine.databinding.CountryListItemBinding
 
 class CountryListAdapter(
-    private val countryList: ArrayList<Country>
+    private val countryList: ArrayList<Countries>
 ):BaseAdapter(){
     override fun getCount() = countryList.size
 

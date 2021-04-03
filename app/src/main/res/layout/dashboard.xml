@@ -118,18 +118,19 @@
                         android:id="@+id/radio_vaccine"
                         android:layout_width="110dp"
                         android:layout_height="157dp"
-                        android:button="@null"
-                        />
+                        android:button="@null" />
                     <RadioButton
                         android:id="@+id/radio_test"
                         android:layout_width="110dp"
                         android:layout_height="157dp"
-                        android:button="@null"/>
+                        android:button="@null"
+                        android:layout_marginLeft="5dp"/>
                     <RadioButton
                         android:id="@+id/radio_mykey"
                         android:layout_width="110dp"
                         android:layout_height="157dp"
                         android:button="@null"
+                        android:layout_marginLeft="5dp"
                         android:background="@drawable/mykey_btn_selector"/>
                 </RadioGroup>
             </RelativeLayout>

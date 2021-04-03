@@ -8,12 +8,14 @@ import android.widget.SectionIndexer
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.blongho.country_data.Country
+import com.blongho.country_data.World
 import com.cmg.vaccine.R
+import com.cmg.vaccine.database.Countries
 import com.cmg.vaccine.databinding.CountryListItemBinding
 import com.cmg.vaccine.listener.AddSelectedRVListener
 
 class CountryListRecyclerViewAdapter(
-    private val countryList: ArrayList<Country>,
+    private val countryList: ArrayList<Countries>,
     var addSelectedRVListener: AddSelectedRVListener?,
     var type:String?
 
@@ -21,7 +23,7 @@ class CountryListRecyclerViewAdapter(
 
     private var mSectionPositions= ArrayList<Int>()
 
-    private val countryListFull:ArrayList<Country> = ArrayList()
+    private val countryListFull:ArrayList<Countries> = ArrayList()
     init {
         countryListFull.addAll(countryList)
 
@@ -38,11 +40,12 @@ class CountryListRecyclerViewAdapter(
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.countryListItemBinding.countries = countryList[position]
+        holder.countryListItemBinding.imgFlag.setImageResource(World.getFlagOf(countryList[position].countryCodeAlpha))
 
         holder.countryListItemBinding.countryListItemLayout.setOnClickListener {
             //addSelectedRVListener?.setClick(countryList[position].name, countryList[position].alpha2)
-            addSelectedRVListener?.onClickSelectedItem(countryList[position].name,
-                countryList[position].alpha3,type.toString())
+            addSelectedRVListener?.onClickSelectedItem(countryList[position].countryName!!,
+                countryList[position].countryCodeAlpha!!,type.toString())
         }
         //val flag = World.getFlagOf(countryList.get(position).countryCodeAlpha)
         //holder.binding.imgFlag.setImageResource(flag)
@@ -61,7 +64,7 @@ class CountryListRecyclerViewAdapter(
         val size: Int = countryList.size
         while (i < size) {
             val section: String =
-                java.lang.String.valueOf((countryList.get(i).name.toString()).first()).toUpperCase()
+                java.lang.String.valueOf((countryList.get(i).countryName.toString()).first()).toUpperCase()
             if (!sections.contains(section)) {
                 sections.add(section)
                 mSectionPositions.add(i)
@@ -88,7 +91,7 @@ class CountryListRecyclerViewAdapter(
 
         override fun performFiltering(constraint: CharSequence?): FilterResults {
 
-            var tempList:ArrayList<Country> = ArrayList()
+            var tempList:ArrayList<Countries> = ArrayList()
             if (constraint.isNullOrEmpty()){
                 tempList.clear()
                 tempList.addAll(countryListFull)
@@ -96,7 +99,7 @@ class CountryListRecyclerViewAdapter(
                 var value = constraint.toString().toLowerCase().trim()
                 tempList.clear()
                 countryListFull.forEach {
-                    if (it.name?.toLowerCase()?.startsWith(value) == true){
+                    if (it.countryName?.toLowerCase()?.startsWith(value) == true){
                         tempList.add(it)
                     }
                 }
@@ -108,7 +111,7 @@ class CountryListRecyclerViewAdapter(
 
         override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
             countryList.clear()
-            countryList.addAll(results?.values as List<Country>)
+            countryList.addAll(results?.values as List<Countries>)
             notifyDataSetChanged()
         }
     }

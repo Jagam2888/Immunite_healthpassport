@@ -45,7 +45,7 @@ class SplashActivity() : BaseActivity(),KodeinAware{
     }
     private fun navigateActivity(){
         if (viewModel.subId.value.isNullOrEmpty()) {
-            Intent(this, WelcomeActivity::class.java).also {
+            Intent(this, IntroActivity::class.java).also {
                 startActivity(it)
                 finish()
             }
@@ -72,7 +72,7 @@ class SplashActivity() : BaseActivity(),KodeinAware{
                     }
                 }
             }else{
-                Intent(this, WelcomeActivity::class.java).also {
+                Intent(this, IntroActivity::class.java).also {
                     startActivity(it)
                     finish()
                 }

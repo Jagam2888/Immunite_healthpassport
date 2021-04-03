@@ -30,6 +30,12 @@
         android:theme="@style/Theme.Noactionbar"
         android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup">
+
+        <activity android:name=".IntroActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".TutorialActivity"
+            android:screenOrientation="portrait"/>
+
         <activity android:name=".TermsOfUseActivity"
             android:screenOrientation="portrait"></activity>
         <activity

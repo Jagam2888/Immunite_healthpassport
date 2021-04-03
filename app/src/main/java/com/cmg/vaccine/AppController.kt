@@ -89,6 +89,9 @@ class AppController : Application(),KodeinAware {
         bind() from singleton { DepartureVerificationRepositary(instance(),instance()) }
         bind() from provider { DepartureVerificationModelFactory(instance()) }
 
+        bind() from singleton { CountryListFragmentRepositary(instance(),instance()) }
+        bind() from provider { CountryListFragmentViewModelFactory(instance()) }
+
         //bind() from provider { MyFirebaseInstanceIDService(instance()) }
 
     }

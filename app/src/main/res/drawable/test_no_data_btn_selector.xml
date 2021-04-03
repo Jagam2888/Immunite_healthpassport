@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:state_checked="true" android:drawable="@drawable/test_no_data_selected_shape"/>
-    <item android:state_checked="false" android:drawable="@drawable/test_no_data_unselected_shape"/>
+    <item android:state_checked="true" android:drawable="@drawable/test_no_data_btn_selected">
+        <size android:scaleHeight="140" android:scaleWidth="140"/>
+    </item>
+    <item android:state_checked="false" android:drawable="@drawable/test_no_data_btn_unselected">
+        <size android:scaleHeight="110" android:scaleWidth="110"/>
+    </item>
 </selector>

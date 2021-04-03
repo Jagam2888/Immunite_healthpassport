@@ -10,7 +10,7 @@ object Passparams{
     const val USER_DOB = "user_dob"
     const val SUBSID = "subsid"
     const val USER = "user"
-    const val PARENT = "Principal"
+    const val PARENT = "Principle"
     const val DEPENDENT = "Dependent"
     const val RELATIONSHIP = "relation_ship"
     const val DEPENDENT_SUBID = "dependant_sub_id"

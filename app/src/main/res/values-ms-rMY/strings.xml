@@ -325,6 +325,27 @@ clinical data and complete your clinical test at Immunitee clinic.
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 
+    <string name="blockchain_title">Authenticate &amp; Secured Blockchain System</string>
+    <string name="blockchain_desc">Vaccine traceability &amp; health passport solutions to prevent falsify medical data and vaccines.</string>
+    <string name="accessibility_title">Accessibility Freedom</string>
+    <string name="accessibility_desc">Enable travel deconfinement by fulfilling requirements set by different health authorities, facilities and countries.</string>
+    <string name="booking_title">Convenient Test Booking</string>
+    <string name="booking_desc">Book an appointments online easily  and obtain personal clinical health data secured by blockchain through Immunitee™ globally recognised clinics &amp; lab partners.</string>
+    <string name="scan_go_title">Scan &amp; Go</string>
+    <string name="scan_go_desc">Hassle free travel through Immunitee™ Health Passport.</string>
+
+    //tutorial
+    <string name="tutorial_signup_desc">Get start with Immunitee digital health passport, medical data and accessibility freedom. Easily sign up an account by filling in all the required information.</string>
+    <string name="tutorial_we_desc">You can add travel destination and check your entry status. You can also get more details on the entry requirement through Immunitee.</string>
+    <string name="tutorial_add_we_desc">1. Add your travel destination.\n\n2. Travel destination status.</string>
+    <string name="tutorial_cer_desc">Check your entry status before travel.</string>
+    <string name="tutorial_vaccine_test_desc">Book an appointments online easily  and obtain personal clinical health data secured by blockchain through Immunitee™ globally recognised clinics &amp; lab partners.</string>
+    <string name="add_world_entries">Add World Entries</string>
+    <string name="check_entry_requirement">Check Entry Requirement</string>
+    <string name="vaccine_n_test_result">Vaccine &amp; Test Result</string>
+
+
+
     <string name="vaccine">Vaksin</string>
     <string name="test">Ujian</string>
     <string name="personal_profile_details">Maklumat Profil Peribadi</string>
