@@ -102,8 +102,8 @@ class SettingsViewModel(
     }
 
     private fun getVaccineCall(){
-        getVaccineTestRef(repositary.getPrivateKey()!!,"Prinicipal")
-        //getVaccineTestRef("5874C4015510CE5786D9CFD40F14B7BB89E996DC0D8BF29DAFE875DF8D532536","Prinicipal")
+       getVaccineTestRef(repositary.getPrivateKey()!!,"Prinicipal")
+        //getVaccineTestRef("83276DA59997B53E06619BEF46ED650889BE630000389B61BB3D3C9EE6909432","Prinicipal")
 
         val dependent = repositary.getAllDependent()
 
@@ -116,7 +116,6 @@ class SettingsViewModel(
             }
         }
 
-        //getVaccineFromAPI()
     }
 
     private fun getWorldPriorities(){
@@ -492,9 +491,9 @@ class SettingsViewModel(
                                 repositary.insertTestReport(testReport)
                             }
                         }
-                        listener?.onSuccess(jsonBodayDataObject.getString("reason"))
+                        listener?.onSuccess(jsonBodayDataObject.getString("message"))
                     }else{
-                        listener?.onFailure(jsonBodayDataObject.getString("reason")+" : "+user)
+                        listener?.onFailure(jsonBodayDataObject.getString("message")+" : "+user)
                     }
                 }
             }catch (e: APIException) {

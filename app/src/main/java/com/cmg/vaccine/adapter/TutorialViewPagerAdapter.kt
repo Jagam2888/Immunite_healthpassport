@@ -35,10 +35,10 @@ class TutorialViewPagerAdapter(
         val title = layoutScreen.findViewById<TextView>(R.id.intro_title)
         val description = layoutScreen.findViewById<TextView>(R.id.intro_desc)
 
-        Log.e("item",list.get(position).getTitle().toString())
-        title.setText(list.get(position).getTitle())
-        description.setText(list.get(position).getDescription())
-        imgSlide.setImageResource(list.get(position).getScreenImg())
+        //Log.e("item",list.get(position).getTitle().toString())
+        title.text = list[position].introTitle
+        description.text = list[position].desc
+        imgSlide.setImageResource(list[position].introImg)
 
 
         container.addView(layoutScreen)

@@ -11,9 +11,10 @@ import java.util.regex.Pattern
 
 class OTPReceiver():BroadcastReceiver() {
 
-    fun setEditText(editText: MutableLiveData<String>?) {
+    fun setEditText(editText: MutableLiveData<String>?,pinTxt:MutableLiveData<String>?) {
         //editText?.value = txtValue.value
-        Companion.txtValue = editText
+        txtValue = editText
+        otpValue = pinTxt
     }
 
 
@@ -26,6 +27,7 @@ class OTPReceiver():BroadcastReceiver() {
             if (!message.isNullOrEmpty()) {
                 if (message.contains("Immunitee", true)) {
                     val code = parseCode(message.trim())
+                    otpValue?.value = code
                     txtValue?.value = "Your OTP is $code"
                 }
             }
@@ -45,6 +47,7 @@ class OTPReceiver():BroadcastReceiver() {
 
     companion object {
         private var txtValue: MutableLiveData<String>? = null
+        private var otpValue: MutableLiveData<String>? = null
     }
 
 }

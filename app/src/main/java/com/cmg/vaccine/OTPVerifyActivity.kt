@@ -58,7 +58,7 @@ class OTPVerifyActivity : BaseActivity(),KodeinAware,SimpleListener{
         if (checkPermission()){
             //viewModel.txtOTP.set(OTPReceiver().getOTPValue())
             //OTPReceiver(viewModel)
-            OTPReceiver().setEditText(viewModel._txtOTP)
+            OTPReceiver().setEditText(viewModel._txtOTP,viewModel.pinTxt)
         }else{
             requestPermission()
         }
@@ -156,7 +156,7 @@ class OTPVerifyActivity : BaseActivity(),KodeinAware,SimpleListener{
                     val accepted: Boolean =
                         grantResults[0] == PackageManager.PERMISSION_GRANTED
                     if (accepted) {
-                        OTPReceiver().setEditText(viewModel._txtOTP)
+                        OTPReceiver().setEditText(viewModel._txtOTP,viewModel.pinTxt)
                     } else {
                         toast("Permission Denied")
                     }

@@ -14,7 +14,10 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.cmg.vaccine.data.setOnSingleClickListener
 import com.cmg.vaccine.databinding.ActivityViewProfileBinding
+import com.cmg.vaccine.listener.SimpleListener
 import com.cmg.vaccine.util.Passparams
+import com.cmg.vaccine.util.hide
+import com.cmg.vaccine.util.show
 import com.cmg.vaccine.util.toast
 import com.cmg.vaccine.viewmodel.ProfileViewModel
 import com.cmg.vaccine.viewmodel.viewmodelfactory.ProfileViewModelFactory
@@ -22,7 +25,7 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
 
-class ViewProfileActivity : BaseActivity(),KodeinAware {
+class ViewProfileActivity : BaseActivity(),KodeinAware,SimpleListener {
     override val kodein by kodein()
     private lateinit var binding:ActivityViewProfileBinding
     private lateinit var viewModel:ProfileViewModel
@@ -38,6 +41,8 @@ class ViewProfileActivity : BaseActivity(),KodeinAware {
         viewModel = ViewModelProvider(this,factory).get(ProfileViewModel::class.java)
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
+
+        viewModel.listener = this
 
         user = intent.extras?.getString(Passparams.USER,"")
 
@@ -82,8 +87,8 @@ class ViewProfileActivity : BaseActivity(),KodeinAware {
         ) { dialog, which ->
             dialog?.dismiss()
             viewModel.removeDependent(intent.extras?.getString(Passparams.DEPENDENT_SUBID, "")!!)
-            toast("Removed Successfully")
-            finish()
+            /*toast("Removed Successfully")
+            finish()*/
         }.setNegativeButton(resources.getString(R.string.no)
         ) { dialog, which -> dialog?.dismiss() }
 
@@ -114,5 +119,20 @@ class ViewProfileActivity : BaseActivity(),KodeinAware {
         if (viewModel.countryCode.value != null)
             binding.phoneCode.setCountryForPhoneCode(viewModel.countryCode.value!!)
 
+    }
+
+    override fun onStarted() {
+        show(binding.progressBarViewProfile)
+    }
+
+    override fun onSuccess(msg: String) {
+        hide(binding.progressBarViewProfile)
+        toast(msg)
+        finish()
+    }
+
+    override fun onFailure(msg: String) {
+        hide(binding.progressBarViewProfile)
+        toast(msg)
     }
 }

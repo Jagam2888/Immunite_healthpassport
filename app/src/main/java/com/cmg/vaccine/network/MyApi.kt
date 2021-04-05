@@ -116,6 +116,9 @@ interface MyApi {
     @GET(Passparams.GET_WORLD_PRIORITY_LIST)
     suspend fun getWorldPriorityList():Response<GetWorldPriorityListResponse>
 
+    @POST(Passparams.REMOVE_DEPENDENT)
+    suspend fun removeDependent(@Query("masterSubsId")masterSubId:String,@Query("dependentSubsId")subId:String):Response<RemoveDependentResponse>
+
 
     companion object{
         operator fun invoke(

@@ -38,10 +38,14 @@ object Passparams{
     const val FORGOT_PIN = "forgot_pin"
 
     //API
-    const val URL = "http://47.254.238.145:7001/"
+    //const val URL = "http://47.254.238.145:7001/"
+    const val URL = "http://dev.immunitee.com:7001/"
+
+    //Staging API
+    //const val URL = "http://stapp.immunitee.com:7001/"
 
     //Production API
-    //const val URL = "http://47.254.236.183:7001/"
+    //const val URL = "http://app.immunitee.com:7001/"
 
     const val PATIENT_REGISTRATION = "nhr-module-user/patientreg"
     const val DEPENDENT_REGISTRATION = "nhr-module-user/patientdependentreg"
@@ -72,6 +76,7 @@ object Passparams{
     const val GET_IDENTIFIER_TYPE = "nhr-module-user/searchidentifiertype"
     const val GET_TEST_CODES = "nhr-module-user/searchworldtestcodes"
     const val GET_WORLD_PRIORITY_LIST = "nhr-module-user/searchworldprioritylist"
+    const val REMOVE_DEPENDENT = "nhr-module-user/removedependent"
 
     //const val GET_VACCINE_TEST_REF = "blockchainapi/getAllTestRecord"
     const val GET_VACCINE_TEST_REF = "nhr-module-user/getalltestrecord"

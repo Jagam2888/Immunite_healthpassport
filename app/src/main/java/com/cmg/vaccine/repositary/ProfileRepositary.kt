@@ -3,6 +3,7 @@ package com.cmg.vaccine.repositary
 import com.cmg.vaccine.database.*
 import com.cmg.vaccine.model.request.UpdateProfileReq
 import com.cmg.vaccine.model.response.PatientRegResponse
+import com.cmg.vaccine.model.response.RemoveDependentResponse
 import com.cmg.vaccine.model.response.UpdatePatientResponse
 import com.cmg.vaccine.network.MyApi
 import com.cmg.vaccine.network.SafeAPIRequest
@@ -48,6 +49,10 @@ class ProfileRepositary(
         }
     }*/
 
+    fun getMasterSubId():String?{
+        return preferenceProvider.getSubId()
+    }
+
     fun saveEditProfileReq(updateProfileReq: UpdateProfileReq){
         preferenceProvider.saveEditProfileReq(updateProfileReq)
     }
@@ -73,5 +78,11 @@ class ProfileRepositary(
 
     fun getAllIdentifierType():List<IdentifierType>{
         return database.getDao().getAllIdentifierType()
+    }
+
+    suspend fun removeDependentFromAPI(masterSubId:String,depSubId:String):RemoveDependentResponse{
+        return apiRequest {
+            api.removeDependent(masterSubId,depSubId)
+        }
     }
 }

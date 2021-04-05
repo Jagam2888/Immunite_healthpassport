@@ -10,7 +10,6 @@ import androidx.viewpager.widget.ViewPager
 import com.cmg.vaccine.adapter.IntroViewPagerAdapter
 import com.cmg.vaccine.data.IntroItem
 import com.cmg.vaccine.databinding.ActivityIntroBinding
-import kotlinx.android.synthetic.main.introlayout_design.view.*
 
 class IntroActivity : BaseActivity() {
 
@@ -28,12 +27,12 @@ class IntroActivity : BaseActivity() {
             resources.getString(R.string.blockchain_desc),
             R.drawable.ic_blockchain
         )
-        var p2 = IntroItem(
+        var p3 = IntroItem(
             resources.getString(R.string.accessibility_title),
             resources.getString(R.string.accessibility_desc),
             R.drawable.ic_accessibility
         )
-        var p3 = IntroItem(
+        var p2 = IntroItem(
             resources.getString(R.string.booking_title),
             resources.getString(R.string.booking_desc),
             R.drawable.ic_test_booking
@@ -43,8 +42,29 @@ class IntroActivity : BaseActivity() {
             resources.getString(R.string.scan_go_desc),
             R.drawable.ic_scan_go
         )
+        var p5 = IntroItem(
+                resources.getString(R.string.signup),
+                resources.getString(R.string.tutorial_signup_desc),
+                R.drawable.ic_tutorial_signup
+        )
+        var p6 = IntroItem(
+                resources.getString(R.string.world_entries),
+                resources.getString(R.string.tutorial_add_we_desc),
+                R.drawable.ic_tutorial_add_we
+        )
 
-        var screenList = listOf(p1, p2, p3, p4)
+        var p7 = IntroItem(
+                resources.getString(R.string.entry_req_title),
+                resources.getString(R.string.entry_req_desc),
+                R.drawable.ic_tutorial_chk_entry_req
+        )
+        var p8 = IntroItem(
+                resources.getString(R.string.vaccine_n_test_result),
+                resources.getString(R.string.tutorial_vaccine_test_desc),
+                R.drawable.ic_tutorial_vac_test_result
+        )
+
+        var screenList = listOf(p1, p2, p3,p5, p6,p7,p8,p4)
 
 
 
@@ -54,6 +74,28 @@ class IntroActivity : BaseActivity() {
             screenListItem = screenList
             if (!screenList.isNullOrEmpty()) {
                 addBottomDots(0)
+            }
+
+        }
+
+        binding.btnNext.setOnClickListener {
+            var pos=binding.introViewPager.currentItem
+            Log.e("position",pos.toString())
+            Log.e("size",screenList.size.toString())
+            if(pos<screenList.size){
+                ++pos
+                binding.introViewPager.currentItem=pos
+            }
+
+            if(pos==screenList.size){
+                Intent(this, WelcomeActivity::class.java).also {
+                    startActivity(it)
+                }
+            }
+        }
+        binding.btnSkip.setOnClickListener {
+            Intent(this, WelcomeActivity::class.java).also {
+                startActivity(it)
             }
 
         }
@@ -69,9 +111,15 @@ class IntroActivity : BaseActivity() {
                 Log.e("position",position.toString())
                 Log.e("size",screenList.size.toString())
                 if (position+1 == screenList.size) {
-                    binding.btnStart.visibility = View.VISIBLE
+                    binding.btnSkip.visibility = View.INVISIBLE
                 } else
-                    binding.btnStart.visibility = View.INVISIBLE
+                    binding.btnSkip.visibility = View.VISIBLE
+
+                if (position > 2){
+                    binding.mainlayout.setBackgroundResource(R.drawable.background_transparent_intro)
+                }else{
+                    binding.mainlayout.setBackgroundResource(R.drawable.background_curve_shape)
+                }
             }
 
             override fun onPageSelected(position: Int) {
@@ -84,12 +132,12 @@ class IntroActivity : BaseActivity() {
             }
         })
 
-        binding.btnStart.setOnClickListener {
+        /*binding.btnStart.setOnClickListener {
             Intent(this, TutorialActivity::class.java).also {
                 startActivity(it)
             }
 
-        }
+        }*/
     }
 
     fun addBottomDots(currentPage : Int){

@@ -324,25 +324,29 @@ clinical data and complete your clinical test at Immunitee clinic.
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    
+    <string name="blockchain_title">Authentic, Secure &amp; Resourceful</string>
 
-    <string name="blockchain_title">Authenticate &amp; Secured Blockchain System</string>
-    <string name="blockchain_desc">Vaccine traceability &amp; health passport solutions to prevent falsify medical data and vaccines.</string>
-    <string name="accessibility_title">Accessibility Freedom</string>
-    <string name="accessibility_desc">Enable travel deconfinement by fulfilling requirements set by different health authorities, facilities and countries.</string>
-    <string name="booking_title">Convenient Test Booking</string>
-    <string name="booking_desc">Book an appointments online easily  and obtain personal clinical health data secured by blockchain through Immunitee™ globally recognised clinics &amp; lab partners.</string>
+    <string name="blockchain_desc">Secured and safe traveling solution. Intelligent algorithm to measure and qualify your trip. Globally recognized Health Passport. Ensure privacy &amp; confidentiality through blockchain technology.</string>
+
+    <string name="accessibility_title">Simple &amp; Trusted Verification</string>
+    <string name="accessibility_desc">Easy scan and hassle free traveling.</string>
+    <string name="booking_title">Online Test Result</string>
+    <string name="booking_desc">Access to nearest Immunitee partner clinic and lab networks. Access to secured digital test data. Keep, share and protect your data with Private Key.</string>
     <string name="scan_go_title">Scan &amp; Go</string>
-    <string name="scan_go_desc">Hassle free travel through Immunitee™ Health Passport.</string>
+    <string name="scan_go_desc">Your Digital Health Passport with \u00E2\u0080\u009CPrivate Key\u00E2\u0080\u009D for verification and accessibility to your destination.</string>
+    <string name="entry_req_title">Entry \nRequirements &amp; Status</string>
+    <string name="entry_req_desc">Qualify your trip with clinical requirement as needed for the destination country.</string>
 
     //tutorial
-    <string name="tutorial_signup_desc">Get start with Immunitee digital health passport, medical data and accessibility freedom. Easily sign up an account by filling in all the required information.</string>
+    <string name="tutorial_signup_desc">Easy and simple sign up steps. Fields are designed to meet cross countries requirement. Feature to add dependent.</string>
     <string name="tutorial_we_desc">You can add travel destination and check your entry status. You can also get more details on the entry requirement through Immunitee.</string>
-    <string name="tutorial_add_we_desc">1. Add your travel destination.\n\n2. Travel destination status.</string>
+    <string name="tutorial_add_we_desc">1. Adding your favourite or upcoming destination.\n\n2. Click on to the destination to check entry requirements.</string>
     <string name="tutorial_cer_desc">Check your entry status before travel.</string>
-    <string name="tutorial_vaccine_test_desc">Book an appointments online easily  and obtain personal clinical health data secured by blockchain through Immunitee™ globally recognised clinics &amp; lab partners.</string>
+    <string name="tutorial_vaccine_test_desc">Book your test at the nearest Immunitee partners clinic/lab. Obtained your clinical data digitally through blockchain. Secure and privacy assured.</string>
     <string name="add_world_entries">Add World Entries</string>
     <string name="check_entry_requirement">Check Entry Requirement</string>
-    <string name="vaccine_n_test_result">Vaccine &amp; Test Result</string>
+    <string name="vaccine_n_test_result">Traceable \nVaccine &amp; Test Data</string>
 
 
 

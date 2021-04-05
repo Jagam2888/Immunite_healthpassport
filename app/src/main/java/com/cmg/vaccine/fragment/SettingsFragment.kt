@@ -273,6 +273,7 @@ class SettingsFragment : Fragment(),KodeinAware,SimpleListener {
             val versionName = packageInfo?.versionName
             //val version = "Version : $versionName \nDevelopment Server : ${Passparams.URL}"
             val version = "Version : $versionName \nDevelopment Server"
+            //val version = "Version : $versionName \nStaging Server"
             //val version = "Version : $versionName \nProduction Server"
             val alertDialogBuilder = AlertDialog.Builder(requireContext())
             alertDialogBuilder.setMessage(version).setTitle(R.string.app_name)

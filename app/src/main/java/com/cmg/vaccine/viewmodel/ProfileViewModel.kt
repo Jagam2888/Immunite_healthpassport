@@ -252,7 +252,29 @@ class ProfileViewModel(
     }
 
     fun removeDependent(subId: String){
-        repositary.removeDependent(subId)
+        listener?.onStarted()
+        Log.d("masterSubId",repositary.getMasterSubId()!!)
+        Log.d("depSubId",subId)
+        Couritnes.main {
+            try {
+                val response = repositary.removeDependentFromAPI(repositary.getMasterSubId()!!,subId)
+                if (response.StatusCode == 1){
+                    repositary.removeDependent(subId)
+                    listener?.onSuccess(response.Message)
+                }else{
+                    listener?.onFailure(response.Message)
+                }
+            }catch (e: APIException) {
+                listener?.onFailure(e.message!!)
+            } catch (e: NoInternetException) {
+                listener?.onFailure(e.message!!)
+            } catch (e: SocketTimeoutException) {
+                listener?.onFailure(e.message!!)
+            } catch (e: Exception) {
+                listener?.onFailure(e.message!!)
+            }
+        }
+
     }
 
 
