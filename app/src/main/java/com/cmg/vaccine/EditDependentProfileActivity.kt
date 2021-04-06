@@ -283,6 +283,28 @@ class EditDependentProfileActivity : BaseActivity(),KodeinAware,SimpleListener,S
             val uri = Uri.parse(viewModel.getProfileImage(dependentSubId!!))
             binding.headPicture.setImageURI(uri)
         }
+
+        binding.edtIdno.addTextChangedListener(object :TextWatcher{
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                if (!s.toString().isNullOrEmpty()){
+                    if (viewModel.nationalityCountryCode.value.equals("Malaysia",false)) {
+                        if (s?.length!! < 12) {
+                            binding.edtIdno.error = "Minimum 12 Character"
+                        }
+                    }else{
+                        if (s?.length!! < 15) {
+                            binding.edtIdno.error = "Minimum 15 Character"
+                        }
+                    }
+                }
+            }
+        })
     }
 
 

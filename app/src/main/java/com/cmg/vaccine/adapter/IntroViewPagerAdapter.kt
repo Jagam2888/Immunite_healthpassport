@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.annotation.NonNull
@@ -34,11 +35,20 @@ class IntroViewPagerAdapter(
         val imgSlide = layoutScreen.findViewById<ImageView>(R.id.intro_img)
         val title = layoutScreen.findViewById<TextView>(R.id.intro_title)
         val description = layoutScreen.findViewById<TextView>(R.id.intro_desc)
+        val worldEntriesDescription = layoutScreen.findViewById<LinearLayout>(R.id.layout_world_entries)
 
         //Log.e("item",list.get(position).getTitle().toString())
         title.text = list[position].introTitle
         description.text = list[position].desc
         imgSlide.setImageResource(list[position].introImg)
+
+        /*if (list[position].introTitle.equals(mContext.resources.getString(R.string.world_entries))){
+            worldEntriesDescription.visibility = View.VISIBLE
+            description.visibility = View.GONE
+        }else{
+            worldEntriesDescription.visibility = View.GONE
+            description.visibility = View.VISIBLE
+        }*/
 
 
         container.addView(layoutScreen)

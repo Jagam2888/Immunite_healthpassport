@@ -13,6 +13,7 @@ import com.cmg.vaccine.repositary.VaccineAndTestRepositary
 import com.cmg.vaccine.util.APIException
 import com.cmg.vaccine.util.Couritnes
 import com.cmg.vaccine.util.NoInternetException
+import com.cmg.vaccine.util.Passparams
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.Dispatchers
@@ -58,40 +59,41 @@ class VaccineAndTestViewModel(
 
     fun download(view: View){
         listener?.onStarted()
-        //DownloadManager.Request("dasda/")
-        //val recordId = "LAB_A06M100006"
+        if(!recorId.value.isNullOrEmpty()) {
+            Couritnes.main {
+                try {
+                    //val url = "http://stg.i-care.com:6001/gp-module-lab/ext/labpdf?labOrderTxn=LAB_A07R100051"
+                    val url = Passparams.DOWNLOAD_TEST_REPORT+recorId.value
+                    val downloadCall = repositary.getApi()
+                        .downLoadDynamicUrl(url)
+                    downloadCall.enqueue(object : Callback<ResponseBody> {
+                        override fun onResponse(
+                            call: Call<ResponseBody>,
+                            response: Response<ResponseBody>
+                        ) {
+                            if (response.isSuccessful) {
+                                Log.d("download_file", response.body()?.byteStream().toString())
 
-        Couritnes.main {
-            try {
-                /*val response =  repositary.downLoadDynamic(recordId)
-                if (response != null){
-                    saveFile(response,view,recordId)
-                }*/
-                    val downloadCall = repositary.getApi().downLoadDynamicUrl("http://10.1.1.150:6001/gp-module-lab/ext/labpdf?labOrderTxn=LAB_A06M100004")
-                downloadCall.enqueue(object :Callback<ResponseBody>{
-                    override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                        if (response.isSuccessful){
-                            Log.d("download_file",response.body()?.byteStream().toString())
-
-                            saveFile(response.body(),view,recorId.value!!)
-                        }else{
-                            Log.d("download_file_errorbody",response.body().toString())
-                            listener?.onFailure("errorbody")
+                                saveFile(response.body(), view, recorId.value!!)
+                            } else {
+                                Log.d("download_file_errorbody", response.body().toString())
+                                listener?.onFailure(response.body().toString())
+                            }
                         }
-                    }
 
-                    override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                        Log.d("download_file_error",t.toString())
-                        listener?.onFailure("error")
-                    }
-                })
+                        override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                            Log.d("download_file_error", t.toString())
+                            listener?.onFailure(t.toString())
+                        }
+                    })
 
-            }catch (e:APIException){
-                listener?.onFailure(e.message!!)
-            }catch (e:NoInternetException){
-                listener?.onFailure(e.message!!)
-            }catch (e:Exception){
-                listener?.onFailure(e.message!!)
+                } catch (e: APIException) {
+                    listener?.onFailure(e.message!!)
+                } catch (e: NoInternetException) {
+                    listener?.onFailure(e.message!!)
+                } catch (e: Exception) {
+                    listener?.onFailure(e.message!!)
+                }
             }
         }
     }

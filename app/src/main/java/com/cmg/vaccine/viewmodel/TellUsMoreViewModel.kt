@@ -80,12 +80,13 @@ class TellUsMoreViewModel(
 
         override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
             selectedItemIdTYpe.set(position)
-            if (!identifierTypeList.value?.isNullOrEmpty()!!){
+
+            /*if (!identifierTypeList.value?.isNullOrEmpty()!!){
                 if (identifierTypeList.value!![position].identifierCode.equals("NNMYS")){
                     idNo.value = ""
                     patientIdNoCharLength.set(12)
                 }
-            }
+            }*/
         }
     }
 
@@ -114,7 +115,7 @@ class TellUsMoreViewModel(
 
         }
 
-        patientIdNoCharLength.set(15)
+
 
     }
     fun getPlaceOfBirthPos(){
@@ -126,11 +127,24 @@ class TellUsMoreViewModel(
         nationalityCountryFlag.value = World.getFlagOf(userData.placeBirth)
         /*val pos = selectedCountryName(userData.placeBirth,countries.value!!)
         selectedItemNationalityCode.set(pos)*/
+
+        if (!nationalityCountryCode.value.isNullOrEmpty()){
+            if (nationalityCountryCode.value.equals("Malaysia",false)){
+                patientIdNoCharLength.set(12)
+            }else{
+                patientIdNoCharLength.set(15)
+            }
+        }
     }
 
     fun onRegister(view:View){
         listener?.onStarted()
-        //if((!passportNo.value.isNullOrEmpty()) or (!idNo.value.isNullOrEmpty())) {
+        if (!idNo.value.isNullOrEmpty()){
+            if (idNo.value?.length != patientIdNoCharLength.get()){
+                listener?.onFailure("Your ID Number is invalid")
+                return
+            }
+        }
             if (isChecked.get()) {
 
                 if (nationalityCountryCode.value.equals("Malaysia")){
@@ -168,7 +182,14 @@ class TellUsMoreViewModel(
 
                 /*val idTypeList = view.context.resources.getStringArray(R.array.id_type)
                 idType.value = idTypeList[selectedItemIdTYpe.get()]*/
-                idType.value = identifierTypeList.value?.get(selectedItemIdTYpe.get())?.identifierCode
+                if (nationalityCountryCode.value.equals("Malaysia",false)) {
+                    idType.value =
+                        identifierTypeListForMYS.value?.get(selectedItemIdTYpe.get())?.identifierCode
+                }else{
+                    idType.value =
+                        identifierTypeListForOthers.value?.get(selectedItemIdTYpe.get())?.identifierCode
+                }
+                //idType.value = identifierTypeList.value?.get(selectedItemIdTYpe.get())?.identifierCode
 
                 userData.passportNumber = passportNo.value?.trim()
                 userData.passportExpiryDate = passportExpDate.value
@@ -219,8 +240,6 @@ class TellUsMoreViewModel(
             } else {
                 listener?.onFailure("Please Read Terms and Condtition")
             }
-        /*}else{
-            listener?.onFailure("Passport Number or Id number Mandatory")
-        }*/
+
     }
 }

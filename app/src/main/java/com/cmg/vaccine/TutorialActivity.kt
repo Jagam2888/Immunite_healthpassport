@@ -10,7 +10,6 @@ import androidx.viewpager.widget.ViewPager
 import com.cmg.vaccine.adapter.TutorialViewPagerAdapter
 import com.cmg.vaccine.data.IntroItem
 import com.cmg.vaccine.databinding.ActivityTutorialBinding
-import kotlinx.android.synthetic.main.introlayout_design.view.*
 
 class TutorialActivity : BaseActivity() {
 

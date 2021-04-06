@@ -632,7 +632,7 @@
                             android:entries="@{profileviewmodel.nationalityCountryCode.equals(`Malaysia`)?profileviewmodel.identifierTypeListForMYS:profileviewmodel.identifierTypeListForOthers}"
                             android:layout_toLeftOf="@id/img_down_arrow_id"
                             android:layout_centerVertical="true"
-                            android:selectedItemPosition="@={profileviewmodel.selectedItemIdTYpe}" />
+                            tools:setOnItemSelectedListener="@{profileviewmodel.clicksListener}" />
 
 
                     </RelativeLayout>
@@ -643,6 +643,7 @@
                         android:background="@color/gray" />
 
                     <EditText
+                        android:id="@+id/edt_idno"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
@@ -650,7 +651,7 @@
                         android:hint="@string/id_number"
                         android:inputType="number"
                         android:maxLines="1"
-                        android:maxLength="15"
+                        android:maxLength="@{profileviewmodel.patientIdNoCharLength}"
                         android:textAppearance="@style/opens_regular"
                         android:textSize="14sp"
                         android:layout_weight="1"

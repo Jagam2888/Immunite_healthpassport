@@ -176,7 +176,11 @@ class DepartureVerificationViewModel(
                                                 if (!listTestReportFilterByHours[j].observationCode.isNullOrEmpty()){
                                                     val observationStatusCode = testCodesFilterByTestReport[i].wetstObservationStatusCode
                                                     val observationStatusCodeArray = observationStatusCode?.split("|")
-                                                    if (observationStatusCodeArray?.contains(listTestReportFilterByHours[j].observationCode!!) == true){
+                                                    val observationTrimArray = ArrayList<String>()
+                                                    for (k in observationStatusCodeArray!!.indices){
+                                                        observationTrimArray.add(observationStatusCodeArray[k].trim())
+                                                    }
+                                                    if (observationTrimArray?.contains(listTestReportFilterByHours[j].observationCode!!)){
                                                         status.set(true)
                                                         return
                                                     }

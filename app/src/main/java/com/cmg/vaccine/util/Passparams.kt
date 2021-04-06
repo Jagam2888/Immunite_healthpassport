@@ -43,9 +43,11 @@ object Passparams{
 
     //Staging API
     //const val URL = "http://stapp.immunitee.com:7001/"
+    const val DOWNLOAD_TEST_REPORT = "http://stg.i-care.com:6001/gp-module-lab/ext/labpdf?labOrderTxn="
 
     //Production API
     //const val URL = "http://app.immunitee.com:7001/"
+    //const val DOWNLOAD_TEST_REPORT = "http://prod.i-care.com:6001/gp-module-lab/ext/labpdf?labOrderTxn="
 
     const val PATIENT_REGISTRATION = "nhr-module-user/patientreg"
     const val DEPENDENT_REGISTRATION = "nhr-module-user/patientdependentreg"

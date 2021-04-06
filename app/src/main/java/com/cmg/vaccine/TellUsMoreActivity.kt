@@ -99,6 +99,28 @@ class TellUsMoreActivity : BaseActivity(),KodeinAware,SimpleListener,SlideDatePi
                 }
             }
         })
+
+        binding.edtIdno.addTextChangedListener(object :TextWatcher{
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                if (!s.toString().isNullOrEmpty()){
+                    if (viewModel.nationalityCountryCode.value.equals("Malaysia",false)) {
+                        if (s?.length!! < 12) {
+                            binding.edtIdno.error = "Minimum 12 Character"
+                        }
+                    }else{
+                        if (s?.length!! < 15) {
+                            binding.edtIdno.error = "Minimum 15 Character"
+                        }
+                    }
+                }
+            }
+        })
     }
 
     override fun onPositiveClick(day: Int, month: Int, year: Int, calendar: Calendar) {
@@ -111,6 +133,13 @@ class TellUsMoreActivity : BaseActivity(),KodeinAware,SimpleListener,SlideDatePi
         hideKeyBoard()
         viewModel.nationalityCountryCode.value = World.getCountryFrom(countryCode).name
         viewModel.nationalityCountryFlag.value = World.getFlagOf(countryCode)
+
+        viewModel.idNo.value = ""
+        if (countryCode == "MYS"){
+            viewModel.patientIdNoCharLength.set(12)
+        }else{
+            viewModel.patientIdNoCharLength.set(15)
+        }
 
     }
 

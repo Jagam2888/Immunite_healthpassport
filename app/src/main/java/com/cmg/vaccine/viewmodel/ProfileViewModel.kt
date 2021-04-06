@@ -104,7 +104,18 @@ class ProfileViewModel(
     val identifierTypeListForOthers:LiveData<ArrayList<IdentifierType>>
         get() = _identifierTypeListForOthers
 
+    var patientIdNoCharLength = ObservableInt()
 
+    val clicksListener = object : AdapterView.OnItemSelectedListener {
+        override fun onNothingSelected(parent: AdapterView<*>?) {
+
+        }
+
+        override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+            selectedItemIdTYpe.set(position)
+
+        }
+    }
 
     init {
         //val countries = World.
@@ -244,7 +255,13 @@ class ProfileViewModel(
             userSubId.value = user.parentSubscriberId
 
 
-            
+            if (!nationalityCountryCode.value.isNullOrEmpty()){
+                if (nationalityCountryCode.value.equals("Malaysia",false)){
+                    patientIdNoCharLength.set(12)
+                }else{
+                    patientIdNoCharLength.set(15)
+                }
+            }
 
         }
 
@@ -336,6 +353,12 @@ class ProfileViewModel(
 
     fun onClick(view:View){
         listener?.onStarted()
+        if (!idNo.value.isNullOrEmpty()){
+            if (idNo.value?.length != patientIdNoCharLength.get()){
+                listener?.onFailure("Your ID Number is invalid")
+                return
+            }
+        }
         var user = repositary.getUserData()
 
         /*var placeBirth = ""
@@ -353,7 +376,14 @@ class ProfileViewModel(
         /*val idTypeList =
                 view.context.resources.getStringArray(R.array.id_type)
         idType.value = idTypeList[selectedItemIdTYpe.get()]*/
-        idType.value = identifierTypeList.value?.get(selectedItemIdTYpe.get())?.identifierCode
+        if (nationalityCountryCode.value.equals("Malaysia",false)) {
+            idType.value =
+                identifierTypeListForMYS.value?.get(selectedItemIdTYpe.get())?.identifierCode
+        }else{
+            idType.value =
+                identifierTypeListForOthers.value?.get(selectedItemIdTYpe.get())?.identifierCode
+        }
+        //idType.value = identifierTypeList.value?.get(selectedItemIdTYpe.get())?.identifierCode
 
         //remove first char if zero
         if (!contactNumber.value.isNullOrEmpty()) {
@@ -364,81 +394,88 @@ class ProfileViewModel(
         }
         isAllow = !(!currentEmail.equals(email1.value) and !currentMobile.equals(contactNumber.value))
             try {
-                if (!firstName.value.isNullOrEmpty() and !contactNumber.value.isNullOrEmpty() and !email1.value.isNullOrEmpty()) {
-                    if (isAllow) {
-                        if (email1.value.equals(reTypeEmail.value)) {
+                    if (!firstName.value.isNullOrEmpty() and !contactNumber.value.isNullOrEmpty() and !email1.value.isNullOrEmpty()) {
+                        if (isAllow) {
+                            if (email1.value.equals(reTypeEmail.value)) {
 
-                            if (nationalityCountryCode.value.equals("Malaysia")){
-                                if (idNo.value.isNullOrEmpty()){
-                                    listener?.onFailure("Malaysian should be enter Your Id number")
-                                    return
+                                if (nationalityCountryCode.value.equals("Malaysia")) {
+                                    if (idNo.value.isNullOrEmpty()) {
+                                        listener?.onFailure("Malaysian should be enter Your Id number")
+                                        return
+                                    }
                                 }
-                            }
 
-                            if (!nationalityCountryCode.value.equals("Malaysia")){
-                                if((passportNumber.value.isNullOrEmpty()) and (idNo.value.isNullOrEmpty())) {
-                                    listener?.onFailure("Passport Number or Id number either one Mandatory")
-                                    return
+                                if (!nationalityCountryCode.value.equals("Malaysia")) {
+                                    if ((passportNumber.value.isNullOrEmpty()) and (idNo.value.isNullOrEmpty())) {
+                                        listener?.onFailure("Passport Number or Id number either one Mandatory")
+                                        return
+                                    }
                                 }
-                            }
 
-                            if (!passportNumber.value.isNullOrEmpty()){
-                                if (passportExpDate.value.isNullOrEmpty()){
-                                    listener?.onFailure("Please Enter Your Passport Expiry Date")
-                                    return
+                                if (!passportNumber.value.isNullOrEmpty()) {
+                                    if (passportExpDate.value.isNullOrEmpty()) {
+                                        listener?.onFailure("Please Enter Your Passport Expiry Date")
+                                        return
+                                    }
                                 }
-                            }
 
 
-                            if (isChecked.get()) {
-                                if (isValidEmail(email1.value!!)) {
-                                    if (validateDateFormat(dob.value!!)) {
-                                        if (validateTime(dobTime.value!!)) {
+                                if (isChecked.get()) {
+                                    if (isValidEmail(email1.value!!)) {
+                                        if (validateDateFormat(dob.value!!)) {
+                                            if (validateTime(dobTime.value!!)) {
 
-                                            val updateProfileReq = UpdateProfileReq()
-                                            val updateProfileReqData = UpdateProfileReqData()
+                                                val updateProfileReq = UpdateProfileReq()
+                                                val updateProfileReqData = UpdateProfileReqData()
 
-                                            updateProfileReqData.firstName = firstName.value
-                                            updateProfileReqData.nationalityCountry = World.getCountryFrom(nationalityCountryCode.value).alpha3
-                                            updateProfileReqData.dob =
-                                                dob.value + " " + dobTime.value + ":00"
-                                            updateProfileReqData.subsId = user.parentSubscriberId
-                                            updateProfileReqData.passportNo = passportNumber.value
-                                            updateProfileReqData.passportExpiryDate = passportExpDate.value
-                                            updateProfileReqData.gender = genderEnum.name
-                                            updateProfileReqData.idNo = idNo.value
-                                            updateProfileReqData.idType = idType.value
-                                            updateProfileReqData.placeOfBirth = World.getCountryFrom(birthPlaceCountryCode.value).alpha3
-                                            updateProfileReqData.countryCode =
-                                                selectedItemContactCode.get()!!
-                                            updateProfileReqData.email = email1.value
-                                            updateProfileReqData.mobileNumber = contactNumber.value
+                                                updateProfileReqData.firstName = firstName.value
+                                                updateProfileReqData.nationalityCountry =
+                                                    World.getCountryFrom(nationalityCountryCode.value).alpha3
+                                                updateProfileReqData.dob =
+                                                    dob.value + " " + dobTime.value + ":00"
+                                                updateProfileReqData.subsId =
+                                                    user.parentSubscriberId
+                                                updateProfileReqData.passportNo =
+                                                    passportNumber.value
+                                                updateProfileReqData.passportExpiryDate =
+                                                    passportExpDate.value
+                                                updateProfileReqData.gender = genderEnum.name
+                                                updateProfileReqData.idNo = idNo.value
+                                                updateProfileReqData.idType = idType.value
+                                                updateProfileReqData.placeOfBirth =
+                                                    World.getCountryFrom(birthPlaceCountryCode.value).alpha3
+                                                updateProfileReqData.countryCode =
+                                                    selectedItemContactCode.get()!!
+                                                updateProfileReqData.email = email1.value
+                                                updateProfileReqData.mobileNumber =
+                                                    contactNumber.value
 
 
-                                            updateProfileReq.data = updateProfileReqData
-                                            repositary.saveEditProfileReq(updateProfileReq)
-                                            listener?.onSuccess("")
-                                        }else{
-                                            listener?.onFailure("Sorry! Invalid Birth Time")
+                                                updateProfileReq.data = updateProfileReqData
+                                                repositary.saveEditProfileReq(updateProfileReq)
+                                                listener?.onSuccess("")
+                                            } else {
+                                                listener?.onFailure("Sorry! Invalid Birth Time")
+                                            }
+                                        } else {
+                                            listener?.onFailure("Sorry! Invalid Date of Birth")
                                         }
-                                    }else{
-                                        listener?.onFailure("Sorry! Invalid Date of Birth")
+                                    } else {
+                                        listener?.onFailure("InValid Email")
                                     }
                                 } else {
-                                    listener?.onFailure("InValid Email")
+                                    listener?.onFailure("Please accept terms and conditions")
                                 }
                             } else {
-                                listener?.onFailure("Please accept terms and conditions")
+                                listener?.onFailure("Email and Retype Email Mismatch")
                             }
-                        }else{
-                            listener?.onFailure("Email and Retype Email Mismatch")
+                        } else {
+                            listener?.onFailure("Sorry! You are not allowed to change Email Address and Mobile Number at same time")
                         }
-                    }else{
-                        listener?.onFailure("Sorry! You are not allowed to change Email Address and Mobile Number at same time")
+                    } else {
+                        listener?.onFailure("Please fill all Mandatory fields")
                     }
-                }else{
-                    listener?.onFailure("Please fill all Mandatory fields")
-                }
+
             }catch (e:Exception){
                 listener?.onFailure(e.message!!)
             }

@@ -89,7 +89,7 @@
     <!--<string name="thank_you_signup">Thank You for your interest to sign up with Immunitee.</string>-->
     <string name="thank_you_signup">WELCOME TO IMMUNITEE</string>
     <!--<string name="immunitee_welcome_content">Immunitee is built on trust and protecting privacy, thus we do not required copy of your confidential document such as Passport, ID or Bank Statement to confirm your credential. Signing up Immunitee has no use to you if the information provided are vary from your actual.</string>-->
-    <string name="immunitee_welcome_content">Immunite is a trusted platform for Digital Health Passport. Your clinical data is kept at secured blockchain with unique Private Key that only owned by you. Your clinical data Will only be shared with your consent.</string>
+    <string name="immunitee_welcome_content">Immunite is a trusted platform for Digital Health Passport. Your clinical data is kept at secured blockchain with unique private key that only owned by you. Your clinical data will only be shared with your consent.</string>
 
 
     <string name="immunisation_history">Immunisation History</string>
@@ -351,7 +351,7 @@ clinical data and complete your clinical test at Immunitee clinic.
     <string name="booking_title">Online Test Result</string>
     <string name="booking_desc">Access to nearest Immunitee partner clinic and lab networks. Access to secured digital test data. Keep, share and protect your data with Private Key.</string>
     <string name="scan_go_title">Scan &amp; Go</string>
-    <string name="scan_go_desc">Your Digital Health Passport with \u00E2\u0080\u009CPrivate Key\u00E2\u0080\u009D for verification and accessibility to your destination.</string>
+    <string name="scan_go_desc">Your Digital Health Passport with \"Private Key\" for verification and accessibility to your destination.</string>
     <string name="entry_req_title">Entry \nRequirements &amp; Status</string>
     <string name="entry_req_desc">Qualify your trip with clinical requirement as needed for the destination country.</string>
 

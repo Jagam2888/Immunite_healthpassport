@@ -111,7 +111,7 @@ class DependentViewModel(
     val identifierTypeListForMYS:LiveData<ArrayList<IdentifierType>>
         get() = _identifierTypeListForMYS
 
-    var _identifierTypeListForOthers:MutableLiveData<ArrayList<IdentifierType>> = MutableLiveData()
+    private var _identifierTypeListForOthers:MutableLiveData<ArrayList<IdentifierType>> = MutableLiveData()
     val identifierTypeListForOthers:LiveData<ArrayList<IdentifierType>>
         get() = _identifierTypeListForOthers
 
@@ -122,12 +122,7 @@ class DependentViewModel(
 
         override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
             selectedItemIdTYpe.set(position)
-            if (!identifierTypeList.value?.isNullOrEmpty()!!){
-                if (identifierTypeList.value!![position].identifierCode.equals("NNMYS")){
-                    idNo.value = ""
-                    patientIdNoCharLength.set(12)
-                }
-            }
+
         }
     }
 
@@ -192,7 +187,7 @@ class DependentViewModel(
             _identifierTypeListForOthers.value = identifierTypeForOthers
         }
 
-        patientIdNoCharLength.set(15)
+
 
     }
 
@@ -215,45 +210,54 @@ class DependentViewModel(
     }
 
     fun onClick(view:View) {
+
+        if (!idNo.value.isNullOrEmpty()){
+            if (idNo.value?.length != patientIdNoCharLength.get()){
+                listener?.onFailure("Your ID Number is invalid")
+                return
+            }
+        }
+
+
         if (isChecked.get()) {
-            if (!fullName.value.isNullOrEmpty() and !email.value.isNullOrEmpty() and !contactNumber.value.isNullOrEmpty() and !dob.value.isNullOrEmpty()) {
-                if (email.value.equals(reTypeEmail.value)) {
-                    if (isValidEmail(email.value!!)) {
-                        if (validateDateFormat(dob.value!!)) {
-                            if (validateTime(dobTime.value!!)) {
-                                listener?.onStarted()
+                if (!fullName.value.isNullOrEmpty() and !email.value.isNullOrEmpty() and !contactNumber.value.isNullOrEmpty() and !dob.value.isNullOrEmpty()) {
+                    if (email.value.equals(reTypeEmail.value)) {
+                        if (isValidEmail(email.value!!)) {
+                            if (validateDateFormat(dob.value!!)) {
+                                if (validateTime(dobTime.value!!)) {
+                                    listener?.onStarted()
 
 
-                                if (nationalityCountryCode.value.equals("Malaysia")){
-                                    if (idNo.value.isNullOrEmpty()){
-                                        listener?.onFailure("Malaysian should be enter Your Id number")
-                                        return
+                                    if (nationalityCountryCode.value.equals("Malaysia")) {
+                                        if (idNo.value.isNullOrEmpty()) {
+                                            listener?.onFailure("Malaysian should be enter Your Id number")
+                                            return
+                                        }
                                     }
-                                }
 
-                                if (!nationalityCountryCode.value.equals("Malaysia")){
-                                    if((passportNumber.value.isNullOrEmpty()) and (idNo.value.isNullOrEmpty())) {
-                                        listener?.onFailure("Passport Number or Id number either one Mandatory")
-                                        return
+                                    if (!nationalityCountryCode.value.equals("Malaysia")) {
+                                        if ((passportNumber.value.isNullOrEmpty()) and (idNo.value.isNullOrEmpty())) {
+                                            listener?.onFailure("Passport Number or Id number either one Mandatory")
+                                            return
+                                        }
                                     }
-                                }
 
-                                if (!passportNumber.value.isNullOrEmpty()){
-                                    if (passportExpDate.value.isNullOrEmpty()){
-                                        listener?.onFailure("Please Enter Your Passport Expiry Date")
-                                        return
+                                    if (!passportNumber.value.isNullOrEmpty()) {
+                                        if (passportExpDate.value.isNullOrEmpty()) {
+                                            listener?.onFailure("Please Enter Your Passport Expiry Date")
+                                            return
+                                        }
                                     }
-                                }
 
-                                val relationShips =
-                                    view.context.resources.getStringArray(R.array.relationships)
-                                val relationShip = relationShips.get(relationshipItemPos.get())
+                                    val relationShips =
+                                        view.context.resources.getStringArray(R.array.relationships)
+                                    val relationShip = relationShips.get(relationshipItemPos.get())
 
-                                if (dobTime.value.isNullOrEmpty()) {
-                                    dobTime.value = "00:00"
-                                }
+                                    if (dobTime.value.isNullOrEmpty()) {
+                                        dobTime.value = "00:00"
+                                    }
 
-                                /*var placeBirth = ""
+                                    /*var placeBirth = ""
                                 if (!countryList.isNullOrEmpty()) {
                                     placeBirth =
                                         countryList?.get(selectedItemBirthPlaceCode.get())?.alpha3!!
@@ -265,94 +269,108 @@ class DependentViewModel(
                                         countryList?.get(selectedItemNationalityCode.get())?.alpha3!!
                                 }*/
 
-                                /*val idTypeList =
+                                    /*val idTypeList =
                                     view.context.resources.getStringArray(R.array.id_type)
                                 idType.value = idTypeList[selectedItemIdTYpe.get()]*/
-                                idType.value = identifierTypeList.value?.get(selectedItemIdTYpe.get())?.identifierCode
-
-                                //remove first char if zero
-                                if (!contactNumber.value.isNullOrEmpty()) {
-                                    if (contactNumber.value!!.startsWith("0")) {
-                                        contactNumber.value = contactNumber.value!!.drop(1)
+                                    if (nationalityCountryCode.value.equals("Malaysia", false)) {
+                                        idType.value =
+                                            identifierTypeListForMYS.value?.get(selectedItemIdTYpe.get())?.identifierCode
+                                    } else {
+                                        idType.value =
+                                            identifierTypeListForOthers.value?.get(
+                                                selectedItemIdTYpe.get()
+                                            )?.identifierCode
                                     }
-                                }
 
-
-                                val dependentRegReq = DependentRegReq()
-
-                                val dependentRegReqData = DependentRegReqData()
-                                dependentRegReqData.firstName = fullName.value?.trim()
-                                dependentRegReqData.countryCode = selectedItemContactCode.get()
-                                dependentRegReqData.mobileNumber = contactNumber.value?.trim()
-                                dependentRegReqData.email = email.value?.trim()
-                                dependentRegReqData.relationship = relationShip
-                                dependentRegReqData.nationalityCountry = World.getCountryFrom(nationalityCountryCode.value).alpha3
-                                dependentRegReqData.gender = genderEnum.name
-                                dependentRegReqData.dob = dob.value + " " + dobTime.value + ":00"
-                                dependentRegReqData.placeOfBirth = World.getCountryFrom(birthPlaceCountryCode.value).alpha3
-                                dependentRegReqData.idType = idType.value
-
-                                dependentRegReqData.passportNo = passportNumber.value?.trim()
-                                dependentRegReqData.passportExpiryDate = passportExpDate.value?.trim()
-                                dependentRegReqData.idNo = idNo.value?.trim()
-                                dependentRegReqData.masterSubsId = repositary.getParentSubId()
-
-                                dependentRegReq.data = dependentRegReqData
-
-                                Couritnes.main {
-                                    try {
-                                        val response = repositary.dependentSignUp(dependentRegReq)
-                                        if (response.StatusCode == 1) {
-
-                                            val dependent = Dependent(
-                                                selectedItemContactCode.get(),
-                                                dob.value,
-                                                dobTime.value,
-                                                email.value?.trim(),
-                                                fullName.value?.trim(),
-                                                genderEnum.name,
-                                                idNo.value?.trim(),
-                                                idType.value,
-                                                repositary.getParentSubId(),
-                                                response.SubsId,
-                                                response.privateKey,
-                                                    null,
-                                                contactNumber.value?.trim(),
-                                                World.getCountryFrom(nationalityCountryCode.value).alpha3,
-                                                passportNumber.value?.trim(),
-                                                passportExpDate.value,
-                                                World.getCountryFrom(birthPlaceCountryCode.value).alpha3,
-                                                relationShip
-                                            )
-                                            repositary.insertDependentSignUp(dependent)
-                                            listener?.onSuccess(response.Message)
-                                        } else {
-                                            listener?.onFailure(response.Message)
+                                    //remove first char if zero
+                                    if (!contactNumber.value.isNullOrEmpty()) {
+                                        if (contactNumber.value!!.startsWith("0")) {
+                                            contactNumber.value = contactNumber.value!!.drop(1)
                                         }
-                                    } catch (e: APIException) {
-                                        listener?.onFailure(e.message!!)
-                                    } catch (e: NoInternetException) {
-                                        listener?.onFailure(e.message!!)
-                                    } catch (e: SocketTimeoutException) {
-                                        listener?.onFailure(e.message!!)
                                     }
+
+
+                                    val dependentRegReq = DependentRegReq()
+
+                                    val dependentRegReqData = DependentRegReqData()
+                                    dependentRegReqData.firstName = fullName.value?.trim()
+                                    dependentRegReqData.countryCode = selectedItemContactCode.get()
+                                    dependentRegReqData.mobileNumber = contactNumber.value?.trim()
+                                    dependentRegReqData.email = email.value?.trim()
+                                    dependentRegReqData.relationship = relationShip
+                                    dependentRegReqData.nationalityCountry =
+                                        World.getCountryFrom(nationalityCountryCode.value).alpha3
+                                    dependentRegReqData.gender = genderEnum.name
+                                    dependentRegReqData.dob =
+                                        dob.value + " " + dobTime.value + ":00"
+                                    dependentRegReqData.placeOfBirth =
+                                        World.getCountryFrom(birthPlaceCountryCode.value).alpha3
+                                    dependentRegReqData.idType = idType.value
+
+                                    dependentRegReqData.passportNo = passportNumber.value?.trim()
+                                    dependentRegReqData.passportExpiryDate =
+                                        passportExpDate.value?.trim()
+                                    dependentRegReqData.idNo = idNo.value?.trim()
+                                    dependentRegReqData.masterSubsId = repositary.getParentSubId()
+
+                                    dependentRegReq.data = dependentRegReqData
+
+                                    Couritnes.main {
+                                        try {
+                                            val response =
+                                                repositary.dependentSignUp(dependentRegReq)
+                                            if (response.StatusCode == 1) {
+
+                                                val dependent = Dependent(
+                                                    selectedItemContactCode.get(),
+                                                    dob.value,
+                                                    dobTime.value,
+                                                    email.value?.trim(),
+                                                    fullName.value?.trim(),
+                                                    genderEnum.name,
+                                                    idNo.value?.trim(),
+                                                    idType.value,
+                                                    repositary.getParentSubId(),
+                                                    response.SubsId,
+                                                    response.privateKey,
+                                                    null,
+                                                    contactNumber.value?.trim(),
+                                                    World.getCountryFrom(nationalityCountryCode.value).alpha3,
+                                                    passportNumber.value?.trim(),
+                                                    passportExpDate.value,
+                                                    World.getCountryFrom(birthPlaceCountryCode.value).alpha3,
+                                                    relationShip
+                                                )
+                                                repositary.insertDependentSignUp(dependent)
+                                                listener?.onSuccess(response.Message)
+                                            } else {
+                                                listener?.onFailure(response.Message)
+                                            }
+                                        } catch (e: APIException) {
+                                            listener?.onFailure(e.message!!)
+                                        } catch (e: NoInternetException) {
+                                            listener?.onFailure(e.message!!)
+                                        } catch (e: SocketTimeoutException) {
+                                            listener?.onFailure(e.message!!)
+                                        }
+                                    }
+                                } else {
+                                    listener?.onFailure("Sorry! Invalid Birth Time")
                                 }
-                            }else{
-                                listener?.onFailure("Sorry! Invalid Birth Time")
+                            } else {
+                                listener?.onFailure("Sorry! Invalid Date of Birth")
                             }
-                        }else{
-                            listener?.onFailure("Sorry! Invalid Date of Birth")
+                        } else {
+                            listener?.onFailure("InValid Email")
                         }
-                    }else{
-                        listener?.onFailure("InValid Email")
+                    } else {
+                        listener?.onFailure("Email and Retype Email Mismatch")
                     }
-                }else{
-                    listener?.onFailure("Email and Retype Email Mismatch")
+
+                } else {
+                    listener?.onFailure("Please fill all mandatory fields")
                 }
 
-            }else{
-                listener?.onFailure("Please fill all mandatory fields")
-            }
         }else{
             listener?.onFailure("Please accept Terms and conditions")
         }
@@ -420,9 +438,23 @@ class DependentViewModel(
         currentMobile = contactNumber.value
 
         userSubId.value = dependent?.subsId
+
+        if (!nationalityCountryCode.value.isNullOrEmpty()){
+            if (nationalityCountryCode.value.equals("Malaysia",false)){
+                patientIdNoCharLength.set(12)
+            }else{
+                patientIdNoCharLength.set(15)
+            }
+        }
     }
 
     fun updateProfile(view: View){
+        if (!idNo.value.isNullOrEmpty()){
+            if (idNo.value?.length != patientIdNoCharLength.get()){
+                listener?.onFailure("Your ID Number is invalid")
+                return
+            }
+        }
         isAllow = !(!currentEmail.equals(email.value) and !currentMobile.equals(contactNumber.value))
         val relationShips =
                 view.context.resources.getStringArray(R.array.relationships)
@@ -445,51 +477,62 @@ class DependentViewModel(
         /*val idTypeList =
                 view.context.resources.getStringArray(R.array.id_type)
         idType.value = idTypeList[selectedItemIdTYpe.get()]*/
-        idType.value = identifierTypeList.value?.get(selectedItemIdTYpe.get())?.identifierCode
+        //idType.value = identifierTypeList.value?.get(selectedItemIdTYpe.get())?.identifierCode
+        if (nationalityCountryCode.value.equals("Malaysia",false)) {
+            idType.value =
+                identifierTypeListForMYS.value?.get(selectedItemIdTYpe.get())?.identifierCode
+        }else{
+            idType.value =
+                identifierTypeListForOthers.value?.get(selectedItemIdTYpe.get())?.identifierCode
+        }
 
         if (isChecked.get()){
-            if (!fullName.value.isNullOrEmpty() and !email.value.isNullOrEmpty() and !contactNumber.value.isNullOrEmpty()) {
-                if (isAllow) {
-                    if (email.value.equals(reTypeEmail.value)) {
-                        if (isValidEmail(email.value!!)) {
-                            if (validateDateFormat(dob.value!!)) {
-                                if (validateTime(dobTime.value!!)) {
-                                    listener?.onStarted()
 
-                                    if (nationalityCountryCode.value.equals("Malaysia")){
-                                        if (idNo.value.isNullOrEmpty()){
-                                            listener?.onFailure("Malaysian should be enter Your Id number")
-                                            return
-                                        }
-                                    }
+                if (!fullName.value.isNullOrEmpty() and !email.value.isNullOrEmpty() and !contactNumber.value.isNullOrEmpty()) {
+                    if (isAllow) {
+                        if (email.value.equals(reTypeEmail.value)) {
+                            if (isValidEmail(email.value!!)) {
+                                if (validateDateFormat(dob.value!!)) {
+                                    if (validateTime(dobTime.value!!)) {
+                                        listener?.onStarted()
 
-                                    if (!nationalityCountryCode.value.equals("Malaysia")){
-                                        if((passportNumber.value.isNullOrEmpty()) and (idNo.value.isNullOrEmpty())) {
-                                            listener?.onFailure("Passport Number or Id number either one Mandatory")
-                                            return
+                                        if (nationalityCountryCode.value.equals("Malaysia")) {
+                                            if (idNo.value.isNullOrEmpty()) {
+                                                listener?.onFailure("Malaysian should be enter Your Id number")
+                                                return
+                                            }
                                         }
-                                    }
 
-                                    if (!passportNumber.value.isNullOrEmpty()){
-                                        if (passportExpDate.value.isNullOrEmpty()){
-                                            listener?.onFailure("Please Enter Your Passport Expiry Date")
-                                            return
+                                        if (!nationalityCountryCode.value.equals("Malaysia")) {
+                                            if ((passportNumber.value.isNullOrEmpty()) and (idNo.value.isNullOrEmpty())) {
+                                                listener?.onFailure("Passport Number or Id number either one Mandatory")
+                                                return
+                                            }
                                         }
-                                    }
+
+                                        if (!passportNumber.value.isNullOrEmpty()) {
+                                            if (passportExpDate.value.isNullOrEmpty()) {
+                                                listener?.onFailure("Please Enter Your Passport Expiry Date")
+                                                return
+                                            }
+                                        }
                                         try {
                                             val updateProfileReq = UpdateProfileReq()
                                             val updateProfileReqData = UpdateProfileReqData()
 
                                             updateProfileReqData.firstName = fullName.value?.trim()
-                                            updateProfileReqData.nationalityCountry = World.getCountryFrom(nationalityCountryCode.value).alpha3
+                                            updateProfileReqData.nationalityCountry =
+                                                World.getCountryFrom(nationalityCountryCode.value).alpha3
                                             updateProfileReqData.dob =
                                                 dob.value + " " + dobTime.value + ":00"
-                                            updateProfileReqData.placeOfBirth = World.getCountryFrom(birthPlaceCountryCode.value).alpha3
+                                            updateProfileReqData.placeOfBirth =
+                                                World.getCountryFrom(birthPlaceCountryCode.value).alpha3
                                             updateProfileReqData.countryCode =
                                                 selectedItemContactCode.get()
                                             updateProfileReqData.passportNo =
                                                 passportNumber.value?.trim()
-                                            updateProfileReqData.passportExpiryDate = passportExpDate.value
+                                            updateProfileReqData.passportExpiryDate =
+                                                passportExpDate.value
                                             updateProfileReqData.gender = genderEnum.name
                                             updateProfileReqData.idNo = idNo.value?.trim()
                                             updateProfileReqData.subsId = dependent?.subsId
@@ -508,24 +551,25 @@ class DependentViewModel(
                                         } catch (e: Exception) {
                                             listener?.onFailure(e.message!!)
                                         }
-                                }else{
-                                    listener?.onFailure("Sorry! Invalid Birth Time")
+                                    } else {
+                                        listener?.onFailure("Sorry! Invalid Birth Time")
+                                    }
+                                } else {
+                                    listener?.onFailure("Sorry! Invalid Date of Birth")
                                 }
-                            }else{
-                                listener?.onFailure("Sorry! Invalid Date of Birth")
+                            } else {
+                                listener?.onFailure("InValid Email")
                             }
                         } else {
-                            listener?.onFailure("InValid Email")
+                            listener?.onFailure("Email and Retype Email Mismatch")
                         }
-                    }else{
-                        listener?.onFailure("Email and Retype Email Mismatch")
+                    } else {
+                        listener?.onFailure("Sorry! You are not allowed to change Email Address and Mobile Number at same time")
                     }
-                }else{
-                    listener?.onFailure("Sorry! You are not allowed to change Email Address and Mobile Number at same time")
+                } else {
+                    listener?.onFailure("Please fill all Mandatory fields")
                 }
-            }else{
-                listener?.onFailure("Please fill all Mandatory fields")
-            }
+
         }else{
             listener?.onFailure("Please accept Terms and conditions")
         }
