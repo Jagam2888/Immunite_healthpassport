@@ -40,14 +40,15 @@ object Passparams{
     //API
     //const val URL = "http://47.254.238.145:7001/"
     const val URL = "http://dev.immunitee.com:7001/"
+    const val DOWNLOAD_TEST_REPORT = "http://10.1.1.150:6001/gp-module-lab/ext/labpdf?labOrderTxn="
 
     //Staging API
     //const val URL = "http://stapp.immunitee.com:7001/"
-    const val DOWNLOAD_TEST_REPORT = "http://stg.i-care.com:6001/gp-module-lab/ext/labpdf?labOrderTxn="
+    //const val DOWNLOAD_TEST_REPORT = "http://stg.i-care.com:6001/gp-module-lab/ext/labpdf?labOrderTxn="
 
     //Production API
     //const val URL = "http://app.immunitee.com:7001/"
-    //const val DOWNLOAD_TEST_REPORT = "http://prod.i-care.com:6001/gp-module-lab/ext/labpdf?labOrderTxn="
+    //const val DOWNLOAD_TEST_REPORT = "http://api.i-care.com:6001/gp-module-lab/ext/labpdf?labOrderTxn="
 
     const val PATIENT_REGISTRATION = "nhr-module-user/patientreg"
     const val DEPENDENT_REGISTRATION = "nhr-module-user/patientdependentreg"
@@ -84,8 +85,11 @@ object Passparams{
     const val GET_VACCINE_TEST_REF = "nhr-module-user/getalltestrecord"
     const val UPDATE_UUID = "nhr-module-user/updateuuid"
     const val UPDATE_PRIVATE_KEY_STATUS = "nhr-module-user/updatePrivateKeyStatus"
+    const val UPDATE_DEPENDENT_PRIVATE_KEY_STATUS = "nhr-module-user/updatedependentprivatekeystatus"
     const val UPDATE_FCM_TOKEN = "nhr-module-user/updatetoken"
     const val DOWNLOAD_TEST_REPORT_FILE = "gp-module-lab/ext/labpdf"
+    const val BLOCK_CHAIN_ERROR_CODE = "nhr-module-user/searchbcerrorcode"
+    const val OBSERVATION_STATUS_CODE = "nhr-module-user/searchobservationstatus"
 
     //Block Chain
     const val BLOCK_CHAIN_URL = "https://cashierbook.com.my:8081/blockchainapi/"

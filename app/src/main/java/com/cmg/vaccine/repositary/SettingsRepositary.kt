@@ -170,4 +170,32 @@ class SettingsRepositary(
     fun deleteAllCountries(){
         database.getDao().deleteAllCountries()
     }
+
+    suspend fun getBlockChainErrorCode():BlockChainErrorCodeResponse{
+        return apiRequest {
+            api.getBlockChainErrorCode()
+        }
+    }
+
+    fun insertBlockChainErrorCode(blockChainErrorCode: BlockChainErrorCode){
+        database.getDao().insertBlockChainErrorCode(blockChainErrorCode)
+    }
+
+    fun deleteAllBlockChainErrorCode(){
+        database.getDao().deleteAllBlockChainErrorCode()
+    }
+
+    suspend fun getObservationStatus():ObservationStatusResponse{
+        return apiRequest {
+            api.getObservationStatusCode()
+        }
+    }
+
+    fun insertObservationStatus(observationStatus: ObservationStatus){
+        database.getDao().insertObservationStatus(observationStatus)
+    }
+
+    fun deleteAllObservationStatus(){
+        database.getDao().deleteAllObservationStatus()
+    }
 }

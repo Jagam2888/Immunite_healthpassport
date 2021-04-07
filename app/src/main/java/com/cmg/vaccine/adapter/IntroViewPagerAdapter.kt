@@ -42,13 +42,13 @@ class IntroViewPagerAdapter(
         description.text = list[position].desc
         imgSlide.setImageResource(list[position].introImg)
 
-        /*if (list[position].introTitle.equals(mContext.resources.getString(R.string.world_entries))){
+        if (list[position].introTitle.equals(mContext.resources.getString(R.string.world_entries))){
             worldEntriesDescription.visibility = View.VISIBLE
             description.visibility = View.GONE
         }else{
             worldEntriesDescription.visibility = View.GONE
             description.visibility = View.VISIBLE
-        }*/
+        }
 
 
         container.addView(layoutScreen)

@@ -46,8 +46,8 @@ class SplashActivity() : BaseActivity(),KodeinAware{
     private fun navigateActivity(){
         if (viewModel.subId.value.isNullOrEmpty()) {
             Intent(this, IntroActivity::class.java).also {
+                it.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                 startActivity(it)
-                finish()
             }
         }else{
             if (viewModel.userData.value?.virifyStatus == "Y"){
@@ -55,26 +55,26 @@ class SplashActivity() : BaseActivity(),KodeinAware{
                     if (viewModel.loginPin.value?.enable == "Y") {
                         Intent(this, LoginPinActivity::class.java).also {
                             it.putExtra(Passparams.ISCREATE,"")
+                            it.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                             startActivity(it)
-                            finish()
                         }
                     } else {
                         Intent(this, MainActivity::class.java).also {
+                            it.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                             startActivity(it)
-                            finish()
                         }
 
                     }
                 }else{
                     Intent(this, MainActivity::class.java).also {
+                        it.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                         startActivity(it)
-                        finish()
                     }
                 }
             }else{
                 Intent(this, IntroActivity::class.java).also {
+                    it.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                     startActivity(it)
-                    finish()
                 }
             }
         }

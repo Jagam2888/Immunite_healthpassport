@@ -71,6 +71,7 @@ class HomeFragment : Fragment(),KodeinAware,SimpleListener {
 
         viewModel.setUser()
 
+
         viewModel.users.observe(viewLifecycleOwner, Observer {
             viewModel.loadData()
         })

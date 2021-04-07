@@ -233,4 +233,22 @@ interface PatientDao {
     @Query("SELECT a.testCode,a.observationCode,a.dateSampleCollected,a.timeSampleCollected,b.wetstObservationStatusCode FROM TestReport a,TestCodes b WHERE a.privateKey =:privateKey AND b.wetstCountryCode=:countryCode AND b.wetstTestCode=a.testCode")
     fun getFilterTestCodeByReport(privateKey: String,countryCode: String):List<TestCodeFilterByReport>
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertBlockChainErrorCode(blockChainErrorCode: BlockChainErrorCode):Long
+
+    @Query("DELETE FROM BlockChainErrorCode")
+    fun deleteAllBlockChainErrorCode()
+
+    @Query("SELECT prioRuleCriteria FROM BlockChainErrorCode WHERE prioRuleCountry =:errorCode")
+    fun getErrorMessage(errorCode:String):String?
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertObservationStatus(observationStatus: ObservationStatus):Long
+
+    @Query("SELECT oscDisplayName FROM ObservationStatus WHERE oscSnomedCode =:code")
+    fun getObservationStatus(code:String):String?
+
+    @Query("DELETE FROM ObservationStatus")
+    fun deleteAllObservationStatus()
+
 }

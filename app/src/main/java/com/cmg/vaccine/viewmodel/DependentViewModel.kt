@@ -305,7 +305,10 @@ class DependentViewModel(
                                         dob.value + " " + dobTime.value + ":00"
                                     dependentRegReqData.placeOfBirth =
                                         World.getCountryFrom(birthPlaceCountryCode.value).alpha3
-                                    dependentRegReqData.idType = idType.value
+
+                                    if (!idNo.value.isNullOrEmpty()) {
+                                        dependentRegReqData.idType = idType.value
+                                    }
 
                                     dependentRegReqData.passportNo = passportNumber.value?.trim()
                                     dependentRegReqData.passportExpiryDate =
@@ -542,7 +545,10 @@ class DependentViewModel(
                                             updateProfileReqData.email = email.value?.trim()
                                             updateProfileReqData.mobileNumber =
                                                 contactNumber.value?.trim()
-                                            updateProfileReqData.idType = idType.value
+
+                                            if (!idNo.value.isNullOrEmpty()) {
+                                                updateProfileReqData.idType = idType.value
+                                            }
 
                                             updateProfileReq.data = updateProfileReqData
                                             repositary.saveEditProfileReq(updateProfileReq)

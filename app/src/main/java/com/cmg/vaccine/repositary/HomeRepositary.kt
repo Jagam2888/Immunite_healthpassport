@@ -31,6 +31,12 @@ class HomeRepositary(
         }
     }
 
+    suspend fun updateDependentPrivateKeyStatus(subId: String,status:String):UpdateUUIDResponse{
+        return apiRequest {
+            api.updateDependentPrivateKeyStatus(subId,status)
+        }
+    }
+
     /*suspend fun getTestReportList(subsId:String):TestReportListResponse{
         return apiRequest {
             api.searchTestReportList(subsId)

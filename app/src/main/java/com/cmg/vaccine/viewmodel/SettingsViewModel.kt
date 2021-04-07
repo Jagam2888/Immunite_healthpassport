@@ -62,8 +62,12 @@ class SettingsViewModel(
         repositary.deleteTestCodes()
         repositary.deleteWorldPriority()
         repositary.deleteAllCountries()
+        repositary.deleteAllBlockChainErrorCode()
+        repositary.deleteAllObservationStatus()
 
 
+        getAllBlockChainErrorCode()
+        getAllObservationStatus()
         getAllCountries()
         getWorldPriorities()
         getIdentifierType()
@@ -74,6 +78,55 @@ class SettingsViewModel(
         getVaccineCall()
 
 
+    }
+
+    private fun getAllObservationStatus(){
+        Couritnes.main {
+            try {
+                val response = repositary.getObservationStatus()
+                if (!response.data.isNullOrEmpty()){
+                    response.data.forEach {
+                        val observationStatus = ObservationStatus(
+                            it.oscDisplayName,
+                            it.oscSeqNo,
+                            it.oscSnomedCode
+                        )
+                        repositary.insertObservationStatus(observationStatus)
+                    }
+                }
+            }catch (e:APIException){
+                listener?.onFailure(e.message!!)
+            }catch (e:NoInternetException){
+                listener?.onFailure(e.message!!)
+            }catch (e:Exception){
+                listener?.onFailure(e.message!!)
+            }
+        }
+    }
+
+    private fun getAllBlockChainErrorCode(){
+        Couritnes.main {
+            try {
+                val response = repositary.getBlockChainErrorCode()
+                if (!response.data.isNullOrEmpty()){
+                    response.data.forEach {
+                        val blockChainErrorCode = BlockChainErrorCode(
+                            it.prioRuleCountry,
+                            it.prioRuleCriteria,
+                            it.prioRuleNo,
+                            it.prioSeqNo
+                        )
+                        repositary.insertBlockChainErrorCode(blockChainErrorCode)
+                    }
+                }
+            }catch (e:APIException){
+                listener?.onFailure(e.message!!)
+            }catch (e:NoInternetException){
+                listener?.onFailure(e.message!!)
+            }catch (e:Exception){
+                listener?.onFailure(e.message!!)
+            }
+        }
     }
 
     private fun getAllCountries(){

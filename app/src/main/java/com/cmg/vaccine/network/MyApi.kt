@@ -97,6 +97,9 @@ interface MyApi {
     @POST(Passparams.UPDATE_PRIVATE_KEY_STATUS)
     suspend fun updatePrivateKeyStatus(@Query("subsId")subId:String,@Query("status") uuid:String):Response<UpdateUUIDResponse>
 
+    @POST(Passparams.UPDATE_DEPENDENT_PRIVATE_KEY_STATUS)
+    suspend fun updateDependentPrivateKeyStatus(@Query("subsId")subId:String,@Query("status") uuid:String):Response<UpdateUUIDResponse>
+
     @POST(Passparams.UPDATE_FCM_TOKEN)
     suspend fun updateFCMToken(@Query("subsId")subid:String,@Query("token")token:String):Response<UpdateFCMTokenResponse>
 
@@ -115,6 +118,12 @@ interface MyApi {
 
     @GET(Passparams.GET_WORLD_PRIORITY_LIST)
     suspend fun getWorldPriorityList():Response<GetWorldPriorityListResponse>
+
+    @GET(Passparams.BLOCK_CHAIN_ERROR_CODE)
+    suspend fun getBlockChainErrorCode():Response<BlockChainErrorCodeResponse>
+
+    @GET(Passparams.OBSERVATION_STATUS_CODE)
+    suspend fun getObservationStatusCode():Response<ObservationStatusResponse>
 
     @POST(Passparams.REMOVE_DEPENDENT)
     suspend fun removeDependent(@Query("masterSubsId")masterSubId:String,@Query("dependentSubsId")subId:String):Response<RemoveDependentResponse>

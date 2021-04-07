@@ -441,7 +441,9 @@ class ProfileViewModel(
                                                     passportExpDate.value
                                                 updateProfileReqData.gender = genderEnum.name
                                                 updateProfileReqData.idNo = idNo.value
-                                                updateProfileReqData.idType = idType.value
+                                                if (!idNo.value.isNullOrEmpty()) {
+                                                    updateProfileReqData.idType = idType.value
+                                                }
                                                 updateProfileReqData.placeOfBirth =
                                                     World.getCountryFrom(birthPlaceCountryCode.value).alpha3
                                                 updateProfileReqData.countryCode =

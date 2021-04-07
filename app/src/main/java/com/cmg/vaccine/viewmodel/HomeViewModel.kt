@@ -469,7 +469,7 @@ class HomeViewModel(
                         getUser.privateKey = originalPrivateKey
                         repositary.updateDependent(getUser)
                         _privateKey.value = originalPrivateKey
-                        updatePrivateKeyStatus(getUser.subsId!!)
+                        updateDependentPrivateKeyStatus(getUser.subsId!!)
                         listener?.onSuccess("$originalPrivateKey|${getUser.firstName}|${getUser.dob}")
                     }else{
                         listener?.onFailure(response.Message)
@@ -493,6 +493,23 @@ class HomeViewModel(
         Couritnes.main {
             try {
                 val response = repositary.updatePrivateKeyStatus(subId,"Y")
+                if (response.StatusCode != 1){
+                    listener?.onFailure(response.Message)
+                }
+            }catch (e: APIException) {
+                listener?.onFailure(e.message!!)
+            } catch (e: NoInternetException) {
+                listener?.onFailure(e.message!!)
+            } catch (e: SocketTimeoutException) {
+                listener?.onFailure(e.message!!)
+            }
+        }
+    }
+
+    private fun updateDependentPrivateKeyStatus(subId: String){
+        Couritnes.main {
+            try {
+                val response = repositary.updateDependentPrivateKeyStatus(subId,"Y")
                 if (response.StatusCode != 1){
                     listener?.onFailure(response.Message)
                 }

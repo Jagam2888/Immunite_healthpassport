@@ -194,7 +194,9 @@ class TellUsMoreViewModel(
                 userData.passportNumber = passportNo.value?.trim()
                 userData.passportExpiryDate = passportExpDate.value
                 userData.patientIdNo = idNo.value?.trim()
-                userData.patientIdType = idType.value!!
+                if (!idNo.value.isNullOrEmpty()) {
+                    userData.patientIdType = idType.value!!
+                }
                 userData.nationality = World.getCountryFrom(nationalityCountryCode.value).alpha3
 
                 val signUpReq = SignUpReq()
@@ -210,7 +212,9 @@ class TellUsMoreViewModel(
                 signUpReqData.passportNo = userData.passportNumber
                 signUpReqData.passportExpiryDate = userData.passportExpiryDate
                 signUpReqData.idNo = userData.patientIdNo
-                signUpReqData.idType = userData.patientIdType
+                if (!idNo.value.isNullOrEmpty()) {
+                    signUpReqData.idType = userData.patientIdType
+                }
                 signUpReqData.nationalityCountry = userData.nationality
                 signUpReqData.token = token
                 signUpReqData.mobileUniqueId = view.context.getDeviceUUID()
