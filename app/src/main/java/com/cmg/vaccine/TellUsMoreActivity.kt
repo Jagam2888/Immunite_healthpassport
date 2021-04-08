@@ -149,7 +149,7 @@ class TellUsMoreActivity : BaseActivity(),KodeinAware,SimpleListener,SlideDatePi
 
     override fun onSuccess(msg: String) {
         hide(binding.progressTellus)
-        toast(msg)
+        //toast(msg)
         Intent(this,OTPVerifyActivity::class.java).also {
             it.putExtra(Passparams.NAVIGATE_FROM,Passparams.SIGNUP)
             it.putExtra(Passparams.SUBSID, viewModel.userSubId.value)
@@ -160,6 +160,7 @@ class TellUsMoreActivity : BaseActivity(),KodeinAware,SimpleListener,SlideDatePi
 
     override fun onFailure(msg: String) {
         hide(binding.progressTellus)
-        toast(msg)
+        //toast(msg)
+        showAlertDialog(msg,"",false,supportFragmentManager)
     }
 }

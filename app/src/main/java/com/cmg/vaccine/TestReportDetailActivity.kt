@@ -92,6 +92,7 @@ class TestReportDetailActivity : BaseActivity(),KodeinAware,SimpleListener {
 
     override fun onFailure(msg: String) {
         hide(binding.progressBar)
-        toast(msg)
+        //toast(msg)
+        showAlertDialog(msg,"",false,supportFragmentManager)
     }
 }

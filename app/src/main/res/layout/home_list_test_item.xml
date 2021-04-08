@@ -84,7 +84,6 @@
                     android:textSize="12sp"
                     android:background="@drawable/home_list_injected_gray"
                     android:textAppearance="@style/opens_bold"
-                    android:layout_marginTop="5dp"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
                     android:paddingRight="5dp"

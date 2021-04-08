@@ -13,6 +13,7 @@ import com.cmg.vaccine.databinding.ActivityLoginPinBinding
 import com.cmg.vaccine.listener.SimpleListener
 import com.cmg.vaccine.util.Passparams
 import com.cmg.vaccine.util.hideKeyBoard
+import com.cmg.vaccine.util.showAlertDialog
 import com.cmg.vaccine.util.toast
 import com.cmg.vaccine.viewmodel.LoginPinViewModel
 import com.cmg.vaccine.viewmodel.viewmodelfactory.LoginPinViewFactory
@@ -176,7 +177,7 @@ class LoginPinActivity : BaseActivity(),KodeinAware,SimpleListener {
     }
 
     override fun onSuccess(msg: String) {
-        toast(msg)
+        //toast(msg)
         hideKeyBoard()
         if (loginStatus == "create") {
             Intent(this@LoginPinActivity, MainActivity::class.java).also {
@@ -190,6 +191,7 @@ class LoginPinActivity : BaseActivity(),KodeinAware,SimpleListener {
     }
 
     override fun onFailure(msg: String) {
-        toast(msg)
+        //toast(msg)
+        showAlertDialog(msg,"",false,supportFragmentManager)
     }
 }

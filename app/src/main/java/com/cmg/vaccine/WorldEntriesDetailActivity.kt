@@ -10,10 +10,7 @@ import com.cmg.vaccine.adapter.WorldEntriesDetailAdapter
 import com.cmg.vaccine.data.WorldEntriesListData.WorldCountryData
 import com.cmg.vaccine.databinding.ActivityWorldEntriesDetailBinding
 import com.cmg.vaccine.listener.SimpleListener
-import com.cmg.vaccine.util.Passparams
-import com.cmg.vaccine.util.hide
-import com.cmg.vaccine.util.show
-import com.cmg.vaccine.util.toast
+import com.cmg.vaccine.util.*
 import com.cmg.vaccine.viewmodel.WorldEntryViewModel
 import com.cmg.vaccine.viewmodel.viewmodelfactory.WorldEntryViewModelFactory
 import kotlinx.android.synthetic.main.layout_travel.*
@@ -77,7 +74,8 @@ class WorldEntriesDetailActivity : BaseActivity(),KodeinAware,SimpleListener {
 
     override fun onFailure(msg: String) {
         hide(binding.progressBar)
-        toast(msg)
+        //toast(msg)
+        showAlertDialog(msg,"",false,supportFragmentManager)
     }
 
     private fun importData()

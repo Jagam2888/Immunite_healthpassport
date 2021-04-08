@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.cmg.vaccine.databinding.ActivityDepartureVerificationBinding
 import com.cmg.vaccine.listener.SimpleListener
 import com.cmg.vaccine.util.Passparams
+import com.cmg.vaccine.util.showAlertDialog
 import com.cmg.vaccine.util.toast
 import com.cmg.vaccine.viewmodel.DepartureVerificationViewModel
 import com.cmg.vaccine.viewmodel.viewmodelfactory.DepartureVerificationModelFactory
@@ -74,6 +75,7 @@ class DepartureVerificationActivity : BaseActivity(),KodeinAware,SimpleListener 
     }
 
     override fun onFailure(msg: String) {
-        toast(msg)
+        //toast(msg)
+        showAlertDialog(msg,"",false,supportFragmentManager)
     }
 }

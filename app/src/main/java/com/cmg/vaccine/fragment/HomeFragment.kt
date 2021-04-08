@@ -27,10 +27,7 @@ import com.cmg.vaccine.databinding.FragmentHomeBinding
 import com.cmg.vaccine.listener.SimpleListener
 import com.cmg.vaccine.model.Dashboard
 import com.cmg.vaccine.model.response.HomeResponse
-import com.cmg.vaccine.util.Passparams
-import com.cmg.vaccine.util.hide
-import com.cmg.vaccine.util.show
-import com.cmg.vaccine.util.toast
+import com.cmg.vaccine.util.*
 import com.cmg.vaccine.viewmodel.HomeViewModel
 import com.cmg.vaccine.viewmodel.viewmodelfactory.HomeViewModelFactory
 import immuniteeEncryption.EncryptionUtils
@@ -186,7 +183,8 @@ class HomeFragment : Fragment(),KodeinAware,SimpleListener {
 
     override fun onFailure(msg: String) {
         hide(binding.progressBar)
-        context?.toast(msg)
+        //context?.toast(msg)
+        showAlertDialog(msg,"",false,childFragmentManager)
     }
 
      override fun onResume() {

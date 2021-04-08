@@ -3,20 +3,18 @@ package com.cmg.vaccine
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.os.SystemClock
-import android.util.Log
 import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.cmg.vaccine.DialogFragment.DependentDialogFragment
+import com.cmg.vaccine.DialogFragment.AlertDialogFragment
 import com.cmg.vaccine.adapter.ChildListAdapter
 import com.cmg.vaccine.data.setOnSingleClickListener
 import com.cmg.vaccine.databinding.FragmentProfileBinding
-import com.cmg.vaccine.listener.SimpleListener
 import com.cmg.vaccine.util.Passparams
 import com.cmg.vaccine.util.RecyclerViewTouchListener
+import com.cmg.vaccine.util.showAlertDialog
 import com.cmg.vaccine.viewmodel.ProfileViewModel
 import com.cmg.vaccine.viewmodel.viewmodelfactory.ProfileViewModelFactory
 import io.paperdb.Paper
@@ -117,7 +115,7 @@ class ProfileListActivity:BaseActivity(),KodeinAware {
         val isDoneAddDependent = Paper.book().read<Boolean>(Passparams.ADD_DEPENDENT_SUCCESS,false)
         if (isDoneAddDependent){
             Paper.book().write(Passparams.ADD_DEPENDENT_SUCCESS,false)
-            DependentDialogFragment().show(supportFragmentManager,"Add")
+            showAlertDialog(resources.getString(R.string.dependent_added),resources.getString(R.string.you_can_now_manage_dependent),true,supportFragmentManager)
         }
     }
 

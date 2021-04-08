@@ -19,10 +19,7 @@ import com.cmg.vaccine.database.Dependent
 import com.cmg.vaccine.database.IdentifierType
 import com.cmg.vaccine.database.User
 import com.cmg.vaccine.listener.SimpleListener
-import com.cmg.vaccine.model.request.DependentRegReq
-import com.cmg.vaccine.model.request.DependentRegReqData
-import com.cmg.vaccine.model.request.UpdateProfileReq
-import com.cmg.vaccine.model.request.UpdateProfileReqData
+import com.cmg.vaccine.model.request.*
 import com.cmg.vaccine.repositary.DependentRepositary
 import com.cmg.vaccine.util.*
 import org.json.JSONException
@@ -210,8 +207,8 @@ class DependentViewModel(
     }
 
     fun onClick(view:View) {
-
-        if (!idNo.value.isNullOrEmpty()){
+        listener?.onStarted()
+        if ((!idNo.value.isNullOrEmpty()) and (nationalityCountryCode.value.equals("Malaysia"))){
             if (idNo.value?.length != patientIdNoCharLength.get()){
                 listener?.onFailure("Your ID Number is invalid")
                 return
@@ -225,7 +222,7 @@ class DependentViewModel(
                         if (isValidEmail(email.value!!)) {
                             if (validateDateFormat(dob.value!!)) {
                                 if (validateTime(dobTime.value!!)) {
-                                    listener?.onStarted()
+
 
 
                                     if (nationalityCountryCode.value.equals("Malaysia")) {
@@ -451,8 +448,151 @@ class DependentViewModel(
         }
     }
 
+   /* fun onClickExistingDependent(view: View){
+        getDependentInfo(view = )
+    }*/
+
+    private fun regExistingDependent(dependent: Dependent, view: View){
+
+        val relationShips =
+            view.context.resources.getStringArray(R.array.relationships)
+        val relationShip = relationShips.get(relationshipItemPos.get())
+        Couritnes.main {
+            try {
+                val existingDependentReq = ExistingDependentReq()
+                val existingDependentReqData = ExistingDependentReqData()
+
+                existingDependentReqData.masterSubsId = repositary.getParentSubId()
+                existingDependentReqData.relationship = relationShip
+                existingDependentReqData.subsId = dependent.subsId
+
+                existingDependentReq.data = existingDependentReqData
+
+                val response = repositary.existingDependent(existingDependentReq)
+                if (response.StatusCode == 1){
+                    dependent.relationship = relationShip
+                    repositary.insertDependentSignUp(dependent)
+                    listener?.onSuccess(response.Message)
+                }else{
+                    listener?.onFailure(response.Message)
+                }
+            }catch (e:APIException){
+                listener?.onFailure(e.message!!)
+            }catch (e:NoInternetException){
+                listener?.onFailure(e.message!!)
+            }catch (e:SocketTimeoutException){
+                listener?.onFailure(e.message!!)
+            }catch (e: Exception){
+                listener?.onFailure(e.message!!)
+            }
+        }
+    }
+
+    fun getDependentInfo(view: View){
+        Log.d("enter","yes")
+        Log.d("private_key",existingUserprivateKey.get()!!)
+        var passportNo:String?=null
+        var passportExpiryDate:String?=null
+        var patientIdType:String?=null
+        var patientIdNo:String?=null
+        if (isChecked.get()) {
+            Couritnes.main {
+                try {
+                    listener?.onStarted()
+                    val response = repositary.getExistingUser(existingUserprivateKey.get()!!)
+
+                    val responseBody = response.string()
+                    val jsonBody = JSONObject(responseBody)
+                    val jsonBodyFirst = jsonBody.getJSONObject("data")
+                    val jsonBodySecond = jsonBodyFirst.getJSONObject("data")
+
+
+                    if (jsonBodySecond.has("IDTypes")) {
+                        val jsonIdTypeArray = jsonBodySecond.getJSONArray("IDTypes")
+                        for (i in 0 until jsonIdTypeArray.length()) {
+                            val item = jsonIdTypeArray.getJSONObject(i)
+                            if (item.has("IdType")) {
+                                if (item.getString("IdType").equals("PPN", false)) {
+                                    if (item.has("idNo")) {
+                                        passportNo = item.getString("idNo")
+                                    }
+                                    if (item.has("passportExpiryDate")) {
+                                        passportExpiryDate = item.getString("passportExpiryDate")
+                                    }
+                                } else {
+                                    patientIdType = item.getString("IdType")
+
+                                    if (item.has("idNo")) {
+                                        patientIdNo = item.getString("idNo")
+                                    }
+                                }
+                            }
+
+                        }
+                    }
+
+
+                    if (jsonBodySecond.has("dob")) {
+                        if (!jsonBodySecond.getString("dob").isNullOrEmpty()) {
+                            val isoFormat = changeDateFormatBC(jsonBodySecond.getString("dob"))
+                            var dobFormatArray = isoFormat?.split(" ")
+                            dob.value = dobFormatArray?.get(0)
+                            dobTime.value = dobFormatArray?.get(1)
+                        }
+                    }
+
+                    val dependent = Dependent(
+                        jsonBodySecond.getString("countryCode"),
+                        dob.value,
+                        dobTime.value,
+                        jsonBodySecond.getString("email"),
+                        jsonBodySecond.getString("fullName"),
+                        jsonBodySecond.getString("gender"),
+                        patientIdNo,
+                        patientIdType,
+                        repositary.getParentSubId(),
+                        jsonBodySecond.getString("subsId"),
+                        existingUserprivateKey.get()!!,
+                        "",
+                        jsonBodySecond.getString("mobileNumber"),
+                        jsonBodySecond.getString("nationalityCountry"),
+                        passportNo,
+                        passportExpiryDate,
+                        jsonBodySecond.getString("placeOfBirth"),
+                        "",
+                    )
+
+                    if (!jsonBodySecond.getString("subsId").isNullOrEmpty()) {
+                        val getDependent =
+                            repositary.getDependent(jsonBodySecond.getString("subsId"))
+                        if (getDependent == null) {
+                            regExistingDependent(dependent, view)
+                        } else {
+                            listener?.onFailure("Sorry, this Dependent already added")
+                        }
+                    }
+
+                    Log.d("response_body", responseBody)
+
+                } catch (e: APIException) {
+                    listener?.onFailure(e.message!!)
+                } catch (e: NoInternetException) {
+                    listener?.onFailure(e.message!!)
+                } catch (e: SocketTimeoutException) {
+                    listener?.onFailure(e.message!!)
+                } catch (e: JSONException) {
+                    listener?.onFailure("invalid")
+                } catch (e: Exception) {
+                    listener?.onFailure(e.message!!)
+                }
+            }
+        }else{
+            listener?.onFailure("Please accept Terms and conditions")
+        }
+    }
+
     fun updateProfile(view: View){
-        if (!idNo.value.isNullOrEmpty()){
+        if ((!idNo.value.isNullOrEmpty()) and (nationalityCountryCode.value.equals("Malaysia"))){
             if (idNo.value?.length != patientIdNoCharLength.get()){
                 listener?.onFailure("Your ID Number is invalid")
                 return

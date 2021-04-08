@@ -172,7 +172,8 @@ class ExistingUserActivity : BaseActivity(),KodeinAware,SimpleListener,SlideDate
                 startActivity(it)
             }
         }else {
-            toast(msg)
+            //toast(msg)
+            showAlertDialog(msg,"",false,supportFragmentManager)
         }
     }
 }

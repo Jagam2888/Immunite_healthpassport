@@ -2,6 +2,7 @@ package com.cmg.vaccine.repositary
 
 import com.cmg.vaccine.database.*
 import com.cmg.vaccine.model.request.DependentRegReq
+import com.cmg.vaccine.model.request.ExistingDependentReq
 import com.cmg.vaccine.model.request.UpdateProfileReq
 import com.cmg.vaccine.model.response.DependentRegResponse
 import com.cmg.vaccine.network.MyApi
@@ -20,6 +21,14 @@ class DependentRepositary(
             api.dependentSignUp(dependentRegReq)
         }
     }
+
+    suspend fun existingDependent(existingDependentReq: ExistingDependentReq):DependentRegResponse{
+        return apiRequest {
+            api.existingDependent(existingDependentReq)
+        }
+    }
+
+
 
     fun getUserData():User{
         return database.getDao().getUserData(preferenceProvider.getSubId()!!)

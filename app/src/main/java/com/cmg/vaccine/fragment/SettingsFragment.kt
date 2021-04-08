@@ -19,10 +19,7 @@ import com.cmg.vaccine.data.setOnSingleClickListener
 import com.cmg.vaccine.databinding.FragmentSettingsBinding
 import com.cmg.vaccine.listener.SimpleListener
 import com.cmg.vaccine.services.DriveServiceHelper
-import com.cmg.vaccine.util.Passparams
-import com.cmg.vaccine.util.hide
-import com.cmg.vaccine.util.show
-import com.cmg.vaccine.util.toast
+import com.cmg.vaccine.util.*
 import com.cmg.vaccine.viewmodel.SettingsViewModel
 import com.cmg.vaccine.viewmodel.viewmodelfactory.SettingsModelFactory
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -272,9 +269,9 @@ class SettingsFragment : Fragment(),KodeinAware,SimpleListener {
             val packageInfo = context?.packageManager?.getPackageInfo(context?.packageName!!, 0)
             val versionName = packageInfo?.versionName
             //val version = "Version : $versionName \nDevelopment Server : ${Passparams.URL}"
-            val version = "Version : $versionName \nDevelopment Server"
+            //val version = "Version : $versionName \nDevelopment Server"
             //val version = "Version : $versionName \nStaging Server"
-            //val version = "Version : $versionName \nProduction Server"
+            val version = "Version : $versionName \nProduction Server"
             val alertDialogBuilder = AlertDialog.Builder(requireContext())
             alertDialogBuilder.setMessage(version).setTitle(R.string.app_name)
                     .setNegativeButton("CANCEL"
@@ -295,7 +292,7 @@ class SettingsFragment : Fragment(),KodeinAware,SimpleListener {
 
     override fun onSuccess(msg: String) {
         hide(binding.progressBar)
-        context?.toast(msg)
+        showAlertDialog(msg,"",false,childFragmentManager)
     }
 
     override fun onFailure(msg: String) {
@@ -347,14 +344,16 @@ class SettingsFragment : Fragment(),KodeinAware,SimpleListener {
                 //Sets the drive api service on the view model and creates our apps folder
                 Log.e("Indicator", "Login In Success")
                 isGoogleSiginSuccess = true
-                context?.toast("Login In Success")
+                //context?.toast("Login In Success")
+                showAlertDialog("Login In Success","",false,childFragmentManager)
                 driveServiceHelper= DriveServiceHelper(googleDriveService)
                 hideMainLayout()
                 binding.backup.visibility = View.VISIBLE
             }
             .addOnFailureListener { exception ->
                 Log.e("Indicator", "Fail to Login")
-                context?.toast("Fail to Login")
+                //context?.toast("Fail to Login")
+                showAlertDialog("Fail to Login","",false,childFragmentManager)
             }
     }
 
@@ -464,7 +463,8 @@ class SettingsFragment : Fragment(),KodeinAware,SimpleListener {
             ?.addOnFailureListener(
                 OnFailureListener {
                     hide(binding.progressBar)
-                    context?.toast("Your Backup is upload Failed")
+                    //context?.toast("Your Backup is upload Failed")
+                    showAlertDialog("Backup","Your Backup is upload Failed",false,childFragmentManager)
                     Log.e("Upload", "Fail")
                 }
             )

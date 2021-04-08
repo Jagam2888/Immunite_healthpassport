@@ -205,6 +205,7 @@ class ImmunizationHistoryActivity : BaseActivity(),KodeinAware,SimpleListener,Sl
 
     override fun onFailure(msg: String) {
         hide(binding.progressBar)
-        toast(msg)
+        //toast(msg)
+        showAlertDialog(msg,"",false,supportFragmentManager)
     }
 }

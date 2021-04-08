@@ -139,7 +139,7 @@ class TellUsMoreViewModel(
 
     fun onRegister(view:View){
         listener?.onStarted()
-        if (!idNo.value.isNullOrEmpty()){
+        if ((!idNo.value.isNullOrEmpty()) and (nationalityCountryCode.value.equals("Malaysia"))){
             if (idNo.value?.length != patientIdNoCharLength.get()){
                 listener?.onFailure("Your ID Number is invalid")
                 return

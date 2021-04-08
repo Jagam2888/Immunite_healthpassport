@@ -303,12 +303,14 @@ class RestoredBackupOptionList : BaseActivity(),KodeinAware,SimpleListener {
                 }
             }
         }else{
-            toast("sorry Your account not active")
+            //toast("sorry Your account not active")
+            showAlertDialog(msg,"",false,supportFragmentManager)
         }
     }
 
     override fun onFailure(msg: String) {
-        toast(msg)
+        //toast(msg)
         hide(binding.progressBar)
+        showAlertDialog(msg,"",false,supportFragmentManager)
     }
 }

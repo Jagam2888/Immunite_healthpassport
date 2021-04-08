@@ -7,21 +7,17 @@ import android.os.SystemClock
 import android.text.Editable
 import android.text.TextWatcher
 import android.text.method.LinkMovementMethod
-import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.akexorcist.snaptimepicker.SnapTimePickerDialog
-import com.blongho.country_data.Country
 import com.blongho.country_data.World
 import com.cmg.vaccine.DialogFragment.CountryListDialogFragment
-import com.cmg.vaccine.DialogFragment.DependentDialogFragment
-import com.cmg.vaccine.adapter.CountryListAdapter
+import com.cmg.vaccine.DialogFragment.AlertDialogFragment
 import com.cmg.vaccine.data.setOnSingleClickListener
 import com.cmg.vaccine.databinding.ActivityAddDependentBinding
 import com.cmg.vaccine.listener.SimpleListener
@@ -46,7 +42,8 @@ class AddDependentActivity : BaseActivity(),KodeinAware,SimpleListener,SlideDate
     var lastClickTimeQr:Long = 0
 
     var qrCodeValue = ""
-    var isDOBPicker:Boolean = false
+    var isDOBPicker:String = Passparams.DATE_BIRTH
+    var isExistingUser:Boolean = false
 
     private val factory:DependentViewModelFactory by instance()
 
@@ -113,7 +110,7 @@ class AddDependentActivity : BaseActivity(),KodeinAware,SimpleListener,SlideDate
         })*/
 
         binding.btnDobCalender.setOnSingleClickListener{
-            isDOBPicker = true
+            isDOBPicker = Passparams.DATE_BIRTH
             hideKeyBoard()
             showSliderDatePickerDialog("DOB",supportFragmentManager,
                 Calendar.getInstance().apply {
@@ -131,7 +128,7 @@ class AddDependentActivity : BaseActivity(),KodeinAware,SimpleListener,SlideDate
         }
 
         binding.btnDateCalender.setOnSingleClickListener{
-            isDOBPicker = false
+            isDOBPicker = Passparams.DATE_PASSPORT
             hideKeyBoard()
             showSliderDatePickerDialog("passport",supportFragmentManager,
                 Calendar.getInstance().apply { add(Calendar.DATE,1) }, Calendar.getInstance().apply { add(Calendar.YEAR,10) })
@@ -208,12 +205,14 @@ class AddDependentActivity : BaseActivity(),KodeinAware,SimpleListener,SlideDate
 
             when(checkedId){
                 R.id.radio_new_member ->{
+                    isExistingUser = false
                     if (binding.layoutNewMembers.visibility == View.GONE) {
                         binding.layoutNewMembers.visibility = View.VISIBLE
                     }
                         binding.layoutExistingUser.visibility = View.GONE
                 }
                 else ->{
+                    isExistingUser = true
                     if (binding.layoutExistingUser.visibility == View.GONE) {
                         binding.layoutExistingUser.visibility = View.VISIBLE
                     }
@@ -272,7 +271,7 @@ class AddDependentActivity : BaseActivity(),KodeinAware,SimpleListener,SlideDate
             }
         })
 
-        binding.btnScanQr.setOnClickListener {
+        /*binding.btnScanQr.setOnClickListener {
             if (SystemClock.elapsedRealtime() - lastClickTimeQr<1000){
                 return@setOnClickListener
             }
@@ -286,7 +285,7 @@ class AddDependentActivity : BaseActivity(),KodeinAware,SimpleListener,SlideDate
             }else{
                 toast("Please enter your Date of Birth")
             }
-        }
+        }*/
 
         binding.edtIdno.addTextChangedListener(object :TextWatcher{
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -309,6 +308,58 @@ class AddDependentActivity : BaseActivity(),KodeinAware,SimpleListener,SlideDate
             }
             }
         })
+
+        binding.edtExistingUserDob.addTextChangedListener(object :TextWatcher{
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+
+                if ((!validateDateFormat(binding.edtExistingUserDob.text.toString())) and (binding.edtExistingUserDob.text?.isNotEmpty() == true)){
+                    binding.edtExistingUserDob.error = Passparams.DATE_FORMAT
+                }else{
+                    binding.edtExistingUserDob.error = null
+                }
+            }
+        })
+
+        binding.btnDobCalenderExisting.setOnSingleClickListener{
+            hideKeyBoard()
+            isDOBPicker = Passparams.DATE_EXISTING_USER
+            showSliderDatePickerDialog("DOB",supportFragmentManager,
+                Calendar.getInstance().apply {
+                    set(Calendar.YEAR,1900)
+                }, Calendar.getInstance())
+        }
+
+        binding.btnSignup.setOnSingleClickListener{
+            if (!isExistingUser) {
+                viewModel.onClick(it)
+            }else{
+                if ((!viewModel.existingUserprivateKey.get().isNullOrEmpty()) and (!binding.edtQrCode.text.isNullOrEmpty())) {
+                    viewModel.getDependentInfo(it)
+                }else{
+                    toast("Please Enter or Scan Your Private key")
+                }
+            }
+        }
+
+        binding.btnScanQr.setOnSingleClickListener{
+            hideKeyBoard()
+            if (!binding.edtExistingUserDob.text.toString().isNullOrEmpty()) {
+                Paper.book().write(Passparams.QR_CODE_VALUE, "")
+                Intent(this, ScanQRActivity::class.java).also {
+                    it.putExtra(Passparams.NAVIGATE_TO,Passparams.EXISTING_USER)
+                    startActivity(it)
+                }
+            }else{
+                showAlertDialog("Date Of Birth","Please enter your Date of Birth",false,supportFragmentManager)
+                //toast("Please enter your Date of Birth")
+            }
+        }
 
 
     }
@@ -373,12 +424,15 @@ class AddDependentActivity : BaseActivity(),KodeinAware,SimpleListener,SlideDate
     }
 
     override fun onPositiveClick(day: Int, month: Int, year: Int, calendar: Calendar) {
-        if (isDOBPicker) {
+        if (isDOBPicker == Passparams.DATE_BIRTH) {
             binding.edtDob.setText(SimpleDateFormat("dd/MM/yyyy").format(calendar.time))
             binding.edtDob.setSelection(binding.edtDob.length())
-        }else{
+        }else if (isDOBPicker == Passparams.DATE_PASSPORT){
             binding.edtPassportExpDate.setText( SimpleDateFormat("dd/MM/yyyy").format(calendar.time))
             binding.edtPassportExpDate.setSelection(binding.edtPassportExpDate.length())
+        }else if (isDOBPicker == Passparams.DATE_EXISTING_USER){
+            binding.edtExistingUserDob.setText( SimpleDateFormat("dd/MM/yyyy").format(calendar.time))
+            binding.edtExistingUserDob.setSelection(binding.edtExistingUserDob.length())
         }
     }
 
@@ -425,8 +479,9 @@ class AddDependentActivity : BaseActivity(),KodeinAware,SimpleListener,SlideDate
 
     override fun onFailure(msg: String) {
         hide(binding.progressBar)
-        toast(msg)
+        //toast(msg)
         hideKeyBoard()
+        showAlertDialog(msg,"",false,supportFragmentManager)
     }
 
     override fun onResume() {
@@ -434,8 +489,10 @@ class AddDependentActivity : BaseActivity(),KodeinAware,SimpleListener,SlideDate
         binding.edtQrCode.setText("")
         qrCodeValue = Paper.book().read(Passparams.QR_CODE_VALUE,"")
         if (!qrCodeValue.isNullOrEmpty()){
-            viewModel.existingUserprivateKey.set(decryptQRValue(qrCodeValue,changeDateFormatForPrivateKeyDecrypt(binding.edtDob.text.toString())!!))
+            qrCodeValue = qrCodeValue.replace("\\n","\n")
+            viewModel.existingUserprivateKey.set(decryptQRValue(qrCodeValue,changeDateFormatForPrivateKeyDecrypt(binding.edtExistingUserDob.text.toString())!!))
             binding.edtQrCode.setText(qrCodeValue)
+            Paper.book().write(Passparams.QR_CODE_VALUE,"")
         }
     }
 }

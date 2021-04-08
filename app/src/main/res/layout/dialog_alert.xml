@@ -11,6 +11,7 @@
         android:orientation="vertical">
 
         <ImageView
+            android:id="@+id/img_status"
             android:layout_width="75dp"
             android:layout_height="75dp"
             android:src="@drawable/success_msg_icon"
@@ -18,9 +19,9 @@
             android:layout_marginTop="20sp" />
 
         <TextView
+            android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/dependent_added"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textAppearance="@style/opens_bold"
@@ -28,9 +29,9 @@
             android:layout_marginTop="20dp" />
 
         <TextView
+            android:id="@+id/message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/you_can_now_manage_dependent"
             android:textColor="@color/gray"
             android:textSize="14sp"
             android:textAppearance="@style/opens_regular"

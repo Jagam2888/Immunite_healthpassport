@@ -351,6 +351,7 @@ class SignUpActivity : BaseActivity(),KodeinAware,SimpleListener,SlideDatePicker
 
     override fun onFailure(msg: String) {
         hide(binding.progressBar)
-        toast(msg)
+        showAlertDialog(msg,"",false,supportFragmentManager)
+        //toast(msg)
     }
 }

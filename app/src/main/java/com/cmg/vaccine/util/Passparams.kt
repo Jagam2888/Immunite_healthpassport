@@ -25,9 +25,18 @@ object Passparams{
 
     const val ADD_DEPENDENT_SUCCESS = "add_dependent_success"
 
+    const val DATE_BIRTH = "date_birth"
+    const val DATE_PASSPORT = "date_passport"
+    const val DATE_EXISTING_USER = "date_existing_user"
+
+    const val DIALOG_TITLE = "dialog_title"
+    const val DIALOG_MSG = "dialog_msg"
+    const val DIALOG_STATUS = "dialog_status"
+
 
     const val NAVIGATE_TO = "navigate_to"
     const val EXISTING_USER = "existing_user"
+    const val EXISTING_DEPENDENT = "existing_dependent"
     const val DEPARTURE_VERIFICATION = "departure_verification"
 
     const val NAVIGATE_FROM = "navigate_from"
@@ -39,16 +48,16 @@ object Passparams{
 
     //API
     //const val URL = "http://47.254.238.145:7001/"
-    const val URL = "http://dev.immunitee.com:7001/"
-    const val DOWNLOAD_TEST_REPORT = "http://10.1.1.150:6001/gp-module-lab/ext/labpdf?labOrderTxn="
+    //const val URL = "http://dev.immunitee.com:7001/"
+    //const val DOWNLOAD_TEST_REPORT = "http://10.1.1.150:6001/gp-module-lab/ext/labpdf?labOrderTxn="
 
     //Staging API
     //const val URL = "http://stapp.immunitee.com:7001/"
     //const val DOWNLOAD_TEST_REPORT = "http://stg.i-care.com:6001/gp-module-lab/ext/labpdf?labOrderTxn="
 
     //Production API
-    //const val URL = "http://app.immunitee.com:7001/"
-    //const val DOWNLOAD_TEST_REPORT = "http://api.i-care.com:6001/gp-module-lab/ext/labpdf?labOrderTxn="
+    const val URL = "http://app.immunitee.com:7001/"
+    const val DOWNLOAD_TEST_REPORT = "https://api.i-care.com:6001/gp-module-lab/ext/labpdf?labOrderTxn="
 
     const val PATIENT_REGISTRATION = "nhr-module-user/patientreg"
     const val DEPENDENT_REGISTRATION = "nhr-module-user/patientdependentreg"

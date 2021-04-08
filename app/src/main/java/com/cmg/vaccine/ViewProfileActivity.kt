@@ -15,10 +15,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.cmg.vaccine.data.setOnSingleClickListener
 import com.cmg.vaccine.databinding.ActivityViewProfileBinding
 import com.cmg.vaccine.listener.SimpleListener
-import com.cmg.vaccine.util.Passparams
-import com.cmg.vaccine.util.hide
-import com.cmg.vaccine.util.show
-import com.cmg.vaccine.util.toast
+import com.cmg.vaccine.util.*
 import com.cmg.vaccine.viewmodel.ProfileViewModel
 import com.cmg.vaccine.viewmodel.viewmodelfactory.ProfileViewModelFactory
 import org.kodein.di.KodeinAware
@@ -133,6 +130,7 @@ class ViewProfileActivity : BaseActivity(),KodeinAware,SimpleListener {
 
     override fun onFailure(msg: String) {
         hide(binding.progressBarViewProfile)
-        toast(msg)
+        //toast(msg)
+        showAlertDialog(msg,"",false,supportFragmentManager)
     }
 }

@@ -11,6 +11,7 @@ import android.location.Address
 import android.location.Geocoder
 import android.location.Location
 import android.location.LocationManager
+import android.os.Bundle
 import android.provider.Settings
 import android.util.Base64
 import android.util.Log
@@ -27,6 +28,7 @@ import androidx.fragment.app.FragmentManager
 import com.akexorcist.snaptimepicker.SnapTimePickerDialog
 import com.akexorcist.snaptimepicker.TimeValue
 import com.blongho.country_data.Country
+import com.cmg.vaccine.DialogFragment.AlertDialogFragment
 import com.cmg.vaccine.R
 import com.cmg.vaccine.database.IdentifierType
 import com.cmg.vaccine.database.WorldEntryCountries
@@ -67,6 +69,16 @@ fun hide(progressBar: ProgressBar){
 /*fun isValidEmail(value: String):Boolean{
     return (!TextUtils.isEmpty(value) and Patterns.EMAIL_ADDRESS.matcher(value).matches())
 }*/
+
+fun showAlertDialog(title: String,msg: String,status: Boolean,fragmentManager: FragmentManager){
+    var alertDialog = AlertDialogFragment()
+    var data= Bundle()
+    data.putString(Passparams.DIALOG_TITLE,title)
+    data.putString(Passparams.DIALOG_MSG,msg)
+    data.putBoolean(Passparams.DIALOG_STATUS,status)
+    alertDialog.arguments = data
+    alertDialog.show(fragmentManager,"TAG")
+}
 
 fun isValidEmail(value: String):Boolean{
     val regx = "^[\\w-\\.+]*[\\w-\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$"

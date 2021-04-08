@@ -1,10 +1,7 @@
 package com.cmg.vaccine.network
 
 import android.content.Context
-import com.cmg.vaccine.model.request.DependentRegReq
-import com.cmg.vaccine.model.request.ImmunizationHistoryReq
-import com.cmg.vaccine.model.request.SignUpReq
-import com.cmg.vaccine.model.request.UpdateProfileReq
+import com.cmg.vaccine.model.request.*
 import com.cmg.vaccine.model.response.*
 import com.cmg.vaccine.util.Passparams
 import okhttp3.MultipartBody
@@ -26,6 +23,9 @@ interface MyApi {
 
     @POST(Passparams.DEPENDENT_REGISTRATION)
     suspend fun dependentSignUp(@Body dependentRegReq: DependentRegReq):Response<DependentRegResponse>
+
+    @POST(Passparams.DEPENDENT_REGISTRATION)
+    suspend fun existingDependent(@Body existingDependentReq: ExistingDependentReq):Response<DependentRegResponse>
 
     @POST(Passparams.EDIT_DEPENDENT_PROFILE_API)
     suspend fun updateDependentProfile(@Body updateProfileReq: UpdateProfileReq):Response<DependentRegResponse>

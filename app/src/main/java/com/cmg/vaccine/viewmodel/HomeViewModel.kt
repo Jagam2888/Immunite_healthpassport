@@ -406,7 +406,7 @@ class HomeViewModel(
                     if (response.StatusCode == 1){
 
                         if (!response.PrivateKey.isNullOrEmpty()){
-                            val tempPK = response.PrivateKey
+                            val tempPK = response.PrivateKey.replace("\\n","\n")
                             val tempDob = changeDateFormatForPrivateKeyDecrypt(getUser.dob!!)
                             if ((!decryptServerKey(tempPK,tempDob!!).isNullOrEmpty()) and (!decryptServerKey(tempPK,tempDob!!).equals("invalid",true))){
                                 originalPrivateKey = decryptServerKey(tempPK,tempDob)
@@ -457,7 +457,7 @@ class HomeViewModel(
                     if (response.StatusCode == 1){
 
                         if (!response.PrivateKey.isNullOrEmpty()){
-                            val tempPK = response.PrivateKey
+                            val tempPK = response.PrivateKey.replace("\\n","\n")
                             val tempDob = changeDateFormatForPrivateKeyDecrypt(getUser.dob!!)
                             if ((!decryptServerKey(tempPK,tempDob!!).isNullOrEmpty()) and (!decryptServerKey(tempPK,tempDob!!).equals("invalid",true))){
                                 originalPrivateKey = decryptServerKey(tempPK,tempDob)

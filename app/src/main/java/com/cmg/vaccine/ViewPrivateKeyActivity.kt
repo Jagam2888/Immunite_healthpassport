@@ -194,7 +194,8 @@ class ViewPrivateKeyActivity : BaseActivity(),KodeinAware,SimpleListener {
 
     override fun onFailure(msg: String) {
         hide(binding.progressBar)
-        toast(msg)
-        finish()
+        //toast(msg)
+        //finish()
+        showAlertDialog(msg,"",false,supportFragmentManager)
     }
 }

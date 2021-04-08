@@ -39,7 +39,7 @@ class SplashActivity() : BaseActivity(),KodeinAware{
             }
         })
 
-        //Log.d("decrypt_splash",decryptKey("uVavFdRLVIG5hMxlyAhr\/mQTV4v8\/htWDwnQoP7YYwsF56IBKnGSOea\/g1maoRypMcB7kMMdf9OC\ntpVTlPhIomqVcXtIGaJ6ASNH1dK+ApeVWWg400Pbx2lHRP0zZmA4LgIhWyU7\/AUHxVvmM8rxYqxw\nmSFi8ef2TE2pkH+a+SRgR5N\/TExlCWUyV7Ufj06teFTHX3lgRVKN8v8jIGNT6z3gx3nj9I7QnH9c\nSGCuFrqhIV7OhCj\/4Xz\/UP2H6\/RehBnfEJWUbxqoKvuTf0kuJwBsU3KstzKY09h1jGJ7Ut2wLR\/P\nOQ6tu7JiCJJWuajAqcB0vpPgxseY\/HCnNC1ZzqMM4JThoOfv94D1Vjyt29A=","20210327")!!)
+        Log.d("decrypt_splash",decryptKey("OU/wqK7aBe7rrDL+JTrUfCnLPuH5GpdgfbjNjbQlF0xqi9CsQp4bOReDIdpmWPWVxn67zy0IQHiQ\nBmBG6Y+8uhebe9FnAXEz7l0gS7d/ezM=","20140808")!!)
 
 
     }

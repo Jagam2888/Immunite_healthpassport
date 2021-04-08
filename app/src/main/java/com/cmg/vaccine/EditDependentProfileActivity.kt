@@ -418,6 +418,7 @@ class EditDependentProfileActivity : BaseActivity(),KodeinAware,SimpleListener,S
 
     override fun onFailure(msg: String) {
         hide(binding.progressBar)
-        toast(msg)
+        //toast(msg)
+        showAlertDialog(msg,"",false,supportFragmentManager)
     }
 }
