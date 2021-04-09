@@ -77,7 +77,12 @@ fun showAlertDialog(title: String,msg: String,status: Boolean,fragmentManager: F
     data.putString(Passparams.DIALOG_MSG,msg)
     data.putBoolean(Passparams.DIALOG_STATUS,status)
     alertDialog.arguments = data
-    alertDialog.show(fragmentManager,"TAG")
+    try {
+        alertDialog.show(fragmentManager,"TAG")
+    }catch (e:Exception){
+        e.printStackTrace()
+    }
+
 }
 
 fun isValidEmail(value: String):Boolean{

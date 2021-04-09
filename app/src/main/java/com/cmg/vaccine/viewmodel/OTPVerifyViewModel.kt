@@ -66,18 +66,18 @@ class OTPVerifyViewModel(
             try {
                 val response = repositary.resendOTP(userSubId.value!!)
                 //if (isResend)
-                listener?.onFailure(response.Message)
-                /*if (response.success){
-                    listener?.onSuccess(response.message)
+                //listener?.onFailure(response.Message)
+                if (response.StatusCode == 1){
+                    listener?.onFailure("1|true|"+response.Message)
                 }else{
-                    listener?.onSuccess(response.message)
-                }*/
+                    listener?.onFailure("1|false|"+response.Message)
+                }
             }catch (e: APIException) {
-                listener?.onFailure(e.message!!)
+                listener?.onFailure("2"+e.message!!)
             }catch (e: NoInternetException){
-                listener?.onFailure(e.message!!)
+                listener?.onFailure("3"+e.message!!)
             }catch (e: SocketTimeoutException){
-                listener?.onFailure(e.message!!)
+                listener?.onShowToast(e.message!!)
             }
         }
     }
@@ -104,17 +104,17 @@ class OTPVerifyViewModel(
                             listener?.onSuccess(response.message)
                         }
                     }else{
-                        listener?.onFailure(response.message)
+                        listener?.onFailure("2"+response.message)
                     }
                 } catch (e: APIException) {
-                    listener?.onFailure(e.message!!)
+                    listener?.onFailure("2"+e.message!!)
                 }catch (e: NoInternetException){
-                    listener?.onFailure(e.message!!)
+                    listener?.onFailure("3"+e.message!!)
                 }catch (e: SocketTimeoutException){
-                    listener?.onFailure(e.message!!)
+                    listener?.onShowToast(e.message!!)
                 }
             }else{
-                listener?.onFailure("Please enter your OTP")
+                listener?.onShowToast("Please enter your OTP")
             }
         }
     }
@@ -152,16 +152,16 @@ class OTPVerifyViewModel(
                     repositary.updateUser(user)
                     listener?.onSuccess(response.Message)
                 }else{
-                    listener?.onFailure(response.Message)
+                    listener?.onFailure("2"+response.Message)
                 }
             }catch (e: APIException) {
-                listener?.onFailure(e.message!!)
+                listener?.onFailure("2"+e.message!!)
             }catch (e: NoInternetException){
-                listener?.onFailure(e.message!!)
+                listener?.onFailure("3"+e.message!!)
             }catch (e: SocketTimeoutException){
-                listener?.onFailure(e.message!!)
+                listener?.onShowToast(e.message!!)
             }catch (e:Exception){
-                listener?.onFailure(e.message!!)
+                listener?.onShowToast(e.message!!)
             }
         }
     }
@@ -202,16 +202,16 @@ class OTPVerifyViewModel(
                     repositary.updateDependent(dependent!!)
                     listener?.onSuccess(response.Message)
                 }else{
-                    listener?.onFailure(response.Message)
+                    listener?.onFailure("2"+response.Message)
                 }
             }catch (e: APIException) {
-                listener?.onFailure(e.message!!)
+                listener?.onFailure("2"+e.message!!)
             }catch (e: NoInternetException){
-                listener?.onFailure(e.message!!)
+                listener?.onFailure("3"+e.message!!)
             }catch (e: SocketTimeoutException){
-                listener?.onFailure(e.message!!)
+                listener?.onShowToast(e.message!!)
             }catch (e:Exception){
-                listener?.onFailure(e.message!!)
+                listener?.onShowToast(e.message!!)
             }
         }
     }

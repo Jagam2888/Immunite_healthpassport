@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".decryptTesting.DecryptActivityActivity"
+    android:paddingBottom="20dp"
+    android:paddingRight="20dp"
+    android:paddingLeft="20dp"
+    android:paddingTop="20dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerInParent="true">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_backup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Decrypt Backupkey" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_qrcode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Decrypt QR Code"
+            android:layout_marginTop="20dp"/>
+    </LinearLayout>
+
+</RelativeLayout>

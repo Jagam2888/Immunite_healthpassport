@@ -56,11 +56,11 @@ class CountryListFragmentViewModel(
                 listener?.onSuccess("success")
 
             }catch (e: APIException){
-                listener?.onFailure(e.message!!)
+                listener?.onShowToast(e.message!!)
             }catch (e: NoInternetException){
                 listener?.onFailure(e.message!!)
             }catch (e: Exception){
-                listener?.onFailure(e.message!!)
+                listener?.onShowToast(e.message!!)
             }
         }
     }

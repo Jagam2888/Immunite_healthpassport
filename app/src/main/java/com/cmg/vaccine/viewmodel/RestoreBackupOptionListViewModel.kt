@@ -54,18 +54,18 @@ class RestoreBackupOptionListViewModel(
                     //listener?.onSuccess(response.Message)
                     listener?.onSuccess("Setup Manually Success")
                 }else{
-                    listener?.onFailure(response.Message)
+                    listener?.onShowToast(response.Message)
                 }
             }catch (e:APIException){
-                listener?.onFailure(e.message!!)
+                listener?.onShowToast(e.message!!)
             }catch (e:NoInternetException){
-                listener?.onFailure(e.message!!)
+                listener?.onFailure("3"+e.message!!)
             }catch (e:SocketTimeoutException){
-                listener?.onFailure(e.message!!)
+                listener?.onShowToast(e.message!!)
             }catch (e:JSONException){
-                listener?.onFailure("invalid")
+                listener?.onShowToast("invalid")
             }catch (e: Exception){
-                listener?.onFailure(e.message!!)
+                listener?.onShowToast(e.message!!)
             }
 
         }
@@ -82,13 +82,11 @@ class RestoreBackupOptionListViewModel(
                     listener?.onFailure(response.Message)
                 }
             }catch (e: APIException){
-                listener?.onFailure(e.message!!)
+                listener?.onShowToast(e.message!!)
             }catch (e: NoInternetException){
-                listener?.onFailure(e.message!!)
-            }catch (e: SocketTimeoutException){
-                listener?.onFailure(e.message!!)
-            }catch (e: JSONException){
-                listener?.onFailure("invalid")
+                listener?.onFailure("3"+e.message!!)
+            }catch (e: Exception){
+                listener?.onShowToast(e.message!!)
             }
         }
     }

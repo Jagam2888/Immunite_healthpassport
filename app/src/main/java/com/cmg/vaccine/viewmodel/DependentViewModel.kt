@@ -210,7 +210,7 @@ class DependentViewModel(
         listener?.onStarted()
         if ((!idNo.value.isNullOrEmpty()) and (nationalityCountryCode.value.equals("Malaysia"))){
             if (idNo.value?.length != patientIdNoCharLength.get()){
-                listener?.onFailure("Your ID Number is invalid")
+                listener?.onFailure("2Your ID Number is invalid")
                 return
             }
         }
@@ -227,21 +227,21 @@ class DependentViewModel(
 
                                     if (nationalityCountryCode.value.equals("Malaysia")) {
                                         if (idNo.value.isNullOrEmpty()) {
-                                            listener?.onFailure("Malaysian should be enter Your Id number")
+                                            listener?.onShowToast("Malaysian should be enter Your Id number")
                                             return
                                         }
                                     }
 
                                     if (!nationalityCountryCode.value.equals("Malaysia")) {
                                         if ((passportNumber.value.isNullOrEmpty()) and (idNo.value.isNullOrEmpty())) {
-                                            listener?.onFailure("Passport Number or Id number either one Mandatory")
+                                            listener?.onShowToast("Passport Number or Id number either one Mandatory")
                                             return
                                         }
                                     }
 
                                     if (!passportNumber.value.isNullOrEmpty()) {
                                         if (passportExpDate.value.isNullOrEmpty()) {
-                                            listener?.onFailure("Please Enter Your Passport Expiry Date")
+                                            listener?.onShowToast("Please Enter Your Passport Expiry Date")
                                             return
                                         }
                                     }
@@ -344,35 +344,35 @@ class DependentViewModel(
                                                 repositary.insertDependentSignUp(dependent)
                                                 listener?.onSuccess(response.Message)
                                             } else {
-                                                listener?.onFailure(response.Message)
+                                                listener?.onFailure("2"+response.Message)
                                             }
                                         } catch (e: APIException) {
-                                            listener?.onFailure(e.message!!)
+                                            listener?.onFailure("2"+e.message!!)
                                         } catch (e: NoInternetException) {
-                                            listener?.onFailure(e.message!!)
+                                            listener?.onFailure("3"+e.message!!)
                                         } catch (e: SocketTimeoutException) {
                                             listener?.onFailure(e.message!!)
                                         }
                                     }
                                 } else {
-                                    listener?.onFailure("Sorry! Invalid Birth Time")
+                                    listener?.onShowToast("Sorry! Invalid Birth Time")
                                 }
                             } else {
-                                listener?.onFailure("Sorry! Invalid Date of Birth")
+                                listener?.onShowToast("Sorry! Invalid Date of Birth")
                             }
                         } else {
-                            listener?.onFailure("InValid Email")
+                            listener?.onShowToast("InValid Email")
                         }
                     } else {
-                        listener?.onFailure("Email and Retype Email Mismatch")
+                        listener?.onShowToast("Email and Retype Email Mismatch")
                     }
 
                 } else {
-                    listener?.onFailure("Please fill all mandatory fields")
+                    listener?.onShowToast("Please fill all mandatory fields")
                 }
 
         }else{
-            listener?.onFailure("Please accept Terms and conditions")
+            listener?.onShowToast("Please accept Terms and conditions")
         }
     }
 
@@ -416,7 +416,9 @@ class DependentViewModel(
 
             /*selectedItemNationalityCode.set(selectedCountryName(dependent?.nationalityCountry!!,countryList!!))
             selectedItemBirthPlaceCode.set(selectedCountryName(dependent?.placeOfBirth!!,countryList!!))*/
-            selectedItemIdTYpe.set(selectedIdType(dependent?.idType!!,identifierTypeList.value!!))
+            if (!idType.value.isNullOrEmpty()) {
+                selectedItemIdTYpe.set(selectedIdType(dependent?.idType!!, identifierTypeList.value!!))
+            }
 
             dependent?.gender.run {
                 genderEnum = when(this){
@@ -474,16 +476,16 @@ class DependentViewModel(
                     repositary.insertDependentSignUp(dependent)
                     listener?.onSuccess(response.Message)
                 }else{
-                    listener?.onFailure(response.Message)
+                    listener?.onFailure("2"+response.Message)
                 }
             }catch (e:APIException){
-                listener?.onFailure(e.message!!)
+                listener?.onFailure("2"+e.message!!)
             }catch (e:NoInternetException){
-                listener?.onFailure(e.message!!)
+                listener?.onFailure("3"+e.message!!)
             }catch (e:SocketTimeoutException){
-                listener?.onFailure(e.message!!)
+                listener?.onShowToast(e.message!!)
             }catch (e: Exception){
-                listener?.onFailure(e.message!!)
+                listener?.onShowToast(e.message!!)
             }
         }
     }
@@ -568,26 +570,26 @@ class DependentViewModel(
                         if (getDependent == null) {
                             regExistingDependent(dependent, view)
                         } else {
-                            listener?.onFailure("Sorry, this Dependent already added")
+                            listener?.onFailure("2Sorry, this Dependent already added")
                         }
                     }
 
                     Log.d("response_body", responseBody)
 
                 } catch (e: APIException) {
-                    listener?.onFailure(e.message!!)
+                    listener?.onFailure("2"+e.message!!)
                 } catch (e: NoInternetException) {
-                    listener?.onFailure(e.message!!)
+                    listener?.onFailure("3"+e.message!!)
                 } catch (e: SocketTimeoutException) {
-                    listener?.onFailure(e.message!!)
+                    listener?.onShowToast(e.message!!)
                 } catch (e: JSONException) {
-                    listener?.onFailure("invalid")
+                    listener?.onShowToast("invalid")
                 } catch (e: Exception) {
-                    listener?.onFailure(e.message!!)
+                    listener?.onShowToast("2"+e.message!!)
                 }
             }
         }else{
-            listener?.onFailure("Please accept Terms and conditions")
+            listener?.onShowToast("Please accept Terms and conditions")
         }
     }
 
@@ -641,21 +643,21 @@ class DependentViewModel(
 
                                         if (nationalityCountryCode.value.equals("Malaysia")) {
                                             if (idNo.value.isNullOrEmpty()) {
-                                                listener?.onFailure("Malaysian should be enter Your Id number")
+                                                listener?.onShowToast("Malaysian should be enter Your Id number")
                                                 return
                                             }
                                         }
 
                                         if (!nationalityCountryCode.value.equals("Malaysia")) {
                                             if ((passportNumber.value.isNullOrEmpty()) and (idNo.value.isNullOrEmpty())) {
-                                                listener?.onFailure("Passport Number or Id number either one Mandatory")
+                                                listener?.onShowToast("Passport Number or Id number either one Mandatory")
                                                 return
                                             }
                                         }
 
                                         if (!passportNumber.value.isNullOrEmpty()) {
                                             if (passportExpDate.value.isNullOrEmpty()) {
-                                                listener?.onFailure("Please Enter Your Passport Expiry Date")
+                                                listener?.onShowToast("Please Enter Your Passport Expiry Date")
                                                 return
                                             }
                                         }
@@ -695,29 +697,29 @@ class DependentViewModel(
                                             listener?.onSuccess("")
 
                                         } catch (e: Exception) {
-                                            listener?.onFailure(e.message!!)
+                                            listener?.onShowToast(e.message!!)
                                         }
                                     } else {
-                                        listener?.onFailure("Sorry! Invalid Birth Time")
+                                        listener?.onShowToast("Sorry! Invalid Birth Time")
                                     }
                                 } else {
-                                    listener?.onFailure("Sorry! Invalid Date of Birth")
+                                    listener?.onShowToast("Sorry! Invalid Date of Birth")
                                 }
                             } else {
-                                listener?.onFailure("InValid Email")
+                                listener?.onShowToast("InValid Email")
                             }
                         } else {
-                            listener?.onFailure("Email and Retype Email Mismatch")
+                            listener?.onShowToast("Email and Retype Email Mismatch")
                         }
                     } else {
-                        listener?.onFailure("Sorry! You are not allowed to change Email Address and Mobile Number at same time")
+                        listener?.onShowToast("Sorry! You are not allowed to change Email Address and Mobile Number at same time")
                     }
                 } else {
-                    listener?.onFailure("Please fill all Mandatory fields")
+                    listener?.onShowToast("Please fill all Mandatory fields")
                 }
 
         }else{
-            listener?.onFailure("Please accept Terms and conditions")
+            listener?.onShowToast("Please accept Terms and conditions")
         }
     }
 }

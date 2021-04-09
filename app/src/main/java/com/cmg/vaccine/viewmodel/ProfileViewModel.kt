@@ -279,16 +279,16 @@ class ProfileViewModel(
                     repositary.removeDependent(subId)
                     listener?.onSuccess(response.Message)
                 }else{
-                    listener?.onFailure(response.Message)
+                    listener?.onFailure("2"+response.Message)
                 }
             }catch (e: APIException) {
-                listener?.onFailure(e.message!!)
+                listener?.onFailure("2"+e.message!!)
             } catch (e: NoInternetException) {
-                listener?.onFailure(e.message!!)
+                listener?.onFailure("3"+e.message!!)
             } catch (e: SocketTimeoutException) {
-                listener?.onFailure(e.message!!)
+                listener?.onShowToast(e.message!!)
             } catch (e: Exception) {
-                listener?.onFailure(e.message!!)
+                listener?.onShowToast(e.message!!)
             }
         }
 
@@ -355,7 +355,7 @@ class ProfileViewModel(
         listener?.onStarted()
         if ((!idNo.value.isNullOrEmpty()) and (nationalityCountryCode.value.equals("Malaysia"))){
             if (idNo.value?.length != patientIdNoCharLength.get()){
-                listener?.onFailure("Your ID Number is invalid")
+                listener?.onFailure("2Your ID Number is invalid")
                 return
             }
         }
@@ -400,21 +400,21 @@ class ProfileViewModel(
 
                                 if (nationalityCountryCode.value.equals("Malaysia")) {
                                     if (idNo.value.isNullOrEmpty()) {
-                                        listener?.onFailure("Malaysian should be enter Your Id number")
+                                        listener?.onShowToast("Malaysian should be enter Your Id number")
                                         return
                                     }
                                 }
 
                                 if (!nationalityCountryCode.value.equals("Malaysia")) {
                                     if ((passportNumber.value.isNullOrEmpty()) and (idNo.value.isNullOrEmpty())) {
-                                        listener?.onFailure("Passport Number or Id number either one Mandatory")
+                                        listener?.onShowToast("Passport Number or Id number either one Mandatory")
                                         return
                                     }
                                 }
 
                                 if (!passportNumber.value.isNullOrEmpty()) {
                                     if (passportExpDate.value.isNullOrEmpty()) {
-                                        listener?.onFailure("Please Enter Your Passport Expiry Date")
+                                        listener?.onShowToast("Please Enter Your Passport Expiry Date")
                                         return
                                     }
                                 }
@@ -457,29 +457,29 @@ class ProfileViewModel(
                                                 repositary.saveEditProfileReq(updateProfileReq)
                                                 listener?.onSuccess("")
                                             } else {
-                                                listener?.onFailure("Sorry! Invalid Birth Time")
+                                                listener?.onShowToast("Sorry! Invalid Birth Time")
                                             }
                                         } else {
-                                            listener?.onFailure("Sorry! Invalid Date of Birth")
+                                            listener?.onShowToast("Sorry! Invalid Date of Birth")
                                         }
                                     } else {
-                                        listener?.onFailure("InValid Email")
+                                        listener?.onShowToast("InValid Email")
                                     }
                                 } else {
-                                    listener?.onFailure("Please accept terms and conditions")
+                                    listener?.onShowToast("Please accept terms and conditions")
                                 }
                             } else {
-                                listener?.onFailure("Email and Retype Email Mismatch")
+                                listener?.onShowToast("Email and Retype Email Mismatch")
                             }
                         } else {
-                            listener?.onFailure("Sorry! You are not allowed to change Email Address and Mobile Number at same time")
+                            listener?.onShowToast("Sorry! You are not allowed to change Email Address and Mobile Number at same time")
                         }
                     } else {
-                        listener?.onFailure("Please fill all Mandatory fields")
+                        listener?.onShowToast("Please fill all Mandatory fields")
                     }
 
             }catch (e:Exception){
-                listener?.onFailure(e.message!!)
+                listener?.onShowToast(e.message!!)
             }
     }
 

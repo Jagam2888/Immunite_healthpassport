@@ -181,10 +181,22 @@ class HomeFragment : Fragment(),KodeinAware,SimpleListener {
         }
     }
 
+    override fun onShowToast(msg: String) {
+        hide(binding.progressBar)
+        context?.toast(msg)
+    }
+
     override fun onFailure(msg: String) {
         hide(binding.progressBar)
-        //context?.toast(msg)
-        showAlertDialog(msg,"",false,childFragmentManager)
+        if (msg.startsWith("2")){
+            val showMsg = msg.drop(1)
+            showAlertDialog(resources.getString(R.string.failed), showMsg, false, childFragmentManager)
+        }else if (msg.startsWith("3")){
+            val showMsg = msg.drop(1)
+            showAlertDialog(showMsg, resources.getString(R.string.check_internet), false, childFragmentManager)
+        }else {
+            showAlertDialog(msg, "", false, childFragmentManager)
+        }
     }
 
      override fun onResume() {

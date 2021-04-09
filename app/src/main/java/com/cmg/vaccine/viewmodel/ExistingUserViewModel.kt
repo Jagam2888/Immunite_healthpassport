@@ -38,7 +38,7 @@ class ExistingUserViewModel(
 
     fun onSubmit(view:View){
         if (dobTxt.get().isNullOrEmpty()){
-            listener?.onFailure("Please Check your Date of Birth, Maybe Wrong or Empty")
+            listener?.onShowToast("Please Check your Date of Birth, Maybe Wrong or Empty")
             return
         }
         if (!isRestoreForSync.get()){
@@ -49,7 +49,7 @@ class ExistingUserViewModel(
                 privateKey.set(decryptQRValue(qrCodeValue!!,changeDateFormatForPrivateKeyDecrypt(dobTxt.get()!!)!!))
                 getSyncManually(view)
             }else{
-                listener?.onFailure("Please Enter or Scan Your Private key")
+                listener?.onShowToast("Please Enter or Scan Your Private key")
             }
         }else{
                 listener?.onSuccess("restore")
@@ -75,11 +75,11 @@ class ExistingUserViewModel(
                 }
                 listener?.onSuccess("Setup Manually Success")
             }catch (e:APIException){
-                listener?.onFailure(e.message!!)
+                listener?.onFailure("2"+e.message!!)
             }catch (e:NoInternetException){
-                listener?.onFailure(e.message!!)
+                listener?.onFailure("3"+e.message!!)
             }catch (e:Exception){
-                listener?.onFailure(e.message!!)
+                listener?.onShowToast(e.message!!)
             }
         }
     }
@@ -97,15 +97,13 @@ class ExistingUserViewModel(
                 }
                 updateFCMToken()
             }catch (e:APIException){
-                listener?.onFailure(e.message!!)
+                listener?.onFailure("2"+e.message!!)
             }catch (e:NoInternetException){
-                listener?.onFailure(e.message!!)
+                listener?.onFailure("3"+e.message!!)
             }catch (e:SocketTimeoutException){
-                listener?.onFailure(e.message!!)
-            }catch (e:JSONException){
-                listener?.onFailure("invalid")
+                listener?.onShowToast(e.message!!)
             }catch (e:Exception){
-                listener?.onFailure(e.message!!)
+                listener?.onShowToast(e.message!!)
             }
         }
     }
@@ -123,15 +121,13 @@ class ExistingUserViewModel(
                     listener?.onFailure(response.Message)
                 }*/
             }catch (e:APIException){
-                listener?.onFailure(e.message!!)
+                listener?.onFailure("2"+e.message!!)
             }catch (e:NoInternetException){
-                listener?.onFailure(e.message!!)
+                listener?.onFailure("3"+e.message!!)
             }catch (e:SocketTimeoutException){
-                listener?.onFailure(e.message!!)
-            }catch (e:JSONException){
-                listener?.onFailure("invalid")
+                listener?.onShowToast(e.message!!)
             }catch (e:Exception){
-                listener?.onFailure(e.message!!)
+                listener?.onShowToast(e.message!!)
             }
 
         }
@@ -234,15 +230,15 @@ class ExistingUserViewModel(
                 Log.d("response_body",responseBody)
 
             }catch (e:APIException){
-                listener?.onFailure(e.message!!)
+                listener?.onFailure("2"+e.message!!)
             }catch (e:NoInternetException){
-                listener?.onFailure(e.message!!)
+                listener?.onFailure("3"+e.message!!)
             }catch (e:SocketTimeoutException){
-                listener?.onFailure(e.message!!)
+                listener?.onShowToast(e.message!!)
+            }catch (e:Exception){
+                listener?.onShowToast(e.message!!)
             }catch (e:JSONException){
                 listener?.onFailure("invalid")
-            }catch (e:Exception){
-                listener?.onFailure(e.message!!)
             }
         }
     }
@@ -267,15 +263,13 @@ class ExistingUserViewModel(
                     }
                     listener?.onSuccess("")
                 }catch (e:APIException){
-                    listener?.onFailure(e.message!!)
+                    listener?.onFailure("2"+e.message!!)
                 }catch (e:NoInternetException){
-                    listener?.onFailure(e.message!!)
+                    listener?.onFailure("3"+e.message!!)
                 }catch (e:SocketTimeoutException){
-                    listener?.onFailure(e.message!!)
-                }catch (e:JSONException){
-                    listener?.onFailure("invalid")
+                    listener?.onShowToast(e.message!!)
                 }catch (e:Exception){
-                    listener?.onFailure(e.message!!)
+                    listener?.onShowToast(e.message!!)
                 }
             }
         }

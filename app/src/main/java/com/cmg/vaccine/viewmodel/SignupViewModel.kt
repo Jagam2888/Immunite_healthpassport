@@ -206,11 +206,11 @@ class SignupViewModel(
                 }
                 listener?.onSuccess("success")
             }catch (e:APIException){
-                listener?.onFailure(e.message!!)
+                listener?.onShowToast(e.message!!)
             }catch (e:NoInternetException){
-                listener?.onFailure(e.message!!)
+                listener?.onFailure("3"+e.message!!)
             }catch (e:Exception){
-                listener?.onFailure(e.message!!)
+                listener?.onShowToast(e.message!!)
             }
         }
     }
@@ -272,19 +272,19 @@ class SignupViewModel(
 
 
                         }else{
-                            listener?.onFailure("Sorry! Invalid Birth Time")
+                            listener?.onShowToast("Sorry! Invalid Birth Time")
                         }
                     }else{
-                        listener?.onFailure("Sorry! Invalid Date of Birth")
+                        listener?.onShowToast("Sorry! Invalid Date of Birth")
                     }
                 } else {
-                    listener?.onFailure("Your Email Address 1 is Invalid")
+                    listener?.onShowToast("Your Email Address 1 is Invalid")
                 }
             } else {
-                listener?.onFailure("Email Mismatch")
+                listener?.onShowToast("Email Mismatch")
             }
         }else{
-            listener?.onFailure("All Field(s) Mandatory")
+            listener?.onShowToast("All Field(s) Mandatory")
         }
 
     }

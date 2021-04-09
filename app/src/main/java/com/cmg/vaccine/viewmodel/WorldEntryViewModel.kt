@@ -93,13 +93,13 @@ class WorldEntryViewModel(
                     }
                     //getWorldEntryCountries()
                 } catch (e: APIException) {
-                    listener?.onFailure(e.message!!)
+                    listener?.onShowToast(e.message!!)
                 } catch (e: NoInternetException) {
-                    listener?.onFailure(e.message!!)
+                    listener?.onFailure("3"+e.message!!)
                 } catch (e: SocketTimeoutException) {
-                    listener?.onFailure(e.message!!)
+                    listener?.onShowToast(e.message!!)
                 } catch (e: Exception) {
-                    listener?.onFailure(e.message!!)
+                    listener?.onShowToast(e.message!!)
                 }
 
             }
@@ -134,13 +134,13 @@ class WorldEntryViewModel(
                     }
                     //getAllAirportCities()
                 } catch (e: APIException) {
-                    listener?.onFailure(e.message!!)
+                    listener?.onShowToast(e.message!!)
                 } catch (e: NoInternetException) {
-                    listener?.onFailure(e.message!!)
+                    listener?.onFailure("3"+e.message!!)
                 } catch (e: SocketTimeoutException) {
-                    listener?.onFailure(e.message!!)
+                    listener?.onShowToast(e.message!!)
                 } catch (e: Exception) {
-                    listener?.onFailure(e.message!!)
+                    listener?.onShowToast(e.message!!)
                 }
             }
         }
@@ -170,11 +170,11 @@ class WorldEntryViewModel(
                         listener?.onSuccess("")
                     }
                 }catch (e:Exception){
-                    listener?.onFailure(e.message!!)
+                    listener?.onShowToast(e.message!!)
                 }catch (e:NoInternetException){
-                    listener?.onFailure(e.message!!)
+                    listener?.onFailure("3"+e.message!!)
                 }catch (e:SocketTimeoutException){
-                    listener?.onFailure(e.message!!)
+                    listener?.onShowToast(e.message!!)
                 }
 
             }
@@ -200,7 +200,7 @@ class WorldEntryViewModel(
 
             loadWorldEntriesData()
         }else{
-            listener?.onFailure("Sorry! You already added this country")
+            listener?.onFailure("2Sorry! You already added this country")
         }
     }
 
@@ -263,14 +263,14 @@ class WorldEntryViewModel(
                         loadVaccineDataList()
                         //listener?.onSuccess("")
                     }else{
-                        listener?.onFailure("No Rules for this country")
+                        listener?.onShowToast("No Rules for this country")
                     }
                 }catch (e:Exception){
-                    listener?.onFailure(e.message!!)
+                    listener?.onShowToast(e.message!!)
                 }catch (e:NoInternetException){
-                    listener?.onFailure(e.message!!)
+                    listener?.onFailure("3"+e.message!!)
                 }catch (e:SocketTimeoutException){
-                    listener?.onFailure(e.message!!)
+                    listener?.onShowToast(e.message!!)
                 }
             }
         }else{
@@ -375,11 +375,9 @@ class WorldEntryViewModel(
                         _vaccineDetailList.value = getVaccineDetail
                     }
                 } catch (e: Exception) {
-                    listener?.onFailure(e.message!!)
+                    listener?.onShowToast(e.message!!)
                 } catch (e: NoInternetException) {
-                    listener?.onFailure(e.message!!)
-                } catch (e: SocketTimeoutException) {
-                    listener?.onFailure(e.message!!)
+                    listener?.onFailure("3"+e.message!!)
                 }
             }
         }else{
@@ -420,11 +418,9 @@ class WorldEntryViewModel(
                         listener?.onSuccess("")
                     }
                 } catch (e: Exception) {
-                    listener?.onFailure(e.message!!)
+                    listener?.onShowToast(e.message!!)
                 } catch (e: NoInternetException) {
-                    listener?.onFailure(e.message!!)
-                } catch (e: SocketTimeoutException) {
-                    listener?.onFailure(e.message!!)
+                    listener?.onFailure("3"+e.message!!)
                 }
             }
         }else{

@@ -23,6 +23,7 @@ import com.cmg.vaccine.listener.AddSelectedRVListener
 import com.cmg.vaccine.listener.SimpleListener
 import com.cmg.vaccine.util.hide
 import com.cmg.vaccine.util.show
+import com.cmg.vaccine.util.showAlertDialog
 import com.cmg.vaccine.util.toast
 import com.cmg.vaccine.viewmodel.CountryListFragmentViewModel
 import com.cmg.vaccine.viewmodel.viewmodelfactory.CountryListFragmentViewModelFactory
@@ -178,8 +179,13 @@ class CountryListDialogFragment:DialogFragment(),AddSelectedRVListener,KodeinAwa
         hide(binding.progressBar)
     }
 
-    override fun onFailure(msg: String) {
-        context?.toast(msg)
+    override fun onShowToast(msg: String) {
         hide(binding.progressBar)
+        context?.toast(msg)
+    }
+
+    override fun onFailure(msg: String) {
+        hide(binding.progressBar)
+        showAlertDialog(msg, resources.getString(R.string.check_internet), false, childFragmentManager)
     }
 }

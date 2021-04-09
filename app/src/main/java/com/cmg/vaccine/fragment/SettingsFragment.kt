@@ -17,6 +17,7 @@ import com.cmg.vaccine.*
 import com.cmg.vaccine.DialogFragment.BackupSuccessDialogFragment
 import com.cmg.vaccine.data.setOnSingleClickListener
 import com.cmg.vaccine.databinding.FragmentSettingsBinding
+import com.cmg.vaccine.decryptTesting.DecryptActivityActivity
 import com.cmg.vaccine.listener.SimpleListener
 import com.cmg.vaccine.services.DriveServiceHelper
 import com.cmg.vaccine.util.*
@@ -159,6 +160,12 @@ class SettingsFragment : Fragment(),KodeinAware,SimpleListener {
             showMainLayout()
         }
 
+        binding.layoutDecrypt.setOnSingleClickListener{
+            Intent(context,DecryptActivityActivity::class.java).also {
+                startActivity(it)
+            }
+        }
+
         layout_version_relase.setOnSingleClickListener {
             showReleaseAppVersion()
 
@@ -269,9 +276,9 @@ class SettingsFragment : Fragment(),KodeinAware,SimpleListener {
             val packageInfo = context?.packageManager?.getPackageInfo(context?.packageName!!, 0)
             val versionName = packageInfo?.versionName
             //val version = "Version : $versionName \nDevelopment Server : ${Passparams.URL}"
-            //val version = "Version : $versionName \nDevelopment Server"
+            val version = "Version : $versionName \nDevelopment Server"
             //val version = "Version : $versionName \nStaging Server"
-            val version = "Version : $versionName \nProduction Server"
+            //val version = "Version : $versionName \nProduction Server"
             val alertDialogBuilder = AlertDialog.Builder(requireContext())
             alertDialogBuilder.setMessage(version).setTitle(R.string.app_name)
                     .setNegativeButton("CANCEL"
@@ -295,9 +302,22 @@ class SettingsFragment : Fragment(),KodeinAware,SimpleListener {
         showAlertDialog(msg,"",false,childFragmentManager)
     }
 
-    override fun onFailure(msg: String) {
+    override fun onShowToast(msg: String) {
         hide(binding.progressBar)
         context?.toast(msg)
+    }
+
+    override fun onFailure(msg: String) {
+        hide(binding.progressBar)
+        if (msg.startsWith("2")){
+            val showMsg = msg.drop(1)
+            showAlertDialog(resources.getString(R.string.failed), showMsg, false, childFragmentManager)
+        }else if (msg.startsWith("3")){
+            val showMsg = msg.drop(1)
+            showAlertDialog(showMsg, resources.getString(R.string.check_internet), false, childFragmentManager)
+        }else {
+            showAlertDialog(msg, "", false, childFragmentManager)
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

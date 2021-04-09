@@ -106,11 +106,11 @@ class ImmunizationHistoryViewModel(
                 Log.d("response",response.Message)
                 listener?.onSuccess(response.Message)
             }catch (e: APIException){
-                listener?.onFailure(e.message!!)
+                listener?.onFailure("2"+e.message!!)
             }catch (e: NoInternetException){
-                listener?.onFailure(e.message!!)
+                listener?.onFailure("3"+e.message!!)
             }catch (e: SocketTimeoutException){
-                listener?.onFailure(e.message!!)
+                listener?.onShowToast(e.message!!)
             }
         }
         

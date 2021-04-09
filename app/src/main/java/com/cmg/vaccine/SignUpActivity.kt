@@ -349,9 +349,18 @@ class SignUpActivity : BaseActivity(),KodeinAware,SimpleListener,SlideDatePicker
         }
     }
 
+    override fun onShowToast(msg: String) {
+        hide(binding.progressBar)
+        toast(msg)
+    }
+
     override fun onFailure(msg: String) {
         hide(binding.progressBar)
-        showAlertDialog(msg,"",false,supportFragmentManager)
-        //toast(msg)
+        if (msg.startsWith("3")){
+            val showMsg = msg.drop(1)
+            showAlertDialog(showMsg, resources.getString(R.string.check_internet), false, supportFragmentManager)
+        }else {
+            showAlertDialog(msg, "", false, supportFragmentManager)
+        }
     }
 }

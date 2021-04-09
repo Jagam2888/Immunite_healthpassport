@@ -4,4 +4,5 @@ interface SimpleListener {
     fun onStarted()
     fun onSuccess(msg:String)
     fun onFailure(msg: String)
+    fun onShowToast(msg: String)
 }

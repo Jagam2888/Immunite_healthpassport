@@ -37,7 +37,21 @@
             android:textAppearance="@style/opens_regular"
             android:layout_gravity="center_horizontal"
             android:gravity="center_horizontal"
-            android:layout_marginTop="20dp" />
+            android:layout_marginTop="10dp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_ok"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/dialog_btn_ok"
+            android:textColor="@color/white"
+            android:textAppearance="@style/opens_bold"
+            android:textSize="18sp"
+            android:background="@drawable/button_red"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="10dp"
+            android:visibility="gone"/>
 
     </LinearLayout>
 </layout>

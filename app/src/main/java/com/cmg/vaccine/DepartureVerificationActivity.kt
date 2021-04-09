@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.cmg.vaccine.databinding.ActivityDepartureVerificationBinding
 import com.cmg.vaccine.listener.SimpleListener
 import com.cmg.vaccine.util.Passparams
+import com.cmg.vaccine.util.hide
 import com.cmg.vaccine.util.showAlertDialog
 import com.cmg.vaccine.util.toast
 import com.cmg.vaccine.viewmodel.DepartureVerificationViewModel
@@ -74,8 +75,19 @@ class DepartureVerificationActivity : BaseActivity(),KodeinAware,SimpleListener 
         finish()
     }
 
+    override fun onShowToast(msg: String) {
+        toast(msg)
+    }
+
     override fun onFailure(msg: String) {
-        //toast(msg)
-        showAlertDialog(msg,"",false,supportFragmentManager)
+        if (msg.startsWith("2")){
+            val showMsg = msg.drop(1)
+            showAlertDialog(resources.getString(R.string.failed), showMsg, false, supportFragmentManager)
+        }else if (msg.startsWith("3")){
+            val showMsg = msg.drop(1)
+            showAlertDialog(showMsg, resources.getString(R.string.check_internet), false, supportFragmentManager)
+        }else {
+            showAlertDialog(msg, "", false, supportFragmentManager)
+        }
     }
 }

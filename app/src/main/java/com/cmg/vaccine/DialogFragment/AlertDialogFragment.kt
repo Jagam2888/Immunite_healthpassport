@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import com.cmg.vaccine.R
+import com.cmg.vaccine.data.setOnSingleClickListener
 import com.cmg.vaccine.databinding.DialogAlertBinding
 import com.cmg.vaccine.util.Passparams
 
@@ -33,6 +34,11 @@ class AlertDialogFragment:DialogFragment() {
             binding.imgStatus.setImageResource(R.drawable.success_msg_icon)
         }else{
             binding.imgStatus.setImageResource(R.drawable.failed_msg_icon)
+            binding.btnOk.visibility = View.VISIBLE
+        }
+
+        binding.btnOk.setOnSingleClickListener{
+            dismiss()
         }
 
         binding.title.text = title

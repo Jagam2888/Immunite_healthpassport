@@ -203,9 +203,21 @@ class ImmunizationHistoryActivity : BaseActivity(),KodeinAware,SimpleListener,Sl
         }
     }
 
+    override fun onShowToast(msg: String) {
+        hide(binding.progressBar)
+        toast(msg)
+    }
+
     override fun onFailure(msg: String) {
         hide(binding.progressBar)
-        //toast(msg)
-        showAlertDialog(msg,"",false,supportFragmentManager)
+        if (msg.startsWith("2")){
+            val showMsg = msg.drop(1)
+            showAlertDialog(resources.getString(R.string.failed), showMsg, false, supportFragmentManager)
+        }else if (msg.startsWith("3")){
+            val showMsg = msg.drop(1)
+            showAlertDialog(showMsg, resources.getString(R.string.check_internet), false, supportFragmentManager)
+        }else {
+            showAlertDialog(msg, "", false, supportFragmentManager)
+        }
     }
 }

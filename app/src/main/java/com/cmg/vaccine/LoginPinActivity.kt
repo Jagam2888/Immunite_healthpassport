@@ -83,42 +83,6 @@ class LoginPinActivity : BaseActivity(),KodeinAware,SimpleListener {
     }
 
     private fun initViews(){
-        /*binding.btnOne.setOnClickListener {
-            appendTxt(binding.btnOne.text.toString())
-        }
-
-        binding.btnTwo.setOnClickListener {
-            appendTxt(binding.btnTwo.text.toString())
-        }
-
-        binding.btnThree.setOnClickListener {
-            appendTxt(binding.btnThree.text.toString())
-        }
-        binding.btnFour.setOnClickListener {
-            appendTxt(binding.btnFour.text.toString())
-        }
-        binding.btnFive.setOnClickListener {
-            appendTxt(binding.btnFive.text.toString())
-        }
-        binding.btnSix.setOnClickListener {
-            appendTxt(binding.btnSix.text.toString())
-        }
-        binding.btnSeven.setOnClickListener {
-            appendTxt(binding.btnSeven.text.toString())
-        }
-        binding.btnEight.setOnClickListener {
-            appendTxt(binding.btnEight.text.toString())
-        }
-        binding.btnNine.setOnClickListener {
-            appendTxt(binding.btnNine.text.toString())
-        }
-        binding.btnZero.setOnClickListener {
-            appendTxt(binding.btnZero.text.toString())
-        }
-
-        binding.btnX.setOnClickListener {
-            removePin()
-        }*/
 
         binding.edtTxt.addTextChangedListener(object : TextWatcher{
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -190,8 +154,11 @@ class LoginPinActivity : BaseActivity(),KodeinAware,SimpleListener {
         }
     }
 
+    override fun onShowToast(msg: String) {
+        toast(msg)
+    }
+
     override fun onFailure(msg: String) {
-        //toast(msg)
-        showAlertDialog(msg,"",false,supportFragmentManager)
+        showAlertDialog(resources.getString(R.string.login_failed), msg, false, supportFragmentManager)
     }
 }

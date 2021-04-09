@@ -240,12 +240,12 @@ class DepartureVerificationViewModel(
                                         }
                                     }*/
                                 }else{
-                                    listener?.onFailure("Database Error, Country Code return Null or Empty")
+                                    listener?.onShowToast("Database Error, Country Code return Null or Empty")
                                     status.set(false)
                                 }
 
                             }else{
-                                listener?.onFailure("Please Sync your Data, your TestReport Empty")
+                                listener?.onFailure("2Please Sync your Data, your TestReport Empty")
                                 status.set(false)
                             }
 
@@ -263,9 +263,9 @@ class DepartureVerificationViewModel(
 
 
             }catch (e:JSONException){
-                listener?.onFailure(e.message!!)
+                listener?.onShowToast(e.message!!)
             }catch (e:Exception){
-                listener?.onFailure(e.message!!)
+                listener?.onShowToast(e.message!!)
             }
 
         }

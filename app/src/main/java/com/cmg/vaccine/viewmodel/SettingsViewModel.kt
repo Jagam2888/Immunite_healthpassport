@@ -95,11 +95,11 @@ class SettingsViewModel(
                     }
                 }
             }catch (e:APIException){
-                listener?.onFailure(e.message!!)
+                listener?.onShowToast(e.message!!)
             }catch (e:NoInternetException){
-                listener?.onFailure(e.message!!)
+                listener?.onFailure("3"+e.message!!)
             }catch (e:Exception){
-                listener?.onFailure(e.message!!)
+                listener?.onShowToast(e.message!!)
             }
         }
     }
@@ -120,11 +120,11 @@ class SettingsViewModel(
                     }
                 }
             }catch (e:APIException){
-                listener?.onFailure(e.message!!)
+                listener?.onShowToast(e.message!!)
             }catch (e:NoInternetException){
-                listener?.onFailure(e.message!!)
+                listener?.onFailure("3"+e.message!!)
             }catch (e:Exception){
-                listener?.onFailure(e.message!!)
+                listener?.onShowToast(e.message!!)
             }
         }
     }
@@ -145,18 +145,18 @@ class SettingsViewModel(
 
                 }
             }catch (e:APIException){
-                listener?.onFailure(e.message!!)
+                listener?.onShowToast(e.message!!)
             }catch (e:NoInternetException){
-                listener?.onFailure(e.message!!)
+                listener?.onFailure("3"+e.message!!)
             }catch (e:Exception){
-                listener?.onFailure(e.message!!)
+                listener?.onShowToast(e.message!!)
             }
         }
     }
 
     private fun getVaccineCall(){
        getVaccineTestRef(repositary.getPrivateKey()!!,"Prinicipal")
-        //getVaccineTestRef("83276DA59997B53E06619BEF46ED650889BE630000389B61BB3D3C9EE6909432","Prinicipal")
+        //getVaccineTestRef("F41B6149C0FC42E41390427A0CB82FA5A91A15A9C928BAB4C6986D81C9585323","Prinicipal")
 
         val dependent = repositary.getAllDependent()
 
@@ -188,11 +188,11 @@ class SettingsViewModel(
                     }
                 }
             }catch (e:APIException){
-                listener?.onFailure(e.message!!)
+                listener?.onShowToast(e.message!!)
             }catch (e:NoInternetException){
-                listener?.onFailure(e.message!!)
+                listener?.onFailure("3"+e.message!!)
             }catch (e:Exception){
-                listener?.onFailure(e.message!!)
+                listener?.onShowToast(e.message!!)
             }
         }
     }
@@ -215,11 +215,11 @@ class SettingsViewModel(
                     }
                 }
             }catch (e:APIException){
-                listener?.onFailure(e.message!!)
+                listener?.onShowToast(e.message!!)
             }catch (e:NoInternetException){
-                listener?.onFailure(e.message!!)
+                listener?.onFailure("3"+e.message!!)
             }catch (e:Exception){
-                listener?.onFailure(e.message!!)
+                listener?.onShowToast(e.message!!)
             }
         }
     }
@@ -241,11 +241,11 @@ class SettingsViewModel(
 
                 }
             }catch (e:APIException){
-                listener?.onFailure(e.message!!)
+                listener?.onShowToast(e.message!!)
             }catch (e:NoInternetException){
-                listener?.onFailure(e.message!!)
+                listener?.onFailure("3"+e.message!!)
             }catch (e:Exception){
-                listener?.onFailure(e.message!!)
+                listener?.onShowToast(e.message!!)
             }
         }
     }
@@ -268,13 +268,11 @@ class SettingsViewModel(
                 }
                 //getWorldEntryCountries()
             }catch (e:APIException){
-                listener?.onFailure(e.message!!)
+                listener?.onShowToast(e.message!!)
             }catch (e:NoInternetException){
-                listener?.onFailure(e.message!!)
-            }catch (e:SocketTimeoutException){
-                listener?.onFailure(e.message!!)
+                listener?.onFailure("3"+e.message!!)
             }catch (e:Exception){
-                listener?.onFailure(e.message!!)
+                listener?.onShowToast(e.message!!)
             }
 
         }
@@ -306,13 +304,11 @@ class SettingsViewModel(
                 }
                 //getAllAirportCities()
             }catch (e:APIException){
-                listener?.onFailure(e.message!!)
+                listener?.onShowToast(e.message!!)
             }catch (e:NoInternetException){
-                listener?.onFailure(e.message!!)
-            }catch (e:SocketTimeoutException){
-                listener?.onFailure(e.message!!)
+                listener?.onFailure("3"+e.message!!)
             }catch (e:Exception){
-                listener?.onFailure(e.message!!)
+                listener?.onShowToast(e.message!!)
             }
         }
     }
@@ -334,13 +330,11 @@ class SettingsViewModel(
                 }
                 //getVaccineCall()
             }catch (e:APIException){
-                listener?.onFailure(e.message!!)
+                listener?.onShowToast(e.message!!)
             }catch (e:NoInternetException){
-                listener?.onFailure(e.message!!)
-            }catch (e:SocketTimeoutException){
-                listener?.onFailure(e.message!!)
+                listener?.onFailure("3"+e.message!!)
             }catch (e:Exception){
-                listener?.onFailure(e.message!!)
+                listener?.onShowToast(e.message!!)
             }
 
         }
@@ -546,17 +540,15 @@ class SettingsViewModel(
                         }
                         listener?.onSuccess(jsonBodayDataObject.getString("message"))
                     }else{
-                        listener?.onFailure(jsonBodayDataObject.getString("message")+" : "+user)
+                        listener?.onShowToast(jsonBodayDataObject.getString("message")+" : "+user)
                     }
                 }
-            }catch (e: APIException) {
-                listener?.onFailure(e.message!!)
-            } catch (e: NoInternetException) {
-                listener?.onFailure(e.message!!)
-            } catch (e: SocketTimeoutException) {
-                listener?.onFailure(e.message!!)
-            } catch (e:Exception){
-                listener?.onFailure(e.message!!)
+            }catch (e:APIException){
+                listener?.onShowToast(e.message!!)
+            }catch (e:NoInternetException){
+                listener?.onFailure("3"+e.message!!)
+            }catch (e:Exception){
+                listener?.onShowToast(e.message!!)
             }
         }
     }
@@ -607,7 +599,7 @@ class SettingsViewModel(
                 }
             }
         }else{
-            listener?.onFailure("Private key not generated yet")
+            listener?.onShowToast("Private key not generated yet")
         }
     }
 

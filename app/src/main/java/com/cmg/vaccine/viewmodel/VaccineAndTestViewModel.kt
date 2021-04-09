@@ -77,22 +77,22 @@ class VaccineAndTestViewModel(
                                 saveFile(response.body(), view, recorId.value!!)
                             } else {
                                 Log.d("download_file_errorbody", response.body().toString())
-                                listener?.onFailure(response.body().toString())
+                                listener?.onFailure("2"+response.body().toString())
                             }
                         }
 
                         override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                             Log.d("download_file_error", t.toString())
-                            listener?.onFailure(t.toString())
+                            listener?.onFailure("2$t")
                         }
                     })
 
                 } catch (e: APIException) {
                     listener?.onFailure(e.message!!)
                 } catch (e: NoInternetException) {
-                    listener?.onFailure(e.message!!)
+                    listener?.onFailure("3"+e.message!!)
                 } catch (e: Exception) {
-                    listener?.onFailure(e.message!!)
+                    listener?.onShowToast(e.message!!)
                 }
             }
         }

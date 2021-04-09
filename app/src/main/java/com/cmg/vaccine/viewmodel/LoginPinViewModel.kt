@@ -92,7 +92,7 @@ class LoginPinViewModel(
                         isDoneReEnter = true
                     }
                 }catch (e:Exception){
-                    listener?.onFailure(e.message!!)
+                    listener?.onShowToast(e.message!!)
                 }
 
         }

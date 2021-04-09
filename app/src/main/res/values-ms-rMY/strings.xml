@@ -72,6 +72,11 @@
     <string name="restore">Restore</string>
     <string name="restore_google_drive">Restore from Google Drive</string>
 
+    <string name="otp">OTP</string>
+    <string name="failed">Failed</string>
+    <string name="login_failed">Login Failed!</string>
+    <string name="check_internet">Please check your internet connection</string>
+
 
     <string name="account_restored">Account Restored</string>
     <string name="congratulation_restored">Congratulations!\nYou Account has been \nRestored Successfully!</string>

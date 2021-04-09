@@ -102,6 +102,11 @@ class ViewReportFragment : Fragment(),KodeinAware,SimpleListener {
         hide(binding.progressBar)
     }
 
+    override fun onShowToast(msg: String) {
+        hide(binding.progressBar)
+        context?.toast(msg)
+    }
+
     override fun onFailure(msg: String) {
         hide(binding.progressBar)
         context?.toast(msg)

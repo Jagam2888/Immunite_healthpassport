@@ -141,7 +141,7 @@ class TellUsMoreViewModel(
         listener?.onStarted()
         if ((!idNo.value.isNullOrEmpty()) and (nationalityCountryCode.value.equals("Malaysia"))){
             if (idNo.value?.length != patientIdNoCharLength.get()){
-                listener?.onFailure("Your ID Number is invalid")
+                listener?.onShowToast("Your ID Number is invalid")
                 return
             }
         }
@@ -149,21 +149,21 @@ class TellUsMoreViewModel(
 
                 if (nationalityCountryCode.value.equals("Malaysia")){
                     if (idNo.value.isNullOrEmpty()){
-                        listener?.onFailure("Malaysian should be enter Your Id number")
+                        listener?.onShowToast("Malaysian should be enter Your Id number")
                         return
                     }
                 }
 
                 if (!nationalityCountryCode.value.equals("Malaysia")){
                     if((passportNo.value.isNullOrEmpty()) and (idNo.value.isNullOrEmpty())) {
-                        listener?.onFailure("Passport Number or Id number either one Mandatory")
+                        listener?.onShowToast("Passport Number or Id number either one Mandatory")
                         return
                     }
                 }
 
                 if (!passportNo.value.isNullOrEmpty()){
                     if (passportExpDate.value.isNullOrEmpty()){
-                        listener?.onFailure("Please Enter Your Passport Expiry Date")
+                        listener?.onShowToast("Please Enter Your Passport Expiry Date")
                         return
                     }
                 }
@@ -234,15 +234,15 @@ class TellUsMoreViewModel(
                             listener?.onFailure(response.Message)
                         }
                     } catch (e: APIException) {
-                        listener?.onFailure(e.message!!)
+                        listener?.onFailure("2"+e.message!!)
                     } catch (e: NoInternetException) {
-                        listener?.onFailure(e.message!!)
+                        listener?.onFailure("3"+e.message!!)
                     } catch (e: SocketTimeoutException) {
-                        listener?.onFailure(e.message!!)
+                        listener?.onShowToast(e.message!!)
                     }
                 }
             } else {
-                listener?.onFailure("Please Read Terms and Condtition")
+                listener?.onShowToast("Please Read Terms and Condtition")
             }
 
     }

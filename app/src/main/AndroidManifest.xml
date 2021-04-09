@@ -30,14 +30,19 @@
         android:theme="@style/Theme.Noactionbar"
         android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup">
-
-        <activity android:name=".IntroActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".TutorialActivity"
-            android:screenOrientation="portrait"/>
-
-        <activity android:name=".TermsOfUseActivity"
+        <activity android:name=".decryptTesting.DecryptActivityActivity"
             android:screenOrientation="portrait"></activity>
+        <activity android:name=".decryptTesting.QRCodeActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".IntroActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".TutorialActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".TermsOfUseActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".DepartureVerificationActivity"
             android:screenOrientation="portrait" />

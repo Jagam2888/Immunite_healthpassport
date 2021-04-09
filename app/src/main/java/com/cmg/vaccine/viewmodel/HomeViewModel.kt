@@ -313,13 +313,13 @@ class HomeViewModel(
                         }
                     }
                 } catch (e: APIException) {
-                    listener?.onFailure(e.message!!)
+                    listener?.onFailure("2"+e.message!!)
                 } catch (e: NoInternetException) {
-                    listener?.onFailure(e.message!!)
+                    listener?.onFailure("3"+e.message!!)
                 } catch (e: SocketTimeoutException) {
-                    listener?.onFailure(e.message!!)
+                    listener?.onShowToast(e.message!!)
                 } catch (e: Exception) {
-                    listener?.onFailure(e.message!!)
+                    listener?.onShowToast(e.message!!)
                 }
             }
         }
@@ -425,15 +425,15 @@ class HomeViewModel(
                         updatePrivateKeyStatus(getUser.parentSubscriberId!!)
                         listener?.onSuccess("$originalPrivateKey|${getUser.fullName}|${getUser.dob}")
                     }else{
-                        listener?.onFailure(response.Message)
+                        listener?.onFailure("2"+response.Message)
                     }
 
                 }catch (e: APIException) {
-                    listener?.onFailure(e.message!!)
+                    listener?.onFailure("2"+e.message!!)
                 } catch (e: NoInternetException) {
-                    listener?.onFailure(e.message!!)
+                    listener?.onFailure("3"+e.message!!)
                 } catch (e: SocketTimeoutException) {
-                    listener?.onFailure(e.message!!)
+                    listener?.onShowToast(e.message!!)
                 }
             }
         }else{
@@ -463,7 +463,7 @@ class HomeViewModel(
                                 originalPrivateKey = decryptServerKey(tempPK,tempDob)
                             }else{
                                 originalPrivateKey = response.PrivateKey
-                                listener?.onFailure("Please Check ! API return Original Private Key Instead of Encrypt Private Key")
+                                listener?.onShowToast("Please Check ! API return Original Private Key Instead of Encrypt Private Key")
                             }
                         }
                         getUser.privateKey = originalPrivateKey
@@ -472,15 +472,15 @@ class HomeViewModel(
                         updateDependentPrivateKeyStatus(getUser.subsId!!)
                         listener?.onSuccess("$originalPrivateKey|${getUser.firstName}|${getUser.dob}")
                     }else{
-                        listener?.onFailure(response.Message)
+                        listener?.onFailure("2"+response.Message)
                     }
 
                 }catch (e: APIException) {
-                    listener?.onFailure(e.message!!)
+                    listener?.onFailure("2"+e.message!!)
                 } catch (e: NoInternetException) {
-                    listener?.onFailure(e.message!!)
+                    listener?.onFailure("3"+e.message!!)
                 } catch (e: SocketTimeoutException) {
-                    listener?.onFailure(e.message!!)
+                    listener?.onShowToast(e.message!!)
                 }
             }
         }else{
@@ -494,14 +494,14 @@ class HomeViewModel(
             try {
                 val response = repositary.updatePrivateKeyStatus(subId,"Y")
                 if (response.StatusCode != 1){
-                    listener?.onFailure(response.Message)
+                    listener?.onFailure("2"+response.Message)
                 }
             }catch (e: APIException) {
-                listener?.onFailure(e.message!!)
+                listener?.onFailure("2"+e.message!!)
             } catch (e: NoInternetException) {
-                listener?.onFailure(e.message!!)
+                listener?.onFailure("3"+e.message!!)
             } catch (e: SocketTimeoutException) {
-                listener?.onFailure(e.message!!)
+                listener?.onShowToast(e.message!!)
             }
         }
     }
@@ -511,14 +511,14 @@ class HomeViewModel(
             try {
                 val response = repositary.updateDependentPrivateKeyStatus(subId,"Y")
                 if (response.StatusCode != 1){
-                    listener?.onFailure(response.Message)
+                    listener?.onFailure("2"+response.Message)
                 }
             }catch (e: APIException) {
-                listener?.onFailure(e.message!!)
+                listener?.onFailure("2"+e.message!!)
             } catch (e: NoInternetException) {
-                listener?.onFailure(e.message!!)
+                listener?.onFailure("3"+e.message!!)
             } catch (e: SocketTimeoutException) {
-                listener?.onFailure(e.message!!)
+                listener?.onShowToast(e.message!!)
             }
         }
     }

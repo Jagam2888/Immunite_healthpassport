@@ -171,7 +171,7 @@ class OTPVerifyActivity : BaseActivity(),KodeinAware,SimpleListener{
 
     override fun onSuccess(msg: String) {
         hide(binding.progressBar)
-        toast(msg)
+        //toast(msg)
         if (navigateFrom.equals(Passparams.SIGNUP)) {
             Intent(this, SignupCompleteActivity::class.java).also {
                 it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -192,9 +192,26 @@ class OTPVerifyActivity : BaseActivity(),KodeinAware,SimpleListener{
         }
     }
 
+    override fun onShowToast(msg: String) {
+        toast(msg)
+    }
+
     override fun onFailure(msg: String) {
         hide(binding.progressBar)
         //toast(msg)
-        showAlertDialog(msg,"",false,supportFragmentManager)
+        if (msg.startsWith("1")){
+         val msgSplitArray = msg.split("|")
+         if (msgSplitArray.size > 1){
+             showAlertDialog(resources.getString(R.string.otp), msgSplitArray[2], msgSplitArray[1].toBoolean(), supportFragmentManager)
+         }
+        }else if (msg.startsWith("2")){
+            val showMsg = msg.drop(1)
+            showAlertDialog(resources.getString(R.string.failed), showMsg, false, supportFragmentManager)
+        }else if (msg.startsWith("3")){
+            val showMsg = msg.drop(1)
+            showAlertDialog(showMsg, resources.getString(R.string.check_internet), false, supportFragmentManager)
+        }else {
+            showAlertDialog(msg, "", false, supportFragmentManager)
+        }
     }
 }
