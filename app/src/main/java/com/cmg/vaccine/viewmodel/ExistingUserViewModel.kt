@@ -93,7 +93,7 @@ class ExistingUserViewModel(
                     //listener?.onSuccess(response.Message)
 
                 }else{
-                    listener?.onFailure(response.Message)
+                    listener?.onShowToast(response.Message)
                 }
                 updateFCMToken()
             }catch (e:APIException){

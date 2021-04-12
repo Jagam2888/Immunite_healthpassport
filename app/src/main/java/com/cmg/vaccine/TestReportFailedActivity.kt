@@ -18,8 +18,8 @@ class TestReportFailedActivity : BaseActivity() {
             finish()
         }
 
-        val testName = intent.extras?.getString(Passparams.TEST_REPORT_ID,"")
+        /*val testName = intent.extras?.getString(Passparams.TEST_REPORT_ID,"")
 
-        binding.txtHeading.text = testName
+        binding.txtHeading.text = testName*/
     }
 }

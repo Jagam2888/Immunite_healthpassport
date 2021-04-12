@@ -358,7 +358,7 @@ class EditProfileActivity : BaseActivity(),KodeinAware,SimpleListener,SlideDateP
     }
 
     private fun cropImage() {
-        CropImage.activity( )
+        CropImage.activity()
             .setGuidelines(CropImageView.Guidelines.ON)
             .setActivityTitle("Edit Photo")
             .setCropShape(CropImageView.CropShape.OVAL)
@@ -385,6 +385,7 @@ class EditProfileActivity : BaseActivity(),KodeinAware,SimpleListener,SlideDateP
                             grantResults[0] == PackageManager.PERMISSION_GRANTED
                     if (accepted) {
                         //pickImageFromGallery()
+
                         cropImage()
                     } else {
                         toast("Permission Denied, You cannot access your gallery")

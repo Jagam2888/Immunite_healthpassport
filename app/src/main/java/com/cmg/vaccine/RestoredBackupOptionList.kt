@@ -259,7 +259,7 @@ class RestoredBackupOptionList : BaseActivity(),KodeinAware,SimpleListener {
             }
         }
         //hide(binding.progressBar)
-        toast("Databse insert done")
+        toast("Database insert done")
         viewModel.getUser(this)
 
         /*viewModel.userData.observe(this, androidx.lifecycle.Observer {

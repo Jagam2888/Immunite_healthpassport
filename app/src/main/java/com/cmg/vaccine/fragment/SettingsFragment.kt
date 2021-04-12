@@ -37,6 +37,7 @@ import com.zcw.togglebutton.ToggleButton.OnToggleChanged
 import immuniteeEncryption.EncryptionUtils
 import kotlinx.android.synthetic.main.about.*
 import kotlinx.android.synthetic.main.backup.*
+import kotlinx.android.synthetic.main.change_language.*
 import kotlinx.android.synthetic.main.fragment_settings.*
 import kotlinx.android.synthetic.main.fragment_settings.layout_backup
 import kotlinx.android.synthetic.main.fragment_settings.view.*
@@ -95,32 +96,37 @@ class SettingsFragment : Fragment(),KodeinAware,SimpleListener {
 
         binding.layoutAbout.setOnSingleClickListener {
             hideMainLayout()
+            binding.txtAppBar.text = context?.resources?.getString(R.string.about)
             binding.about.visibility = View.VISIBLE
 
         }
 
         binding.layoutSecurityPin.setOnSingleClickListener {
             hideMainLayout()
+            binding.txtAppBar.text = context?.resources?.getString(R.string.privacy)
             binding.tested.visibility = View.VISIBLE
         }
 
         binding.layoutHelp.setOnSingleClickListener {
             hideMainLayout()
+            binding.txtAppBar.text = context?.resources?.getString(R.string.help)
             binding.help.visibility = View.VISIBLE
         }
 
         binding.layoutAdvanced.setOnSingleClickListener {
             hideMainLayout()
+            binding.txtAppBar.text = context?.resources?.getString(R.string.advanced)
             binding.advanced.visibility = View.VISIBLE
         }
 
         binding.layoutSync.setOnSingleClickListener {
             hideMainLayout()
+            binding.txtAppBar.text = context?.resources?.getString(R.string.sync)
             binding.sync.visibility = View.VISIBLE
         }
 
         binding.layoutBackup.setOnSingleClickListener {
-
+            binding.txtAppBar.text = context?.resources?.getString(R.string.backup)
             requestSignIn()
         }
 
@@ -137,6 +143,9 @@ class SettingsFragment : Fragment(),KodeinAware,SimpleListener {
         }
 
         binding.layoutChangeLanguage.setOnSingleClickListener {
+            hideMainLayout()
+            /*binding.txtAppBar.text = context?.resources?.getString(R.string.change_language)
+            binding.changeLanguage.visibility = View.VISIBLE*/
             Intent(context, ChangeLanguageActivity::class.java).also {
                 context?.startActivity(it)
             }
@@ -149,6 +158,7 @@ class SettingsFragment : Fragment(),KodeinAware,SimpleListener {
 
         binding.layoutPaymentMethod.setOnSingleClickListener {
             hideMainLayout()
+            binding.txtAppBar.text = context?.resources?.getString(R.string.payment_method)
             binding.paymentMethod.visibility = View.VISIBLE
         }
 
@@ -157,6 +167,7 @@ class SettingsFragment : Fragment(),KodeinAware,SimpleListener {
         }
 
         binding.imgBack.setOnSingleClickListener {
+            binding.txtAppBar.text = context?.resources?.getString(R.string.setting)
             showMainLayout()
         }
 
@@ -221,7 +232,7 @@ class SettingsFragment : Fragment(),KodeinAware,SimpleListener {
             }
         }
 
-
+        changeLanguage()
     }
 
     private fun hideMainLayout(){
@@ -276,8 +287,8 @@ class SettingsFragment : Fragment(),KodeinAware,SimpleListener {
             val packageInfo = context?.packageManager?.getPackageInfo(context?.packageName!!, 0)
             val versionName = packageInfo?.versionName
             //val version = "Version : $versionName \nDevelopment Server : ${Passparams.URL}"
-            val version = "Version : $versionName \nDevelopment Server"
-            //val version = "Version : $versionName \nStaging Server"
+            //val version = "Version : $versionName \nDevelopment Server"
+            val version = "Version : $versionName \nStaging Server"
             //val version = "Version : $versionName \nProduction Server"
             val alertDialogBuilder = AlertDialog.Builder(requireContext())
             alertDialogBuilder.setMessage(version).setTitle(R.string.app_name)
@@ -365,7 +376,7 @@ class SettingsFragment : Fragment(),KodeinAware,SimpleListener {
                 Log.e("Indicator", "Login In Success")
                 isGoogleSiginSuccess = true
                 //context?.toast("Login In Success")
-                showAlertDialog("Login In Success","",false,childFragmentManager)
+                showAlertDialog("Google Drive","Login In Success",true,childFragmentManager)
                 driveServiceHelper= DriveServiceHelper(googleDriveService)
                 hideMainLayout()
                 binding.backup.visibility = View.VISIBLE
@@ -373,7 +384,7 @@ class SettingsFragment : Fragment(),KodeinAware,SimpleListener {
             .addOnFailureListener { exception ->
                 Log.e("Indicator", "Fail to Login")
                 //context?.toast("Fail to Login")
-                showAlertDialog("Fail to Login","",false,childFragmentManager)
+                showAlertDialog("Google Drive","Failed to Login",false,childFragmentManager)
             }
     }
 
@@ -490,6 +501,22 @@ class SettingsFragment : Fragment(),KodeinAware,SimpleListener {
             )
     }
 
+    private fun changeLanguage(){
+        layout_english.setOnSingleClickListener{
+            if (!english_checkbox.isChecked){
+                english_checkbox.isChecked = true
+                malay_checkbox.isChecked = false
+            }
+        }
+        layout_malay.setOnSingleClickListener{
+            if (!malay_checkbox.isChecked){
+                english_checkbox.isChecked = false
+                malay_checkbox.isChecked = true
+            }
+
+        }
+
+    }
 
 
 }

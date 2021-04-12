@@ -44,20 +44,18 @@ class WorldEntriesDetailAdapter internal constructor(
         val indicator = convertView!!.findViewById<ImageView>(R.id.indicator)
         expandedListTextView.text = expandedListText
 
+        if (listPosition == 0){
+            indicator.visibility = View.GONE
+        }
+
         if (listPosition ==1){
-            /*val gson = Gson()
-            val type: Type = object : TypeToken<TestReport>() {}.type
-            val testReportData = gson.fromJson<TestReport>(expandedListText, type)*/
-                val testReportArray = expandedListText.split("|")
+            val testReportArray = expandedListText.split("|")
             val status:Boolean = testReportArray[1].toBoolean()
             if (!status){
                 indicator.setImageResource(R.drawable.ic_red_failed)
             }
             expandedListTextView.text = testReportArray[0]
         }else if (listPosition == 2){
-            /*val gson = Gson()
-            val type: Type = object : TypeToken<Vaccine>() {}.type
-            val vaccineData = gson.fromJson<Vaccine>(expandedListText, type)*/
             val vaccineArray = expandedListText.split("|")
             val status:Boolean = vaccineArray[1].toBoolean()
             if (!status){
@@ -66,14 +64,7 @@ class WorldEntriesDetailAdapter internal constructor(
             expandedListTextView.text = vaccineArray[0]
         }
         expandedListTextView.setOnClickListener {
-            /*if(expandedListTextView.text=="Covid-19 Vaccine2 (Pfizer)") {
-                var it = Intent(this.context, VaccineAndTestReportActivity::class.java)
-                this.context.startActivity(it)
-            }
-            else{
-                var it = Intent(this.context, RRTPCRActivity::class.java)
-                this.context.startActivity(it)
-            }*/
+
             if (listPosition == 1){
                 val testReportArray = expandedListText.split("|")
                 val status:Boolean = testReportArray[1].toBoolean()
@@ -131,6 +122,10 @@ class WorldEntriesDetailAdapter internal constructor(
         listTitleTextView.text = listTitle
         val arrow = convertView!!.findViewById<ImageView>(R.id.arrow_img)
         val indicator = convertView!!.findViewById<ImageView>(R.id.indicator)
+
+        if (listPosition == 0){
+            indicator.visibility = View.GONE
+        }
 
         /*if (listTitleArray[1].equals("red",true)){
             indicator.setImageResource(R.drawable.red_indicator)
