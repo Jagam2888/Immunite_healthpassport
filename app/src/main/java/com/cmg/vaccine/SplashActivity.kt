@@ -6,12 +6,16 @@ import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.blongho.country_data.World
 import com.cmg.vaccine.repositary.SplashRepositary
 import com.cmg.vaccine.util.Passparams
 import com.cmg.vaccine.util.calculateHours
 import com.cmg.vaccine.util.changeDateToTimeStamp
 import com.cmg.vaccine.viewmodel.SplashViewModel
 import com.cmg.vaccine.viewmodel.viewmodelfactory.SplashModelFactory
+import com.hbb20.CountryCodePicker
+import com.jdev.countryutil.Country
+
 import immuniteeEncryption.EncryptionUtils
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
@@ -39,7 +43,10 @@ class SplashActivity() : BaseActivity(),KodeinAware{
             }
         })
 
-        Log.d("decrypt_splash",decryptKey("OU/wqK7aBe7rrDL+JTrUfCnLPuH5GpdgfbjNjbQlF0xqi9CsQp4bOReDIdpmWPWVxn67zy0IQHiQ\nBmBG6Y+8uhebe9FnAXEz7l0gS7d/ezM=","20140808")!!)
+
+        //Log.d("encrypt_dob",EncryptionUtils.encryptForBackup("823BBF131755B9FF006B73C3D901E9D52C465BD2E0D1E37E53053C91D1912B43","19860206"))
+        //Log.d("country_code",CountryCodePicker.)
+        //Log.d("decrypt_splash",decryptKey("OU/wqK7aBe7rrDL+JTrUfCnLPuH5GpdgfbjNjbQlF0xqi9CsQp4bOReDIdpmWPWVxn67zy0IQHiQ\nBmBG6Y+8uhebe9FnAXEz7l0gS7d/ezM=","20140808")!!)
 
 
     }

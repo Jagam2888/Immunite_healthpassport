@@ -540,7 +540,7 @@ class SettingsViewModel(
                         }
                         listener?.onSuccess(jsonBodayDataObject.getString("message"))
                     }else{
-                        listener?.onShowToast(jsonBodayDataObject.getString("message")+" : "+user)
+                        listener?.onShowToast(jsonBodayDataObject.getString("message"))
                     }
                 }
             }catch (e:APIException){

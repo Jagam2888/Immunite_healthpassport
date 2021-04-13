@@ -1,5 +1,6 @@
 package com.cmg.vaccine.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Filter
@@ -13,6 +14,7 @@ import com.cmg.vaccine.R
 import com.cmg.vaccine.database.Countries
 import com.cmg.vaccine.databinding.CountryListItemBinding
 import com.cmg.vaccine.listener.AddSelectedRVListener
+
 
 class CountryListRecyclerViewAdapter(
     private val countryList: ArrayList<Countries>,
@@ -41,6 +43,8 @@ class CountryListRecyclerViewAdapter(
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.countryListItemBinding.countries = countryList[position]
         holder.countryListItemBinding.imgFlag.setImageResource(World.getFlagOf(countryList[position].countryCodeAlpha))
+       // holder.countryListItemBinding.imgFlag.setImageResource(com.jdev.countryutil.Country.getCountryByName(countryList[position].countryName).flag)
+
 
         holder.countryListItemBinding.countryListItemLayout.setOnClickListener {
             //addSelectedRVListener?.setClick(countryList[position].name, countryList[position].alpha2)
@@ -49,6 +53,8 @@ class CountryListRecyclerViewAdapter(
         }
         //val flag = World.getFlagOf(countryList.get(position).countryCodeAlpha)
         //holder.binding.imgFlag.setImageResource(flag)
+
+        //Log.d("country_code",com.jdev.countryutil.Country.getCountryByName(countryList[position].countryName).code)
 
     }
 

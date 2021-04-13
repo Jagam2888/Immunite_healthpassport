@@ -66,6 +66,7 @@
     <string name="scan_qr_code">Imbas Kod QR</string>
 
     <string name="forget_pin"><u>Forget PIN</u></string>
+    <string name="change_language_success">Bahasa Berubah Berjaya</string>
 
     <string name="departure_verify">Departure Verification</string>
 

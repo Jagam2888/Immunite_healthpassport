@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import com.blongho.country_data.World
 import com.cmg.vaccine.util.LocaleHelper
+
 import io.paperdb.Paper
 
 open class BaseActivity:AppCompatActivity() {
@@ -15,6 +16,7 @@ open class BaseActivity:AppCompatActivity() {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         Paper.init(this)
         World.init(this)
+        //CountryUtil(this).build()
     }
     override fun attachBaseContext(newBase: Context?) {
         super.attachBaseContext(LocaleHelper.setLocale(newBase!!))

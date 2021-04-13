@@ -22,6 +22,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.akexorcist.snaptimepicker.SnapTimePickerDialog
 import com.blongho.country_data.Country
 import com.blongho.country_data.World
+import com.canhub.cropper.CropImage
+import com.canhub.cropper.CropImageView
 import com.cmg.vaccine.DialogFragment.CountryListDialogFragment
 import com.cmg.vaccine.adapter.CountryListAdapter
 import com.cmg.vaccine.data.setOnSingleClickListener
@@ -31,8 +33,7 @@ import com.cmg.vaccine.util.*
 import com.cmg.vaccine.viewmodel.DependentViewModel
 import com.cmg.vaccine.viewmodel.viewmodelfactory.DependentViewModelFactory
 import com.niwattep.materialslidedatepicker.SlideDatePickerDialogCallback
-import com.theartofdev.edmodo.cropper.CropImage
-import com.theartofdev.edmodo.cropper.CropImageView
+
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
@@ -356,14 +357,14 @@ class EditDependentProfileActivity : BaseActivity(),KodeinAware,SimpleListener,S
         if (requestCode === CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             val result = CropImage.getActivityResult(data)
             if (resultCode === RESULT_OK) {
-                val resultUri = result.uri
+                val resultUri = result?.uri
                 //viewModel.profileImageUri.set(resultUri.toString())
                 viewModel.saveProfileImage(resultUri.toString(),dependentSubId!!)
                 binding.headPicture.setImageURI(resultUri)
                 //toast("You profile picture was successfully changed")
             } else if (resultCode === CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-                val error = result.error
-                error.message?.let { toast(it) }
+                val error = result?.error
+                error?.message?.let { toast(it) }
             }
         }
 

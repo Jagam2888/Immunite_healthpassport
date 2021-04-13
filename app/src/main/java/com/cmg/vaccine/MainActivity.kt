@@ -30,6 +30,7 @@ import com.cmg.vaccine.fragment.*
 import com.cmg.vaccine.util.Passparams
 import com.cmg.vaccine.util.RecyclerViewTouchListener
 import com.cmg.vaccine.util.getDeviceUUID
+import com.cmg.vaccine.util.showAlertDialog
 import com.cmg.vaccine.viewmodel.HomeViewModel
 import com.cmg.vaccine.viewmodel.viewmodelfactory.HomeViewModelFactory
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -64,7 +65,15 @@ class MainActivity : BaseActivity(),KodeinAware {
 
 
     private fun initViews(){
-        loadFragment(HomeFragment())
+
+        val isFromChangeLanguage = Paper.book().read<Boolean>(Passparams.ISFROMCHANGELANGUAGE,false)
+        if (!isFromChangeLanguage) {
+            loadFragment(HomeFragment())
+        }else{
+            Paper.book().write(Passparams.ISFROMCHANGELANGUAGE,false)
+            loadFragment(SettingsFragment())
+            showAlertDialog(resources.getString(R.string.language),resources.getString(R.string.change_language_success),true,supportFragmentManager)
+        }
 
         val token = Paper.book().read(Passparams.FCM_TOKEN, "")
         Log.d("fcm_token", token)

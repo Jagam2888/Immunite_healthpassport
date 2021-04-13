@@ -35,6 +35,7 @@ import com.google.api.services.drive.Drive
 import com.google.api.services.drive.DriveScopes
 import com.zcw.togglebutton.ToggleButton.OnToggleChanged
 import immuniteeEncryption.EncryptionUtils
+import io.paperdb.Paper
 import kotlinx.android.synthetic.main.about.*
 import kotlinx.android.synthetic.main.backup.*
 import kotlinx.android.synthetic.main.change_language.*
@@ -144,12 +145,13 @@ class SettingsFragment : Fragment(),KodeinAware,SimpleListener {
 
         binding.layoutChangeLanguage.setOnSingleClickListener {
             hideMainLayout()
-            /*binding.txtAppBar.text = context?.resources?.getString(R.string.change_language)
-            binding.changeLanguage.visibility = View.VISIBLE*/
-            Intent(context, ChangeLanguageActivity::class.java).also {
+            binding.txtAppBar.text = context?.resources?.getString(R.string.change_language)
+            binding.changeLanguage.visibility = View.VISIBLE
+            /*Intent(context, ChangeLanguageActivity::class.java).also {
                 context?.startActivity(it)
-            }
+            }*/
         }
+
 
         binding.layoutNotification.setOnSingleClickListener {
             hideMainLayout()
@@ -310,7 +312,8 @@ class SettingsFragment : Fragment(),KodeinAware,SimpleListener {
 
     override fun onSuccess(msg: String) {
         hide(binding.progressBar)
-        showAlertDialog(msg,"",false,childFragmentManager)
+        context?.toast(msg)
+        //showAlertDialog(msg,"",false,childFragmentManager)
     }
 
     override fun onShowToast(msg: String) {
@@ -502,16 +505,42 @@ class SettingsFragment : Fragment(),KodeinAware,SimpleListener {
     }
 
     private fun changeLanguage(){
+        val pos = Paper.book().read<Int>(Passparams.SELECT_LANGUAGE_POS,0)
+        if (pos == 0){
+            english_checkbox.isChecked = true
+            malay_checkbox.isChecked = false
+        }else{
+            malay_checkbox.isChecked = true
+            english_checkbox.isChecked = false
+        }
+
         layout_english.setOnSingleClickListener{
             if (!english_checkbox.isChecked){
                 english_checkbox.isChecked = true
                 malay_checkbox.isChecked = false
+
+                Paper.book().write(Passparams.SELECT_LANGUAGE_POS,0)
+                Paper.book().write(Passparams.ISFROMCHANGELANGUAGE,true)
+
+                LocaleHelper.setNewLocale(requireContext(),LocaleHelper.LANGUAGE_ENGLISH)
+                Intent(context,MainActivity::class.java).also {
+                    it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    startActivity(it)
+                }
             }
         }
         layout_malay.setOnSingleClickListener{
+
             if (!malay_checkbox.isChecked){
                 english_checkbox.isChecked = false
                 malay_checkbox.isChecked = true
+                Paper.book().write(Passparams.SELECT_LANGUAGE_POS,1)
+                Paper.book().write(Passparams.ISFROMCHANGELANGUAGE,true)
+                LocaleHelper.setNewLocale(requireContext(),LocaleHelper.LANGUAGE_MALAY)
+                Intent(context,MainActivity::class.java).also {
+                    it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    startActivity(it)
+                }
             }
 
         }

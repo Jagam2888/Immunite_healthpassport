@@ -22,6 +22,8 @@ object Passparams{
     const val QR_CODE_VALUE = "qr_code_value"
     const val DATE_FORMAT = "dd/mm/yyyy"
     const val CURRENT_USER_SUBSID = "current_user_subid"
+    const val SELECT_LANGUAGE_POS = "select_language_pos"
+    const val ISFROMCHANGELANGUAGE = "is_from_change_language"
 
     const val ADD_DEPENDENT_SUCCESS = "add_dependent_success"
 

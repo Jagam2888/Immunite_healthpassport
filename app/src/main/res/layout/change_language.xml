@@ -9,8 +9,8 @@
         android:id="@+id/layout_english"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="20dp"
-        android:paddingBottom="20dp">
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp">
         <androidx.appcompat.widget.AppCompatCheckBox
             android:id="@+id/english_checkbox"
             android:layout_width="wrap_content"
@@ -34,15 +34,15 @@
         android:layout_height="1dp"
         android:background="@color/gray"
         android:layout_marginTop="10dp"
-        android:paddingRight="30dp"
-        android:paddingLeft="30dp"/>
+        android:paddingRight="10dp"
+        android:paddingLeft="10dp"/>
 
     <RelativeLayout
         android:id="@+id/layout_malay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="20dp"
-        android:paddingBottom="20dp">
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp">
         <androidx.appcompat.widget.AppCompatCheckBox
             android:id="@+id/malay_checkbox"
             android:layout_width="wrap_content"
@@ -65,7 +65,7 @@
         android:layout_height="1dp"
         android:background="@color/gray"
         android:layout_marginTop="10dp"
-        android:paddingRight="30dp"
-        android:paddingLeft="30dp"/>
+        android:paddingRight="10dp"
+        android:paddingLeft="10dp"/>
 
 </LinearLayout>

@@ -52,6 +52,7 @@ private val layouts:List<Dashboard>,
         val txtNationality = view.findViewById<TextView>(R.id.txt_nationality)
         val txtIdNo = view.findViewById<TextView>(R.id.txt_id_no)
         val txtNoData = view.findViewById<TextView>(R.id.txt_nodata)
+        //val txtNoDataVaccine = view.findViewById<TextView>(R.id.txt_nodata_vaccine)
         val profilePic = view.findViewById<CircleImageView>(R.id.img_profile)
         val radioGroup = view.findViewById<RadioGroup>(R.id.dashboard_radio_group)
 
@@ -92,23 +93,27 @@ private val layouts:List<Dashboard>,
                 it.layoutManager = LinearLayoutManager(context)
                 it.adapter = HomeVaccineListAdapter(layouts[position].data!!)
             }
-            if (txtNoData.visibility == View.VISIBLE)
+            if (txtNoData.visibility == View.VISIBLE) {
                 txtNoData.visibility = View.GONE
+            }
         }else{
-            if (txtNoData.visibility == View.GONE)
+            if (txtNoData.visibility == View.GONE) {
                 txtNoData.visibility = View.VISIBLE
+            }
         }
         if (!layouts[position].dataTest.isNullOrEmpty()) {
             recyclerViewTest.also {
                 it.layoutManager = LinearLayoutManager(context)
                 it.adapter = HomeTestListAdapter(layouts[position].dataTest!!)
             }
-            if (txtNoData.visibility == View.VISIBLE)
+            /*if (txtNoData.visibility == View.VISIBLE) {
                 txtNoData.visibility = View.GONE
-        }else{
-            if (txtNoData.visibility == View.GONE)
+            }*/
+        }/*else{
+            if (txtNoData.visibility == View.GONE) {
                 txtNoData.visibility = View.VISIBLE
-        }
+            }
+        }*/
 
         recyclerViewTest.addOnItemTouchListener(RecyclerViewTouchListener(context,recyclerViewTest,object :RecyclerViewTouchListener.ClickListener{
             override fun onClick(view: View?, pos: Int) {
@@ -131,12 +136,22 @@ private val layouts:List<Dashboard>,
                         recyclerViewTest.visibility = View.GONE
                         recyclerViewVaccine.visibility = View.VISIBLE
                     }
+                    if (layouts[position].data.isNullOrEmpty()){
+                        txtNoData.visibility = View.VISIBLE
+                    }else{
+                        txtNoData.visibility = View.GONE
+                    }
                     return@setOnCheckedChangeListener
                 }
                 R.id.radio_test ->{
                     if (recyclerViewTest.visibility == View.GONE){
                         recyclerViewVaccine.visibility = View.GONE
                         recyclerViewTest.visibility = View.VISIBLE
+                    }
+                    if (layouts[position].dataTest.isNullOrEmpty()){
+                        txtNoData.visibility = View.VISIBLE
+                    }else{
+                        txtNoData.visibility = View.GONE
                     }
                     return@setOnCheckedChangeListener
                 }
