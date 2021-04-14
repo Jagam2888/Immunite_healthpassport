@@ -5,8 +5,8 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.cmg.vaccine.R
+import com.cmg.vaccine.database.Notification
 import com.cmg.vaccine.databinding.NotificationListItemBinding
-import com.cmg.vaccine.model.response.Notification
 
 class NotificationListAdapter(
     private val notificationList:List<Notification>

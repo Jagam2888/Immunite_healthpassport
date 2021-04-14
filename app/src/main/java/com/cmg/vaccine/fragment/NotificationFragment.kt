@@ -37,7 +37,7 @@ class NotificationFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(NotificationViewModel::class.java)
+        //viewModel = ViewModelProvider(this).get(NotificationViewModel::class.java)
 
         val notification = Notification()
         notification.msg = "Your next Covid-19 dose is due in 2 weeks!"
@@ -55,7 +55,7 @@ class NotificationFragment : Fragment() {
         notification3.msg = "Your Covid-19 Vaccination 1st Dose is complete!"
         notification3.status = false
 
-
+/*
         list = listOf(notification,notification1,notification2,notification3)
 
         viewModel.setNotificationList(list!!)
@@ -82,7 +82,7 @@ class NotificationFragment : Fragment() {
 
             override fun onLongClick(view: View?, position: Int) {
             }
-        }))
+        }))*/
 
     }
 

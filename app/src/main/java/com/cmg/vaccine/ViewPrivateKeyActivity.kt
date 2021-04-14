@@ -45,6 +45,7 @@ class ViewPrivateKeyActivity : BaseActivity(),KodeinAware,SimpleListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        window.setFlags(WindowManager.LayoutParams.FLAG_SECURE,WindowManager.LayoutParams.FLAG_SECURE)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_view_private_key)
         viewModel = ViewModelProvider(this, factory).get(HomeViewModel::class.java)
         binding.viewmodel = viewModel

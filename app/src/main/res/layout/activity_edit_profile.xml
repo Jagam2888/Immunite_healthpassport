@@ -244,7 +244,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/edittext_background"
+                    android:background="@drawable/edittext_disable_background"
                     android:layout_marginTop="5dp">
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/btn_dob_calender"
@@ -274,7 +274,8 @@
                         android:paddingTop="10dp"
                         android:imeOptions="actionNext"
                         android:layout_toLeftOf="@id/btn_dob_calender"
-                        android:layout_marginRight="20dp" />
+                        android:layout_marginRight="20dp"
+                        android:focusable="false"/>
 
                 </RelativeLayout>
 

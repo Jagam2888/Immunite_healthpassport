@@ -7,12 +7,13 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.cmg.vaccine.R
 import com.cmg.vaccine.database.Vaccine
+import com.cmg.vaccine.database.VaccineReport
 import com.cmg.vaccine.databinding.DashboardListItemBinding
 import com.cmg.vaccine.model.DashboardVaccineData
 import com.cmg.vaccine.model.response.VaccineListResponseData
 
 class HomeVaccineListAdapter(
-        private val list:List<Vaccine>
+        private val list:List<VaccineReport>
 ):RecyclerView.Adapter<HomeVaccineListAdapter.MyViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = MyViewHolder(

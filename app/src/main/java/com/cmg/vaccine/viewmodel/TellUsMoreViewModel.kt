@@ -231,7 +231,7 @@ class TellUsMoreViewModel(
                             repositary.insertUser(userData)
                             listener?.onSuccess(response.Message)
                         }else{
-                            listener?.onFailure(response.Message)
+                            listener?.onFailure("2"+response.Message)
                         }
                     } catch (e: APIException) {
                         listener?.onFailure("2"+e.message!!)

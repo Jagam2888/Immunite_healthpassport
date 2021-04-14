@@ -11,8 +11,14 @@ import android.provider.Settings.Global.getString
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat.getSystemService
+import androidx.lifecycle.ViewModelProvider
 import com.cmg.vaccine.NotificationDetailActivity
 import com.cmg.vaccine.R
+import com.cmg.vaccine.database.AppDatabase
+import com.cmg.vaccine.database.Notification
+import com.cmg.vaccine.repositary.NotificationRepositary
+import com.cmg.vaccine.viewmodel.HomeViewModel
+import java.lang.Exception
 
 
 class NotificationService(
@@ -26,7 +32,28 @@ class NotificationService(
 
     var pendingIntent:PendingIntent?=null
 
+    val database = AppDatabase(context)
+    var notificationMessage:String?=null
+
     fun createNotificationChannel(msg:String){
+        try{
+            notificationMessage = msg
+            val msgArray = msg.split("|")
+            if (msgArray.size > 3){
+                notificationMessage = msgArray[0]
+
+                val notification = Notification(
+                    msgArray[1],
+                    msgArray[0],
+                    msgArray[2],
+                    msgArray[3],
+                    0
+                )
+                database.getDao().insertNotificationMessage(notification)
+            }
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val name = context.resources.getString(R.string.channel_name)
             val descriptionText = context.resources.getString(R.string.channel_description)
@@ -46,7 +73,7 @@ class NotificationService(
         var builder = NotificationCompat.Builder(context, CHANNEL_ID)
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle(context.resources.getString(R.string.app_name))
-                .setContentText(msg)
+                .setContentText(notificationMessage)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setContentIntent(pendingIntent).setAutoCancel(true)
 

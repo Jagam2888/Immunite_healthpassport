@@ -113,7 +113,7 @@ class EditProfileActivity : BaseActivity(),KodeinAware,SimpleListener,SlideDateP
             showDatePickerDialog(binding.edtDob)
         }*/
 
-        binding.btnDobCalender.setOnSingleClickListener{
+        /*binding.btnDobCalender.setOnSingleClickListener{
             hideKeyBoard()
             isDOBPicker = true
             showSliderDatePickerDialog("DOB",supportFragmentManager,
@@ -138,7 +138,7 @@ class EditProfileActivity : BaseActivity(),KodeinAware,SimpleListener,SlideDateP
                     binding.edtDob.error = null
                 }
             }
-        })
+        })*/
 
         binding.btnDateCalender.setOnSingleClickListener{
             hideKeyBoard()

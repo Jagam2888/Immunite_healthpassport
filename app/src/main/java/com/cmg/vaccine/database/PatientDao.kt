@@ -125,6 +125,18 @@ interface PatientDao {
     fun deleteAllTestReport():Int
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertVaccineReport(vaccineReport: VaccineReport):Long
+
+    @Query("SELECT * FROM VaccineReport WHERE privateKey = :privateKey ORDER BY id DESC")
+    fun getVaccineReportList(privateKey:String):List<VaccineReport>
+
+    @Query("SELECT * FROM VaccineReport WHERE id = :id")
+    fun getVaccineReport(id: Int):VaccineReport
+
+    @Query("DELETE FROM VaccineReport")
+    fun deleteAllVaccineReport():Int
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAddWorldEntry(addWorldEntries: AddWorldEntries):Long
 
     /*@Query("SELECT * FROM AddWorldEntries")
@@ -251,4 +263,18 @@ interface PatientDao {
     @Query("DELETE FROM ObservationStatus")
     fun deleteAllObservationStatus()
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertNotificationMessage(notification: Notification):Long
+
+    @Query("SELECT * FROM Notification WHERE notificationGroup =:group")
+    fun getNotificationMsgByGroup(group:String):List<Notification>
+
+    @Query("SELECT COUNT(isRead) FROM Notification WHERE isRead =0 AND notificationGroup =:group")
+    fun getUnreadNotificationCount(group: String):Int
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertScanAirportEntry(scanAirportEntry: ScanAirportEntry):Long
+
+    @Query("UPDATE Notification SET isRead=1 WHERE id =:id")
+    fun updateNotificationReadStatus(id: Int)
 }

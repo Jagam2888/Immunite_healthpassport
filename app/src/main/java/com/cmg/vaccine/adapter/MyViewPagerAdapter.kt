@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.PagerAdapter
 import com.blongho.country_data.World
+import com.cmg.vaccine.ImmunizationDetailActivity
 import com.cmg.vaccine.R
 import com.cmg.vaccine.TestReportDetailActivity
 import com.cmg.vaccine.ViewPrivateKeyActivity
@@ -121,6 +122,19 @@ private val layouts:List<Dashboard>,
                 val value:String = gson.toJson(layouts[position].dataTest?.get(pos))
                 Intent(context,TestReportDetailActivity::class.java).also {
                     it.putExtra(Passparams.TEST_REPORT_ID,value)
+                    context.startActivity(it)
+                }
+            }
+
+            override fun onLongClick(view: View?, position: Int) {
+            }
+        }))
+
+        recyclerViewVaccine.addOnItemTouchListener(RecyclerViewTouchListener(context,recyclerViewVaccine,object :RecyclerViewTouchListener.ClickListener{
+            override fun onClick(view: View?, pos: Int) {
+
+                Intent(context,ImmunizationDetailActivity::class.java).also {
+                    it.putExtra(Passparams.VACCINE_REPORT_ID,layouts[position].data?.get(pos)?.id)
                     context.startActivity(it)
                 }
             }

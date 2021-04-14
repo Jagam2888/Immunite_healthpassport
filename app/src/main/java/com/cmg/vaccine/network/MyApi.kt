@@ -88,8 +88,11 @@ interface MyApi {
     @POST(Passparams.IMMUNIZATION_HISTORY)
     suspend fun immunizationHistory(@Part file:MultipartBody.Part,@Part("form") immunizationHistoryReq: ImmunizationHistoryReq):Response<ImmunizationHistoryResponse>
 
-    @GET(Passparams.GET_VACCINE_TEST_REF)
+    @GET(Passparams.GET_TEST_REPORT_LIST)
     suspend fun getVaccineTestRef(@Query("privateKey")privateKey:String):Response<ResponseBody>
+
+    @GET(Passparams.GET_VACCINE_REPORT_LIST)
+    suspend fun getVaccineReport(@Query("privateKey")privateKey:String):Response<ResponseBody>
 
     @POST(Passparams.UPDATE_UUID)
     suspend fun updateUUID(@Query("subsId")subId:String,@Query("uuid") uuid:String):Response<UpdateUUIDResponse>

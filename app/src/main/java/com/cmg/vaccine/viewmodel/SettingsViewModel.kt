@@ -55,6 +55,7 @@ class SettingsViewModel(
         listener?.onStarted()
         repositary.deleteVaccine()
         repositary.deleteTestReport()
+        repositary.deleteAllVaccineReport()
         repositary.deleteWorldEntryCountries()
         repositary.deleteAllAirportCities()
         repositary.deleteAllWorldEntryRuleByCountry()
@@ -75,7 +76,8 @@ class SettingsViewModel(
         getAllWorldEntryCountryRules()
         getWorldEntryCountries()
         getAllAirportCities()
-        getVaccineCall()
+        getTestReportCall()
+        getVaccineReportCall()
 
 
     }
@@ -154,7 +156,24 @@ class SettingsViewModel(
         }
     }
 
-    private fun getVaccineCall(){
+    private fun getVaccineReportCall(){
+        getVaccineReport(repositary.getPrivateKey()!!)
+        //getVaccineTestRef("F41B6149C0FC42E41390427A0CB82FA5A91A15A9C928BAB4C6986D81C9585323","Prinicipal")
+
+        val dependent = repositary.getAllDependent()
+
+        if (!dependent.isNullOrEmpty()){
+            dependent.forEach {
+                if (!it.privateKey.isNullOrEmpty()){
+                    getVaccineReport(it.privateKey!!)
+                    //getVaccineTestRef("5B9137D189F408B754C75E84F3C60FA92FE098173D60D6516D1233EC672A6475","Dependent ${it.firstName}")
+                }
+            }
+        }
+
+    }
+
+    private fun getTestReportCall(){
        getVaccineTestRef(repositary.getPrivateKey()!!,"Prinicipal")
         //getVaccineTestRef("F41B6149C0FC42E41390427A0CB82FA5A91A15A9C928BAB4C6986D81C9585323","Prinicipal")
 
@@ -340,8 +359,144 @@ class SettingsViewModel(
         }
     }
 
-    private fun getVaccineTestRef(privateKey:String,user:String){
+    private fun getVaccineReport(privateKey: String){
+        var vaccineDisplayName = ""
+        var vaccineDisplayDate= ""
+        var vaccineCode= ""
+        var vaccineLocation= ""
+        var status= ""
+        var manufactureName= ""
+        var lotNo= ""
+        var expiryDate= ""
+        var performerName= ""
+        var qualificationId= ""
+        var qualificationIssuerName= ""
+        Couritnes.main {
+            try {
+                val response = repositary.getVaccineReportFromApi(privateKey)
+                if (response != null){
+                    val jsonParent = JSONObject(response.string())
+                    if (jsonParent.has("data")){
+                        val jsonParentData = jsonParent.getJSONObject("data")
+                        if (jsonParentData.has("data")){
+                            val jsonChildData = jsonParentData.getJSONArray("data")
+                            if (jsonChildData.length() > 0){
+                                for (i in 0 until jsonChildData.length()){
+                                    vaccineDisplayName = ""
+                                    vaccineDisplayDate= ""
+                                    vaccineCode= ""
+                                    vaccineLocation= ""
+                                    status= ""
+                                    manufactureName= ""
+                                    lotNo= ""
+                                    expiryDate= ""
+                                    performerName= ""
+                                    qualificationId= ""
+                                    qualificationIssuerName= ""
 
+                                    val jsonChildDataIndex = jsonChildData.getJSONObject(i)
+                                    if (jsonChildDataIndex.has("expirationDate")){
+                                        expiryDate = jsonChildDataIndex.getString("expirationDate")
+                                    }
+                                    if (jsonChildDataIndex.has("vaccineCode")) {
+                                        val vaccineCodeJson =
+                                            jsonChildDataIndex.getJSONObject("vaccineCode")
+                                        vaccineCode = vaccineCodeJson.getString("coding")
+                                        vaccineDisplayName = vaccineCodeJson.getString("text")
+                                    }
+
+                                    if (jsonChildDataIndex.has("occurrenceDateTime")){
+                                        vaccineDisplayDate = jsonChildDataIndex.getString("occurrenceDateTime")
+                                    }
+
+                                    if (jsonChildDataIndex.has("location")){
+                                        val locationJson = jsonChildDataIndex.getJSONObject("location")
+                                        vaccineLocation = locationJson.getString("text")
+                                    }
+
+                                    if (jsonChildDataIndex.has("status")){
+                                        status = jsonChildDataIndex.getString("status")
+                                    }
+
+                                    if (jsonChildDataIndex.has("manufacturer")){
+                                        val manufacturerJson = jsonChildDataIndex.getJSONObject("manufacturer")
+                                        if (manufacturerJson.has("name")){
+                                            manufactureName = manufacturerJson.getString("name")
+                                        }
+                                    }
+
+                                    if (jsonChildDataIndex.has("lotNumber")){
+                                        lotNo = jsonChildDataIndex.getString("lotNumber")
+                                    }
+
+                                    if (jsonChildDataIndex.has("performer")){
+                                        val performerParentJson = jsonChildDataIndex.getJSONArray("performer")
+                                        val performerParentJsonIndex = performerParentJson.getJSONObject(0)
+                                        val actorJson = performerParentJsonIndex.getJSONObject("actor")
+                                        val performerJson = actorJson.getJSONObject("performer")
+                                        val nameJson = performerJson.getJSONArray("name")
+                                        val nameJsonIndex = nameJson.getJSONObject(0)
+                                        performerName = nameJsonIndex.getString("text")
+
+                                        val qualificationJson = performerJson.getJSONArray("qualification")
+                                        val qualificationJsonIndex = qualificationJson.getJSONObject(0)
+                                        qualificationId = qualificationJsonIndex.getString("identifier")
+                                        qualificationIssuerName = qualificationJsonIndex.getString("issuer")
+                                    }
+
+                                    val vaccineReport = VaccineReport(
+                                        vaccineDisplayName,
+                                        vaccineDisplayDate,
+                                        vaccineCode,
+                                        vaccineLocation,
+                                        status,
+                                        manufactureName,
+                                        lotNo,
+                                        expiryDate,
+                                        performerName,
+                                        qualificationId,
+                                        qualificationIssuerName,
+                                        privateKey
+                                    )
+                                    repositary.insertVaccineReport(vaccineReport)
+                                }
+                            }
+                        }
+                    }
+                }
+            }catch (e:APIException){
+                listener?.onShowToast(e.message!!)
+            }catch (e:NoInternetException){
+                listener?.onFailure("3"+e.message!!)
+            }catch (e:Exception){
+                listener?.onShowToast(e.message!!)
+            }
+        }
+    }
+
+    private fun getVaccineTestRef(privateKey:String,user:String){
+        var sampleCollectedDate = ""
+        var sampleCollectedTime = "00:00:00"
+        var testCode = ""
+        var qualificationIdentifier = ""
+        var qualificationIssuerName = ""
+        var phone = ""
+        var workAddress = ""
+        var performerName = ""
+        var type = ""
+        var testBy = ""
+        var takenBy = ""
+        var displayName = ""
+        var specimenCode = ""
+        var specimenName = ""
+        var dateSampleCollected = ""
+        var dateSampleReceived = ""
+        var issueDate = ""
+        var statusFinalized = ""
+        var testCodeName = ""
+        var observationCode = ""
+        var observationResult = ""
+        var recordId = ""
         Couritnes.main {
             try {
                 val response = repositary.getVaccineTestRef(privateKey)
@@ -351,28 +506,28 @@ class SettingsViewModel(
                     val jsonBodyData = jsonBodayDataObject.getJSONArray("data")
                     if (jsonBodyData.length() > 0) {
                         for (i in 0 until jsonBodyData.length()) {
-                            var sampleCollectedDate = ""
-                            var sampleCollectedTime = "00:00:00"
-                            var testCode = ""
-                            var qualificationIdentifier = ""
-                            var qualificationIssuerName = ""
-                            var phone = ""
-                            var workAddress = ""
-                            var performerName = ""
-                            var type = ""
-                            var testBy = ""
-                            var takenBy = ""
-                            var displayName = ""
-                            var specimenCode = ""
-                            var specimenName = ""
-                            var dateSampleCollected = ""
-                            var dateSampleReceived = ""
-                            var issueDate = ""
-                            var statusFinalized = ""
-                            var testCodeName = ""
-                            var observationCode = ""
-                            var observationResult = ""
-                            var recordId = ""
+                            sampleCollectedDate = ""
+                            sampleCollectedTime = "00:00:00"
+                            testCode = ""
+                            qualificationIdentifier = ""
+                            qualificationIssuerName = ""
+                            phone = ""
+                            workAddress = ""
+                            performerName = ""
+                            type = ""
+                            testBy = ""
+                            takenBy = ""
+                            displayName = ""
+                            specimenCode = ""
+                            specimenName = ""
+                            dateSampleCollected = ""
+                            dateSampleReceived = ""
+                            issueDate = ""
+                            statusFinalized = ""
+                            testCodeName = ""
+                            observationCode = ""
+                            observationResult = ""
+                            recordId = ""
 
                             val jsonArrayBody = jsonBodyData.getJSONObject(i)
                             if ((jsonArrayBody.has("specimen")) and (jsonArrayBody.has("observation"))) {

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import com.cmg.vaccine.databinding.ActivityNotificationGroupListBinding
+import com.cmg.vaccine.util.Passparams
 
 class NotificationGroupListActivity : BaseActivity() {
 
@@ -20,18 +21,27 @@ class NotificationGroupListActivity : BaseActivity() {
 
         binding.layoutNewsUpdate.setOnClickListener {
             Intent(this,NewsUpdateActivity::class.java).also {
+                it.putExtra(Passparams.NOTIFICATION_FROM,Passparams.NEWS_UPDATE)
                 startActivity(it)
             }
         }
 
         binding.layoutAdvisoryAlert.setOnClickListener {
-            Intent(this,AdvisoryAlertActivity::class.java).also {
+            /*Intent(this,AdvisoryAlertActivity::class.java).also {
+                startActivity(it)
+            }*/
+            Intent(this,NewsUpdateActivity::class.java).also {
+                it.putExtra(Passparams.NOTIFICATION_FROM,Passparams.ADVISARY_ALERT)
                 startActivity(it)
             }
         }
 
         binding.layoutRegulatoryUpdate.setOnClickListener {
-            Intent(this,RegulatoryUpdateActivity::class.java).also {
+           /* Intent(this,RegulatoryUpdateActivity::class.java).also {
+                startActivity(it)
+            }*/
+            Intent(this,NewsUpdateActivity::class.java).also {
+                it.putExtra(Passparams.NOTIFICATION_FROM,Passparams.REGULATORY_UPDATE)
                 startActivity(it)
             }
         }

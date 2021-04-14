@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.cmg.vaccine.database.TestReport
 import com.cmg.vaccine.database.Vaccine
+import com.cmg.vaccine.database.VaccineReport
 import com.cmg.vaccine.listener.SimpleListener
 import com.cmg.vaccine.model.Dashboard
 import com.cmg.vaccine.model.DashboardTestData
@@ -77,6 +78,10 @@ class HomeViewModel(
     var _testReportList:MutableLiveData<List<TestReport>> = MutableLiveData()
     val testReportList:LiveData<List<TestReport>>
         get() = _testReportList
+
+    var _vaccineReportList:MutableLiveData<List<VaccineReport>> = MutableLiveData()
+    val vaccineReportList:LiveData<List<VaccineReport>>
+        get() = _vaccineReportList
 
     //for showing in qrcode screen
     var _userName:MutableLiveData<String> = MutableLiveData()
@@ -333,6 +338,14 @@ class HomeViewModel(
         return tempTestReportList
     }
 
+    private fun getVaccineReportList(privateKey: String):List<VaccineReport>{
+        var tempVaccineReportList = repositary.getVaccineReportList(privateKey)
+        if (tempVaccineReportList.isNotEmpty()){
+            _vaccineReportList.value = tempVaccineReportList
+        }
+        return tempVaccineReportList
+    }
+
     fun loadData() {
         val userData = repositary.getUserData()
 
@@ -348,10 +361,11 @@ class HomeViewModel(
         dashBoard.idNo = userData.patientIdNo
         dashBoard.privateKey = userData.privateKey
         dashBoard.nationality = userData.nationality
-        dashBoard.data = vaccineList.value
+
         //dashBoard.dataTest = testReportList.value
         if (!userData.privateKey.isNullOrEmpty()) {
             dashBoard.dataTest = getTestReportList(userData.privateKey!!)
+            dashBoard.data = getVaccineReportList(userData.privateKey!!)
         }
         dashBoard.relationShip = Passparams.PARENT
         dashBoard.subId = userData.parentSubscriberId
@@ -373,6 +387,7 @@ class HomeViewModel(
                 //dashboard1.dataTest = testReportList.value
                 if (!dependent.privateKey.isNullOrEmpty()) {
                     dashboard1.dataTest = getTestReportList(dependent.privateKey!!)
+                    dashBoard.data = getVaccineReportList(dependent.privateKey!!)
                 }
                 dashboard1.subId = dependent.subsId
                 dashboard1.dob = dependent.dob

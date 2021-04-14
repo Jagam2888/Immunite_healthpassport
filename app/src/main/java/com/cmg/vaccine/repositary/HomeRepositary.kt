@@ -97,6 +97,10 @@ class HomeRepositary(
         return database.getDao().getTestReportList(privateKey)
     }
 
+    fun getVaccineReportList(privateKey: String):List<VaccineReport>{
+        return database.getDao().getVaccineReportList(privateKey)
+    }
+
     fun getDependentPrivateKey(subId: String):String?{
         return database.getDao().getDependentPrivateKey(subId)
     }

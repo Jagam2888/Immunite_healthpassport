@@ -73,6 +73,20 @@ class SettingsRepositary(
         }
     }
 
+    suspend fun getVaccineReportFromApi(privateKey: String):ResponseBody{
+        return apiRequest {
+            api.getVaccineReport(privateKey)
+        }
+    }
+
+    fun insertVaccineReport(vaccineReport: VaccineReport){
+        database.getDao().insertVaccineReport(vaccineReport)
+    }
+
+    fun deleteAllVaccineReport(){
+        database.getDao().deleteAllVaccineReport()
+    }
+
     fun getAllDependent():List<Dependent>{
         return database.getDao().getDependentList(preferenceProvider.getSubId()!!)
     }

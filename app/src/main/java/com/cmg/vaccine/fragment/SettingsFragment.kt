@@ -42,6 +42,7 @@ import kotlinx.android.synthetic.main.change_language.*
 import kotlinx.android.synthetic.main.fragment_settings.*
 import kotlinx.android.synthetic.main.fragment_settings.layout_backup
 import kotlinx.android.synthetic.main.fragment_settings.view.*
+import kotlinx.android.synthetic.main.help.*
 import kotlinx.android.synthetic.main.security_pin.*
 import kotlinx.android.synthetic.main.sync.*
 import org.apache.poi.hssf.usermodel.HSSFWorkbook
@@ -234,6 +235,12 @@ class SettingsFragment : Fragment(),KodeinAware,SimpleListener {
             }
         }
 
+        layout_faq.setOnSingleClickListener{
+            Intent(context,FAQTravelAdvisoryActivity::class.java).also {
+                context?.startActivity(it)
+            }
+        }
+
         changeLanguage()
     }
 
@@ -289,8 +296,8 @@ class SettingsFragment : Fragment(),KodeinAware,SimpleListener {
             val packageInfo = context?.packageManager?.getPackageInfo(context?.packageName!!, 0)
             val versionName = packageInfo?.versionName
             //val version = "Version : $versionName \nDevelopment Server : ${Passparams.URL}"
-            //val version = "Version : $versionName \nDevelopment Server"
-            val version = "Version : $versionName \nStaging Server"
+            val version = "Version : $versionName \nDevelopment Server"
+            //val version = "Version : $versionName \nStaging Server"
             //val version = "Version : $versionName \nProduction Server"
             val alertDialogBuilder = AlertDialog.Builder(requireContext())
             alertDialogBuilder.setMessage(version).setTitle(R.string.app_name)

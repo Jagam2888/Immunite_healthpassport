@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import com.cmg.vaccine.databinding.ActivityTermsOfUseBinding
+import com.cmg.vaccine.util.Passparams
 
 class TermsOfUseActivity : BaseActivity() {
 
@@ -13,7 +14,7 @@ class TermsOfUseActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this,R.layout.activity_terms_of_use)
 
-        binding.webView.loadUrl("http://stapi.immunitee.com:8088/immunitee_tnc.html")
+        binding.webView.loadUrl(Passparams.TERMS_CONDITION_URL)
         val webViewSettings = binding.webView.settings
 
         webViewSettings.javaScriptEnabled = true

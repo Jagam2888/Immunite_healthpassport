@@ -15,6 +15,7 @@ import java.lang.Exception
 class MyFirebaseInstanceIDService():FirebaseMessagingService() {
     //val prefernece:PreferenceProvider = PreferenceProvider(this)
     //val api = MyApi(applicationContext)
+
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         super.onMessageReceived(remoteMessage)
         val notificationService = NotificationService(applicationContext)

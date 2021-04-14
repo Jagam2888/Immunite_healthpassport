@@ -92,6 +92,12 @@ class AppController : Application(),KodeinAware {
         bind() from singleton { CountryListFragmentRepositary(instance(),instance()) }
         bind() from provider { CountryListFragmentViewModelFactory(instance()) }
 
+        bind() from singleton { NotificationRepositary(instance(),instance(),instance()) }
+        bind() from provider { NotificationViewModelFactory(instance()) }
+
+        bind() from singleton { ImmunizationDetailRepositary(instance()) }
+        bind() from provider { ImmunizationDetailViewModelFactory(instance()) }
+
         //bind() from provider { MyFirebaseInstanceIDService(instance()) }
 
     }

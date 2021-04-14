@@ -123,7 +123,7 @@ class EditDependentProfileActivity : BaseActivity(),KodeinAware,SimpleListener,S
         binding.btnDateCalender.setOnClickListener {
             showDatePickerDialogForPassport(binding.edtPassportExpDate)
         }*/
-        binding.btnDobCalender.setOnSingleClickListener{
+        /*binding.btnDobCalender.setOnSingleClickListener{
             hideKeyBoard()
             isDOBPicker = true
             showSliderDatePickerDialog("DOB",supportFragmentManager,
@@ -131,7 +131,7 @@ class EditDependentProfileActivity : BaseActivity(),KodeinAware,SimpleListener,S
                     set(Calendar.YEAR,1900)
                 }, Calendar.getInstance())
             //showDatePickerDialog(binding.edtDob)
-        }
+        }*/
 
         binding.btnDobTimeCalender.setOnSingleClickListener{
             hideKeyBoard()
@@ -174,7 +174,7 @@ class EditDependentProfileActivity : BaseActivity(),KodeinAware,SimpleListener,S
             }
         })
 
-        binding.edtDob.addTextChangedListener(object :TextWatcher{
+        /*binding.edtDob.addTextChangedListener(object :TextWatcher{
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 
@@ -189,7 +189,7 @@ class EditDependentProfileActivity : BaseActivity(),KodeinAware,SimpleListener,S
                     binding.edtDob.error = null
                 }
             }
-        })
+        })*/
 
         binding.edtDobTime.addTextChangedListener(object :TextWatcher{
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {

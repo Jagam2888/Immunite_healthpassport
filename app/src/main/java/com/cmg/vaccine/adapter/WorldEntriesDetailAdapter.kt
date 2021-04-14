@@ -83,10 +83,10 @@ class WorldEntriesDetailAdapter internal constructor(
                 val vaccineArray = expandedListText.split("|")
                 val status:Boolean = vaccineArray[1].toBoolean()
                 if (status) {
-                    Intent(context, ImmunizationDetailActivity::class.java).also {
+                    /*Intent(context, ImmunizationDetailActivity::class.java).also {
                         it.putExtra(Passparams.VACCINE_CODE,vaccineArray[3])
                         context.startActivity(it)
-                    }
+                    }*/
                 }
             }
         }

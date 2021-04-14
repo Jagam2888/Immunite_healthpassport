@@ -2,6 +2,7 @@ package com.cmg.vaccine.model
 
 import com.cmg.vaccine.database.TestReport
 import com.cmg.vaccine.database.Vaccine
+import com.cmg.vaccine.database.VaccineReport
 import com.cmg.vaccine.model.response.TestReportListResponseData
 import com.cmg.vaccine.model.response.VaccineListResponseData
 
@@ -15,6 +16,6 @@ class Dashboard {
     var dob:String?=null
     var profileImg:String?=null
     var subId:String?=null
-    var data:List<Vaccine>?=null
+    var data:List<VaccineReport>?=null
     var dataTest:List<TestReport>?=null
 }

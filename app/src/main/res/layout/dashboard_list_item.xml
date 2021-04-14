@@ -4,7 +4,7 @@
     <data>
         <variable
             name="dashboard"
-            type="com.cmg.vaccine.database.Vaccine" />
+            type="com.cmg.vaccine.database.VaccineReport" />
     </data>
 
     <RelativeLayout
@@ -58,7 +58,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{dashboard.brandName}"
+                        android:text="@{dashboard.vaccineDisplayName}"
                         android:textSize="14sp"
                         android:textColor="@color/black"
                         android:textAppearance="@style/opens_bold" />
@@ -75,7 +75,7 @@
                     android:id="@+id/txt_vaccinedate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Injected on 01/02/2021"
+                    android:text="@{dashboard.vaccineDisplayDate}"
                     android:textColor="@color/white"
                     android:textSize="12sp"
                     android:background="@drawable/home_list_injected_gray"
@@ -86,7 +86,7 @@
                     android:paddingRight="5dp"
                     android:paddingLeft="5dp" />
 
-                <LinearLayout
+                <!--<LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
@@ -104,7 +104,7 @@
                         android:text="@{dashboard.brandName}"
                         android:textColor="@color/gray"
                         android:textSize="12sp" />
-                </LinearLayout>
+                </LinearLayout>-->
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -121,7 +121,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{dashboard.manufacturerName}"
+                        android:text="@{dashboard.manufactureName}"
                         android:textColor="@color/gray"
                         android:textSize="12sp" />
                 </LinearLayout>
@@ -141,15 +141,15 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{dashboard.facilityname}"
+                        android:text="@{dashboard.vaccineLocation}"
                         android:textColor="@color/gray"
                         android:textSize="12sp" />
                 </LinearLayout>
-                <ImageView
+                <!--<ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/certified"
-                    android:layout_marginTop="5dp"/>
+                    android:layout_marginTop="5dp"/>-->
             </LinearLayout>
         </LinearLayout>
 

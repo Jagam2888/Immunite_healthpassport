@@ -4,41 +4,73 @@
     <data>
         <variable
             name="notification"
-            type="com.cmg.vaccine.model.response.Notification" />
+            type="com.cmg.vaccine.database.Notification" />
     </data>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="20dp"
-        android:paddingBottom="20dp"
-        android:paddingLeft="20dp"
-        android:background="@{notification.status ? @color/lite_yellow : @color/white}">
-        <ImageView
-            android:id="@+id/icon"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@{notification.status ? @drawable/new_msg_icon : @drawable/old_msg_icon}"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"/>
-        <ImageView
-            android:id="@+id/arrow"
-            android:layout_width="wrap_content"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/right_arrow"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{notification.msg}"
-            style="@style/opens_regular"
-            android:textColor="@color/black"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="10dp"
-            android:layout_toRightOf="@+id/icon"
-            android:layout_toLeftOf="@+id/arrow"/>
-
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp"
+            android:paddingLeft="20dp"
+            android:background="@{notification.isRead ==0 ? @color/lite_yellow : @color/white}">
+            <ImageView
+                android:id="@+id/icon"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@{notification.isRead ==0 ? @drawable/new_msg_icon : @drawable/old_msg_icon}"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"/>
+            <ImageView
+                android:id="@+id/arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/right_arrow"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"/>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="10dp"
+                android:layout_toRightOf="@+id/icon"
+                android:layout_toLeftOf="@+id/arrow">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{notification.message}"
+                style="@style/opens_regular"
+                android:textColor="@color/black"/>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center_vertical">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/clock_icon_gray" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{notification.date}"
+                        android:textColor="@color/gray"
+                        android:textSize="12sp"
+                        android:textAppearance="@style/opens_regular"
+                        android:layout_marginLeft="5dp"/>
+                </LinearLayout>
+            </LinearLayout>
     </RelativeLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/line_yellow"/>
+    </LinearLayout>
 </layout>
