@@ -67,6 +67,9 @@
 
     <string name="departure_verify">Departure Verification</string>
 
+    <string name="splash_bottom_msg">Secured &#8226; Authentic &#8226; Privacy</string>
+    <string name="splash_digital_auth">Digitally Authenticated and Secured \nHealth Passport</string>
+
     <string name="change_language_success">Language Changed Successfully</string>
 
     <string name="forget_pin"><u>Forget PIN</u></string>
@@ -349,11 +352,11 @@ clinical data and complete your clinical test at Immunitee clinic.
     <string name="time_prefix">&gt;&gt;</string>
     <string name="time_suffix">&lt;&lt;</string>
 
-    <string name="blockchain_title">Authentic, Secure &amp; Resourceful</string>
+    <string name="blockchain_title">Authentic, Secure &amp; \nResourceful</string>
 
-    <string name="blockchain_desc">Secured and safe traveling solution. Intelligent algorithm to measure and qualify your trip. Globally recognized Health Passport. Ensure privacy &amp; confidentiality through blockchain technology.</string>
+    <string name="blockchain_desc">Secured and safe traveling solution.\nIntelligent algorithm to measure and qualify your trip. Globally recognized Health Passport. Ensure privacy &amp; confidentiality through blockchain technology.</string>
 
-    <string name="accessibility_title">Simple &amp; Trusted Verification</string>
+    <string name="accessibility_title">Simple &amp; Trusted \nVerification</string>
     <string name="accessibility_desc">Easy scan and hassle free traveling.</string>
     <string name="booking_title">Online Test Result</string>
     <string name="booking_desc">Access to nearest Immunitee partner clinic and lab networks. Access to secured digital test data. Keep, share and protect your data with Private Key.</string>

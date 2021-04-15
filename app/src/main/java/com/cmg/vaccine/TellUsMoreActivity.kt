@@ -58,7 +58,12 @@ class TellUsMoreActivity : BaseActivity(),KodeinAware,SimpleListener,SlideDatePi
 
         viewModel.getPlaceOfBirthPos()
 
-        binding.layoutNationality.setOnSingleClickListener{
+        binding.ccpNationality.setCountryForNameCode(viewModel.nationalityCountryCode.value?.dropLast(1))
+        binding.ccpNationality.setOnCountryChangeListener {
+            viewModel.nationalityCountryCode.value = getThreeAlpha(binding.ccpNationality.selectedCountryNameCode)
+        }
+
+        /*binding.layoutNationality.setOnSingleClickListener{
             var myDialogFragment= CountryListDialogFragment()
             var data=Bundle()
             data.putString("type","nation")
@@ -66,7 +71,7 @@ class TellUsMoreActivity : BaseActivity(),KodeinAware,SimpleListener,SlideDatePi
             myDialogFragment.arguments=data
             myDialogFragment.show(supportFragmentManager,"Place of Birth")
 
-        }
+        }*/
 
         //viewModel.setPlaceOfBirthToNationality()
 
@@ -109,7 +114,7 @@ class TellUsMoreActivity : BaseActivity(),KodeinAware,SimpleListener,SlideDatePi
 
             override fun afterTextChanged(s: Editable?) {
                 if (!s.toString().isNullOrEmpty()){
-                    if (viewModel.nationalityCountryCode.value.equals("Malaysia",false)) {
+                    if (viewModel.nationalityCountryCode.value.equals("MYS",false)) {
                         if (s?.length!! < 12) {
                             binding.edtIdno.error = "Minimum 12 Character"
                         }

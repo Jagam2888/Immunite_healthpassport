@@ -83,7 +83,12 @@ class SignUpActivity : BaseActivity(),KodeinAware,SimpleListener,SlideDatePicker
             }, Calendar.getInstance())
         }
 
-        binding.layoutPob.setOnSingleClickListener{
+        viewModel.birthPlaceCountryCode.value = getThreeAlpha(binding.ccpPob.selectedCountryNameCode)
+        binding.ccpPob.setOnCountryChangeListener {
+            viewModel.birthPlaceCountryCode.value = getThreeAlpha(binding.ccpPob.selectedCountryNameCode)
+        }
+
+        /*binding.layoutPob.setOnSingleClickListener{
             var myDialogFragment= CountryListDialogFragment()
             var data=Bundle()
             data.putString("type","pob")
@@ -91,7 +96,7 @@ class SignUpActivity : BaseActivity(),KodeinAware,SimpleListener,SlideDatePicker
             myDialogFragment.arguments=data
             myDialogFragment.show(supportFragmentManager,"Place of Birth")
 
-        }
+        }*/
 
         if (checkPermission()) {
             //viewModel.setCurrentCountry(getCurrentCountryName()!!)

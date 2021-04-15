@@ -35,7 +35,11 @@ class NotificationViewModel(
             val count = repositary.getUnReadCount(group)
             if (count != null) {
                 unReadCount.set(count.toString())
+            }else{
+                unReadCount.set("0")
             }
+        }else{
+            unReadCount.set("0")
         }
     }
 

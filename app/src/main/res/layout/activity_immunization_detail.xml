@@ -7,6 +7,7 @@
         <variable
             name="viewmodel"
             type="com.cmg.vaccine.viewmodel.ImmunizationDetailViewModel" />
+        <import type="com.cmg.vaccine.util.ViewUtilsKt"/>
     </data>
 
     <LinearLayout
@@ -44,16 +45,28 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="wrap_content"
             android:background="@color/lite_green"
-            android:paddingRight="20dp"
-            android:paddingLeft="20dp">
+            android:paddingRight="10dp"
+            android:paddingLeft="20dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp">
 
-            <LinearLayout
+            <ImageView
+                android:id="@+id/btn_sucess"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:src="@drawable/success_icon_green"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_centerVertical="true">
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@id/btn_sucess"
+                android:layout_marginRight="5dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -78,12 +91,7 @@
                     android:layout_marginTop="5dp" />
             </LinearLayout>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/success_icon_green"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true" />
+
         </RelativeLayout>
 
         <ScrollView

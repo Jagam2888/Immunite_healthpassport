@@ -91,6 +91,9 @@ interface PatientDao {
     @Query("SELECT * FROM Dependent WHERE subsId =:subId")
     fun getDependent(subId:String):Dependent
 
+    @Query("SELECT * FROM Dependent WHERE privateKey =:privateKey")
+    fun getDependentUsingPrivateKey(privateKey: String):Dependent
+
     @Query("SELECT profileImage FROM Dependent WHERE subsId =:subsId")
     fun getDependentProfileImage(subsId: String):String
 

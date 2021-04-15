@@ -123,13 +123,14 @@ class TellUsMoreViewModel(
         val gson = Gson()
         val type: Type = object : TypeToken<User>() {}.type
         var userData = gson.fromJson<User>(alreadyStored, type)
-        nationalityCountryCode.value = World.getCountryFrom(userData.placeBirth).name
+        //nationalityCountryCode.value = World.getCountryFrom(userData.placeBirth).name
+        nationalityCountryCode.value = userData.placeBirth
         nationalityCountryFlag.value = World.getFlagOf(userData.placeBirth)
         /*val pos = selectedCountryName(userData.placeBirth,countries.value!!)
         selectedItemNationalityCode.set(pos)*/
 
         if (!nationalityCountryCode.value.isNullOrEmpty()){
-            if (nationalityCountryCode.value.equals("Malaysia",false)){
+            if (nationalityCountryCode.value.equals("MYS",false)){
                 patientIdNoCharLength.set(12)
             }else{
                 patientIdNoCharLength.set(15)
@@ -139,7 +140,7 @@ class TellUsMoreViewModel(
 
     fun onRegister(view:View){
         listener?.onStarted()
-        if ((!idNo.value.isNullOrEmpty()) and (nationalityCountryCode.value.equals("Malaysia"))){
+        if ((!idNo.value.isNullOrEmpty()) and (nationalityCountryCode.value.equals("MYS"))){
             if (idNo.value?.length != patientIdNoCharLength.get()){
                 listener?.onShowToast("Your ID Number is invalid")
                 return
@@ -147,14 +148,14 @@ class TellUsMoreViewModel(
         }
             if (isChecked.get()) {
 
-                if (nationalityCountryCode.value.equals("Malaysia")){
+                if (nationalityCountryCode.value.equals("MYS")){
                     if (idNo.value.isNullOrEmpty()){
                         listener?.onShowToast("Malaysian should be enter Your Id number")
                         return
                     }
                 }
 
-                if (!nationalityCountryCode.value.equals("Malaysia")){
+                if (!nationalityCountryCode.value.equals("MYS")){
                     if((passportNo.value.isNullOrEmpty()) and (idNo.value.isNullOrEmpty())) {
                         listener?.onShowToast("Passport Number or Id number either one Mandatory")
                         return
@@ -182,7 +183,7 @@ class TellUsMoreViewModel(
 
                 /*val idTypeList = view.context.resources.getStringArray(R.array.id_type)
                 idType.value = idTypeList[selectedItemIdTYpe.get()]*/
-                if (nationalityCountryCode.value.equals("Malaysia",false)) {
+                if (nationalityCountryCode.value.equals("MYS",false)) {
                     idType.value =
                         identifierTypeListForMYS.value?.get(selectedItemIdTYpe.get())?.identifierCode
                 }else{
@@ -197,7 +198,7 @@ class TellUsMoreViewModel(
                 if (!idNo.value.isNullOrEmpty()) {
                     userData.patientIdType = idType.value!!
                 }
-                userData.nationality = World.getCountryFrom(nationalityCountryCode.value).alpha3
+                userData.nationality = nationalityCountryCode.value!!
 
                 val signUpReq = SignUpReq()
                 var signUpReqData = SignUpReqData()

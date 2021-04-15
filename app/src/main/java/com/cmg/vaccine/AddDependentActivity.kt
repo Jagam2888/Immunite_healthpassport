@@ -7,6 +7,7 @@ import android.os.SystemClock
 import android.text.Editable
 import android.text.TextWatcher
 import android.text.method.LinkMovementMethod
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
@@ -37,15 +38,12 @@ class AddDependentActivity : BaseActivity(),KodeinAware,SimpleListener,SlideDate
     private lateinit var binding:ActivityAddDependentBinding
     private lateinit var viewModel:DependentViewModel
 
-    var lastClickTimeDOB:Long = 0
-    var lastClickTimeDOBTime:Long = 0
-    var lastClickTimeQr:Long = 0
-
     var qrCodeValue = ""
     var isDOBPicker:String = Passparams.DATE_BIRTH
     var isExistingUser:Boolean = false
 
     private val factory:DependentViewModelFactory by instance()
+    var isFirstTimeSelectPOB:Boolean = true
 
 
     companion object{
@@ -70,7 +68,7 @@ class AddDependentActivity : BaseActivity(),KodeinAware,SimpleListener,SlideDate
             }
         }
 
-        binding.layoutNationality.setOnSingleClickListener{
+        /*binding.layoutNationality.setOnSingleClickListener{
             var myDialogFragment= CountryListDialogFragment()
             var data=Bundle()
             data.putString("type","nation")
@@ -78,9 +76,9 @@ class AddDependentActivity : BaseActivity(),KodeinAware,SimpleListener,SlideDate
             myDialogFragment.arguments=data
             myDialogFragment.show(supportFragmentManager,"Place of Birth")
 
-        }
+        }*/
 
-        binding.layoutPob.setOnSingleClickListener{
+        /*binding.layoutPob.setOnSingleClickListener{
             var myDialogFragment= CountryListDialogFragment()
             var data=Bundle()
             data.putString("type","pob")
@@ -88,6 +86,19 @@ class AddDependentActivity : BaseActivity(),KodeinAware,SimpleListener,SlideDate
             myDialogFragment.arguments=data
             myDialogFragment.show(supportFragmentManager,"Place of Birth")
 
+        }*/
+        viewModel.birthPlaceCountryCode.value = getThreeAlpha(binding.ccpPob.selectedCountryNameCode)
+        binding.ccpPob.setOnCountryChangeListener {
+            viewModel.birthPlaceCountryCode.value = getThreeAlpha(binding.ccpPob.selectedCountryNameCode)
+            if (isFirstTimeSelectPOB) {
+                binding.ccpNationality.setCountryForNameCode(binding.ccpPob.selectedCountryNameCode)
+            }
+        }
+
+        viewModel.nationalityCountryCode.value = getThreeAlpha(binding.ccpNationality.selectedCountryNameCode)
+        binding.ccpNationality.setOnCountryChangeListener {
+            isFirstTimeSelectPOB = false
+            viewModel.nationalityCountryCode.value = getThreeAlpha(binding.ccpNationality.selectedCountryNameCode)
         }
 
         if (checkPermission()) {
@@ -296,7 +307,7 @@ class AddDependentActivity : BaseActivity(),KodeinAware,SimpleListener,SlideDate
 
             override fun afterTextChanged(s: Editable?) {
                 if (!s.toString().isNullOrEmpty()){
-                    if (viewModel.nationalityCountryCode.value.equals("Malaysia",false)) {
+                    if (viewModel.nationalityCountryCode.value.equals("MYS",false)) {
                         if (s?.length!! < 12) {
                             binding.edtIdno.error = "Minimum 12 Character"
                         }
@@ -339,10 +350,16 @@ class AddDependentActivity : BaseActivity(),KodeinAware,SimpleListener,SlideDate
             if (!isExistingUser) {
                 viewModel.onClick(it)
             }else{
-                if ((!viewModel.existingUserprivateKey.get().isNullOrEmpty()) and (!binding.edtQrCode.text.isNullOrEmpty())) {
+
+                if ((!binding.edtQrCode.text.isNullOrEmpty()) and (!binding.edtExistingUserDob.text.isNullOrEmpty())) {
+                    if (viewModel.existingUserprivateKey.get().isNullOrEmpty()){
+                        qrCodeValue = binding.edtQrCode.text.toString()
+                        qrCodeValue = qrCodeValue.replace("\\n","\n")
+                        viewModel.existingUserprivateKey.set(decryptQRValue(qrCodeValue,changeDateFormatForPrivateKeyDecrypt(binding.edtExistingUserDob.text.toString())!!))
+                    }
                     viewModel.getDependentInfo(it)
                 }else{
-                    toast("Please Enter or Scan Your Private key")
+                    showAlertDialog(resources.getString(R.string.failed),"Please Enter or Scan Your Private key or Enter DOB",false,supportFragmentManager)
                 }
             }
         }

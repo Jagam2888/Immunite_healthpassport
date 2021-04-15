@@ -267,6 +267,8 @@ class SettingsFragment : Fragment(),KodeinAware,SimpleListener {
             binding.sync.visibility = View.GONE
         }else if (binding.backup.visibility == View.VISIBLE){
             binding.backup.visibility = View.GONE
+        }else if (binding.changeLanguage.visibility == View.VISIBLE){
+            binding.changeLanguage.visibility = View.GONE
         }
 
         binding.mainLayout.visibility = View.VISIBLE
@@ -296,8 +298,8 @@ class SettingsFragment : Fragment(),KodeinAware,SimpleListener {
             val packageInfo = context?.packageManager?.getPackageInfo(context?.packageName!!, 0)
             val versionName = packageInfo?.versionName
             //val version = "Version : $versionName \nDevelopment Server : ${Passparams.URL}"
-            val version = "Version : $versionName \nDevelopment Server"
-            //val version = "Version : $versionName \nStaging Server"
+            //val version = "Version : $versionName \nDevelopment Server"
+            val version = "Version : $versionName \nStaging Server"
             //val version = "Version : $versionName \nProduction Server"
             val alertDialogBuilder = AlertDialog.Builder(requireContext())
             alertDialogBuilder.setMessage(version).setTitle(R.string.app_name)

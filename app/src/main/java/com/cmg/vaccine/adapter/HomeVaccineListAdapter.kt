@@ -11,6 +11,7 @@ import com.cmg.vaccine.database.VaccineReport
 import com.cmg.vaccine.databinding.DashboardListItemBinding
 import com.cmg.vaccine.model.DashboardVaccineData
 import com.cmg.vaccine.model.response.VaccineListResponseData
+import com.cmg.vaccine.util.changeDateFormatForVaccine
 
 class HomeVaccineListAdapter(
         private val list:List<VaccineReport>
@@ -34,6 +35,9 @@ class HomeVaccineListAdapter(
             holder.dashboardListItemBinding.txtVaccinedate.setBackgroundResource(R.drawable.home_list_injected_green)
 
         }
+        /*if (!list[position].vaccineDisplayDate.isNullOrEmpty()) {
+            holder.dashboardListItemBinding.txtVaccinedate.text = changeDateFormatForVaccine(list[position].vaccineDisplayDate!!)
+        }*/
     }
 
     override fun getItemCount() = list.size

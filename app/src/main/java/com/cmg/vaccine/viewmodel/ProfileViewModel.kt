@@ -225,8 +225,11 @@ class ProfileViewModel(
                 selectedItemIdTYpe.set(selectedIdType(user.patientIdType!!, identifierTypeList.value!!))
             }
 
-            nationalityCountryCode.value = World.getCountryFrom(user?.nationality).name
-            birthPlaceCountryCode.value = World.getCountryFrom(user?.placeBirth).name
+            /*nationalityCountryCode.value = World.getCountryFrom(user?.nationality).name
+            birthPlaceCountryCode.value = World.getCountryFrom(user?.placeBirth).name*/
+
+            nationalityCountryCode.value = user?.nationality
+            birthPlaceCountryCode.value = user?.placeBirth
 
             nationalityCountryFlag.value = World.getCountryFrom(user?.nationality).flagResource
             birthPlaceCountryFlag.value = World.getCountryFrom(user?.placeBirth).flagResource
@@ -256,7 +259,7 @@ class ProfileViewModel(
 
 
             if (!nationalityCountryCode.value.isNullOrEmpty()){
-                if (nationalityCountryCode.value.equals("Malaysia",false)){
+                if (nationalityCountryCode.value.equals("MYS",false)){
                     patientIdNoCharLength.set(12)
                 }else{
                     patientIdNoCharLength.set(15)
@@ -353,7 +356,7 @@ class ProfileViewModel(
 
     fun onClick(view:View){
         listener?.onStarted()
-        if ((!idNo.value.isNullOrEmpty()) and (nationalityCountryCode.value.equals("Malaysia"))){
+        if ((!idNo.value.isNullOrEmpty()) and (nationalityCountryCode.value.equals("MYS"))){
             if (idNo.value?.length != patientIdNoCharLength.get()){
                 listener?.onFailure("2Your ID Number is invalid")
                 return
@@ -376,7 +379,7 @@ class ProfileViewModel(
         /*val idTypeList =
                 view.context.resources.getStringArray(R.array.id_type)
         idType.value = idTypeList[selectedItemIdTYpe.get()]*/
-        if (nationalityCountryCode.value.equals("Malaysia",false)) {
+        if (nationalityCountryCode.value.equals("MYS",false)) {
             idType.value =
                 identifierTypeListForMYS.value?.get(selectedItemIdTYpe.get())?.identifierCode
         }else{
@@ -398,14 +401,14 @@ class ProfileViewModel(
                         if (isAllow) {
                             if (email1.value.equals(reTypeEmail.value)) {
 
-                                if (nationalityCountryCode.value.equals("Malaysia")) {
+                                if (nationalityCountryCode.value.equals("MYS")) {
                                     if (idNo.value.isNullOrEmpty()) {
                                         listener?.onShowToast("Malaysian should be enter Your Id number")
                                         return
                                     }
                                 }
 
-                                if (!nationalityCountryCode.value.equals("Malaysia")) {
+                                if (!nationalityCountryCode.value.equals("MYS")) {
                                     if ((passportNumber.value.isNullOrEmpty()) and (idNo.value.isNullOrEmpty())) {
                                         listener?.onShowToast("Passport Number or Id number either one Mandatory")
                                         return
@@ -430,7 +433,7 @@ class ProfileViewModel(
 
                                                 updateProfileReqData.firstName = firstName.value
                                                 updateProfileReqData.nationalityCountry =
-                                                    World.getCountryFrom(nationalityCountryCode.value).alpha3
+                                                    nationalityCountryCode.value
                                                 updateProfileReqData.dob =
                                                     dob.value + " " + dobTime.value + ":00"
                                                 updateProfileReqData.subsId =
@@ -445,7 +448,7 @@ class ProfileViewModel(
                                                     updateProfileReqData.idType = idType.value
                                                 }
                                                 updateProfileReqData.placeOfBirth =
-                                                    World.getCountryFrom(birthPlaceCountryCode.value).alpha3
+                                                    birthPlaceCountryCode.value
                                                 updateProfileReqData.countryCode =
                                                     selectedItemContactCode.get()!!
                                                 updateProfileReqData.email = email1.value

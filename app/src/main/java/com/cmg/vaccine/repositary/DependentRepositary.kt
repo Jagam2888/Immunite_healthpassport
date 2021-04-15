@@ -42,6 +42,10 @@ class DependentRepositary(
         return database.getDao().getDependent(subsId)
     }
 
+    fun getDependentUsingPrivateKey(privateKey: String):Dependent{
+        return database.getDao().getDependentUsingPrivateKey(privateKey)
+    }
+
     fun updateDependent(dependent: Dependent):Int{
         return database.getDao().updateDependent(dependent)
     }

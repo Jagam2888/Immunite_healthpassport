@@ -53,6 +53,12 @@
         <item name="android:foreground">?attr/selectableItemBackground</item>
     </style>
 
+    <style name="opens_lightitalic">
+        <item name="android:fontFamily">@font/opensans_lightitalic</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:foreground">?attr/selectableItemBackground</item>
+    </style>
+
     <style name="Theme.Noactionbar.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>

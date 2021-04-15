@@ -49,90 +49,6 @@ class SignupViewModel(
     val countries:LiveData<List<Country>>
         get() = _countries
 
-
-
-
-
-    /*var _years:MutableLiveData<List<String>> = MutableLiveData()
-    val years:LiveData<List<String>>
-    get() = _years
-
-    var _days:MutableLiveData<List<String>> = MutableLiveData()
-    val days:LiveData<List<String>>
-        get() = _days
-
-
-    val clicksListenerYears = object : AdapterView.OnItemSelectedListener {
-        override fun onNothingSelected(parent: AdapterView<*>?) {
-
-        }
-
-        @RequiresApi(Build.VERSION_CODES.O)
-        override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-            selectedYearsItem.set(parent?.getItemAtPosition(position) as String)
-            loadDays()
-        }
-    }
-
-    val clicksListenerMonth = object : AdapterView.OnItemSelectedListener {
-        override fun onNothingSelected(parent: AdapterView<*>?) {
-
-        }
-
-        @RequiresApi(Build.VERSION_CODES.O)
-        override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-            selectedYearsMonth.set(parent?.getItemAtPosition(position) as String)
-            loadDays()
-        }
-    }
-
-    val clicksListenerDay = object : AdapterView.OnItemSelectedListener {
-        override fun onNothingSelected(parent: AdapterView<*>?) {
-
-        }
-
-        override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-            selectedYearsDay.set(parent?.getItemAtPosition(position) as String)
-        }
-    }
-
-    fun loadYears(){
-        var listYaers:List<String>?=null
-        val thisYear = Calendar.getInstance().get(Calendar.YEAR)
-        listYaers = listOf("1900")
-        for (i in 1901..thisYear) {
-            //listYaers = arrayListOf(i.toString())
-            listYaers = listYaers?.plus(i.toString())
-        }
-        _years.value = listYaers
-    }
-
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun loadDays(){
-        var currentYear = 1900
-        var currentMonth = 1
-        var listDays:List<String>?=null
-        listDays = listOf("1")
-
-        //val currentYear = selectedYearsItem.get()
-        if (!selectedYearsItem.get().isNullOrEmpty()){
-            currentYear = selectedYearsItem.get()!!.toInt()
-        }
-
-        if (!selectedYearsMonth.get().isNullOrEmpty()){
-            currentMonth = selectedYearsMonth.get()!!.toInt()
-        }
-
-        val yearMonth = YearMonth.of(currentYear,currentMonth)
-        val day = yearMonth.lengthOfMonth()
-
-        for (i in 2..day) {
-            listDays = listDays?.plus(i.toString())
-        }
-        _days.value = listDays
-    }*/
-
     var countryList:List<Country>?=null
 
     fun setCurrentCountry(country:String){
@@ -150,38 +66,6 @@ class SignupViewModel(
         //countryList = signUpRepositary.getAllCountriesDB()
         countryList = World.getAllCountries()
         _countries.value = countryList
-       /* if (countryList.isNullOrEmpty()){
-            Couritnes.main {
-                try {
-                    val reponse = signUpRepositary.getAllCountries()
-                    if (reponse.data.isNotEmpty()){
-                        for (country in reponse.data){
-                            val countries = Countries(
-                                    country.countryCodeAlpha,
-                                    country.countryMstrSeqno,
-                                    country.countryName
-
-                            )
-                            signUpRepositary.insertCountries(countries)
-                        }
-                        countryList = signUpRepositary.getAllCountriesDB()
-                        _countries.value = countryList
-                        listener?.onSuccess("")
-                    }else{
-                        listener?.onFailure("Failed to load Countries")
-                    }
-                }catch (e:APIException){
-                    listener?.onFailure(e.message!!)
-                }catch (e:NoInternetException){
-                    listener?.onFailure(e.message!!)
-                }catch (e:SocketTimeoutException){
-                    listener?.onFailure(e.message!!)
-                }
-            }
-        }else{
-            listener?.onSuccess("success")
-            _countries.value = countryList
-        }*/
 
         dobTime.value = "1200"
 
@@ -247,7 +131,8 @@ class SignupViewModel(
                                 "",
                                 "",
                                 selectedItemContactCode.get()!!,
-                                World.getCountryFrom(birthPlaceCountryCode.value).alpha3,
+                                    birthPlaceCountryCode.value!!,
+                                /*World.getCountryFrom(birthPlaceCountryCode.value).alpha3,*/
                                 gender.name,
                                 "",
                                 dob.value,

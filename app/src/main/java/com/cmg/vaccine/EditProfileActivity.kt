@@ -184,7 +184,17 @@ class EditProfileActivity : BaseActivity(),KodeinAware,SimpleListener,SlideDateP
             }
         })
 
-        binding.layoutNationality.setOnSingleClickListener{
+        binding.ccpPob.setCountryForNameCode(viewModel.birthPlaceCountryCode.value?.dropLast(1))
+        binding.ccpPob.setOnCountryChangeListener {
+            viewModel.birthPlaceCountryCode.value = getThreeAlpha(binding.ccpPob.selectedCountryNameCode)
+        }
+
+        binding.ccpNationality.setCountryForNameCode(viewModel.nationalityCountryCode.value?.dropLast(1))
+        binding.ccpNationality.setOnCountryChangeListener {
+            viewModel.nationalityCountryCode.value = getThreeAlpha(binding.ccpNationality.selectedCountryNameCode)
+        }
+
+        /*binding.layoutNationality.setOnSingleClickListener{
             var myDialogFragment= CountryListDialogFragment()
             var data=Bundle()
             data.putString("type","nation")
@@ -202,7 +212,7 @@ class EditProfileActivity : BaseActivity(),KodeinAware,SimpleListener,SlideDateP
             myDialogFragment.arguments=data
             myDialogFragment.show(supportFragmentManager,"Place of Birth")
 
-        }
+        }*/
 
         /*viewModel.countries.observe(this, Observer { list->
             val arrayList = arrayListOf<Country>()
@@ -344,7 +354,7 @@ class EditProfileActivity : BaseActivity(),KodeinAware,SimpleListener,SlideDateP
 
             override fun afterTextChanged(s: Editable?) {
                 if (!s.toString().isNullOrEmpty()){
-                    if (viewModel.nationalityCountryCode.value.equals("Malaysia",false)) {
+                    if (viewModel.nationalityCountryCode.value.equals("MYS",false)) {
                         if (s?.length!! < 12) {
                             binding.edtIdno.error = "Minimum 12 Character"
                         }

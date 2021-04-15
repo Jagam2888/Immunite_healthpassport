@@ -69,6 +69,8 @@
     <string name="change_language_success">Bahasa Berubah Berjaya</string>
 
     <string name="departure_verify">Departure Verification</string>
+    <string name="splash_bottom_msg">Secured &#8226; Authentic &#8226; Privacy</string>
+    <string name="splash_digital_auth">Digitally Authenticated and Secured \nHealth Passport</string>
 
     <string name="restore">Restore</string>
     <string name="restore_google_drive">Restore from Google Drive</string>

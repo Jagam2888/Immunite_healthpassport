@@ -73,6 +73,16 @@ class EditDependentProfileActivity : BaseActivity(),KodeinAware,SimpleListener,S
         dependentSubId = intent.extras?.getString(Passparams.DEPENDENT_SUBID,"")
         viewModel.loadProfileData(this,dependentSubId!!)
 
+        binding.ccpPob.setCountryForNameCode(viewModel.birthPlaceCountryCode.value?.dropLast(1))
+        binding.ccpPob.setOnCountryChangeListener {
+            viewModel.birthPlaceCountryCode.value = getThreeAlpha(binding.ccpPob.selectedCountryNameCode)
+        }
+
+        binding.ccpNationality.setCountryForNameCode(viewModel.nationalityCountryCode.value?.dropLast(1))
+        binding.ccpNationality.setOnCountryChangeListener {
+            viewModel.nationalityCountryCode.value = getThreeAlpha(binding.ccpNationality.selectedCountryNameCode)
+        }
+
         /*viewModel.countries.observe(this, Observer {list->
             val arrayList = arrayListOf<Country>()
             arrayList.addAll(list)
@@ -81,7 +91,7 @@ class EditDependentProfileActivity : BaseActivity(),KodeinAware,SimpleListener,S
             viewModel.loadProfileData(this,dependentSubId!!)
         })*/
 
-        binding.layoutNationality.setOnSingleClickListener{
+        /*binding.layoutNationality.setOnSingleClickListener{
             var myDialogFragment= CountryListDialogFragment()
             var data=Bundle()
             data.putString("type","nation")
@@ -99,7 +109,7 @@ class EditDependentProfileActivity : BaseActivity(),KodeinAware,SimpleListener,S
             myDialogFragment.arguments=data
             myDialogFragment.show(supportFragmentManager,"Place of Birth")
 
-        }
+        }*/
 
         /*binding.btnDobCalender.setOnClickListener {
             if (SystemClock.elapsedRealtime() - lastClickTimeDOB<1000){
@@ -294,7 +304,7 @@ class EditDependentProfileActivity : BaseActivity(),KodeinAware,SimpleListener,S
 
             override fun afterTextChanged(s: Editable?) {
                 if (!s.toString().isNullOrEmpty()){
-                    if (viewModel.nationalityCountryCode.value.equals("Malaysia",false)) {
+                    if (viewModel.nationalityCountryCode.value.equals("MYS",false)) {
                         if (s?.length!! < 12) {
                             binding.edtIdno.error = "Minimum 12 Character"
                         }

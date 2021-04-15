@@ -85,6 +85,11 @@ fun showAlertDialog(title: String,msg: String,status: Boolean,fragmentManager: F
 
 }
 
+fun getThreeAlpha(nameCode:String):String{
+    val locale = Locale("en",nameCode)
+    return locale.isO3Country
+}
+
 fun isValidEmail(value: String):Boolean{
     val regx = "^[\\w-\\.+]*[\\w-\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$"
     val pattern = Pattern.compile(regx)
@@ -401,6 +406,17 @@ fun removeSeconds(time:String):String?{
     try {
         val date = currentDateFormat.parse(time)
         return simpleDateFormat.format(date)
+    }catch (e: ParseException){
+        e.printStackTrace()
+    }
+    return ""
+}
+fun changeDateFormatForVaccine(dateString: String): String {
+    val resultFormat = SimpleDateFormat("dd/MM/yyyy")
+    val isoFormat = SimpleDateFormat("yyyy-MM-dd")
+    try {
+        val date = isoFormat.parse(dateString)
+        return resultFormat.format(date)
     }catch (e: ParseException){
         e.printStackTrace()
     }

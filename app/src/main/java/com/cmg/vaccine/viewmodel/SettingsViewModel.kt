@@ -397,6 +397,7 @@ class SettingsViewModel(
                                     val jsonChildDataIndex = jsonChildData.getJSONObject(i)
                                     if (jsonChildDataIndex.has("expirationDate")){
                                         expiryDate = jsonChildDataIndex.getString("expirationDate")
+                                        expiryDate = changeDateFormatForVaccine(expiryDate)
                                     }
                                     if (jsonChildDataIndex.has("vaccineCode")) {
                                         val vaccineCodeJson =
@@ -407,6 +408,9 @@ class SettingsViewModel(
 
                                     if (jsonChildDataIndex.has("occurrenceDateTime")){
                                         vaccineDisplayDate = jsonChildDataIndex.getString("occurrenceDateTime")
+                                        if (!vaccineDisplayDate.isNullOrEmpty()) {
+                                            vaccineDisplayDate = changeDateFormatForVaccine(vaccineDisplayDate)
+                                        }
                                     }
 
                                     if (jsonChildDataIndex.has("location")){

@@ -208,7 +208,7 @@ class DependentViewModel(
 
     fun onClick(view:View) {
         listener?.onStarted()
-        if ((!idNo.value.isNullOrEmpty()) and (nationalityCountryCode.value.equals("Malaysia"))){
+        if ((!idNo.value.isNullOrEmpty()) and (nationalityCountryCode.value.equals("MYS"))){
             if (idNo.value?.length != patientIdNoCharLength.get()){
                 listener?.onFailure("2Your ID Number is invalid")
                 return
@@ -225,14 +225,14 @@ class DependentViewModel(
 
 
 
-                                    if (nationalityCountryCode.value.equals("Malaysia")) {
+                                    if (nationalityCountryCode.value.equals("MYS")) {
                                         if (idNo.value.isNullOrEmpty()) {
                                             listener?.onShowToast("Malaysian should be enter Your Id number")
                                             return
                                         }
                                     }
 
-                                    if (!nationalityCountryCode.value.equals("Malaysia")) {
+                                    if (!nationalityCountryCode.value.equals("MYS")) {
                                         if ((passportNumber.value.isNullOrEmpty()) and (idNo.value.isNullOrEmpty())) {
                                             listener?.onShowToast("Passport Number or Id number either one Mandatory")
                                             return
@@ -254,22 +254,7 @@ class DependentViewModel(
                                         dobTime.value = "00:00"
                                     }
 
-                                    /*var placeBirth = ""
-                                if (!countryList.isNullOrEmpty()) {
-                                    placeBirth =
-                                        countryList?.get(selectedItemBirthPlaceCode.get())?.alpha3!!
-                                }
-
-                                var nationality = ""
-                                if (!countryList.isNullOrEmpty()) {
-                                    nationality =
-                                        countryList?.get(selectedItemNationalityCode.get())?.alpha3!!
-                                }*/
-
-                                    /*val idTypeList =
-                                    view.context.resources.getStringArray(R.array.id_type)
-                                idType.value = idTypeList[selectedItemIdTYpe.get()]*/
-                                    if (nationalityCountryCode.value.equals("Malaysia", false)) {
+                                    if (nationalityCountryCode.value.equals("MYS", false)) {
                                         idType.value =
                                             identifierTypeListForMYS.value?.get(selectedItemIdTYpe.get())?.identifierCode
                                     } else {
@@ -295,13 +280,13 @@ class DependentViewModel(
                                     dependentRegReqData.mobileNumber = contactNumber.value?.trim()
                                     dependentRegReqData.email = email.value?.trim()
                                     dependentRegReqData.relationship = relationShip
-                                    dependentRegReqData.nationalityCountry =
-                                        World.getCountryFrom(nationalityCountryCode.value).alpha3
+                                    dependentRegReqData.nationalityCountry =nationalityCountryCode.value
+                                        /*World.getCountryFrom(nationalityCountryCode.value).alpha3*/
                                     dependentRegReqData.gender = genderEnum.name
                                     dependentRegReqData.dob =
                                         dob.value + " " + dobTime.value + ":00"
-                                    dependentRegReqData.placeOfBirth =
-                                        World.getCountryFrom(birthPlaceCountryCode.value).alpha3
+                                    dependentRegReqData.placeOfBirth = birthPlaceCountryCode.value
+                                        /*World.getCountryFrom(birthPlaceCountryCode.value).alpha3*/
 
                                     if (!idNo.value.isNullOrEmpty()) {
                                         dependentRegReqData.idType = idType.value
@@ -335,10 +320,12 @@ class DependentViewModel(
                                                     response.privateKey,
                                                     null,
                                                     contactNumber.value?.trim(),
-                                                    World.getCountryFrom(nationalityCountryCode.value).alpha3,
+                                                        nationalityCountryCode.value,
+                                                    /*World.getCountryFrom(nationalityCountryCode.value).alpha3,*/
                                                     passportNumber.value?.trim(),
                                                     passportExpDate.value,
-                                                    World.getCountryFrom(birthPlaceCountryCode.value).alpha3,
+                                                        birthPlaceCountryCode.value,
+                                                    /*World.getCountryFrom(birthPlaceCountryCode.value).alpha3,*/
                                                     relationShip
                                                 )
                                                 repositary.insertDependentSignUp(dependent)
@@ -408,11 +395,13 @@ class DependentViewModel(
             if (!dependent?.countryCode.isNullOrEmpty())
                 countryCode.value = dependent?.countryCode?.toInt()
 
-            nationalityCountryCode.value = World.getCountryFrom(dependent?.nationalityCountry).name
-            birthPlaceCountryCode.value = World.getCountryFrom(dependent?.placeOfBirth).name
+            nationalityCountryCode.value = dependent?.nationalityCountry
+            birthPlaceCountryCode.value = dependent?.placeOfBirth
+                    //nationalityCountryCode.value = World.getCountryFrom(dependent?.nationalityCountry).name
+            //birthPlaceCountryCode.value = World.getCountryFrom(dependent?.placeOfBirth).name
 
-            nationalityCountryFlag.value = World.getCountryFrom(dependent?.nationalityCountry).flagResource
-            birthPlaceCountryFlag.value = World.getCountryFrom(dependent?.placeOfBirth).flagResource
+            //nationalityCountryFlag.value = World.getCountryFrom(dependent?.nationalityCountry).flagResource
+            //birthPlaceCountryFlag.value = World.getCountryFrom(dependent?.placeOfBirth).flagResource
 
             /*selectedItemNationalityCode.set(selectedCountryName(dependent?.nationalityCountry!!,countryList!!))
             selectedItemBirthPlaceCode.set(selectedCountryName(dependent?.placeOfBirth!!,countryList!!))*/
@@ -442,17 +431,13 @@ class DependentViewModel(
         userSubId.value = dependent?.subsId
 
         if (!nationalityCountryCode.value.isNullOrEmpty()){
-            if (nationalityCountryCode.value.equals("Malaysia",false)){
+            if (nationalityCountryCode.value.equals("MYS",false)){
                 patientIdNoCharLength.set(12)
             }else{
                 patientIdNoCharLength.set(15)
             }
         }
     }
-
-   /* fun onClickExistingDependent(view: View){
-        getDependentInfo(view = )
-    }*/
 
     private fun regExistingDependent(dependent: Dependent, view: View){
 
@@ -498,95 +483,100 @@ class DependentViewModel(
         var patientIdType:String?=null
         var patientIdNo:String?=null
         if (isChecked.get()) {
-            Couritnes.main {
-                try {
-                    listener?.onStarted()
-                    val response = repositary.getExistingUser(existingUserprivateKey.get()!!)
+            val isDependentExists = repositary.getDependentUsingPrivateKey(existingUserprivateKey.get()!!)
+            if (isDependentExists == null) {
+                Couritnes.main {
+                    try {
+                        listener?.onStarted()
+                        val response = repositary.getExistingUser(existingUserprivateKey.get()!!)
 
-                    val responseBody = response.string()
-                    val jsonBody = JSONObject(responseBody)
-                    val jsonBodyFirst = jsonBody.getJSONObject("data")
-                    val jsonBodySecond = jsonBodyFirst.getJSONObject("data")
+                        val responseBody = response.string()
+                        val jsonBody = JSONObject(responseBody)
+                        val jsonBodyFirst = jsonBody.getJSONObject("data")
+                        val jsonBodySecond = jsonBodyFirst.getJSONObject("data")
 
 
-                    if (jsonBodySecond.has("IDTypes")) {
-                        val jsonIdTypeArray = jsonBodySecond.getJSONArray("IDTypes")
-                        for (i in 0 until jsonIdTypeArray.length()) {
-                            val item = jsonIdTypeArray.getJSONObject(i)
-                            if (item.has("IdType")) {
-                                if (item.getString("IdType").equals("PPN", false)) {
-                                    if (item.has("idNo")) {
-                                        passportNo = item.getString("idNo")
-                                    }
-                                    if (item.has("passportExpiryDate")) {
-                                        passportExpiryDate = item.getString("passportExpiryDate")
-                                    }
-                                } else {
-                                    patientIdType = item.getString("IdType")
+                        if (jsonBodySecond.has("IDTypes")) {
+                            val jsonIdTypeArray = jsonBodySecond.getJSONArray("IDTypes")
+                            for (i in 0 until jsonIdTypeArray.length()) {
+                                val item = jsonIdTypeArray.getJSONObject(i)
+                                if (item.has("IdType")) {
+                                    if (item.getString("IdType").equals("PPN", false)) {
+                                        if (item.has("idNo")) {
+                                            passportNo = item.getString("idNo")
+                                        }
+                                        if (item.has("passportExpiryDate")) {
+                                            passportExpiryDate = item.getString("passportExpiryDate")
+                                        }
+                                    } else {
+                                        patientIdType = item.getString("IdType")
 
-                                    if (item.has("idNo")) {
-                                        patientIdNo = item.getString("idNo")
+                                        if (item.has("idNo")) {
+                                            patientIdNo = item.getString("idNo")
+                                        }
                                     }
                                 }
+
                             }
-
                         }
-                    }
 
 
-                    if (jsonBodySecond.has("dob")) {
-                        if (!jsonBodySecond.getString("dob").isNullOrEmpty()) {
-                            val isoFormat = changeDateFormatBC(jsonBodySecond.getString("dob"))
-                            var dobFormatArray = isoFormat?.split(" ")
-                            dob.value = dobFormatArray?.get(0)
-                            dobTime.value = dobFormatArray?.get(1)
+                        if (jsonBodySecond.has("dob")) {
+                            if (!jsonBodySecond.getString("dob").isNullOrEmpty()) {
+                                val isoFormat = changeDateFormatBC(jsonBodySecond.getString("dob"))
+                                var dobFormatArray = isoFormat?.split(" ")
+                                dob.value = dobFormatArray?.get(0)
+                                dobTime.value = dobFormatArray?.get(1)
+                            }
                         }
-                    }
 
-                    val dependent = Dependent(
-                        jsonBodySecond.getString("countryCode"),
-                        dob.value,
-                        dobTime.value,
-                        jsonBodySecond.getString("email"),
-                        jsonBodySecond.getString("fullName"),
-                        jsonBodySecond.getString("gender"),
-                        patientIdNo,
-                        patientIdType,
-                        repositary.getParentSubId(),
-                        jsonBodySecond.getString("subsId"),
-                        existingUserprivateKey.get()!!,
-                        "",
-                        jsonBodySecond.getString("mobileNumber"),
-                        jsonBodySecond.getString("nationalityCountry"),
-                        passportNo,
-                        passportExpiryDate,
-                        jsonBodySecond.getString("placeOfBirth"),
-                        "",
-                    )
+                        val dependent = Dependent(
+                                jsonBodySecond.getString("countryCode"),
+                                dob.value,
+                                dobTime.value,
+                                jsonBodySecond.getString("email"),
+                                jsonBodySecond.getString("fullName"),
+                                jsonBodySecond.getString("gender"),
+                                patientIdNo,
+                                patientIdType,
+                                repositary.getParentSubId(),
+                                jsonBodySecond.getString("subsId"),
+                                existingUserprivateKey.get()!!,
+                                "",
+                                jsonBodySecond.getString("mobileNumber"),
+                                jsonBodySecond.getString("nationalityCountry"),
+                                passportNo,
+                                passportExpiryDate,
+                                jsonBodySecond.getString("placeOfBirth"),
+                                "",
+                        )
 
-                    if (!jsonBodySecond.getString("subsId").isNullOrEmpty()) {
-                        val getDependent =
-                            repositary.getDependent(jsonBodySecond.getString("subsId"))
-                        if (getDependent == null) {
-                            regExistingDependent(dependent, view)
-                        } else {
-                            listener?.onFailure("2Sorry, this Dependent already added")
+                        if (!jsonBodySecond.getString("subsId").isNullOrEmpty()) {
+                            val getDependent =
+                                    repositary.getDependent(jsonBodySecond.getString("subsId"))
+                            if (getDependent == null) {
+                                regExistingDependent(dependent, view)
+                            } else {
+                                listener?.onFailure("2Sorry, this Dependent already added")
+                            }
                         }
+
+                        Log.d("response_body", responseBody)
+
+                    } catch (e: APIException) {
+                        listener?.onFailure("2" + e.message!!)
+                    } catch (e: NoInternetException) {
+                        listener?.onFailure("3" + e.message!!)
+                    } catch (e: SocketTimeoutException) {
+                        listener?.onShowToast(e.message!!)
+                    } catch (e: JSONException) {
+                        listener?.onShowToast("invalid")
+                    } catch (e: Exception) {
+                        listener?.onShowToast("2" + e.message!!)
                     }
-
-                    Log.d("response_body", responseBody)
-
-                } catch (e: APIException) {
-                    listener?.onFailure("2"+e.message!!)
-                } catch (e: NoInternetException) {
-                    listener?.onFailure("3"+e.message!!)
-                } catch (e: SocketTimeoutException) {
-                    listener?.onShowToast(e.message!!)
-                } catch (e: JSONException) {
-                    listener?.onShowToast("invalid")
-                } catch (e: Exception) {
-                    listener?.onShowToast("2"+e.message!!)
                 }
+            }else{
+                listener?.onFailure("2Dependent Already Exists!")
             }
         }else{
             listener?.onShowToast("Please accept Terms and conditions")
@@ -594,7 +584,7 @@ class DependentViewModel(
     }
 
     fun updateProfile(view: View){
-        if ((!idNo.value.isNullOrEmpty()) and (nationalityCountryCode.value.equals("Malaysia"))){
+        if ((!idNo.value.isNullOrEmpty()) and (nationalityCountryCode.value.equals("MYS"))){
             if (idNo.value?.length != patientIdNoCharLength.get()){
                 listener?.onFailure("Your ID Number is invalid")
                 return
@@ -606,24 +596,7 @@ class DependentViewModel(
         val relationShip =
                 relationShips.get(relationshipItemPos.get())
 
-        /*var placeBirth = ""
-        if (!countryList.isNullOrEmpty()) {
-            placeBirth =
-                    countryList?.get(selectedItemBirthPlaceCode.get())?.alpha3!!
-            //placeBirth = World.getCountryFrom(selectedItemBirthPlaceCode.get()).alpha3
-        }
-
-        var nationality = ""
-        if (!countryList.isNullOrEmpty()) {
-            nationality =
-                    countryList?.get(selectedItemNationalityCode.get())?.alpha3!!
-        }*/
-
-        /*val idTypeList =
-                view.context.resources.getStringArray(R.array.id_type)
-        idType.value = idTypeList[selectedItemIdTYpe.get()]*/
-        //idType.value = identifierTypeList.value?.get(selectedItemIdTYpe.get())?.identifierCode
-        if (nationalityCountryCode.value.equals("Malaysia",false)) {
+        if (nationalityCountryCode.value.equals("MYS",false)) {
             idType.value =
                 identifierTypeListForMYS.value?.get(selectedItemIdTYpe.get())?.identifierCode
         }else{
@@ -641,14 +614,14 @@ class DependentViewModel(
                                     if (validateTime(dobTime.value!!)) {
                                         listener?.onStarted()
 
-                                        if (nationalityCountryCode.value.equals("Malaysia")) {
+                                        if (nationalityCountryCode.value.equals("MYS")) {
                                             if (idNo.value.isNullOrEmpty()) {
                                                 listener?.onShowToast("Malaysian should be enter Your Id number")
                                                 return
                                             }
                                         }
 
-                                        if (!nationalityCountryCode.value.equals("Malaysia")) {
+                                        if (!nationalityCountryCode.value.equals("MYS")) {
                                             if ((passportNumber.value.isNullOrEmpty()) and (idNo.value.isNullOrEmpty())) {
                                                 listener?.onShowToast("Passport Number or Id number either one Mandatory")
                                                 return
@@ -666,12 +639,12 @@ class DependentViewModel(
                                             val updateProfileReqData = UpdateProfileReqData()
 
                                             updateProfileReqData.firstName = fullName.value?.trim()
-                                            updateProfileReqData.nationalityCountry =
-                                                World.getCountryFrom(nationalityCountryCode.value).alpha3
+                                            updateProfileReqData.nationalityCountry =nationalityCountryCode.value
+                                                /*World.getCountryFrom(nationalityCountryCode.value).alpha3*/
                                             updateProfileReqData.dob =
                                                 dob.value + " " + dobTime.value + ":00"
-                                            updateProfileReqData.placeOfBirth =
-                                                World.getCountryFrom(birthPlaceCountryCode.value).alpha3
+                                            updateProfileReqData.placeOfBirth =birthPlaceCountryCode.value
+                                                /*World.getCountryFrom(birthPlaceCountryCode.value).alpha3*/
                                             updateProfileReqData.countryCode =
                                                 selectedItemContactCode.get()
                                             updateProfileReqData.passportNo =

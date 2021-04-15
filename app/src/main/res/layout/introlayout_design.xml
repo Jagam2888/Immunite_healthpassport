@@ -16,12 +16,12 @@
         android:layout_marginTop="280dp"
         />-->
 
-    <androidx.constraintlayout.widget.Guideline
+    <!--<androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="20dp" />
+        app:layout_constraintGuide_begin="20dp" />-->
 
 
     <LinearLayout
@@ -33,10 +33,10 @@
 
         <ImageView
             android:id="@+id/intro_img"
-            android:layout_width="300dp"
-            android:layout_height="260dp"
+            android:layout_width="320dp"
+            android:layout_height="277dp"
             android:layout_gravity="center_horizontal|center_vertical"
-            android:layout_marginTop="43dp" />
+            android:layout_marginTop="45dp" />
 
         <TextView
             android:id="@+id/intro_title"
@@ -76,7 +76,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
-                    android:textSize="15sp"
+                    android:textSize="16sp"
                     android:textAppearance="@style/opens_regular"
                     android:layout_marginLeft="10dp"
                     android:text="Adding your favourite or upcoming destination."/>
@@ -99,9 +99,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
-                    android:textSize="15sp"
+                    android:textSize="16sp"
                     android:textAppearance="@style/opens_regular"
                     android:layout_marginLeft="10dp"
+                    android:gravity="center_horizontal"
+                    android:layout_gravity="center_horizontal"
                     android:text="Click on to the destination to check entry requirements."/>
             </LinearLayout>
 

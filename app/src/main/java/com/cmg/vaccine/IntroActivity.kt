@@ -152,13 +152,13 @@ class IntroActivity : BaseActivity() {
             val dotsViewParams = LinearLayout.LayoutParams(20,20)
             dotsViewParams.setMargins(20,0,0,0)
             dotsView[i]!!.layoutParams = dotsViewParams
-            dotsView[i]!!.setBackgroundResource(R.drawable.rectangle_inactive)
+            dotsView[i]!!.setBackgroundResource(R.drawable.oval_inactive)
             dotsView[i]!!
             binding.layoutDots?.addView(dotsView[i])
         }
 
         if(dotsView!!.isNotEmpty()){
-            dotsView[currentPage]!!.setBackgroundResource(R.drawable.rectangle_inactive)
+            dotsView[currentPage]!!.setBackgroundResource(R.drawable.oval_active)
             dotsView[currentPage]!!.scaleX=1.2f
             dotsView[currentPage]!!.scaleY=1.2f
         }

@@ -387,7 +387,7 @@ class HomeViewModel(
                 //dashboard1.dataTest = testReportList.value
                 if (!dependent.privateKey.isNullOrEmpty()) {
                     dashboard1.dataTest = getTestReportList(dependent.privateKey!!)
-                    dashBoard.data = getVaccineReportList(dependent.privateKey!!)
+                    dashboard1.data = getVaccineReportList(dependent.privateKey!!)
                 }
                 dashboard1.subId = dependent.subsId
                 dashboard1.dob = dependent.dob

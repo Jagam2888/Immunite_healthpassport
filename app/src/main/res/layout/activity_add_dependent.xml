@@ -348,7 +348,7 @@
                     android:textAppearance="@style/opens_regular"
                     android:textSize="14sp"/>
 
-                <RelativeLayout
+                <!--<RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
                     android:background="@drawable/edittext_background"
@@ -356,20 +356,29 @@
                     android:paddingBottom="5dp"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
-                    android:paddingTop="5dp">
+                    android:paddingTop="5dp">-->
 
-                    <!--<Spinner
-                        android:id="@+id/spinner_place_birth"
+                    <com.hbb20.CountryCodePicker
+                        android:id="@+id/ccp_pob"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="16sp"
-                        android:background="@null"
-                        android:minHeight="0dp"
-                        android:layout_centerVertical="true"
-                        android:selectedItemPosition="@={dependentViewModel.selectedItemBirthPlaceCode}"
-                        tools:setOnItemSelectedListener="@{dependentViewModel.clicksListener}"/>-->
+                        app:ccp_showFullName="true"
+                        app:ccp_autoDetectCountry="true"
+                        app:ccp_countryAutoDetectionPref="NETWORK_SIM_LOCALE"
+                        app:ccpDialog_cornerRadius="4dp"
+                        app:ccpDialog_showNameCode="false"
+                        app:ccpDialog_keyboardAutoPopup="false"
+                        app:ccp_showPhoneCode="false"
+                        app:ccp_textGravity="LEFT"
+                        app:ccp_showNameCode="false"
+                        android:background="@drawable/edittext_background"
+                        android:layout_marginTop="5dp"
+                        android:paddingBottom="5dp"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingTop="5dp"/>
 
-                    <LinearLayout
+                    <!--<LinearLayout
                         android:id="@+id/layout_pob"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -392,16 +401,6 @@
                             android:textAppearance="@style/opens_bold" />
                     </LinearLayout>
 
-                    <!--<Spinner
-                        android:id="@+id/spinner_place_birth"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="16sp"
-                        android:background="@null"
-                        android:minHeight="0dp"
-                        android:layout_centerVertical="true"
-                        android:selectedItemPosition="@={dependentViewModel.selectedItemBirthPlaceCode}"/>
--->
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -409,8 +408,8 @@
                         android:layout_centerVertical="true"
                         android:layout_alignParentRight="true"
                         android:src="@drawable/down_arrow"
-                        android:layout_marginRight="10dp" />
-                </RelativeLayout>
+                        android:layout_marginRight="10dp" />-->
+                <!--</RelativeLayout>-->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -477,7 +476,7 @@
                     android:textAppearance="@style/opens_regular"
                     android:textSize="14sp" />
 
-                <RelativeLayout
+                <!--<RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
                     android:background="@drawable/edittext_background"
@@ -485,8 +484,28 @@
                     android:paddingBottom="5dp"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
-                    android:paddingTop="5dp">
+                    android:paddingTop="5dp">-->
 
+                    <com.hbb20.CountryCodePicker
+                        android:id="@+id/ccp_nationality"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:ccp_showFullName="true"
+                        app:ccp_autoDetectCountry="true"
+                        app:ccp_countryAutoDetectionPref="NETWORK_SIM_LOCALE"
+                        app:ccpDialog_cornerRadius="4dp"
+                        app:ccpDialog_showNameCode="false"
+                        app:ccpDialog_keyboardAutoPopup="false"
+                        app:ccp_showPhoneCode="false"
+                        app:ccp_textGravity="LEFT"
+                        app:ccp_showNameCode="false"
+                        android:background="@drawable/edittext_background"
+                        android:layout_marginTop="5dp"
+                        android:paddingBottom="5dp"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingTop="5dp"/>
+<!--
                     <LinearLayout
                         android:id="@+id/layout_nationality"
                         android:layout_width="match_parent"
@@ -509,25 +528,14 @@
                             android:textColor="@color/black"
                             android:textAppearance="@style/opens_bold"/>
                     </LinearLayout>
-
-                    <!--<Spinner
-                        android:id="@+id/spinner_nationality"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="16sp"
-                        android:background="@null"
-                        android:minHeight="0dp"
-                        android:layout_centerVertical="true"
-                        android:selectedItemPosition="@={dependentViewModel.selectedItemNationalityCode}"/>-->
-
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_alignParentRight="true"
                         android:src="@drawable/down_arrow"
-                        android:layout_marginRight="10dp" />
-                </RelativeLayout>
+                        android:layout_marginRight="10dp" />-->
+                <!--</RelativeLayout>-->
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -645,7 +653,7 @@
                             android:textSize="16sp"
                             android:background="@null"
                             android:minHeight="0dp"
-                            android:entries="@{dependentViewModel.nationalityCountryCode.equals(`Malaysia`)?dependentViewModel.identifierTypeListForMYS:dependentViewModel.identifierTypeListForOthers}"
+                            android:entries="@{dependentViewModel.nationalityCountryCode.equals(`MYS`)?dependentViewModel.identifierTypeListForMYS:dependentViewModel.identifierTypeListForOthers}"
                             android:layout_toLeftOf="@id/img_down_arrow_id"
                             android:layout_centerVertical="true"
                             tools:setOnItemSelectedListener="@{dependentViewModel.clicksListener}"/>

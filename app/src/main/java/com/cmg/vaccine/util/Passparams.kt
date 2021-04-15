@@ -57,12 +57,12 @@ object Passparams{
 
     //API
     //const val URL = "http://47.254.238.145:7001/"
-    const val URL = "http://dev.immunitee.com:7001/"
-    const val DOWNLOAD_TEST_REPORT = "http://10.1.1.150:6001/gp-module-lab/ext/labpdf?labOrderTxn="
+    //const val URL = "http://dev.immunitee.com:7001/"
+    //const val DOWNLOAD_TEST_REPORT = "http://10.1.1.150:6001/gp-module-lab/ext/labpdf?labOrderTxn="
 
     //Staging API
-    //const val URL = "http://stapp.immunitee.com:7001/"
-    //const val DOWNLOAD_TEST_REPORT = "http://stg.i-care.com:6001/gp-module-lab/ext/labpdf?labOrderTxn="
+    const val URL = "http://stapp.immunitee.com:7001/"
+    const val DOWNLOAD_TEST_REPORT = "http://stg.i-care.com:6001/gp-module-lab/ext/labpdf?labOrderTxn="
 
     //Production API
     //const val URL = "http://app.immunitee.com:7001/"
