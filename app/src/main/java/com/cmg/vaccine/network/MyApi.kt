@@ -43,7 +43,7 @@ interface MyApi {
     suspend fun searchTestReportList(@Query("subsId")key: String):Response<TestReportListResponse>
 
     @POST(Passparams.VERIFY_TAC)
-    suspend fun verifyOTP(@Query("subsId")key: String,@Query("verifyTac")verifyTac:String):Response<OTPVerifiyResponse>
+    suspend fun verifyOTP(@Query("subsId")key: String,@Query("verifyTac")verifyTac:String,@Query("isSignup")isSignup:String):Response<OTPVerifiyResponse>
 
     @POST(Passparams.RESEND_TAC)
     suspend fun resendOTP(@Query("subsId")key: String):Response<ResentOTPResponse>

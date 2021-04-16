@@ -102,8 +102,6 @@
                     android:textSize="16sp"
                     android:textAppearance="@style/opens_regular"
                     android:layout_marginLeft="10dp"
-                    android:gravity="center_horizontal"
-                    android:layout_gravity="center_horizontal"
                     android:text="Click on to the destination to check entry requirements."/>
             </LinearLayout>
 
@@ -113,11 +111,12 @@
             android:id="@+id/intro_desc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical|center_horizontal"
+            android:layout_gravity="center_horizontal"
             android:layout_marginTop="20dp"
-            android:fontFamily="@font/opensans_regular"
+            android:textAppearance="@style/opens_regular"
             android:textColor="@color/white"
-            android:textSize="18dp" />
+            android:textSize="18dp"
+            android:gravity="center_horizontal" />
 
     </LinearLayout>
 

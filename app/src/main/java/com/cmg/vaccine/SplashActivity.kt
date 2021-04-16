@@ -17,6 +17,7 @@ import com.hbb20.CountryCodePicker
 import com.jdev.countryutil.Country
 
 import immuniteeEncryption.EncryptionUtils
+import io.paperdb.Paper
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
@@ -31,6 +32,8 @@ class SplashActivity() : BaseActivity(),KodeinAware{
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
+        val token = Paper.book().read(Passparams.FCM_TOKEN, "")
+        Log.d("fcm_token", token)
 
         viewModel = ViewModelProvider(this,factory).get(SplashViewModel::class.java)
 

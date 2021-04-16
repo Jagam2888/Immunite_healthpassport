@@ -47,9 +47,9 @@ class OTPVerifyRepositary(
         return preferenceProvider.getUserReqData()
     }
 
-    suspend fun OTPVerify(key:String,tacCode:String):OTPVerifiyResponse{
+    suspend fun OTPVerify(key:String,tacCode:String,isSignup:String):OTPVerifiyResponse{
         return apiRequest {
-            api.verifyOTP(key,tacCode)
+            api.verifyOTP(key,tacCode,isSignup)
         }
     }
 

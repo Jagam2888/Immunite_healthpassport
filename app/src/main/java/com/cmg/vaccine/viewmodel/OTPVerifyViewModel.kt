@@ -87,7 +87,11 @@ class OTPVerifyViewModel(
         Couritnes.main {
             if (!pinTxt.value.isNullOrEmpty()) {
                 try {
-                    val response = repositary.OTPVerify(userSubId.value!!, pinTxt.value!!)
+                    var isSignUp = ""
+                    if (navigateFrom.get() == Passparams.SIGNUP){
+                        isSignUp = "Y"
+                    }
+                    val response = repositary.OTPVerify(userSubId.value!!, pinTxt.value!!,isSignUp)
                     if (response.success){
                         if (navigateFrom.get().equals(Passparams.SIGNUP)) {
                             val userData = repositary.getUserData()

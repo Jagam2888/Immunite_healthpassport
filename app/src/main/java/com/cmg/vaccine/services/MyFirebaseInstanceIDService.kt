@@ -10,6 +10,8 @@ import com.cmg.vaccine.util.Passparams
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import io.paperdb.Paper
+import org.json.JSONException
+import org.json.JSONObject
 import java.lang.Exception
 
 class MyFirebaseInstanceIDService():FirebaseMessagingService() {
@@ -20,11 +22,20 @@ class MyFirebaseInstanceIDService():FirebaseMessagingService() {
         super.onMessageReceived(remoteMessage)
         val notificationService = NotificationService(applicationContext)
         if (remoteMessage.data.isNotEmpty()) {
-            notificationService.createNotificationChannel(remoteMessage.data.toString())
+            Log.d("remote_data",remoteMessage.data.toString())
+            try {
+                val message = remoteMessage.data["message"]
+                val title = remoteMessage.data["title"]
+                Log.d("remote_data",message.toString())
+                notificationService.createNotificationChannel(message!!,title!!)
+            }catch (e:JSONException){
+                e.printStackTrace()
+            }
+
         }
-        if (remoteMessage.notification != null){
+        /*if (remoteMessage.notification != null){
             remoteMessage.notification?.body?.let { notificationService.createNotificationChannel(it) }
-        }
+        }*/
     }
 
     override fun onNewToken(token: String) {
