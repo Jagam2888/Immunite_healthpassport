@@ -156,6 +156,7 @@ class DependentViewModel(
 
         dobTime.value = "1200"
 
+
         /*if (!parentUser.privateKey.isNullOrEmpty()) {
             val dependent = repositary.getDependent(parentUser.parentSubscriberId!!)
             if (dependent != null){

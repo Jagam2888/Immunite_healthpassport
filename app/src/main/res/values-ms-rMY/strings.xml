@@ -79,6 +79,7 @@
     <string name="failed">Failed</string>
     <string name="login_failed">Login Failed!</string>
     <string name="check_internet">Please check your internet connection</string>
+    <string name="account_opening">Account Opening In Progress</string>
 
 
     <string name="account_restored">Account Restored</string>
@@ -210,7 +211,8 @@
     <string name="malay">Bahasa Melayu</string>
     <string name="chinese">中文</string>
 
-    <string name="not_support_google">Immunitee won\'t run without Google Play Services, which are not supported by your device.</string>
+    <string name="not_support_google">Backup won\'t run without Google Play Services, which are not supported by your device.</string>
+    <string name="immunitee_not_support_google">Immunitee won\'t run without Google Play Services, which are not supported by your device.</string>
 
 
     <string name="terms_condition">Saya bersetuju dengan syarat dan dasar privasi.</string>

@@ -626,15 +626,20 @@ fun Context.showSuccessOrFailedAlert(title:String,msg:String,status:Boolean){
 }
 
 fun Context.checkGoogleServices(){
-    val googleApiAvailability = GoogleApiAvailability.getInstance()
-    val resultCode = googleApiAvailability.isGooglePlayServicesAvailable(this)
-    if (resultCode != ConnectionResult.SUCCESS){
+    /*val googleApiAvailability = GoogleApiAvailability.getInstance()
+    val resultCode = googleApiAvailability.isGooglePlayServicesAvailable(this)*/
+    if (getGoogleServicesResult() != ConnectionResult.SUCCESS){
         val alertDialog = AlertDialog.Builder(this)
-        alertDialog.setTitle(resources.getString(R.string.app_name)).setMessage(resources.getString(R.string.not_support_google))
+        alertDialog.setTitle(resources.getString(R.string.app_name)).setMessage(resources.getString(R.string.immunitee_not_support_google))
             .setNegativeButton("OK"
             ) { dialog, which -> dialog.dismiss() }
         alertDialog.show()
     }
+}
+
+fun Context.getGoogleServicesResult():Int{
+    val googleApiAvailability = GoogleApiAvailability.getInstance()
+    return googleApiAvailability.isGooglePlayServicesAvailable(this)
 }
 
 fun genearteKey(secretKey: String): SecretKeySpec?{

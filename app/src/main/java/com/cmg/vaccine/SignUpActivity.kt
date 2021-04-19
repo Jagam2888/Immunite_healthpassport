@@ -98,12 +98,11 @@ class SignUpActivity : BaseActivity(),KodeinAware,SimpleListener,SlideDatePicker
 
         }*/
 
-        if (checkPermission()) {
-            //viewModel.setCurrentCountry(getCurrentCountryName()!!)
+        /*if (checkPermission()) {
             setCurrentCountry()
         } else {
             requestPermission()
-        }
+        }*/
 
         //viewModel.loadYears()
         //viewModel.loadDays()

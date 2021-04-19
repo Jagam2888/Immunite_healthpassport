@@ -440,7 +440,7 @@ class HomeViewModel(
                         updatePrivateKeyStatus(getUser.parentSubscriberId!!)
                         listener?.onSuccess("$originalPrivateKey|${getUser.fullName}|${getUser.dob}")
                     }else{
-                        listener?.onFailure("2"+response.Message)
+                        listener?.onFailure("4"+response.Message)
                     }
 
                 }catch (e: APIException) {

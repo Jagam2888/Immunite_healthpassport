@@ -25,6 +25,7 @@ import com.cmg.vaccine.viewmodel.SettingsViewModel
 import com.cmg.vaccine.viewmodel.viewmodelfactory.SettingsModelFactory
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.Scope
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
@@ -128,8 +129,12 @@ class SettingsFragment : Fragment(),KodeinAware,SimpleListener {
         }
 
         binding.layoutBackup.setOnSingleClickListener {
-            binding.txtAppBar.text = context?.resources?.getString(R.string.backup)
-            requestSignIn()
+            if (context?.getGoogleServicesResult() == ConnectionResult.SUCCESS) {
+                binding.txtAppBar.text = context?.resources?.getString(R.string.backup)
+                requestSignIn()
+            }else{
+                showAlertDialog(context?.resources?.getString(R.string.failed)!!,context?.resources?.getString(R.string.not_support_google)!!,true,childFragmentManager)
+            }
         }
 
         /*binding.layoutChangePassword.setOnClickListener {
@@ -388,7 +393,7 @@ class SettingsFragment : Fragment(),KodeinAware,SimpleListener {
                 Log.e("Indicator", "Login In Success")
                 isGoogleSiginSuccess = true
                 //context?.toast("Login In Success")
-                showAlertDialog("Google Drive","Login In Success",true,childFragmentManager)
+                //showAlertDialog("Google Drive","Login In Success",true,childFragmentManager)
                 driveServiceHelper= DriveServiceHelper(googleDriveService)
                 hideMainLayout()
                 binding.backup.visibility = View.VISIBLE

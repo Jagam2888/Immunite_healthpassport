@@ -68,7 +68,7 @@ class OTPVerifyViewModel(
                 //if (isResend)
                 //listener?.onFailure(response.Message)
                 if (response.StatusCode == 1){
-                    listener?.onFailure("1|true|"+response.Message)
+                    listener?.onShowToast(response.Message)
                 }else{
                     listener?.onFailure("1|false|"+response.Message)
                 }

@@ -194,6 +194,9 @@ class HomeFragment : Fragment(),KodeinAware,SimpleListener {
         }else if (msg.startsWith("3")){
             val showMsg = msg.drop(1)
             showAlertDialog(showMsg, resources.getString(R.string.check_internet), false, childFragmentManager)
+        }else if (msg.startsWith("4")){
+            val showMsg = msg.drop(1)
+            showAlertDialog(resources.getString(R.string.account_opening), showMsg, true, childFragmentManager)
         }else {
             showAlertDialog(msg, "", false, childFragmentManager)
         }

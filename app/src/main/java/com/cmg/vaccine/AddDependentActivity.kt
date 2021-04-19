@@ -60,6 +60,7 @@ class AddDependentActivity : BaseActivity(),KodeinAware,SimpleListener,SlideDate
         binding.lifecycleOwner = this
         viewModel.listener = this
 
+
         binding.checkboxTerms.movementMethod = LinkMovementMethod.getInstance()
 
         binding.checkboxTerms.setOnSingleClickListener{
@@ -96,17 +97,24 @@ class AddDependentActivity : BaseActivity(),KodeinAware,SimpleListener,SlideDate
         }
 
         viewModel.nationalityCountryCode.value = getThreeAlpha(binding.ccpNationality.selectedCountryNameCode)
+        setIdNoCharLength(getThreeAlpha(binding.ccpNationality.selectedCountryNameCode))
         binding.ccpNationality.setOnCountryChangeListener {
+            viewModel.idNo.value = ""
             isFirstTimeSelectPOB = false
+            setIdNoCharLength(getThreeAlpha(binding.ccpNationality.selectedCountryNameCode))
+            /*if (getThreeAlpha(binding.ccpNationality.selectedCountryNameCode) == "MYS"){
+                viewModel.patientIdNoCharLength.set(12)
+            }else{
+                viewModel.patientIdNoCharLength.set(15)
+            }*/
             viewModel.nationalityCountryCode.value = getThreeAlpha(binding.ccpNationality.selectedCountryNameCode)
         }
 
-        if (checkPermission()) {
-            //viewModel.setCurrentCountry(getCurrentCountryName()!!)
+        /*if (checkPermission()) {
             setCurrentCountry()
         } else {
             requestPermission()
-        }
+        }*/
 
         /*viewModel.countries.observe(this, Observer {list->
             val arrayList = arrayListOf<Country>()
@@ -380,6 +388,15 @@ class AddDependentActivity : BaseActivity(),KodeinAware,SimpleListener,SlideDate
 
 
     }
+    private fun setIdNoCharLength(countryCode: String){
+        if (!countryCode.isNullOrEmpty()){
+            if (countryCode.equals("MYS",false)){
+                viewModel.patientIdNoCharLength.set(12)
+            }else{
+                viewModel.patientIdNoCharLength.set(15)
+            }
+        }
+    }
 
     private fun setCurrentCountry(){
         viewModel.birthPlaceCountryCode.value = getCurrentCountryName()
@@ -389,7 +406,7 @@ class AddDependentActivity : BaseActivity(),KodeinAware,SimpleListener,SlideDate
         viewModel.nationalityCountryFlag.value = World.getCountryFrom(getCurrentCountryName()).flagResource
 
         if (!viewModel.nationalityCountryCode.value.isNullOrEmpty()){
-            if (viewModel.nationalityCountryCode.value.equals("Malaysia",false)){
+            if (viewModel.nationalityCountryCode.value.equals("MYS",false)){
                 viewModel.patientIdNoCharLength.set(12)
             }else{
                 viewModel.patientIdNoCharLength.set(15)

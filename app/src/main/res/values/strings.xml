@@ -78,6 +78,7 @@
     <string name="failed">Failed</string>
     <string name="login_failed">Login Failed!</string>
     <string name="check_internet">Please check your internet connection</string>
+    <string name="account_opening">Account Opening In Progress</string>
 
     <string name="restore">Restore</string>
     <string name="restore_google_drive">Restore from Google Drive</string>
@@ -225,7 +226,8 @@
     <string name="payment_due">Payment Due</string>
     <string name="proceed_to_pay">Proceed to Payment</string>
 
-    <string name="not_support_google">Immunitee won\'t run without Google Play Services, which are not supported by your device.</string>
+    <string name="not_support_google">Backup won\'t run without Google Play Services, which are not supported by your device.</string>
+    <string name="immunitee_not_support_google">Immunitee won\'t run without Google Play Services, which are not supported by your device.</string>
 
 
     <string name="terms_condition">I agree to the <a href='com.cmg.vaccine.TellUsMoreActivity'>terms and privacy policy</a>.</string>

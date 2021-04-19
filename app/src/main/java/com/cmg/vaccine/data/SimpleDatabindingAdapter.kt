@@ -5,7 +5,11 @@ import android.widget.ImageView
 import androidx.core.os.HandlerCompat.postDelayed
 import androidx.databinding.BindingAdapter
 import androidx.databinding.InverseMethod
+import androidx.databinding.ObservableField
+import androidx.lifecycle.MutableLiveData
 import com.cmg.vaccine.R
+import com.cmg.vaccine.util.getThreeAlpha
+import com.hbb20.CountryCodePicker
 import java.util.concurrent.atomic.AtomicBoolean
 
 @InverseMethod("buttonIdToGender")
@@ -40,6 +44,16 @@ fun View.setOnSingleClickListener(clickListener: View.OnClickListener?) {
     clickListener?.also {
         setOnClickListener(OnSingleClickListener(it))
     } ?: setOnClickListener(null)
+}
+
+object countryPickerBinding {
+    @JvmStatic
+    @BindingAdapter("countryValue")
+    fun setCountryValue(picker: CountryCodePicker, code: MutableLiveData<String>) {
+        picker.setOnCountryChangeListener {
+            code.value = getThreeAlpha(picker.selectedCountryNameCode)
+        }
+    }
 }
 
 class OnSingleClickListener(

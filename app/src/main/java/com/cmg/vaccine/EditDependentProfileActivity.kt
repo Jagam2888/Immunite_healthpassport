@@ -80,6 +80,11 @@ class EditDependentProfileActivity : BaseActivity(),KodeinAware,SimpleListener,S
 
         binding.ccpNationality.setCountryForNameCode(viewModel.nationalityCountryCode.value?.dropLast(1))
         binding.ccpNationality.setOnCountryChangeListener {
+            if (getThreeAlpha(binding.ccpNationality.selectedCountryNameCode) == "MYS"){
+                viewModel.patientIdNoCharLength.set(12)
+            }else{
+                viewModel.patientIdNoCharLength.set(15)
+            }
             viewModel.nationalityCountryCode.value = getThreeAlpha(binding.ccpNationality.selectedCountryNameCode)
         }
 
