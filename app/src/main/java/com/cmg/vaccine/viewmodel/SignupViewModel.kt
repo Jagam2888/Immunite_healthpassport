@@ -77,6 +77,7 @@ class SignupViewModel(
             try {
                 val response = signUpRepositary.getIdentifierTypeFromAPI()
                 if (!response.data.isNullOrEmpty()){
+                    signUpRepositary.deleteAllIdentifier()
                     response.data.forEach {
                         val identifierType = IdentifierType(
                             it.identifierCode,

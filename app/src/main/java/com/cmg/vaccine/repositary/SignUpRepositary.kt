@@ -46,4 +46,8 @@ class SignUpRepositary(
     fun insertIdentifierType(identifierType: IdentifierType){
         database.getDao().insertIdentifierType(identifierType)
     }
+
+    fun deleteAllIdentifier(){
+        database.getDao().deleteAllIdentifierType()
+    }
 }

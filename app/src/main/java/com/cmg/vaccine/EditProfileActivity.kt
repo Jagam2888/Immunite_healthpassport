@@ -72,7 +72,7 @@ class EditProfileActivity : BaseActivity(),KodeinAware,SimpleListener,SlideDateP
         if (viewModel.countryCode.value != null)
             binding.ccpLoadCountryCode.setCountryForPhoneCode(viewModel.countryCode.value!!)
 
-        binding.ccpLoadCountryCode.registerCarrierNumberEditText(binding.edtMobile)
+        //binding.ccpLoadCountryCode.registerCarrierNumberEditText(binding.edtMobile)
         binding.imgBack.setOnClickListener {
             finish()
         }
@@ -184,12 +184,12 @@ class EditProfileActivity : BaseActivity(),KodeinAware,SimpleListener,SlideDateP
             }
         })
 
-        binding.ccpPob.setCountryForNameCode(viewModel.birthPlaceCountryCode.value?.dropLast(1))
+        binding.ccpPob.setCountryForNameCode(getTwoAlpha(viewModel.birthPlaceCountryCode.value!!))
         binding.ccpPob.setOnCountryChangeListener {
             viewModel.birthPlaceCountryCode.value = getThreeAlpha(binding.ccpPob.selectedCountryNameCode)
         }
 
-        binding.ccpNationality.setCountryForNameCode(viewModel.nationalityCountryCode.value?.dropLast(1))
+        binding.ccpNationality.setCountryForNameCode(getTwoAlpha(viewModel.nationalityCountryCode.value!!))
         binding.ccpNationality.setOnCountryChangeListener {
             viewModel.idNo.value = ""
             if (getThreeAlpha(binding.ccpNationality.selectedCountryNameCode) == "MYS"){

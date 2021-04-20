@@ -31,16 +31,20 @@ import com.blongho.country_data.Country
 import com.cmg.vaccine.DialogFragment.AlertDialogFragment
 import com.cmg.vaccine.R
 import com.cmg.vaccine.database.IdentifierType
+import com.cmg.vaccine.database.User
 import com.cmg.vaccine.database.WorldEntryCountries
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.niwattep.materialslidedatepicker.SlideDatePickerDialog
 import immuniteeEncryption.EncryptionUtils
+import io.paperdb.Paper
 import java.io.File
 import java.io.UnsupportedEncodingException
-import java.lang.Exception
+import java.lang.reflect.Type
 import java.security.InvalidKeyException
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
@@ -51,6 +55,7 @@ import java.util.*
 import java.util.regex.Pattern
 import javax.crypto.*
 import javax.crypto.spec.SecretKeySpec
+import kotlin.collections.HashMap
 
 fun Context.toast(message: String){
     Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
@@ -70,24 +75,47 @@ fun hide(progressBar: ProgressBar){
     return (!TextUtils.isEmpty(value) and Patterns.EMAIL_ADDRESS.matcher(value).matches())
 }*/
 
-fun showAlertDialog(title: String,msg: String,status: Boolean,fragmentManager: FragmentManager){
+fun showAlertDialog(title: String, msg: String, status: Boolean, fragmentManager: FragmentManager){
     var alertDialog = AlertDialogFragment()
     var data= Bundle()
-    data.putString(Passparams.DIALOG_TITLE,title)
-    data.putString(Passparams.DIALOG_MSG,msg)
-    data.putBoolean(Passparams.DIALOG_STATUS,status)
+    data.putString(Passparams.DIALOG_TITLE, title)
+    data.putString(Passparams.DIALOG_MSG, msg)
+    data.putBoolean(Passparams.DIALOG_STATUS, status)
     alertDialog.arguments = data
     try {
-        alertDialog.show(fragmentManager,"TAG")
-    }catch (e:Exception){
+        alertDialog.show(fragmentManager, "TAG")
+    }catch (e: Exception){
         e.printStackTrace()
     }
 
 }
 
-fun getThreeAlpha(nameCode:String):String{
-    val locale = Locale("en",nameCode)
+fun getThreeAlpha(nameCode: String):String{
+    val locale = Locale("en", nameCode)
+    val locals = Locale("en","")
     return locale.isO3Country
+}
+
+fun getTwoAlpha(nameCode: String): String? {
+    return getHashMap()[nameCode]
+}
+
+fun getHashMap():Map<String, String>{
+    var hashMap = HashMap<String, String>()
+    val gsonHashMap = Paper.book().read<String>(Passparams.GSON_HASHMAP_COUNTRYLIST,null)
+    if (gsonHashMap.isNullOrEmpty()) {
+        for (iso in Locale.getISOCountries()) {
+            val l = Locale("en", iso)
+            hashMap[l.isO3Country] = iso
+        }
+        val gson = Gson()
+        Paper.book().write(Passparams.GSON_HASHMAP_COUNTRYLIST,gson.toJson(hashMap))
+    }else{
+        val gson = Gson()
+        val type: Type = object : TypeToken<HashMap<String,String>>() {}.type
+        hashMap = gson.fromJson<HashMap<String,String>>(gsonHashMap, type)
+    }
+    return hashMap
 }
 
 fun isValidEmail(value: String):Boolean{
@@ -108,8 +136,8 @@ fun Activity.hideKeyBoard(){
 
 fun Context.getDeviceUUID():String?{
     try {
-        return Settings.Secure.getString(contentResolver,Settings.Secure.ANDROID_ID)
-    }catch (e:Exception){
+        return Settings.Secure.getString(contentResolver, Settings.Secure.ANDROID_ID)
+    }catch (e: Exception){
         e.printStackTrace()
     }
     return ""
@@ -123,12 +151,12 @@ fun Context.showDatePickerDialog(editText: EditText){
     val format = SimpleDateFormat("ddMMyyyy")
 
     val datePicker = DatePickerDialog(
-        this,
-        DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
-            calender.set(year, month, dayOfMonth)
-            val dateDob = format.format(calender.time)
-            editText.setText(dateDob)
-        }, year, month, day
+            this,
+            DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+                calender.set(year, month, dayOfMonth)
+                val dateDob = format.format(calender.time)
+                editText.setText(dateDob)
+            }, year, month, day
     )
     datePicker.datePicker.maxDate = System.currentTimeMillis()
 
@@ -155,7 +183,7 @@ fun Context.showDatePickerDialogForPassport(editText: EditText){
     datePicker.show()
 }
 
-fun validateTime(time:String):Boolean{
+fun validateTime(time: String):Boolean{
     if (time.isNullOrEmpty())
         return false
     val timeArray = time.split(":")
@@ -208,7 +236,7 @@ fun validateDateFormat(date: String):Boolean{
         return result
     }
     }
-fun isLeapYear(year:Int):Boolean {
+fun isLeapYear(year: Int):Boolean {
     return ((year % 4 == 0) and ((year % 100 != 0) or (year % 400 == 0)));
 }
 
@@ -258,13 +286,13 @@ fun validateDateFormatForPassport(date: String):Boolean{
 }
 
 fun Context.showSliderDatePickerDialog(
-    text:String,
-    fragmentManager:FragmentManager,
-    startDate: Calendar,
-    endDate:Calendar){
+        text: String,
+        fragmentManager: FragmentManager,
+        startDate: Calendar,
+        endDate: Calendar){
     SlideDatePickerDialog.Builder()
         .setLocale(Locale("en"))
-        .setThemeColor(ContextCompat.getColor(this,R.color.primary))
+        .setThemeColor(ContextCompat.getColor(this, R.color.primary))
         .setHeaderDateFormat("EEE dd MMM")
         .setShowYear(true)
         .setCancelText("Cancel")
@@ -276,7 +304,7 @@ fun Context.showSliderDatePickerDialog(
 
 }
 
-fun Context.showSnapTimePickerDialog(hour:Int,minute:Int): SnapTimePickerDialog {
+fun Context.showSnapTimePickerDialog(hour: Int, minute: Int): SnapTimePickerDialog {
     return SnapTimePickerDialog.Builder().apply {
         setTitle(R.string.time_picker_title)
         setTitleColor(R.color.white)
@@ -290,7 +318,7 @@ fun Context.showSnapTimePickerDialog(hour:Int,minute:Int): SnapTimePickerDialog 
     }.build()
 }
 
-fun Context.onTimePicked(selectedHour: Int, selectedMinute: Int,editText: EditText) {
+fun Context.onTimePicked(selectedHour: Int, selectedMinute: Int, editText: EditText) {
     val hour = selectedHour.toString().padStart(2, '0')
     val minute = selectedMinute.toString().padStart(2, '0')
     editText.setText(String.format(getString(R.string.selected_time_format, hour, minute)))
@@ -313,11 +341,11 @@ fun Context.showTimepickerDialog(editText: EditText, currentTime: String){
         editText.setText(SimpleDateFormat("HHmm").format(cal.time))
     }
     TimePickerDialog(
-        this,
-        timeSetListener,
-        cal.get(Calendar.HOUR_OF_DAY),
-        cal.get(Calendar.MINUTE),
-        true
+            this,
+            timeSetListener,
+            cal.get(Calendar.HOUR_OF_DAY),
+            cal.get(Calendar.MINUTE),
+            true
     ).show()
 }
 
@@ -400,7 +428,7 @@ fun changeDateFormatForViewProfile(dateString: String):String?{
     }
     return ""
 }
-fun removeSeconds(time:String):String?{
+fun removeSeconds(time: String):String?{
     val currentDateFormat = SimpleDateFormat("HH:mm:ss")
     val simpleDateFormat = SimpleDateFormat("HH:mm")
     try {
@@ -467,7 +495,7 @@ fun changeDateFormatBC(dateString: String):String?{
     }
     return ""
 }
-fun changeDateFormatForPrivateKeyDecrypt(dateString:String):String?{
+fun changeDateFormatForPrivateKeyDecrypt(dateString: String):String?{
     val currentDateFormat = SimpleDateFormat("dd/MM/yyyy")
     val simpleDateFormat = SimpleDateFormat("yyyyMMdd")
     try {
@@ -483,7 +511,7 @@ fun changeDateToTimeStamp(dateString: String):Long?{
     val date = currentDateFormat.parse(dateString) as Date
     return date.time
 }
-fun calculateHours(timeStamp:Long,currentTimeStamp:Long):Long{
+fun calculateHours(timeStamp: Long, currentTimeStamp: Long):Long{
     val differnce = timeStamp - currentTimeStamp
     val seconds = differnce / 1000
     val minutes = seconds / 60
@@ -495,7 +523,7 @@ fun Context.getCurrentCountryName():String?{
     var country:String = "Malaysia"
     //Couritnes.main {
         try {
-            val geocoder = Geocoder(applicationContext,Locale.getDefault())
+            val geocoder = Geocoder(applicationContext, Locale.getDefault())
             for (provider in locationManager.allProviders){
                 @SuppressWarnings("ResourceType")
                 val location = locationManager.getLastKnownLocation(provider)
@@ -510,9 +538,9 @@ fun Context.getCurrentCountryName():String?{
                     }
                 }
             }
-        }catch (e:Exception){
+        }catch (e: Exception){
             toast(e.message!!)
-        }catch (e:NoInternetException){
+        }catch (e: NoInternetException){
             toast(e.message!!)
         }
     //}
@@ -520,7 +548,7 @@ fun Context.getCurrentCountryName():String?{
     return country
 }
 
-fun Context.openPdf(fileName:String,file: File){
+fun Context.openPdf(fileName: String, file: File){
 
     if(file.exists()) {
         Intent(Intent.ACTION_VIEW).apply {
@@ -538,19 +566,19 @@ fun Context.openPdf(fileName:String,file: File){
     }
 }
 
-fun decryptQRValue(key:String,dob:String):String?{
-    return EncryptionUtils.decryptBackupKey(key,dob)
+fun decryptQRValue(key: String, dob: String):String?{
+    return EncryptionUtils.decryptBackupKey(key, dob)
 }
 
 fun Context.getLastLocation():Location? {
     var lastLocation: Location? = null
     var fusedLocationProviderClient: FusedLocationProviderClient =LocationServices.getFusedLocationProviderClient(
-        this
+            this
     )
     if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-            this,
-            Manifest.permission.ACCESS_COARSE_LOCATION
-        ) != PackageManager.PERMISSION_GRANTED) {
+                    this,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED) {
         return null
     }
     fusedLocationProviderClient?.lastLocation!!.addOnCompleteListener { task ->
@@ -620,7 +648,7 @@ private fun diceCoefficientOptimized(s: String?, t: String?): Double {
     return matches.toDouble() / (n + m)
 }
 
-fun Context.showSuccessOrFailedAlert(title:String,msg:String,status:Boolean){
+fun Context.showSuccessOrFailedAlert(title: String, msg: String, status: Boolean){
     val alertDialog = AlertDialog.Builder(this)
 
 }
@@ -693,8 +721,8 @@ fun encryptToString(secretKey: String, jsonValues: String): String? {
             val cipher = Cipher.getInstance("AES/ECB/PKCS5PADDING")
             cipher.init(Cipher.ENCRYPT_MODE, genearteKey(secretKey))
             var cipherFinal = Base64.encodeToString(
-                cipher.doFinal(jsonValues.toByteArray(charset("UTF-8"))),
-                Base64.DEFAULT
+                    cipher.doFinal(jsonValues.toByteArray(charset("UTF-8"))),
+                    Base64.DEFAULT
             )
             return cipherFinal
         }

@@ -180,8 +180,12 @@ class ProfileViewModel(
 
             dobTime.value = user.dobTime?.replace(":","")
             country.value = user.nationality
-            passportNumber.value = user.passportNumber
-            passportExpDate.value = user.passportExpiryDate
+            if (!user.passportNumber.isNullOrEmpty()) {
+                passportNumber.value = user.passportNumber
+            }
+            if (!user.passportExpiryDate.isNullOrEmpty()) {
+                passportExpDate.value = user.passportExpiryDate
+            }
             idNo.value = user.patientIdNo
             if (idNo.value.isNullOrEmpty()){
                 isIdnoExists.set(false)

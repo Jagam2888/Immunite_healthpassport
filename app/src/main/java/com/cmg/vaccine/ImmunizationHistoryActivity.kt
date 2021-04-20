@@ -114,7 +114,7 @@ class ImmunizationHistoryActivity : BaseActivity(),KodeinAware,SimpleListener,Sl
         }
 
 
-        binding.ccpLoadCountryCode.registerCarrierNumberEditText(binding.edtMobile)
+        //binding.ccpLoadCountryCode.registerCarrierNumberEditText(binding.edtMobile)
 
         binding.ccpLoadCountryCode.setOnCountryChangeListener {
             viewModel.selectedItemContactCode.set(binding.ccpLoadCountryCode.selectedCountryCode) }

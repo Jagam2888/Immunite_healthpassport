@@ -174,7 +174,7 @@ class AddDependentActivity : BaseActivity(),KodeinAware,SimpleListener,SlideDate
         if (viewModel.countryCode.value != null)
             binding.ccpLoadCountryCode.setCountryForPhoneCode(viewModel.countryCode.value!!)
         viewModel.selectedItemContactCode.set(binding.ccpLoadCountryCode.selectedCountryCode)
-        binding.ccpLoadCountryCode.registerCarrierNumberEditText(binding.edtMobile)
+        //binding.ccpLoadCountryCode.registerCarrierNumberEditText(binding.edtMobile)
 
         binding.ccpLoadCountryCode.setOnCountryChangeListener {
             viewModel.selectedItemContactCode.set(binding.ccpLoadCountryCode.selectedCountryCode) }

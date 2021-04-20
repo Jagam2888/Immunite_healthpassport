@@ -73,12 +73,13 @@ class EditDependentProfileActivity : BaseActivity(),KodeinAware,SimpleListener,S
         dependentSubId = intent.extras?.getString(Passparams.DEPENDENT_SUBID,"")
         viewModel.loadProfileData(this,dependentSubId!!)
 
-        binding.ccpPob.setCountryForNameCode(viewModel.birthPlaceCountryCode.value?.dropLast(1))
+        Log.d("display_code", getTwoAlpha(viewModel.birthPlaceCountryCode.value!!)!!)
+        binding.ccpPob.setCountryForNameCode(getTwoAlpha(viewModel.birthPlaceCountryCode.value!!))
         binding.ccpPob.setOnCountryChangeListener {
             viewModel.birthPlaceCountryCode.value = getThreeAlpha(binding.ccpPob.selectedCountryNameCode)
         }
 
-        binding.ccpNationality.setCountryForNameCode(viewModel.nationalityCountryCode.value?.dropLast(1))
+        binding.ccpNationality.setCountryForNameCode(getTwoAlpha(viewModel.nationalityCountryCode.value!!))
         binding.ccpNationality.setOnCountryChangeListener {
             if (getThreeAlpha(binding.ccpNationality.selectedCountryNameCode) == "MYS"){
                 viewModel.patientIdNoCharLength.set(12)
@@ -234,7 +235,7 @@ class EditDependentProfileActivity : BaseActivity(),KodeinAware,SimpleListener,S
             false
         })
 
-        binding.ccpLoadCountryCode.registerCarrierNumberEditText(binding.edtMobile)
+        //binding.ccpLoadCountryCode.registerCarrierNumberEditText(binding.edtMobile)
         if (viewModel.countryCode.value != null)
             binding.ccpLoadCountryCode.setCountryForPhoneCode(viewModel.countryCode.value!!)
 

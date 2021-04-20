@@ -217,7 +217,7 @@ class SignUpActivity : BaseActivity(),KodeinAware,SimpleListener,SlideDatePicker
             }
         })
 
-        binding.ccpLoadCountryCode.registerCarrierNumberEditText(binding.edtMobile)
+        //binding.ccpLoadCountryCode.registerCarrierNumberEditText(binding.edtMobile)
 
         binding.ccpLoadCountryCode.setOnCountryChangeListener {
             viewModel.selectedItemContactCode.set(binding.ccpLoadCountryCode.selectedCountryCode) }

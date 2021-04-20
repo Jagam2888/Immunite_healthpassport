@@ -55,6 +55,9 @@ object Passparams{
     const val ADVISARY_ALERT = "A"
 
 
+    const val GSON_HASHMAP_COUNTRYLIST = "gson_hashmap_countrylist"
+
+
     //API
     //const val URL = "http://47.254.238.145:7001/"
     //const val URL = "http://dev.immunitee.com:7001/"
@@ -62,7 +65,7 @@ object Passparams{
 
     //Staging API
     const val URL = "http://stapp.immunitee.com:7001/"
-    const val DOWNLOAD_TEST_REPORT = "http://stg.i-care.com:6001/gp-module-lab/ext/labpdf?labOrderTxn="
+    const val DOWNLOAD_TEST_REPORT = "https://stg.i-care.com:6001/gp-module-lab/ext/labpdf?labOrderTxn="
 
     //Production API
     //const val URL = "http://app.immunitee.com:7001/"
