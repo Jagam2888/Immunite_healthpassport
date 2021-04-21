@@ -13,6 +13,7 @@ import com.cmg.vaccine.listener.SimpleListener
 import com.cmg.vaccine.util.*
 import com.cmg.vaccine.viewmodel.WorldEntryViewModel
 import com.cmg.vaccine.viewmodel.viewmodelfactory.WorldEntryViewModelFactory
+import com.jdev.countryutil.Country
 import kotlinx.android.synthetic.main.layout_travel.*
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
@@ -36,7 +37,8 @@ class WorldEntriesDetailActivity : BaseActivity(),KodeinAware,SimpleListener {
         binding.viewmodel = viewModel
 
         val countryCode = intent.extras?.getString(Passparams.WORLD_ENTRY_SELECTED_COUNTRY_CODE,"")
-        val countryName = World.getCountryFrom(countryCode).name
+        //val countryName = World.getCountryFrom(countryCode).name
+        val countryName = Country.getCountryByISO(getTwoAlpha(countryCode!!)).name
         viewModel._selectedCountryName.value = countryName
 
         viewModel.listener = this

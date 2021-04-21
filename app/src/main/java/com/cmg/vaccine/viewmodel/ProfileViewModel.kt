@@ -186,11 +186,12 @@ class ProfileViewModel(
             if (!user.passportExpiryDate.isNullOrEmpty()) {
                 passportExpDate.value = user.passportExpiryDate
             }
-            idNo.value = user.patientIdNo
-            if (idNo.value.isNullOrEmpty()){
-                isIdnoExists.set(false)
-            }else{
+
+            if (user.patientIdNo.isNullOrEmpty()){
                 isIdnoExists.set(true)
+            }else{
+                idNo.value = user.patientIdNo
+                isIdnoExists.set(false)
             }
             if ((!user.patientIdType.isNullOrEmpty()) and (!identifierTypeList.value.isNullOrEmpty())) {
                 idType.value = identifierTypeList.value?.get(selectedIdType(user.patientIdType!!, identifierTypeList.value!!))?.identifierDisplay

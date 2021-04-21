@@ -50,6 +50,7 @@ class NotificationService(
 
                 val notification = Notification(
                     msgArray[1],
+                        title,
                     msgArray[0],
                     msgArray[2],
                     msgArray[3],

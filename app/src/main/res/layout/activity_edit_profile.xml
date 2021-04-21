@@ -614,7 +614,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:orientation="horizontal"
-                    android:background="@{profileviewmodel.isIdnoExists() ? @drawable/edittext_disable_background : @drawable/edittext_background}">
+                    android:background="@{profileviewmodel.isIdnoExists() ? @drawable/edittext_background : @drawable/edittext_disable_background}">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -672,7 +672,7 @@
                         android:background="@android:color/transparent"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="10dp"
-                        android:focusable="@{profileviewmodel.isIdnoExists()?false:true}"/>
+                        android:focusable="@{profileviewmodel.isIdnoExists()}"/>
 
                 </LinearLayout>
 

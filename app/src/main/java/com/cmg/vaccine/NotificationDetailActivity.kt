@@ -14,6 +14,9 @@ class NotificationDetailActivity : BaseActivity() {
         val msg = intent.extras?.get("msg")
         binding.txtMsg.text = msg.toString()
 
+        val title = intent.extras?.get("title")
+        binding.txtTitle.text = title.toString()
+
         binding.btnBack.setOnClickListener {
             finish()
         }

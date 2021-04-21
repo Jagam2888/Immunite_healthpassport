@@ -57,6 +57,7 @@ class NewsUpdateActivity : BaseActivity(),KodeinAware {
                 viewModel.updateNotificationReadStatus(viewModel.messageList.value?.get(position)?.id!!)
                 Intent(this@NewsUpdateActivity,NotificationDetailActivity::class.java).also {
                     it.putExtra("msg",viewModel.messageList.value?.get(position)?.message)
+                    it.putExtra("title",viewModel.messageList.value?.get(position)?.title)
                     startActivity(it)
                 }
             }

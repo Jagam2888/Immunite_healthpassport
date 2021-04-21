@@ -14,7 +14,6 @@ import com.cmg.vaccine.util.changeDateToTimeStamp
 import com.cmg.vaccine.viewmodel.SplashViewModel
 import com.cmg.vaccine.viewmodel.viewmodelfactory.SplashModelFactory
 import com.hbb20.CountryCodePicker
-import com.jdev.countryutil.Country
 
 import immuniteeEncryption.EncryptionUtils
 import io.paperdb.Paper

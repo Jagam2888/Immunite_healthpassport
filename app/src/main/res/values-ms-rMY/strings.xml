@@ -65,6 +65,9 @@
     <string name="remove_dependent">Buang Tanggungan</string>
     <string name="scan_qr_code">Imbas Kod QR</string>
 
+    <string name="dependent_profile">Dependent Profile</string>
+    <string name="principle_profile">Principle Profile</string>
+
     <string name="forget_pin"><u>Forget PIN</u></string>
     <string name="change_language_success">Bahasa Berubah Berjaya</string>
 

@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.cmg.vaccine.R
 import com.cmg.vaccine.database.Notification
 import com.cmg.vaccine.databinding.NotificationListItemBinding
+import com.cmg.vaccine.util.changeDateFormatForNotification
 
 class NotificationListAdapter(
     private val notificationList:List<Notification>
@@ -22,7 +23,8 @@ class NotificationListAdapter(
     )
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.notificationListItemBinding.notification = notificationList.get(position)
+        holder.notificationListItemBinding.notification = notificationList[position]
+        holder.notificationListItemBinding.txtDate.text = changeDateFormatForNotification(notificationList[position].date!!)
     }
 
     override fun getItemCount() = notificationList.size

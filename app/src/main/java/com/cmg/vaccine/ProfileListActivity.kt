@@ -49,12 +49,12 @@ class ProfileListActivity:BaseActivity(),KodeinAware {
 
 
 
-        binding.layoutParent.setOnClickListener {
+        /*binding.layoutParent.setOnClickListener {
             Intent(this,ViewProfileActivity::class.java).also {
                 it.putExtra(Passparams.USER, Passparams.PARENT)
                 startActivity(it)
             }
-        }
+        }*/
 
         binding.btnAddDependent.setOnSingleClickListener{
             Intent(this,AddDependentActivity::class.java).also {
@@ -98,7 +98,7 @@ class ProfileListActivity:BaseActivity(),KodeinAware {
 
     override fun onResume() {
         super.onResume()
-        viewModel.loadParentData()
+        //viewModel.loadParentData()
         viewModel.loadChildList()
         childListAdapter?.notifyDataSetChanged()
         if (viewModel.dependentListCount.get() >= 4) {
@@ -107,10 +107,10 @@ class ProfileListActivity:BaseActivity(),KodeinAware {
             }
         }
 
-        if (!viewModel.getProfileImage().isNullOrEmpty()){
+        /*if (!viewModel.getProfileImage().isNullOrEmpty()){
             val uri = Uri.parse(viewModel.getProfileImage())
             binding.imgProfile.setImageURI(uri)
-        }
+        }*/
 
         val isDoneAddDependent = Paper.book().read<Boolean>(Passparams.ADD_DEPENDENT_SUCCESS,false)
         if (isDoneAddDependent){

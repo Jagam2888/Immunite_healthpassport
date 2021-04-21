@@ -58,9 +58,9 @@
                         android:layout_height="wrap_content"
                         android:src="@drawable/clock_icon_gray" />
                     <TextView
+                        android:id="@+id/txt_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{notification.date}"
                         android:textColor="@color/gray"
                         android:textSize="12sp"
                         android:textAppearance="@style/opens_regular"

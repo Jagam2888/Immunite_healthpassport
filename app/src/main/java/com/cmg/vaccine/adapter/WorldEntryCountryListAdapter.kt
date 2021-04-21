@@ -11,6 +11,8 @@ import com.cmg.vaccine.R
 import com.cmg.vaccine.database.WorldEntryCountries
 import com.cmg.vaccine.databinding.CountryListItemBinding
 import com.cmg.vaccine.databinding.WorldEntryCountryListItemBinding
+import com.cmg.vaccine.util.getTwoAlpha
+import com.jdev.countryutil.Country
 
 class WorldEntryCountryListAdapter(
     private var countryList: ArrayList<WorldEntryCountries>
@@ -33,9 +35,10 @@ class WorldEntryCountryListAdapter(
     )
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.worldEntryCountryListItemBinding.countries = countryList.get(position)
+        holder.worldEntryCountryListItemBinding.countries = countryList[position]
 
-        val flag = World.getFlagOf(countryList.get(position).countryCodeAlpha)
+        val flag = Country.getCountryByISO(getTwoAlpha(countryList[position].countryCodeAlpha!!)).flag
+        //val flag = World.getFlagOf(countryList.get(position).countryCodeAlpha)
         holder.worldEntryCountryListItemBinding.imgFlag.setImageResource(flag)
 
     }

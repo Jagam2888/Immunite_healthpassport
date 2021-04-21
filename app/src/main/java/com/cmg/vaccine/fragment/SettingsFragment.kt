@@ -143,8 +143,15 @@ class SettingsFragment : Fragment(),KodeinAware,SimpleListener {
             }
         }*/
 
-        binding.layoutProfile.setOnSingleClickListener {
+        binding.layoutDepProfile.setOnSingleClickListener {
             Intent(context, ProfileListActivity::class.java).also {
+                context?.startActivity(it)
+            }
+        }
+
+        binding.layoutPrinicipleProfile.setOnSingleClickListener{
+            Intent(context,ViewProfileActivity::class.java).also {
+                it.putExtra(Passparams.USER, Passparams.PARENT)
                 context?.startActivity(it)
             }
         }

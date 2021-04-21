@@ -68,12 +68,12 @@ class ProfileFragment : Fragment(),KodeinAware {
 
 
 
-        binding.layoutParent.setOnClickListener {
+        /*binding.layoutParent.setOnClickListener {
             Intent(context,ViewProfileActivity::class.java).also {
                 it.putExtra(Passparams.USER,Passparams.PARENT)
                 context?.startActivity(it)
             }
-        }
+        }*/
 
         binding.btnAddDependent.setOnClickListener {
 
@@ -151,7 +151,7 @@ class ProfileFragment : Fragment(),KodeinAware {
 
     override fun onResume() {
         super.onResume()
-        viewModel.loadParentData()
+       // viewModel.loadParentData()
         viewModel.loadChildList()
         if (viewModel.dependentListCount.get() >= 4) {
             if (binding.btnAddDependent.visibility == View.VISIBLE){
@@ -161,7 +161,7 @@ class ProfileFragment : Fragment(),KodeinAware {
 
         if (!viewModel.getProfileImage().isNullOrEmpty()){
             val uri = Uri.parse(viewModel.getProfileImage())
-            binding.imgProfile.setImageURI(uri)
+            //binding.imgProfile.setImageURI(uri)
         }
     }
 

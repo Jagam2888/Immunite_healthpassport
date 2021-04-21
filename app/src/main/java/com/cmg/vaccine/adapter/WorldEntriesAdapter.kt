@@ -15,7 +15,9 @@ import com.cmg.vaccine.database.AddWorldEntries
 import com.cmg.vaccine.databinding.EntriesListItemBinding
 import com.cmg.vaccine.databinding.SwipeHorizontalRightBinding
 import com.cmg.vaccine.util.Passparams
+import com.cmg.vaccine.util.getTwoAlpha
 import com.cmg.vaccine.viewmodel.WorldEntryViewModel
+import com.jdev.countryutil.Country
 import com.tubb.smrv.SwipeHorizontalMenuLayout
 import com.tubb.smrv.SwipeMenuLayout
 import com.tubb.smrv.listener.SwipeSwitchListener
@@ -39,9 +41,10 @@ class WorldEntriesAdapter(
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         //holder.swipeHorizontalRightBinding.worldentries = countryList.get(position)
-        holder.swipeHorizontalRightBinding.smContentView.worldentries = countryList.get(position)
+        holder.swipeHorizontalRightBinding.smContentView.worldentries = countryList[position]
 
-        val flag = World.getFlagOf(countryList.get(position).countryCodeAlpha)
+        //val flag = World.getFlagOf(countryList.get(position).countryCodeAlpha)
+        val flag = Country.getCountryByISO(getTwoAlpha(countryList[position].countryCodeAlpha!!)).flag
         holder.swipeHorizontalRightBinding.smContentView.imgFlag.setImageResource(flag)
 
 

@@ -6,6 +6,7 @@ import androidx.room.PrimaryKey
 @Entity
 data class Notification(
         var countryCode:String?,
+        var title:String?,
         var message:String?,
         var notificationGroup:String?,
         var date:String?,

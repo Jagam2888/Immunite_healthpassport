@@ -380,13 +380,16 @@ class DependentViewModel(
             //state.set(dependent?.provinceState)
             passportNumber.value = dependent?.passportNo
             passportExpDate.value = dependent?.passportExpiryDate
-            idNo.value = dependent?.idNo
-            if (idNo.value.isNullOrEmpty()){
-                isIdnoExists.set(false)
-            }else{
+
+            if (dependent?.idNo.isNullOrEmpty()){
                 isIdnoExists.set(true)
+            }else{
+                idNo.value = dependent?.idNo
+                isIdnoExists.set(false)
             }
-            idType.value = dependent?.idType
+            if (!dependent?.idType.isNullOrEmpty()) {
+                idType.value = dependent?.idType
+            }
             dob.value = dependent?.dob?.replace("/","")
             dobTime.value = dependent?.dobTime?.replace(":","")
             country.value = dependent?.nationalityCountry

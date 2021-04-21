@@ -51,7 +51,7 @@
                 android:layout_centerVertical="true"/>
         </RelativeLayout>
 
-        <LinearLayout
+        <!--<LinearLayout
             android:id="@+id/layout_parent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -103,7 +103,7 @@
                     android:paddingTop="5dp"/>
             </LinearLayout>
 
-        </LinearLayout>
+        </LinearLayout>-->
         <TextView
             android:id="@+id/btn_upgrade"
             android:layout_width="wrap_content"
@@ -119,8 +119,8 @@
             android:id="@+id/recycler_view_child"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="5dp"
-            android:layout_below="@id/layout_parent"
+            android:layout_marginTop="20dp"
+            android:layout_below="@id/action_bar"
             android:paddingBottom="20dp"
             android:paddingRight="10dp"
             android:paddingLeft="10dp"

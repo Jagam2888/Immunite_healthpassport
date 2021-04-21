@@ -99,7 +99,7 @@ class HomeViewModel(
         var user = SwitchProfile()
 
         user.fullName = parent.fullName
-        user.tyep = "Principal"
+        user.tyep = Passparams.PARENT
         user.profileImg = parent.profileImage
         listuser = listOf(user)
 
@@ -487,7 +487,7 @@ class HomeViewModel(
                         updateDependentPrivateKeyStatus(getUser.subsId!!)
                         listener?.onSuccess("$originalPrivateKey|${getUser.firstName}|${getUser.dob}")
                     }else{
-                        listener?.onFailure("2"+response.Message)
+                        listener?.onFailure("4"+response.Message)
                     }
 
                 }catch (e: APIException) {
