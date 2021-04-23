@@ -73,6 +73,8 @@ class HomeFragment : Fragment(),KodeinAware,SimpleListener {
             viewModel.loadData()
         })
 
+        //context?.showToolTip(binding.notification,"this is vaccine")
+
         viewModel.listDashboard.observe(viewLifecycleOwner, Observer { list->
             listDashboard = list
             binding.sliderViewPager.also {

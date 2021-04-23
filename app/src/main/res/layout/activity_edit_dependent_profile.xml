@@ -562,6 +562,7 @@
                     android:textSize="14sp"
                     android:textAppearance="@style/opens_regular"
                     android:maxLines="1"
+                    android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890"
                     android:maxLength="30"
                     android:textColorHint="@color/gray"
                     android:textColor="@color/black"

@@ -103,7 +103,7 @@ class LoginPinActivity : BaseActivity(),KodeinAware,SimpleListener {
                                     startActivity(it)
                                 }
                                 }else{
-                                    toast("Incorrect PIN")
+                                    showAlertDialog(resources.getString(R.string.login_failed), "Incorrect PIN", false, supportFragmentManager)
                                 }
                             /*}else{
                                 binding.edtTxt.setText("")
@@ -159,6 +159,6 @@ class LoginPinActivity : BaseActivity(),KodeinAware,SimpleListener {
     }
 
     override fun onFailure(msg: String) {
-        showAlertDialog(resources.getString(R.string.login_failed), msg, false, supportFragmentManager)
+        showAlertDialog(resources.getString(R.string.failed), msg, false, supportFragmentManager)
     }
 }

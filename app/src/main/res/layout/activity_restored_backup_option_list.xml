@@ -87,6 +87,93 @@
                 android:layout_marginRight="20dp" />
         </RelativeLayout>
 
+        <RelativeLayout
+            android:id="@+id/progress_bar_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
+            android:layout_below="@id/action_bar"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginLeft="10dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="53dp"
+                    android:layout_marginLeft="69dp">
+
+                    <com.mikhaellopez.circularprogressbar.CircularProgressBar
+                        android:id="@+id/circularProgressBar"
+                        android:layout_width="220dp"
+                        android:layout_height="220dp"
+                        app:cpb_background_progressbar_color="@color/lite_green"
+                        app:cpb_background_progressbar_width="12dp"
+                        app:cpb_progress_direction="to_right"
+                        app:cpb_progressbar_color="@color/primary"
+                        app:cpb_progressbar_width="8dp"
+                        app:cpb_round_border="true"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/progress_perc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center_horizontal"
+                        android:text="0%"
+                        android:textAppearance="@style/opens_bold"
+                        android:textColor="@color/primary"
+                        android:textSize="23sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/circularProgressBar"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/circularProgressBar" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <TextView
+                    android:id="@+id/txt_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Restoring..."
+                    android:textAppearance="@style/opens_bold"
+                    android:textSize="23sp"
+                    android:textColor="@color/primary"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center_horizontal"
+                    android:layout_marginTop="20dp" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/ok_btn"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="@string/dialog_btn_ok"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:background="@drawable/lite_blue_button"
+                    android:layout_marginTop="50dp"
+                    android:visibility="gone"/>
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/right_arrow"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="20dp" />
+        </RelativeLayout>
+
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"

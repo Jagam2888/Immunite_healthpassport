@@ -553,6 +553,7 @@
                     android:hint="@string/passport_number"
                     android:maxLength="15"
                     android:maxLines="1"
+                    android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890"
                     android:textColorHint="@color/gray"
                     android:textColor="@color/black"
                     android:layout_marginTop="5dp"

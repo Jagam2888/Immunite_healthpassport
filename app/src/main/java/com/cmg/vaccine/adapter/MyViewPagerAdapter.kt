@@ -60,6 +60,11 @@ private val layouts:List<Dashboard>,
         val radioVaccine = view.findViewById<RadioButton>(R.id.radio_vaccine)
         val radioTest = view.findViewById<RadioButton>(R.id.radio_test)
 
+        //context.showToolTip(txtName,"this is vaccine")
+       /*if (position == 0){
+            context.showToolTip(radioVaccine,"this is vaccine")
+        }*/
+
         if (!layouts[position].profileImg.isNullOrEmpty()){
             val uri = Uri.parse(layouts[position].profileImg)
             profilePic.setImageURI(uri)
@@ -146,6 +151,7 @@ private val layouts:List<Dashboard>,
         radioGroup.setOnCheckedChangeListener { group, checkedId ->
             when(checkedId){
                 R.id.radio_vaccine ->{
+
                     if (recyclerViewVaccine.visibility == View.GONE){
                         recyclerViewTest.visibility = View.GONE
                         recyclerViewVaccine.visibility = View.VISIBLE
@@ -193,6 +199,7 @@ private val layouts:List<Dashboard>,
                 }
             }
         }
+
         container!!.addView(view)
         return view
     }

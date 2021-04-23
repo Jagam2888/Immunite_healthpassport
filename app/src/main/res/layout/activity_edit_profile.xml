@@ -538,6 +538,7 @@
                     android:text="@={profileviewmodel.passportNumber}"
                     android:textAppearance="@style/opens_regular"
                     android:textSize="14sp"
+                    android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890"
                     android:maxLines="1"
                     android:maxLength="30"
                     android:textColorHint="@color/gray"

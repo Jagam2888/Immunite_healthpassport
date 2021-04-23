@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteException
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.cmg.vaccine.data.setOnSingleClickListener
@@ -43,6 +44,7 @@ class RestoredBackupOptionList : BaseActivity(),KodeinAware,SimpleListener {
     private lateinit var driveServiceHelper: DriveServiceHelper
     var isGoogleSiginSuccess:Boolean = false
     var dob:String?=null
+    var progress_status:Float=0f
 
     private val factory:RestoreBackupOptionListViewModelFactory by instance()
 
@@ -60,6 +62,7 @@ class RestoredBackupOptionList : BaseActivity(),KodeinAware,SimpleListener {
         binding.lifecycleOwner = this
 
         viewModel.listener = this
+        binding.progressPerc.text=progress_status.toString() +" %"
 
         dob = intent.extras?.getString(Passparams.USER_DOB,"")
 
@@ -119,6 +122,8 @@ class RestoredBackupOptionList : BaseActivity(),KodeinAware,SimpleListener {
                     Log.e("Indicator", "Login In Success")
                     isGoogleSiginSuccess = true
                     toast("Login In Success")
+                    binding.layoutGoogleDrive.visibility= View.GONE
+                    binding.progressBarView.visibility= View.VISIBLE
                     driveServiceHelper= DriveServiceHelper(googleDriveService)
                     downLoadExcelFromDrive()
                 }
@@ -129,11 +134,14 @@ class RestoredBackupOptionList : BaseActivity(),KodeinAware,SimpleListener {
     }
 
     private fun downLoadExcelFromDrive(){
-        show(binding.progressBar)
+        //show(binding.progressBar)
 
         driveServiceHelper.downloadFile(File(getExternalFilesDir(null)?.absoluteFile,FILE_NAME))?.addOnSuccessListener {
             //hide(binding.progressBar)
             toast("Download success")
+            progress_status+=40;
+            binding.circularProgressBar.progress = progress_status
+            binding.progressPerc.text = "$progress_status%"
             decryptExcelFile()
         }?.addOnFailureListener {
             hide(binding.progressBar)
@@ -164,6 +172,7 @@ class RestoredBackupOptionList : BaseActivity(),KodeinAware,SimpleListener {
                     //Log.e("DOB", viewModel.getUserDOB().toString())
                     var decryptData = EncryptionUtils.decrypt(currentCell.stringCellValue, dob)
                     currentCell.setCellValue(decryptData)
+
                     Log.e("Encrypted Format", currentCell.stringCellValue.toString())
                 }
             }
@@ -179,6 +188,9 @@ class RestoredBackupOptionList : BaseActivity(),KodeinAware,SimpleListener {
             encrypt_wb.write(outputStream)
             toast("Decrypt Success")
             insertDataIntoLocalDatabase()
+            progress_status+=40;
+            binding.circularProgressBar.progress=progress_status
+            binding.progressPerc.text=progress_status.toString() +" %"
             Log.e("Decrypt", "Success")
 
         } catch (e: IOException) {
@@ -260,6 +272,9 @@ class RestoredBackupOptionList : BaseActivity(),KodeinAware,SimpleListener {
         }
         //hide(binding.progressBar)
         toast("Database insert done")
+        progress_status+=20;
+        binding.circularProgressBar.progress=progress_status
+        binding.progressPerc.text=progress_status.toString() +" %"
         viewModel.getUser(this)
 
         /*viewModel.userData.observe(this, androidx.lifecycle.Observer {

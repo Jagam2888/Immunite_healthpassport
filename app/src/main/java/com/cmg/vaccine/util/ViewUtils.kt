@@ -15,6 +15,7 @@ import android.os.Bundle
 import android.provider.Settings
 import android.util.Base64
 import android.util.Log
+import android.view.Gravity
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
@@ -41,6 +42,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.niwattep.materialslidedatepicker.SlideDatePickerDialog
 import immuniteeEncryption.EncryptionUtils
+import io.github.douglasjunior.androidSimpleTooltip.SimpleTooltip
 import io.paperdb.Paper
 import java.io.File
 import java.io.UnsupportedEncodingException
@@ -59,6 +61,17 @@ import kotlin.collections.HashMap
 
 fun Context.toast(message: String){
     Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+}
+
+fun Context.showToolTip(view: View,msg: String){
+    SimpleTooltip.Builder(this)
+        .anchorView(view)
+        .text(msg)
+        .transparentOverlay(false)
+        .gravity(Gravity.BOTTOM)
+        .animated(true)
+        .build()
+        .show()
 }
 
 fun show(progressBar: ProgressBar){
@@ -92,7 +105,6 @@ fun showAlertDialog(title: String, msg: String, status: Boolean, fragmentManager
 
 fun getThreeAlpha(nameCode: String):String{
     val locale = Locale("en", nameCode)
-    val locals = Locale("en","")
     return locale.isO3Country
 }
 

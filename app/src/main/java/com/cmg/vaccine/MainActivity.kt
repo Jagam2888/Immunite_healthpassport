@@ -27,10 +27,7 @@ import com.cmg.vaccine.adapter.SwitchProfileAdapter
 import com.cmg.vaccine.data.setOnSingleClickListener
 import com.cmg.vaccine.databinding.ActivityMainBinding
 import com.cmg.vaccine.fragment.*
-import com.cmg.vaccine.util.Passparams
-import com.cmg.vaccine.util.RecyclerViewTouchListener
-import com.cmg.vaccine.util.getDeviceUUID
-import com.cmg.vaccine.util.showAlertDialog
+import com.cmg.vaccine.util.*
 import com.cmg.vaccine.viewmodel.HomeViewModel
 import com.cmg.vaccine.viewmodel.viewmodelfactory.HomeViewModelFactory
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -78,6 +75,8 @@ class MainActivity : BaseActivity(),KodeinAware {
         val token = Paper.book().read(Passparams.FCM_TOKEN, "")
         Log.d("fcm_token", token)
         Log.d("device_id", getDeviceUUID()!!)
+
+
 
 
 

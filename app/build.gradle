@@ -22,7 +22,7 @@ android {
         minSdkVersion 23
         targetSdkVersion 30
         versionCode 35
-        versionName "1.34(13)"
+        versionName "1.34(15)"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -109,8 +109,13 @@ dependencies {
     implementation "org.kodein.di:kodein-di-generic-jvm:6.2.1"
     implementation "org.kodein.di:kodein-di-framework-android-x:6.2.1"
 
+    implementation 'com.mikhaellopez:circularprogressbar:3.0.3'
+
     //SharedPrefernces
     implementation "androidx.preference:preference-ktx:1.1.1"
+
+    //tooltip
+    implementation 'com.github.douglasjunior:android-simple-tooltip:1.0.0-rc.0'
 
     //Navigation
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"

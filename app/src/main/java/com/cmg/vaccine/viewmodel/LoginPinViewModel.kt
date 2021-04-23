@@ -83,7 +83,7 @@ class LoginPinViewModel(
                             labelTxt.value = "Enter your 4-digit Security PIN!"
                             tempPin.value = ""
                             pin.value = ""
-                            listener?.onFailure("Incorrect PIN")
+                            listener?.onFailure("Incorrect PIN,Sorry unable to generate PIN")
                         }
                     }else{
                         labelTxt.value = "Re-enter your 4-digit Security PIN!"

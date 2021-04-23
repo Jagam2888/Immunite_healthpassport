@@ -232,6 +232,7 @@ class AddDependentActivity : BaseActivity(),KodeinAware,SimpleListener,SlideDate
                 }
                 else ->{
                     isExistingUser = true
+                    binding.edtQrCode.setText("")
                     if (binding.layoutExistingUser.visibility == View.GONE) {
                         binding.layoutExistingUser.visibility = View.VISIBLE
                     }
