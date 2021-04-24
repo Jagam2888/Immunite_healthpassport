@@ -141,6 +141,7 @@
     <string name="activation_code">Activation Code</string>
     <string name="choose_plan">Choose Your Plan</string>
     <string name="subscribe">SubScribe</string>
+    <string name="subscribe_now">SubScribe Now</string>
     <string name="approve_account">You will be charges for the plan after the admin approves your account.</string>
     <string name="no_world_entry">No World Entry Setup! \nAdd your favourite World \nEntry Destination by \nclicking “+”  sign.</string>
     <string name="privacy">Privacy</string>
@@ -256,9 +257,8 @@ This QR Code is one time use and it expires in 5 minutes.</string>
     <string name="covid19_rrt_pcr_test">Covid-19 rRT-PCR Test</string>
     <string name="enter_the_activate_code">Enter the 6-digit activation code sent to </string>
 
-    <string name="no_data">Currently no data is available. \nPlease subscribe to obtain your digital
-clinical data and complete your clinical test at Immunitee clinic.
-        \nClick to see <a href=''>Immunitee Clinic.</a>\n<a href=''>Subscription</a></string>
+    <string name="no_data">Currently no data is available,\nPlease conduct your test at nearest \nclinics/labs.</string>
+    <string name="list_clinics">List of Panel Clinics or Labs</string>
 
 
     <string name="authorization">Authorization</string>

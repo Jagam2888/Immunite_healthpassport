@@ -146,19 +146,55 @@
                 android:textAppearance="@style/opens_bold"
                 android:paddingRight="20dp"
                 android:paddingLeft="20dp"/>
-            <TextView
-                android:id="@+id/txt_nodata"
+
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/no_data"
-                android:textSize="14sp"
-                android:textColor="@color/gray"
-                android:textAppearance="@style/opens_bold"
+                android:src="@drawable/ic_banner_small"
                 android:layout_gravity="center_horizontal"
-                android:gravity="center_horizontal"
+                android:layout_marginTop="20dp"/>
+
+            <LinearLayout
+                android:id="@+id/txt_nodata"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingRight="20dp"
+                android:paddingLeft="20dp"
+                android:paddingBottom="20dp"
+                android:paddingTop="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:layout_marginTop="20dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp" />
+                android:background="@drawable/lite_gray_background">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_info"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="20dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/no_data"
+                    android:textSize="14sp"
+                    android:textColor="@color/gray"
+                    android:textAppearance="@style/opens_bold"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center_horizontal"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp" />
+                <androidx.appcompat.widget.AppCompatButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/list_clinics"
+                    android:textColor="@color/white"
+                    android:textAppearance="@style/opens_bold"
+                    android:textSize="16sp"
+                    android:background="@drawable/button_green_primary"
+                    android:layout_marginTop="20dp"/>
+            </LinearLayout>
             <!--<TextView
                 android:id="@+id/txt_nodata_vaccine"
                 android:layout_width="wrap_content"

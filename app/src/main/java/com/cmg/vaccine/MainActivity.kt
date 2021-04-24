@@ -23,6 +23,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.cmg.vaccine.DialogFragment.PopUpDialogFragment
 import com.cmg.vaccine.adapter.SwitchProfileAdapter
 import com.cmg.vaccine.data.setOnSingleClickListener
 import com.cmg.vaccine.databinding.ActivityMainBinding
@@ -57,7 +58,7 @@ class MainActivity : BaseActivity(),KodeinAware {
 
         initViews()
 
-            }
+    }
 
 
 
@@ -145,6 +146,8 @@ class MainActivity : BaseActivity(),KodeinAware {
                 startActivity(it)
             }
         }
+
+        PopUpDialogFragment().show(supportFragmentManager,"Popup")
     }
 
     private fun isShowPopWindow(){

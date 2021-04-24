@@ -7,6 +7,7 @@ import android.os.SystemClock
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.TextView
@@ -52,7 +53,7 @@ private val layouts:List<Dashboard>,
         val txtPassportNo = view.findViewById<TextView>(R.id.txt_passport)
         val txtNationality = view.findViewById<TextView>(R.id.txt_nationality)
         val txtIdNo = view.findViewById<TextView>(R.id.txt_id_no)
-        val txtNoData = view.findViewById<TextView>(R.id.txt_nodata)
+        val txtNoData = view.findViewById<LinearLayout>(R.id.txt_nodata)
         //val txtNoDataVaccine = view.findViewById<TextView>(R.id.txt_nodata_vaccine)
         val profilePic = view.findViewById<CircleImageView>(R.id.img_profile)
         val radioGroup = view.findViewById<RadioGroup>(R.id.dashboard_radio_group)

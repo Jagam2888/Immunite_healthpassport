@@ -163,6 +163,7 @@
     <string name="activation_code">Kod pengaktifan</string>
     <string name="choose_plan">Pilih Plan Anda</string>
     <string name="subscribe">SubScribe</string>
+    <string name="subscribe_now">SubScribe Now</string>
     <string name="approve_account">Anda akan dikenakan bayaran untuk plan tersebut setelah pentadbir meluluskan akaun anda.</string>
     <string name="no_world_entry">Tiada Persediaan Kemasukan Dunia! \nTambah Dunia kegemaran anda \nMasuk Destinasi dengan \nKlik tanda "+"</string>
     <string name="privacy">Privasi</string>
@@ -241,9 +242,12 @@
     <string name="covid19_rrt_pcr_test">Ujian Covid-19 rRT-PCR</string>
     <string name="enter_the_activate_code">Masukkan kod pengaktifan 6 digit yang dihantar ke </string>
 
-    <string name="no_data">Currently no data is available. \nPlease subscribe to obtain your digital
+    <string name="no_data">Currently no data is available,\nPlease conduct your test at nearest \nclinics/labs.</string>
+    <string name="list_clinics">List of Panel Clinics or Labs</string>
+
+    <!--<string name="no_data">Currently no data is available. \nPlease subscribe to obtain your digital
 clinical data and complete your clinical test at Immunitee clinic.
-        \n.Click to see <a href=''>Immunitee Clinic.</a>\n<a href=''>Subscription</a> </string>
+        \n.Click to see <a href=''>Immunitee Clinic.</a>\n<a href=''>Subscription</a> </string>-->
 
 
     <string name="authorization">Kebenaran</string>
