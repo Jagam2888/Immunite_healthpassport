@@ -176,8 +176,8 @@ class HomeFragment : Fragment(),KodeinAware,SimpleListener {
             //viewModel.loadData()
             Intent(context,ViewPrivateKeyActivity::class.java).also {
                 it.putExtra(Passparams.PRIVATEKEY, privateKeyArray[0])
-                it.putExtra(Passparams.USER_NAME, privateKeyArray[1])
-                it.putExtra(Passparams.USER_DOB, privateKeyArray[2])
+                it.putExtra(Passparams.USER, privateKeyArray[1])
+                //it.putExtra(Passparams.USER_DOB, privateKeyArray[2])
                 context?.startActivity(it)
             }
         }

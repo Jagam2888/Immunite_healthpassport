@@ -129,6 +129,10 @@ class HomeRepositary(
         return database.getDao().getDependent(subId)
     }
 
+    fun getDependentDataUsingPrivateKey(privateKey: String):Dependent{
+        return database.getDao().getDependentUsingPrivateKey(privateKey)
+    }
+
     fun updateDependent(dependent: Dependent):Int{
         return database.getDao().updateDependent(dependent)
     }

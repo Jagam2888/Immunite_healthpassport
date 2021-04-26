@@ -17,6 +17,7 @@ import com.cmg.vaccine.model.SwitchProfile
 import com.cmg.vaccine.model.response.*
 import com.cmg.vaccine.repositary.HomeRepositary
 import com.cmg.vaccine.util.*
+import com.jdev.countryutil.Country
 import immuniteeEncryption.EncryptionUtils
 import org.json.JSONObject
 import retrofit2.Call
@@ -89,6 +90,11 @@ class HomeViewModel(
         get() = _userName
     var listuser:List<SwitchProfile>?=null
 
+    var userDob:MutableLiveData<String> = MutableLiveData()
+    var passportNo:MutableLiveData<String> = MutableLiveData()
+    var idNo:MutableLiveData<String> = MutableLiveData()
+    var nationality:MutableLiveData<String> = MutableLiveData()
+
 
     fun setCurrentItem(position:Int){
         _currentPagerPosition.value = position
@@ -122,6 +128,28 @@ class HomeViewModel(
         }
     }
 
+    fun loadUserForViewPrivateKey(user:String,privateKey: String){
+        if (user == Passparams.PARENT){
+            val parent = repositary.getUserData()
+            if (parent != null) {
+                _userName.value = parent.fullName
+                passportNo.value = parent.passportNumber
+                idNo.value = parent.patientIdNo
+                nationality.value = Country.getCountryByISO(getTwoAlpha(parent.nationality)).name
+                userDob.value = parent.dob
+            }
+        }else{
+            val dependent = repositary.getDependentDataUsingPrivateKey(privateKey)
+            if (dependent != null) {
+                _userName.value = dependent.firstName
+                passportNo.value = dependent.passportNo
+                idNo.value = dependent.idNo
+                nationality.value = Country.getCountryByISO(getTwoAlpha(dependent.nationalityCountry!!)).name
+                userDob.value = dependent.dob
+            }
+        }
+    }
+
 
     fun getVaccineTestRef(privateKey:String){
 
@@ -132,189 +160,191 @@ class HomeViewModel(
                     if (response != null) {
                         val jsonBody = JSONObject(response.string())
                         val jsonBodayDataObject = jsonBody.getJSONObject("data")
-                        val jsonBodyData = jsonBodayDataObject.getJSONArray("data")
-                        if (jsonBodyData.length() > 0) {
-                            for (i in 0 until jsonBodyData.length()) {
-                                var sampleCollectedDate = ""
-                                var sampleCollectedTime = "00:00:00"
-                                var testCode = ""
-                                var qualificationIdentifier = ""
-                                var qualificationIssuerName = ""
-                                var phone = ""
-                                var workAddress = ""
-                                var performerName = ""
-                                var type = ""
-                                var testBy = ""
-                                var takenBy = ""
-                                var displayName = ""
-                                var specimenCode = ""
-                                var specimenName = ""
-                                var dateSampleCollected = ""
-                                var dateSampleReceived = ""
-                                var issueDate = ""
-                                var statusFinalized = ""
-                                var testCodeName = ""
-                                var observationCode = ""
-                                var observationResult = ""
-                                var recordId = ""
+                        if (jsonBodayDataObject.has("data")) {
+                            val jsonBodyData = jsonBodayDataObject.getJSONArray("data")
+                            if (jsonBodyData.length() > 0) {
+                                for (i in 0 until jsonBodyData.length()) {
+                                    var sampleCollectedDate = ""
+                                    var sampleCollectedTime = "00:00:00"
+                                    var testCode = ""
+                                    var qualificationIdentifier = ""
+                                    var qualificationIssuerName = ""
+                                    var phone = ""
+                                    var workAddress = ""
+                                    var performerName = ""
+                                    var type = ""
+                                    var testBy = ""
+                                    var takenBy = ""
+                                    var displayName = ""
+                                    var specimenCode = ""
+                                    var specimenName = ""
+                                    var dateSampleCollected = ""
+                                    var dateSampleReceived = ""
+                                    var issueDate = ""
+                                    var statusFinalized = ""
+                                    var testCodeName = ""
+                                    var observationCode = ""
+                                    var observationResult = ""
+                                    var recordId = ""
 
-                                val jsonArrayBody = jsonBodyData.getJSONObject(i)
-                                if ((jsonArrayBody.has("specimen")) and (jsonArrayBody.has("observation"))) {
-                                    if (jsonArrayBody.has("specimen")) {
-                                        val jsonSpecimen = jsonArrayBody.getJSONObject("specimen")
-                                        val jsonspecimenType = jsonSpecimen.getJSONObject("type")
-                                        val jsonSpecimenCoding = jsonspecimenType.getJSONArray("coding")
+                                    val jsonArrayBody = jsonBodyData.getJSONObject(i)
+                                    if ((jsonArrayBody.has("specimen")) and (jsonArrayBody.has("observation"))) {
+                                        if (jsonArrayBody.has("specimen")) {
+                                            val jsonSpecimen = jsonArrayBody.getJSONObject("specimen")
+                                            val jsonspecimenType = jsonSpecimen.getJSONObject("type")
+                                            val jsonSpecimenCoding = jsonspecimenType.getJSONArray("coding")
 
-                                        val codeArray = jsonSpecimenCoding.getJSONObject(0)
-                                        specimenCode = codeArray.getString("code")
-                                        specimenName = codeArray.getString("display")
-                                        dateSampleCollected = jsonSpecimen.getString("collectedDateTime")
+                                            val codeArray = jsonSpecimenCoding.getJSONObject(0)
+                                            specimenCode = codeArray.getString("code")
+                                            specimenName = codeArray.getString("display")
+                                            dateSampleCollected = jsonSpecimen.getString("collectedDateTime")
 
-                                        val jsonspecimenMethod = jsonSpecimen.getJSONObject("method")
-                                        val jsonSpecimenMethodCoding = jsonspecimenMethod.getJSONArray("coding")
+                                            val jsonspecimenMethod = jsonSpecimen.getJSONObject("method")
+                                            val jsonSpecimenMethodCoding = jsonspecimenMethod.getJSONArray("coding")
 
-                                        val jsonSpecimenMethodCodingArray = jsonSpecimenMethodCoding.getJSONObject(0)
-                                        displayName = jsonSpecimenMethodCodingArray.getString("display")
+                                            val jsonSpecimenMethodCodingArray = jsonSpecimenMethodCoding.getJSONObject(0)
+                                            displayName = jsonSpecimenMethodCodingArray.getString("display")
 
-                                        if (!dateSampleCollected.isNullOrEmpty()) {
-                                            val isoFormat = changeDateFormatNormal(dateSampleCollected)
-                                            var dobFormatArray = isoFormat?.split(" ")
-                                            if (dobFormatArray?.size!! > 1) {
-                                                sampleCollectedDate = dobFormatArray?.get(0).toString()
-                                                sampleCollectedTime = dobFormatArray?.get(1).toString()
-                                            }
-                                        }
-
-                                        val jsonSpecimenCollection = jsonSpecimen.getJSONObject("collection")
-                                        val jsonSpecimenCollectionCollector = jsonSpecimenCollection.getJSONObject("collector")
-
-                                        if (jsonSpecimenCollectionCollector.has("name")) {
-                                            takenBy = jsonSpecimenCollectionCollector.getString("name")
-                                        }
-
-
-                                    }
-
-                                    if (jsonArrayBody.has("observation")) {
-                                        val jsonObservation = jsonArrayBody.getJSONObject("observation")
-                                        statusFinalized = jsonObservation.getString("status")
-                                        val jsonPerformer = jsonObservation.getJSONObject("performer")
-
-                                        val jsontestCodeMethod = jsonObservation.getJSONObject("code")
-                                        val jsontestCodeMethodCoding = jsontestCodeMethod.getJSONArray("coding")
-                                        if (jsontestCodeMethodCoding.length() > 1) {
-                                            val jsontestCodeMethodCodeArray =
-                                                    jsontestCodeMethodCoding.getJSONObject(1)
-                                            testCodeName =
-                                                    jsontestCodeMethodCodeArray.getString("display")
-
-                                            if (jsontestCodeMethodCodeArray.has("code")) {
-                                                testCode = jsontestCodeMethodCodeArray.getString("code")
-                                            }
-                                        }
-                                        val jsonObservation_interpretation = jsonObservation.getJSONArray("interpretation")
-                                        val jsonObservation_interpretationArray = jsonObservation_interpretation.getJSONObject(0)
-                                        val jsonObservation_interpretation_valueCodeableConcept = jsonObservation_interpretationArray.getJSONObject("valueCodeableConcept")
-                                        val jsonObservation_interpretation_valueCodeableConcept_coding = jsonObservation_interpretation_valueCodeableConcept.getJSONArray("coding")
-                                        val jsonObservation_interpretation_valueCodeableConcept_codingArray = jsonObservation_interpretation_valueCodeableConcept_coding.getJSONObject(0)
-                                        observationCode = jsonObservation_interpretation_valueCodeableConcept_codingArray.getString("code")
-                                        observationResult = jsonObservation_interpretation_valueCodeableConcept_codingArray.getString("display")
-
-                                        val jsonPerformerName = jsonPerformer.getJSONArray("name")
-                                        val jsonPerformerNameArray = jsonPerformerName.getJSONObject(0)
-
-                                        if (jsonPerformerNameArray.has("text")) {
-                                            performerName = jsonPerformerNameArray.getString("text")
-                                        }
-
-                                        val jsonQualification = jsonPerformer.getJSONArray("qualification")
-                                        if (jsonQualification.length() > 0) {
-                                            val jsonQualificationArray = jsonQualification.getJSONObject(0)
-                                            if (jsonQualificationArray.has("identifier")) {
-                                                qualificationIdentifier = jsonQualificationArray.getString("identifier")
-                                            }
-                                            if (jsonQualificationArray.has("issuer")) {
-                                                qualificationIssuerName = jsonQualificationArray.getString("issuer")
-                                            }
-                                        }
-
-                                        val jsonOrganization = jsonPerformer.getJSONObject("organization")
-                                        val jsonOrganizationContact = jsonOrganization.getJSONObject("contact")
-
-                                        if (jsonOrganizationContact.has("telecom")) {
-
-                                            val jsonTelecom = jsonOrganizationContact.getJSONArray("telecom")
-                                            if (jsonTelecom.length() > 0) {
-                                                val jsonTelecomArray = jsonTelecom.getJSONObject(0)
-                                                if (jsonTelecomArray.has("value")) {
-                                                    phone = jsonTelecomArray.getString("value")
+                                            if (!dateSampleCollected.isNullOrEmpty()) {
+                                                val isoFormat = changeDateFormatNormal(dateSampleCollected)
+                                                var dobFormatArray = isoFormat?.split(" ")
+                                                if (dobFormatArray?.size!! > 1) {
+                                                    sampleCollectedDate = dobFormatArray?.get(0).toString()
+                                                    sampleCollectedTime = dobFormatArray?.get(1).toString()
                                                 }
+                                            }
 
+                                            val jsonSpecimenCollection = jsonSpecimen.getJSONObject("collection")
+                                            val jsonSpecimenCollectionCollector = jsonSpecimenCollection.getJSONObject("collector")
+
+                                            if (jsonSpecimenCollectionCollector.has("name")) {
+                                                takenBy = jsonSpecimenCollectionCollector.getString("name")
+                                            }
+
+
+                                        }
+
+                                        if (jsonArrayBody.has("observation")) {
+                                            val jsonObservation = jsonArrayBody.getJSONObject("observation")
+                                            statusFinalized = jsonObservation.getString("status")
+                                            val jsonPerformer = jsonObservation.getJSONObject("performer")
+
+                                            val jsontestCodeMethod = jsonObservation.getJSONObject("code")
+                                            val jsontestCodeMethodCoding = jsontestCodeMethod.getJSONArray("coding")
+                                            if (jsontestCodeMethodCoding.length() > 1) {
+                                                val jsontestCodeMethodCodeArray =
+                                                        jsontestCodeMethodCoding.getJSONObject(1)
+                                                testCodeName =
+                                                        jsontestCodeMethodCodeArray.getString("display")
+
+                                                if (jsontestCodeMethodCodeArray.has("code")) {
+                                                    testCode = jsontestCodeMethodCodeArray.getString("code")
+                                                }
+                                            }
+                                            val jsonObservation_interpretation = jsonObservation.getJSONArray("interpretation")
+                                            val jsonObservation_interpretationArray = jsonObservation_interpretation.getJSONObject(0)
+                                            val jsonObservation_interpretation_valueCodeableConcept = jsonObservation_interpretationArray.getJSONObject("valueCodeableConcept")
+                                            val jsonObservation_interpretation_valueCodeableConcept_coding = jsonObservation_interpretation_valueCodeableConcept.getJSONArray("coding")
+                                            val jsonObservation_interpretation_valueCodeableConcept_codingArray = jsonObservation_interpretation_valueCodeableConcept_coding.getJSONObject(0)
+                                            observationCode = jsonObservation_interpretation_valueCodeableConcept_codingArray.getString("code")
+                                            observationResult = jsonObservation_interpretation_valueCodeableConcept_codingArray.getString("display")
+
+                                            val jsonPerformerName = jsonPerformer.getJSONArray("name")
+                                            val jsonPerformerNameArray = jsonPerformerName.getJSONObject(0)
+
+                                            if (jsonPerformerNameArray.has("text")) {
+                                                performerName = jsonPerformerNameArray.getString("text")
+                                            }
+
+                                            val jsonQualification = jsonPerformer.getJSONArray("qualification")
+                                            if (jsonQualification.length() > 0) {
+                                                val jsonQualificationArray = jsonQualification.getJSONObject(0)
+                                                if (jsonQualificationArray.has("identifier")) {
+                                                    qualificationIdentifier = jsonQualificationArray.getString("identifier")
+                                                }
+                                                if (jsonQualificationArray.has("issuer")) {
+                                                    qualificationIssuerName = jsonQualificationArray.getString("issuer")
+                                                }
+                                            }
+
+                                            val jsonOrganization = jsonPerformer.getJSONObject("organization")
+                                            val jsonOrganizationContact = jsonOrganization.getJSONObject("contact")
+
+                                            if (jsonOrganizationContact.has("telecom")) {
+
+                                                val jsonTelecom = jsonOrganizationContact.getJSONArray("telecom")
+                                                if (jsonTelecom.length() > 0) {
+                                                    val jsonTelecomArray = jsonTelecom.getJSONObject(0)
+                                                    if (jsonTelecomArray.has("value")) {
+                                                        phone = jsonTelecomArray.getString("value")
+                                                    }
+
+                                                }
+                                            }
+
+                                            if (jsonOrganizationContact.has("address")) {
+
+                                                val jsonAddress = jsonOrganizationContact.getJSONObject("address")
+                                                if (jsonAddress.has("text")) {
+                                                    workAddress = jsonAddress.getString("text")
+                                                }
+                                            }
+
+                                            if (jsonOrganization.has("type")) {
+                                                type = jsonOrganization.getString("type")
+                                            }
+
+                                            if (jsonOrganization.has("name")) {
+                                                testBy = jsonOrganization.getString("name")
+                                            }
+
+                                            if (jsonObservation.has("issued")) {
+                                                if (!jsonObservation.getString("issued").isNullOrEmpty() and !jsonObservation.getString("issued").equals("null")) {
+                                                    val isoFormat = changeDateFormatNormal(jsonObservation.getString("issued"))
+                                                    var formatArray = isoFormat?.split(" ")
+                                                    dateSampleReceived = formatArray?.get(0).toString()
+                                                    issueDate = formatArray?.get(0).toString()
+                                                }
+                                            }
+                                            if (jsonObservation.has("basedOn")) {
+                                                val jsonObservationBasedOn = jsonObservation.getJSONObject("basedOn")
+                                                recordId = jsonObservationBasedOn.getString("value")
                                             }
                                         }
 
-                                        if (jsonOrganizationContact.has("address")) {
+                                        val testReport = TestReport(
+                                                recordId,
+                                                privateKey,
+                                                displayName,
+                                                dateSampleReceived,
+                                                specimenCode,
+                                                specimenName,
+                                                sampleCollectedDate,
+                                                sampleCollectedTime,
+                                                testCode,
+                                                testCodeName,
+                                                observationCode,
+                                                observationResult,
+                                                issueDate,
+                                                statusFinalized,
+                                                performerName,
+                                                qualificationIdentifier,
+                                                qualificationIssuerName,
+                                                type,
+                                                phone,
+                                                workAddress,
+                                                testBy,
+                                                takenBy,
+                                                ""
+                                        )
 
-                                            val jsonAddress = jsonOrganizationContact.getJSONObject("address")
-                                            if (jsonAddress.has("text")) {
-                                                workAddress = jsonAddress.getString("text")
-                                            }
-                                        }
-
-                                        if (jsonOrganization.has("type")) {
-                                            type = jsonOrganization.getString("type")
-                                        }
-
-                                        if (jsonOrganization.has("name")) {
-                                            testBy = jsonOrganization.getString("name")
-                                        }
-
-                                        if (jsonObservation.has("issued")) {
-                                            if (!jsonObservation.getString("issued").isNullOrEmpty() and !jsonObservation.getString("issued").equals("null")) {
-                                                val isoFormat = changeDateFormatNormal(jsonObservation.getString("issued"))
-                                                var formatArray = isoFormat?.split(" ")
-                                                dateSampleReceived = formatArray?.get(0).toString()
-                                                issueDate = formatArray?.get(0).toString()
-                                            }
-                                        }
-                                        if (jsonObservation.has("basedOn")) {
-                                            val jsonObservationBasedOn = jsonObservation.getJSONObject("basedOn")
-                                            recordId = jsonObservationBasedOn.getString("value")
-                                        }
+                                        repositary.insertTestReport(testReport)
                                     }
-
-                                    val testReport = TestReport(
-                                            recordId,
-                                            privateKey,
-                                            displayName,
-                                            dateSampleReceived,
-                                            specimenCode,
-                                            specimenName,
-                                            sampleCollectedDate,
-                                            sampleCollectedTime,
-                                            testCode,
-                                            testCodeName,
-                                            observationCode,
-                                            observationResult,
-                                            issueDate,
-                                            statusFinalized,
-                                            performerName,
-                                            qualificationIdentifier,
-                                            qualificationIssuerName,
-                                            type,
-                                            phone,
-                                            workAddress,
-                                            testBy,
-                                            takenBy,
-                                            ""
-                                    )
-
-                                    repositary.insertTestReport(testReport)
                                 }
+                                //listener?.onSuccess(jsonBodayDataObject.getString("reason"))
+                            } else {
+                                //listener?.onFailure(jsonBodayDataObject.getString("reason"))
                             }
-                            //listener?.onSuccess(jsonBodayDataObject.getString("reason"))
-                        } else {
-                            //listener?.onFailure(jsonBodayDataObject.getString("reason"))
                         }
                     }
                 } catch (e: APIException) {
@@ -438,7 +468,8 @@ class HomeViewModel(
                         repositary.savePrivateKey(originalPrivateKey!!)
                         _privateKey.value = originalPrivateKey
                         updatePrivateKeyStatus(getUser.parentSubscriberId!!)
-                        listener?.onSuccess("$originalPrivateKey|${getUser.fullName}|${getUser.dob}")
+                        //listener?.onSuccess("$originalPrivateKey|${getUser.fullName}|${getUser.dob}")
+                        listener?.onSuccess(getUser.privateKey+"|"+Passparams.PARENT)
                     }else{
                         listener?.onFailure("4"+response.Message)
                     }
@@ -454,7 +485,8 @@ class HomeViewModel(
         }else{
             if (getUser != null){
                 _privateKey.value = getUser.privateKey
-                listener?.onSuccess("${getUser.privateKey}|${getUser.fullName}|${getUser.dob}")
+                //listener?.onSuccess("${getUser.privateKey}|${getUser.fullName}|${getUser.dob}")
+                listener?.onSuccess(getUser.privateKey+"|"+Passparams.PARENT)
             }
 
         }
@@ -485,7 +517,8 @@ class HomeViewModel(
                         repositary.updateDependent(getUser)
                         _privateKey.value = originalPrivateKey
                         updateDependentPrivateKeyStatus(getUser.subsId!!)
-                        listener?.onSuccess("$originalPrivateKey|${getUser.firstName}|${getUser.dob}")
+                        //listener?.onSuccess("$originalPrivateKey|${getUser.firstName}|${getUser.dob}")
+                        listener?.onSuccess(getUser.privateKey+"|"+Passparams.DEPENDENT)
                     }else{
                         listener?.onFailure("4"+response.Message)
                     }
@@ -500,7 +533,8 @@ class HomeViewModel(
             }
         }else{
             _privateKey.value = getUser.privateKey
-            listener?.onSuccess("${getUser.privateKey}|${getUser.firstName}|${getUser.dob}")
+            //listener?.onSuccess("${getUser.privateKey}|${getUser.firstName}|${getUser.dob}")
+            listener?.onSuccess(getUser.privateKey+"|"+Passparams.DEPENDENT)
         }
     }
 

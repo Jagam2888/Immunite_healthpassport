@@ -8,6 +8,7 @@ import android.graphics.Point
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.Log
+import android.view.View
 import android.view.WindowManager
 import androidmads.library.qrgenearator.QRGContents
 import androidmads.library.qrgenearator.QRGEncoder
@@ -16,6 +17,7 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.cmg.vaccine.data.setOnSingleClickListener
 import com.cmg.vaccine.databinding.ActivityViewPrivateKeyBinding
 import com.cmg.vaccine.listener.SimpleListener
 import com.cmg.vaccine.util.*
@@ -25,6 +27,7 @@ import com.cmg.vaccine.viewmodel.viewmodelfactory.HomeViewModelFactory
 import com.cmg.vaccine.viewmodel.viewmodelfactory.ViewPrivateKeyFactory
 import com.google.zxing.WriterException
 import immuniteeEncryption.EncryptionUtils
+import io.paperdb.Paper
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
@@ -52,15 +55,18 @@ class ViewPrivateKeyActivity : BaseActivity(),KodeinAware,SimpleListener {
 
         viewModel.listener = this
 
-        val userName = intent.extras?.getString(Passparams.USER_NAME,"")
+        val user = intent.extras?.getString(Passparams.USER,"")
+
+        /*val userName = intent.extras?.getString(Passparams.USER_NAME,"")
         viewModel._userName.value = userName
-        val userDob = intent.extras?.getString(Passparams.USER_DOB,"")
+        val userDob = intent.extras?.getString(Passparams.USER_DOB,"")*/
 
 
         privateKey = intent.extras?.getString(Passparams.PRIVATEKEY,"")
+        viewModel.loadUserForViewPrivateKey(user!!,privateKey!!)
         if (!privateKey.isNullOrEmpty()) {
             val timeStamp = System.currentTimeMillis().toString()
-            val encryptPrivateKey = encryptPrivateKey(privateKey!!,changeDateFormatForPrivateKeyDecrypt(userDob!!)!!)
+            val encryptPrivateKey = encryptPrivateKey(privateKey!!,changeDateFormatForPrivateKeyDecrypt(viewModel.userDob.value!!)!!)
             Log.d("encrypt_pk",encryptPrivateKey!!)
             generateQRCode(encryptPrivateKey)
             viewModel.getVaccineTestRef(privateKey!!)
@@ -81,7 +87,13 @@ class ViewPrivateKeyActivity : BaseActivity(),KodeinAware,SimpleListener {
             showMASREquest()
         }
 
-        startTimer()
+        binding.btnSubscribe.setOnSingleClickListener{
+            Intent(this,SubscriptionActivity::class.java).also {
+                startActivity(it)
+            }
+        }
+
+
     }
 
 
@@ -183,6 +195,22 @@ class ViewPrivateKeyActivity : BaseActivity(),KodeinAware,SimpleListener {
 
         val alertDialog = alertDialogBuilder.create()
         alertDialog.show()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val isAlredaySubscribe = Paper.book().read<Boolean>(Passparams.ISSUBSCRIBE,false)
+
+        if (isAlredaySubscribe) {
+            startTimer()
+            binding.layoutPrivateKey.visibility = View.VISIBLE
+            binding.layoutUserDetail.visibility = View.VISIBLE
+            binding.layoutDummy.visibility = View.GONE
+        }else{
+            binding.layoutPrivateKey.visibility = View.GONE
+            binding.layoutUserDetail.visibility = View.GONE
+            binding.layoutDummy.visibility = View.VISIBLE
+        }
     }
 
     override fun onStarted() {

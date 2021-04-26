@@ -1,5 +1,6 @@
 package com.cmg.vaccine.DialogFragment
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,6 +9,8 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import com.cmg.vaccine.R
+import com.cmg.vaccine.SubscriptionActivity
+import com.cmg.vaccine.data.setOnSingleClickListener
 import com.cmg.vaccine.databinding.FragmentPopUpDialogBinding
 
 
@@ -28,6 +31,13 @@ class PopUpDialogFragment : DialogFragment() {
 
         binding.imgClose.setOnClickListener {
             dismiss()
+        }
+
+        binding.btnSubscribe.setOnSingleClickListener{
+            Intent(context,SubscriptionActivity::class.java).also {
+                startActivity(it)
+                dismiss()
+            }
         }
     }
 

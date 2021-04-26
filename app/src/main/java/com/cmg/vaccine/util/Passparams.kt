@@ -25,6 +25,7 @@ object Passparams{
     const val CURRENT_USER_SUBSID = "current_user_subid"
     const val SELECT_LANGUAGE_POS = "select_language_pos"
     const val ISFROMCHANGELANGUAGE = "is_from_change_language"
+    const val ISSUBSCRIBE = "is_subscribe"
 
     const val ADD_DEPENDENT_SUCCESS = "add_dependent_success"
 

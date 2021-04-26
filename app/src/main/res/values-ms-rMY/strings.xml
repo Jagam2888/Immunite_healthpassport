@@ -164,6 +164,7 @@
     <string name="choose_plan">Pilih Plan Anda</string>
     <string name="subscribe">SubScribe</string>
     <string name="subscribe_now">SubScribe Now</string>
+    <string name="subscribe_private_key">Subscribe to get your Private Key</string>
     <string name="approve_account">Anda akan dikenakan bayaran untuk plan tersebut setelah pentadbir meluluskan akaun anda.</string>
     <string name="no_world_entry">Tiada Persediaan Kemasukan Dunia! \nTambah Dunia kegemaran anda \nMasuk Destinasi dengan \nKlik tanda "+"</string>
     <string name="privacy">Privasi</string>

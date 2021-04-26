@@ -56,6 +56,7 @@ class MainActivity : BaseActivity(),KodeinAware {
         homeViewModel = ViewModelProvider(this, factory).get(HomeViewModel::class.java)
         homeViewModel.setUser()
 
+
         initViews()
 
     }

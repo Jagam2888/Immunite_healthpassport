@@ -58,7 +58,19 @@
                     android:textColor="@color/primary"
                     android:layout_gravity="center_horizontal" />
 
-                <TextView
+                <ImageView
+                    android:id="@+id/img_subscribe_free"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/subscription_free" />
+
+                <ImageView
+                    android:id="@+id/img_subscribe_pay"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/subscription_year_package" />
+
+                <!--<TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/approve_account"
@@ -111,7 +123,7 @@
                     android:textColor="@color/white"
                     android:textSize="16sp"
                     android:textAppearance="@style/opens_bold"
-                    android:layout_marginTop="30dp" />
+                    android:layout_marginTop="30dp" />-->
             </LinearLayout>
         </ScrollView>
 
