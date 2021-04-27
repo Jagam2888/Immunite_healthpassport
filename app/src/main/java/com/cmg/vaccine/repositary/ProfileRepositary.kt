@@ -85,4 +85,8 @@ class ProfileRepositary(
             api.removeDependent(masterSubId,depSubId)
         }
     }
+
+    fun getNoOfDependentCount():String{
+        return database.getDao().getNoOfDependentCount()
+    }
 }

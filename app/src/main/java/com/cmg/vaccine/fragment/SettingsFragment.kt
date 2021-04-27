@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.media.RingtoneManager
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -20,6 +21,7 @@ import com.cmg.vaccine.databinding.FragmentSettingsBinding
 import com.cmg.vaccine.decryptTesting.DecryptActivityActivity
 import com.cmg.vaccine.listener.SimpleListener
 import com.cmg.vaccine.services.DriveServiceHelper
+import com.cmg.vaccine.services.NotificationService
 import com.cmg.vaccine.util.*
 import com.cmg.vaccine.viewmodel.SettingsViewModel
 import com.cmg.vaccine.viewmodel.viewmodelfactory.SettingsModelFactory
@@ -44,6 +46,7 @@ import kotlinx.android.synthetic.main.fragment_settings.*
 import kotlinx.android.synthetic.main.fragment_settings.layout_backup
 import kotlinx.android.synthetic.main.fragment_settings.view.*
 import kotlinx.android.synthetic.main.help.*
+import kotlinx.android.synthetic.main.notification.*
 import kotlinx.android.synthetic.main.security_pin.*
 import kotlinx.android.synthetic.main.sync.*
 import org.apache.poi.hssf.usermodel.HSSFWorkbook
@@ -254,6 +257,57 @@ class SettingsFragment : Fragment(),KodeinAware,SimpleListener {
         }
 
         changeLanguage()
+
+
+        //Ringtone part
+        /*if(viewModel.getNotificationStatus()!!)
+            toggle_show_notification.setToggleOn()
+        else
+            toggle_show_notification.setToggleOff()*/
+
+        if(viewModel.getNotificationSoundStatus()!!) {
+            toggle_notification_sound.setToggleOn()
+            //enableRingtoneSound()
+        }
+        else {
+            toggle_notification_sound.setToggleOff()
+            //disableRingtoneSound()
+        }
+
+
+
+        //Notification
+        /*toggle_show_notification.setOnToggleChanged(OnToggleChanged {
+            Log.e("Notification Status", it.toString())
+            viewModel.saveNotificationStatus(it)
+        })*/
+
+        toggle_notification_sound.setOnToggleChanged(OnToggleChanged {
+            Log.e("Noti Sound Status", it.toString())
+            viewModel.saveNotificationSoundStatus(it)
+            /* if (it == true)
+                enableRingtoneSound()
+            else
+                disableRingtoneSound()*/
+        })
+
+
+
+       /* create_notification_btn.setOnClickListener {
+            if(viewModel.getNotificationStatus()!!) {
+                val noti_service= NotificationService(this.requireContext())
+                noti_service?.createNotificationChannel("Hello, This is a notification from immunitee","Immunitee")
+            }
+        }*/
+
+        ringtone_name.post {  ringtone_name.text=viewModel.getRingtoneName()}
+
+        layout_change_ringtone.setOnClickListener {
+            pickupRingtone()
+        }
+
+
+
     }
 
     private fun hideMainLayout(){
@@ -567,6 +621,25 @@ class SettingsFragment : Fragment(),KodeinAware,SimpleListener {
         }
 
     }
+
+    //Ringtone part
+    private fun pickupRingtone() {
+        // if user granted access else ask for permission
+        // if user granted access else ask for permission
+        // am?.ringerMode  =AudioManager.RINGER_MODE_NORMAL
+        val currentTone = RingtoneManager.getActualDefaultRingtoneUri(
+                this.activity,
+                RingtoneManager.TYPE_NOTIFICATION
+        )
+        val intent = Intent(RingtoneManager.ACTION_RINGTONE_PICKER)
+        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_NOTIFICATION)
+        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE, "Select Tone")
+        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, currentTone)
+        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_SILENT, false)
+        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_DEFAULT, true)
+        startActivityForResult(intent, 999)
+    }
+
 
 
 }

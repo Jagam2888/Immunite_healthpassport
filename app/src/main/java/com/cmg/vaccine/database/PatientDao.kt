@@ -3,6 +3,7 @@ package com.cmg.vaccine.database
 import androidx.room.*
 import com.cmg.vaccine.model.JoinWorldEntryRuleAndPriority
 import com.cmg.vaccine.model.TestCodeFilterByReport
+import com.cmg.vaccine.model.response.SystemConfigResponseData
 
 @Dao
 interface PatientDao {
@@ -280,4 +281,16 @@ interface PatientDao {
 
     @Query("UPDATE Notification SET isRead=1 WHERE id =:id")
     fun updateNotificationReadStatus(id: Int)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertSystemConfig(systemConfigResponseData: SystemConfigResponseData)
+
+    @Query("DELETE FROM SystemConfigResponseData")
+    fun deleteAllSystemConfig()
+
+    @Query("SELECT sysMappingValue FROM SystemConfigResponseData WHERE sysMappingKeyName ='No_of_Dependent'")
+    fun getNoOfDependentCount():String
+
+    @Query("SELECT sysMappingValue FROM SystemConfigResponseData WHERE sysMappingKeyName ='MAS_Counter_Check_IN'")
+    fun getCounterCheckinDecryptKey():String
 }

@@ -117,6 +117,7 @@ object Passparams{
     const val DOWNLOAD_TEST_REPORT_FILE = "gp-module-lab/ext/labpdf"
     const val BLOCK_CHAIN_ERROR_CODE = "nhr-module-user/searchbcerrorcode"
     const val OBSERVATION_STATUS_CODE = "nhr-module-user/searchobservationstatus"
+    const val SYSTEM_CONFIG = "nhr-module-user/searchsystemconfig"
 
     //Block Chain
     const val BLOCK_CHAIN_URL = "https://cashierbook.com.my:8081/blockchainapi/"

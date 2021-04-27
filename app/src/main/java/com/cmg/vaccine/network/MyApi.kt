@@ -125,6 +125,9 @@ interface MyApi {
     @GET(Passparams.BLOCK_CHAIN_ERROR_CODE)
     suspend fun getBlockChainErrorCode():Response<BlockChainErrorCodeResponse>
 
+    @GET(Passparams.SYSTEM_CONFIG)
+    suspend fun getSystemConfigData():Response<SystemConfigResponse>
+
     @GET(Passparams.OBSERVATION_STATUS_CODE)
     suspend fun getObservationStatusCode():Response<ObservationStatusResponse>
 

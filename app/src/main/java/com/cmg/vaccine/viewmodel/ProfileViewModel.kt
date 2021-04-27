@@ -105,6 +105,7 @@ class ProfileViewModel(
         get() = _identifierTypeListForOthers
 
     var patientIdNoCharLength = ObservableInt()
+    var allowDependentCount = ObservableInt()
 
     val clicksListener = object : AdapterView.OnItemSelectedListener {
         override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -150,7 +151,13 @@ class ProfileViewModel(
             _identifierTypeListForOthers.value = identifierTypeForOthers
         }
 
-
+        Log.d("dep_count",repositary.getNoOfDependentCount())
+        if (!repositary.getNoOfDependentCount().isNullOrEmpty()){
+            val count = repositary.getNoOfDependentCount().toInt()
+            allowDependentCount.set(count)
+        }else{
+            allowDependentCount.set(0)
+        }
     }
 
     fun saveProfileImage(img:String){

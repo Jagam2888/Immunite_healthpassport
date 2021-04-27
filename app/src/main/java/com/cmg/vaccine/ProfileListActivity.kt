@@ -101,7 +101,7 @@ class ProfileListActivity:BaseActivity(),KodeinAware {
         //viewModel.loadParentData()
         viewModel.loadChildList()
         childListAdapter?.notifyDataSetChanged()
-        if (viewModel.dependentListCount.get() >= 4) {
+        if (viewModel.dependentListCount.get() >= viewModel.allowDependentCount.get()) {
             if (binding.btnAddDependent.visibility == View.VISIBLE){
                 binding.btnAddDependent.visibility = View.GONE
             }

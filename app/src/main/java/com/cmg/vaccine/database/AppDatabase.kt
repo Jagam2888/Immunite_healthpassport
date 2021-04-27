@@ -6,11 +6,13 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.cmg.vaccine.model.response.SystemConfigResponseData
 
 @Database(
     entities = [User::class,LoginPin::class,Dependent::class,Countries::class,Vaccine::class,TestReport::class,AddWorldEntries::class,
                TestType::class,Virus::class,VaccineDetail::class,WorldEntryCountries::class,WorldEntryRulesByCountry::class,AirportCitiesName::class,TestCodes::class,
-               IdentifierType::class,WorldPriority::class,BlockChainErrorCode::class,ObservationStatus::class,Notification::class,ScanAirportEntry::class,VaccineReport::class],
+               IdentifierType::class,WorldPriority::class,BlockChainErrorCode::class,ObservationStatus::class,Notification::class,ScanAirportEntry::class,VaccineReport::class,
+               SystemConfigResponseData::class],
     version = 1,
     exportSchema = false
 )

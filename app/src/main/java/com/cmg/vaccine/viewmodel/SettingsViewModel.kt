@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.cmg.vaccine.database.*
 import com.cmg.vaccine.listener.SimpleListener
+import com.cmg.vaccine.model.response.SystemConfigResponseData
 import com.cmg.vaccine.repositary.SettingsRepositary
 import com.cmg.vaccine.util.*
 import com.google.gson.JsonObject
@@ -65,8 +66,10 @@ class SettingsViewModel(
         repositary.deleteAllCountries()
         repositary.deleteAllBlockChainErrorCode()
         repositary.deleteAllObservationStatus()
+        repositary.deleteAllSystemConfig()
 
 
+        getSystemConfigData()
         getAllBlockChainErrorCode()
         getAllObservationStatus()
         getAllCountries()
@@ -80,6 +83,39 @@ class SettingsViewModel(
         getVaccineReportCall()
 
 
+    }
+
+    private fun getSystemConfigData(){
+        Couritnes.main {
+            try {
+                val response = repositary.getSystemConfigDataFromAPI()
+                if (!response.data.isNullOrEmpty()){
+                    response.data.forEach {
+                        if (!it.sysReferredBy.equals("backend",false)) {
+                            val systemConfigResponseData = SystemConfigResponseData(
+                                    it.configSeqno,
+                                    it.sysCreatedBy,
+                                    it.sysCreatedDate,
+                                    it.sysDescription,
+                                    it.sysMappingKeyName,
+                                    it.sysMappingValue,
+                                    it.sysReferredBy,
+                                    it.sysStatus,
+                                    it.sysUpdatedBy,
+                                    it.sysUpdatedDate
+                            )
+                            repositary.insertSystemConfigData(systemConfigResponseData)
+                        }
+                    }
+                }
+            }catch (e:APIException){
+                listener?.onShowToast(e.message!!)
+            }catch (e:NoInternetException){
+                listener?.onFailure("3"+e.message!!)
+            }catch (e:Exception){
+                listener?.onShowToast(e.message!!)
+            }
+        }
     }
 
     private fun getAllObservationStatus(){
@@ -761,5 +797,30 @@ class SettingsViewModel(
             listener?.onShowToast("Private key not generated yet")
         }
     }
+
+    fun getNotificationStatus():Boolean?{
+        return repositary.getNotificationStatus()
+    }
+
+    fun saveNotificationStatus(status:Boolean){
+        repositary.saveNotificationStatus(status)
+    }
+
+    fun getNotificationSoundStatus():Boolean?{
+        return repositary.getNotificationSoundStatus()
+    }
+
+    fun saveNotificationSoundStatus(status:Boolean){
+        repositary.saveNotificationSoundStatus(status)
+    }
+
+    fun saveRingtone(ringtone_url:String,ringtone_name:String){
+        repositary.saveRingtoneUrl(ringtone_url,ringtone_name)
+    }
+
+    fun getRingtoneName():String?{
+        return repositary.getRingtoneName()
+    }
+
 
 }

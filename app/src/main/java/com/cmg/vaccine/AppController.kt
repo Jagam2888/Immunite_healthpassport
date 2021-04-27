@@ -98,6 +98,9 @@ class AppController : Application(),KodeinAware {
         bind() from singleton { ImmunizationDetailRepositary(instance()) }
         bind() from provider { ImmunizationDetailViewModelFactory(instance()) }
 
+        bind() from singleton { WelcomeViewModelRepositary(instance(),instance(),instance()) }
+        bind() from provider { WelcomeViewModelFactory(instance()) }
+
         //bind() from provider { MyFirebaseInstanceIDService(instance()) }
 
     }

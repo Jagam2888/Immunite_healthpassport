@@ -80,7 +80,7 @@ class DepartureVerificationViewModel(
                     if (jsonObject.getString("purpose").equals("Counter Check-In",false)){
                         if (jsonObject.has("data")) {
                             val getData = jsonObject.getString("data")
-                            val decryptData = EncryptionUtils.decryptBackupKey(getData,"20210327")
+                            val decryptData = EncryptionUtils.decryptBackupKey(getData,repositary.getCounterCheckinDecryptKey())
                             val data = JSONObject(decryptData)
 
                             departureDestination.value = data.getString("reqDepatureDestination")

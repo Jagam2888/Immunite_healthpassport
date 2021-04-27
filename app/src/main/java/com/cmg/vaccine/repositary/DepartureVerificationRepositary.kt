@@ -50,4 +50,8 @@ class DepartureVerificationRepositary(
         return database.getDao().getFilterTestCodeByReport(privateKey,countryCode)
     }
 
+    fun getCounterCheckinDecryptKey():String{
+        return database.getDao().getCounterCheckinDecryptKey()
+    }
+
 }

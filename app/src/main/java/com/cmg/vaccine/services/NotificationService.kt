@@ -6,6 +6,9 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.media.AudioAttributes
+import android.media.RingtoneManager
+import android.net.Uri
 import android.os.Build
 import android.provider.Settings.Global.getString
 import androidx.core.app.NotificationCompat
@@ -18,6 +21,7 @@ import com.cmg.vaccine.NotificationGroupListActivity
 import com.cmg.vaccine.R
 import com.cmg.vaccine.database.AppDatabase
 import com.cmg.vaccine.database.Notification
+import com.cmg.vaccine.prefernces.PreferenceProvider
 import com.cmg.vaccine.repositary.NotificationRepositary
 import com.cmg.vaccine.util.Passparams
 import com.cmg.vaccine.viewmodel.HomeViewModel
@@ -78,6 +82,12 @@ class NotificationService(
             it.putExtra(Passparams.NOTIFICATION_FROM, group)
             pendingIntent = PendingIntent.getActivity(context,0,it,PendingIntent.FLAG_UPDATE_CURRENT)
         }
+
+        var pref= PreferenceProvider(context)
+        var currentRingtoneUrl= Uri.parse(pref.getRingtone())
+        var ringtone = RingtoneManager.getRingtone(this.context, currentRingtoneUrl)
+
+
         var builder = NotificationCompat.Builder(context, CHANNEL_ID)
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle(title)
@@ -85,8 +95,24 @@ class NotificationService(
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setContentIntent(pendingIntent).setAutoCancel(true)
 
-        with(NotificationManagerCompat.from(context)){
-            notify(1,builder.build())
+        if (pref.getNotificationSoundStatus() == false) {
+            with(NotificationManagerCompat.from(context)) {
+                cancelAll()
+            }
+        }else {
+            with(NotificationManagerCompat.from(context)) {
+                notify(1, builder.build())
+            }
         }
+
+        if(pref.getNotificationSoundStatus()!!){
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                ringtone.audioAttributes = AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_ALARM).build()
+            } else {
+                // ringtone.streamType = AudioManager.STREAM_ALARM
+            }
+            ringtone.play()
+        }
+
     }
 }

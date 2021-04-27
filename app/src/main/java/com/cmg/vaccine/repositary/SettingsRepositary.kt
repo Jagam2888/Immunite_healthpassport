@@ -212,4 +212,43 @@ class SettingsRepositary(
     fun deleteAllObservationStatus(){
         database.getDao().deleteAllObservationStatus()
     }
+
+    suspend fun getSystemConfigDataFromAPI():SystemConfigResponse{
+        return apiRequest {
+            api.getSystemConfigData()
+        }
+    }
+
+    fun insertSystemConfigData(systemConfigResponseData: SystemConfigResponseData){
+        database.getDao().insertSystemConfig(systemConfigResponseData)
+    }
+
+    fun deleteAllSystemConfig(){
+        database.getDao().deleteAllSystemConfig()
+    }
+
+    fun getNotificationStatus():Boolean?{
+        return preferenceProvider.getNotificationStatus()
+    }
+
+    fun saveNotificationStatus(status:Boolean){
+        preferenceProvider.saveNotificationStatus(status)
+    }
+
+    fun getNotificationSoundStatus():Boolean?{
+        return preferenceProvider.getNotificationSoundStatus()
+    }
+
+    fun saveNotificationSoundStatus(status:Boolean){
+        preferenceProvider.saveNotificationSoundStatus(status)
+    }
+
+    fun saveRingtoneUrl(ringtone_url:String,ringtone_name:String){
+        preferenceProvider.saveRingtone(ringtone_url,ringtone_name)
+    }
+
+    fun getRingtoneName():String?{
+        return preferenceProvider.getRingtoneName()
+    }
+
 }

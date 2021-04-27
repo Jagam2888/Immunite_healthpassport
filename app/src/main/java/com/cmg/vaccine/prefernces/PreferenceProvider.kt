@@ -19,6 +19,14 @@ private const val USER_SUB_ID = "user_sub_id"
 private const val PRINCIPAL_PRIVATE_KEY = "prinicipal_private_key"
 private const val FCM_TOKEN = "fcm_token"
 private const val PROFILE_IMAGE = "profile_image"
+
+//ringtone
+private const val NOTIFICATION_STATUS="notification_status"
+private const val NOTIFICATION_SOUND_STATUS="notification_sound_status"
+private const val RINGTONE_URL="ringtone_url"
+private const val RINGTONE_NAME="ringtone_name"
+
+
 class PreferenceProvider(
         context: Context
 ) {
@@ -130,4 +138,43 @@ class PreferenceProvider(
     fun getaddDependentReq():String?{
         return prefernece.getString(ADD_DEPENDENT_PROFILE_REQ,"")
     }
+    fun saveNotificationStatus(status:Boolean){
+        prefernece.edit().putBoolean(
+                NOTIFICATION_STATUS,
+                status
+        ).apply()
+    }
+
+    fun getNotificationStatus():Boolean?{
+        return prefernece.getBoolean(NOTIFICATION_STATUS,true)
+    }
+
+
+    fun saveNotificationSoundStatus(status:Boolean){
+        prefernece.edit().putBoolean(
+                NOTIFICATION_SOUND_STATUS,
+                status
+        ).apply()
+    }
+
+    fun getNotificationSoundStatus():Boolean?{
+        return prefernece.getBoolean(NOTIFICATION_SOUND_STATUS,true)
+    }
+
+
+    fun saveRingtone(ringtone_url:String,ringtone_name:String){
+        prefernece.edit().putString(RINGTONE_URL, ringtone_url).apply()
+        prefernece.edit().putString(RINGTONE_NAME, ringtone_name).apply()
+    }
+
+    fun getRingtoneName():String?{
+        return prefernece.getString(RINGTONE_NAME,null)
+    }
+
+
+
+    fun getRingtone():String?{
+        return prefernece.getString(RINGTONE_URL,null)
+    }
+
 }
