@@ -44,7 +44,7 @@ class RestoredBackupOptionList : BaseActivity(),KodeinAware,SimpleListener {
     private lateinit var driveServiceHelper: DriveServiceHelper
     var isGoogleSiginSuccess:Boolean = false
     var dob:String?=null
-    var progress_status:Float=0f
+    var progress_status:Int=0
 
     private val factory:RestoreBackupOptionListViewModelFactory by instance()
 

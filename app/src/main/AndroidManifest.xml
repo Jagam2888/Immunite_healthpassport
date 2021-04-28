@@ -30,10 +30,17 @@
         android:theme="@style/Theme.Noactionbar"
         android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup">
-        <activity android:name=".decryptTesting.DecryptActivityActivity"
+        <activity android:name=".FaceRecognitionActivity"
             android:screenOrientation="portrait"></activity>
-        <activity android:name=".decryptTesting.QRCodeActivity"
-            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".VerifyFaceIDActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".decryptTesting.DecryptActivityActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".decryptTesting.QRCodeActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".IntroActivity"
             android:screenOrientation="portrait" />

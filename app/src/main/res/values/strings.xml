@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Immunitee</string>
-    <string name="welcome_immunitee">Welcome to \nIMMUNITEE</string>
+    <string name="welcome_immunitee">Welcome to</string>
     <string name="full_name">Full Name</string>
     <string name="full_name_passport">Full Name as per Passport</string>
     <string name="first_name">First Name</string>
@@ -64,6 +64,17 @@
     <string name="my_key">MyKey</string>
     <string name="remove_dependent">Remove Dependent</string>
     <string name="scan_qr_code">Scan QR Code</string>
+
+    <string name="dont_have_faceid">I don’t have ID with me</string>
+    <string name="we_need_to_verify">We need to verify your ID</string>
+    <string name="we_need_to_verify_desc">We need to determine your information \ngiven is authentic and belongs to you.</string>
+    <string name="face_id">Face ID</string>
+    <string name="take_photo">Take photo</string>
+    <string name="set_up_face_id">Set Up Face ID</string>
+    <string name="sign_up_by_scan">Sign up by scanning your face.</string>
+    <string name="get_started">Get Started</string>
+    <string name="position_within_frame">Position your face within the frame</string>
+    <string name="setup_complete">Setup Complete</string>
 
     <string name="dependent_profile">Dependent Profiles</string>
     <string name="principle_profile">Principle Profile</string>

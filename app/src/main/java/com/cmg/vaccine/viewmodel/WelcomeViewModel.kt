@@ -27,6 +27,7 @@ class WelcomeViewModel(
             try {
                 val response = repositary.getSystemConfigDataFromAPI()
                 if (!response.data.isNullOrEmpty()){
+                    repositary.deleteSystemConfigData()
                     response.data.forEach {
                         if (!it.sysReferredBy.equals("backend",false)) {
                             val systemConfigResponseData = SystemConfigResponseData(

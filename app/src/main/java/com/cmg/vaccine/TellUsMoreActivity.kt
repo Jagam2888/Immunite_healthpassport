@@ -132,6 +132,12 @@ class TellUsMoreActivity : BaseActivity(),KodeinAware,SimpleListener,SlideDatePi
                 }
             }
         })
+
+        binding.txtFaceId.setOnSingleClickListener{
+            Intent(this,VerifyFaceIDActivity::class.java).also {
+                startActivity(it)
+            }
+        }
     }
 
     override fun onPositiveClick(day: Int, month: Int, year: Int, calendar: Calendar) {

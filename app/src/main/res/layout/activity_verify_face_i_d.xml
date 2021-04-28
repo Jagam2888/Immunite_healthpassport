@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".VerifyFaceIDActivity">
+
+        <LinearLayout
+            android:id="@+id/layout_verify_menu"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="?android:attr/actionBarSize"
+                android:background="@drawable/action_bar_center">
+
+                <ImageView
+                    android:id="@+id/img_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/left_arrow"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp" />
+            </RelativeLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingRight="20dp"
+                android:paddingLeft="20dp"
+                android:paddingBottom="20dp"
+                android:paddingTop="20dp">
+                <TextView
+                    android:id="@+id/instruction"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="50dp"
+                    android:text="@string/we_need_to_verify"
+                    android:textColor="@color/primary"
+                    android:textSize="23sp"
+                    android:textAppearance="@style/opens_bold"/>
+
+                <TextView
+                    android:id="@+id/instruction_desc"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/we_need_to_verify_desc"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    android:textAppearance="@style/opens_regular"/>
+                <LinearLayout
+                    android:id="@+id/face_id_btn"
+                    android:orientation="horizontal"
+                    android:layout_width="300dp"
+                    android:layout_gravity="center"
+                    android:layout_height="54dp"
+                    android:background="@drawable/button_green_primary"
+                    android:layout_marginTop="20dp">
+
+                    <ImageView
+                        android:id="@+id/imageView3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="87dp"
+                        android:layout_gravity="center"
+                        app:srcCompat="@drawable/ic_face_id_icon" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="@string/face_id"
+                        android:textColor="@color/white"
+                        android:layout_marginLeft="20dp"
+                        android:textSize="14sp"
+                        android:textAppearance="@style/opens_bold"/>
+            </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/take_photo_btn"
+                    android:orientation="horizontal"
+                    android:layout_width="300dp"
+                    android:layout_gravity="center"
+                    android:layout_height="54dp"
+                    android:background="@drawable/box_green_outline"
+                    android:layout_marginTop="20dp">
+                    <ImageView
+                        android:id="@+id/imageView4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="87dp"
+                        android:layout_gravity="center"
+                        app:srcCompat="@drawable/ic_cam_icon" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="@string/take_photo"
+                        android:textColor="@color/primary"
+                        android:layout_marginLeft="10dp"
+                        android:textSize="14sp"
+                        android:textAppearance="@style/opens_regular"/>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_face_id"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="gone">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="?android:attr/actionBarSize"
+                android:background="@color/primary">
+
+                <ImageView
+                    android:id="@+id/img_back_face_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/left_arrow"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/face_id"
+                    android:textSize="24sp"
+                    android:textAppearance="@style/opens_bold"
+                    android:textColor="@color/white"
+                    android:layout_centerInParent="true" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp">
+            <ImageView
+                android:id="@+id/imageView10"
+                android:layout_marginTop="40dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/ic_setup_face_icon" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="50dp"
+                android:text="@string/set_up_face_id"
+                android:textColor="@color/primary"
+                android:textSize="23sp"
+                android:textAppearance="@style/opens_bold"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:text="@string/sign_up_by_scan"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:textAppearance="@style/opens_regular"/>
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_get_start"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/get_started"
+                android:textSize="14sp"
+                android:textColor="@color/white"
+                android:textAppearance="@style/opens_bold"
+                android:background="@drawable/button_green"
+                android:layout_marginTop="88dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </RelativeLayout>
+</layout>

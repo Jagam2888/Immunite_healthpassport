@@ -155,6 +155,7 @@ class WorldEntryViewModel(
                 try {
                     val worldEntryCountries = repositary.getWorldEntriesCountryList()
                     if (!worldEntryCountries.data.isNullOrEmpty()) {
+                        repositary.deleteAllWorlEntryCountries()
                         worldEntryCountries.data.forEach { data->
                             val worldEntryCountries = WorldEntryCountries(
                                     data.countryName,

@@ -23,6 +23,10 @@ class WelcomeViewModelRepositary(
         database.getDao().insertSystemConfig(systemConfigResponseData)
     }
 
+    fun deleteSystemConfigData(){
+        database.getDao().deleteAllSystemConfig()
+    }
+
     fun saveNotificationStatus(){
         preferenceProvider.saveNotificationSoundStatus(true)
     }

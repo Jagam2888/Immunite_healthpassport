@@ -21,6 +21,10 @@ class WorldEntryRepositary(
         database.getDao().insertWorldCountries(worldEntryCountries)
     }
 
+    fun deleteAllWorlEntryCountries(){
+        database.getDao().deleteAllWorldCountries()
+    }
+
     fun insertWorldEntry(addWorldEntries: AddWorldEntries){
         database.getDao().insertAddWorldEntry(addWorldEntries)
     }

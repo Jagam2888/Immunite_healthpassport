@@ -395,6 +395,17 @@
                     android:layout_marginTop="20dp"
                     style="@style/opens_bold"
                     android:onClick="@{(v) -> tellusviewmodel.onRegister(v)}"/>
+
+                <TextView
+                    android:id="@+id/txt_face_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/dont_have_faceid"
+                    android:textColor="@color/primary"
+                    android:textAppearance="@style/opens_bold"
+                    android:textSize="14sp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="20dp"/>
             </LinearLayout>
         </ScrollView>
         <ProgressBar
