@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.cmg.vaccine.database.Notification
+import com.cmg.vaccine.listener.SimpleListener
 import com.cmg.vaccine.repositary.NotificationRepositary
 import kotlin.time.milliseconds
 
@@ -27,11 +28,17 @@ class NotificationViewModel(
 
     var unReadCount = ObservableField<String>()
 
+    var listener:SimpleListener?=null
+
+    fun deleteNotificationByGroup(group: String){
+        repositary.deleteNotificationByFroup(group)
+        listener?.onSuccess("success")
+    }
+
     fun loadMesaage(group:String){
         val list = repositary.getNotificationByGroup(group)
+        _messageList.value = list
         if (!list.isNullOrEmpty()){
-            _messageList.value = list
-
             val count = repositary.getUnReadCount(group)
             if (count != null) {
                 unReadCount.set(count.toString())

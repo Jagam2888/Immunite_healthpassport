@@ -20,7 +20,7 @@ interface PatientDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertWorldCountries(worldEntryCountries: WorldEntryCountries):Long
 
-    @Query("SELECT * FROM WorldEntryCountries")
+    @Query("SELECT * FROM WorldEntryCountries ORDER BY countryName")
     fun getAllWorldCountries():List<WorldEntryCountries>
 
     @Query("DELETE FROM WorldEntryCountries")
@@ -272,6 +272,9 @@ interface PatientDao {
 
     @Query("SELECT * FROM Notification WHERE notificationGroup =:group")
     fun getNotificationMsgByGroup(group:String):List<Notification>
+
+    @Query("DELETE FROM Notification WHERE notificationGroup =:group")
+    fun deleteNotificationByGroup(group: String)
 
     @Query("SELECT COUNT(isRead) FROM Notification WHERE isRead =0 AND notificationGroup =:group")
     fun getUnreadNotificationCount(group: String):Int

@@ -414,13 +414,6 @@ class EditProfileActivity : BaseActivity(),KodeinAware,SimpleListener,SlideDateP
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        /*if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE){
-            Picasso.with(this)
-                    .load(data?.data)
-                    .centerCrop()
-                    .fit()
-                    .into(binding.imgGallery)
-        }*/
         if (requestCode === CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             val result = CropImage.getActivityResult(data)
             if (resultCode === RESULT_OK) {

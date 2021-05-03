@@ -1,21 +1,24 @@
 package com.cmg.vaccine
 
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Size
+import android.view.View
 import android.view.ViewGroup
-import androidx.camera.core.*
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
-import com.cmg.vaccine.util.FaceTrackingAnalyzer
+import com.canhub.cropper.CropImage
+import com.canhub.cropper.CropImageView
+import com.cmg.vaccine.data.setOnSingleClickListener
 import com.cmg.vaccine.databinding.ActivityFaceRecognitionBinding
 import com.cmg.vaccine.util.toast
 
 class FaceRecognitionActivity : BaseActivity() {
     private lateinit var binding: ActivityFaceRecognitionBinding
 
-    var lens = CameraX.LensFacing.FRONT
+   // var lens = CameraX.LensFacing.FRONT
     val REQUEST_CODE_PERMISSION = 101
     var capture=false
     val REQUIRED_PERMISSIONS = arrayOf(
@@ -74,10 +77,22 @@ class FaceRecognitionActivity : BaseActivity() {
 
           })*/
 
+        binding.imgBack.setOnClickListener {
+            finish()
+        }
+
+        binding.imgCircle.setOnSingleClickListener{
+            if (checkPermission()){
+                cropImage()
+            }else{
+                requestPermission()
+            }
+        }
+
 
         if(intent.getStringExtra("recent_capture")==null)
             if (checkPermission()){
-                binding.trackingTextureView.post(Runnable { startCamera() })
+                //binding.trackingTextureView.post(Runnable { startCamera() })
             }else{
                 requestPermission()
             }
@@ -170,7 +185,7 @@ class FaceRecognitionActivity : BaseActivity() {
     }
 
     private fun initCamera() {
-        CameraX.unbindAll()
+      /*  CameraX.unbindAll()
         val pc = PreviewConfig.Builder()
             .setTargetResolution(
                 Size(
@@ -210,7 +225,37 @@ class FaceRecognitionActivity : BaseActivity() {
                 binding.resultCapture
             )
         )
-        CameraX.bindToLifecycle(this, preview, imageAnalysis)
+        CameraX.bindToLifecycle(this, preview, imageAnalysis)*/
+    }
+
+    private fun cropImage() {
+        CropImage.activity()
+            .setGuidelines(CropImageView.Guidelines.ON)
+            .setActivityTitle("Face ID")
+            .setCropShape(CropImageView.CropShape.OVAL)
+            .setFixAspectRatio(true)
+            .setCropMenuCropButtonTitle("Done")
+            .start(this)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode === CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            val result = CropImage.getActivityResult(data)
+            if (resultCode === RESULT_OK) {
+                val resultUri = result?.uri
+                //viewModel.saveProfileImage(resultUri.toString())
+                //viewModel.profileImageUri.set(resultUri.toString())
+                binding.imgCircle.setImageURI(resultUri)
+                binding.textDesc.text = resources.getString(R.string.set_up_face_id)
+                binding.layoutComplete.visibility = View.VISIBLE
+                //toast("You profile picture was successfully changed")
+            } else if (resultCode === CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                val error = result?.error
+                error?.message?.let { toast(it) }
+            }
+        }
+
     }
 
     override fun onRequestPermissionsResult(
@@ -224,7 +269,8 @@ class FaceRecognitionActivity : BaseActivity() {
                 if (grantResults.isNotEmpty()) {
                     val accepted: Boolean = grantResults[0] == PackageManager.PERMISSION_GRANTED
                     if (accepted) {
-                        binding.trackingTextureView.post(Runnable { startCamera() })
+                        cropImage()
+                        //binding.trackingTextureView.post(Runnable { startCamera() })
                     } else {
                         toast("Permission Denied, You cannot access your camera")
                     }

@@ -44,7 +44,7 @@ class RestoredBackupOptionList : BaseActivity(),KodeinAware,SimpleListener {
     private lateinit var driveServiceHelper: DriveServiceHelper
     var isGoogleSiginSuccess:Boolean = false
     var dob:String?=null
-    var progress_status:Int=0
+    var progress_status:Float=0f
 
     private val factory:RestoreBackupOptionListViewModelFactory by instance()
 
@@ -62,7 +62,7 @@ class RestoredBackupOptionList : BaseActivity(),KodeinAware,SimpleListener {
         binding.lifecycleOwner = this
 
         viewModel.listener = this
-        binding.progressPerc.text=progress_status.toString() +" %"
+        binding.progressPerc.text="${progress_status.toInt()}%"
 
         dob = intent.extras?.getString(Passparams.USER_DOB,"")
 
@@ -141,7 +141,7 @@ class RestoredBackupOptionList : BaseActivity(),KodeinAware,SimpleListener {
             toast("Download success")
             progress_status+=40;
             binding.circularProgressBar.progress = progress_status
-            binding.progressPerc.text = "$progress_status%"
+            binding.progressPerc.text = "${progress_status.toInt()}%"
             decryptExcelFile()
         }?.addOnFailureListener {
             hide(binding.progressBar)
@@ -190,7 +190,7 @@ class RestoredBackupOptionList : BaseActivity(),KodeinAware,SimpleListener {
             insertDataIntoLocalDatabase()
             progress_status+=40;
             binding.circularProgressBar.progress=progress_status
-            binding.progressPerc.text=progress_status.toString() +" %"
+            binding.progressPerc.text="${progress_status.toInt()}%"
             Log.e("Decrypt", "Success")
 
         } catch (e: IOException) {
@@ -274,7 +274,7 @@ class RestoredBackupOptionList : BaseActivity(),KodeinAware,SimpleListener {
         toast("Database insert done")
         progress_status+=20;
         binding.circularProgressBar.progress=progress_status
-        binding.progressPerc.text=progress_status.toString() +" %"
+        binding.progressPerc.text="${progress_status.toInt()}%"
         viewModel.getUser(this)
 
         /*viewModel.userData.observe(this, androidx.lifecycle.Observer {

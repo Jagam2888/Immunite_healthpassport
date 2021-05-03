@@ -151,7 +151,7 @@ class ProfileViewModel(
             _identifierTypeListForOthers.value = identifierTypeForOthers
         }
 
-        Log.d("dep_count",repositary.getNoOfDependentCount())
+        //Log.d("dep_count",repositary.getNoOfDependentCount())
         if (!repositary.getNoOfDependentCount().isNullOrEmpty()){
             val count = repositary.getNoOfDependentCount().toInt()
             allowDependentCount.set(count)

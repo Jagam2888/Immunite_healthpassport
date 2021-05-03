@@ -55,7 +55,7 @@ class WorldEntriesAdapter(
         }else if ((viewModel.vaccineList.value?.isNotEmpty() == true) and (viewModel.testReportList.value?.isEmpty() == true)){
             holder.swipeHorizontalRightBinding.smContentView.statusIndicator.setImageResource(R.drawable.green_indicator)
         }else if ((viewModel.vaccineList.value?.isEmpty() == true) and (viewModel.testReportList.value?.isNotEmpty() == true)){
-            holder.swipeHorizontalRightBinding.smContentView.statusIndicator.setImageResource(R.drawable.yellow_indicator)
+            holder.swipeHorizontalRightBinding.smContentView.statusIndicator.setImageResource(R.drawable.red_indicator)
         }
 
         holder.swipeHorizontalRightBinding.sml.setSwipeListener(object :SwipeSwitchListener{

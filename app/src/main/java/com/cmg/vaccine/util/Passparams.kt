@@ -54,6 +54,7 @@ object Passparams{
     const val NEWS_UPDATE = "N"
     const val REGULATORY_UPDATE = "R"
     const val ADVISARY_ALERT = "A"
+    const val NOTIFICATION_MSG = "notification_msg"
 
 
     const val GSON_HASHMAP_COUNTRYLIST = "gson_hashmap_countrylist"

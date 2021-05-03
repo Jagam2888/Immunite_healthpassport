@@ -7,17 +7,10 @@ import android.view.TextureView
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
-import androidx.camera.core.CameraX.LensFacing
-import androidx.camera.core.ImageAnalysis
-import androidx.camera.core.ImageProxy
-import com.google.firebase.ml.vision.FirebaseVision
-import com.google.firebase.ml.vision.common.FirebaseVisionImage
-import com.google.firebase.ml.vision.common.FirebaseVisionImageMetadata
-import com.google.firebase.ml.vision.face.FirebaseVisionFace
-import com.google.firebase.ml.vision.face.FirebaseVisionFaceDetectorOptions
-import com.shunan.circularprogressbar.CircularProgressBar
 
 
+
+/*
 class FaceTrackingAnalyzer internal constructor(
     private val tv: TextureView,
     iv: ImageView,
@@ -87,7 +80,8 @@ class FaceTrackingAnalyzer internal constructor(
 
     private fun processFaces(faces: List<FirebaseVisionFace>) {
         for (face in faces) {
- /*           val box = Rect(
+ */
+/*           val box = Rect(
                 translateX(face.boundingBox.left.toFloat()).toInt(),
                 translateY(face.boundingBox.top.toFloat()).toInt(),
                 translateX(face.boundingBox.right.toFloat()).toInt(),
@@ -112,7 +106,8 @@ class FaceTrackingAnalyzer internal constructor(
                         + " right: " + face.boundingBox.right
             )
             linePaint?.let { canvas?.drawRect(box, it) }
-*/
+*//*
+
 
     if(!capture) {
         if (face.trackingId != temp) {
@@ -196,4 +191,4 @@ class FaceTrackingAnalyzer internal constructor(
         this.lens = lens
         this.result_cap=result_cap
     }
-}
+}*/

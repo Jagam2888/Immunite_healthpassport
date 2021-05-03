@@ -84,8 +84,18 @@ class NotificationService(
         }
 
         var pref= PreferenceProvider(context)
-        var currentRingtoneUrl= Uri.parse(pref.getRingtone())
-        var ringtone = RingtoneManager.getRingtone(this.context, currentRingtoneUrl)
+        if (!pref.getRingtone().isNullOrEmpty()) {
+            var currentRingtoneUrl = Uri.parse(pref.getRingtone())
+            var ringtone = RingtoneManager.getRingtone(this.context, currentRingtoneUrl)
+            if(pref.getNotificationSoundStatus()!!){
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    ringtone.audioAttributes = AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_ALARM).build()
+                } else {
+                    // ringtone.streamType = AudioManager.STREAM_ALARM
+                }
+                ringtone.play()
+            }
+        }
 
 
         var builder = NotificationCompat.Builder(context, CHANNEL_ID)
@@ -105,14 +115,7 @@ class NotificationService(
             }
         }
 
-        if(pref.getNotificationSoundStatus()!!){
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                ringtone.audioAttributes = AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_ALARM).build()
-            } else {
-                // ringtone.streamType = AudioManager.STREAM_ALARM
-            }
-            ringtone.play()
-        }
+
 
     }
 }

@@ -49,8 +49,11 @@ class VerifyFaceIDActivity : BaseActivity() {
         }
 
         binding.takePhotoBtn.setOnSingleClickListener{
+            Intent(this, FaceRecognitionActivity::class.java).also {
+                startActivity(it)
+            }
             //if (checkPermission()) {
-                cropImage()
+               // cropImage()
            /* }else{
                 requestPermission()
             }*/

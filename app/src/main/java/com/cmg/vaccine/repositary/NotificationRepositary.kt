@@ -23,6 +23,10 @@ class NotificationRepositary(
         database.getDao().insertNotificationMessage(notification)
     }
 
+    fun deleteNotificationByFroup(group: String){
+        database.getDao().deleteNotificationByGroup(group)
+    }
+
     fun getNotificationByGroup(group:String):List<Notification>{
         return database.getDao().getNotificationMsgByGroup(group)
     }

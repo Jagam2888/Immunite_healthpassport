@@ -44,6 +44,7 @@ class WorldEntriesDetailActivity : BaseActivity(),KodeinAware,SimpleListener {
         viewModel.listener = this
 
         binding.travel.txtDescription.text = "$countryName has restricted the entry of all foreign nationals who have passed through or have been in China, Iran, Most European Countries, UK, Ireland and Brazil in the past 14 days.`}"
+       // binding.travel.txtDescription.text = "Digital health, which includes digital care programs, is the convergence of digital technologies with health, healthcare, living, and society to enhance the efficiency of healthcare delivery to make medicine more personalized and precise.[1][2][3] The discipline uses information and communication technologies to facilitate understanding of health problems and challenges faced by people receiving medical treatment.Worldwide adoption of electronic medical records has been on the rise since 1990 an"
 
         binding.closeBtn.setOnClickListener {
             finish()

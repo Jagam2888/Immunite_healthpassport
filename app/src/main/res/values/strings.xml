@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">Immunitee</string>
     <string name="welcome_immunitee">Welcome to</string>
-    <string name="full_name">Full Name</string>
+    <string name="full_name">Full Name  (same as Identity card or passport)</string>
     <string name="full_name_passport">Full Name as per Passport</string>
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
@@ -266,6 +266,7 @@ This QR Code is one time use and it expires in 5 minutes.</string>
     <string name="manually_sync">Manually Sync Your Device</string>
     <string name="disclaimer">Disclaimer</string>
     <string name="disclaimer_desc">The verification for entry to a destination is done at our best knowledge. It is for reference and does not guarantee a entry to the destination desired. The right of entry to a destination is remained at the authority of entry owner.</string>
+    <!--<string name="disclaimer_desc">Digital health, which includes digital care programs, is the convergence of digital technologies with health, healthcare, living, and society to enhance the efficiency of healthcare delivery to make medicine more personalized and precise.[1][2][3] The discipline uses information and communication technologies to facilitate understanding of health problems and challenges faced by people receiving medical treatment.Worldwide adoption of electronic medical records has been on the rise since 1990 an.</string>-->
     <string name="covid19_rrt_pcr_test">Covid-19 rRT-PCR Test</string>
     <string name="enter_the_activate_code">Enter the 6-digit activation code sent to </string>
 
@@ -297,6 +298,12 @@ This QR Code is one time use and it expires in 5 minutes.</string>
     <string name="advisory">Advisory Alert</string>
     <string name="channel_name">Immunitee Channel</string>
     <string name="channel_description">Immunitee Channel Description</string>
+    <string name="news_update_desc">Protect yourself and others around you by knowing the facts and taking appropriate precautions. Follow advice provided by your local health authority.\n\n<b>Wear a mask.Save lives.</b>\nWear a mask\nClean your hands\nKeep a safe distance</string>
+    <string name="regulatory_desc">International Restrictions:\n*Entry to Singapore: Short term visitors from anywhere in the world are not able to enter Singapore without prior permission.</string>
+    <string name="advisory_desc"></string>
+
+    <string name="clear_notifi_msg">Are you sure Want to Clear Notification</string>
+    <string name="clear">CLEAR</string>
 
     <string name="add_entry">Add Entry Point</string>
 

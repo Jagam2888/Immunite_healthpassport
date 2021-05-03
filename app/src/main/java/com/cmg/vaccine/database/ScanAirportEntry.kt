@@ -15,6 +15,9 @@ data class ScanAirportEntry(
         var staffName:String?,
         var airLines:String?,
         var status:String?,
+        var eCode:String?,
+        var dobEcode:String?,
+        var scanDateTime:String?,
         var remarks:String
 ){
     @PrimaryKey(autoGenerate = true)

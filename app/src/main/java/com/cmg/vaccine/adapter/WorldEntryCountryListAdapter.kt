@@ -61,7 +61,7 @@ class WorldEntryCountryListAdapter(
                 var value = constraint.toString().toLowerCase().trim()
                 tempList.clear()
                 countryListFull.forEach {
-                    if (it.countryName?.toLowerCase()?.startsWith(value) == true){
+                    if (it.countryName?.toLowerCase()?.startsWith(value)){
                         tempList.add(it)
                     }
                 }

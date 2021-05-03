@@ -12,34 +12,84 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         tools:context=".NotificationDetailActivity"
-        android:background="@color/lite_yellow">
+        android:background="@color/white">
 
         <RelativeLayout
+            android:id="@+id/action_bar"
             android:layout_width="match_parent"
             android:layout_height="?android:attr/actionBarSize"
-            android:background="@color/green"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:background="@color/white">
 
+            <ImageView
+                android:id="@+id/img_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/left_arrow"
+                app:tint="@color/black"
+                android:layout_marginLeft="10dp"
+                android:layout_centerVertical="true" />
+
+            <TextView
+                android:id="@+id/txt_actionbar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/news"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:layout_centerInParent="true"
+                style="@style/opens_regular"/>
         </RelativeLayout>
 
-        <ImageView
-            android:id="@+id/msg_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/old_msg_icon"
-            android:paddingLeft="15dp"
-            android:paddingBottom="15dp"
-            android:paddingTop="15dp"
-            android:paddingRight="15dp"
-            android:background="@drawable/white_oval"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="30dp" />
-
         <LinearLayout
+            android:id="@+id/layout_news_update"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_below="@id/action_bar">
+            <RelativeLayout
+                android:id="@+id/layout_ellipse"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:background="@drawable/ic_ellipse_notifi_news">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_centerInParent="true"
+                    android:gravity="center_horizontal">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_notification_news"/>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center_vertical">
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/clock_icon_gray"
+                            app:tint="#288BE5"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="03/05/2021 05:30:00"
+                            android:textColor="#288BE5"
+                            android:textSize="14sp"
+                            android:textAppearance="@style/opens_regular"
+                            android:layout_marginLeft="5dp"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </RelativeLayout>
+
+            <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:layout_below="@+id/msg_icon"
+            android:layout_below="@+id/layout_ellipse"
             android:layout_marginTop="20dp"
             android:paddingRight="20dp"
             android:paddingTop="10dp"
@@ -47,27 +97,182 @@
             android:paddingLeft="20dp">
 
             <TextView
-                android:id="@+id/txt_title"
+                android:id="@+id/txt_title_news"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="dafdsasdffd"
-                android:textSize="16sp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Dear Sir/Madam"
-                android:layout_marginTop="20dp"
-                android:textSize="12sp"/>
+                android:textSize="16sp"
+                android:textAppearance="@style/opens_bold"/>
 
             <TextView
                 android:id="@+id/txt_msg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Please take note that your next Covid-19 dose is due in 2 weeks time. Your next dose is on 20/02/2021. Make sure you make an appointment with your doctor. If anything, do not hesitate to call our Hotline at 03-2818 8199. We will guide you on the matter.\n\nHope you\u00E2\u0080\u0099re doing great. Cheers!"
+                android:text="@string/news_update_desc"
                 android:layout_marginTop="10dp"
-                android:layout_marginLeft="10dp"
                 android:textSize="12sp"/>
+        </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/layout_regulatory_update"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_below="@id/action_bar"
+            android:visibility="gone">
+            <RelativeLayout
+                android:id="@+id/layout_regulatory_ellipse"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:background="@drawable/ic_ellipse_notifi_regulatory">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_centerInParent="true"
+                    android:gravity="center_horizontal">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_notification_regulatory"/>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center_vertical">
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/clock_icon_gray"
+                            app:tint="#E34F8D"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="03/05/2021 05:30:00"
+                            android:textColor="#E34F8D"
+                            android:textSize="14sp"
+                            android:textAppearance="@style/opens_regular"
+                            android:layout_marginLeft="5dp"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_below="@+id/layout_ellipse"
+                android:layout_marginTop="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="20dp"
+                android:paddingLeft="20dp">
+
+                <TextView
+                    android:id="@+id/txt_title_regulatory"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="dafdsasdffd"
+                    android:textSize="16sp"
+                    android:textAppearance="@style/opens_bold"/>
+
+                <!-- <TextView
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="Dear Sir/Madam"
+                     android:layout_marginTop="20dp"
+                     android:textSize="12sp"/>-->
+
+                <TextView
+                    android:id="@+id/txt_msg_regulatory"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/regulatory_desc"
+                    android:layout_marginTop="10dp"
+                    android:textSize="12sp"/>
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/layout_advisory_alert"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_below="@id/action_bar"
+            android:visibility="gone">
+            <RelativeLayout
+                android:id="@+id/layout_advisory_ellipse"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:background="@drawable/ic_ellipse_notifi_advisory">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_centerInParent="true"
+                    android:gravity="center_horizontal">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_notification_advisory"/>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center_vertical">
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/clock_icon_gray"
+                            app:tint="#754FE3"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="03/05/2021 05:30:00"
+                            android:textColor="#754FE3"
+                            android:textSize="14sp"
+                            android:textAppearance="@style/opens_regular"
+                            android:layout_marginLeft="5dp"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_below="@+id/layout_ellipse"
+                android:layout_marginTop="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="20dp"
+                android:paddingLeft="20dp">
+
+                <TextView
+                    android:id="@+id/txt_title_advisory"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="dafdsasdffd"
+                    android:textSize="16sp"
+                    android:textAppearance="@style/opens_bold"/>
+
+                 <TextView
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="Dear Sir/Madam"
+                     android:layout_marginTop="20dp"
+                     android:textSize="12sp"/>
+
+                <TextView
+                    android:id="@+id/txt_msg_advisory"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Please take note that your next Covid-19 dose is due in 2 weeks time. Your next dose is on 20/02/2021. Make sure you make an appointment with your doctor. If anything, do not hesitate to call our Hotline at 03-2818 8199. We will guide you on the matter.\n\nHope you're doing great. \n\nCheers!"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:textSize="12sp"/>
+            </LinearLayout>
         </LinearLayout>
 
         <androidx.appcompat.widget.AppCompatButton

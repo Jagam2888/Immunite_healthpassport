@@ -38,7 +38,7 @@
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:layout_centerInParent="true"
-                style="@style/opens_regular"/>
+                android:textAppearance="@style/opens_bold"/>
         </RelativeLayout>
 
         <RelativeLayout
@@ -55,10 +55,11 @@
                 android:textColor="@color/black"
                 android:textAppearance="@style/opens_bold"/>
             <TextView
+                android:id="@+id/txtClearAll"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="ClearAll"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 android:textColor="@color/gray"
                 android:textAppearance="@style/opens_regular"
                 android:layout_alignParentRight="true"/>

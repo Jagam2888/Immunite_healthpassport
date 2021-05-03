@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">Immunitee</string>
     <string name="welcome_immunitee">Selamat Datang ke</string>
-    <string name="full_name">Nama Penuh</string>
+    <string name="full_name">Nama Penuh (sama seperti kad pengenalan atau pasport)</string>
     <string name="full_name_passport">Nama Penuh mengikut Pasport</string>
     <string name="first_name">Nama Pertama</string>
     <string name="last_name">Nama Terakhir</string>
@@ -302,6 +302,11 @@ clinical data and complete your clinical test at Immunitee clinic.
     <string name="advisory">Makluman Penasihat</string>
     <string name="channel_name">Saluran Immunitee</string>
     <string name="channel_description">Penerangan Saluran Immunitee</string>
+    <string name="news_update_desc">Protect yourself and others around you by knowing the facts and taking appropriate precautions. Follow advice provided by your local health authority.\n\n<b>Wear a mask.Save lives.</b>\nWear a mask\nClean your hands\nKeep a safe distance</string>
+    <string name="regulatory_desc">International Restrictions:\n*Entry to Singapore: Short term visitors from anywhere in the world are not able to enter Singapore without prior permission.</string>
+    <string name="advisory_desc"></string>
+    <string name="clear_notifi_msg">Are you sure Want to Clear Notification</string>
+    <string name="clear">CLEAR</string>
 
     <string name="add_entry">Tambah Titik Masuk</string>
 

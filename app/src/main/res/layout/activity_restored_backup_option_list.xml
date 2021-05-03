@@ -107,16 +107,22 @@
                     android:layout_marginTop="53dp"
                     android:layout_marginLeft="69dp">
 
-                    <com.dinuscxj.progressbar.CircleProgressBar
+                    <com.mikhaellopez.circularprogressbar.CircularProgressBar
                         android:id="@+id/circularProgressBar"
                         android:layout_width="220dp"
                         android:layout_height="220dp"
-                        app:progress_stroke_width="8dp"
-                        app:progress_background_color="@color/primary"
+                        app:cpb_background_progressbar_color="@color/lite_green"
+                        app:cpb_background_progressbar_width="12dp"
+                        app:cpb_progress_direction="to_right"
+                        app:cpb_progressbar_color="@color/primary"
+                        app:cpb_progressbar_width="8dp"
+                        app:cpb_round_border="true"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
+
+
 
                     <TextView
                         android:id="@+id/progress_perc"
