@@ -152,7 +152,7 @@
     <string name="activation_code">Activation Code</string>
     <string name="choose_plan">Choose Your Plan</string>
     <string name="subscribe">SubScribe</string>
-    <string name="subscribe_now">SubScribe Now</string>
+    <string name="subscribe_now">Subscribe Now</string>
     <string name="subscribe_private_key">Subscribe to get your Private Key</string>
     <string name="approve_account">You will be charges for the plan after the admin approves your account.</string>
     <string name="no_world_entry">No World Entry Setup! \nAdd your favourite World \nEntry Destination by \nclicking “+”  sign.</string>

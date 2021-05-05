@@ -11,14 +11,13 @@ import android.widget.LinearLayout
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.TextView
+import androidx.appcompat.widget.AppCompatButton
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.PagerAdapter
 import com.blongho.country_data.World
-import com.cmg.vaccine.ImmunizationDetailActivity
-import com.cmg.vaccine.R
-import com.cmg.vaccine.TestReportDetailActivity
-import com.cmg.vaccine.ViewPrivateKeyActivity
+import com.cmg.vaccine.*
+import com.cmg.vaccine.data.setOnSingleClickListener
 import com.cmg.vaccine.listener.SimpleListener
 import com.cmg.vaccine.model.Dashboard
 import com.cmg.vaccine.util.*
@@ -60,6 +59,8 @@ private val layouts:List<Dashboard>,
 
         val radioVaccine = view.findViewById<RadioButton>(R.id.radio_vaccine)
         val radioTest = view.findViewById<RadioButton>(R.id.radio_test)
+
+        val btnClincList = view.findViewById<AppCompatButton>(R.id.btn_clinc_list)
 
         //context.showToolTip(txtName,"this is vaccine")
        /*if (position == 0){
@@ -148,6 +149,12 @@ private val layouts:List<Dashboard>,
             override fun onLongClick(view: View?, position: Int) {
             }
         }))
+
+        btnClincList.setOnSingleClickListener{
+            Intent(context,ClinicListActivity::class.java).also {
+                context?.startActivity(it)
+            }
+        }
 
         radioGroup.setOnCheckedChangeListener { group, checkedId ->
             when(checkedId){

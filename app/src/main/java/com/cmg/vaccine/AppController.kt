@@ -101,6 +101,9 @@ class AppController : Application(),KodeinAware {
         bind() from singleton { WelcomeViewModelRepositary(instance(),instance(),instance()) }
         bind() from provider { WelcomeViewModelFactory(instance()) }
 
+        bind() from singleton { ClinicListRepositary(instance()) }
+        bind() from provider { ClinicListViewModelFactory(instance()) }
+
         //bind() from provider { MyFirebaseInstanceIDService(instance()) }
 
     }

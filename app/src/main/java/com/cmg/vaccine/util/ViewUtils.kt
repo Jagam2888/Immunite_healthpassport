@@ -463,7 +463,7 @@ fun changeDateFormatForVaccine(dateString: String): String {
     return ""
 }
 fun changeDateFormatForNotification(dateString: String): String {
-    val resultFormat = SimpleDateFormat("dd/MM/yyyy HH:mm:ss")
+    val resultFormat = SimpleDateFormat("dd MMM yyyy HH:mm:ss")
     val isoFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
     try {
         val date = isoFormat.parse(dateString)

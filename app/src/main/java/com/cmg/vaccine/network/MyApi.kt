@@ -128,6 +128,9 @@ interface MyApi {
     @GET(Passparams.SYSTEM_CONFIG)
     suspend fun getSystemConfigData():Response<SystemConfigResponse>
 
+    @GET(Passparams.GET_CLINIC_LIST)
+    suspend fun getClinicList():Response<ClinicListResponse>
+
     @GET(Passparams.OBSERVATION_STATUS_CODE)
     suspend fun getObservationStatusCode():Response<ObservationStatusResponse>
 

@@ -201,7 +201,7 @@ class WorldEntryViewModel(
 
             loadWorldEntriesData()
         }else{
-            listener?.onShowToast("Sorry! You already added this country")
+            listener?.onFailure("1Sorry! You already added this country")
         }
     }
 

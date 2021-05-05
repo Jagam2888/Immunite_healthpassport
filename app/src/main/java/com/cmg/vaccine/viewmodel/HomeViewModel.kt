@@ -2,6 +2,7 @@ package com.cmg.vaccine.viewmodel
 
 import android.util.Log
 import androidx.databinding.ObservableBoolean
+import androidx.databinding.ObservableField
 import androidx.databinding.ObservableInt
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -95,9 +96,20 @@ class HomeViewModel(
     var idNo:MutableLiveData<String> = MutableLiveData()
     var nationality:MutableLiveData<String> = MutableLiveData()
 
+    var totalUnreadNotificationCount = ObservableField<String>()
+
 
     fun setCurrentItem(position:Int){
         _currentPagerPosition.value = position
+    }
+
+    fun loadNotificationCount() {
+        val count = repositary.getTotalUnReadCount()
+        if (count != null){
+            totalUnreadNotificationCount.set(count.toString())
+        }else{
+            totalUnreadNotificationCount.set("0")
+        }
     }
 
     fun setUser(){
@@ -395,6 +407,7 @@ class HomeViewModel(
         //dashBoard.dataTest = testReportList.value
         if (!userData.privateKey.isNullOrEmpty()) {
             dashBoard.dataTest = getTestReportList(userData.privateKey!!)
+            //dashBoard.dataTest = getTestReportList("0C810A24224B0477CA3DCFF03F94FA194685E138F37DAC7909603275784D4593")
             dashBoard.data = getVaccineReportList(userData.privateKey!!)
         }
         dashBoard.relationShip = Passparams.PARENT

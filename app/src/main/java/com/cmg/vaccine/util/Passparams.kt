@@ -26,6 +26,7 @@ object Passparams{
     const val SELECT_LANGUAGE_POS = "select_language_pos"
     const val ISFROMCHANGELANGUAGE = "is_from_change_language"
     const val ISSUBSCRIBE = "is_subscribe"
+    const val ERROR_ALERT = "error_alert"
 
     const val ADD_DEPENDENT_SUCCESS = "add_dependent_success"
 
@@ -119,6 +120,7 @@ object Passparams{
     const val BLOCK_CHAIN_ERROR_CODE = "nhr-module-user/searchbcerrorcode"
     const val OBSERVATION_STATUS_CODE = "nhr-module-user/searchobservationstatus"
     const val SYSTEM_CONFIG = "nhr-module-user/searchsystemconfig"
+    const val GET_CLINIC_LIST = "nhr-module-user/facility"
 
     //Block Chain
     const val BLOCK_CHAIN_URL = "https://cashierbook.com.my:8081/blockchainapi/"

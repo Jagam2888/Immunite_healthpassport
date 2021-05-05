@@ -206,6 +206,7 @@ class HomeFragment : Fragment(),KodeinAware,SimpleListener {
 
      override fun onResume() {
         super.onResume()
+         viewModel.loadNotificationCount()
          Log.d("onresume","OnResume")
     }
 

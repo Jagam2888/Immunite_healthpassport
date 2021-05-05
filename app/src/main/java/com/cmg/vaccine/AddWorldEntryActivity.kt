@@ -13,6 +13,7 @@ import com.cmg.vaccine.listener.SimpleListener
 import com.cmg.vaccine.util.*
 import com.cmg.vaccine.viewmodel.WorldEntryViewModel
 import com.cmg.vaccine.viewmodel.viewmodelfactory.WorldEntryViewModelFactory
+import io.paperdb.Paper
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
@@ -89,7 +90,10 @@ class AddWorldEntryActivity : BaseActivity(),KodeinAware,SimpleListener {
 
     override fun onFailure(msg: String) {
         hide(binding.progressBar)
-        if (msg.startsWith("2")){
+
+        if (msg.startsWith("1")){
+            Paper.book().write(Passparams.ERROR_ALERT,true)
+        }else if (msg.startsWith("2")){
             val showMsg = msg.drop(1)
             showAlertDialog(resources.getString(R.string.failed), showMsg, false, supportFragmentManager)
         }else if (msg.startsWith("3")){

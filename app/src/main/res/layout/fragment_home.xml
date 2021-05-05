@@ -29,14 +29,34 @@
             android:layout_height="wrap_content">
             <include
                 layout="@layout/actionbar_layout_home"/>
-            <ImageView
+            <RelativeLayout
                 android:id="@+id/notification"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="20dp">
+            <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:src="@drawable/notification_icon"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="20dp"
-                android:layout_centerVertical="true"/>
+                android:src="@drawable/notification_icon"/>
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_notification_count_oval"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="10dp"
+                android:visibility="@{homeviewmodel.totalUnreadNotificationCount.equals(`0`) ? View.GONE:View.VISIBLE}">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{homeviewmodel.totalUnreadNotificationCount}"
+                    android:textSize="10sp"
+                    android:layout_centerInParent="true"
+                    android:textColor="@color/white"
+                    android:textAppearance="@style/opens_bold"/>
+            </RelativeLayout>
+            </RelativeLayout>
         </RelativeLayout>
 
         <RelativeLayout

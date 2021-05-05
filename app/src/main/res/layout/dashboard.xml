@@ -189,6 +189,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp" />
                 <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_clinc_list"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/list_clinics"

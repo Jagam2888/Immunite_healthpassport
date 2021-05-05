@@ -25,7 +25,7 @@ class ChildListAdapter(
     )
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.childItemBinding.model = list.get(position)
+        holder.childItemBinding.model = list[position]
         if (!list[position].profileImage.isNullOrEmpty()) {
             val uri = Uri.parse(list[position].profileImage)
             holder.childItemBinding.imgProfile.setImageURI(uri)

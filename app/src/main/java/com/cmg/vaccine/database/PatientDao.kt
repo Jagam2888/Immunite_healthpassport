@@ -279,6 +279,9 @@ interface PatientDao {
     @Query("SELECT COUNT(isRead) FROM Notification WHERE isRead =0 AND notificationGroup =:group")
     fun getUnreadNotificationCount(group: String):Int
 
+    @Query("SELECT COUNT(isRead) FROM Notification WHERE isRead =0")
+    fun getTotalUnreadNotificationCount():Int
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertScanAirportEntry(scanAirportEntry: ScanAirportEntry):Long
 

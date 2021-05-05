@@ -137,4 +137,8 @@ class HomeRepositary(
         return database.getDao().updateDependent(dependent)
     }
 
+    fun getTotalUnReadCount():Int{
+        return database.getDao().getTotalUnreadNotificationCount()
+    }
+
 }

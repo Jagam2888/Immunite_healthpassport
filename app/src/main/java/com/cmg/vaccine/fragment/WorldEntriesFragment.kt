@@ -20,8 +20,11 @@ import com.cmg.vaccine.adapter.WorldEntriesAdapter
 import com.cmg.vaccine.data.setOnSingleClickListener
 import com.cmg.vaccine.database.AddWorldEntries
 import com.cmg.vaccine.databinding.FragmentWorldEntriesBinding
+import com.cmg.vaccine.util.Passparams
+import com.cmg.vaccine.util.showAlertDialog
 import com.cmg.vaccine.viewmodel.WorldEntryViewModel
 import com.cmg.vaccine.viewmodel.viewmodelfactory.WorldEntryViewModelFactory
+import io.paperdb.Paper
 import me.rishabhkhanna.recyclerswipedrag.RecyclerHelper
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
@@ -119,5 +122,11 @@ class WorldEntriesFragment : Fragment(),KodeinAware {
     override fun onResume() {
         super.onResume()
         viewModel.loadWorldEntriesData()
+
+        val isError = Paper.book().read<Boolean>(Passparams.ERROR_ALERT,false)
+        if (isError){
+            Paper.book().write(Passparams.ERROR_ALERT,false)
+            showAlertDialog(resources.getString(R.string.failed),"Sorry! You already added this country",false,childFragmentManager)
+        }
     }
 }
