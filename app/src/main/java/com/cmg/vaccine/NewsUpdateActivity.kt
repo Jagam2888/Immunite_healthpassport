@@ -62,7 +62,7 @@ class NewsUpdateActivity : BaseActivity(),KodeinAware,SimpleListener {
                 viewModel.updateNotificationReadStatus(viewModel.messageList.value?.get(position)?.id!!)
                 Intent(this@NewsUpdateActivity,NotificationDetailActivity::class.java).also {
                     it.putExtra(Passparams.NOTIFICATION_MSG,viewModel.messageList.value?.get(position)?.message)
-                    //it.putExtra("title",viewModel.messageList.value?.get(position)?.title)
+                    it.putExtra(Passparams.NOTIFICATION_DATE,viewModel.messageList.value?.get(position)?.date)
                     it.putExtra(Passparams.NOTIFICATION_FROM,group)
                     startActivity(it)
                 }

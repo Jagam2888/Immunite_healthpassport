@@ -40,7 +40,8 @@
     <string name="edit_profile">Sunting Profil</string>
     <string name="home">Kediaman</string>
     <string name="setting">Tetapan</string>
-    <string name="notification">Pemberitahuan</string>
+    <string name="notifications">Pemberitahuan</string>
+    <string name="notification">Notification</string>
     <string name="view_private_key">Lihat Kunci Peribadi</string>
     <string name="my_qr_code">KOD QR SAYA</string>
     <string name="view_report">Lihat Laporan</string>

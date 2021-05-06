@@ -437,6 +437,71 @@ class WorldEntryViewModel(
 
     }
 
+    fun validateWorldEntry(countryCode: String,criteria:String):Boolean{
+        var hours:Int = 0
+        val worldEntryRule = repositary.getJoinWorldEntryRuleAndPriority(countryCode)
+        var listTestReportFilterByHours:ArrayList<TestReport> = ArrayList()
+
+        var observationCode = ArrayList<String>()
+
+        val testReport = repositary.getTestReportList(repositary.getParentPrivateKey()!!)
+        worldEntryRule.forEach {
+            if (it.prioRuleCriteria == "T"){
+                if (!it.woen_duration_hours.isNullOrEmpty()) {
+                    hours = it.woen_duration_hours.toInt()
+                }
+                if (!it.woen_test_code.isNullOrEmpty()){
+                    observationCode.add(it.woen_test_code)
+                }
+            }
+        }
+
+        testReport.forEach {
+            if ((!it.dateSampleCollected.isNullOrEmpty()) and (!it.timeSampleCollected.isNullOrEmpty())){
+                val sampleDate = changeDateFormatNewISO8601(it.dateSampleCollected + " " + it.timeSampleCollected + ":00")
+                val calculateHours = calculateHours(System.currentTimeMillis(),changeDateToTimeStamp(sampleDate!!)!!)
+                if (calculateHours != null){
+                    if (calculateHours <= hours) {
+                        listTestReportFilterByHours.add(it)
+                    }
+
+                }
+            }
+        }
+
+        var testCodesFilterByTestReport = ArrayList<TestCodes>()
+
+        val testCodes = repositary.getTestCodesByCategory(observationCode,countryCode)
+        for (i in testCodes.indices){
+            for (j in listTestReportFilterByHours.indices){
+                if (testCodes[i].wetstTestCode.equals(listTestReportFilterByHours[j].testCode)){
+                    testCodesFilterByTestReport.add(testCodes[i])
+                }
+            }
+        }
+
+        if ((!listTestReportFilterByHours.isNullOrEmpty()) and (!testCodesFilterByTestReport.isNullOrEmpty())){
+            for (i in testCodesFilterByTestReport.indices){
+                for (j in listTestReportFilterByHours.indices){
+                    if (!listTestReportFilterByHours[j].observationCode.isNullOrEmpty()){
+                        val observationStatusCode = testCodesFilterByTestReport[i].wetstObservationStatusCode
+                        val observationStatusCodeArray = observationStatusCode?.split("|")
+                        val observationTrimArray = ArrayList<String>()
+                        for (k in observationStatusCodeArray!!.indices){
+                            observationTrimArray.add(observationStatusCodeArray[k].trim())
+                        }
+                        if (observationTrimArray?.contains(listTestReportFilterByHours[j].observationCode!!)){
+                            //status.set(true)
+                            return true
+                        }
+                    }
+                }
+            }
+        }
+
+        return false
+    }
+
 
     fun getVaccineDetail(vaccineCode:String){
         val vaccineDetails = repositary.getVaccineDetail(vaccineCode)

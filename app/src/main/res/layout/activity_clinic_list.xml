@@ -34,7 +34,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Clinic List"
+                android:text="@string/list_clinics"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:layout_centerInParent="true"

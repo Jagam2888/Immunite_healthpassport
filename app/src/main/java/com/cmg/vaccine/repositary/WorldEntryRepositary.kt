@@ -2,6 +2,7 @@ package com.cmg.vaccine.repositary
 
 import com.cmg.vaccine.data.WorldEntriesListData
 import com.cmg.vaccine.database.*
+import com.cmg.vaccine.model.JoinWorldEntryRuleAndPriority
 import com.cmg.vaccine.model.response.*
 import com.cmg.vaccine.network.MyApi
 import com.cmg.vaccine.network.SafeAPIRequest
@@ -138,6 +139,14 @@ class WorldEntryRepositary(
 
     fun getAllWorldEntryRulesByCountry():List<WorldEntryRulesByCountry>{
         return database.getDao().getAllWorldEntryRuleByCountry()
+    }
+
+    fun getJoinWorldEntryRuleAndPriority(countryCode: String):List<JoinWorldEntryRuleAndPriority>{
+        return database.getDao().getJoinWorldEntryRuleAndPriority(countryCode)
+    }
+
+    fun getTestCodesByCategory(category:ArrayList<String>,countryCode: String):List<TestCodes>{
+        return database.getDao().getAllTestCodesByCategory(category,countryCode)
     }
 
 

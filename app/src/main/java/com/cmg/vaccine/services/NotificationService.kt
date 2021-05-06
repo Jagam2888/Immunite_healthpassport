@@ -110,8 +110,9 @@ class NotificationService(
                 cancelAll()
             }
         }else {
+            val notificationId = System.currentTimeMillis().toInt()
             with(NotificationManagerCompat.from(context)) {
-                notify(1, builder.build())
+                notify(notificationId, builder.build())
             }
         }
 

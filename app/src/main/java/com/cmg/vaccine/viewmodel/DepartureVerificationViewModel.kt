@@ -189,56 +189,6 @@ class DepartureVerificationViewModel(
                                         }
                                     }
                                     status.set(false)
-                                    /*val testCodeFileterByReport = repositary.getFilterTestCodeByReport(userData.privateKey!!,getAirportValues.countryCode)
-                                    testCodeFileterByReport.forEach {
-                                        val observationStatusCode = it.wetstObservationStatusCode
-                                        val observationStatusCodeArray = observationStatusCode?.split("|")
-                                        if (observationStatusCodeArray?.contains(it.testCode!!)){
-                                            status.set(true)
-                                            return
-                                        }
-                                    }*/
-
-                                    /*if ((!testCodesFilterByTestReport.isNullOrEmpty()) and (!listTestReportFilterByHours.isNullOrEmpty())){
-                                        for (i in testCodesFilterByTestReport.indices){
-                                            for (j in listTestReportFilterByHours.indices){
-
-                                            }
-                                        }
-                                    }*/
-
-                                    /*if (testCodesFilterByTestReport.size > 0){
-                                        testCodesFilterByTestReport.forEach {
-                                            if (it.wetstObservationStatusCode.equals("PCR", false)) {
-                                                if ((it.wetstTestcategory.equals("260385009")) or (it.wetstTestcategory.equals("260415000"))) {
-                                                    status.set(true)
-                                                    return
-                                                } else if (it.wetstTestcategory.equals("260385009 | 260415000")) {
-                                                    status.set(true)
-                                                    return
-                                                } else {
-                                                    status.set(false)
-                                                    return
-                                                }
-                                            }else if (it.wetstObservationStatusCode.equals("ANTIGEN", false)){
-                                                if (it.wetstTestcategory.equals("10828004")) {
-                                                    status.set(true)
-                                                    return
-                                                } else {
-                                                    status.set(false)
-                                                    return
-                                                }
-                                            }else if (it.wetstObservationStatusCode.equals("ANTIBODY", false)){
-                                                if (it.wetstTestcategory.equals("10828004")) {
-                                                    status.set(true)
-                                                    return
-                                                } else {
-                                                    status.set(false)
-                                                    return
-                                                }
-                                            }
-                                        }
-                                    }*/
                                 }else{
                                     listener?.onShowToast("Database Error, Country Code return Null or Empty")
                                     status.set(false)

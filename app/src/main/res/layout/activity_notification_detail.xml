@@ -74,6 +74,7 @@
                             android:src="@drawable/clock_icon_gray"
                             app:tint="#288BE5"/>
                         <TextView
+                            android:id="@+id/txt_date_news"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="03/05/2021 05:30:00"
@@ -147,6 +148,7 @@
                             android:src="@drawable/clock_icon_gray"
                             app:tint="#E34F8D"/>
                         <TextView
+                            android:id="@+id/txt_date_regular"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="03/05/2021 05:30:00"
@@ -227,6 +229,7 @@
                             android:src="@drawable/clock_icon_gray"
                             app:tint="#754FE3"/>
                         <TextView
+                            android:id="@+id/txt_date_advisory"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="03/05/2021 05:30:00"

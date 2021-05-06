@@ -28,7 +28,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Notification/Message Sound"
+            android:text="Notification/Message Sound(All)"
             android:textColor="@color/black"
             style="@style/opens_bold"
             android:textSize="13sp"
@@ -76,7 +76,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Ringtone"
+            android:text="Message Tone"
             android:textColor="@color/black"
             style="@style/opens_bold"
             android:textSize="13sp"
@@ -112,7 +112,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="News Updates"
+            android:text="@string/news"
             android:textColor="@color/black"
             style="@style/opens_bold"
             android:textSize="13sp"

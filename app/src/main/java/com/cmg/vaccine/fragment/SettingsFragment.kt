@@ -171,6 +171,7 @@ class SettingsFragment : Fragment(),KodeinAware,SimpleListener {
 
         binding.layoutNotification.setOnSingleClickListener {
             hideMainLayout()
+            binding.txtAppBar.text = context?.resources?.getString(R.string.notification)
             binding.notification.visibility = View.VISIBLE
         }
 
@@ -587,6 +588,33 @@ class SettingsFragment : Fragment(),KodeinAware,SimpleListener {
         }else{
             malay_checkbox.isChecked = true
             english_checkbox.isChecked = false
+        }
+
+        english_checkbox.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked){
+                malay_checkbox.isChecked = false
+                Paper.book().write(Passparams.SELECT_LANGUAGE_POS,0)
+                Paper.book().write(Passparams.ISFROMCHANGELANGUAGE,true)
+
+                LocaleHelper.setNewLocale(requireContext(),LocaleHelper.LANGUAGE_ENGLISH)
+                Intent(context,MainActivity::class.java).also {
+                    it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    startActivity(it)
+                }
+            }
+        }
+
+        malay_checkbox.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked){
+                english_checkbox.isChecked = false
+                Paper.book().write(Passparams.SELECT_LANGUAGE_POS,1)
+                Paper.book().write(Passparams.ISFROMCHANGELANGUAGE,true)
+                LocaleHelper.setNewLocale(requireContext(),LocaleHelper.LANGUAGE_MALAY)
+                Intent(context,MainActivity::class.java).also {
+                    it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    startActivity(it)
+                }
+            }
         }
 
         layout_english.setOnSingleClickListener{

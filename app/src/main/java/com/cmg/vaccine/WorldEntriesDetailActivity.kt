@@ -38,7 +38,8 @@ class WorldEntriesDetailActivity : BaseActivity(),KodeinAware,SimpleListener {
 
         val countryCode = intent.extras?.getString(Passparams.WORLD_ENTRY_SELECTED_COUNTRY_CODE,"")
         //val countryName = World.getCountryFrom(countryCode).name
-        val countryName = Country.getCountryByISO(getTwoAlpha(countryCode!!)).name
+        //val countryName = Country.getCountryByISO(getTwoAlpha(countryCode!!)).name
+        val countryName = intent.extras?.getString(Passparams.WORLD_ENTRY_SELECTED_COUNTRY_NAME,"")
         viewModel._selectedCountryName.value = countryName
 
         viewModel.listener = this

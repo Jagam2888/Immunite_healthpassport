@@ -84,6 +84,7 @@ class WorldEntriesAdapter(
             if (!holder.swipeHorizontalRightBinding.sml.isMenuOpen){
                 Intent(context,WorldEntriesDetailActivity::class.java).also {
                     it.putExtra(Passparams.WORLD_ENTRY_SELECTED_COUNTRY_CODE, countryList[position].countryCodeAlpha)
+                    it.putExtra(Passparams.WORLD_ENTRY_SELECTED_COUNTRY_NAME, countryList[position].countryName)
                     context?.startActivity(it)
                 }
             }
@@ -147,7 +148,7 @@ class WorldEntriesAdapter(
 
         for( i in countryList.indices)
         {
-            viewModel.changeOrder(countryList.get(i).countryName.toString(),i)
+            viewModel.changeOrder(countryList[i].countryName.toString(),i)
         }
 
     }

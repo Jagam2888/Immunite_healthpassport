@@ -40,7 +40,8 @@
     <string name="edit_profile">Edit Profile</string>
     <string name="setting">Settings</string>
     <string name="home">Home</string>
-    <string name="notification">Notifications</string>
+    <string name="notifications">Notifications</string>
+    <string name="notification">Notification</string>
     <string name="view_private_key">View Private Key</string>
     <string name="my_qr_code">MY QR CODE</string>
     <string name="view_report">View Report</string>

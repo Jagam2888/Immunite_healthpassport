@@ -68,6 +68,7 @@ class MainActivity : BaseActivity(),KodeinAware {
         val isFromChangeLanguage = Paper.book().read<Boolean>(Passparams.ISFROMCHANGELANGUAGE,false)
         if (!isFromChangeLanguage) {
             loadFragment(HomeFragment())
+            PopUpDialogFragment().show(supportFragmentManager,"Popup")
         }else{
             Paper.book().write(Passparams.ISFROMCHANGELANGUAGE,false)
             loadFragment(SettingsFragment())
@@ -148,7 +149,7 @@ class MainActivity : BaseActivity(),KodeinAware {
             }
         }
 
-        PopUpDialogFragment().show(supportFragmentManager,"Popup")
+
     }
 
     private fun isShowPopWindow(){
