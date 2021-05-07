@@ -144,10 +144,9 @@ class LoginPinActivity : BaseActivity(),KodeinAware,SimpleListener {
         //toast(msg)
         hideKeyBoard()
         if (loginStatus == "create") {
-            Intent(this@LoginPinActivity, MainActivity::class.java).also {
+            Intent(this@LoginPinActivity, SuccessPopUpActivity::class.java).also {
                 it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(it)
-                finish()
             }
         }else if (loginStatus == "update"){
             finish()

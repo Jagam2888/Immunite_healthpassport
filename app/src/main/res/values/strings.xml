@@ -270,6 +270,7 @@ This QR Code is one time use and it expires in 5 minutes.</string>
     <!--<string name="disclaimer_desc">Digital health, which includes digital care programs, is the convergence of digital technologies with health, healthcare, living, and society to enhance the efficiency of healthcare delivery to make medicine more personalized and precise.[1][2][3] The discipline uses information and communication technologies to facilitate understanding of health problems and challenges faced by people receiving medical treatment.Worldwide adoption of electronic medical records has been on the rise since 1990 an.</string>-->
     <string name="covid19_rrt_pcr_test">Covid-19 rRT-PCR Test</string>
     <string name="enter_the_activate_code">Enter the 6-digit activation code sent to </string>
+    <string name="your_security_success_msg">Your Security PIN has been \ncreated! You may change \nyour Security PIN at \nSettings!</string>
 
     <string name="no_data">Currently no data is available,\nPlease conduct your test at nearest \nclinics/labs.</string>
     <string name="list_clinics">List of Panel Clinics or Labs</string>

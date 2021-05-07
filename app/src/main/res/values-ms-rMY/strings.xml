@@ -254,6 +254,7 @@
     <string name="disclaimer_desc">Pengesahan untuk masuk ke destinasi dilakukan pada pengetahuan kami. Ini untuk rujukan dan tidak menjamin kemasukan ke destinasi yang diinginkan. Hak masuk ke destinasi tetap berada di bawah kuasa pemilik masuk.</string>
     <string name="covid19_rrt_pcr_test">Ujian Covid-19 rRT-PCR</string>
     <string name="enter_the_activate_code">Masukkan kod pengaktifan 6 digit yang dihantar ke </string>
+    <string name="your_security_success_msg">Your Security PIN has been \ncreated! You may change \nyour Security PIN at \nSettings!</string>
 
     <string name="no_data">Currently no data is available,\nPlease conduct your test at nearest \nclinics/labs.</string>
     <string name="list_clinics">List of Panel Clinics or Labs</string>

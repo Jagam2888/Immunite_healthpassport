@@ -46,6 +46,10 @@ class WorldEntryRepositary(
         return database.getDao().getVaccineList()
     }
 
+    fun getVaccineReportList(privateKey: String):List<VaccineReport>{
+        return database.getDao().getVaccineReportList(privateKey)
+    }
+
     fun getTestReportList(privateKey:String):List<TestReport>{
         return database.getDao().getTestReportList(privateKey)
     }
@@ -69,6 +73,10 @@ class WorldEntryRepositary(
 
     fun getWorldEntryRulesByCountry(countryCode:String):List<WorldEntryRulesByCountry>{
         return database.getDao().getWorldEntryRuleByCountryByCode(countryCode)
+    }
+
+    fun getWorldEntryRuleVaccineByCountry(countryCode: String):WorldEntryRulesByCountry{
+        return database.getDao().getWorldEntryRuleByCountryVaccineByCode(countryCode)
     }
 
     suspend fun getWorldEntryRulesByCountryFromAPI(countryCode: String):WorldEntryRulesResponse{

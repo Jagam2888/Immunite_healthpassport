@@ -176,6 +176,9 @@ interface PatientDao {
     @Query("SELECT * FROM WorldEntryRulesByCountry WHERE woen_country_code =:countryCode")
     fun getWorldEntryRuleByCountryByCode(countryCode:String):List<WorldEntryRulesByCountry>
 
+    @Query("SELECT * FROM WorldEntryRulesByCountry WHERE woen_country_code =:countryCode AND woen_rule_match_criteria ='V'")
+    fun getWorldEntryRuleByCountryVaccineByCode(countryCode:String):WorldEntryRulesByCountry
+
     @Query("SELECT * FROM WorldEntryRulesByCountry WHERE woen_country_code =:countryCode AND woen_rule_match_criteria =:criteria AND woen_status='A'")
     fun getWorldEntryRuleForMAS(countryCode:String,criteria:String):List<WorldEntryRulesByCountry>
 

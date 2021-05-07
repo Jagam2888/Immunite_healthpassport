@@ -31,8 +31,8 @@ class WorldEntryViewModel(
     val worldEntriesList:LiveData<ArrayList<AddWorldEntries>>
     get() = _worldEntriesList
 
-    val _vaccineList:MutableLiveData<List<Vaccine>> = MutableLiveData()
-    val vaccineList:LiveData<List<Vaccine>>
+    val _vaccineList:MutableLiveData<List<VaccineReport>> = MutableLiveData()
+    val vaccineList:LiveData<List<VaccineReport>>
     get() = _vaccineList
 
     val _testReportList:MutableLiveData<List<TestReport>> = MutableLiveData()
@@ -219,7 +219,7 @@ class WorldEntryViewModel(
     }
 
     fun getVaccineAndTestReportList(){
-        val vaccineList = repositary.getVaccineList()
+        val vaccineList = repositary.getVaccineReportList(repositary.getParentPrivateKey()!!)
         _vaccineList.value = vaccineList
         if (!repositary.getParentPrivateKey().isNullOrEmpty()) {
             val testReportList = repositary.getTestReportList(repositary.getParentPrivateKey()!!)
@@ -294,6 +294,9 @@ class WorldEntryViewModel(
         val vaccineArrayList = ArrayList<String>()
         val personalData = ArrayList<String>()
 
+        var testReportstatus = false
+        var vaccineReportstatus = false
+
         getWorldEntryRuleByCountry.forEach { worldEntryRulesByCountry ->
             when(worldEntryRulesByCountry.woen_rule_match_criteria){
                 "A" ->{
@@ -302,38 +305,43 @@ class WorldEntryViewModel(
                 "P" ->{
                     personalData.add(worldEntryRulesByCountry.woen_rule_description!!)
                 }
-                "T" ->{
-                    var status = "false"
-                    var successTestReport:String = ""
-                    testReportList.value?.forEach { test->
-                        if (worldEntryRulesByCountry.woen_test_code.equals(test.dateDisplayTitle)){
-                            status = "true"
+                "T" -> {
+
+                    var successTestReport: String = ""
+                    var title = worldEntryRulesByCountry.woen_rule_description
+                    if (!testReportList.value.isNullOrEmpty()){
+                        testReportList.value?.forEach { test ->
+                            //if (worldEntryRulesByCountry.woen_test_code.equals(test.dateDisplayTitle)){
+                            testReportstatus = validateTestReportWorldEntry(countryCode)
+                            title = test.NameDisplayTitle
                             val gson = Gson()
                             successTestReport = gson.toJson(test)
+                            //}
                         }
-                    }
-                    testReportArrayList.add(worldEntryRulesByCountry.woen_rule_description!!+"|"+status+"|"+successTestReport)
+                }
+                    testReportArrayList.add("$title|$testReportstatus|$successTestReport")
                 }
                 "V" ->{
-                    var status = "false"
                     var successVaccine:String = ""
+                    var title = worldEntryRulesByCountry.woen_rule_description
                     var vaccineCode:String = worldEntryRulesByCountry.woen_vaccine_code!!
                     vaccineList.value?.forEach { vaccine ->
-                        if (worldEntryRulesByCountry.woen_test_code.equals(vaccine.vaccinetype)){
-                            status = "true"
-                            val gson = Gson()
-                            successVaccine = gson.toJson(vaccine)
-                        }
+                        //if (worldEntryRulesByCountry.woen_test_code.equals(vaccine.vaccineCode)){
+                        vaccineReportstatus = validateVaccineReport(countryCode)
+                        title = vaccine.vaccineDisplayName
+                        val gson = Gson()
+                        successVaccine = gson.toJson(vaccine)
+                        //}
                     }
-                    vaccineArrayList.add(worldEntryRulesByCountry.woen_rule_description!!+"|"+status+"|"+successVaccine+"|"+vaccineCode)
+                    vaccineArrayList.add("$title|$vaccineReportstatus|$successVaccine|$vaccineCode")
                 }
             }
 
         }
 
         expandableListDetail["Entry Requirements"] = entryRequirement
-        expandableListDetail["Test"] = testReportArrayList
-        expandableListDetail["Vaccine"] = vaccineArrayList
+        expandableListDetail["Test|$testReportstatus"] = testReportArrayList
+        expandableListDetail["Vaccine|$vaccineReportstatus"] = vaccineArrayList
         expandableListDetail["Personal Profile Details"] = personalData
 
         _worldEntriesExpandableData.value = expandableListDetail
@@ -437,7 +445,7 @@ class WorldEntryViewModel(
 
     }
 
-    fun validateWorldEntry(countryCode: String,criteria:String):Boolean{
+    fun validateTestReportWorldEntry(countryCode: String):Boolean{
         var hours:Int = 0
         val worldEntryRule = repositary.getJoinWorldEntryRuleAndPriority(countryCode)
         var listTestReportFilterByHours:ArrayList<TestReport> = ArrayList()
@@ -446,12 +454,24 @@ class WorldEntryViewModel(
 
         val testReport = repositary.getTestReportList(repositary.getParentPrivateKey()!!)
         worldEntryRule.forEach {
-            if (it.prioRuleCriteria == "T"){
-                if (!it.woen_duration_hours.isNullOrEmpty()) {
-                    hours = it.woen_duration_hours.toInt()
-                }
-                if (!it.woen_test_code.isNullOrEmpty()){
-                    observationCode.add(it.woen_test_code)
+            when(it.woen_rule_match_criteria){
+                "T" ->{
+                    if (it.prioRuleCriteria.equals("Mandatory",false)) {
+                        if (!it.woen_duration_hours.isNullOrEmpty()) {
+                            hours = it.woen_duration_hours.toInt()
+                        }
+                        if (!it.woen_test_code.isNullOrEmpty()) {
+                            observationCode.add(it.woen_test_code)
+                        }
+                    }
+                    if (it.prioRuleCriteria.equals("Selective",false)) {
+                        if (!it.woen_duration_hours.isNullOrEmpty()) {
+                            hours = it.woen_duration_hours.toInt()
+                        }
+                        if (!it.woen_test_code.isNullOrEmpty()) {
+                            observationCode.add(it.woen_test_code)
+                        }
+                    }
                 }
             }
         }
@@ -499,6 +519,18 @@ class WorldEntryViewModel(
             }
         }
 
+        return false
+    }
+
+    fun validateVaccineReport(countryCode: String):Boolean{
+        val worldEntryRulesVaccineByCountry = repositary.getWorldEntryRuleVaccineByCountry(countryCode)
+        if ((!vaccineList.value.isNullOrEmpty()) and (worldEntryRulesVaccineByCountry != null)){
+            vaccineList.value!!.forEach {
+                if (worldEntryRulesVaccineByCountry.woen_vaccine_code.equals(it.vaccineCode)){
+                    return true
+                }
+            }
+        }
         return false
     }
 

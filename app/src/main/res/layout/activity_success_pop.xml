@@ -32,13 +32,13 @@
             <ImageView
                 android:layout_width="200dp"
                 android:layout_height="200dp"
-                android:src="@drawable/past_vaccine_success"
+                android:src="@drawable/login_success_popup"
                 android:layout_gravity="center_horizontal" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/successfull_past_vaccine"
+                android:text="@string/your_security_success_msg"
                 android:textColor="@color/black"
                 style="@style/opens_bold"
                 android:layout_gravity="center_horizontal"

@@ -47,8 +47,13 @@ class WorldEntriesAdapter(
         val flag = Country.getCountryByISO(getTwoAlpha(countryList[position].countryCodeAlpha!!)).flag
         holder.swipeHorizontalRightBinding.smContentView.imgFlag.setImageResource(flag)
 
+        if ((viewModel.validateVaccineReport(countryList[position].countryCodeAlpha!!)) and (viewModel.validateTestReportWorldEntry(countryList[position].countryCodeAlpha!!))){
+            holder.swipeHorizontalRightBinding.smContentView.statusIndicator.setImageResource(R.drawable.green_indicator)
+        }else{
+            holder.swipeHorizontalRightBinding.smContentView.statusIndicator.setImageResource(R.drawable.red_indicator)
+        }
 
-        if ((viewModel.vaccineList.value?.isEmpty() == true) and (viewModel.testReportList.value?.isEmpty() == true)){
+        /*if ((viewModel.vaccineList.value?.isEmpty() == true) and (viewModel.testReportList.value?.isEmpty() == true)){
             holder.swipeHorizontalRightBinding.smContentView.statusIndicator.setImageResource(R.drawable.red_indicator)
         }else if ((viewModel.vaccineList.value?.isNotEmpty() == true) and (viewModel.testReportList.value?.isNotEmpty() == true)){
             holder.swipeHorizontalRightBinding.smContentView.statusIndicator.setImageResource(R.drawable.green_indicator)
@@ -56,7 +61,7 @@ class WorldEntriesAdapter(
             holder.swipeHorizontalRightBinding.smContentView.statusIndicator.setImageResource(R.drawable.green_indicator)
         }else if ((viewModel.vaccineList.value?.isEmpty() == true) and (viewModel.testReportList.value?.isNotEmpty() == true)){
             holder.swipeHorizontalRightBinding.smContentView.statusIndicator.setImageResource(R.drawable.red_indicator)
-        }
+        }*/
 
         holder.swipeHorizontalRightBinding.sml.setSwipeListener(object :SwipeSwitchListener{
             override fun beginMenuClosed(swipeMenuLayout: SwipeMenuLayout?) {

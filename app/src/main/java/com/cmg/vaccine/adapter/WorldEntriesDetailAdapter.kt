@@ -44,7 +44,7 @@ class WorldEntriesDetailAdapter internal constructor(
         val indicator = convertView!!.findViewById<ImageView>(R.id.indicator)
         expandedListTextView.text = expandedListText
 
-        if (listPosition == 0){
+        if ((listPosition == 0) or (listPosition == 3)){
             indicator.visibility = View.GONE
         }
 
@@ -111,7 +111,7 @@ class WorldEntriesDetailAdapter internal constructor(
 
     override fun getGroupView(listPosition: Int, isExpanded: Boolean, convertView: View?, parent: ViewGroup): View {
         var convertView = convertView
-        val listTitle = getGroup(listPosition) as String
+        var listTitle = getGroup(listPosition) as String
         //val listTitleArray = listTitle.split("_")
         if (convertView == null) {
             val layoutInflater = this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -119,14 +119,26 @@ class WorldEntriesDetailAdapter internal constructor(
         }
         val listTitleTextView = convertView!!.findViewById<TextView>(R.id.txt_group)
         listTitleTextView.setTypeface(null, Typeface.BOLD)
-        listTitleTextView.text = listTitle
+
         val arrow = convertView!!.findViewById<ImageView>(R.id.arrow_img)
         val indicator = convertView!!.findViewById<ImageView>(R.id.indicator)
 
-        if (listPosition == 0){
+        if ((listPosition == 0) or (listPosition == 3)){
             indicator.visibility = View.GONE
         }
 
+        if ((listPosition == 1) or (listPosition == 2)){
+            val splitTitle = listTitle.split("|")
+            if (splitTitle.size > 1){
+                val status = splitTitle[1].toBoolean()
+                if (status){
+                    indicator.setImageResource(R.drawable.green_indicator)
+                }
+
+                listTitle = splitTitle[0]
+            }
+        }
+        listTitleTextView.text = listTitle
         /*if (listTitleArray[1].equals("red",true)){
             indicator.setImageResource(R.drawable.red_indicator)
         }else if (listTitleArray[1].equals("green",true)){
