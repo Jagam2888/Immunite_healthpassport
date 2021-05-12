@@ -20,7 +20,10 @@ interface PatientDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertWorldCountries(worldEntryCountries: WorldEntryCountries):Long
 
-    @Query("SELECT * FROM WorldEntryCountries ORDER BY countryName")
+    /*@Query("SELECT * FROM WorldEntryCountries ORDER BY countryName")
+    fun getAllWorldCountries():List<WorldEntryCountries>*/
+
+    @Query("Select countryCodeAlpha,countryName,countryMstrSeqno,id from (SELECT WorldEntryCountries.countryCodeAlpha countryCodeAlpha,WorldEntryCountries.countryName countryName,WorldEntryCountries.countryMstrSeqno countryMstrSeqno,WorldEntryCountries.id id,AddWorldEntries.countryCodeAlpha b FROM WorldEntryCountries LEFT OUTER JOIN AddWorldEntries ON WorldEntryCountries.countryCodeAlpha = AddWorldEntries.countryCodeAlpha) Where b is null ORDER BY countryName")
     fun getAllWorldCountries():List<WorldEntryCountries>
 
     @Query("DELETE FROM WorldEntryCountries")

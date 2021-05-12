@@ -170,6 +170,7 @@
     <string name="you_have_enter_invalid_pk">You have enter an invalid Private Key! \nWe are unable to restore your account. Please contact our helpdesk center at \n<b>+60 113 545 3139</b> \nif you need further assistant.</string>
     <string name="contact_immunite_helpdesk">Contact Immunitee Helpdesk</string>
 
+    <string name="lab_result_history">Lab Result History</string>
     <string name="immunization_detail">Immunization Detail</string>
     <string name="vaccine_code">Vaccine Code</string>
     <string name="vaccine_date_time">Vaccinated Date and Time</string>

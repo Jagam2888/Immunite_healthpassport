@@ -48,7 +48,7 @@ class SplashActivity() : BaseActivity(),KodeinAware{
 
         //Log.d("encrypt_dob",EncryptionUtils.encryptForBackup("823BBF131755B9FF006B73C3D901E9D52C465BD2E0D1E37E53053C91D1912B43","19860206"))
         //Log.d("country_code",CountryCodePicker.)
-        //Log.d("decrypt_splash",decryptKey("OU/wqK7aBe7rrDL+JTrUfCnLPuH5GpdgfbjNjbQlF0xqi9CsQp4bOReDIdpmWPWVxn67zy0IQHiQ\nBmBG6Y+8uhebe9FnAXEz7l0gS7d/ezM=","20140808")!!)
+        Log.d("decrypt_splash",decryptKey("iofJ8XF3C7GKCyBW7bA8zEfj1TlgDAgB/rF0Zy3h0kaKM0A/yuCUZnNlkV+GnMH5LseQ2kLmT3Or\nPfPQReX4QqWbUySLwhcv7UaIa09aOMw=","19880101")!!)
 
 
     }

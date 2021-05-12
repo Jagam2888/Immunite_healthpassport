@@ -52,7 +52,7 @@ class RestoreBackupOptionListViewModel(
                 val response = repositary.updateFCMToken(repositary.getPatientSubId()!!,token)
                 if (response.StatusCode == 1){
                     //listener?.onSuccess(response.Message)
-                    listener?.onSuccess("Setup Manually Success")
+                    listener?.onShowToast("Setup Manually Success")
                 }else{
                     listener?.onShowToast(response.Message)
                 }

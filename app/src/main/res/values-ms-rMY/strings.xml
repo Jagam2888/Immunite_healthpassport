@@ -148,6 +148,7 @@
     <string name="file_size_limit">Had saiz fail (5MB) Format fail (pdf, png, jpg)</string>
     <string name="additional_docs">Tambah Dokumen Tambahan</string>
 
+    <string name="lab_result_history">Lab Result History</string>
     <string name="immunization_detail">Perincian Imunisasi</string>
     <string name="vaccine_code">Kod Vaksin</string>
     <string name="vaccine_date_time">Tarikh dan Masa Vaksinasi</string>

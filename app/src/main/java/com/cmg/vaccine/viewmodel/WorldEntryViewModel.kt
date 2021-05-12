@@ -70,7 +70,7 @@ class WorldEntryViewModel(
     fun loadAPIs() {
         getAllAirportCities()
         getAllWorldEntryCountryRules()
-        loadWorldEntryCountries()
+        //loadWorldEntryCountries()
     }
 
     private fun getAllAirportCities(){
@@ -168,6 +168,7 @@ class WorldEntryViewModel(
                         val tempList = arrayListOf<WorldEntryCountries>()
                         tempList.addAll(getWorldEntryCountries)
                         _countryList.value = tempList
+                        //checkWorldEntriesAlreadySelected(getWorldEntryCountries)
                         listener?.onSuccess("")
                     }
                 }catch (e:Exception){
@@ -183,8 +184,32 @@ class WorldEntryViewModel(
            val tempList = arrayListOf<WorldEntryCountries>()
            tempList.addAll(getWorldEntryCountries)
            _countryList.value = tempList
+            //checkWorldEntriesAlreadySelected(getWorldEntryCountries)
         }
 
+    }
+
+    private fun checkWorldEntriesAlreadySelected(countriesList:List<WorldEntryCountries>){
+        if (!countriesList.isNullOrEmpty()) {
+            val tempList = arrayListOf<WorldEntryCountries>()
+            if (!worldEntriesList.value.isNullOrEmpty()) {
+                /*countriesList.forEach {
+                    if (!worldEntriesList.value?.contains(it.countryCodeAlpha)!!) {
+                        tempList.add(it)
+                    }
+                }*/
+                for (i in countriesList.indices){
+                    for (j in worldEntriesList.value!!.indices){
+                        if (countriesList[i].countryCodeAlpha != worldEntriesList.value!![j].countryCodeAlpha){
+                            tempList.add(countriesList[i])
+                        }
+                    }
+                }
+            }else{
+                tempList.addAll(countriesList)
+            }
+            _countryList.value = tempList
+        }
     }
 
     fun insertWorldEntry(country:String,countryCode:String){

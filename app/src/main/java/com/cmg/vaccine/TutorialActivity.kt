@@ -22,40 +22,40 @@ class TutorialActivity : BaseActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_tutorial)
 
 
-        var p1 = IntroItem(
+        val p1 = IntroItem(
             resources.getString(R.string.signup),
             resources.getString(R.string.tutorial_signup_desc),
             R.drawable.ic_tutorial_signup
         )
-        var p2 = IntroItem(
+        val p2 = IntroItem(
             resources.getString(R.string.world_entries),
             resources.getString(R.string.tutorial_we_desc),
             R.drawable.tut_we_img
         )
-        var p3 = IntroItem(
+        val p3 = IntroItem(
             resources.getString(R.string.add_world_entries),
             resources.getString(R.string.tutorial_add_we_desc),
             R.drawable.ic_tutorial_add_we
         )
-        var p4 = IntroItem(
+        val p4 = IntroItem(
             resources.getString(R.string.check_entry_requirement),
             resources.getString(R.string.tutorial_cer_desc),
                 R.drawable.ic_tutorial_chk_entry_req
         )
 
-        var p5 = IntroItem(
+        val p5 = IntroItem(
             resources.getString(R.string.vaccine_n_test_result),
             resources.getString(R.string.tutorial_vaccine_test_desc),
                 R.drawable.ic_tutorial_vac_test_result
         )
 
-        var p6 = IntroItem(
+        val p6 = IntroItem(
             resources.getString(R.string.scan_go_title),
             resources.getString(R.string.scan_go_desc),
                 R.drawable.ic_scan_go
         )
 
-        var screenList = listOf(p1,p2,p3, p4,p5,p6)
+        val screenList = listOf(p1,p2,p3, p4,p5,p6)
 
 
 
