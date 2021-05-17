@@ -75,7 +75,7 @@ class WorldEntryRepositary(
         return database.getDao().getWorldEntryRuleByCountryByCode(countryCode)
     }
 
-    fun getWorldEntryRuleVaccineByCountry(countryCode: String):WorldEntryRulesByCountry{
+    fun getWorldEntryRuleVaccineByCountry(countryCode: String):List<WorldEntryRulesByCountry>{
         return database.getDao().getWorldEntryRuleByCountryVaccineByCode(countryCode)
     }
 

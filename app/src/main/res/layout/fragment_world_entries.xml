@@ -62,11 +62,23 @@
                 android:visibility="@{viewmodel.worldEntriesList.size() >=10?View.GONE:View.VISIBLE}"/>
         </RelativeLayout>
 
+        <TextView
+            android:id="@+id/txt_user"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:text="@{viewmodel.fullName}"
+            android:textColor="@color/dark_gray"
+            android:textAppearance="@font/opensans_bold"
+            android:layout_below="@id/actionBar"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"/>
+
         <com.tubb.smrv.SwipeMenuRecyclerView
             android:id="@+id/recyclerViewWorldEntry"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/actionBar"
+            android:layout_below="@id/txt_user"
             android:paddingLeft="20dp"
             android:paddingTop="20dp"
             android:paddingRight="20dp"

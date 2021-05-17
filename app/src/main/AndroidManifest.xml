@@ -33,7 +33,7 @@
         <activity android:name=".ClinicListActivity"></activity>
         <activity
             android:name=".FaceRecognitionActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".VerifyFaceIDActivity"
             android:screenOrientation="portrait" />

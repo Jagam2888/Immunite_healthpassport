@@ -57,8 +57,10 @@ class WorldEntriesDetailAdapter internal constructor(
             expandedListTextView.text = testReportArray[0]
         }else if (listPosition == 2){
             val vaccineArray = expandedListText.split("|")
-            val status:Boolean = vaccineArray[1].toBoolean()
-            if (!status){
+            val status = vaccineArray[1]
+            if (status == "2"){
+                indicator.visibility = View.GONE
+            }else if (status == "0"){
                 indicator.setImageResource(R.drawable.ic_red_failed)
             }
             expandedListTextView.text = vaccineArray[0]
@@ -127,7 +129,20 @@ class WorldEntriesDetailAdapter internal constructor(
             indicator.visibility = View.GONE
         }
 
-        if ((listPosition == 1) or (listPosition == 2)){
+        if (listPosition == 2){
+            val splitTitle = listTitle.split("|")
+            if (splitTitle.size > 1){
+                val status = splitTitle[1]
+                listTitle = splitTitle[0]
+                if (status == "2"){
+                    indicator.visibility = View.GONE
+                }else if (status =="1"){
+                    indicator.setImageResource(R.drawable.green_indicator)
+                }
+            }
+        }
+
+        if (listPosition == 1){
             val splitTitle = listTitle.split("|")
             if (splitTitle.size > 1){
                 val status = splitTitle[1].toBoolean()

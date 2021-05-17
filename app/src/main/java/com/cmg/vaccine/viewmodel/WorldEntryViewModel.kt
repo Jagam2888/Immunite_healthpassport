@@ -6,11 +6,13 @@ import androidx.lifecycle.ViewModel
 import com.cmg.vaccine.R
 import com.cmg.vaccine.database.*
 import com.cmg.vaccine.listener.SimpleListener
+import com.cmg.vaccine.model.Dashboard
 import com.cmg.vaccine.model.FlagModel
 import com.cmg.vaccine.model.response.WorldEntriesCountryListData
 import com.cmg.vaccine.repositary.WorldEntryRepositary
 import com.cmg.vaccine.util.*
 import com.google.gson.Gson
+import io.paperdb.Paper
 import java.lang.Exception
 import java.lang.reflect.Array.get
 import java.net.SocketTimeoutException
@@ -66,6 +68,18 @@ class WorldEntryViewModel(
     var _vaccineDetail:MutableLiveData<VaccineDetail> = MutableLiveData()
     val vaccineDetail:LiveData<VaccineDetail>
         get() = _vaccineDetail
+    val fullName:MutableLiveData<String> = MutableLiveData()
+    val privateKey:MutableLiveData<String> = MutableLiveData()
+
+    init {
+        val userData = Paper.book().read<Dashboard>(Passparams.CURRENT_USER_SUBSID,null)
+        if (userData != null) {
+            if (!userData.fullName.isNullOrEmpty()) {
+                fullName.value = userData.fullName
+                privateKey.value = userData.privateKey
+            }
+        }
+    }
 
     fun loadAPIs() {
         getAllAirportCities()
@@ -244,11 +258,15 @@ class WorldEntryViewModel(
     }
 
     fun getVaccineAndTestReportList(){
-        val vaccineList = repositary.getVaccineReportList(repositary.getParentPrivateKey()!!)
-        _vaccineList.value = vaccineList
-        if (!repositary.getParentPrivateKey().isNullOrEmpty()) {
-            val testReportList = repositary.getTestReportList(repositary.getParentPrivateKey()!!)
+        //val vaccineList = repositary.getVaccineReportList(repositary.getParentPrivateKey()!!)
+
+        if (!privateKey.value.isNullOrEmpty()) {
+            //val testReportList = repositary.getTestReportList(repositary.getParentPrivateKey()!!)
+            val testReportList = repositary.getTestReportList(privateKey.value!!)
             _testReportList.value = testReportList
+
+            val vaccineList = repositary.getVaccineReportList(privateKey.value!!)
+            _vaccineList.value = vaccineList
         }
     }
 
@@ -320,7 +338,7 @@ class WorldEntryViewModel(
         val personalData = ArrayList<String>()
 
         var testReportstatus = false
-        var vaccineReportstatus = false
+        var vaccineReportstatus = 0
 
         getWorldEntryRuleByCountry.forEach { worldEntryRulesByCountry ->
             when(worldEntryRulesByCountry.woen_rule_match_criteria){
@@ -350,13 +368,17 @@ class WorldEntryViewModel(
                     var successVaccine:String = ""
                     var title = worldEntryRulesByCountry.woen_rule_description
                     var vaccineCode:String = worldEntryRulesByCountry.woen_vaccine_code!!
-                    vaccineList.value?.forEach { vaccine ->
-                        //if (worldEntryRulesByCountry.woen_test_code.equals(vaccine.vaccineCode)){
-                        vaccineReportstatus = validateVaccineReport(countryCode)
-                        title = vaccine.vaccineDisplayName
-                        val gson = Gson()
-                        successVaccine = gson.toJson(vaccine)
-                        //}
+                    if (!vaccineList.value.isNullOrEmpty()) {
+                        vaccineList.value?.forEach { vaccine ->
+                            //if (worldEntryRulesByCountry.woen_test_code.equals(vaccine.vaccineCode)){
+                            vaccineReportstatus = validateVaccineReport(countryCode)
+                            title = vaccine.vaccineDisplayName
+                            val gson = Gson()
+                            successVaccine = gson.toJson(vaccine)
+                            //}
+                        }
+                    }else{
+                        vaccineReportstatus = 2
                     }
                     vaccineArrayList.add("$title|$vaccineReportstatus|$successVaccine|$vaccineCode")
                 }
@@ -477,7 +499,8 @@ class WorldEntryViewModel(
 
         var observationCode = ArrayList<String>()
 
-        val testReport = repositary.getTestReportList(repositary.getParentPrivateKey()!!)
+        //val testReport = repositary.getTestReportList(repositary.getParentPrivateKey()!!)
+        val testReport = repositary.getTestReportList(privateKey.value!!)
         worldEntryRule.forEach {
             when(it.woen_rule_match_criteria){
                 "T" ->{
@@ -547,16 +570,34 @@ class WorldEntryViewModel(
         return false
     }
 
-    fun validateVaccineReport(countryCode: String):Boolean{
+    fun validateVaccineReport(countryCode: String):Int{
+
+        // 0 means vaccine not inject but priority
+        //1 means vaccine inject with priority
+        //2 means vaccine not priority
+
         val worldEntryRulesVaccineByCountry = repositary.getWorldEntryRuleVaccineByCountry(countryCode)
-        if ((!vaccineList.value.isNullOrEmpty()) and (worldEntryRulesVaccineByCountry != null)){
-            vaccineList.value!!.forEach {
-                if (worldEntryRulesVaccineByCountry.woen_vaccine_code.equals(it.vaccineCode)){
-                    return true
+        if (!worldEntryRulesVaccineByCountry.isNullOrEmpty()) {
+            if (!vaccineList.value.isNullOrEmpty()) {
+                for (i in worldEntryRulesVaccineByCountry.indices){
+                    for (j in vaccineList.value!!.indices){
+                        if (worldEntryRulesVaccineByCountry[i].woen_vaccine_code == vaccineList.value!![j].vaccineCode){
+                            return 1
+                        }
+                    }
                 }
+                /*vaccineList.value!!.forEach {
+                    if (worldEntryRulesVaccineByCountry.woen_vaccine_code.equals(it.vaccineCode)) {
+                        return 1
+                    }
+                }*/
+            }else{
+                return 0
             }
+        }else{
+            return 2
         }
-        return false
+        return 0
     }
 
 

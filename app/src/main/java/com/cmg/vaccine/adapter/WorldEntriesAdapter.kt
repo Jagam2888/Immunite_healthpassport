@@ -47,11 +47,21 @@ class WorldEntriesAdapter(
         val flag = Country.getCountryByISO(getTwoAlpha(countryList[position].countryCodeAlpha!!)).flag
         holder.swipeHorizontalRightBinding.smContentView.imgFlag.setImageResource(flag)
 
-        if ((viewModel.validateVaccineReport(countryList[position].countryCodeAlpha!!)) and (viewModel.validateTestReportWorldEntry(countryList[position].countryCodeAlpha!!))){
-            holder.swipeHorizontalRightBinding.smContentView.statusIndicator.setImageResource(R.drawable.green_indicator)
+        if (viewModel.validateVaccineReport(countryList[position].countryCodeAlpha!!) == 2){
+            if (viewModel.validateTestReportWorldEntry(countryList[position].countryCodeAlpha!!)) {
+                holder.swipeHorizontalRightBinding.smContentView.statusIndicator.setImageResource(R.drawable.green_indicator)
+            }else{
+                holder.swipeHorizontalRightBinding.smContentView.statusIndicator.setImageResource(R.drawable.red_indicator)
+            }
         }else{
-            holder.swipeHorizontalRightBinding.smContentView.statusIndicator.setImageResource(R.drawable.red_indicator)
+            if ((viewModel.validateVaccineReport(countryList[position].countryCodeAlpha!!) == 1) and (viewModel.validateTestReportWorldEntry(countryList[position].countryCodeAlpha!!))){
+                holder.swipeHorizontalRightBinding.smContentView.statusIndicator.setImageResource(R.drawable.green_indicator)
+            }else{
+                holder.swipeHorizontalRightBinding.smContentView.statusIndicator.setImageResource(R.drawable.red_indicator)
+            }
         }
+
+
 
         /*if ((viewModel.vaccineList.value?.isEmpty() == true) and (viewModel.testReportList.value?.isEmpty() == true)){
             holder.swipeHorizontalRightBinding.smContentView.statusIndicator.setImageResource(R.drawable.red_indicator)

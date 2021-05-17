@@ -466,6 +466,7 @@ class ProfileViewModel(
                                                 updateProfileReqData.email = email1.value
                                                 updateProfileReqData.mobileNumber =
                                                     contactNumber.value
+                                                updateProfileReqData.privateKey = user.privateKey
 
 
                                                 updateProfileReq.data = updateProfileReqData

@@ -16,4 +16,5 @@ class UpdateProfileReqData {
     var subsId: String?=null
     var masterSubsId: String?=null
     var relationship: String?=null
+    var privateKey: String?=null
 }

@@ -11,6 +11,7 @@ import com.cmg.vaccine.repositary.SplashRepositary
 import com.cmg.vaccine.util.Passparams
 import com.cmg.vaccine.util.calculateHours
 import com.cmg.vaccine.util.changeDateToTimeStamp
+import com.cmg.vaccine.util.decryptQRValue
 import com.cmg.vaccine.viewmodel.SplashViewModel
 import com.cmg.vaccine.viewmodel.viewmodelfactory.SplashModelFactory
 import com.hbb20.CountryCodePicker
@@ -48,14 +49,15 @@ class SplashActivity() : BaseActivity(),KodeinAware{
 
         //Log.d("encrypt_dob",EncryptionUtils.encryptForBackup("823BBF131755B9FF006B73C3D901E9D52C465BD2E0D1E37E53053C91D1912B43","19860206"))
         //Log.d("country_code",CountryCodePicker.)
-        Log.d("decrypt_splash",decryptKey("iofJ8XF3C7GKCyBW7bA8zEfj1TlgDAgB/rF0Zy3h0kaKM0A/yuCUZnNlkV+GnMH5LseQ2kLmT3Or\nPfPQReX4QqWbUySLwhcv7UaIa09aOMw=","19880101")!!)
+        Log.d("decrypt_splash",
+            decryptQRValue("UU08PcGCoQcShlPO9n1eVuvdESiQWtCa4lMYa5vDUTC8FdoYN5NIa6P4muICau4mWm3u1BpoPOzGX00I7JW3VZVtS6QhmEQBTsfeBmEUZhU=","19860206")!!)
 
 
     }
     private fun navigateActivity(){
         if (viewModel.subId.value.isNullOrEmpty()) {
             Intent(this, IntroActivity::class.java).also {
-                it.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(it)
             }
         }else{
@@ -64,32 +66,29 @@ class SplashActivity() : BaseActivity(),KodeinAware{
                     if (viewModel.loginPin.value?.enable == "Y") {
                         Intent(this, LoginPinActivity::class.java).also {
                             it.putExtra(Passparams.ISCREATE,"")
-                            it.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                            it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                             startActivity(it)
                         }
                     } else {
                         Intent(this, MainActivity::class.java).also {
-                            it.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                            it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                             startActivity(it)
                         }
 
                     }
                 }else{
                     Intent(this, MainActivity::class.java).also {
-                        it.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                        it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                         startActivity(it)
                     }
                 }
             }else{
                 Intent(this, IntroActivity::class.java).also {
-                    it.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                    it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     startActivity(it)
                 }
             }
         }
     }
 
-    fun decryptKey(key:String,dob:String):String?{
-        return EncryptionUtils.decryptBackupKey(key,dob)
-    }
 }

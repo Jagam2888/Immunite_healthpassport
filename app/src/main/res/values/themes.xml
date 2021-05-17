@@ -21,12 +21,13 @@
         <item name="android:statusBarColor">@color/primary</item>
     </style>-->
 
-    <style name="Theme.Noactionbar" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.Noactionbar" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryVariant">@color/primary</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:statusBarColor">@color/primary</item>
+        <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
     </style>
 
 

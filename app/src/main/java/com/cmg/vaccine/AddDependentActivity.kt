@@ -364,6 +364,7 @@ class AddDependentActivity : BaseActivity(),KodeinAware,SimpleListener,SlideDate
                     if (viewModel.existingUserprivateKey.get().isNullOrEmpty()){
                         qrCodeValue = binding.edtQrCode.text.toString()
                         qrCodeValue = qrCodeValue.replace("\\n","\n")
+                        qrCodeValue = qrCodeValue.replace(" ","")
                         viewModel.existingUserprivateKey.set(decryptQRValue(qrCodeValue,changeDateFormatForPrivateKeyDecrypt(binding.edtExistingUserDob.text.toString())!!))
                     }
                     viewModel.getDependentInfo(it)

@@ -668,6 +668,7 @@ class DependentViewModel(
                                             if (!idNo.value.isNullOrEmpty()) {
                                                 updateProfileReqData.idType = idType.value
                                             }
+                                            updateProfileReqData.privateKey = dependent?.privateKey
 
                                             updateProfileReq.data = updateProfileReqData
                                             repositary.saveEditProfileReq(updateProfileReq)
