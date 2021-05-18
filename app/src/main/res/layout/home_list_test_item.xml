@@ -79,7 +79,7 @@
                     android:id="@+id/txt_vaccinedate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{`Complete on `+model.dateDisplayTitle}"
+                    android:text="@{model.observationResult+`. Complete on `+model.dateDisplayTitle}"
                     android:textColor="@color/white"
                     android:textSize="12sp"
                     android:background="@drawable/home_list_injected_gray"

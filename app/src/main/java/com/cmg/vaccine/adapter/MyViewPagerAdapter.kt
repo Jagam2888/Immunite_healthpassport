@@ -7,16 +7,15 @@ import android.os.SystemClock
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
-import android.widget.RadioButton
-import android.widget.RadioGroup
-import android.widget.TextView
+import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.PagerAdapter
 import com.blongho.country_data.World
 import com.cmg.vaccine.*
+import com.cmg.vaccine.DialogFragment.PopUpDialogFragment
 import com.cmg.vaccine.data.setOnSingleClickListener
 import com.cmg.vaccine.listener.SimpleListener
 import com.cmg.vaccine.model.Dashboard
@@ -61,6 +60,11 @@ private val layouts:List<Dashboard>,
         val radioTest = view.findViewById<RadioButton>(R.id.radio_test)
 
         val btnClincList = view.findViewById<AppCompatButton>(R.id.btn_clinc_list)
+        val imgBanner = view.findViewById<ImageView>(R.id.img_banner)
+
+        imgBanner.setOnSingleClickListener{
+            PopUpDialogFragment().show((context as AppCompatActivity).supportFragmentManager,"Popup")
+        }
 
         //context.showToolTip(txtName,"this is vaccine")
        /*if (position == 0){

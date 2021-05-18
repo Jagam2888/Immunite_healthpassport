@@ -18,10 +18,20 @@
         android:paddingBottom="25dp"
         android:background="@drawable/gray_background_outline">
 
-        <RelativeLayout
+        <ImageView
+            android:id="@+id/status_indicator"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true">
+            android:src="@drawable/green_indicator"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/status_indicator"
+            android:layout_marginRight="5dp">
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/img_flag"
@@ -42,14 +52,6 @@
                 android:textAppearance="@style/opens_bold"
                 android:layout_toRightOf="@id/img_flag" />
         </RelativeLayout>
-
-        <ImageView
-            android:id="@+id/status_indicator"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/green_indicator"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"/>
 
     </RelativeLayout>
 </layout>

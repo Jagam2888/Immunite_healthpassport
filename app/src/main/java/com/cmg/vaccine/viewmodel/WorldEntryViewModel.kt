@@ -338,7 +338,7 @@ class WorldEntryViewModel(
         val personalData = ArrayList<String>()
 
         var testReportstatus = false
-        var vaccineReportstatus = 0
+        var vaccineReportstatus = 2
 
         getWorldEntryRuleByCountry.forEach { worldEntryRulesByCountry ->
             when(worldEntryRulesByCountry.woen_rule_match_criteria){

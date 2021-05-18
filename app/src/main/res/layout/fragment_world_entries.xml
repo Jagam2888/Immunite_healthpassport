@@ -68,8 +68,8 @@
             android:layout_height="wrap_content"
             android:textSize="16sp"
             android:text="@{viewmodel.fullName}"
-            android:textColor="@color/dark_gray"
-            android:textAppearance="@font/opensans_bold"
+            android:textColor="@color/black"
+            android:textAppearance="@style/opens_bold"
             android:layout_below="@id/actionBar"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="20dp"/>
