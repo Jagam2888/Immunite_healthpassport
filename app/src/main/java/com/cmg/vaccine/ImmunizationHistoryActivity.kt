@@ -151,7 +151,13 @@ class ImmunizationHistoryActivity : BaseActivity(),KodeinAware,SimpleListener,Sl
             if (data == null)
                 return
 
-            val uri = data.data?.path
+            val uri = data.data
+
+            //val path = RealPathUtil.getRealPath(this,uri)
+            /*val path = FilePath.getPath(this,uri!!)
+            if (path != null) {
+                Log.d("pdf_file_path",path)
+            }*/
 
 
             val filePathColumn = arrayOf(MediaStore.MediaColumns.DATA)
@@ -160,7 +166,6 @@ class ImmunizationHistoryActivity : BaseActivity(),KodeinAware,SimpleListener,Sl
                 val columnIndex = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA)
                 val path = cursor.getString(columnIndex)
                 Log.d("pdf_file_path",path)
-                //Log.d("pdf_file_path1",file.absolutePath)
                 viewModel.filePath.value = path
                 val file = File(path)
                 viewModel.fileName.value = file.name

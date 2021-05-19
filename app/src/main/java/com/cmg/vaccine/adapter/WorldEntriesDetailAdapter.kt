@@ -126,7 +126,8 @@ class WorldEntriesDetailAdapter internal constructor(
         val indicator = convertView!!.findViewById<ImageView>(R.id.indicator)
 
         if ((listPosition == 0) or (listPosition == 3)){
-            indicator.visibility = View.GONE
+            if (indicator.visibility == View.VISIBLE)
+                indicator.visibility = View.GONE
         }
 
         if (listPosition == 2){
@@ -135,14 +136,19 @@ class WorldEntriesDetailAdapter internal constructor(
                 val status = splitTitle[1]
                 listTitle = splitTitle[0]
                 if (status == "2"){
-                    indicator.visibility = View.GONE
+                    if (indicator.visibility == View.VISIBLE)
+                        indicator.visibility = View.GONE
                 }else if (status =="1"){
+                    if (indicator.visibility == View.GONE)
+                        indicator.visibility = View.VISIBLE
                     indicator.setImageResource(R.drawable.green_indicator)
                 }
             }
         }
 
         if (listPosition == 1){
+            if (indicator.visibility == View.GONE)
+                indicator.visibility = View.VISIBLE
             val splitTitle = listTitle.split("|")
             if (splitTitle.size > 1){
                 val status = splitTitle[1].toBoolean()

@@ -29,7 +29,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Noactionbar"
         android:usesCleartextTraffic="true"
-        tools:replace="android:allowBackup">
+        tools:replace="android:allowBackup"
+        android:requestLegacyExternalStorage="true">
         <activity android:name=".ClinicListActivity"></activity>
         <activity
             android:name=".FaceRecognitionActivity"

@@ -356,7 +356,7 @@ class WorldEntryViewModel(
                         testReportList.value?.forEach { test ->
                             //if (worldEntryRulesByCountry.woen_test_code.equals(test.dateDisplayTitle)){
                             testReportstatus = validateTestReportWorldEntry(countryCode)
-                            title = test.NameDisplayTitle
+                            //title = test.NameDisplayTitle
                             val gson = Gson()
                             successTestReport = gson.toJson(test)
                             //}
@@ -372,7 +372,7 @@ class WorldEntryViewModel(
                         vaccineList.value?.forEach { vaccine ->
                             //if (worldEntryRulesByCountry.woen_test_code.equals(vaccine.vaccineCode)){
                             vaccineReportstatus = validateVaccineReport(countryCode)
-                            title = vaccine.vaccineDisplayName
+                            //title = vaccine.vaccineDisplayName
                             val gson = Gson()
                             successVaccine = gson.toJson(vaccine)
                             //}
