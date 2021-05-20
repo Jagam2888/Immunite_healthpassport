@@ -229,6 +229,8 @@
     <string name="malay">Bahasa Melayu</string>
     <string name="chinese">中文</string>
 
+    <string name="terms_and_con"><u>Terms and Conditions Apply</u></string>
+
     <string name="not_support_google">Backup won\'t run without Google Play Services, which are not supported by your device.</string>
     <string name="immunitee_not_support_google">Immunitee won\'t run without Google Play Services, which are not supported by your device.</string>
 

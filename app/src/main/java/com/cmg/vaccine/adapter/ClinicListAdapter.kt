@@ -6,10 +6,10 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.cmg.vaccine.R
 import com.cmg.vaccine.databinding.ClinicListItemBinding
-import com.cmg.vaccine.model.response.ClinicListResponseDataTwo
+import com.cmg.vaccine.model.response.ClinicListResponseDataOne
 
 class ClinicListAdapter(
-        private val list:List<ClinicListResponseDataTwo>
+        private val list:List<ClinicListResponseDataOne>
 ):RecyclerView.Adapter<ClinicListAdapter.MyViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = MyViewHolder(

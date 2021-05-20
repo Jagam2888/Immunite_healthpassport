@@ -26,15 +26,18 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:manageSpaceActivity=".SplashActivity"
+        android:requestLegacyExternalStorage="true"
         android:supportsRtl="true"
         android:theme="@style/Theme.Noactionbar"
         android:usesCleartextTraffic="true"
-        tools:replace="android:allowBackup"
-        android:requestLegacyExternalStorage="true">
-        <activity android:name=".ClinicListActivity"></activity>
+        tools:replace="android:allowBackup">
+        <activity android:name=".AirAsiaActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".ClinicListActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".FaceRecognitionActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".VerifyFaceIDActivity"
             android:screenOrientation="portrait" />

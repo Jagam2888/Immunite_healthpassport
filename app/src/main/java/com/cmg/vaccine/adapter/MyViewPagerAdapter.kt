@@ -59,11 +59,18 @@ private val layouts:List<Dashboard>,
         val radioVaccine = view.findViewById<RadioButton>(R.id.radio_vaccine)
         val radioTest = view.findViewById<RadioButton>(R.id.radio_test)
 
-        val btnClincList = view.findViewById<AppCompatButton>(R.id.btn_clinc_list)
+        val btnClincList = view.findViewById<LinearLayout>(R.id.btn_clinc_list)
+        val btnAirAsia = view.findViewById<LinearLayout>(R.id.layout_airasia)
         val imgBanner = view.findViewById<ImageView>(R.id.img_banner)
 
         imgBanner.setOnSingleClickListener{
             PopUpDialogFragment().show((context as AppCompatActivity).supportFragmentManager,"Popup")
+        }
+
+        btnAirAsia.setOnSingleClickListener{
+            Intent(context,AirAsiaActivity::class.java).also {
+                context?.startActivity(it)
+            }
         }
 
         //context.showToolTip(txtName,"this is vaccine")

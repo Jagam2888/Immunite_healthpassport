@@ -147,6 +147,73 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="10dp"/>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginLeft="20dp">
+                    <ImageView
+                        android:layout_width="58dp"
+                        android:layout_height="58dp"
+                        android:src="@drawable/ic_digital_health_certificate"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Digital Cert"
+                        android:textColor="@color/black"
+                        android:textSize="12sp"
+                        android:textAppearance="@style/opens_bold"
+                        android:layout_marginTop="5dp"
+                        android:layout_gravity="center_horizontal"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/btn_clinc_list"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginLeft="20dp">
+                    <ImageView
+                        android:layout_width="58dp"
+                        android:layout_height="58dp"
+                        android:src="@drawable/ic_lab_result"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Clinic List"
+                        android:textColor="@color/black"
+                        android:textSize="12sp"
+                        android:textAppearance="@style/opens_bold"
+                        android:layout_marginTop="5dp"
+                        android:layout_gravity="center_horizontal"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/layout_airasia"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginLeft="20dp">
+                    <ImageView
+                        android:layout_width="58dp"
+                        android:layout_height="58dp"
+                        android:src="@drawable/ic_air_asia"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Air Asia"
+                        android:textColor="@color/black"
+                        android:textSize="12sp"
+                        android:textAppearance="@style/opens_bold"
+                        android:layout_marginTop="5dp"
+                        android:layout_gravity="center_horizontal"/>
+                </LinearLayout>
+            </LinearLayout>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -189,7 +256,7 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp" />
-                <androidx.appcompat.widget.AppCompatButton
+                <!--<androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btn_clinc_list"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -198,7 +265,7 @@
                     android:textAppearance="@style/opens_bold"
                     android:textSize="16sp"
                     android:background="@drawable/button_green_primary"
-                    android:layout_marginTop="20dp"/>
+                    android:layout_marginTop="20dp"/>-->
             </LinearLayout>
             <!--<TextView
                 android:id="@+id/txt_nodata_vaccine"
