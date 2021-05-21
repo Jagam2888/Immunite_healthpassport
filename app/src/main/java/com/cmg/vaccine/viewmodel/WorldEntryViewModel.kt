@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.cmg.vaccine.R
+import com.cmg.vaccine.data.WorldEntryRuleData
 import com.cmg.vaccine.database.*
 import com.cmg.vaccine.listener.SimpleListener
 import com.cmg.vaccine.model.Dashboard
@@ -498,6 +499,8 @@ class WorldEntryViewModel(
         var listTestReportFilterByHours:ArrayList<TestReport> = ArrayList()
 
         var observationCode = ArrayList<String>()
+        var observationCodeMandatory = ArrayList<WorldEntryRuleData>()
+        var observationCodeSelective = ArrayList<WorldEntryRuleData>()
 
         //val testReport = repositary.getTestReportList(repositary.getParentPrivateKey()!!)
         val testReport = repositary.getTestReportList(privateKey.value!!)
@@ -511,6 +514,13 @@ class WorldEntryViewModel(
                         if (!it.woen_test_code.isNullOrEmpty()) {
                             observationCode.add(it.woen_test_code)
                         }
+                        val worlEntryRuleData = WorldEntryRuleData(
+                            hours,
+                            it.woen_test_code,
+                            it.prioRulePair,
+                            it.prioRuleCriteria
+                        )
+                        observationCodeMandatory.add(worlEntryRuleData)
                     }
                     if (it.prioRuleCriteria.equals("Selective",false)) {
                         if (!it.woen_duration_hours.isNullOrEmpty()) {
@@ -519,8 +529,25 @@ class WorldEntryViewModel(
                         if (!it.woen_test_code.isNullOrEmpty()) {
                             observationCode.add(it.woen_test_code)
                         }
+                        val worlEntryRuleData = WorldEntryRuleData(
+                            hours,
+                            it.woen_test_code,
+                            it.prioRulePair,
+                            it.prioRuleCriteria
+                        )
+                        observationCodeSelective.add(worlEntryRuleData)
                     }
                 }
+            }
+        }
+
+        testReport.forEach {
+
+        }
+
+        if (observationCodeMandatory.size > 0){
+            for (i in observationCodeMandatory.indices){
+
             }
         }
 

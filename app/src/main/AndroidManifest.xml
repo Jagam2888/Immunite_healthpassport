@@ -32,7 +32,8 @@
         android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup">
         <activity android:name=".AirAsiaActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"></activity>
         <activity android:name=".ClinicListActivity"
             android:screenOrientation="portrait"/>
         <activity

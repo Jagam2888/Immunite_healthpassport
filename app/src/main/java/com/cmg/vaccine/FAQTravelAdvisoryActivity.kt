@@ -7,8 +7,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import com.cmg.vaccine.adapter.FAQTravelAdapter
-import com.cmg.vaccine.data.FAQListData.data
-import com.cmg.vaccine.data.TravelListData.travelData
 import com.cmg.vaccine.databinding.ActivityFAQTravelAdvisoryBinding
 import com.cmg.vaccine.util.Passparams
 import kotlinx.android.synthetic.main.layout_faq.*

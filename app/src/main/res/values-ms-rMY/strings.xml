@@ -62,7 +62,7 @@
     <string name="create_pin">Buat PIN</string>
     <string name="update_pin">Kemas kini PIN</string>
     <string name="enter_4_pin">Masukkan PIN 4-Digit</string>
-    <string name="my_key">MyKey</string>
+    <string name="my_key">My Key</string>
     <string name="remove_dependent">Buang Tanggungan</string>
     <string name="scan_qr_code">Imbas Kod QR</string>
 
@@ -312,6 +312,7 @@ clinical data and complete your clinical test at Immunitee clinic.
     <string name="advisory_desc"></string>
     <string name="clear_notifi_msg">Are you sure Want to Clear Notification</string>
     <string name="clear">CLEAR</string>
+    <string name="no_notification">No Notification Received!</string>
 
     <string name="add_entry">Tambah Titik Masuk</string>
 
