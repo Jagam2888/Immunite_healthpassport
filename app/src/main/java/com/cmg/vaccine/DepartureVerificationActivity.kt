@@ -7,10 +7,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.cmg.vaccine.databinding.ActivityDepartureVerificationBinding
 import com.cmg.vaccine.listener.SimpleListener
-import com.cmg.vaccine.util.Passparams
-import com.cmg.vaccine.util.hide
-import com.cmg.vaccine.util.showAlertDialog
-import com.cmg.vaccine.util.toast
+import com.cmg.vaccine.util.*
 import com.cmg.vaccine.viewmodel.DepartureVerificationViewModel
 import com.cmg.vaccine.viewmodel.viewmodelfactory.DepartureVerificationModelFactory
 import io.paperdb.Paper
@@ -67,27 +64,30 @@ class DepartureVerificationActivity : BaseActivity(),KodeinAware,SimpleListener 
     }
 
     override fun onStarted() {
-        TODO("Not yet implemented")
+        show(binding.wenProgressBar)
     }
 
     override fun onSuccess(msg: String) {
+        hide(binding.wenProgressBar)
         toast(msg)
         finish()
     }
 
     override fun onShowToast(msg: String) {
+        hide(binding.wenProgressBar)
         toast(msg)
     }
 
     override fun onFailure(msg: String) {
+        hide(binding.wenProgressBar)
         if (msg.startsWith("2")){
             val showMsg = msg.drop(1)
             showAlertDialog(resources.getString(R.string.failed), showMsg, false, supportFragmentManager)
         }else if (msg.startsWith("3")){
             val showMsg = msg.drop(1)
             showAlertDialog(showMsg, resources.getString(R.string.check_internet), false, supportFragmentManager)
-        }else {
+        }/*else {
             showAlertDialog(msg, "", false, supportFragmentManager)
-        }
+        }*/
     }
 }

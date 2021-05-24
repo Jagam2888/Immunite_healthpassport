@@ -541,15 +541,58 @@ class WorldEntryViewModel(
             }
         }
 
-        testReport.forEach {
+        val testReportFilterByTestCode = repositary.getTestReportFilterByTestCodes(privateKey.value!!,countryCode)
+        if (testReportFilterByTestCode.isNullOrEmpty()){
+            return false
+        }else{
+            if (observationCodeMandatory.size > 0){
+                if (testReportFilterByTestCode.size >= observationCodeMandatory.size) {
+                    for (i in observationCodeMandatory.indices) {
+                        for (j in testReportFilterByTestCode.indices) {
+                            if ((!testReportFilterByTestCode[j].dateSampleCollected.isNullOrEmpty()) and (!testReportFilterByTestCode[j].timeSampleCollected.isNullOrEmpty())){
+                                val sampleDate = changeDateFormatNewISO8601(testReportFilterByTestCode[j].dateSampleCollected + " " + testReportFilterByTestCode[j].timeSampleCollected + ":00")
+                                val calculateHours = calculateHours(System.currentTimeMillis(),changeDateToTimeStamp(sampleDate!!)!!)
+                                if (calculateHours != null){
+                                    if (calculateHours <= observationCodeMandatory[i].hours) {
+                                        //listTestReportFilterByHours.add(it)
+                                        if (i+1 == observationCodeMandatory.size){
+                                            return true
+                                        }
+                                    }else{
+                                        return false
+                                    }
 
-        }
+                                }
+                            }
+                        }
+                    }
+                }else{
+                    return false
+                }
+            }
+            if (observationCodeSelective.size > 0){
+                for (i in observationCodeSelective.indices){
+                    if (observationCodeSelective[i].priorRulePair.isNullOrEmpty()) {
+                        for (j in testReportFilterByTestCode.indices) {
+                            if ((!testReportFilterByTestCode[j].dateSampleCollected.isNullOrEmpty()) and (!testReportFilterByTestCode[j].timeSampleCollected.isNullOrEmpty())){
+                                val sampleDate = changeDateFormatNewISO8601(testReportFilterByTestCode[j].dateSampleCollected + " " + testReportFilterByTestCode[j].timeSampleCollected + ":00")
+                                val calculateHours = calculateHours(System.currentTimeMillis(),changeDateToTimeStamp(sampleDate!!)!!)
+                                if (calculateHours != null){
+                                    return calculateHours <= observationCodeSelective[i].hours
+                                }
+                            }
+                        }
+                    }else{
 
-        if (observationCodeMandatory.size > 0){
-            for (i in observationCodeMandatory.indices){
-
+                    }
+                }
             }
         }
+
+
+
+
+
 
         testReport.forEach {
             if ((!it.dateSampleCollected.isNullOrEmpty()) and (!it.timeSampleCollected.isNullOrEmpty())){

@@ -54,6 +54,10 @@ class WorldEntryRepositary(
         return database.getDao().getTestReportList(privateKey)
     }
 
+    fun getTestReportFilterByTestCodes(privateKey: String,countryCode: String):List<TestReport>{
+        return database.getDao().gettestReportFilterByTestCodes(privateKey,countryCode)
+    }
+
     fun getParentPrivateKey():String?{
         return database.getDao().getPrivateKey(preferenceProvider.getSubId()!!)
     }

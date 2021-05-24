@@ -266,7 +266,7 @@ interface PatientDao {
     fun getErrorMessage(errorCode:String):String?
 
     @Query("SELECT a.* FROM TestReport a,TestCodes b where privateKey=:privateKey and b.wetstCountryCode=:countryCode and b.wetstTestCode=a.testCode and instr(b.wetstObservationStatusCode,a.observationCode)>0")
-    fun gettestReportFilterByTestCodes(privateKey: String,countryCode: String)
+    fun gettestReportFilterByTestCodes(privateKey: String,countryCode: String):List<TestReport>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertObservationStatus(observationStatus: ObservationStatus):Long
@@ -307,6 +307,6 @@ interface PatientDao {
     @Query("SELECT sysMappingValue FROM SystemConfigResponseData WHERE sysMappingKeyName ='No_of_Dependent'")
     fun getNoOfDependentCount():String
 
-    @Query("SELECT sysMappingValue FROM SystemConfigResponseData WHERE sysMappingKeyName ='Airline_Counter_Check_IN'")
-    fun getCounterCheckinDecryptKey():String
+    @Query("SELECT sysMappingValue FROM SystemConfigResponseData WHERE sysMappingKeyName =:mapkey")
+    fun getCounterCheckinDecryptKey(mapkey:String):String
 }

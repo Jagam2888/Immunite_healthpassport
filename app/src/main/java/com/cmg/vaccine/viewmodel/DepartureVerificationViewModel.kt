@@ -1,6 +1,7 @@
 package com.cmg.vaccine.viewmodel
 
 import android.os.Build
+import android.util.Log
 import androidx.databinding.ObservableBoolean
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,8 +11,11 @@ import com.cmg.vaccine.database.WorldPriority
 import com.cmg.vaccine.listener.SimpleListener
 import com.cmg.vaccine.model.Dashboard
 import com.cmg.vaccine.model.MASResponseStatic
+import com.cmg.vaccine.model.request.WebCheckInReq
+import com.cmg.vaccine.model.request.WebCheckInReqData
 import com.cmg.vaccine.repositary.DepartureVerificationRepositary
 import com.cmg.vaccine.util.*
+import com.google.android.gms.common.api.ApiException
 import immuniteeEncryption.EncryptionUtils
 import io.paperdb.Paper
 import org.json.JSONException
@@ -48,6 +52,7 @@ class DepartureVerificationViewModel(
 
     var status = ObservableBoolean()
 
+
     var hours:Long = 72
     var listener:SimpleListener?=null
 
@@ -80,7 +85,7 @@ class DepartureVerificationViewModel(
                     if (jsonObject.getString("purpose").equals("Counter Check-In",false)){
                         if (jsonObject.has("data")) {
                             val getData = jsonObject.getString("data")
-                            val decryptData = EncryptionUtils.decryptBackupKey(getData,repositary.getCounterCheckinDecryptKey())
+                            val decryptData = EncryptionUtils.decryptBackupKey(getData,repositary.getCounterCheckinDecryptKey(Passparams.COUNTER_CHECKIN))
                             val data = JSONObject(decryptData)
 
                             departureDestination.value = data.getString("reqDepatureDestination")
@@ -200,12 +205,46 @@ class DepartureVerificationViewModel(
                             }
 
                         }
-                    }else if (jsonObject.getString("purpose").equals("Email Check-In",false)){
+                    }else if (jsonObject.getString("purpose").equals("Web Check-in",false)){
                         if (jsonObject.has("data")){
+                            listener?.onStarted()
                             val getData = jsonObject.getString("data")
-                            val decryptData = EncryptionUtils.decryptBackupKey(getData,"20210327")
+                            val decryptData = EncryptionUtils.decryptBackupKey(getData,repositary.getCounterCheckinDecryptKey(Passparams.WEB_CHECKIN))
+                            Log.d("decrypt",decryptData)
                             val data = JSONObject(decryptData)
-                            listener?.onSuccess("Ecode is missing")
+                            //listener?.onSuccess("Ecode is missing")
+
+                            var passengerIdno = ""
+                            var passengerPassportNo = ""
+                            var passengerPassportExpiryDate=""
+
+                            if (data.has("reqPassengerIdNo")){
+                                passengerIdno = data.getString("reqPassengerIdNo")
+                            }
+
+                            if (data.has("reqPassengerPassportNo")){
+                                passengerPassportNo = data.getString("reqPassengerPassportNo")
+                            }
+
+                            if (data.has("reqPassengerExpiry")){
+                                passengerPassportExpiryDate = data.getString("reqPassengerExpiry")
+                            }
+
+
+                            val webCheckInReq = WebCheckInReq()
+                            val webCheckInReqData = WebCheckInReqData(
+                                data.getString("dobEcode"),
+                                changeDateFormatOnlyDateReverse(data.getString("reqPassengerDob"))!!,
+                                passengerIdno,
+                                data.getString("reqPassengerIdType"),
+                                data.getString("reqPassengerName"),
+                                passengerPassportNo,
+                                passengerPassportExpiryDate,
+                                userData.privateKey!!,
+                                userData.subId!!
+                            )
+                            webCheckInReq.data = webCheckInReqData
+                            webCheckInAPI(webCheckInReq)
                         }
                     }
                 }
@@ -219,5 +258,25 @@ class DepartureVerificationViewModel(
             }
 
         }
+    }
+
+    private fun webCheckInAPI(webCheckInReq: WebCheckInReq){
+        Couritnes.main {
+            try {
+                val response = repositary.webCheckInApi(webCheckInReq)
+                if (response.StatusCode == 1){
+                    listener?.onSuccess(response.Message)
+                }else{
+                    listener?.onFailure("2"+response.Message)
+                }
+            }catch (e:ApiException){
+                listener?.onShowToast("2"+e.message!!)
+            }catch (e:NoInternetException){
+                listener?.onFailure("3"+e.message!!)
+            }catch (e:Exception){
+                listener?.onShowToast("2"+e.message!!)
+            }
+        }
+
     }
 }

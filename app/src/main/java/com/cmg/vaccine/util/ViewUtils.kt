@@ -484,6 +484,17 @@ fun changeDateFormatISO8601(dateString: String):String?{
     }
     return ""
 }
+fun changeDateFormatOnlyDateReverse(dateString: String):String?{
+    val resultFormat = SimpleDateFormat("yyyyMMdd")
+    val currentDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
+    try {
+        val date = currentDateFormat.parse(dateString)
+        return resultFormat.format(date)
+    }catch (e: ParseException){
+        e.printStackTrace()
+    }
+    return ""
+}
 fun changeDateFormatNewISO8601(dateString: String):String?{
     val currentDateFormat = SimpleDateFormat("dd/MM/yyyy HH:mm:ss")
     val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")

@@ -86,7 +86,7 @@ class AppController : Application(),KodeinAware {
         bind() from singleton { RestoreBackupOptionListRepositary(instance(),instance(),instance()) }
         bind() from provider { RestoreBackupOptionListViewModelFactory(instance()) }
 
-        bind() from singleton { DepartureVerificationRepositary(instance(),instance()) }
+        bind() from singleton { DepartureVerificationRepositary(instance(),instance(),instance()) }
         bind() from provider { DepartureVerificationModelFactory(instance()) }
 
         bind() from singleton { CountryListFragmentRepositary(instance(),instance()) }

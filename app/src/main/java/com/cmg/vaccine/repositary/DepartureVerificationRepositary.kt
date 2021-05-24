@@ -3,12 +3,17 @@ package com.cmg.vaccine.repositary
 import com.cmg.vaccine.database.*
 import com.cmg.vaccine.model.JoinWorldEntryRuleAndPriority
 import com.cmg.vaccine.model.TestCodeFilterByReport
+import com.cmg.vaccine.model.request.WebCheckInReq
+import com.cmg.vaccine.model.response.WebCheckInResponse
+import com.cmg.vaccine.network.MyApi
+import com.cmg.vaccine.network.SafeAPIRequest
 import com.cmg.vaccine.prefernces.PreferenceProvider
 
 class DepartureVerificationRepositary(
     private val database: AppDatabase,
-    private val preferenceProvider: PreferenceProvider
-) {
+    private val preferenceProvider: PreferenceProvider,
+    private val api:MyApi
+):SafeAPIRequest() {
 
     fun getUserData(): User {
         return database.getDao().getUserData(preferenceProvider.getSubId()!!)
@@ -50,8 +55,14 @@ class DepartureVerificationRepositary(
         return database.getDao().getFilterTestCodeByReport(privateKey,countryCode)
     }
 
-    fun getCounterCheckinDecryptKey():String{
-        return database.getDao().getCounterCheckinDecryptKey()
+    fun getCounterCheckinDecryptKey(mapKey:String):String{
+        return database.getDao().getCounterCheckinDecryptKey(mapKey)
+    }
+
+    suspend fun webCheckInApi(webCheckInReq: WebCheckInReq):WebCheckInResponse{
+        return apiRequest {
+            api.webCheckInAPI(webCheckInReq)
+        }
     }
 
 }

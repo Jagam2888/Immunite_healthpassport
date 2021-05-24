@@ -58,6 +58,9 @@ object Passparams{
     const val NOTIFICATION_MSG = "notification_msg"
     const val NOTIFICATION_DATE = "notification_date"
 
+    const val COUNTER_CHECKIN = "Airline_Counter_Check_IN"
+    const val WEB_CHECKIN = "Airline_Online_Check_IN"
+
 
     const val GSON_HASHMAP_COUNTRYLIST = "gson_hashmap_countrylist"
 
@@ -122,6 +125,7 @@ object Passparams{
     const val OBSERVATION_STATUS_CODE = "nhr-module-user/searchobservationstatus"
     const val SYSTEM_CONFIG = "nhr-module-user/searchsystemconfig"
     const val GET_CLINIC_LIST = "nhr-module-user/facility"
+    const val WEB_CHECK_IN_API = "nhr-module-integration/grantpk"
 
     //Block Chain
     const val BLOCK_CHAIN_URL = "https://cashierbook.com.my:8081/blockchainapi/"

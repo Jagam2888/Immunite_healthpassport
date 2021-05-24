@@ -137,6 +137,9 @@ interface MyApi {
     @POST(Passparams.REMOVE_DEPENDENT)
     suspend fun removeDependent(@Query("masterSubsId")masterSubId:String,@Query("dependentSubsId")subId:String):Response<RemoveDependentResponse>
 
+    @POST(Passparams.WEB_CHECK_IN_API)
+    suspend fun webCheckInAPI(@Body webCheckInReq: WebCheckInReq):Response<WebCheckInResponse>
+
 
     companion object{
         operator fun invoke(
