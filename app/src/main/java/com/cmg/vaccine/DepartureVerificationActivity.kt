@@ -3,6 +3,7 @@ package com.cmg.vaccine
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.cmg.vaccine.databinding.ActivityDepartureVerificationBinding
@@ -35,6 +36,19 @@ class DepartureVerificationActivity : BaseActivity(),KodeinAware,SimpleListener 
 
         val qrCodeValue = Paper.book().read<String>(Passparams.QR_CODE_VALUE,"")
         viewModel.qrCodeValue.value = qrCodeValue.replace("\\n","\n")
+
+        if (!viewModel.getPurpose().isNullOrEmpty()) {
+            if (viewModel.getPurpose() == "Web Check-in") {
+                if (binding.mainlayout.visibility == View.VISIBLE)
+                    binding.mainlayout.visibility = View.GONE
+            } else {
+                if (binding.mainlayout.visibility == View.GONE)
+                    binding.mainlayout.visibility = View.VISIBLE
+            }
+        }else{
+            toast("Sorry!cannot detect,Please scan again")
+            finish()
+        }
 
         viewModel.loadData()
 
@@ -69,25 +83,27 @@ class DepartureVerificationActivity : BaseActivity(),KodeinAware,SimpleListener 
 
     override fun onSuccess(msg: String) {
         hide(binding.wenProgressBar)
-        toast(msg)
-        finish()
+        //toast(msg)
+        showAlertDialogWithClick(resources.getString(R.string.success), msg, true, true,supportFragmentManager)
+        //finish()
     }
 
     override fun onShowToast(msg: String) {
         hide(binding.wenProgressBar)
         toast(msg)
+        //finish()
     }
 
     override fun onFailure(msg: String) {
         hide(binding.wenProgressBar)
         if (msg.startsWith("2")){
             val showMsg = msg.drop(1)
-            showAlertDialog(resources.getString(R.string.failed), showMsg, false, supportFragmentManager)
+            showAlertDialogWithClick(resources.getString(R.string.failed), showMsg, false,true, supportFragmentManager)
         }else if (msg.startsWith("3")){
             val showMsg = msg.drop(1)
-            showAlertDialog(showMsg, resources.getString(R.string.check_internet), false, supportFragmentManager)
-        }/*else {
-            showAlertDialog(msg, "", false, supportFragmentManager)
-        }*/
+            showAlertDialogWithClick(showMsg, resources.getString(R.string.check_internet), false,true, supportFragmentManager)
+        }else {
+            showAlertDialogWithClick(resources.getString(R.string.failed), msg, false, true,supportFragmentManager)
+        }
     }
 }

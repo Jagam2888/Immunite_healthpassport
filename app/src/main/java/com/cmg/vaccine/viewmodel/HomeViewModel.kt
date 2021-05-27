@@ -401,6 +401,8 @@ class HomeViewModel(
         dashBoard.fullName = userData.fullName
         dashBoard.passportNo = userData.passportNumber
         dashBoard.idNo = userData.patientIdNo
+        dashBoard.idType = userData.patientIdType
+        dashBoard.passportExpiry = userData.passportExpiryDate
         dashBoard.privateKey = userData.privateKey
         dashBoard.nationality = userData.nationality
 
@@ -422,7 +424,9 @@ class HomeViewModel(
                 val dashboard1 = Dashboard()
                 dashboard1.fullName = dependent.firstName
                 dashboard1.passportNo = dependent.passportNo
+                dashboard1.passportExpiry = dependent.passportExpiryDate
                 dashboard1.idNo = dependent.idNo
+                dashboard1.idType = dependent.idType
                 dashboard1.relationShip = dependent.relationship
                 dashboard1.nationality = dependent.nationalityCountry
                 //dashboard1.data = vaccineList.value

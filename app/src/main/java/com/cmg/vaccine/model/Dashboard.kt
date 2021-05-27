@@ -10,7 +10,9 @@ class Dashboard {
     var fullName:String?=null
     var relationShip:String?=null
     var passportNo:String?=null
+    var passportExpiry:String?=null
     var idNo:String?=null
+    var idType:String?=null
     var nationality:String?=null
     var privateKey:String?=null
     var dob:String?=null

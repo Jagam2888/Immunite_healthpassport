@@ -88,12 +88,28 @@ fun hide(progressBar: ProgressBar){
     return (!TextUtils.isEmpty(value) and Patterns.EMAIL_ADDRESS.matcher(value).matches())
 }*/
 
-fun showAlertDialog(title: String, msg: String, status: Boolean, fragmentManager: FragmentManager){
+fun showAlertDialog(title: String, msg: String, status: Boolean,fragmentManager: FragmentManager){
     var alertDialog = AlertDialogFragment()
     var data= Bundle()
     data.putString(Passparams.DIALOG_TITLE, title)
     data.putString(Passparams.DIALOG_MSG, msg)
     data.putBoolean(Passparams.DIALOG_STATUS, status)
+    data.putBoolean(Passparams.DIALOG_CLOSE_ACTIVITY, false)
+    alertDialog.arguments = data
+    try {
+        alertDialog.show(fragmentManager, "TAG")
+    }catch (e: Exception){
+        e.printStackTrace()
+    }
+
+}
+fun showAlertDialogWithClick(title: String, msg: String, status: Boolean, closeAvtivity:Boolean,fragmentManager: FragmentManager){
+    var alertDialog = AlertDialogFragment()
+    var data= Bundle()
+    data.putString(Passparams.DIALOG_TITLE, title)
+    data.putString(Passparams.DIALOG_MSG, msg)
+    data.putBoolean(Passparams.DIALOG_STATUS, status)
+    data.putBoolean(Passparams.DIALOG_CLOSE_ACTIVITY, closeAvtivity)
     alertDialog.arguments = data
     try {
         alertDialog.show(fragmentManager, "TAG")
@@ -486,7 +502,7 @@ fun changeDateFormatISO8601(dateString: String):String?{
 }
 fun changeDateFormatOnlyDateReverse(dateString: String):String?{
     val resultFormat = SimpleDateFormat("yyyyMMdd")
-    val currentDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
+    val currentDateFormat = SimpleDateFormat("dd/MM/yyyy")
     try {
         val date = currentDateFormat.parse(dateString)
         return resultFormat.format(date)

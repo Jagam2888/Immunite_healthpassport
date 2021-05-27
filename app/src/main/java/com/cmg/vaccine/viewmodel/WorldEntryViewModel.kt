@@ -1,5 +1,6 @@
 package com.cmg.vaccine.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -583,7 +584,33 @@ class WorldEntryViewModel(
                             }
                         }
                     }else{
+                        var result = ArrayList<Boolean>()
+                        var priorRulePairList = ArrayList<String>()
+                        observationCodeSelective.forEach {
+                            if (!priorRulePairList.contains(it.priorRulePair)){
+                                priorRulePairList.add(it.priorRulePair!!)
+                            }
+                        }
+                        /*for (i in observationCodeSelective.indices){
 
+                        }*/
+                        for (i in priorRulePairList.indices){
+                            for (k in observationCodeSelective.indices){
+                                if (observationCodeSelective[k].priorRulePair == priorRulePairList[i]){
+                                    for (j in testReportFilterByTestCode.indices) {
+                                        if ((!testReportFilterByTestCode[j].dateSampleCollected.isNullOrEmpty()) and (!testReportFilterByTestCode[j].timeSampleCollected.isNullOrEmpty())){
+                                            val sampleDate = changeDateFormatNewISO8601(testReportFilterByTestCode[j].dateSampleCollected + " " + testReportFilterByTestCode[j].timeSampleCollected + ":00")
+                                            val calculateHours = calculateHours(System.currentTimeMillis(),changeDateToTimeStamp(sampleDate!!)!!)
+                                            if (calculateHours != null){
+
+                                                result.add(calculateHours <= observationCodeSelective[k].hours)
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        Log.d("priorrule",priorRulePairList.toString())
                     }
                 }
             }
@@ -594,7 +621,7 @@ class WorldEntryViewModel(
 
 
 
-        testReport.forEach {
+     /*   testReport.forEach {
             if ((!it.dateSampleCollected.isNullOrEmpty()) and (!it.timeSampleCollected.isNullOrEmpty())){
                 val sampleDate = changeDateFormatNewISO8601(it.dateSampleCollected + " " + it.timeSampleCollected + ":00")
                 val calculateHours = calculateHours(System.currentTimeMillis(),changeDateToTimeStamp(sampleDate!!)!!)
@@ -629,13 +656,12 @@ class WorldEntryViewModel(
                             observationTrimArray.add(observationStatusCodeArray[k].trim())
                         }
                         if (observationTrimArray?.contains(listTestReportFilterByHours[j].observationCode!!)){
-                            //status.set(true)
                             return true
                         }
                     }
                 }
             }
-        }
+        }*/
 
         return false
     }

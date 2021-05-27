@@ -56,6 +56,20 @@ class DepartureVerificationViewModel(
     var hours:Long = 72
     var listener:SimpleListener?=null
 
+    fun getPurpose():String?{
+        var result = ""
+        try {
+            val jsonObject = JSONObject(qrCodeValue.value)
+            if (jsonObject.has("purpose")){
+                result = jsonObject.getString("purpose")
+            }
+        }catch (e:JSONException){
+            result = ""
+        }
+
+        return result
+    }
+
     fun loadData(){
         //val userData = repositary.getUserData()
         var maxDate:Date?=null
@@ -215,10 +229,27 @@ class DepartureVerificationViewModel(
                             //listener?.onSuccess("Ecode is missing")
 
                             var passengerIdno = ""
+                            var passengerIdType = ""
                             var passengerPassportNo = ""
                             var passengerPassportExpiryDate=""
 
-                            if (data.has("reqPassengerIdNo")){
+                            if (!userData.passportNo.isNullOrEmpty()){
+                                passengerPassportNo = userData.passportNo!!
+                            }
+
+                            if (!userData.passportExpiry.isNullOrEmpty()){
+                                passengerPassportExpiryDate = userData.passportExpiry!!
+                            }
+
+                            if (!userData.idNo.isNullOrEmpty()){
+                                passengerIdno = userData.idNo!!
+                            }
+
+                            if (!userData.idType.isNullOrEmpty()){
+                                passengerIdType = userData.idType!!
+                            }
+
+                            /*if (data.has("reqPassengerIdNo")){
                                 passengerIdno = data.getString("reqPassengerIdNo")
                             }
 
@@ -228,23 +259,28 @@ class DepartureVerificationViewModel(
 
                             if (data.has("reqPassengerExpiry")){
                                 passengerPassportExpiryDate = data.getString("reqPassengerExpiry")
-                            }
+                            }*/
 
 
                             val webCheckInReq = WebCheckInReq()
                             val webCheckInReqData = WebCheckInReqData(
                                 data.getString("dobEcode"),
-                                changeDateFormatOnlyDateReverse(data.getString("reqPassengerDob"))!!,
+                                changeDateFormatOnlyDateReverse(userData.dob!!)!!,
                                 passengerIdno,
-                                data.getString("reqPassengerIdType"),
-                                data.getString("reqPassengerName"),
+                                passengerIdType,
+                                userData.fullName!!,
                                 passengerPassportNo,
                                 passengerPassportExpiryDate,
                                 userData.privateKey!!,
                                 userData.subId!!
                             )
                             webCheckInReq.data = webCheckInReqData
-                            webCheckInAPI(webCheckInReq)
+                            val eCodeDOB = data.getString("dobEcode").dropLast(6)
+                            if (eCodeDOB == changeDateFormatOnlyDateReverse(userData.dob!!)) {
+                                webCheckInAPI(webCheckInReq)
+                            }else{
+                                listener?.onFailure("Sorry! You're not Authorized Person")
+                            }
                         }
                     }
                 }

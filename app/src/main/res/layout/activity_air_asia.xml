@@ -5,6 +5,9 @@
 
     <data>
 
+        <variable
+            name="viewmodel"
+            type="com.cmg.vaccine.viewmodel.AirasiaViewModel" />
     </data>
 
     <RelativeLayout
@@ -97,6 +100,7 @@
                         android:paddingTop="10dp"
                         android:inputType="number|textNoSuggestions"
                         android:maxLines="1"
+                        android:text="@={viewmodel.ECodeTxt}"
                         android:maxLength="6"
                         android:paddingRight="10dp"
                         android:paddingLeft="10dp"
@@ -111,9 +115,16 @@
                         android:text="@string/confirm"
                         android:textColor="@color/white"
                         android:textSize="16sp"
-                        android:textAppearance="@style/opens_bold"/>
+                        android:textAppearance="@style/opens_bold"
+                        onSingleClick="@{() -> viewmodel.webCheckInAPI()}"/>
                 </LinearLayout>
             </LinearLayout>
         </ScrollView>
+        <ProgressBar
+            android:id="@+id/progress_airasia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="gone"/>
     </RelativeLayout>
 </layout>

@@ -37,6 +37,7 @@ object Passparams{
     const val DIALOG_TITLE = "dialog_title"
     const val DIALOG_MSG = "dialog_msg"
     const val DIALOG_STATUS = "dialog_status"
+    const val DIALOG_CLOSE_ACTIVITY = "dialog_close_activity"
 
 
     const val NAVIGATE_TO = "navigate_to"
@@ -58,7 +59,7 @@ object Passparams{
     const val NOTIFICATION_MSG = "notification_msg"
     const val NOTIFICATION_DATE = "notification_date"
 
-    const val COUNTER_CHECKIN = "Airline_Counter_Check_IN"
+    const val COUNTER_CHECKIN = "Airline_Counter_Check_IN_1"
     const val WEB_CHECKIN = "Airline_Online_Check_IN"
 
 

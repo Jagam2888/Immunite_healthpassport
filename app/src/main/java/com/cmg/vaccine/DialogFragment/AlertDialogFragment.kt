@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import com.cmg.vaccine.R
@@ -29,6 +30,7 @@ class AlertDialogFragment:DialogFragment() {
         val title = arguments?.getString(Passparams.DIALOG_TITLE)
         val msg = arguments?.getString(Passparams.DIALOG_MSG)
         val status = arguments?.getBoolean(Passparams.DIALOG_STATUS)
+        val activityFinishStatus = arguments?.getBoolean(Passparams.DIALOG_CLOSE_ACTIVITY)
 
         if (status == true){
             binding.imgStatus.setImageResource(R.drawable.success_msg_icon)
@@ -38,7 +40,11 @@ class AlertDialogFragment:DialogFragment() {
         }
 
         binding.btnOk.setOnSingleClickListener{
-            dismiss()
+            if (activityFinishStatus == false) {
+                dismiss()
+            }else{
+                activity?.finish()
+            }
         }
 
         binding.title.text = title
