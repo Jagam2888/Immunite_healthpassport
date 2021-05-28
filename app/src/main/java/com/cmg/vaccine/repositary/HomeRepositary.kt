@@ -141,4 +141,8 @@ class HomeRepositary(
         return database.getDao().getTotalUnreadNotificationCount()
     }
 
+    fun getQRValidTime(mapKey:String):String{
+        return database.getDao().getCounterCheckinDecryptKey(mapKey)
+    }
+
 }

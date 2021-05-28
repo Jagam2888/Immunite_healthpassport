@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.cmg.vaccine.R
 import com.cmg.vaccine.data.WorldEntryRuleData
+import com.cmg.vaccine.data.WorldEntryRulePairResult
 import com.cmg.vaccine.database.*
 import com.cmg.vaccine.listener.SimpleListener
 import com.cmg.vaccine.model.Dashboard
@@ -502,8 +503,9 @@ class WorldEntryViewModel(
         var observationCode = ArrayList<String>()
         var observationCodeMandatory = ArrayList<WorldEntryRuleData>()
         var observationCodeSelective = ArrayList<WorldEntryRuleData>()
+        var priorRulePairList = ArrayList<String>()
+        var worldEntryRulePairTotalResult = ArrayList<WorldEntryRulePairResult>()
 
-        //val testReport = repositary.getTestReportList(repositary.getParentPrivateKey()!!)
         val testReport = repositary.getTestReportList(privateKey.value!!)
         worldEntryRule.forEach {
             when(it.woen_rule_match_criteria){
@@ -572,6 +574,77 @@ class WorldEntryViewModel(
                 }
             }
             if (observationCodeSelective.size > 0){
+                observationCodeSelective.forEach {
+                    if (it.priorRulePair.isNullOrEmpty()){
+                        for (j in testReportFilterByTestCode.indices) {
+                            if ((!testReportFilterByTestCode[j].dateSampleCollected.isNullOrEmpty()) and (!testReportFilterByTestCode[j].timeSampleCollected.isNullOrEmpty())){
+                                val sampleDate = changeDateFormatNewISO8601(testReportFilterByTestCode[j].dateSampleCollected + " " + testReportFilterByTestCode[j].timeSampleCollected + ":00")
+                                val calculateHours = calculateHours(System.currentTimeMillis(),changeDateToTimeStamp(sampleDate!!)!!)
+                                if (calculateHours != null){
+                                    //val result:Boolean =
+                                    if (calculateHours <= it.hours){
+                                        return true
+                                    }
+                                }
+                            }
+                        }
+                    }else{
+                        if (!priorRulePairList.contains(it.priorRulePair)){
+                            priorRulePairList.add(it.priorRulePair!!)
+                        }
+                    }
+                }
+                if ((priorRulePairList.size > 0) and (priorRulePairList.size <= testReportFilterByTestCode.size)){
+                    for (i in priorRulePairList.indices){
+                        for (k in observationCodeSelective.indices){
+                            if (observationCodeSelective[k].priorRulePair == priorRulePairList[i]){
+                                for (j in testReportFilterByTestCode.indices) {
+                                    if ((!testReportFilterByTestCode[j].dateSampleCollected.isNullOrEmpty()) and (!testReportFilterByTestCode[j].timeSampleCollected.isNullOrEmpty())){
+                                        val sampleDate = changeDateFormatNewISO8601(testReportFilterByTestCode[j].dateSampleCollected + " " + testReportFilterByTestCode[j].timeSampleCollected + ":00")
+                                        val calculateHours = calculateHours(System.currentTimeMillis(),changeDateToTimeStamp(sampleDate!!)!!)
+                                        if (calculateHours != null){
+                                            val rulePairResult = WorldEntryRulePairResult(
+                                                priorRulePairList[i],
+                                                calculateHours <= observationCodeSelective[k].hours
+                                            )
+                                            worldEntryRulePairTotalResult.add(rulePairResult)
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    if (worldEntryRulePairTotalResult.size > 0){
+                        var finalResult = ArrayList<Boolean>()
+                        for (i in priorRulePairList.indices){
+
+
+                            for (j in worldEntryRulePairTotalResult.indices){
+                                if (worldEntryRulePairTotalResult[j].rulePair == priorRulePairList[i]){
+                                    val rulePair = WorldEntryRulePairResult(
+                                        priorRulePairList[i],
+                                        true
+                                    )
+                                    if (finalResult.size < i+1) {
+                                        if (worldEntryRulePairTotalResult.contains(rulePair)) {
+                                            finalResult.add(true)
+                                        } else {
+                                            finalResult.add(false)
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        Log.d("priorrule",finalResult.toString())
+                        return !finalResult.contains(false)
+                    }
+                }else{
+                    return false
+                }
+            }else{
+                return false
+            }
+            /*if (observationCodeSelective.size > 0){
                 for (i in observationCodeSelective.indices){
                     if (observationCodeSelective[i].priorRulePair.isNullOrEmpty()) {
                         for (j in testReportFilterByTestCode.indices) {
@@ -584,16 +657,21 @@ class WorldEntryViewModel(
                             }
                         }
                     }else{
-                        var result = ArrayList<Boolean>()
+                        var result = ArrayList<WorldEntryRulePairResult>()
                         var priorRulePairList = ArrayList<String>()
                         observationCodeSelective.forEach {
                             if (!priorRulePairList.contains(it.priorRulePair)){
                                 priorRulePairList.add(it.priorRulePair!!)
                             }
                         }
-                        /*for (i in observationCodeSelective.indices){
+                        *//*if (!priorRulePairList.contains(observationCodeSelective[i].priorRulePair)){
+                            priorRulePairList.add(observationCodeSelective[i].priorRulePair!!)
+                        }*//*
 
-                        }*/
+                        *//*if (testReportFilterByTestCode.size < priorRulePairList.size){
+                            return false
+                        }*//*
+
                         for (i in priorRulePairList.indices){
                             for (k in observationCodeSelective.indices){
                                 if (observationCodeSelective[k].priorRulePair == priorRulePairList[i]){
@@ -602,18 +680,45 @@ class WorldEntryViewModel(
                                             val sampleDate = changeDateFormatNewISO8601(testReportFilterByTestCode[j].dateSampleCollected + " " + testReportFilterByTestCode[j].timeSampleCollected + ":00")
                                             val calculateHours = calculateHours(System.currentTimeMillis(),changeDateToTimeStamp(sampleDate!!)!!)
                                             if (calculateHours != null){
-
-                                                result.add(calculateHours <= observationCodeSelective[k].hours)
+                                                val rulePairResult = WorldEntryRulePairResult(
+                                                    priorRulePairList[i],
+                                                    calculateHours <= observationCodeSelective[k].hours
+                                                )
+                                                result.add(rulePairResult)
                                             }
                                         }
                                     }
                                 }
                             }
                         }
-                        Log.d("priorrule",priorRulePairList.toString())
+
+                        if (result.size > 0){
+                            var finalResult = ArrayList<Boolean>()
+                            for (i in priorRulePairList.indices){
+
+
+                                for (j in result.indices){
+                                    if (result[j].rulePair == priorRulePairList[i]){
+                                        val rulePair = WorldEntryRulePairResult(
+                                            priorRulePairList[i],
+                                            true
+                                        )
+                                        if (finalResult.size < i+1) {
+                                            if (result.contains(rulePair)) {
+                                                finalResult.add(true)
+                                            } else {
+                                                finalResult.add(false)
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        Log.d("priorrule",finalResult.toString())
+                            return !finalResult.contains(false)
+                        }
                     }
                 }
-            }
+            }*/
         }
 
 

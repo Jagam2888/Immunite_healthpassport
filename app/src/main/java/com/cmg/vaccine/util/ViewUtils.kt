@@ -561,8 +561,8 @@ fun changeDateToTimeStamp(dateString: String):Long?{
     val date = currentDateFormat.parse(dateString) as Date
     return date.time
 }
-fun calculateHours(timeStamp: Long, currentTimeStamp: Long):Long{
-    val differnce = timeStamp - currentTimeStamp
+fun calculateHours(currentTimeStamp: Long, timeStamp: Long):Long{
+    val differnce = currentTimeStamp - timeStamp
     val seconds = differnce / 1000
     val minutes = seconds / 60
     val hours = minutes / 60

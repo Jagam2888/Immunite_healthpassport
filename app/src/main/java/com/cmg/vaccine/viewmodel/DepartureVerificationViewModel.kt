@@ -5,6 +5,8 @@ import android.util.Log
 import androidx.databinding.ObservableBoolean
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.cmg.vaccine.data.WorldEntryRuleData
+import com.cmg.vaccine.data.WorldEntryRulePairResult
 import com.cmg.vaccine.database.TestCodes
 import com.cmg.vaccine.database.TestReport
 import com.cmg.vaccine.database.WorldPriority
@@ -53,7 +55,7 @@ class DepartureVerificationViewModel(
     var status = ObservableBoolean()
 
 
-    var hours:Long = 72
+
     var listener:SimpleListener?=null
 
     fun getPurpose():String?{
@@ -72,6 +74,7 @@ class DepartureVerificationViewModel(
 
     fun loadData(){
         //val userData = repositary.getUserData()
+        var hours:Int = 0
         var maxDate:Date?=null
         val userData = Paper.book().read<Dashboard>(Passparams.CURRENT_USER_SUBSID,null)
         if (userData != null){
@@ -143,8 +146,182 @@ class DepartureVerificationViewModel(
                                     val worldEntryRule = repositary.getJoinWorldEntryRuleAndPriority(getAirportValues.countryCode!!)
 
 
+                                    var observationCode = ArrayList<String>()
+                                    var observationCodeMandatory = ArrayList<WorldEntryRuleData>()
+                                    var observationCodeSelective = ArrayList<WorldEntryRuleData>()
+                                    var priorRulePairList = ArrayList<String>()
+                                    var worldEntryRulePairTotalResult = ArrayList<WorldEntryRulePairResult>()
 
-                                    var listTestReportFilterByHours:ArrayList<TestReport> = ArrayList()
+                                    val testReport = repositary.getTestReportList(userData.privateKey!!)
+                                    worldEntryRule.forEach {
+                                        when(it.woen_rule_match_criteria){
+                                            "T" ->{
+                                                if (it.prioRuleCriteria.equals("Mandatory",false)) {
+                                                    if (!it.woen_duration_hours.isNullOrEmpty()) {
+                                                        hours = it.woen_duration_hours.toInt()
+                                                    }
+                                                    if (!it.woen_test_code.isNullOrEmpty()) {
+                                                        observationCode.add(it.woen_test_code)
+                                                    }
+                                                    val worlEntryRuleData = WorldEntryRuleData(
+                                                        hours,
+                                                        it.woen_test_code,
+                                                        it.prioRulePair,
+                                                        it.prioRuleCriteria
+                                                    )
+                                                    observationCodeMandatory.add(worlEntryRuleData)
+                                                }
+                                                if (it.prioRuleCriteria.equals("Selective",false)) {
+                                                    if (!it.woen_duration_hours.isNullOrEmpty()) {
+                                                        hours = it.woen_duration_hours.toInt()
+                                                    }
+                                                    if (!it.woen_test_code.isNullOrEmpty()) {
+                                                        observationCode.add(it.woen_test_code)
+                                                    }
+                                                    val worlEntryRuleData = WorldEntryRuleData(
+                                                        hours,
+                                                        it.woen_test_code,
+                                                        it.prioRulePair,
+                                                        it.prioRuleCriteria
+                                                    )
+                                                    observationCodeSelective.add(worlEntryRuleData)
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    val testReportFilterByTestCode = repositary.getTestReportFilterByTestCodes(userData.privateKey!!,getAirportValues.countryCode)
+                                    if (testReportFilterByTestCode.isNullOrEmpty()){
+                                        status.set(false)
+                                    }else {
+                                        if (observationCodeMandatory.size > 0) {
+                                            if (testReportFilterByTestCode.size >= observationCodeMandatory.size) {
+                                                for (i in observationCodeMandatory.indices) {
+                                                    for (j in testReportFilterByTestCode.indices) {
+                                                        if ((!testReportFilterByTestCode[j].dateSampleCollected.isNullOrEmpty()) and (!testReportFilterByTestCode[j].timeSampleCollected.isNullOrEmpty())) {
+                                                            val sampleDate =
+                                                                changeDateFormatNewISO8601(
+                                                                    testReportFilterByTestCode[j].dateSampleCollected + " " + testReportFilterByTestCode[j].timeSampleCollected + ":00"
+                                                                )
+                                                            val calculateHours = calculateHours(
+                                                                changeDateToTimeStamp(etdTime.value!!)!!,
+                                                                changeDateToTimeStamp(sampleDate!!)!!
+                                                            )
+                                                            if (calculateHours != null) {
+                                                                if (calculateHours <= observationCodeMandatory[i].hours) {
+                                                                    //listTestReportFilterByHours.add(it)
+                                                                    if (i + 1 == observationCodeMandatory.size) {
+                                                                        status.set(true)
+                                                                    }
+                                                                } else {
+                                                                    status.set(false)
+                                                                }
+
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            } else {
+                                                status.set(false)
+                                            }
+                                        }
+                                        if (observationCodeSelective.size > 0) {
+                                            observationCodeSelective.forEach {
+                                                if (it.priorRulePair.isNullOrEmpty()) {
+                                                    for (j in testReportFilterByTestCode.indices) {
+                                                        if ((!testReportFilterByTestCode[j].dateSampleCollected.isNullOrEmpty()) and (!testReportFilterByTestCode[j].timeSampleCollected.isNullOrEmpty())) {
+                                                            val sampleDate =
+                                                                changeDateFormatNewISO8601(
+                                                                    testReportFilterByTestCode[j].dateSampleCollected + " " + testReportFilterByTestCode[j].timeSampleCollected + ":00"
+                                                                )
+                                                            val calculateHours = calculateHours(
+                                                                changeDateToTimeStamp(etdTime.value!!)!!,
+                                                                changeDateToTimeStamp(sampleDate!!)!!
+                                                            )
+                                                            if (calculateHours != null) {
+                                                                //val result:Boolean =
+                                                                if (calculateHours <= it.hours) {
+                                                                    status.set(true)
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                } else {
+                                                    if (!priorRulePairList.contains(it.priorRulePair)) {
+                                                        priorRulePairList.add(it.priorRulePair!!)
+                                                    }
+                                                }
+                                            }
+                                            if ((priorRulePairList.size > 0) and (priorRulePairList.size <= testReportFilterByTestCode.size)) {
+                                                for (i in priorRulePairList.indices) {
+                                                    for (k in observationCodeSelective.indices) {
+                                                        if (observationCodeSelective[k].priorRulePair == priorRulePairList[i]) {
+                                                            for (j in testReportFilterByTestCode.indices) {
+                                                                if ((!testReportFilterByTestCode[j].dateSampleCollected.isNullOrEmpty()) and (!testReportFilterByTestCode[j].timeSampleCollected.isNullOrEmpty())) {
+                                                                    val sampleDate =
+                                                                        changeDateFormatNewISO8601(
+                                                                            testReportFilterByTestCode[j].dateSampleCollected + " " + testReportFilterByTestCode[j].timeSampleCollected + ":00"
+                                                                        )
+                                                                    val calculateHours =
+                                                                        calculateHours(
+                                                                            changeDateToTimeStamp(etdTime.value!!)!!,
+                                                                            changeDateToTimeStamp(
+                                                                                sampleDate!!
+                                                                            )!!
+                                                                        )
+                                                                    if (calculateHours != null) {
+                                                                        val rulePairResult =
+                                                                            WorldEntryRulePairResult(
+                                                                                priorRulePairList[i],
+                                                                                calculateHours <= observationCodeSelective[k].hours
+                                                                            )
+                                                                        worldEntryRulePairTotalResult.add(
+                                                                            rulePairResult
+                                                                        )
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                                if (worldEntryRulePairTotalResult.size > 0) {
+                                                    var finalResult = ArrayList<Boolean>()
+                                                    for (i in priorRulePairList.indices) {
+
+
+                                                        for (j in worldEntryRulePairTotalResult.indices) {
+                                                            if (worldEntryRulePairTotalResult[j].rulePair == priorRulePairList[i]) {
+                                                                val rulePair =
+                                                                    WorldEntryRulePairResult(
+                                                                        priorRulePairList[i],
+                                                                        true
+                                                                    )
+                                                                if (finalResult.size < i + 1) {
+                                                                    if (worldEntryRulePairTotalResult.contains(
+                                                                            rulePair
+                                                                        )
+                                                                    ) {
+                                                                        finalResult.add(true)
+                                                                    } else {
+                                                                        finalResult.add(false)
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                    Log.d("priorrule", finalResult.toString())
+                                                    status.set(!finalResult.contains(false))
+                                                }
+                                            } else {
+                                                status.set(false)
+                                            }
+                                        } else {
+                                            status.set(false)
+                                        }
+                                    }
+
+
+                                    /*var listTestReportFilterByHours:ArrayList<TestReport> = ArrayList()
 
                                     var observationCode = ArrayList<String>()
 
@@ -207,7 +384,7 @@ class DepartureVerificationViewModel(
                                             }
                                         }
                                     }
-                                    status.set(false)
+                                    status.set(false)*/
                                 }else{
                                     listener?.onShowToast("Database Error, Country Code return Null or Empty")
                                     status.set(false)

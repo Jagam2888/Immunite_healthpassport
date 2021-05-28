@@ -51,6 +51,10 @@ class DepartureVerificationRepositary(
         return database.getDao().getJoinWorldEntryRuleAndPriority(countryCode)
     }
 
+    fun getTestReportFilterByTestCodes(privateKey: String,countryCode: String):List<TestReport>{
+        return database.getDao().gettestReportFilterByTestCodes(privateKey,countryCode)
+    }
+
     fun getFilterTestCodeByReport(privateKey: String,countryCode: String):List<TestCodeFilterByReport>{
         return database.getDao().getFilterTestCodeByReport(privateKey,countryCode)
     }

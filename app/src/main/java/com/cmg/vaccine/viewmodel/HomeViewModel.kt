@@ -103,6 +103,10 @@ class HomeViewModel(
         _currentPagerPosition.value = position
     }
 
+    fun getQrValidTime():String?{
+        return repositary.getQRValidTime(Passparams.QR_VALID_TIME)
+    }
+
     fun loadNotificationCount() {
         val count = repositary.getTotalUnReadCount()
         if (count != null){
