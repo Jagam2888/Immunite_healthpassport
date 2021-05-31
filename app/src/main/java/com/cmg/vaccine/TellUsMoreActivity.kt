@@ -120,7 +120,7 @@ class TellUsMoreActivity : BaseActivity(),KodeinAware,SimpleListener,SlideDatePi
 
             override fun afterTextChanged(s: Editable?) {
                 if (!s.toString().isNullOrEmpty()){
-                    if (viewModel.nationalityCountryCode.value.equals("MYS",false)) {
+                    if (viewModel.nationalityCountryCode.value.equals("MYS",true)) {
                         if (s?.length!! < 12) {
                             binding.edtIdno.error = "Minimum 12 Character"
                         }

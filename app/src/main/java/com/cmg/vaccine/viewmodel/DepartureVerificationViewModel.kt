@@ -99,10 +99,14 @@ class DepartureVerificationViewModel(
                 val jsonObject = JSONObject(qrCodeValue.value)
 
                 if (jsonObject.has("purpose")){
-                    if (jsonObject.getString("purpose").equals("Counter Check-In",false)){
+                    if (jsonObject.getString("purpose").equals("Counter Check-In",true)){
                         if (jsonObject.has("data")) {
                             val getData = jsonObject.getString("data")
-                            val decryptData = EncryptionUtils.decryptBackupKey(getData,repositary.getCounterCheckinDecryptKey(Passparams.COUNTER_CHECKIN))
+                            var decryptData = ""
+                            decryptData = EncryptionUtils.decryptBackupKey(getData,repositary.getCounterCheckinDecryptKey(Passparams.COUNTER_CHECKIN))
+                            if ((decryptData.isNullOrEmpty()) or (decryptData.equals("invalid",true))){
+                                decryptData = EncryptionUtils.decryptBackupKey(getData,repositary.getCounterCheckinDecryptKey(Passparams.COUNTER_CHECKIN_2))
+                            }
                             val data = JSONObject(decryptData)
 
                             departureDestination.value = data.getString("reqDepatureDestination")
@@ -396,7 +400,7 @@ class DepartureVerificationViewModel(
                             }
 
                         }
-                    }else if (jsonObject.getString("purpose").equals("Web Check-in",false)){
+                    }else if (jsonObject.getString("purpose").equals("Web Check-in",true)){
                         if (jsonObject.has("data")){
                             listener?.onStarted()
                             val getData = jsonObject.getString("data")

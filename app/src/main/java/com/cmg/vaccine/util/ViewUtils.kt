@@ -391,7 +391,7 @@ fun selectedRelationShipPosition(state: String, relationShipList: List<String>):
 fun selectedCountryName(country: String, countries: List<Country>):Int{
     var pos:Int = 0
     for (i in countries.indices!!){
-        if(country.equals(countries[i].alpha3, false)){
+        if(country.equals(countries[i].alpha3, true)){
             return i
         }
     }
@@ -401,7 +401,7 @@ fun selectedCountryName(country: String, countries: List<Country>):Int{
 fun selectedIdType(idType: String, idTypeList: List<IdentifierType>):Int{
     var pos:Int = 0
     for (i in idTypeList.indices!!){
-        if(idType.equals(idTypeList[i].identifierCode, false)){
+        if(idType.equals(idTypeList[i].identifierCode, true)){
             return i
         }
     }
@@ -411,7 +411,7 @@ fun selectedIdType(idType: String, idTypeList: List<IdentifierType>):Int{
 fun getCurrentCountry(country: String, countries: List<Country>):Int{
     var pos:Int = 0
     for (i in countries.indices!!){
-        if(country.equals(countries[i].name, false)){
+        if(country.equals(countries[i].name, true)){
             return i
         }
     }
@@ -423,7 +423,7 @@ fun getCurrentCountry(country: String, countries: List<Country>):Int{
 fun getCountryNameUsingCode(code: String, countries: List<Country>):String?{
 
     for (i in countries.indices!!){
-        if(code.equals(countries.get(i).alpha3, false)){
+        if(code.equals(countries.get(i).alpha3, true)){
             return countries.get(i).name
         }
     }
@@ -432,7 +432,7 @@ fun getCountryNameUsingCode(code: String, countries: List<Country>):String?{
 fun getWorldEntryCountryNameUsingCode(code: String, countries: List<WorldEntryCountries>):String?{
 
     for (i in countries.indices!!){
-        if(code.equals(countries.get(i).countryCodeAlpha, false)){
+        if(code.equals(countries.get(i).countryCodeAlpha, true)){
             return countries.get(i).countryName
         }
     }

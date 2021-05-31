@@ -156,7 +156,7 @@ class ExistingUserViewModel(
                     for (i in 0 until jsonIdTypeArray.length()){
                         val item = jsonIdTypeArray.getJSONObject(i)
                         if (item.has("IdType")) {
-                            if (item.getString("IdType").equals("PPN",false)) {
+                            if (item.getString("IdType").equals("PPN",true)) {
                                 if (item.has("idNo")) {
                                     passportNo = item.getString("idNo")
                                 }

@@ -316,7 +316,7 @@ class AddDependentActivity : BaseActivity(),KodeinAware,SimpleListener,SlideDate
 
             override fun afterTextChanged(s: Editable?) {
                 if (!s.toString().isNullOrEmpty()){
-                    if (viewModel.nationalityCountryCode.value.equals("MYS",false)) {
+                    if (viewModel.nationalityCountryCode.value.equals("MYS",true)) {
                         if (s?.length!! < 12) {
                             binding.edtIdno.error = "Minimum 12 Character"
                         }
@@ -392,7 +392,7 @@ class AddDependentActivity : BaseActivity(),KodeinAware,SimpleListener,SlideDate
     }
     private fun setIdNoCharLength(countryCode: String){
         if (!countryCode.isNullOrEmpty()){
-            if (countryCode.equals("MYS",false)){
+            if (countryCode.equals("MYS",true)){
                 viewModel.patientIdNoCharLength.set(12)
             }else{
                 viewModel.patientIdNoCharLength.set(15)
@@ -408,7 +408,7 @@ class AddDependentActivity : BaseActivity(),KodeinAware,SimpleListener,SlideDate
         viewModel.nationalityCountryFlag.value = World.getCountryFrom(getCurrentCountryName()).flagResource
 
         if (!viewModel.nationalityCountryCode.value.isNullOrEmpty()){
-            if (viewModel.nationalityCountryCode.value.equals("MYS",false)){
+            if (viewModel.nationalityCountryCode.value.equals("MYS",true)){
                 viewModel.patientIdNoCharLength.set(12)
             }else{
                 viewModel.patientIdNoCharLength.set(15)

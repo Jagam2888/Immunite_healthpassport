@@ -29,7 +29,7 @@ class WelcomeViewModel(
                 if (!response.data.isNullOrEmpty()){
                     repositary.deleteSystemConfigData()
                     response.data.forEach {
-                        if (!it.sysReferredBy.equals("backend",false)) {
+                        if (!it.sysReferredBy.equals("backend",true)) {
                             val systemConfigResponseData = SystemConfigResponseData(
                                     it.configSeqno,
                                     it.sysCreatedBy,

@@ -60,6 +60,7 @@ object Passparams{
     const val NOTIFICATION_DATE = "notification_date"
 
     const val COUNTER_CHECKIN = "Airline_Counter_Check_IN_1"
+    const val COUNTER_CHECKIN_2 = "Airline_Counter_Check_IN_2"
     const val WEB_CHECKIN = "Airline_Online_Check_IN"
     const val QR_VALID_TIME = "qr_valid_time"
 

@@ -510,7 +510,7 @@ class WorldEntryViewModel(
         worldEntryRule.forEach {
             when(it.woen_rule_match_criteria){
                 "T" ->{
-                    if (it.prioRuleCriteria.equals("Mandatory",false)) {
+                    if (it.prioRuleCriteria.equals("Mandatory",true)) {
                         if (!it.woen_duration_hours.isNullOrEmpty()) {
                             hours = it.woen_duration_hours.toInt()
                         }
@@ -525,7 +525,7 @@ class WorldEntryViewModel(
                         )
                         observationCodeMandatory.add(worlEntryRuleData)
                     }
-                    if (it.prioRuleCriteria.equals("Selective",false)) {
+                    if (it.prioRuleCriteria.equals("Selective",true)) {
                         if (!it.woen_duration_hours.isNullOrEmpty()) {
                             hours = it.woen_duration_hours.toInt()
                         }
