@@ -119,7 +119,7 @@ interface PatientDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertTestReport(testReport: TestReport):Long
 
-    @Query("SELECT * FROM TestReport WHERE privateKey = :privateKey AND statusFinalized in ('final','corrected') ORDER BY id DESC")
+    @Query("SELECT * FROM TestReport WHERE privateKey = :privateKey AND LOWER(statusFinalized) in ('final','corrected') ORDER BY id DESC")
     fun getTestReportList(privateKey:String):List<TestReport>
 
     @Query("SELECT * FROM TestReport WHERE id =:id")

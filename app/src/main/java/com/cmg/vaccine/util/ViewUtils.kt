@@ -50,6 +50,7 @@ import java.lang.reflect.Type
 import java.security.InvalidKeyException
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
+import java.sql.Timestamp
 import java.text.DecimalFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -556,10 +557,30 @@ fun changeDateFormatForPrivateKeyDecrypt(dateString: String):String?{
     }
     return ""
 }
-fun changeDateToTimeStamp(dateString: String):Long?{
+fun changeDateToTimeStamp(dateString: String): Long? {
     val currentDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
-    val date = currentDateFormat.parse(dateString) as Date
-    return date.time
+    var timeStamp: Long? = null
+    try {
+        val date = currentDateFormat.parse(dateString) as Date
+        timeStamp = date.time
+    }catch (e:Exception){
+        e.printStackTrace()
+    }
+
+    return timeStamp
+}
+fun changeDateToTimeStampAlter(dateString: String): Long {
+    val currentDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS")
+    var timeStamp:Long = 0
+    try {
+        val date = currentDateFormat.parse(dateString) as Date
+        val time = Timestamp(date.time)
+        timeStamp = time.time
+    }catch (e:Exception){
+        e.printStackTrace()
+    }
+
+    return timeStamp
 }
 fun calculateHours(currentTimeStamp: Long, timeStamp: Long):Long{
     val differnce = currentTimeStamp - timeStamp
@@ -567,6 +588,13 @@ fun calculateHours(currentTimeStamp: Long, timeStamp: Long):Long{
     val minutes = seconds / 60
     val hours = minutes / 60
     return hours
+}
+fun calculateMinutes(currentTimeStamp: Long, timeStamp: Long):Long{
+    val differnce = currentTimeStamp - timeStamp
+    val seconds = differnce / 1000
+    val minutes = seconds / 60
+    //val hours = minutes / 60
+    return minutes
 }
 fun Context.getCurrentCountryName():String?{
     val locationManager = applicationContext.getSystemService(Context.LOCATION_SERVICE) as LocationManager

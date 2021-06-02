@@ -194,7 +194,7 @@ class SettingsViewModel(
 
     private fun getVaccineReportCall(){
         getVaccineReport(repositary.getPrivateKey()!!)
-        //getVaccineReport("8DB8ABE7B3EC1033B0E4D7D10E981247332E6AE2426A2ACE87CD31E1DCD45D74")
+        //getVaccineReport("D1A4B23A1892FF8DE9F8F2BFE6C1D0269FD0DB9CA45EAC8829519F4C64FE337E")
 
         val dependent = repositary.getAllDependent()
 
@@ -202,7 +202,6 @@ class SettingsViewModel(
             dependent.forEach {
                 if (!it.privateKey.isNullOrEmpty()){
                     getVaccineReport(it.privateKey!!)
-                    //getVaccineTestRef("5B9137D189F408B754C75E84F3C60FA92FE098173D60D6516D1233EC672A6475","Dependent ${it.firstName}")
                 }
             }
         }
@@ -450,8 +449,12 @@ class SettingsViewModel(
                                     }
 
                                     if (jsonChildDataIndex.has("location")){
-                                        val locationJson = jsonChildDataIndex.getJSONObject("location")
-                                        vaccineLocation = locationJson.getString("text")
+
+                                        val locationJson =
+                                                jsonChildDataIndex.getJSONObject("location")
+                                        if (locationJson.has("text")) {
+                                            vaccineLocation = locationJson.getString("text")
+                                        }
                                     }
 
                                     if (jsonChildDataIndex.has("status")){

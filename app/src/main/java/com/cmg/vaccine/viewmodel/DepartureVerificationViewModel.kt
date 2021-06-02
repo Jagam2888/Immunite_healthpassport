@@ -401,68 +401,82 @@ class DepartureVerificationViewModel(
 
                         }
                     }else if (jsonObject.getString("purpose").equals("Web Check-in",true)){
-                        if (jsonObject.has("data")){
-                            listener?.onStarted()
-                            val getData = jsonObject.getString("data")
-                            val decryptData = EncryptionUtils.decryptBackupKey(getData,repositary.getCounterCheckinDecryptKey(Passparams.WEB_CHECKIN))
-                            Log.d("decrypt",decryptData)
-                            val data = JSONObject(decryptData)
-                            //listener?.onSuccess("Ecode is missing")
-
-                            var passengerIdno = ""
-                            var passengerIdType = ""
-                            var passengerPassportNo = ""
-                            var passengerPassportExpiryDate=""
-
-                            if (!userData.passportNo.isNullOrEmpty()){
-                                passengerPassportNo = userData.passportNo!!
+                        if (jsonObject.has("TimeStamp")){
+                            var timeStamp = changeDateToTimeStamp(jsonObject.getString("TimeStamp"))
+                            if (timeStamp == null){
+                                timeStamp = changeDateToTimeStampAlter(jsonObject.getString("TimeStamp"))
                             }
+                            val calculateHours = calculateMinutes(System.currentTimeMillis(),timeStamp)
+                            if (calculateHours <= 5){
+                                if (jsonObject.has("data")){
+                                    listener?.onStarted()
+                                    val getData = jsonObject.getString("data")
+                                    val decryptData = EncryptionUtils.decryptBackupKey(getData,repositary.getCounterCheckinDecryptKey(Passparams.WEB_CHECKIN))
+                                    Log.d("decrypt",decryptData)
+                                    val data = JSONObject(decryptData)
+                                    //listener?.onSuccess("Ecode is missing")
 
-                            if (!userData.passportExpiry.isNullOrEmpty()){
-                                passengerPassportExpiryDate = userData.passportExpiry!!
-                            }
+                                    var passengerIdno = ""
+                                    var passengerIdType = ""
+                                    var passengerPassportNo = ""
+                                    var passengerPassportExpiryDate=""
 
-                            if (!userData.idNo.isNullOrEmpty()){
-                                passengerIdno = userData.idNo!!
-                            }
+                                    if (!userData.passportNo.isNullOrEmpty()){
+                                        passengerPassportNo = userData.passportNo!!
+                                    }
 
-                            if (!userData.idType.isNullOrEmpty()){
-                                passengerIdType = userData.idType!!
-                            }
+                                    if (!userData.passportExpiry.isNullOrEmpty()){
+                                        passengerPassportExpiryDate = userData.passportExpiry!!
+                                    }
 
-                            /*if (data.has("reqPassengerIdNo")){
-                                passengerIdno = data.getString("reqPassengerIdNo")
-                            }
+                                    if (!userData.idNo.isNullOrEmpty()){
+                                        passengerIdno = userData.idNo!!
+                                    }
 
-                            if (data.has("reqPassengerPassportNo")){
-                                passengerPassportNo = data.getString("reqPassengerPassportNo")
-                            }
+                                    if (!userData.idType.isNullOrEmpty()){
+                                        passengerIdType = userData.idType!!
+                                    }
 
-                            if (data.has("reqPassengerExpiry")){
-                                passengerPassportExpiryDate = data.getString("reqPassengerExpiry")
-                            }*/
+                                    /*if (data.has("reqPassengerIdNo")){
+                                        passengerIdno = data.getString("reqPassengerIdNo")
+                                    }
+
+                                    if (data.has("reqPassengerPassportNo")){
+                                        passengerPassportNo = data.getString("reqPassengerPassportNo")
+                                    }
+
+                                    if (data.has("reqPassengerExpiry")){
+                                        passengerPassportExpiryDate = data.getString("reqPassengerExpiry")
+                                    }*/
 
 
-                            val webCheckInReq = WebCheckInReq()
-                            val webCheckInReqData = WebCheckInReqData(
-                                data.getString("dobEcode"),
-                                changeDateFormatOnlyDateReverse(userData.dob!!)!!,
-                                passengerIdno,
-                                passengerIdType,
-                                userData.fullName!!,
-                                passengerPassportNo,
-                                passengerPassportExpiryDate,
-                                userData.privateKey!!,
-                                userData.subId!!
-                            )
-                            webCheckInReq.data = webCheckInReqData
-                            val eCodeDOB = data.getString("dobEcode").dropLast(6)
-                            if (eCodeDOB == changeDateFormatOnlyDateReverse(userData.dob!!)) {
-                                webCheckInAPI(webCheckInReq)
+                                    val webCheckInReq = WebCheckInReq()
+                                    val webCheckInReqData = WebCheckInReqData(
+                                        data.getString("dobEcode"),
+                                        changeDateFormatOnlyDateReverse(userData.dob!!)!!,
+                                        passengerIdno,
+                                        passengerIdType,
+                                        userData.fullName!!,
+                                        passengerPassportNo,
+                                        passengerPassportExpiryDate,
+                                        userData.privateKey!!,
+                                        userData.subId!!
+                                    )
+                                    webCheckInReq.data = webCheckInReqData
+                                    val eCodeDOB = data.getString("dobEcode").dropLast(6)
+                                    if (eCodeDOB == changeDateFormatOnlyDateReverse(userData.dob!!)) {
+                                        webCheckInAPI(webCheckInReq)
+                                    }else{
+                                        listener?.onFailure("Sorry! You're not Authorized Person")
+                                    }
+                                }
                             }else{
-                                listener?.onFailure("Sorry! You're not Authorized Person")
+                                listener?.onFailure("Sorry!Your eCode is expired")
                             }
+                            //Log.d("timestamp",calculateHours.toString())
+
                         }
+
                     }
                 }
 
