@@ -817,6 +817,31 @@ class SettingsViewModel(
         repositary.saveNotificationSoundStatus(status)
     }
 
+    fun getNotificationNewsUpdatesStatus():Boolean?{
+        return repositary.getNotificationNewsUpdatesStatus()
+    }
+
+    fun saveNotificationNewsUpdatesStatus(status:Boolean){
+        repositary.saveNotificationNewsUpdatesStatus(status)
+    }
+
+    fun getNotificationAdvisoryStatus():Boolean?{
+        return repositary.getNotificationAdvisoryStatus()
+    }
+
+    fun saveNotificationAdvisoryStatus(status:Boolean){
+        repositary.saveNotificationAdvisoryStatus(status)
+    }
+
+    fun getNotificationRegulatoryStatus():Boolean?{
+        return repositary.getNotificationRegulatoryStatus()
+    }
+
+    fun saveNotificationRegulatoryStatus(status:Boolean){
+        repositary.saveNotificationRegulatoryStatus(status)
+    }
+
+
     fun saveRingtone(ringtone_url:String,ringtone_name:String){
         repositary.saveRingtoneUrl(ringtone_url,ringtone_name)
     }

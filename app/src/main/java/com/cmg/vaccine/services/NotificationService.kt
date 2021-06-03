@@ -110,9 +110,31 @@ class NotificationService(
                 cancelAll()
             }
         }else {
-            val notificationId = System.currentTimeMillis().toInt()
-            with(NotificationManagerCompat.from(context)) {
-                notify(notificationId, builder.build())
+
+            /*when(group){
+                "N"->{
+                    if ()
+                }
+            }*/
+
+
+            if ((group == "N") and (pref.getNotificationNewsUpdatesStatus() == false)){
+                with(NotificationManagerCompat.from(context)) {
+                    cancelAll()
+                }
+            }else if ((group == "R") and (pref.getNotificationRegulatoryStatus() == false)){
+                with(NotificationManagerCompat.from(context)) {
+                    cancelAll()
+                }
+            }else if ((group == "A") and (pref.getNotificationAdvisoryStatus() == false)){
+                with(NotificationManagerCompat.from(context)) {
+                    cancelAll()
+                }
+            }else {
+                val notificationId = System.currentTimeMillis().toInt()
+                with(NotificationManagerCompat.from(context)) {
+                    notify(notificationId, builder.build())
+                }
             }
         }
 

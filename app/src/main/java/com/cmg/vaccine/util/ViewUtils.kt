@@ -569,6 +569,18 @@ fun changeDateToTimeStamp(dateString: String): Long? {
 
     return timeStamp
 }
+fun changeDateToTimeStampForWebCheckin(dateString: String): Long? {
+    val currentDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
+    var timeStamp: Long? = null
+    try {
+        val date = currentDateFormat.parse(dateString) as Date
+        timeStamp = date.time
+    }catch (e:Exception){
+        e.printStackTrace()
+    }
+
+    return timeStamp
+}
 fun changeDateToTimeStampAlter(dateString: String): Long {
     val currentDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS")
     var timeStamp:Long = 0

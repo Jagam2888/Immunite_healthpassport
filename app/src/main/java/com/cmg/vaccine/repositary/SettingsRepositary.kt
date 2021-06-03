@@ -243,6 +243,32 @@ class SettingsRepositary(
         preferenceProvider.saveNotificationSoundStatus(status)
     }
 
+
+    fun getNotificationNewsUpdatesStatus():Boolean?{
+        return preferenceProvider.getNotificationNewsUpdatesStatus()
+    }
+
+    fun saveNotificationNewsUpdatesStatus(status:Boolean){
+        preferenceProvider.saveNotificationNewsUpdatesStatus(status)
+    }
+
+    fun getNotificationAdvisoryStatus():Boolean?{
+        return preferenceProvider.getNotificationAdvisoryStatus()
+    }
+
+    fun saveNotificationAdvisoryStatus(status:Boolean){
+        preferenceProvider.saveNotificationAdvisoryStatus(status)
+    }
+
+    fun getNotificationRegulatoryStatus():Boolean?{
+        return preferenceProvider.getNotificationRegulatoryStatus()
+    }
+
+    fun saveNotificationRegulatoryStatus(status:Boolean){
+        preferenceProvider.saveNotificationRegulatorytatus(status)
+    }
+
+
     fun saveRingtoneUrl(ringtone_url:String,ringtone_name:String){
         preferenceProvider.saveRingtone(ringtone_url,ringtone_name)
     }

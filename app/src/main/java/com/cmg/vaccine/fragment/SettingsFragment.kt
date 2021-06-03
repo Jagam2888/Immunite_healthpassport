@@ -275,6 +275,24 @@ class SettingsFragment : Fragment(),KodeinAware,SimpleListener {
             //disableRingtoneSound()
         }
 
+        if (viewModel.getNotificationAdvisoryStatus()!!){
+            toggle_advisory.setToggleOn()
+        }else{
+            toggle_advisory.setToggleOff()
+        }
+
+        if (viewModel.getNotificationNewsUpdatesStatus()!!){
+            toggle_news_update.setToggleOn()
+        }else{
+            toggle_news_update.setToggleOff()
+        }
+
+        if (viewModel.getNotificationRegulatoryStatus()!!){
+            toggle_regulatory.setToggleOn()
+        }else{
+            toggle_regulatory.setToggleOff()
+        }
+
 
 
         //Notification
@@ -291,6 +309,18 @@ class SettingsFragment : Fragment(),KodeinAware,SimpleListener {
             else
                 disableRingtoneSound()*/
         })
+
+        toggle_advisory.setOnToggleChanged {
+            viewModel.saveNotificationAdvisoryStatus(it)
+        }
+
+        toggle_news_update.setOnToggleChanged {
+            viewModel.saveNotificationNewsUpdatesStatus(it)
+        }
+
+        toggle_regulatory.setOnToggleChanged {
+            viewModel.saveNotificationRegulatoryStatus(it)
+        }
 
 
 

@@ -25,6 +25,9 @@ private const val NOTIFICATION_STATUS="notification_status"
 private const val NOTIFICATION_SOUND_STATUS="notification_sound_status"
 private const val RINGTONE_URL="ringtone_url"
 private const val RINGTONE_NAME="ringtone_name"
+private const val NEWS_UPDATE_STATUS="news_update_status"
+private const val ADVISORY_STATUS="advisory_status"
+private const val REGULATORY_UPDATE_STATUS="regulatory_update_status"
 
 
 class PreferenceProvider(
@@ -159,6 +162,39 @@ class PreferenceProvider(
 
     fun getNotificationSoundStatus():Boolean?{
         return prefernece.getBoolean(NOTIFICATION_SOUND_STATUS,true)
+    }
+
+    fun saveNotificationNewsUpdatesStatus(status:Boolean){
+        prefernece.edit().putBoolean(
+            NEWS_UPDATE_STATUS,
+            status
+        ).apply()
+    }
+
+    fun getNotificationNewsUpdatesStatus():Boolean?{
+        return prefernece.getBoolean(NEWS_UPDATE_STATUS,true)
+    }
+
+    fun saveNotificationAdvisoryStatus(status:Boolean){
+        prefernece.edit().putBoolean(
+            ADVISORY_STATUS,
+            status
+        ).apply()
+    }
+
+    fun getNotificationAdvisoryStatus():Boolean?{
+        return prefernece.getBoolean(ADVISORY_STATUS,true)
+    }
+
+    fun saveNotificationRegulatorytatus(status:Boolean){
+        prefernece.edit().putBoolean(
+            REGULATORY_UPDATE_STATUS,
+            status
+        ).apply()
+    }
+
+    fun getNotificationRegulatoryStatus():Boolean?{
+        return prefernece.getBoolean(REGULATORY_UPDATE_STATUS,true)
     }
 
 

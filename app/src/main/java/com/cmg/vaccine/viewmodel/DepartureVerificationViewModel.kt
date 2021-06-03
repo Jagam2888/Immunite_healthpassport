@@ -402,7 +402,7 @@ class DepartureVerificationViewModel(
                         }
                     }else if (jsonObject.getString("purpose").equals("Web Check-in",true)){
                         if (jsonObject.has("TimeStamp")){
-                            var timeStamp = changeDateToTimeStamp(jsonObject.getString("TimeStamp"))
+                            var timeStamp = changeDateToTimeStampForWebCheckin(jsonObject.getString("TimeStamp"))
                             if (timeStamp == null){
                                 timeStamp = changeDateToTimeStampAlter(jsonObject.getString("TimeStamp"))
                             }
