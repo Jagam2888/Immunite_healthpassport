@@ -101,7 +101,7 @@
                 android:orientation="vertical"
                 android:layout_marginLeft="10dp">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="53dp"
@@ -117,10 +117,8 @@
                         app:cpb_progressbar_color="@color/primary"
                         app:cpb_progressbar_width="8dp"
                         app:cpb_round_border="true"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:cpb_progress="0"
+                        android:layout_centerHorizontal="true" />
 
 
 
@@ -134,11 +132,8 @@
                         android:textAppearance="@style/opens_bold"
                         android:textColor="@color/primary"
                         android:textSize="23sp"
-                        app:layout_constraintBottom_toBottomOf="@+id/circularProgressBar"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/circularProgressBar" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                        android:layout_centerInParent="true"/>
+                </RelativeLayout>
 
                 <TextView
                     android:id="@+id/txt_status"

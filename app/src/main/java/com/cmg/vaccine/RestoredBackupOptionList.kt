@@ -140,7 +140,11 @@ class RestoredBackupOptionList : BaseActivity(),KodeinAware,SimpleListener {
             //hide(binding.progressBar)
             toast("Download success")
             progress_status+=40;
-            binding.circularProgressBar.progress = progress_status
+            //binding.circularProgressBar.progress = progress_status
+            binding.circularProgressBar.apply {
+                progress = progress_status
+                setProgressWithAnimation(65f, 1000)
+            }
             binding.progressPerc.text = "${progress_status.toInt()}%"
             decryptExcelFile()
         }?.addOnFailureListener {
@@ -189,7 +193,11 @@ class RestoredBackupOptionList : BaseActivity(),KodeinAware,SimpleListener {
             toast("Decrypt Success")
             insertDataIntoLocalDatabase()
             progress_status+=40;
-            binding.circularProgressBar.progress=progress_status
+            //binding.circularProgressBar.progress=progress_status
+            binding.circularProgressBar.apply {
+                progress = progress_status
+                setProgressWithAnimation(65f, 1000)
+            }
             binding.progressPerc.text="${progress_status.toInt()}%"
             Log.e("Decrypt", "Success")
 
@@ -273,11 +281,15 @@ class RestoredBackupOptionList : BaseActivity(),KodeinAware,SimpleListener {
         //hide(binding.progressBar)
         toast("Database insert done")
         progress_status+=20;
-        binding.circularProgressBar.progress=progress_status
+        //binding.circularProgressBar.progress=progress_status
+        binding.circularProgressBar.apply {
+            progress = progress_status
+            setProgressWithAnimation(65f, 1000)
+        }
         binding.progressPerc.text="${progress_status.toInt()}%"
         viewModel.getUser(this)
 
-        /*viewModel.userData.observe(this, androidx.lifecycle.Observer {
+        viewModel.userData.observe(this, androidx.lifecycle.Observer {
             if (it.virifyStatus.equals("Y",true)){
                 if (viewModel.loginPin.value != null){
                     Intent(this, LoginPinActivity::class.java).also {intentValue->
@@ -294,7 +306,7 @@ class RestoredBackupOptionList : BaseActivity(),KodeinAware,SimpleListener {
             }else{
                 toast("sorry Your account not active")
             }
-        })*/
+        })
         //viewModel.setUserSubId()
     }
 
