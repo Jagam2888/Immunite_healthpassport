@@ -59,6 +59,7 @@ private val layouts:List<Dashboard>,
         val radioVaccine = view.findViewById<RadioButton>(R.id.radio_vaccine)
         val radioTest = view.findViewById<RadioButton>(R.id.radio_test)
 
+        val btnDigitalCert = view.findViewById<LinearLayout>(R.id.btn_digital_cert)
         val btnClincList = view.findViewById<LinearLayout>(R.id.btn_clinc_list)
         val btnAirAsia = view.findViewById<LinearLayout>(R.id.layout_airasia)
         val imgBanner = view.findViewById<ImageView>(R.id.img_banner)
@@ -69,6 +70,12 @@ private val layouts:List<Dashboard>,
 
         btnAirAsia.setOnSingleClickListener{
             Intent(context,AirAsiaActivity::class.java).also {
+                context?.startActivity(it)
+            }
+        }
+
+        btnDigitalCert.setOnSingleClickListener{
+            Intent(context,ECodeValidationActivity::class.java).also {
                 context?.startActivity(it)
             }
         }

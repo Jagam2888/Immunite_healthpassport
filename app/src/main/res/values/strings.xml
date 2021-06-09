@@ -65,6 +65,7 @@
     <string name="my_key">My Key</string>
     <string name="remove_dependent">Remove Dependent</string>
     <string name="scan_qr_code">Scan QR Code</string>
+    <string name="ecode_validation">e-Code Validation</string>
 
     <string name="dont_have_faceid">I don’t have ID with me</string>
     <string name="we_need_to_verify">We need to verify your ID</string>

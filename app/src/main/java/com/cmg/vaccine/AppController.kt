@@ -107,6 +107,9 @@ class AppController : Application(),KodeinAware {
         bind() from singleton { AirasiaRepositary(instance()) }
         bind() from provider { AirasiaViewModelFactory(instance()) }
 
+        bind() from  singleton { ECodeValidationRepositary(instance()) }
+        bind() from provider { ECodeValidationViewModelFactory(instance()) }
+
         //bind() from provider { MyFirebaseInstanceIDService(instance()) }
 
     }

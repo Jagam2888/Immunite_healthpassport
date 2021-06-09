@@ -1,5 +1,6 @@
 package com.cmg.vaccine
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -102,6 +103,14 @@ class DepartureVerificationActivity : BaseActivity(),KodeinAware,SimpleListener 
         }else if (msg.startsWith("3")){
             val showMsg = msg.drop(1)
             showAlertDialogWithClick(showMsg, resources.getString(R.string.check_internet), false,true, supportFragmentManager)
+        }else if (msg.startsWith("4")){
+            val showMsg = msg.drop(1)
+            Intent(this,ECodeValidationActivity::class.java).also {
+                it.putExtra("ecode",showMsg)
+                startActivity(it)
+            }
+            finish()
+            //showAlertDialogWithClick(showMsg, resources.getString(R.string.check_internet), false,true, supportFragmentManager)
         }else {
             showAlertDialogWithClick(resources.getString(R.string.failed), msg, false, true,supportFragmentManager)
         }

@@ -464,10 +464,12 @@ class DepartureVerificationViewModel(
                                     )
                                     webCheckInReq.data = webCheckInReqData
                                     val eCodeDOB = data.getString("dobEcode").dropLast(6)
+                                    val eCode = data.getString("dobEcode").drop(8)
                                     if (eCodeDOB == changeDateFormatOnlyDateReverse(userData.dob!!)) {
                                         webCheckInAPI(webCheckInReq)
                                     }else{
-                                        listener?.onFailure("Sorry! You're not Authorized Person")
+                                        //listener?.onFailure("4Sorry! You're not Authorized Person")
+                                        listener?.onFailure("4$eCode")
                                     }
                                 }
                             }else{

@@ -65,6 +65,7 @@
     <string name="my_key">My Key</string>
     <string name="remove_dependent">Buang Tanggungan</string>
     <string name="scan_qr_code">Imbas Kod QR</string>
+    <string name="ecode_validation">e-Code Validation</string>
 
     <string name="dependent_profile">Dependent Profiles</string>
     <string name="principle_profile">Principle Profile</string>

@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewmodel"
+            type="com.cmg.vaccine.viewmodel.ECodeValidationViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ECodeValidationActivity">
+
+        <RelativeLayout
+            android:id="@+id/action_bar"
+            android:layout_width="match_parent"
+            android:layout_height="?android:attr/actionBarSize"
+            android:orientation="horizontal"
+            android:background="@color/white">
+
+            <ImageView
+                android:id="@+id/img_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/left_arrow"
+                app:tint="@color/black"
+                android:layout_marginLeft="10dp"
+                android:layout_centerVertical="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ecode_validation"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:layout_centerInParent="true"
+                style="@style/opens_bold" />
+        </RelativeLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/action_bar">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingBottom="20dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="We need to verify your \ndetails"
+                    android:textColor="@color/primary"
+                    android:textSize="24sp"
+                    android:textAppearance="@style/opens_bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Please enter few security questions for \nvalidation purposes."
+                    android:layout_marginTop="10dp"
+                    android:textSize="14sp"
+                    android:textColor="@color/black"
+                    android:textAppearance="@style/opens_regular" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="* Flight no."
+                    android:textColor="@color/black"
+                    android:textAppearance="@style/opens_bold"
+                    android:textSize="12sp"
+                    android:layout_marginTop="20dp"/>
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:text="@={viewmodel.flightNo}"
+                    android:textAppearance="@style/opens_regular"
+                    android:textColor="@color/black"
+                    android:background="@drawable/edittext_background"
+                    android:layout_marginTop="5dp"
+                    android:inputType="text|textNoSuggestions"
+                    android:paddingTop="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingBottom="10dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="* Arrival Destination"
+                    android:textColor="@color/black"
+                    android:textAppearance="@style/opens_bold"
+                    android:textSize="12sp"
+                    android:layout_marginTop="10dp"/>
+                <com.hbb20.CountryCodePicker
+                    android:id="@+id/ccp_pob"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:ccp_showFullName="true"
+                    app:ccp_autoDetectCountry="true"
+                    app:ccp_countryAutoDetectionPref="LOCALE_SIM_NETWORK"
+                    app:ccpDialog_cornerRadius="4dp"
+                    app:ccpDialog_showNameCode="false"
+                    app:ccpDialog_keyboardAutoPopup="false"
+                    app:ccp_showPhoneCode="false"
+                    app:ccp_textGravity="LEFT"
+                    app:ccp_showNameCode="false"
+                    android:background="@drawable/edittext_background"
+                    android:layout_marginTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="5dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="* Passport Number"
+                    android:textColor="@color/black"
+                    android:textAppearance="@style/opens_bold"
+                    android:textSize="12sp"
+                    android:layout_marginTop="10dp"/>
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:text="@={viewmodel.passportNo}"
+                    android:textAppearance="@style/opens_regular"
+                    android:textColor="@color/black"
+                    android:background="@drawable/edittext_background"
+                    android:layout_marginTop="5dp"
+                    android:inputType="text|textNoSuggestions"
+                    android:paddingTop="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingBottom="10dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="* Booking DOB"
+                    android:textColor="@color/black"
+                    android:textAppearance="@style/opens_bold"
+                    android:textSize="12sp"
+                    android:layout_marginTop="10dp"/>
+                <com.vicmikhailau.maskededittext.MaskedEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:textAppearance="@style/opens_regular"
+                    android:textColor="@color/black"
+                    android:text="@={viewmodel.dob}"
+                    app:mask="##/##/####"
+                    android:background="@drawable/edittext_background"
+                    android:layout_marginTop="5dp"
+                    android:inputType="number|textNoSuggestions"
+                    android:paddingTop="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingBottom="10dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="* Full Name as per Booking"
+                    android:textColor="@color/black"
+                    android:textAppearance="@style/opens_bold"
+                    android:textSize="12sp"
+                    android:layout_marginTop="10dp"/>
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@={viewmodel.fullName}"
+                    android:textSize="12sp"
+                    android:textAppearance="@style/opens_regular"
+                    android:textColor="@color/black"
+                    android:background="@drawable/edittext_background"
+                    android:layout_marginTop="5dp"
+                    android:inputType="text|textNoSuggestions"
+                    android:paddingTop="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingBottom="10dp"/>
+                <androidx.appcompat.widget.AppCompatButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/submit"
+                    android:textSize="18sp"
+                    android:textAllCaps="false"
+                    android:textAppearance="@style/opens_bold"
+                    android:textColor="@color/white"
+                    android:background="@drawable/button_red"
+                    android:layout_marginTop="20dp"
+                    android:onClick="@{() -> viewmodel.onClick()}"/>
+            </LinearLayout>
+        </ScrollView>
+
+        <ProgressBar
+            android:id="@+id/ecode_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="gone"/>
+
+    </RelativeLayout>
+</layout>
