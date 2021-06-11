@@ -159,17 +159,22 @@ class ImmunizationHistoryActivity : BaseActivity(),KodeinAware,SimpleListener,Sl
                 Log.d("pdf_file_path",path)
             }*/
 
-
-            val filePathColumn = arrayOf(MediaStore.MediaColumns.DATA)
-            val cursor = contentResolver.query(data.data!!,filePathColumn,null,null,null)
-            if (cursor?.moveToFirst()!!){
-                val columnIndex = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA)
-                val path = cursor.getString(columnIndex)
-                Log.d("pdf_file_path",path)
-                viewModel.filePath.value = path
-                val file = File(path)
-                viewModel.fileName.value = file.name
+            try {
+                val filePathColumn = arrayOf(MediaStore.MediaColumns.DATA)
+                val cursor = contentResolver.query(data.data!!,filePathColumn,null,null,null)
+                if (cursor?.moveToFirst()!!){
+                    val columnIndex = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA)
+                    val path = cursor.getString(columnIndex)
+                    Log.d("pdf_file_path",path)
+                    viewModel.filePath.value = path
+                    val file = File(path)
+                    viewModel.fileName.value = file.name
+                }
+            }catch (e:Exception){
+                e.printStackTrace()
+                toast("Sorry!,this folder file can't access")
             }
+
 
         }
     }
