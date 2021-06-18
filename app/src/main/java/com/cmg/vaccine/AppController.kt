@@ -110,6 +110,9 @@ class AppController : Application(),KodeinAware {
         bind() from  singleton { ECodeValidationRepositary(instance()) }
         bind() from provider { ECodeValidationViewModelFactory(instance()) }
 
+        bind() from singleton { CheckOutRepositary(instance(),instance()) }
+        bind() from provider { CheckOutViewModelFactory(instance()) }
+
         //bind() from provider { MyFirebaseInstanceIDService(instance()) }
 
     }

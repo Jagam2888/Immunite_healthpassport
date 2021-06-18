@@ -87,4 +87,22 @@ class DependentRepositary(
     fun getAllIdentifierType():List<IdentifierType>{
         return database.getDao().getAllIdentifierType()
     }
+
+    fun checkIdNoForPrinciple(idno:String):Int{
+        return database.getDao().checkIdNoExistsForPrinciple(idno)
+    }
+
+    fun checkPassportForPrinciple(passport:String):Int{
+        return database.getDao().checkPassportNoForPrinciple(passport)
+    }
+
+    fun checkIdnoForDependent(idno:String):Int{
+        return database.getDao().checkIdNoExistsForDependent(idno)
+    }
+
+    fun checkPassportForDependent(passport:String):Int{
+        return database.getDao().checkPassportNoForDependent(passport)
+    }
+
+
 }

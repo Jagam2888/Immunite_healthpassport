@@ -139,4 +139,12 @@ object Passparams{
     const val GET_VACCINE_LIST_BLOCK_CHAIN = "getAllVaccineRecord"
     const val GET_TEST_REPORT_LIST_BLOCK_CHAIN = "getAllTestRecord"
 
+
+    const val MERCHANT_CODE = "M33700"
+    const val MERCHANT_KEY = "4PzJXANZ5K"
+    const val PAYMENT_COUNTRY = "MY"
+    const val PAYMENT_CURRENCY = "MYR"
+    const val LANGUAGE = "ISO-8859-1"
+    const val BACKEND_POST_URL = "www.google.com"
+
 }

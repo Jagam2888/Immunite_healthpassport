@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="viewmodel"
+            type="com.cmg.vaccine.viewmodel.CheckOutViewModel" />
     </data>
 
     <LinearLayout
@@ -83,7 +85,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/gray"
-                        android:text="USD 6.00"
+                        android:text="MYR 1.00"
                         android:textSize="14sp"
                         android:textAppearance="@style/opens_regular"
                         android:layout_alignParentRight="true" />
@@ -106,7 +108,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/gray"
-                        android:text="USD 0.06"
+                        android:text="MYR 0.00"
                         android:textSize="14sp"
                         android:textAppearance="@style/opens_regular"
                         android:layout_alignParentRight="true" />
@@ -129,7 +131,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
-                        android:text="USD 6.06"
+                        android:text="MYR 1.00"
                         android:textSize="14sp"
                         android:textAppearance="@style/opens_regular"
                         android:layout_alignParentRight="true" />
@@ -205,7 +207,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/gray"
-                        android:text="USD 6.06"
+                        android:text="MYR 1.00"
                         android:textSize="14sp"
                         android:textAppearance="@style/opens_regular"
                         android:layout_alignParentRight="true" />
@@ -234,7 +236,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
-                        android:text="USD 6.06"
+                        android:text="MYR 1.00"
                         android:textSize="14sp"
                         android:textAppearance="@style/opens_regular"
                         android:layout_alignParentRight="true" />
@@ -247,6 +249,7 @@
                     android:layout_marginTop="20dp" />
 
                 <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_payment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/proceed_to_pay"

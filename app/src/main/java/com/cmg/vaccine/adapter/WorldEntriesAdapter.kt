@@ -17,6 +17,7 @@ import com.cmg.vaccine.databinding.SwipeHorizontalRightBinding
 import com.cmg.vaccine.util.Passparams
 import com.cmg.vaccine.util.getTwoAlpha
 import com.cmg.vaccine.viewmodel.WorldEntryViewModel
+import com.ipay.IPayIHPayment
 import com.jdev.countryutil.Country
 import com.tubb.smrv.SwipeHorizontalMenuLayout
 import com.tubb.smrv.SwipeMenuLayout

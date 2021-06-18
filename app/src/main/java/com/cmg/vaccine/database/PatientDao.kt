@@ -104,6 +104,18 @@ interface PatientDao {
     @Query("DELETE FROM Dependent WHERE subsId =:subsId")
     fun deleteDependent(subsId: String)
 
+    @Query("SELECT COUNT(*) FROM User WHERE patientIdNo =:idno")
+    fun checkIdNoExistsForPrinciple(idno:String):Int
+
+    @Query("SELECT COUNT(*) FROM User WHERE passportNumber =:passport")
+    fun checkPassportNoForPrinciple(passport:String):Int
+
+    @Query("SELECT COUNT(*) FROM Dependent WHERE idNo =:idno")
+    fun checkIdNoExistsForDependent(idno:String):Int
+
+    @Query("SELECT COUNT(*) FROM Dependent WHERE passportNo =:passport")
+    fun checkPassportNoForDependent(passport:String):Int
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertVaccineData(vaccine: Vaccine):Long
 

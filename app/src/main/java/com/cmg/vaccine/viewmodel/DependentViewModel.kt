@@ -247,6 +247,20 @@ class DependentViewModel(
                                         }
                                     }
 
+                                    if (!passportNumber.value.isNullOrEmpty()) {
+                                        if ((repositary.checkPassportForDependent(passportNumber.value!!) > 0) or (repositary.checkPassportForPrinciple(passportNumber.value!!) > 0)){
+                                            listener?.onShowToast("Passport Number Already Exsits")
+                                            return
+                                        }
+                                    }
+
+                                    if (!idNo.value.isNullOrEmpty()) {
+                                        if ((repositary.checkIdnoForDependent(idNo.value!!) > 0) or (repositary.checkIdNoForPrinciple(idNo.value!!) > 0)){
+                                            listener?.onShowToast("ID Number Already Exists")
+                                            return
+                                        }
+                                    }
+
                                     val relationShips =
                                         view.context.resources.getStringArray(R.array.relationships)
                                     val relationShip = relationShips.get(relationshipItemPos.get())
@@ -594,6 +608,21 @@ class DependentViewModel(
                 return
             }
         }
+
+        if (!passportNumber.value.isNullOrEmpty()) {
+            if ((repositary.checkPassportForDependent(passportNumber.value!!) > 0) or (repositary.checkPassportForPrinciple(passportNumber.value!!) > 0)){
+                listener?.onShowToast("Passport Number Already Exsits")
+                return
+            }
+        }
+
+        if (!idNo.value.isNullOrEmpty()) {
+            if ((repositary.checkIdnoForDependent(idNo.value!!) > 0) or (repositary.checkIdNoForPrinciple(idNo.value!!) > 0)){
+                listener?.onShowToast("ID Number Already Exists")
+                return
+            }
+        }
+
         isAllow = !(!currentEmail.equals(email.value) and !currentMobile.equals(contactNumber.value))
         val relationShips =
                 view.context.resources.getStringArray(R.array.relationships)
