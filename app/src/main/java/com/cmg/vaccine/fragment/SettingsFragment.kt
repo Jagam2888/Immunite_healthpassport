@@ -46,6 +46,7 @@ import kotlinx.android.synthetic.main.fragment_settings.*
 import kotlinx.android.synthetic.main.fragment_settings.layout_backup
 import kotlinx.android.synthetic.main.fragment_settings.view.*
 import kotlinx.android.synthetic.main.help.*
+import kotlinx.android.synthetic.main.legacy_documents.*
 import kotlinx.android.synthetic.main.notification.*
 import kotlinx.android.synthetic.main.security_pin.*
 import kotlinx.android.synthetic.main.sync.*
@@ -138,6 +139,12 @@ class SettingsFragment : Fragment(),KodeinAware,SimpleListener {
             }else{
                 showAlertDialog(context?.resources?.getString(R.string.failed)!!,context?.resources?.getString(R.string.not_support_google)!!,true,childFragmentManager)
             }
+        }
+
+        binding.layoutLegacyDocument.setOnSingleClickListener{
+            hideMainLayout()
+            binding.txtAppBar.text = "Legacy Documents"
+            binding.legalDocuments.visibility = View.VISIBLE
         }
 
         /*binding.layoutChangePassword.setOnClickListener {
@@ -338,6 +345,28 @@ class SettingsFragment : Fragment(),KodeinAware,SimpleListener {
         }
 
 
+        layout_privacy_policy.setOnSingleClickListener{
+            Intent(context,LegalDocumentsActivity::class.java).also {
+                it.putExtra(Passparams.LEGAL_DOCUMENT,Passparams.PRIVACY_POLICY)
+                startActivity(it)
+            }
+        }
+
+        layout_refund_policy.setOnSingleClickListener{
+            Intent(context,LegalDocumentsActivity::class.java).also {
+                it.putExtra(Passparams.LEGAL_DOCUMENT,Passparams.REFUND_POLICY)
+                startActivity(it)
+            }
+        }
+
+        legal_terms_conditions.setOnSingleClickListener{
+            Intent(context,LegalDocumentsActivity::class.java).also {
+                it.putExtra(Passparams.LEGAL_DOCUMENT,Passparams.LEGAL_TERMS_CONDITIONS)
+                startActivity(it)
+            }
+        }
+
+
 
     }
 
@@ -366,6 +395,8 @@ class SettingsFragment : Fragment(),KodeinAware,SimpleListener {
             binding.backup.visibility = View.GONE
         }else if (binding.changeLanguage.visibility == View.VISIBLE){
             binding.changeLanguage.visibility = View.GONE
+        } else if (binding.legalDocuments.visibility == View.VISIBLE){
+            binding.legalDocuments.visibility = View.GONE
         }
 
         binding.mainLayout.visibility = View.VISIBLE

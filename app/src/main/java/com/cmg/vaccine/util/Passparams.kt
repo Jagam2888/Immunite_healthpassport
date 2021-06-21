@@ -85,6 +85,11 @@ object Passparams{
     const val TERMS_CONDITION_URL = "http://stapi.immunitee.com:8088/immunitee_tnc.html"
     const val FAQ_URL = "http://stapp.immunitee.com:8088/immunitee_faq.html"
 
+    const val LEGAL_DOCUMENT = "legal_documents"
+    const val PRIVACY_POLICY = "https://www.immunitee.com/privacy-policy"
+    const val REFUND_POLICY = "https://www.immunitee.com/return-and-refund-policy"
+    const val LEGAL_TERMS_CONDITIONS = "https://www.immunitee.com/terms-and-conditions-policy"
+
     const val PATIENT_REGISTRATION = "nhr-module-user/patientreg"
     const val DEPENDENT_REGISTRATION = "nhr-module-user/patientdependentreg"
 

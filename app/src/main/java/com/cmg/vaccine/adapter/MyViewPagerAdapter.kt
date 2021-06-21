@@ -75,9 +75,9 @@ private val layouts:List<Dashboard>,
         }
 
         btnDigitalCert.setOnSingleClickListener{
-            Intent(context,ECodeValidationActivity::class.java).also {
+            /*Intent(context,ECodeValidationActivity::class.java).also {
                 context?.startActivity(it)
-            }
+            }*/
         }
 
         //context.showToolTip(txtName,"this is vaccine")
