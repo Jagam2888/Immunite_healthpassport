@@ -54,6 +54,7 @@ class OTPVerifyActivity : BaseActivity(),KodeinAware,SimpleListener{
 
         val subsId = intent.extras?.getString(Passparams.SUBSID,"")
         viewModel.userSubId.value = subsId
+        viewModel.showMobileNumber()
 
         if (checkPermission()){
             //viewModel.txtOTP.set(OTPReceiver().getOTPValue())
@@ -193,6 +194,7 @@ class OTPVerifyActivity : BaseActivity(),KodeinAware,SimpleListener{
     }
 
     override fun onShowToast(msg: String) {
+        hide(binding.progressBar)
         toast(msg)
     }
 

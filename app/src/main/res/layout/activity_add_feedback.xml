@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".AddFeedbackActivity">
+
+        <RelativeLayout
+            android:id="@+id/action_bar"
+            android:layout_width="match_parent"
+            android:layout_height="?android:attr/actionBarSize"
+            android:orientation="horizontal"
+            android:background="@color/white">
+
+            <ImageView
+                android:id="@+id/img_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/left_arrow"
+                app:tint="@color/black"
+                android:layout_marginLeft="10dp"
+                android:layout_centerVertical="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/add_feedback"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:layout_centerInParent="true"
+                style="@style/opens_regular" />
+        </RelativeLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingTop="20dp"
+                android:paddingRight="20dp"
+                android:paddingLeft="20dp"
+                android:paddingBottom="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/how_do_you_feel_immunitee"
+                    android:textSize="23sp"
+                    android:textAppearance="@style/opens_bold"
+                    android:textColor="@color/primary" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/select_topic_feedback"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/text_color"
+                    android:textSize="14sp" />
+
+                <RadioGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="20dp">
+
+                    <RadioButton
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/account_billing"
+                        android:textSize="14sp"
+                        android:textAppearance="@style/opens_bold"
+                        android:button="@null"
+                        android:drawableRight="@drawable/radio_button_feedback" />
+
+                    <RadioButton
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/profile_management"
+                        android:textSize="14sp"
+                        android:textAppearance="@style/opens_bold"
+                        android:button="@null"
+                        android:drawableRight="@drawable/radio_button_feedback" />
+
+                    <RadioButton
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/health_record"
+                        android:textSize="14sp"
+                        android:textAppearance="@style/opens_bold"
+                        android:button="@null"
+                        android:drawableRight="@drawable/radio_button_feedback" />
+
+                    <RadioButton
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/world_entries"
+                        android:textSize="14sp"
+                        android:textAppearance="@style/opens_bold"
+                        android:button="@null"
+                        android:drawableRight="@drawable/radio_button_feedback" />
+
+                    <RadioButton
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/others"
+                        android:textSize="14sp"
+                        android:textAppearance="@style/opens_bold"
+                        android:button="@null"
+                        android:drawableRight="@drawable/radio_button_feedback" />
+
+                </RadioGroup>
+
+            </LinearLayout>
+        </ScrollView>
+
+    </LinearLayout>
+</layout>

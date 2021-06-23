@@ -39,8 +39,8 @@ class OTPVerifyViewModel(
 
     var displaymobileNumber = ObservableField<String>()
 
-    init {
-        val userData = repositary.getUserData()
+    fun showMobileNumber() {
+        val userData = repositary.getUserData(userSubId.value!!)
         if (userData != null){
             if (!userData.mobileNumber.isNullOrEmpty()) {
                 var mobileNumberTest = userData.mobileNumber
@@ -54,6 +54,22 @@ class OTPVerifyViewModel(
                 }
                 displaymobileNumber.set("+" + userData.countryCode + mobileNumberTest)
                 Log.d("mobilenumber", displaymobileNumber.get()!!)
+            }
+        }else{
+            val dependent = repositary.getDependent(userSubId.value!!)
+            if (dependent != null) {
+                if (!dependent.mobileNumber.isNullOrEmpty()) {
+                    var mobileNumberTest = dependent.mobileNumber
+                    if (mobileNumberTest?.length!! > 8) {
+                        val myName = StringBuilder(mobileNumberTest)
+                        myName.setCharAt(2, 'x')
+                        myName.setCharAt(3, 'x')
+                        myName.setCharAt(4, 'x')
+                        myName.setCharAt(5, 'x')
+                        mobileNumberTest = myName.toString()
+                    }
+                    displaymobileNumber.set("+" + dependent.countryCode + mobileNumberTest)
+                }
             }
         }
         callOTPTac()
@@ -94,7 +110,7 @@ class OTPVerifyViewModel(
                     val response = repositary.OTPVerify(userSubId.value!!, pinTxt.value!!,isSignUp)
                     if (response.success){
                         if (navigateFrom.get().equals(Passparams.SIGNUP)) {
-                            val userData = repositary.getUserData()
+                            val userData = repositary.getUserData(userSubId.value!!)
                             if (userData != null) {
                                 userData.virifyStatus = "Y"
                                 repositary.updateVerifyStatus(userData)
@@ -140,7 +156,7 @@ class OTPVerifyViewModel(
             try {
                 val response = repositary.updateProfile(editProfileData)
                 if (response.StatusCode == 1){
-                    var user = repositary.getUserData()
+                    var user = repositary.getUserData(userSubId.value!!)
                     user.gender = editProfileData.data?.gender.toString()
                     user.fullName = editProfileData.data?.firstName.toString()
                     user.mobileNumber = editProfileData.data?.mobileNumber.toString()

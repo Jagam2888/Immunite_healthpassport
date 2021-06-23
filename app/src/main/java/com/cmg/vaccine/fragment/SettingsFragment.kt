@@ -264,6 +264,12 @@ class SettingsFragment : Fragment(),KodeinAware,SimpleListener {
             }
         }
 
+        layout_feedback.setOnSingleClickListener{
+            Intent(context,AddFeedbackActivity::class.java).also {
+                context?.startActivity(it)
+            }
+        }
+
         changeLanguage()
 
 

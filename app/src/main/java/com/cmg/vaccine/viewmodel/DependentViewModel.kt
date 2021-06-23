@@ -609,7 +609,7 @@ class DependentViewModel(
             }
         }
 
-        if (!passportNumber.value.isNullOrEmpty()) {
+        /*if (!passportNumber.value.isNullOrEmpty()) {
             if ((repositary.checkPassportForDependent(passportNumber.value!!) > 0) or (repositary.checkPassportForPrinciple(passportNumber.value!!) > 0)){
                 listener?.onShowToast("Passport Number Already Exsits")
                 return
@@ -621,7 +621,7 @@ class DependentViewModel(
                 listener?.onShowToast("ID Number Already Exists")
                 return
             }
-        }
+        }*/
 
         isAllow = !(!currentEmail.equals(email.value) and !currentMobile.equals(contactNumber.value))
         val relationShips =

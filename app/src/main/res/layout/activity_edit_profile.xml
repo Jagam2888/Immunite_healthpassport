@@ -132,7 +132,8 @@
                     android:paddingRight="10dp"
                     android:paddingTop="10dp"
                     android:inputType="text"
-                    android:focusable="false"/>
+                    android:focusable="false"
+                    android:longClickable="false"/>
 
 
                 <TextView
@@ -275,7 +276,8 @@
                         android:imeOptions="actionNext"
                         android:layout_toLeftOf="@id/btn_dob_calender"
                         android:layout_marginRight="20dp"
-                        android:focusable="false"/>
+                        android:focusable="false"
+                        android:longClickable="false"/>
 
                 </RelativeLayout>
 
@@ -673,7 +675,8 @@
                         android:background="@android:color/transparent"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="10dp"
-                        android:focusable="@{profileviewmodel.isIdnoExists()}"/>
+                        android:focusable="@{profileviewmodel.isIdnoExists()}"
+                        android:longClickable="@{profileviewmodel.isIdnoExists()}"/>
 
                 </LinearLayout>
 

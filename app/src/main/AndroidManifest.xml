@@ -31,7 +31,8 @@
         android:theme="@style/Theme.Noactionbar"
         android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup">
-        <activity android:name=".LegalDocumentsActivity"></activity>
+        <activity android:name=".AddFeedbackActivity"></activity>
+        <activity android:name=".LegalDocumentsActivity" />
         <activity
             android:name=".ECodeValidationActivity"
             android:screenOrientation="portrait"
