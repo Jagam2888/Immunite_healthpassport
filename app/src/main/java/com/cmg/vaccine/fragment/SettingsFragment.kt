@@ -265,7 +265,7 @@ class SettingsFragment : Fragment(),KodeinAware,SimpleListener {
         }
 
         layout_feedback.setOnSingleClickListener{
-            Intent(context,AddFeedbackActivity::class.java).also {
+            Intent(context,FeedBackActivity::class.java).also {
                 context?.startActivity(it)
             }
         }

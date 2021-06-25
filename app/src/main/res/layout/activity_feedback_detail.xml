@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".FeedbackDetailActivity">
+
+        <RelativeLayout
+            android:id="@+id/action_bar"
+            android:layout_width="match_parent"
+            android:layout_height="?android:attr/actionBarSize"
+            android:orientation="horizontal"
+            android:background="@color/white">
+
+            <ImageView
+                android:id="@+id/img_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/left_arrow"
+                app:tint="@color/black"
+                android:layout_marginLeft="10dp"
+                android:layout_centerVertical="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Payment Issues"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:layout_centerInParent="true"
+                style="@style/opens_regular" />
+        </RelativeLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingTop="20dp"
+                android:paddingRight="10dp"
+                android:paddingLeft="10dp"
+                android:paddingBottom="20dp">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:elevation="4dp"
+                    app:cardElevation="6dp"
+                    app:cardUseCompatPadding="true"
+                    app:cardCornerRadius="8dp"
+                    android:layout_below="@id/tab_layout">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingBottom="20dp"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp"
+                        android:paddingTop="20dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="30dp">
+
+                            <de.hdodenhof.circleimageview.CircleImageView
+                                android:id="@+id/img_profile"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:src="@drawable/user_icon"
+                                android:layout_gravity="center_vertical" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:layout_marginLeft="20dp"
+                                android:layout_gravity="center_vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Aminah Binti Mohamad"
+                                    android:textSize="18sp"
+                                    android:textColor="@color/black"
+                                    style="@style/opens_bold"
+                                    android:layout_centerVertical="true" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Principle Account"
+                                    android:textSize="12sp"
+                                    android:textColor="#7c7c7c"
+                                    android:background="@drawable/gray_background"
+                                    android:textAppearance="@style/opens_bold"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_centerVertical="true"
+                                    android:paddingLeft="15dp"
+                                    android:paddingRight="15dp"
+                                    android:paddingBottom="5dp"
+                                    android:paddingTop="5dp" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <com.whinc.widget.ratingbar.RatingBar
+                            android:id="@+id/ratingBar"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:rb_max_count="5"
+                            app:rb_count="2"
+                            app:rb_empty="@drawable/star_white"
+                            app:rb_fill="@drawable/star_yellow"
+                            app:rb_space="10dp"
+                            app:rb_touch_rating="false"
+                            app:rb_click_rating="false"
+                            android:layout_marginTop="10dp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="5dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Case No.:"
+                                android:textColor="@color/black"
+                                android:textSize="14sp"
+                                android:textAppearance="@style/opens_bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="A09128198"
+                                android:textColor="@color/black"
+                                android:textSize="14sp"
+                                android:textAppearance="@style/opens_bold"
+                                android:layout_marginLeft="5dp" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Payment Issues"
+                            android:textColor="@color/black"
+                            android:textSize="14sp"
+                            android:textAppearance="@style/opens_bold"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginTop="5dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Problem processing payment."
+                            android:textColor="@color/black"
+                            android:textSize="14sp"
+                            android:textAppearance="@style/opens_regular"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginTop="10dp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="5dp">
+
+                            <ImageView
+                                android:layout_width="86dp"
+                                android:layout_height="86dp"
+                                android:src="@drawable/sample_feedback" />
+
+                            <ImageView
+                                android:layout_width="86dp"
+                                android:layout_height="86dp"
+                                android:src="@drawable/sample_feedback"
+                                android:layout_marginLeft="10dp" />
+
+                            <ImageView
+                                android:layout_width="86dp"
+                                android:layout_height="86dp"
+                                android:src="@drawable/sample_feedback"
+                                android:layout_marginLeft="10dp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="10dp">
+
+                            <TextView
+                                android:id="@+id/txt_status"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="In Progress"
+                                android:textSize="14sp"
+                                android:gravity="center_horizontal"
+                                android:textColor="#E25822"
+                                android:layout_weight="1"
+                                android:background="@drawable/feedback_progress_bg" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="20 Dec 2020, 2:00PM"
+                                android:textSize="14sp"
+                                android:gravity="center_horizontal"
+                                android:layout_marginLeft="10dp"
+                                android:textColor="@color/gray"
+                                android:layout_weight="1" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:elevation="4dp"
+                    app:cardElevation="6dp"
+                    app:cardUseCompatPadding="true"
+                    app:cardCornerRadius="8dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:paddingBottom="20dp"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp"
+                        android:paddingTop="20dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_app_circle_logo" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Immunitee Customer Support Team"
+                                android:textColor="@color/black"
+                                android:textSize="16sp"
+                                android:textAppearance="@style/opens_bold"
+                                android:layout_marginLeft="10dp" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Thank you for your feedback. We will proceed your payment soon."
+                            android:textSize="16sp"
+                            android:textColor="@color/text_color"
+                            android:layout_marginTop="10dp"
+                            android:textAppearance="@style/opens_regular" />
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+        </ScrollView>
+
+    </LinearLayout>
+</layout>

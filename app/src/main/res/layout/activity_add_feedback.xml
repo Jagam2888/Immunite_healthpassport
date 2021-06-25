@@ -43,39 +43,46 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
                 android:paddingTop="20dp"
                 android:paddingRight="20dp"
                 android:paddingLeft="20dp"
                 android:paddingBottom="20dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/how_do_you_feel_immunitee"
-                    android:textSize="23sp"
-                    android:textAppearance="@style/opens_bold"
-                    android:textColor="@color/primary" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/select_topic_feedback"
-                    android:layout_marginTop="10dp"
-                    android:textColor="@color/text_color"
-                    android:textSize="14sp" />
-
-                <RadioGroup
+                <LinearLayout
+                    android:id="@+id/layout_radio_group"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginRight="20dp">
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/how_do_you_feel_immunitee"
+                        android:textSize="23sp"
+                        android:textAppearance="@style/opens_bold"
+                        android:textColor="@color/primary" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/select_topic_feedback"
+                        android:layout_marginTop="10dp"
+                        android:textColor="@color/text_color"
+                        android:textSize="14sp" />
+
+                    <RadioGroup
+                        android:id="@+id/radio_group"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginRight="20dp">
 
                     <RadioButton
+                        android:id="@+id/radio_btn_account"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/account_billing"
@@ -85,6 +92,7 @@
                         android:drawableRight="@drawable/radio_button_feedback" />
 
                     <RadioButton
+                        android:id="@+id/radio_btn_profile"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/profile_management"
@@ -94,6 +102,7 @@
                         android:drawableRight="@drawable/radio_button_feedback" />
 
                     <RadioButton
+                        android:id="@+id/radio_btn_health"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/health_record"
@@ -103,6 +112,7 @@
                         android:drawableRight="@drawable/radio_button_feedback" />
 
                     <RadioButton
+                        android:id="@+id/radio_btn_world"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/world_entries"
@@ -112,6 +122,7 @@
                         android:drawableRight="@drawable/radio_button_feedback" />
 
                     <RadioButton
+                        android:id="@+id/radio_btn_others"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/others"
@@ -122,7 +133,182 @@
 
                 </RadioGroup>
 
-            </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout_experience"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/how_was_exp"
+                        android:textSize="16sp"
+                        android:textAppearance="@style/opens_bold"
+                        android:textColor="@color/text_color"
+                        android:layout_gravity="center_horizontal"/>
+                    <com.whinc.widget.ratingbar.RatingBar
+                        android:id="@+id/ratingBar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:rb_max_count="5"
+                        app:rb_count="3"
+                        app:rb_empty="@drawable/star_white"
+                        app:rb_fill="@drawable/star_yellow"
+                        app:rb_space="10dp"
+                        app:rb_touch_rating="true"
+                        android:layout_marginTop="20dp"
+                        android:layout_gravity="center_horizontal"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/profile"
+                        android:textSize="14sp"
+                        android:textColor="@color/text_color"
+                        android:textAppearance="@style/opens_bold"
+                        android:layout_marginTop="20dp"/>
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Principle Profile"
+                        android:background="@drawable/edittext_background"
+                        android:paddingBottom="10dp"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingTop="10dp"
+                        android:layout_marginTop="5dp"
+                        android:drawableRight="@drawable/down_arrow"
+                        android:drawablePadding="10dp"
+                        android:focusable="false"
+                        android:longClickable="false"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/feedback_title"
+                        android:textSize="14sp"
+                        android:textColor="@color/text_color"
+                        android:textAppearance="@style/opens_bold"
+                        android:layout_marginTop="20dp"/>
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/feedback_title"
+                        android:textColor="@color/black"
+                        android:background="@drawable/edittext_background"
+                        android:paddingBottom="10dp"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingTop="10dp"
+                        android:layout_marginTop="5dp"
+                        android:drawablePadding="10dp"/>
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/describe_your_exp"
+                        android:textColor="@color/black"
+                        android:background="@drawable/edittext_background"
+                        android:paddingBottom="10dp"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingTop="10dp"
+                        android:layout_marginTop="5dp"
+                        android:drawablePadding="10dp"
+                        android:minLines="8"
+                        android:maxHeight="5dp"
+                        android:gravity="top"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/upload_document_optional"
+                        android:textSize="14sp"
+                        android:textColor="@color/text_color"
+                        android:textAppearance="@style/opens_bold"
+                        android:layout_marginTop="20dp"/>
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp">
+
+                        <EditText
+                            android:id="@+id/edt_upload_document"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/black"
+                            android:maxLength="30"
+                            android:textSize="14sp"
+                            android:hint="@string/upload_document"
+                            android:textColorHint="@color/gray"
+                            android:inputType="text|textNoSuggestions"
+                            android:drawableLeft="@drawable/attach_icon"
+                            android:drawablePadding="10dp"
+                            android:background="@drawable/edittext_background"
+                            android:textAppearance="@style/opens_regular"
+                            android:maxLines="1"
+                            android:paddingRight="10dp"
+                            android:paddingLeft="10dp"
+                            android:paddingBottom="10dp"
+                            android:paddingTop="10dp"
+                            android:layout_marginTop="5dp" />
+
+                        <LinearLayout
+                            android:id="@+id/btn_nfc"
+                            android:layout_width="wrap_content"
+                            android:layout_height="45dp"
+                            android:orientation="horizontal"
+                            android:background="@drawable/upload_bg_green"
+                            android:layout_gravity="right"
+                            android:layout_marginTop="5dp"
+                            android:gravity="center_vertical"
+                            android:paddingRight="10dp"
+                            android:paddingLeft="10dp"
+                            android:paddingBottom="10dp"
+                            android:paddingTop="10dp">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/upload_icon"
+                                android:layout_gravity="center_horizontal|center_vertical"/>
+                        </LinearLayout>
+                    </FrameLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/file_size_limit"
+                        android:textAppearance="@style/opens_regular"
+                        android:textColor="@color/gray"
+                        android:textSize="14sp"
+                        android:layout_marginTop="10dp"/>
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/additional_docs"
+                        android:textColor="@color/white"
+                        android:paddingTop="10dp"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingBottom="10dp"
+                        android:background="@drawable/button_green_primary"
+                        android:layout_marginTop="10dp"/>
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btn_submit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/submit"
+                        android:textColor="@color/white"
+                        android:paddingTop="10dp"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingBottom="10dp"
+                        android:background="@drawable/button_green"
+                        android:layout_marginTop="20dp" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
         </ScrollView>
 
     </LinearLayout>

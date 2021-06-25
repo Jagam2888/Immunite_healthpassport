@@ -69,12 +69,19 @@
 
     <string name="add_feedback">Add Feedback</string>
     <string name="feedback">Feedback</string>
+    <string name="feedback_title">Feedback Title</string>
     <string name="how_do_you_feel_immunitee">How do you feel about Immunitee?</string>
     <string name="select_topic_feedback">Select a related topic for your feedback</string>
     <string name="account_billing">Account &amp; Billing</string>
     <string name="profile_management">Profile Management</string>
     <string name="health_record">Health Records</string>
     <string name="others">Others</string>
+    <string name="how_was_exp">How was your experience?</string>
+    <string name="describe_your_exp">Describe your experience here...</string>
+    <string name="upload_document_optional">Upload Document (Optional)</string>
+    <string name="thanks_feedback">Thanks for your feedback!</string>
+    <string name="your_feedback">Your feedback is so helpful for us to hear. We \nappreciate your assistance in making \nImmunitee better.</string>
+
 
     <string name="dont_have_faceid">I don’t have ID with me</string>
     <string name="we_need_to_verify">We need to verify your ID</string>
