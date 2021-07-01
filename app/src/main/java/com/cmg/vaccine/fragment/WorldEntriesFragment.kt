@@ -57,8 +57,9 @@ class WorldEntriesFragment : Fragment(),KodeinAware {
 
         binding.lifecycleOwner = this
 
-
-        viewModel.getVaccineAndTestReportList()
+        if (!viewModel.privateKey.value.isNullOrEmpty()) {
+            viewModel.getVaccineAndTestReportList()
+        }
         viewModel.loadAPIs()
         var lastClickTime:Long = 0
 

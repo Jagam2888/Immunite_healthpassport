@@ -3,6 +3,7 @@ package com.cmg.vaccine.database
 import androidx.room.*
 import com.cmg.vaccine.model.JoinWorldEntryRuleAndPriority
 import com.cmg.vaccine.model.TestCodeFilterByReport
+import com.cmg.vaccine.model.response.PackageCodeResponseData
 import com.cmg.vaccine.model.response.SystemConfigResponseData
 
 @Dao
@@ -262,7 +263,7 @@ interface PatientDao {
     @Query("DELETE FROM IdentifierType")
     fun deleteAllIdentifierType()
 
-    @Query("SELECT a.woen_rule_match_criteria,a.woen_country_code,b.prioRuleCountry, a.woen_rule_seq_no,a.woen_test_code,a.woen_duration_hours,b.prioRuleNo,b.prioRuleCriteria,b.prioRulePair FROM WorldEntryRulesByCountry a,WorldPriority b WHERE a.woen_country_code =:countryCode and a.woen_rule_match_criteria in ('T','P','V') and a.woen_rule_seq_no = b.prioRuleNo and a.woen_country_code = b.prioRuleCountry")
+    @Query("SELECT a.woen_rule_match_criteria,a.woen_country_code,b.prioRuleCountry, a.woen_rule_seq_no,a.woen_test_code,a.woen_duration_hours,b.prioRuleNo,b.prioRuleCriteria,b.prioRulePair FROM WorldEntryRulesByCountry a,WorldPriority b WHERE a.woen_country_code =:countryCode and a.woen_status='A' and a.woen_rule_match_criteria in ('T','P','V') and a.woen_rule_seq_no = b.prioRuleNo and a.woen_country_code = b.prioRuleCountry")
     fun getJoinWorldEntryRuleAndPriority(countryCode: String):List<JoinWorldEntryRuleAndPriority>
 
     @Query("SELECT a.testCode,a.observationCode,a.dateSampleCollected,a.timeSampleCollected,b.wetstObservationStatusCode FROM TestReport a,TestCodes b WHERE a.privateKey =:privateKey AND b.wetstCountryCode=:countryCode AND b.wetstTestCode=a.testCode")
@@ -321,4 +322,10 @@ interface PatientDao {
 
     @Query("SELECT sysMappingValue FROM SystemConfigResponseData WHERE sysMappingKeyName =:mapkey")
     fun getCounterCheckinDecryptKey(mapkey:String):String
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertPackageCode(packageCodeResponseData: PackageCodeResponseData)
+
+    @Query("DELETE FROM PackageCodeResponseData")
+    fun deleteAllPackageCode()
 }

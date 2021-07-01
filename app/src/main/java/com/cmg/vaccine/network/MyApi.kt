@@ -140,6 +140,10 @@ interface MyApi {
     @POST(Passparams.WEB_CHECK_IN_API)
     suspend fun webCheckInAPI(@Body webCheckInReq: WebCheckInReq):Response<WebCheckInResponse>
 
+    @GET(Passparams.PACKAGECODE)
+    suspend fun searchPackageCode():Response<PackageCodeResponse>
+
+
 
     companion object{
         operator fun invoke(

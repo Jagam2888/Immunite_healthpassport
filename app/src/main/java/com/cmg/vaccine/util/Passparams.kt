@@ -134,6 +134,7 @@ object Passparams{
     const val SYSTEM_CONFIG = "nhr-module-user/searchsystemconfig"
     const val GET_CLINIC_LIST = "nhr-module-user/facility"
     const val WEB_CHECK_IN_API = "nhr-module-integration/grantpk"
+    const val PACKAGECODE = "nhr-module-user/searchpackagecode"
 
     //Block Chain
     const val BLOCK_CHAIN_URL = "https://cashierbook.com.my:8081/blockchainapi/"

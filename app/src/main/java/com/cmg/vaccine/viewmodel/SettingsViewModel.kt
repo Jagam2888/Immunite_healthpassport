@@ -67,6 +67,7 @@ class SettingsViewModel(
         repositary.deleteAllBlockChainErrorCode()
         repositary.deleteAllObservationStatus()
         repositary.deleteAllSystemConfig()
+        repositary.deleteAllPackageCode()
 
 
         getSystemConfigData()
@@ -81,8 +82,30 @@ class SettingsViewModel(
         getAllAirportCities()
         getTestReportCall()
         getVaccineReportCall()
+        getPackageCode()
 
 
+    }
+
+    private fun getPackageCode(){
+        Couritnes.main {
+            try {
+                val response = repositary.searchPackageCode()
+                if (!response.data.isNullOrEmpty()){
+                    response.data.forEach {
+                        repositary.insertPackageCode(it)
+                    }
+
+                }
+            }catch (e:APIException){
+                listener?.onShowToast(e.message!!)
+            }catch (e:NoInternetException){
+                listener?.onFailure("3"+e.message!!)
+            }catch (e:Exception){
+                listener?.onShowToast(e.message!!)
+            }
+
+        }
     }
 
     private fun getSystemConfigData(){

@@ -277,4 +277,18 @@ class SettingsRepositary(
         return preferenceProvider.getRingtoneName()
     }
 
+    suspend fun searchPackageCode():PackageCodeResponse{
+        return apiRequest {
+            api.searchPackageCode()
+        }
+    }
+
+    fun insertPackageCode(packageCodeResponseData: PackageCodeResponseData){
+        database.getDao().insertPackageCode(packageCodeResponseData)
+    }
+
+    fun deleteAllPackageCode(){
+        database.getDao().deleteAllPackageCode()
+    }
+
 }

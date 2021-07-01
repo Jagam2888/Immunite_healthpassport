@@ -50,8 +50,9 @@ class WorldEntriesDetailActivity : BaseActivity(),KodeinAware,SimpleListener {
         binding.closeBtn.setOnClickListener {
             finish()
         }
-
-        viewModel.getVaccineAndTestReportList()
+        if (!viewModel.privateKey.value.isNullOrEmpty()) {
+            viewModel.getVaccineAndTestReportList()
+        }
 
             viewModel.loadWorldEntryRulesByCountryData(countryCode!!)
         /*viewModel.countryList.observe(this, Observer {
