@@ -141,11 +141,15 @@ class ProfileViewModel(
             _identifierTypeList.value = getAllIdentifierType
 
             getAllIdentifierType.forEach {
-                if (it.identifierCode.equals("NNMYS",false)){
+                when(it.identifierCode?.trim()){
+                    "NNMYS" ->identifierTypeForMYS.add(it)
+                    else ->identifierTypeForOthers.add(it)
+                }
+                /*if (it.identifierCode.trim() == "NNMYS"){
                     identifierTypeForMYS.add(it)
                 }else{
                     identifierTypeForOthers.add(it)
-                }
+                }*/
             }
             _identifierTypeListForMYS.value = identifierTypeForMYS
             _identifierTypeListForOthers.value = identifierTypeForOthers
@@ -187,7 +191,7 @@ class ProfileViewModel(
 
             dobTime.value = user.dobTime?.replace(":","")
             country.value = user.nationality
-            if (!user.passportNumber.isNullOrEmpty()) {
+            if ((!user.passportNumber.isNullOrEmpty()) and (user.passportNumber != "null")) {
                 passportNumber.value = user.passportNumber
             }
             if (!user.passportExpiryDate.isNullOrEmpty()) {
@@ -255,12 +259,15 @@ class ProfileViewModel(
             dob.value = user.dob?.replace("/","")
 
             if (!placeBirth.value.isNullOrEmpty()) {
-                placeBirthViewFormat.value = World.getCountryFrom(placeBirth.value!!).name
-                //placeBirthViewFormat.value = getCountryNameUsingCode(placeBirth.value!!,countryList!!)
+                //placeBirthViewFormat.value = World.getCountryFrom(placeBirth.value!!).name
+                /*placeBirthViewFormat.value = com.jdev.countryutil.Country.getCountryByISO(
+                    getTwoAlpha(placeBirth.value!!)).name*/
+                placeBirthViewFormat.value = getCountryName(getTwoAlpha(placeBirth.value!!)!!)
             }
 
             if (!country.value.isNullOrEmpty()){
-                nationalityViewFormat.value = World.getCountryFrom(country.value!!).name
+                //nationalityViewFormat.value = World.getCountryFrom(country.value!!).name
+                nationalityViewFormat.value = getCountryName(getTwoAlpha(country.value!!)!!)
 
             }
                 //nationalityViewFormat.value = getCountryNameUsingCode(country.value!!,countryList!!)
@@ -346,12 +353,14 @@ class ProfileViewModel(
                 dobViewFormat.value = changeDateFormatForViewProfile(dob.value!!)
 
             if (!dependent?.placeOfBirth.isNullOrEmpty()) {
-                placeBirthViewFormat.value = World.getCountryFrom(dependent?.placeOfBirth!!).name
+                //placeBirthViewFormat.value = World.getCountryFrom(dependent?.placeOfBirth!!).name
+                placeBirthViewFormat.value = getCountryName(getTwoAlpha(dependent?.placeOfBirth!!)!!)
             }
                 //placeBirthViewFormat.value = getCountryNameUsingCode(dependent?.placeOfBirth!!,countryList!!)
 
             if (!dependent?.nationalityCountry.isNullOrEmpty()){
-                nationalityViewFormat.value = World.getCountryFrom(dependent?.nationalityCountry!!).name
+                //nationalityViewFormat.value = World.getCountryFrom(dependent?.nationalityCountry!!).name
+                nationalityViewFormat.value = getCountryName(getTwoAlpha(dependent?.nationalityCountry!!)!!)
             }
                 //nationalityViewFormat.value = getCountryNameUsingCode(dependent?.nationalityCountry!!,countryList!!)
         }

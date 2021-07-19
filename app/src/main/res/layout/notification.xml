@@ -113,7 +113,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/news"
+            android:text="@string/news_update"
             android:textColor="@color/black"
             style="@style/opens_bold"
             android:textSize="13sp"

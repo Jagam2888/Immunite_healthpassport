@@ -399,18 +399,17 @@ class EditDependentProfileActivity : BaseActivity(),KodeinAware,SimpleListener,S
     fun setNation(countryCode:String)
     {
         //hideKeyBoard()
-        viewModel.nationalityCountryCode.value = World.getCountryFrom(countryCode).name
+        viewModel.nationalityCountryCode.value = getCountryName(getTwoAlpha(countryCode)!!)
         //selected_nation.country_name.text = country
         //binding.txtCountryNameNationality.text = World.getCountryFrom(countryCode).name
         viewModel.nationalityCountryFlag.value = World.getFlagOf(countryCode)
-        //binding.imgCountryFlagNationlity.setImageResource(World.getFlagOf(countryCode))
 
     }
 
     fun setPOB(countryCode:String)
     {
         //hideKeyBoard()
-        viewModel.birthPlaceCountryCode.value = World.getCountryFrom(countryCode).name
+        viewModel.birthPlaceCountryCode.value = getCountryName(getTwoAlpha(countryCode)!!)
         //binding.txtCountryNamePob.text = World.getCountryFrom(countryCode).name
         viewModel.birthPlaceCountryFlag.value = World.getFlagOf(countryCode)
         //binding.imgCountryFlagPob.setImageResource(World.getFlagOf(countryCode))

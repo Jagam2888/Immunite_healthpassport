@@ -12,6 +12,7 @@ import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import com.blongho.country_data.World
 import com.cmg.vaccine.data.setOnSingleClickListener
 import com.cmg.vaccine.databinding.ActivityViewProfileBinding
 import com.cmg.vaccine.listener.SimpleListener
@@ -105,6 +106,15 @@ class ViewProfileActivity : BaseActivity(),KodeinAware,SimpleListener {
                 profileImage = Uri.parse(viewModel.getProfileImage())
                 binding.imgProfile.setImageURI(profileImage)
             }
+
+           /* if (!viewModel.placeBirth.value.isNullOrEmpty()) {
+                binding.viewProfilePob.setCountryForNameCode(getTwoAlpha(viewModel.placeBirth.value!!))
+            }*/
+
+            /*if (!viewModel.country.value.isNullOrEmpty()){
+                nationalityViewFormat.value = World.getCountryFrom(country.value!!).name
+
+            }*/
 
         }else if (user == Passparams.DEPENDENT){
             viewModel.loadDependentData(intent.extras?.getString(Passparams.DEPENDENT_SUBID,"")!!)

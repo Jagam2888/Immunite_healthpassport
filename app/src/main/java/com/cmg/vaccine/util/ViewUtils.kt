@@ -120,6 +120,11 @@ fun showAlertDialogWithClick(title: String, msg: String, status: Boolean, closeA
 
 }
 
+fun getCountryName(isoCode:String):String{
+    val locale = Locale("",isoCode)
+    return locale.displayCountry
+}
+
 fun getThreeAlpha(nameCode: String):String{
     val locale = Locale("en", nameCode)
     return locale.isO3Country

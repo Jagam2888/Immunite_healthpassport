@@ -23,7 +23,7 @@ class NotificationDetailActivity : BaseActivity() {
 
         when(notificationFrom){
             "N" ->{
-                binding.txtActionbar.text = resources.getString(R.string.news)
+                binding.txtActionbar.text = resources.getString(R.string.news_update)
                 binding.txtTitleNews.text = msg
                 binding.txtDateNews.text = date
                 binding.layoutNewsUpdate.visibility = View.VISIBLE

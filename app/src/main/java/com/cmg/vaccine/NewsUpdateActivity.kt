@@ -41,7 +41,7 @@ class NewsUpdateActivity : BaseActivity(),KodeinAware,SimpleListener {
         group = intent?.extras?.getString(Passparams.NOTIFICATION_FROM,null)
         if (!group.isNullOrEmpty()){
             when(group){
-                Passparams.NEWS_UPDATE -> binding.actionBarTitle.text = resources.getString(R.string.news)
+                Passparams.NEWS_UPDATE -> binding.actionBarTitle.text = resources.getString(R.string.news_update)
                 Passparams.REGULATORY_UPDATE -> binding.actionBarTitle.text = resources.getString(R.string.regulatory)
                 Passparams.ADVISARY_ALERT -> binding.actionBarTitle.text = resources.getString(R.string.advisory)
             }

@@ -323,7 +323,7 @@ class SignUpActivity : BaseActivity(),KodeinAware,SimpleListener,SlideDatePicker
 
     fun setPOB(countryCode:String)
     {
-        viewModel.birthPlaceCountryCode.value = World.getCountryFrom(countryCode).name
+        viewModel.birthPlaceCountryCode.value = getCountryName(getTwoAlpha(countryCode)!!)
         viewModel.birthPlaceCountryFlag.value = World.getFlagOf(countryCode)
 
     }

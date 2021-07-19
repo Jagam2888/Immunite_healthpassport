@@ -148,7 +148,7 @@ class TellUsMoreActivity : BaseActivity(),KodeinAware,SimpleListener,SlideDatePi
     fun setNation(countryCode:String)
     {
         hideKeyBoard()
-        viewModel.nationalityCountryCode.value = World.getCountryFrom(countryCode).name
+        viewModel.nationalityCountryCode.value = getCountryName(getTwoAlpha(countryCode)!!)
         viewModel.nationalityCountryFlag.value = World.getFlagOf(countryCode)
 
         viewModel.idNo.value = ""

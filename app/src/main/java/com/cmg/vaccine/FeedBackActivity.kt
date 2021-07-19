@@ -17,6 +17,10 @@ class FeedBackActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this,R.layout.activity_feed_back)
 
+        val new = getString(R.string.new_)
+        val inProgress = getString(R.string.in_progress)
+        val solve = getString(R.string.solve)
+
         binding.btnAddFeedback.setOnSingleClickListener{
             Intent(this,AddFeedbackActivity::class.java).also {
                 startActivity(it)
@@ -27,9 +31,9 @@ class FeedBackActivity : BaseActivity() {
             finish()
         }
 
-        binding.tabLayout.addTab(binding.tabLayout.newTab().setText("New"))
-        binding.tabLayout.addTab(binding.tabLayout.newTab().setText("In Progress"))
-        binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Solve"))
+        binding.tabLayout.addTab(binding.tabLayout.newTab().setText(new))
+        binding.tabLayout.addTab(binding.tabLayout.newTab().setText(inProgress))
+        binding.tabLayout.addTab(binding.tabLayout.newTab().setText(solve))
 
         binding.tabLayout.getTabAt(1)?.select()
 
@@ -38,18 +42,18 @@ class FeedBackActivity : BaseActivity() {
                 if (tab != null) {
                     when(tab.position){
                         0 ->{
-                            binding.txtStatus.text = "New"
-                            binding.txtStatus1.text = "New"
+                            binding.txtStatus.text = new
+                            binding.txtStatus1.text = new
                         }
                         1 ->{
-                            binding.txtStatus.text = "In Progress"
-                            binding.txtStatus1.text = "In Progress"
+                            binding.txtStatus.text = inProgress
+                            binding.txtStatus1.text = inProgress
                         }
                         2 ->{
-                            binding.txtStatus.text = "Solved"
-                            binding.txtStatus1.text = "Solved"
+                            binding.txtStatus.text = solve
+                            binding.txtStatus1.text = solve
                         }
-                        else -> binding.txtStatus.text = "New"
+                        else -> binding.txtStatus.text = new
                     }
                 }
 

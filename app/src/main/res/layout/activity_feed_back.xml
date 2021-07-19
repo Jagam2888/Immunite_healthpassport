@@ -113,7 +113,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Principle Account"
+                                    android:text="@string/principle_account"
                                     android:textSize="12sp"
                                     android:textColor="#7c7c7c"
                                     android:background="@drawable/gray_background"
@@ -146,7 +146,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Case No.:"
+                                android:text="@string/case_no"
                                 android:textColor="@color/black"
                                 android:textSize="14sp"
                                 android:textAppearance="@style/opens_bold" />
@@ -162,7 +162,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Payment Issues"
+                            android:text="@string/payment_issues"
                             android:textColor="@color/black"
                             android:textSize="14sp"
                             android:textAppearance="@style/opens_bold"
@@ -171,7 +171,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Problem processing payment."
+                            android:text="@string/problem_solve_payment"
                             android:textColor="@color/black"
                             android:textSize="14sp"
                             android:textAppearance="@style/opens_regular"
@@ -206,7 +206,7 @@
                                 android:id="@+id/txt_status"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="In Progress"
+                                android:text="@string/in_progress"
                                 android:textSize="14sp"
                                 android:gravity="center_horizontal"
                                 android:textColor="#E25822"
@@ -270,7 +270,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Principle Account"
+                                    android:text="@string/principle_account"
                                     android:textSize="12sp"
                                     android:textColor="#7c7c7c"
                                     android:background="@drawable/gray_background"
@@ -302,7 +302,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Case No.:"
+                                android:text="@string/case_no"
                                 android:textColor="@color/black"
                                 android:textSize="14sp"
                                 android:textAppearance="@style/opens_bold" />
@@ -318,7 +318,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Payment Issues"
+                            android:text="@string/payment_issues"
                             android:textColor="@color/black"
                             android:textSize="14sp"
                             android:textAppearance="@style/opens_bold"
@@ -327,7 +327,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Problem processing payment."
+                            android:text="@string/problem_solve_payment"
                             android:textColor="@color/black"
                             android:textSize="14sp"
                             android:textAppearance="@style/opens_regular"
@@ -362,7 +362,7 @@
                                 android:id="@+id/txt_status1"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="In Progress"
+                                android:text="@string/in_progress"
                                 android:textSize="14sp"
                                 android:gravity="center_horizontal"
                                 android:textColor="#E25822"

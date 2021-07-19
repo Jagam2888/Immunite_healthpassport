@@ -111,7 +111,8 @@ private val layouts:List<Dashboard>,
         txtPassportNo.text = layouts[position].passportNo
         txtIdNo.text = layouts[position].idNo
         if (!layouts[position].nationality.isNullOrEmpty()) {
-            txtNationality.text = World.getCountryFrom(layouts[position].nationality!!).name
+            //txtNationality.text = World.getCountryFrom(layouts[position].nationality!!).name
+            txtNationality.text = getCountryName(getTwoAlpha(layouts[position].nationality!!)!!)
         }
 
         if (!layouts[position].data.isNullOrEmpty()) {

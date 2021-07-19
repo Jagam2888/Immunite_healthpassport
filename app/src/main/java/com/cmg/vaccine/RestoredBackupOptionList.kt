@@ -121,7 +121,7 @@ class RestoredBackupOptionList : BaseActivity(),KodeinAware,SimpleListener {
                     //Sets the drive api service on the view model and creates our apps folder
                     Log.e("Indicator", "Login In Success")
                     isGoogleSiginSuccess = true
-                    toast("Login In Success")
+                    //toast("Login In Success")
                     binding.layoutGoogleDrive.visibility= View.GONE
                     binding.progressBarView.visibility= View.VISIBLE
                     driveServiceHelper= DriveServiceHelper(googleDriveService)
@@ -138,7 +138,7 @@ class RestoredBackupOptionList : BaseActivity(),KodeinAware,SimpleListener {
 
         driveServiceHelper.downloadFile(File(getExternalFilesDir(null)?.absoluteFile,FILE_NAME))?.addOnSuccessListener {
             //hide(binding.progressBar)
-            toast("Download success")
+            //toast("Download success")
             progress_status+=40;
             //binding.circularProgressBar.progress = progress_status
             binding.circularProgressBar.apply {
@@ -162,6 +162,8 @@ class RestoredBackupOptionList : BaseActivity(),KodeinAware,SimpleListener {
         val workbook = HSSFWorkbook(excelFile)
         var encrypt_wb=HSSFWorkbook()
 
+        var decryptData:String?=null
+
         var numberOfSheet=workbook.numberOfSheets-1
 
         for(current in 0..numberOfSheet) {
@@ -174,11 +176,23 @@ class RestoredBackupOptionList : BaseActivity(),KodeinAware,SimpleListener {
                 while (cellsInRow.hasNext()) {
                     val currentCell = cellsInRow.next()
                     //Log.e("DOB", viewModel.getUserDOB().toString())
-                    var decryptData = EncryptionUtils.decrypt(currentCell.stringCellValue, dob)
+                    decryptData = EncryptionUtils.decrypt(currentCell.stringCellValue, dob)
+                    if (decryptData == null){
+                        //return
+                        //finish()
+                        break
+
+                    }
                     currentCell.setCellValue(decryptData)
 
                     Log.e("Encrypted Format", currentCell.stringCellValue.toString())
                 }
+
+                if (decryptData == null){
+                    break
+
+                }
+
             }
 
             encrypt_wb=workbook
@@ -188,18 +202,28 @@ class RestoredBackupOptionList : BaseActivity(),KodeinAware,SimpleListener {
         var outputStream: FileOutputStream? = null
 
         try {
-            outputStream = FileOutputStream(encrytedExcelPath)
-            encrypt_wb.write(outputStream)
-            toast("Decrypt Success")
-            insertDataIntoLocalDatabase()
-            progress_status+=40;
-            //binding.circularProgressBar.progress=progress_status
-            binding.circularProgressBar.apply {
-                progress = progress_status
-                setProgressWithAnimation(65f, 1000)
+
+            if (decryptData == null){
+                //return
+                //finish()
+                //break
+                toast("can't decrypt your data, please check your Date of Birth")
+                finish()
+
+            }else {
+                outputStream = FileOutputStream(encrytedExcelPath)
+                encrypt_wb.write(outputStream)
+                toast("Decrypt Success")
+                insertDataIntoLocalDatabase()
+                progress_status += 40;
+                //binding.circularProgressBar.progress=progress_status
+                binding.circularProgressBar.apply {
+                    progress = progress_status
+                    setProgressWithAnimation(65f, 1000)
+                }
+                binding.progressPerc.text = "${progress_status.toInt()}%"
+                Log.e("Decrypt", "Success")
             }
-            binding.progressPerc.text="${progress_status.toInt()}%"
-            Log.e("Decrypt", "Success")
 
         } catch (e: IOException) {
             e.printStackTrace()
@@ -256,10 +280,12 @@ class RestoredBackupOptionList : BaseActivity(),KodeinAware,SimpleListener {
                     val cellsInRow = currentRow.iterator()
                     while (cellsInRow.hasNext()) {
                         val currentCell = cellsInRow.next()
+                        val cellValue = currentCell.stringCellValue
+                        val cellValueResult = cellValue.replace("'", "''")
                         if (data_value == "")
-                            data_value += " '" + currentCell.stringCellValue + "'"
+                            data_value += " '$cellValueResult'"
                         else
-                            data_value += ", '" + currentCell.stringCellValue + "'"
+                            data_value += ", '$cellValueResult'"
 
                     }
                     var data_value_wc = " ($data_value)"

@@ -317,7 +317,7 @@ This QR Code is one time use and it expires in 5 minutes.</string>
     <string name="select_country">Select Your Country</string>
 
     <!--Notification-->
-    <string name="news">News Update</string>
+    <string name="news_update">News Update</string>
     <string name="regulatory">Regulatory Update</string>
     <string name="advisory">Advisory Alert</string>
     <string name="channel_name">Immunitee Channel</string>
@@ -431,6 +431,17 @@ This QR Code is one time use and it expires in 5 minutes.</string>
     <string name="description">has restricted the entry of all foreign nationals except those with prior approval from the government. Travelers with approval from low-risk countries will be issued with a 7-day SHN (Stay-Home-Notice), or no SHN from September 1.</string>
     <string name="get_1_month_free_trail">Get 1 Month Free Trail</string>
     <string name="enter_your_security_pin_to_login">Enter your security PIN to login!</string>
+
+    <string name="new_">New</string>
+    <string name="in_progress">In Progress</string>
+    <string name="solve">Solved</string>
+
+    <string name="case_no">Case No.:</string>
+    <string name="payment_issues">Payment Issues</string>
+    <string name="problem_solve_payment">Problem processing payment.</string>
+
+    <string name="customer_support_team">Immunitee Customer Support Team</string>
+    <string name="thanks_feedback_payment">Thank you for your feedback. We will proceed your payment soon.</string>
 
 
     <string name="unread">Unread</string>

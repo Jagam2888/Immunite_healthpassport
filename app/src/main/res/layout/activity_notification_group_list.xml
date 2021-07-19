@@ -71,7 +71,7 @@
                             android:layout_marginStart="20dp"
                             android:layout_toEndOf="@+id/imageView6"
                             android:fontFamily="@font/opensans_bold"
-                            android:text="@string/news"
+                            android:text="@string/news_update"
                             android:textColor="#00172D" />
 
                         <ImageView

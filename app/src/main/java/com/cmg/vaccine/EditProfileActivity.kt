@@ -455,7 +455,7 @@ class EditProfileActivity : BaseActivity(),KodeinAware,SimpleListener,SlideDateP
     fun setNation(countryCode:String)
     {
         hideKeyBoard()
-        viewModel.nationalityCountryCode.value = World.getCountryFrom(countryCode).name
+        viewModel.nationalityCountryCode.value = getCountryName(getTwoAlpha(countryCode)!!)
         //selected_nation.country_name.text = country
         //binding.txtCountryNameNationality.text = World.getCountryFrom(countryCode).name
         viewModel.nationalityCountryFlag.value = World.getFlagOf(countryCode)
@@ -472,7 +472,7 @@ class EditProfileActivity : BaseActivity(),KodeinAware,SimpleListener,SlideDateP
     fun setPOB(countryCode:String)
     {
         hideKeyBoard()
-        viewModel.birthPlaceCountryCode.value = World.getCountryFrom(countryCode).name
+        viewModel.birthPlaceCountryCode.value = getCountryName(getTwoAlpha(countryCode)!!)
         //binding.txtCountryNamePob.text = World.getCountryFrom(countryCode).name
         viewModel.birthPlaceCountryFlag.value = World.getFlagOf(countryCode)
         //binding.imgCountryFlagPob.setImageResource(World.getFlagOf(countryCode))
