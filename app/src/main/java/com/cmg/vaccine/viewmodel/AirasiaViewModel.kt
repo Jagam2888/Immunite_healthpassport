@@ -60,15 +60,15 @@ class AirasiaViewModel(
 
                     val webCheckInReq = WebCheckInReq()
                     val webCheckInReqData = WebCheckInReqData(
-                        dobEcode,
-                        userDob,
-                        passengerIdno,
-                        passengerIdType,
-                        userData.fullName!!,
-                        passengerPassportNo,
-                        passengerPassportExpiryDate,
-                        userData.privateKey!!,
-                        userData.subId!!
+                        dobEcode.trim(),
+                        userDob.trim(),
+                        passengerIdno.trim(),
+                        passengerIdType.trim(),
+                        userData.fullName!!.trim(),
+                        passengerPassportNo.trim(),
+                        passengerPassportExpiryDate.trim(),
+                        userData.privateKey!!.trim(),
+                        userData.subId!!.trim()
                     )
                     webCheckInReq.data = webCheckInReqData
                     val response = repositary.webCheckInApi(webCheckInReq)

@@ -80,8 +80,8 @@ class SignupViewModel(
                     signUpRepositary.deleteAllIdentifier()
                     response.data.forEach {
                         val identifierType = IdentifierType(
-                            it.identifierCode,
-                            it.identifierDisplay,
+                            it.identifierCode.trim(),
+                            it.identifierDisplay.trim(),
                             it.identifierSeqno,
                             it.identifierStatus
                         )

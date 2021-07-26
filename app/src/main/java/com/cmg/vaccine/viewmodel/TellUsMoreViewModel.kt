@@ -104,10 +104,9 @@ class TellUsMoreViewModel(
             _identifierTypeList.value = getAllIdentifierType
 
             getAllIdentifierType.forEach {
-                if (it.identifierCode.equals("NNMYS",false)){
-                    identifierTypeForMYS.add(it)
-                }else{
-                    identifierTypeForOthers.add(it)
+                when(it.identifierCode?.trim()){
+                    "NNMYS" ->identifierTypeForMYS.add(it)
+                    else ->identifierTypeForOthers.add(it)
                 }
             }
             _identifierTypeListForMYS.value = identifierTypeForMYS

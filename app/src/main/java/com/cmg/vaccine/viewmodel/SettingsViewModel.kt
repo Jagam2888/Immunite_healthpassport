@@ -120,10 +120,10 @@ class SettingsViewModel(
                                     it.sysCreatedBy,
                                     it.sysCreatedDate,
                                     it.sysDescription,
-                                    it.sysMappingKeyName,
-                                    it.sysMappingValue,
+                                    it.sysMappingKeyName?.trim(),
+                                    it.sysMappingValue?.trim(),
                                     it.sysReferredBy,
-                                    it.sysStatus,
+                                    it.sysStatus?.trim(),
                                     it.sysUpdatedBy,
                                     it.sysUpdatedDate
                             )
@@ -148,9 +148,9 @@ class SettingsViewModel(
                 if (!response.data.isNullOrEmpty()){
                     response.data.forEach {
                         val observationStatus = ObservationStatus(
-                            it.oscDisplayName,
+                            it.oscDisplayName.trim(),
                             it.oscSeqNo,
-                            it.oscSnomedCode
+                            it.oscSnomedCode.trim()
                         )
                         repositary.insertObservationStatus(observationStatus)
                     }
@@ -172,9 +172,9 @@ class SettingsViewModel(
                 if (!response.data.isNullOrEmpty()){
                     response.data.forEach {
                         val blockChainErrorCode = BlockChainErrorCode(
-                            it.prioRuleCountry,
-                            it.prioRuleCriteria,
-                            it.prioRuleNo,
+                            it.prioRuleCountry.trim(),
+                            it.prioRuleCriteria.trim(),
+                            it.prioRuleNo.trim(),
                             it.prioSeqNo
                         )
                         repositary.insertBlockChainErrorCode(blockChainErrorCode)
@@ -197,9 +197,9 @@ class SettingsViewModel(
                 if (!response.data.isNullOrEmpty()){
                     response.data.forEach {
                         val countries = Countries(
-                                it.countryCodeAlpha,
+                                it.countryCodeAlpha.trim(),
                                 it.countryMstrSeqno,
-                                it.countryName
+                                it.countryName.trim()
                         )
                         repositary.insertCountries(countries)
                     }
@@ -255,10 +255,10 @@ class SettingsViewModel(
                 if (!response.data.isNullOrEmpty()){
                     response.data.forEach {
                         val worldPriority = WorldPriority(
-                            it.prioRuleCountry,
-                            it.prioRuleCriteria,
-                            it.prioRuleNo,
-                                it.prioRulePair,
+                            it.prioRuleCountry.trim(),
+                            it.prioRuleCriteria.trim(),
+                            it.prioRuleNo.trim(),
+                                it.prioRulePair.trim(),
                             it.prioSeqNo
                         )
                         repositary.insertWorldPriority(worldPriority)
@@ -308,8 +308,8 @@ class SettingsViewModel(
                 if (!response.data.isNullOrEmpty()){
                     response.data.forEach {
                         val identifierType = IdentifierType(
-                            it.identifierCode,
-                            it.identifierDisplay,
+                            it.identifierCode.trim(),
+                            it.identifierDisplay.trim(),
                             it.identifierSeqno,
                             it.identifierStatus
                         )
@@ -334,10 +334,10 @@ class SettingsViewModel(
                 if ((getAllAirportCities != null) and (getAllAirportCities.data.isNotEmpty())){
                     getAllAirportCities.data.forEach {
                         val airportCitiesName = AirportCitiesName(
-                                it.airportName,
-                                it.cityCode,
-                                it.countryCode,
-                                it.countryName,
+                                it.airportName.trim(),
+                                it.cityCode.trim(),
+                                it.countryCode.trim(),
+                                it.countryName.trim(),
                                 it.id
                         )
                         repositary.insertAirportCitiesMaster(airportCitiesName)

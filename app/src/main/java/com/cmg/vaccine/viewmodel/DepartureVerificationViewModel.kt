@@ -112,11 +112,11 @@ class DepartureVerificationViewModel(
                             departureDestination.value = data.getString("reqDepatureDestination")
                             arrivalDestination.value = data.getString("reqArrivalDestination")
 
-                            etdTime.value = data.getString("reqEtdTime")
-                            etaTime.value = data.getString("reqEtaTime")
-                            staffName.value = data.getString("reqStaffName")
-                            flightNo.value = data.getString("reqFlightNo")
-                            airLine.value = data.getString("reqAirline")
+                            etdTime.value = data.getString("reqEtdTime").trim()
+                            etaTime.value = data.getString("reqEtaTime").trim()
+                            staffName.value = data.getString("reqStaffName").trim()
+                            flightNo.value = data.getString("reqFlightNo").trim()
+                            airLine.value = data.getString("reqAirline").trim()
 
                             val etdDate = changeDateFormatBC(data.getString("reqEtdTime"))
                             val etaDate = changeDateFormatBC(data.getString("reqEtaTime"))
