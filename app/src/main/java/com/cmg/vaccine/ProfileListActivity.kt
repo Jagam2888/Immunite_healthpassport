@@ -101,13 +101,22 @@ class ProfileListActivity:BaseActivity(),KodeinAware {
         //viewModel.loadParentData()
         viewModel.loadChildList()
         childListAdapter?.notifyDataSetChanged()
-        if (viewModel.dependentListCount.get() >= viewModel.allowDependentCount.get()) {
+        if (viewModel.dependentListCount.get() >= viewModel.allowDependentCount.get()){
+            if (binding.btnAddDependent.visibility == View.VISIBLE){
+                binding.btnAddDependent.visibility = View.GONE
+            }
+        }else{
+            if (binding.btnAddDependent.visibility == View.GONE){
+                binding.btnAddDependent.visibility = View.VISIBLE
+            }
+        }
+        /*if (viewModel.dependentListCount.get() >= viewModel.allowDependentCount.get()) {
             if (binding.btnAddDependent.visibility == View.VISIBLE){
                 binding.btnAddDependent.visibility = View.GONE
             }else if (binding.btnAddDependent.visibility == View.GONE){
                 binding.btnAddDependent.visibility = View.VISIBLE
             }
-        }
+        }*/
 
         /*if (!viewModel.getProfileImage().isNullOrEmpty()){
             val uri = Uri.parse(viewModel.getProfileImage())

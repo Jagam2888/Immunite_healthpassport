@@ -48,7 +48,7 @@
                 app:tint="@color/gray"
                 android:layout_marginRight="20dp"
                 android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"/>
+                android:layout_centerVertical="true" />
         </RelativeLayout>
 
         <!--<LinearLayout

@@ -1,6 +1,5 @@
 package com.cmg.vaccine.viewmodel
 
-import android.os.Build
 import android.util.Log
 import androidx.databinding.ObservableBoolean
 import androidx.lifecycle.MutableLiveData
@@ -492,6 +491,7 @@ class DepartureVerificationViewModel(
 
         }
     }
+
 
     private fun webCheckInAPI(webCheckInReq: WebCheckInReq){
         Couritnes.main {
