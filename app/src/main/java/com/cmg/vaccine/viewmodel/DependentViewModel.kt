@@ -208,7 +208,7 @@ class DependentViewModel(
 
     fun onClick(view:View) {
         listener?.onStarted()
-        if ((!idNo.value.isNullOrEmpty()) and (nationalityCountryCode.value.equals("MYS"))){
+        if (!idNo.value.isNullOrEmpty()){
             if (idNo.value?.length != patientIdNoCharLength.get()){
                 listener?.onFailure("2Your ID Number is invalid")
                 return
@@ -246,6 +246,20 @@ class DependentViewModel(
                                         }
                                     }
 
+                                    if (!passportExpDate.value.isNullOrEmpty()) {
+                                        if (passportNumber.value.isNullOrEmpty()) {
+                                            listener?.onShowToast("Please Enter Your Passport Number")
+                                            return
+                                        }
+                                    }
+
+                                    if (!passportExpDate.value.isNullOrEmpty()){
+                                        if (!validateDateFormatForPassport(passportExpDate.value!!)) {
+                                            listener?.onShowToast("Sorry! Your Passport Already Expired or Invalid")
+                                            return
+                                        }
+                                    }
+
                                     if (!passportNumber.value.isNullOrEmpty()) {
                                         if ((repositary.checkPassportForDependent(passportNumber.value!!) > 0) or (repositary.checkPassportForPrinciple(passportNumber.value!!) > 0)){
                                             listener?.onShowToast("Passport Number Already Exsits")
@@ -259,6 +273,22 @@ class DependentViewModel(
                                             return
                                         }
                                     }
+
+                                    /*if (nationalityCountryCode.value == "MYS"){
+                                        if (!idNo.value.isNullOrEmpty()) {
+                                            if (idNo.value?.length!! < 12) {
+                                                listener?.onShowToast("Invalid Id Number")
+                                                return
+                                            }
+                                        }
+                                    }else{
+                                        if (!idNo.value.isNullOrEmpty()) {
+                                            if (idNo.value?.length!! < 15) {
+                                                listener?.onShowToast("Invalid Id Number")
+                                                return
+                                            }
+                                        }
+                                    }*/
 
                                     val relationShips =
                                         view.context.resources.getStringArray(R.array.relationships)
@@ -362,7 +392,7 @@ class DependentViewModel(
                                 listener?.onShowToast("Sorry! Invalid Date of Birth")
                             }
                         } else {
-                            listener?.onShowToast("InValid Email")
+                            listener?.onShowToast("Invalid Email")
                         }
                     } else {
                         listener?.onShowToast("Email and Retype Email Mismatch")
@@ -601,7 +631,7 @@ class DependentViewModel(
     }
 
     fun updateProfile(view: View){
-        if ((!idNo.value.isNullOrEmpty()) and (nationalityCountryCode.value.equals("MYS"))){
+        if (!idNo.value.isNullOrEmpty()){
             if (idNo.value?.length != patientIdNoCharLength.get()){
                 listener?.onFailure("Your ID Number is invalid")
                 return
@@ -666,6 +696,21 @@ class DependentViewModel(
                                                 return
                                             }
                                         }
+
+                                        if (!passportExpDate.value.isNullOrEmpty()) {
+                                            if (passportNumber.value.isNullOrEmpty()) {
+                                                listener?.onShowToast("Please Enter Your Passport Number")
+                                                return
+                                            }
+                                        }
+
+                                        if (!passportExpDate.value.isNullOrEmpty()){
+                                            if (!validateDateFormatForPassport(passportExpDate.value!!)) {
+                                                listener?.onShowToast("Sorry! Your Passport Already Expired or Invalid")
+                                                return
+                                            }
+                                        }
+
                                         try {
                                             val updateProfileReq = UpdateProfileReq()
                                             val updateProfileReqData = UpdateProfileReqData()
@@ -712,7 +757,7 @@ class DependentViewModel(
                                     listener?.onShowToast("Sorry! Invalid Date of Birth")
                                 }
                             } else {
-                                listener?.onShowToast("InValid Email")
+                                listener?.onShowToast("Invalid Email")
                             }
                         } else {
                             listener?.onShowToast("Email and Retype Email Mismatch")

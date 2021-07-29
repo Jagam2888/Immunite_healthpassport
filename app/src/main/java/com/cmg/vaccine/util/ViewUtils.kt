@@ -251,6 +251,17 @@ fun validateDateFormat(date: String):Boolean{
         val month = matcher.group(2).toString()
         val day = matcher.group(1).toString()
 
+        val currentMonth = Calendar.getInstance().get(Calendar.MONTH)
+        val currentDay = Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
+
+        if ((year == currentYear) and (month.toInt() > currentMonth+1)){
+            result = false
+        }
+
+        if ((year == currentYear) and (month.toInt() == currentMonth+1) and (day.toInt() > currentDay)){
+            result = false
+        }
+
 
 
         if ((month == "4" || month == "6" || month == "9" ||

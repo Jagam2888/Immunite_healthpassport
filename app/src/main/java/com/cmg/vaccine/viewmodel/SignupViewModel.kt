@@ -164,7 +164,7 @@ class SignupViewModel(
                         listener?.onShowToast("Sorry! Invalid Date of Birth")
                     }
                 } else {
-                    listener?.onShowToast("Your Email Address 1 is Invalid")
+                    listener?.onShowToast("Your Email Address is Invalid")
                 }
             } else {
                 listener?.onShowToast("Email Mismatch")

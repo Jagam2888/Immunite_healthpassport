@@ -48,16 +48,24 @@ class ViewProfileActivity : BaseActivity(),KodeinAware,SimpleListener {
 
         binding.txtEditProfile.setOnSingleClickListener {
 
-            if (user == Passparams.PARENT){
-                Intent(this,EditProfileActivity::class.java).also {
-                    startActivity(it)
+            if (!viewModel.privateKey.value.isNullOrEmpty()) {
+                if (user == Passparams.PARENT) {
+                    Intent(this, EditProfileActivity::class.java).also {
+                        startActivity(it)
+                    }
+
+                } else if (user == Passparams.DEPENDENT) {
+                    Intent(this, EditDependentProfileActivity::class.java).also {
+                        it.putExtra(
+                            Passparams.DEPENDENT_SUBID,
+                            intent.extras?.getString(Passparams.DEPENDENT_SUBID, "")!!
+                        )
+                        startActivity(it)
+                    }
                 }
-            }else if (user == Passparams.DEPENDENT){
-                Intent(this,EditDependentProfileActivity::class.java).also {
-                    it.putExtra(Passparams.DEPENDENT_SUBID,intent.extras?.getString(Passparams.DEPENDENT_SUBID,"")!!)
-                    startActivity(it)
-                }
-            }
+            }else{
+            showAlertDialog(resources.getString(R.string.account_opening), "Your Private Key is not generate, Check Mykey in Dashboard", true, supportFragmentManager)
+        }
         }
 
         binding.imgBack.setOnClickListener {

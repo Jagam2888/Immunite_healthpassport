@@ -139,7 +139,7 @@ class TellUsMoreViewModel(
 
     fun onRegister(view:View){
         listener?.onStarted()
-        if ((!idNo.value.isNullOrEmpty()) and (nationalityCountryCode.value.equals("MYS"))){
+        if (!idNo.value.isNullOrEmpty()){
             if (idNo.value?.length != patientIdNoCharLength.get()){
                 listener?.onShowToast("Your ID Number is invalid")
                 return
@@ -164,6 +164,20 @@ class TellUsMoreViewModel(
                 if (!passportNo.value.isNullOrEmpty()){
                     if (passportExpDate.value.isNullOrEmpty()){
                         listener?.onShowToast("Please Enter Your Passport Expiry Date")
+                        return
+                    }
+                }
+
+                if (!passportExpDate.value.isNullOrEmpty()) {
+                    if (passportNo.value.isNullOrEmpty()) {
+                        listener?.onShowToast("Please Enter Your Passport Number")
+                        return
+                    }
+                }
+
+                if (!passportExpDate.value.isNullOrEmpty()){
+                    if (!validateDateFormatForPassport(passportExpDate.value!!)) {
+                        listener?.onShowToast("Sorry! Your Passport Already Expired or Invalid")
                         return
                     }
                 }

@@ -327,6 +327,7 @@ class ProfileViewModel(
             passportNumber.value = dependent.passportNo
             passportExpDate.value = dependent.passportExpiryDate
             idNo.value = dependent.idNo
+            privateKey.value = dependent.privateKey
             if ((!dependent.idType.isNullOrEmpty()) and (!identifierTypeList.value.isNullOrEmpty())) {
                 idType.value = identifierTypeList.value?.get(selectedIdType(dependent.idType!!, identifierTypeList.value!!))?.identifierDisplay
             }
@@ -377,7 +378,7 @@ class ProfileViewModel(
 
     fun onClick(view:View){
         listener?.onStarted()
-        if ((!idNo.value.isNullOrEmpty()) and (nationalityCountryCode.value.equals("MYS"))){
+        if (!idNo.value.isNullOrEmpty()){
             if (idNo.value?.length != patientIdNoCharLength.get()){
                 listener?.onFailure("2Your ID Number is invalid")
                 return
@@ -439,6 +440,20 @@ class ProfileViewModel(
                                 if (!passportNumber.value.isNullOrEmpty()) {
                                     if (passportExpDate.value.isNullOrEmpty()) {
                                         listener?.onShowToast("Please Enter Your Passport Expiry Date")
+                                        return
+                                    }
+                                }
+
+                                if (!passportExpDate.value.isNullOrEmpty()) {
+                                    if (passportNumber.value.isNullOrEmpty()) {
+                                        listener?.onShowToast("Please Enter Your Passport Number")
+                                        return
+                                    }
+                                }
+
+                                if (!passportExpDate.value.isNullOrEmpty()){
+                                    if (!validateDateFormatForPassport(passportExpDate.value!!)) {
+                                        listener?.onShowToast("Sorry! Your Passport Already Expired or Invalid")
                                         return
                                     }
                                 }
