@@ -160,7 +160,12 @@ class ImmunizationHistoryActivity : BaseActivity(),KodeinAware,SimpleListener,Sl
             }*/
 
             try {
-                val filePathColumn = arrayOf(MediaStore.MediaColumns.DATA)
+                val uri = data.data
+                val filePath = getRealPathFromURI(this,uri!!)?:""
+                viewModel.filePath.value = filePath
+                val file = File(filePath)
+                viewModel.fileName.value = file.name
+                /*val filePathColumn = arrayOf(MediaStore.MediaColumns.DATA)
                 val cursor = contentResolver.query(data.data!!,filePathColumn,null,null,null)
                 if (cursor?.moveToFirst()!!){
                     val columnIndex = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA)
@@ -169,7 +174,7 @@ class ImmunizationHistoryActivity : BaseActivity(),KodeinAware,SimpleListener,Sl
                     viewModel.filePath.value = path
                     val file = File(path)
                     viewModel.fileName.value = file.name
-                }
+                }*/
             }catch (e:Exception){
                 e.printStackTrace()
                 toast("Sorry!,this folder file can't access")

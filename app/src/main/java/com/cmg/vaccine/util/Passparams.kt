@@ -135,6 +135,7 @@ object Passparams{
     const val GET_CLINIC_LIST = "nhr-module-user/facility"
     const val WEB_CHECK_IN_API = "nhr-module-integration/grantpk"
     const val PACKAGECODE = "nhr-module-user/searchpackagecode"
+    const val ADD_FEEDBACK = "nhr-module-user/feedback"
 
     //Block Chain
     const val BLOCK_CHAIN_URL = "https://cashierbook.com.my:8081/blockchainapi/"

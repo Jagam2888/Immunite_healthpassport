@@ -50,7 +50,7 @@ class SplashActivity() : BaseActivity(),KodeinAware{
         //Log.d("encrypt_dob",EncryptionUtils.encryptForBackup("823BBF131755B9FF006B73C3D901E9D52C465BD2E0D1E37E53053C91D1912B43","19860206"))
         //Log.d("country_code",CountryCodePicker.)
         Log.d("decrypt_splash",
-            decryptQRValue("tqo4yEsY0w2nXpMeUeHgGBIcj7uXy271kHN37gfYR8cW/pSVut8/WW8jA6rH/+X5c+SQXglybUBR\nBYzyCilYlevmAVX63YUKO/Vn2UhOb8TxRn5mUE21v69yviCi/4hOsGFrDwWUJEkeuS8DJezVk11c\na2SN5iY4shCNAp5hNX8b7Xq0GgJChdNXffKb8IE9kY8bTgLeYYpP/3mmSmox9GM+9ag8lI3BxJbE\nWn2rRmjZuVFX+L8KyOb+WItbpxW7T8ImGxvpLuRbU8C/2dSOHOqb3y0Qa1YF8vl9PkI3TmrQ7BlT\nsU8mvcrpUaqiqpAJuWOLLR4tZ34fCMhMsqhmXGu5C6y9LCNwjV03L4slygm0qMq7gB5cZHOrPWWY\nPagzD9/qq187AOjAMP9w37FWbmw4Tos8qLG+OKR4N9HJ4jUoE0MPFd5nPO4Mhoz6whE/ZvqaZR21\nTiVyvzwYkqvjHtp4tDfJFBnZQjazsKcP8hY=","20210327")!!)
+            decryptQRValue("2pgx67ZCpkbVNE7wQqIdV428zDjPLBVSBJ2kSBhVGS1rlR+LwJovBF5uSXz6/ZBXRYbhyYeQiCov5KLHRBgCycv8xZAVc/sUe/V8GenyLXc=","19880728")!!)
 
 
     }

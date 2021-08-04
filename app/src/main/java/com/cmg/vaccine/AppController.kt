@@ -113,6 +113,9 @@ class AppController : Application(),KodeinAware {
         bind() from singleton { CheckOutRepositary(instance(),instance()) }
         bind() from provider { CheckOutViewModelFactory(instance()) }
 
+        bind() from singleton { FeedBackViewRepositary(instance(),instance(),instance()) }
+        bind() from provider { FeedBackViewModelFactory(instance()) }
+
         //bind() from provider { MyFirebaseInstanceIDService(instance()) }
 
     }

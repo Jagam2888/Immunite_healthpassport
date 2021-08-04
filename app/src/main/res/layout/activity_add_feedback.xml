@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="viewmodel"
+            type="com.cmg.vaccine.viewmodel.FeedBackViewModel" />
     </data>
 
     <LinearLayout
@@ -170,20 +172,34 @@
                         android:textColor="@color/text_color"
                         android:textAppearance="@style/opens_bold"
                         android:layout_marginTop="20dp"/>
-                    <EditText
+                    <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Principle Profile"
+                        android:layout_height="56dp"
                         android:background="@drawable/edittext_background"
+                        android:layout_marginTop="5dp"
                         android:paddingBottom="10dp"
                         android:paddingLeft="10dp"
                         android:paddingRight="10dp"
-                        android:paddingTop="10dp"
-                        android:layout_marginTop="5dp"
-                        android:drawableRight="@drawable/down_arrow"
-                        android:drawablePadding="10dp"
-                        android:focusable="false"
-                        android:longClickable="false"/>
+                        android:paddingTop="10dp">
+
+                        <Spinner
+                            android:id="@+id/spinner_profile"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="14sp"
+                            android:textAppearance="@style/opens_regular"
+                            android:background="@null"
+                            android:minHeight="0dp"
+                            android:layout_centerVertical="true"/>
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_alignParentRight="true"
+                            android:src="@drawable/down_arrow"
+                            android:layout_marginRight="10dp" />
+                    </RelativeLayout>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -197,6 +213,7 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/feedback_title"
                         android:textColor="@color/black"
+                        android:text="@={viewmodel.feedbackTitle}"
                         android:background="@drawable/edittext_background"
                         android:paddingBottom="10dp"
                         android:paddingLeft="10dp"
@@ -209,6 +226,7 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/describe_your_exp"
                         android:textColor="@color/black"
+                        android:text="@={viewmodel.feedbackDesc}"
                         android:background="@drawable/edittext_background"
                         android:paddingBottom="10dp"
                         android:paddingLeft="10dp"
@@ -227,7 +245,35 @@
                         android:textColor="@color/text_color"
                         android:textAppearance="@style/opens_bold"
                         android:layout_marginTop="20dp"/>
-                    <FrameLayout
+                    <com.cmg.vaccine.util.CustomLIstView
+                        android:id="@+id/listview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:dividerHeight="5dp"
+                        android:divider="@android:color/transparent"/>
+                    <!--<EditText
+                        android:id="@+id/btn_nfc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:maxLength="30"
+                        android:textSize="14sp"
+                        android:textColorHint="@color/gray"
+                        android:hint="@string/upload_document"
+                        android:text="@={viewmodel.feedbackFile}"
+                        android:background="@drawable/ic_upload_document"
+                        android:textAppearance="@style/opens_regular"
+                        android:maxLines="1"
+                        android:paddingRight="20dp"
+                        android:paddingLeft="50dp"
+                        android:paddingBottom="10dp"
+                        android:paddingTop="10dp"
+                        android:layout_marginTop="5dp"
+                        android:focusable="false"
+                        android:longClickable="false"/>-->
+
+                    <!--<FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp">
@@ -240,6 +286,7 @@
                             android:maxLength="30"
                             android:textSize="14sp"
                             android:hint="@string/upload_document"
+                            android:text="@={viewmodel.feedbackFile}"
                             android:textColorHint="@color/gray"
                             android:inputType="text|textNoSuggestions"
                             android:drawableLeft="@drawable/attach_icon"
@@ -251,7 +298,9 @@
                             android:paddingLeft="10dp"
                             android:paddingBottom="10dp"
                             android:paddingTop="10dp"
-                            android:layout_marginTop="5dp" />
+                            android:layout_marginTop="5dp"
+                            android:focusable="false"
+                            android:longClickable="false"/>
 
                         <LinearLayout
                             android:id="@+id/btn_nfc"
@@ -273,7 +322,7 @@
                                 android:src="@drawable/upload_icon"
                                 android:layout_gravity="center_horizontal|center_vertical"/>
                         </LinearLayout>
-                    </FrameLayout>
+                    </FrameLayout>-->
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -283,6 +332,7 @@
                         android:textSize="14sp"
                         android:layout_marginTop="10dp"/>
                     <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/add_document"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/additional_docs"
@@ -304,7 +354,8 @@
                         android:paddingRight="10dp"
                         android:paddingBottom="10dp"
                         android:background="@drawable/button_green"
-                        android:layout_marginTop="20dp" />
+                        android:layout_marginTop="20dp"
+                        android:onClick="@{()->viewmodel.addFeedback()}"/>
 
                 </LinearLayout>
 

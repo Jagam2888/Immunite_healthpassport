@@ -143,6 +143,12 @@ interface MyApi {
     @GET(Passparams.PACKAGECODE)
     suspend fun searchPackageCode():Response<PackageCodeResponse>
 
+    @Multipart
+    @POST(Passparams.ADD_FEEDBACK)
+    suspend fun addFeedback(@Part file:MultipartBody.Part,
+                            @Part("form") addFeedbackReq: AddFeedbackReq):Response<AddFeedbackResponse>
+
+
 
 
     companion object{
