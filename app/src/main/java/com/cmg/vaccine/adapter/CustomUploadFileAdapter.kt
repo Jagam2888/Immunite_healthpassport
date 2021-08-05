@@ -7,12 +7,13 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.EditText
 import com.cmg.vaccine.R
+import com.cmg.vaccine.data.MultipleFilesData
 import com.cmg.vaccine.data.setOnSingleClickListener
 import com.cmg.vaccine.listener.AdapterListener
 
 class CustomUploadFileAdapter(
     private val context: Context,
-    private val list: ArrayList<String>
+    private val list: ArrayList<MultipleFilesData>
 ):BaseAdapter() {
 
     private val mInflator: LayoutInflater = LayoutInflater.from(context)
@@ -39,7 +40,7 @@ class CustomUploadFileAdapter(
             view = convertView
             vh = view.tag as ViewHolder
         }
-        vh.editText.setText(list[position])
+        vh.editText.setText(list[position].fileName)
         vh.editText.setOnSingleClickListener{
             listener?.onClick(position)
         }
@@ -50,10 +51,10 @@ class CustomUploadFileAdapter(
         public val editText: EditText = row?.findViewById<EditText>(R.id.edittext)!!
     }
 
-    fun refreshList(listNew: ArrayList<String>){
+    /*fun refreshList(listNew: ArrayList<String>){
         val listsss = list.size
         list.clear()
         list.addAll(listNew)
         notifyDataSetChanged()
-    }
+    }*/
 }

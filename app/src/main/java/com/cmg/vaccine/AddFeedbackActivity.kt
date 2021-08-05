@@ -10,6 +10,7 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.EditText
+import android.widget.RadioButton
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
@@ -17,6 +18,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.cmg.vaccine.adapter.CustomUploadFileAdapter
+import com.cmg.vaccine.data.MultipleFilesData
 import com.cmg.vaccine.data.UserProfileList
 import com.cmg.vaccine.data.setOnSingleClickListener
 import com.cmg.vaccine.databinding.ActivityAddFeedbackBinding
@@ -42,8 +44,7 @@ class AddFeedbackActivity : BaseActivity(),KodeinAware,SimpleListener,AdapterLis
 
     private val factory:FeedBackViewModelFactory by instance()
 
-    private var list:ArrayList<String>?=null
-    private var listFilePaths:ArrayList<String>?=null
+    private var listOfFiles:ArrayList<MultipleFilesData>?=null
     var clickPosition:Int = 0
 
     private lateinit var customAdapter:CustomUploadFileAdapter
@@ -98,6 +99,8 @@ class AddFeedbackActivity : BaseActivity(),KodeinAware,SimpleListener,AdapterLis
 
         binding.radioGroup.setOnCheckedChangeListener { group, checkedId ->
 
+            val radioButton = findViewById<RadioButton>(checkedId)
+            viewModel.feedbackTitle.set(radioButton.text.toString())
             when(checkedId){
                 R.id.radio_btn_account ->{
                     if (binding.layoutRadioGroup.visibility == View.VISIBLE)
@@ -159,21 +162,27 @@ class AddFeedbackActivity : BaseActivity(),KodeinAware,SimpleListener,AdapterLis
             }
         }
 
-        list = ArrayList<String>()
-        listFilePaths = ArrayList<String>()
-        list!!.add("")
+        listOfFiles = ArrayList<MultipleFilesData>()
+
+        listOfFiles!!.add(MultipleFilesData(
+            "",""
+        ))
 
 
 
 
-        customAdapter = CustomUploadFileAdapter(this,list!!)
+        customAdapter = CustomUploadFileAdapter(this,listOfFiles!!)
         binding.listview.adapter = customAdapter
         customAdapter.listener = this
 
 
         binding.addDocument.setOnSingleClickListener{
-            if (list!!.size <= 5) {
-                list!!.add("")
+            if (listOfFiles!!.size < 5) {
+
+                listOfFiles!!.add(MultipleFilesData(
+                    "",""
+                ))
+                Log.d("list_size_after",listOfFiles!!.size.toString())
                 customAdapter.notifyDataSetChanged()
             }else{
                 toast("Sorry, Already you have reached your attachment limit")
@@ -233,7 +242,17 @@ class AddFeedbackActivity : BaseActivity(),KodeinAware,SimpleListener,AdapterLis
                     if (filePath.name.contains(".pdf", true)) {
                         viewModel.feedbackFile.set(filePath.name)
                         viewModel.filePath.value = filePath.absolutePath
-                        viewModel.filePathList.value?.add(filePath.absolutePath)
+                        //viewModel._filePathList.value?.add(filePath.absolutePath)
+
+                        val multipleFilesData = MultipleFilesData(
+                            filePath.name,filePath.absolutePath
+                        )
+                        listOfFiles!![clickPosition] = multipleFilesData
+                        Log.d("list_size",listOfFiles!!.size.toString())
+                        customAdapter.notifyDataSetChanged()
+
+                        //viewModel._filePathList.value?.clear()
+                        viewModel._filePathList.value = listOfFiles
 
                     } else {
                         compressImage(filePath)
@@ -261,11 +280,18 @@ class AddFeedbackActivity : BaseActivity(),KodeinAware,SimpleListener,AdapterLis
                 val compressImage = Compressor.compress(this@AddFeedbackActivity, imageFile)
                 viewModel.feedbackFile.set(compressImage.name)
                 viewModel.filePath.value = compressImage.absolutePath
-                viewModel.filePathList.value?.add(compressImage.absolutePath)
+                //viewModel._filePathList.value?.add(compressImage.absolutePath)
                 Log.d("file_com",compressImage.absolutePath)
                 Log.d("file_com_name",compressImage.name)
-                list!![clickPosition] = compressImage.name
+                val multipleFilesData = MultipleFilesData(
+                    compressImage.name,compressImage.absolutePath
+                )
+                listOfFiles!![clickPosition] = multipleFilesData
+
                 customAdapter.notifyDataSetChanged()
+                Log.d("list_size",listOfFiles!!.size.toString())
+                //viewModel._filePathList.value?.clear()
+                viewModel._filePathList.value = listOfFiles
 
             }
         }
@@ -295,19 +321,24 @@ class AddFeedbackActivity : BaseActivity(),KodeinAware,SimpleListener,AdapterLis
 
 
     override fun onStarted() {
-        TODO("Not yet implemented")
+        show(binding.progressCircular)
     }
 
     override fun onSuccess(msg: String) {
         toast(msg)
+        hide(binding.progressCircular)
+        finish()
+        //showAlertDialogWithClick(resources.getString(R.string.success),msg,true,true,supportFragmentManager)
     }
 
     override fun onFailure(msg: String) {
         toast(msg)
+        hide(binding.progressCircular)
     }
 
     override fun onShowToast(msg: String) {
         toast(msg)
+        hide(binding.progressCircular)
     }
 
     override fun onClick(position: Int) {

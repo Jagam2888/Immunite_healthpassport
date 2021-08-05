@@ -233,7 +233,7 @@ class SettingsViewModel(
 
     private fun getTestReportCall(){
        getVaccineTestRef(repositary.getPrivateKey()!!,"Prinicipal")
-       // getVaccineTestRef("0C810A24224B0477CA3DCFF03F94FA194685E138F37DAC7909603275784D4593","Prinicipal")
+       //getVaccineTestRef("122CD59272572BAF68C4B824F254D5361F459528D0F02CFC23054CAEA284FF42","Prinicipal")
 
         val dependent = repositary.getAllDependent()
 
@@ -335,8 +335,8 @@ class SettingsViewModel(
                     getAllAirportCities.data.forEach {
                         val airportCitiesName = AirportCitiesName(
                                 it.airportName.trim(),
-                                it.cityCode.trim(),
-                                it.countryCode.trim(),
+                                it.cityCode,
+                                if(it.countryCode != null)it.countryCode else "",
                                 it.countryName.trim(),
                                 it.id
                         )

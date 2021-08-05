@@ -5,10 +5,13 @@ import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.cmg.vaccine.data.MultipleFilesData
 import com.cmg.vaccine.data.UserProfileList
+import com.cmg.vaccine.database.FeedBackUploadedFiles
 import com.cmg.vaccine.listener.SimpleListener
 import com.cmg.vaccine.model.request.AddFeedbackData
 import com.cmg.vaccine.model.request.AddFeedbackReq
+import com.cmg.vaccine.model.response.GetFeedbackResponseData
 import com.cmg.vaccine.repositary.FeedBackViewRepositary
 import com.cmg.vaccine.util.*
 import okhttp3.MediaType
@@ -21,13 +24,16 @@ class FeedBackViewModel(
     private val repositary: FeedBackViewRepositary
 ):ViewModel() {
 
-    val feedbackTitle:MutableLiveData<String> = MutableLiveData()
+    val feedbackTitle = ObservableField<String>()
     val feedbackDesc:MutableLiveData<String> = MutableLiveData()
     //var feedbackFile:MutableLiveData<String> = MutableLiveData()
     var feedbackFile = ObservableField<String>()
 
     val filePath:MutableLiveData<String> = MutableLiveData()
-    val filePathList:MutableLiveData<ArrayList<String>> = MutableLiveData()
+    val _filePathList:MutableLiveData<ArrayList<MultipleFilesData>> = MutableLiveData()
+
+    val filePathList:LiveData<ArrayList<MultipleFilesData>>
+    get() = _filePathList
 
     val caseDob = ObservableField<String>()
     val caseSubId = ObservableField<String>()
@@ -87,11 +93,12 @@ class FeedBackViewModel(
 
     }
     fun addFeedback(){
+        listener?.onStarted()
         if (!feedbackFile.get().isNullOrEmpty()) {
             Couritnes.main {
                 try {
                     val addFeedbackData = AddFeedbackData(
-                        feedbackTitle.value!!,
+                        feedbackTitle.get()!!,
                         caseDob.get()!!,
                         feedbackDesc.value!!,
                         caseEncryptPk.get()?.trim()!!,
@@ -104,21 +111,63 @@ class FeedBackViewModel(
                         addFeedbackData
                     )
 
+                    val feedBackData = GetFeedbackResponseData(
+                        feedbackTitle.get()!!,
+                        caseDob.get()!!,
+                        feedbackDesc.value!!,
+                        caseEncryptPk.get()?.trim()!!,
+                        "",
+                        0,
+                        "NEW",
+                        caseSubId.get()!!,
+                        "",
+                        "",
+                        "",
+                        ratings.get()!!.toInt(),
+                        "",
+                        ""
+                    )
+                    repositary.insertFeedBackData(feedBackData)
 
 
-                    val file = File(filePath.value)
-                    //feedbackFile.set(file.name)
 
                     Log.d("file_name_path_list",filePathList.value?.size.toString())
-                    Log.d("file_name_path", file.absolutePath!!)
+                    //Log.d("file_name_path", file.absolutePath!!)
                     Log.d("file_name", feedbackFile.get()!!)
 
+                    val surveyImagesParts = arrayOfNulls<MultipartBody.Part>(
+                        filePathList.value!!.size
+                    )
+
+                    for (i in filePathList.value!!.indices){
+                        if (!filePathList.value!!.get(i)?.filePath.isNullOrEmpty()) {
+                            val file = File(filePathList.value?.get(i)?.filePath)
+                            val feedBackUploadedFiles = FeedBackUploadedFiles(
+                                "",
+                                caseSubId.get()!!,
+                                file.name,
+                                file.absolutePath
+                            )
+                            repositary.insertFeedBackFiles(feedBackUploadedFiles)
+                            val requestFile: RequestBody =
+                                RequestBody.create(MediaType.parse("multipart/form-data"), file)
+                            surveyImagesParts[i] = MultipartBody.Part.createFormData(
+                                "files",
+                                file.name,
+                                requestFile
+                            )
+                        }
+                    }
+
+                    val response = repositary.addFeedBackApi(surveyImagesParts, addFeedbackReq)
+                    Log.d("response", response.Message)
+                    listener?.onSuccess(response.Message)
 
                     /*val requestBody = CustomUploadRequest(file,"multipart/form-data",null)
                 val body = MultipartBody.Part.createFormData("files", feedbackFile.get()?.trim(), requestBody)*/
 
 
-                    val requestFile: RequestBody =
+                    /*val requestFile: RequestBody =
                         RequestBody.create(MediaType.parse("multipart/form-data"), file)
                     val body = MultipartBody.Part.createFormData(
                         "files",
@@ -127,7 +176,8 @@ class FeedBackViewModel(
                     )
                     val response = repositary.addFeedBackApi(body, addFeedbackReq)
                     Log.d("response", response.Message)
-                    listener?.onSuccess(response.Message)
+                    listener?.onSuccess(response.Message)*/
+                    //listener?.onSuccess(filePathList.value?.size.toString())
                 } catch (e: APIException) {
                     listener?.onFailure("2" + e.message!!)
                 } catch (e: NoInternetException) {

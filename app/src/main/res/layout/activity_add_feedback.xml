@@ -9,10 +9,9 @@
             type="com.cmg.vaccine.viewmodel.FeedBackViewModel" />
     </data>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         tools:context=".AddFeedbackActivity">
 
         <RelativeLayout
@@ -43,7 +42,8 @@
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_below="@id/action_bar">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -213,7 +213,6 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/feedback_title"
                         android:textColor="@color/black"
-                        android:text="@={viewmodel.feedbackTitle}"
                         android:background="@drawable/edittext_background"
                         android:paddingBottom="10dp"
                         android:paddingLeft="10dp"
@@ -362,5 +361,12 @@
             </RelativeLayout>
         </ScrollView>
 
-    </LinearLayout>
+        <ProgressBar
+            android:id="@+id/progress_circular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="gone"/>
+
+    </RelativeLayout>
 </layout>

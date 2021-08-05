@@ -3,6 +3,7 @@ package com.cmg.vaccine.database
 import androidx.room.*
 import com.cmg.vaccine.model.JoinWorldEntryRuleAndPriority
 import com.cmg.vaccine.model.TestCodeFilterByReport
+import com.cmg.vaccine.model.response.GetFeedbackResponseData
 import com.cmg.vaccine.model.response.PackageCodeResponseData
 import com.cmg.vaccine.model.response.SystemConfigResponseData
 
@@ -328,4 +329,16 @@ interface PatientDao {
 
     @Query("DELETE FROM PackageCodeResponseData")
     fun deleteAllPackageCode()
+
+    @Query("SELECT * FROM GetFeedbackResponseData WHERE caseSubId =:subsId")
+    fun getFeedbackData(subsId: String):List<GetFeedbackResponseData>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertFeedBackData(getFeedbackResponseData: GetFeedbackResponseData)
+
+    @Query("SELECT * FROM FeedBackUploadedFiles WHERE caseSubId =:subsId AND caseNo =:caseNo")
+    fun getFeedBackUploadFiles(subsId: String,caseNo:String):List<FeedBackUploadedFiles>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertFeedBackUploadFiles(feedBackUploadedFiles: FeedBackUploadedFiles)
 }

@@ -136,6 +136,7 @@ object Passparams{
     const val WEB_CHECK_IN_API = "nhr-module-integration/grantpk"
     const val PACKAGECODE = "nhr-module-user/searchpackagecode"
     const val ADD_FEEDBACK = "nhr-module-user/feedback"
+    const val PAYMENT_LOG = "nhr-module-user/paymentlog"
 
     //Block Chain
     const val BLOCK_CHAIN_URL = "https://cashierbook.com.my:8081/blockchainapi/"
@@ -152,6 +153,6 @@ object Passparams{
     const val PAYMENT_COUNTRY = "MY"
     const val PAYMENT_CURRENCY = "MYR"
     const val LANGUAGE = "ISO-8859-1"
-    const val BACKEND_POST_URL = "www.google.com"
+    const val BACKEND_POST_URL = URL+ PAYMENT_LOG
 
 }

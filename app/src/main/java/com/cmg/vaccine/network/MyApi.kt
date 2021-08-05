@@ -145,7 +145,7 @@ interface MyApi {
 
     @Multipart
     @POST(Passparams.ADD_FEEDBACK)
-    suspend fun addFeedback(@Part file:MultipartBody.Part,
+    suspend fun addFeedback(@Part file: Array<MultipartBody.Part?>,
                             @Part("form") addFeedbackReq: AddFeedbackReq):Response<AddFeedbackResponse>
 
 
