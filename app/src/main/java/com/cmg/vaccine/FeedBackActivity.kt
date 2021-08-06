@@ -5,17 +5,38 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TableLayout
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.cmg.vaccine.adapter.FeedBackListAdapter
 import com.cmg.vaccine.data.setOnSingleClickListener
 import com.cmg.vaccine.databinding.ActivityFeedBackBinding
+import com.cmg.vaccine.viewmodel.FeedBackViewModel
+import com.cmg.vaccine.viewmodel.viewmodelfactory.FeedBackViewModelFactory
 import com.google.android.material.tabs.TabLayout
+import org.kodein.di.KodeinAware
+import org.kodein.di.android.kodein
+import org.kodein.di.generic.instance
 
-class FeedBackActivity : BaseActivity() {
+class FeedBackActivity : BaseActivity(),KodeinAware {
 
     private lateinit var binding:ActivityFeedBackBinding
+    override val kodein by kodein()
+
+    private lateinit var viewModel: FeedBackViewModel
+
+    private val factory: FeedBackViewModelFactory by instance()
+
+    private lateinit var feedBackAdapter:FeedBackListAdapter
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this,R.layout.activity_feed_back)
+        viewModel = ViewModelProvider(this,factory).get(FeedBackViewModel::class.java)
+
+        binding.viewmodel = viewModel
 
         val new = getString(R.string.new_)
         val inProgress = getString(R.string.in_progress)
@@ -31,6 +52,19 @@ class FeedBackActivity : BaseActivity() {
             finish()
         }
 
+        viewModel.getFeedBackList(inProgress)
+
+
+
+        viewModel.feedBackList.observe(this, Observer {feedBackList->
+            binding.recyclerView.also {
+                feedBackAdapter = FeedBackListAdapter(this,feedBackList,viewModel)
+                it.adapter = feedBackAdapter
+            }
+        })
+
+
+
         binding.tabLayout.addTab(binding.tabLayout.newTab().setText(new))
         binding.tabLayout.addTab(binding.tabLayout.newTab().setText(inProgress))
         binding.tabLayout.addTab(binding.tabLayout.newTab().setText(solve))
@@ -42,18 +76,15 @@ class FeedBackActivity : BaseActivity() {
                 if (tab != null) {
                     when(tab.position){
                         0 ->{
-                            binding.txtStatus.text = new
-                            binding.txtStatus1.text = new
+                            viewModel.getFeedBackList(new)
                         }
                         1 ->{
-                            binding.txtStatus.text = inProgress
-                            binding.txtStatus1.text = inProgress
+                            viewModel.getFeedBackList(inProgress)
                         }
                         2 ->{
-                            binding.txtStatus.text = solve
-                            binding.txtStatus1.text = solve
+                            viewModel.getFeedBackList(solve)
                         }
-                        else -> binding.txtStatus.text = new
+                        else -> viewModel.getFeedBackList(inProgress)
                     }
                 }
 
@@ -66,7 +97,7 @@ class FeedBackActivity : BaseActivity() {
             }
         })
 
-        binding.cardview1.setOnSingleClickListener{
+       /* binding.cardview1.setOnSingleClickListener{
             Intent(this,FeedbackDetailActivity::class.java).also {
                 startActivity(it)
             }
@@ -76,6 +107,6 @@ class FeedBackActivity : BaseActivity() {
             Intent(this,FeedbackDetailActivity::class.java).also {
                 startActivity(it)
             }
-        }
+        }*/
     }
 }

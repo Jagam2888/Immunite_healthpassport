@@ -5,11 +5,11 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class AirportCitiesName (
-    val airportName: String?=null,
-    val cityCode: String?=null,
-    val countryCode: String?=null,
-    val countryName: String?=null,
-    val id: Int?=null
+    val airportName: String?,
+    val cityCode: String?,
+    val countryCode: String?,
+    val countryName: String?,
+    val id: Int
 ){
     @PrimaryKey(autoGenerate = true)
     var sno:Int = 0

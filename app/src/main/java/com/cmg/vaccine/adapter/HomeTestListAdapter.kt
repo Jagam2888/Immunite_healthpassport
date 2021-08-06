@@ -25,7 +25,7 @@ class HomeTestListAdapter(
     )
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.homeListTestItemBinding.model = list.get(position)
+        holder.homeListTestItemBinding.model = list[position]
         if (position == 0){
             holder.homeListTestItemBinding.btnSucess.setImageResource(R.drawable.success_icon_green)
             holder.homeListTestItemBinding.txtLatestRecords.visibility = View.VISIBLE

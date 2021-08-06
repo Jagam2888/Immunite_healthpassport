@@ -136,6 +136,7 @@ object Passparams{
     const val WEB_CHECK_IN_API = "nhr-module-integration/grantpk"
     const val PACKAGECODE = "nhr-module-user/searchpackagecode"
     const val ADD_FEEDBACK = "nhr-module-user/feedback"
+    const val GET_FEEDBACK = "nhr-module-user/feedbackstatus"
     const val PAYMENT_LOG = "nhr-module-user/paymentlog"
 
     //Block Chain

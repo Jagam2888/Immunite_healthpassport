@@ -148,6 +148,9 @@ interface MyApi {
     suspend fun addFeedback(@Part file: Array<MultipartBody.Part?>,
                             @Part("form") addFeedbackReq: AddFeedbackReq):Response<AddFeedbackResponse>
 
+    @GET(Passparams.GET_FEEDBACK)
+    suspend fun getFeedBackListAPI(@Query("caseSubId")subId: String):Response<GetFeedbackStatusResponse>
+
 
 
 

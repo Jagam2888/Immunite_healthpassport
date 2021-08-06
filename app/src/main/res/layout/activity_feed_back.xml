@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="viewmodel"
+            type="com.cmg.vaccine.viewmodel.FeedBackViewModel" />
     </data>
 
     <RelativeLayout
@@ -58,7 +60,14 @@
             android:layout_below="@id/action_bar"
             android:layout_marginTop="3dp"/>
 
-        <ScrollView
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:layout_below="@id/tab_layout"/>
+
+        <!--<ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/tab_layout">
@@ -381,7 +390,7 @@
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
             </LinearLayout>
-        </ScrollView>
+        </ScrollView>-->
 
 
 

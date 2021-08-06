@@ -569,7 +569,10 @@ class WorldEntryViewModel(
                                                 return true
                                             }
                                         } else {
-                                            return false
+                                            if (j + 1 == testReportFilterByTestCode.size) {
+                                                return false
+                                            }
+
                                         }
 
                                     }
@@ -658,9 +661,9 @@ class WorldEntryViewModel(
                     } else {
                         return false
                     }
-                } else {
+                } /*else {
                     return false
-                }
+                }*/
             }
         }
         return false

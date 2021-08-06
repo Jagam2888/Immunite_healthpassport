@@ -100,7 +100,7 @@ class AddFeedbackActivity : BaseActivity(),KodeinAware,SimpleListener,AdapterLis
         binding.radioGroup.setOnCheckedChangeListener { group, checkedId ->
 
             val radioButton = findViewById<RadioButton>(checkedId)
-            viewModel.feedbackTitle.set(radioButton.text.toString())
+            viewModel.feedbackCategory.set(radioButton.text.toString())
             when(checkedId){
                 R.id.radio_btn_account ->{
                     if (binding.layoutRadioGroup.visibility == View.VISIBLE)
@@ -327,6 +327,9 @@ class AddFeedbackActivity : BaseActivity(),KodeinAware,SimpleListener,AdapterLis
     override fun onSuccess(msg: String) {
         toast(msg)
         hide(binding.progressCircular)
+        Intent(this,FeedbackSuccessActivity::class.java).also {
+            startActivity(it)
+        }
         finish()
         //showAlertDialogWithClick(resources.getString(R.string.success),msg,true,true,supportFragmentManager)
     }

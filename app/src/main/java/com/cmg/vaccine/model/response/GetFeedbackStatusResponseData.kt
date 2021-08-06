@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-data class GetFeedbackResponseData(
+data class GetFeedbackStatusResponseData(
     val caseCategory: String,
     val caseDOB: String,
     val caseDescription: String,
@@ -18,7 +18,9 @@ data class GetFeedbackResponseData(
     val createdDate: String,
     val rating: Int,
     val updatedBy: String,
-    val updatedDate: String
+    val updatedDate: String,
+    val caseTitle:String,
+    val casePrincpleId:String
 ){
     @PrimaryKey(autoGenerate = true)
     var id:Int = 0

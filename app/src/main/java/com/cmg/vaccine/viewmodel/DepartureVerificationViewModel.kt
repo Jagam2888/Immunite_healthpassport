@@ -108,6 +108,8 @@ class DepartureVerificationViewModel(
                             }
                             val data = JSONObject(decryptData)
 
+                            status.set(false)
+
                             departureDestination.value = data.getString("reqDepatureDestination")
                             arrivalDestination.value = data.getString("reqArrivalDestination")
 
@@ -215,9 +217,13 @@ class DepartureVerificationViewModel(
                                                                     //listTestReportFilterByHours.add(it)
                                                                     if (i + 1 == observationCodeMandatory.size) {
                                                                         status.set(true)
+                                                                        return
                                                                     }
                                                                 } else {
-                                                                    status.set(false)
+                                                                    if (j + 1 == testReportFilterByTestCode.size) {
+                                                                        status.set(false)
+                                                                    }
+                                                                    //status.set(false)
                                                                 }
 
                                                             }
@@ -318,9 +324,9 @@ class DepartureVerificationViewModel(
                                             } else {
                                                 status.set(false)
                                             }
-                                        } else {
+                                        } /*else {
                                             status.set(false)
-                                        }
+                                        }*/
                                     }
 
 

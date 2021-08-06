@@ -3,9 +3,7 @@ package com.cmg.vaccine.database
 import androidx.room.*
 import com.cmg.vaccine.model.JoinWorldEntryRuleAndPriority
 import com.cmg.vaccine.model.TestCodeFilterByReport
-import com.cmg.vaccine.model.response.GetFeedbackResponseData
-import com.cmg.vaccine.model.response.PackageCodeResponseData
-import com.cmg.vaccine.model.response.SystemConfigResponseData
+import com.cmg.vaccine.model.response.*
 
 @Dao
 interface PatientDao {
@@ -330,15 +328,18 @@ interface PatientDao {
     @Query("DELETE FROM PackageCodeResponseData")
     fun deleteAllPackageCode()
 
-    @Query("SELECT * FROM GetFeedbackResponseData WHERE caseSubId =:subsId")
-    fun getFeedbackData(subsId: String):List<GetFeedbackResponseData>
+    @Query("SELECT * FROM GetFeedbackStatusResponseData WHERE LOWER(caseStatus) =LOWER(:status)")
+    fun getFeedbackDataFullList(status:String):List<GetFeedbackStatusResponseData>
+
+    @Query("SELECT * FROM GetFeedbackStatusResponseData WHERE caseSubId =:subsId AND caseStatus =:status")
+    fun getFeedbackData(subsId: String,status:String):List<GetFeedbackStatusResponseData>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertFeedBackData(getFeedbackResponseData: GetFeedbackResponseData)
+    suspend fun insertFeedBackData(getFeedbackResponseData: GetFeedbackStatusResponseData)
 
-    @Query("SELECT * FROM FeedBackUploadedFiles WHERE caseSubId =:subsId AND caseNo =:caseNo")
-    fun getFeedBackUploadFiles(subsId: String,caseNo:String):List<FeedBackUploadedFiles>
+    @Query("SELECT * FROM GetFeedbackStatusResponseAttachment WHERE caseNo =:caseNo")
+    fun getFeedBackUploadFiles(caseNo:String):List<GetFeedbackStatusResponseAttachment>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertFeedBackUploadFiles(feedBackUploadedFiles: FeedBackUploadedFiles)
+    suspend fun insertFeedBackUploadFiles(feedBackUploadedFiles: GetFeedbackStatusResponseAttachment)
 }

@@ -434,7 +434,7 @@ This QR Code is one time use and it expires in 5 minutes.</string>
 
     <string name="new_">New</string>
     <string name="in_progress">In Progress</string>
-    <string name="solve">Solved</string>
+    <string name="solve">Solve</string>
 
     <string name="case_no">Case No.:</string>
     <string name="payment_issues">Payment Issues</string>

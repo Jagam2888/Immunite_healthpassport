@@ -8,5 +8,7 @@ data class AddFeedbackData(
     val caseNo: String,
     val caseStatus: String,
     val caseSubId: String,
-    val rating: String
+    val rating: String,
+    val casePrincpleId:String,
+    val caseTitle:String
 )
