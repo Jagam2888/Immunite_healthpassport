@@ -331,8 +331,17 @@ interface PatientDao {
     @Query("SELECT * FROM GetFeedbackStatusResponseData WHERE LOWER(caseStatus) =LOWER(:status)")
     fun getFeedbackDataFullList(status:String):List<GetFeedbackStatusResponseData>
 
-    @Query("SELECT * FROM GetFeedbackStatusResponseData WHERE caseSubId =:subsId AND caseStatus =:status")
-    fun getFeedbackData(subsId: String,status:String):List<GetFeedbackStatusResponseData>
+    @Query("SELECT * FROM GetFeedbackStatusResponseData WHERE caseNo =:caseNo")
+    fun getFeedBackData(caseNo: String):GetFeedbackStatusResponseData
+
+    @Query("SELECT COUNT(*) FROM GetFeedbackStatusResponseData WHERE caseNo =:caseNo")
+    fun getFeedBackDataCount(caseNo: String):Int
+
+    @Query("UPDATE GetFeedbackStatusResponseData SET caseStatus =:caseStatus WHERE caseNo =:caseNo")
+    suspend fun updateFeedBackData(caseNo: String,caseStatus:String):Int
+
+    @Query("DELETE FROM GetFeedbackStatusResponseData")
+    fun deleteFeedBackData()
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertFeedBackData(getFeedbackResponseData: GetFeedbackStatusResponseData)
@@ -340,6 +349,12 @@ interface PatientDao {
     @Query("SELECT * FROM GetFeedbackStatusResponseAttachment WHERE caseNo =:caseNo")
     fun getFeedBackUploadFiles(caseNo:String):List<GetFeedbackStatusResponseAttachment>
 
+    @Query("SELECT COUNT(*) FROM GetFeedbackStatusResponseAttachment WHERE caseNo =:caseNo AND fileName =:fileName")
+    fun getFeedBackFileCount(caseNo: String,fileName:String):Int
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertFeedBackUploadFiles(feedBackUploadedFiles: GetFeedbackStatusResponseAttachment)
+
+    @Query("DELETE FROM GetFeedbackStatusResponseAttachment")
+    fun deleteFeedBackFiles()
 }

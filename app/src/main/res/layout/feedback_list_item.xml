@@ -189,9 +189,9 @@
                         android:background="@drawable/feedback_progress_bg" />
 
                     <TextView
+                        android:id="@+id/feedback_date"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@{feedback.createdDate}"
                         android:textSize="14sp"
                         android:gravity="center_horizontal"
                         android:layout_marginLeft="10dp"

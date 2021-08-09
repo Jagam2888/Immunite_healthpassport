@@ -149,7 +149,7 @@ interface MyApi {
                             @Part("form") addFeedbackReq: AddFeedbackReq):Response<AddFeedbackResponse>
 
     @GET(Passparams.GET_FEEDBACK)
-    suspend fun getFeedBackListAPI(@Query("caseSubId")subId: String):Response<GetFeedbackStatusResponse>
+    suspend fun getFeedBackListAPI(@Query("casePrincpleId")subId: String):Response<GetFeedbackStatusResponse>
 
 
 

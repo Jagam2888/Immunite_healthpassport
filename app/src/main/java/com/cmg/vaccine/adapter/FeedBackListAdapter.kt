@@ -10,15 +10,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.cmg.vaccine.R
 import com.cmg.vaccine.databinding.FeedbackListItemBinding
 import com.cmg.vaccine.model.response.GetFeedbackStatusResponseData
+import com.cmg.vaccine.util.changeDateFormatFeedback
 import com.cmg.vaccine.viewmodel.FeedBackViewModel
 
 class FeedBackListAdapter(
     private val context: Context,
-    private val list: List<GetFeedbackStatusResponseData>,
     private val viewModel: FeedBackViewModel
 ):RecyclerView.Adapter<FeedBackListAdapter.MyViewHolder>() {
 
 
+    val list = ArrayList<GetFeedbackStatusResponseData>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = MyViewHolder(
         DataBindingUtil.inflate(
@@ -33,6 +34,10 @@ class FeedBackListAdapter(
         holder.feedbackListItemBinding.feedback = list[position]
 
         holder.feedbackListItemBinding.ratingBar.count = list[position].rating
+
+        if (!list[position].createdDate.isNullOrEmpty()){
+            holder.feedbackListItemBinding.feedbackDate.text = changeDateFormatFeedback(list[position].createdDate)
+        }
 
         if (!viewModel.userProfileList.value.isNullOrEmpty()) {
             viewModel.userProfileList.value?.forEach {
@@ -50,7 +55,7 @@ class FeedBackListAdapter(
                 holder.feedbackListItemBinding.imageRecyclerview.also {
                     val layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
                     it.layoutManager = layoutManager
-                    it.adapter = FeedBackAttachmentAdapter(attachementList)
+                    it.adapter = FeedBackAttachmentAdapter(context,attachementList)
                 }
             }
         }
@@ -62,8 +67,9 @@ class FeedBackListAdapter(
         val feedbackListItemBinding: FeedbackListItemBinding
     ):RecyclerView.ViewHolder(feedbackListItemBinding.root)
 
-   /* fun refreshItem(listNew:List<GetFeedbackStatusResponseData>){
-        list = listNew
+    fun refreshItem(listNew: List<GetFeedbackStatusResponseData>){
+        list.clear()
+        list.addAll(listNew)
         notifyDataSetChanged()
-    }*/
+    }
 }

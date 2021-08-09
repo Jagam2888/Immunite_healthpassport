@@ -1,15 +1,19 @@
 package com.cmg.vaccine.adapter
 
+import android.content.Context
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.cmg.vaccine.R
 import com.cmg.vaccine.databinding.FileUploadItemBinding
 import com.cmg.vaccine.model.response.GetFeedbackStatusResponseAttachment
+import com.cmg.vaccine.util.Passparams
 
 class FeedBackAttachmentAdapter(
+    private val context: Context,
     private val list:List<GetFeedbackStatusResponseAttachment>
 ):RecyclerView.Adapter<FeedBackAttachmentAdapter.MyViewHolder>() {
 
@@ -24,8 +28,15 @@ class FeedBackAttachmentAdapter(
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         if ((!list[position].filePath.isNullOrEmpty()) and (list[position].fileName.contains(".jpg")) or (list[position].fileName.contains(".png"))){
-            val uri = Uri.parse(list[position].filePath)
-            holder.fileUploadItemBinding.imageView.setImageURI(uri)
+            if (list[position].filePath.startsWith("/data")) {
+                val uri = Uri.parse(list[position].filePath)
+                holder.fileUploadItemBinding.imageView.setImageURI(uri)
+            }else{
+                val url = Passparams.FEEDBACK_DOWNLOAD_FILE+"caseNo="+list[position].caseNo+"&fileName="+list[position].fileName
+                Glide.with(context)
+                    .load(url)
+                    .into(holder.fileUploadItemBinding.imageView)
+            }
         }
     }
 

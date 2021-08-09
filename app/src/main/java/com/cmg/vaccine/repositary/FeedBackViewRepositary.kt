@@ -5,12 +5,14 @@ import com.cmg.vaccine.database.Dependent
 import com.cmg.vaccine.database.User
 import com.cmg.vaccine.model.request.AddFeedbackReq
 import com.cmg.vaccine.model.response.AddFeedbackResponse
+import com.cmg.vaccine.model.response.GetFeedbackStatusResponse
 import com.cmg.vaccine.model.response.GetFeedbackStatusResponseAttachment
 import com.cmg.vaccine.model.response.GetFeedbackStatusResponseData
 import com.cmg.vaccine.network.MyApi
 import com.cmg.vaccine.network.SafeAPIRequest
 import com.cmg.vaccine.prefernces.PreferenceProvider
 import okhttp3.MultipartBody
+import retrofit2.Response
 
 class FeedBackViewRepositary(
     private val api: MyApi,
@@ -36,17 +38,36 @@ class FeedBackViewRepositary(
         }
     }
 
+    suspend fun getFeedBackListApi():GetFeedbackStatusResponse{
+        return apiRequest {
+            api.getFeedBackListAPI(preferenceProvider.getSubId()!!)
+        }
+    }
+
+    suspend fun updatedCaseStatus(caseNo: String,caseStatus:String):Int{
+        return database.getDao().updateFeedBackData(caseNo,caseStatus)
+    }
+
+    fun getFeedBackDataCount(caseNo: String):Int{
+        return database.getDao().getFeedBackDataCount(caseNo)
+    }
+
+    fun getFeedBackDataByCaseNo(caseNo: String):GetFeedbackStatusResponseData{
+        return database.getDao().getFeedBackData(caseNo)
+    }
+
     suspend fun insertFeedBackFiles(feedBackUploadedFiles: GetFeedbackStatusResponseAttachment){
         database.getDao().insertFeedBackUploadFiles(feedBackUploadedFiles)
+    }
+
+    fun getFeedBackFileCount(caseNo: String,fileName:String):Int{
+        return database.getDao().getFeedBackFileCount(caseNo,fileName)
     }
 
     suspend fun insertFeedBackData(getFeedbackResponseData: GetFeedbackStatusResponseData){
         database.getDao().insertFeedBackData(getFeedbackResponseData)
     }
 
-    fun getFeedBackList(subId:String,status:String):List<GetFeedbackStatusResponseData>{
-        return database.getDao().getFeedbackData(subId,status)
-    }
 
     fun getFeedBackFullList(status:String):List<GetFeedbackStatusResponseData>{
         return database.getDao().getFeedbackDataFullList(status)

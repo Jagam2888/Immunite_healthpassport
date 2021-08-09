@@ -3,14 +3,19 @@ package com.cmg.vaccine
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.TableLayout
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.cmg.vaccine.adapter.FeedBackListAdapter
 import com.cmg.vaccine.data.setOnSingleClickListener
 import com.cmg.vaccine.databinding.ActivityFeedBackBinding
+import com.cmg.vaccine.listener.SimpleListener
+import com.cmg.vaccine.util.Passparams
+import com.cmg.vaccine.util.RecyclerViewTouchListener
 import com.cmg.vaccine.viewmodel.FeedBackViewModel
 import com.cmg.vaccine.viewmodel.viewmodelfactory.FeedBackViewModelFactory
 import com.google.android.material.tabs.TabLayout
@@ -18,7 +23,7 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
 
-class FeedBackActivity : BaseActivity(),KodeinAware {
+class FeedBackActivity : BaseActivity(),KodeinAware,SimpleListener {
 
     private lateinit var binding:ActivityFeedBackBinding
     override val kodein by kodein()
@@ -42,6 +47,8 @@ class FeedBackActivity : BaseActivity(),KodeinAware {
         val inProgress = getString(R.string.in_progress)
         val solve = getString(R.string.solve)
 
+        viewModel.feedbackStatus.value = inProgress
+
         binding.btnAddFeedback.setOnSingleClickListener{
             Intent(this,AddFeedbackActivity::class.java).also {
                 startActivity(it)
@@ -52,16 +59,33 @@ class FeedBackActivity : BaseActivity(),KodeinAware {
             finish()
         }
 
-        viewModel.getFeedBackList(inProgress)
+        viewModel.getFeedBackListFromAPI()
+
+        //viewModel.getFeedBackList(inProgress)
+
+        binding.recyclerView.also {
+            feedBackAdapter = FeedBackListAdapter(this,viewModel)
+            it.adapter = feedBackAdapter
+        }
 
 
 
         viewModel.feedBackList.observe(this, Observer {feedBackList->
-            binding.recyclerView.also {
-                feedBackAdapter = FeedBackListAdapter(this,feedBackList,viewModel)
-                it.adapter = feedBackAdapter
-            }
+            feedBackAdapter.refreshItem(feedBackList)
         })
+
+        binding.recyclerView.addOnItemTouchListener(RecyclerViewTouchListener(this,binding.recyclerView,object :RecyclerViewTouchListener.ClickListener{
+            override fun onClick(view: View?, position: Int) {
+                Intent(this@FeedBackActivity,FeedbackDetailActivity::class.java).also {
+                    it.putExtra(Passparams.CASE_NO,viewModel.feedBackList.value?.get(position)?.caseNo)
+                    startActivity(it)
+                }
+
+            }
+
+            override fun onLongClick(view: View?, position: Int) {
+            }
+        }))
 
 
 
@@ -108,5 +132,21 @@ class FeedBackActivity : BaseActivity(),KodeinAware {
                 startActivity(it)
             }
         }*/
+    }
+
+    override fun onStarted() {
+        TODO("Not yet implemented")
+    }
+
+    override fun onSuccess(msg: String) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onFailure(msg: String) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onShowToast(msg: String) {
+        TODO("Not yet implemented")
     }
 }

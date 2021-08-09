@@ -619,6 +619,29 @@ fun changeDateToTimeStampAlter(dateString: String): Long {
 
     return timeStamp
 }
+fun currentDateTime():String{
+    var result = ""
+    val calender = Calendar.getInstance()
+    val currentDateFormat = SimpleDateFormat("dd/MM/yyyy HH:mm:ss")
+    try {
+        result = currentDateFormat.format(calender.time)
+    }catch (e:Exception){
+        e.printStackTrace()
+    }
+    return result
+}
+fun changeDateFormatFeedback(date:String):String{
+    var result = ""
+    val currentDateFormat = SimpleDateFormat("dd/MM/yyyy HH:mm:ss")
+    val resultDateFormat = SimpleDateFormat("dd MMM yyyy HH:mm:ss")
+    try {
+        val currentDate = currentDateFormat.parse(date)
+        result = resultDateFormat.format(currentDate)
+    }catch (e:Exception){
+        e.printStackTrace()
+    }
+    return result
+}
 fun calculateHours(currentTimeStamp: Long, timeStamp: Long):Long{
     val differnce = currentTimeStamp - timeStamp
     val seconds = differnce / 1000

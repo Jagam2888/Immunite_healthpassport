@@ -18,6 +18,7 @@ import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.File
+import java.lang.Exception
 import java.net.SocketTimeoutException
 
 class FeedBackViewModel(
@@ -27,6 +28,7 @@ class FeedBackViewModel(
     val feedbackTitle = ObservableField<String>()
     val feedbackCategory = ObservableField<String>()
     val feedbackDesc:MutableLiveData<String> = MutableLiveData()
+    val feedbackStatus:MutableLiveData<String> = MutableLiveData()
     //var feedbackFile:MutableLiveData<String> = MutableLiveData()
     var feedbackFile = ObservableField<String>()
 
@@ -49,6 +51,10 @@ class FeedBackViewModel(
     val _feedBackList:MutableLiveData<List<GetFeedbackStatusResponseData>> = MutableLiveData()
     val feedBackList:LiveData<List<GetFeedbackStatusResponseData>>
     get() = _feedBackList
+
+    val _getFeedBackData:MutableLiveData<GetFeedbackStatusResponseData> = MutableLiveData()
+    val getFeedBackData:LiveData<GetFeedbackStatusResponseData>
+    get() = _getFeedBackData
 
     var listener:SimpleListener?=null
 
@@ -105,6 +111,43 @@ class FeedBackViewModel(
 
     fun getAttachementList(caseNo:String):List<GetFeedbackStatusResponseAttachment>{
         return repositary.getFeedBackUploadFiles(caseNo)
+    }
+
+    fun getFeedBackDataByCaseNo(caseNo: String):GetFeedbackStatusResponseData{
+        return repositary.getFeedBackDataByCaseNo(caseNo)
+    }
+
+    fun getFeedBackListFromAPI(){
+        listener?.onStarted()
+        Couritnes.main {
+            try {
+                val response = repositary.getFeedBackListApi()
+                if (!response.data.isNullOrEmpty()){
+                    response.data.forEach {
+                        if (repositary.getFeedBackDataCount(it.caseNo) > 0){
+                            repositary.updatedCaseStatus(it.caseNo,it.caseStatus)
+                        }else{
+                            repositary.insertFeedBackData(it)
+                        }
+                    }
+                }
+                if (!response.attachments.isNullOrEmpty()){
+                    response.attachments.forEach {
+                        if (repositary.getFeedBackFileCount(it.caseNo,it.fileName) == 0){
+                            repositary.insertFeedBackFiles(it)
+                        }
+                    }
+                }
+                getFeedBackList(feedbackStatus.value!!)
+                listener?.onSuccess("")
+            }catch (e:APIException){
+                listener?.onShowToast(e.message!!)
+            }catch (e:NoInternetException){
+                listener?.onShowToast(e.message!!)
+            }catch (e:Exception){
+                listener?.onShowToast(e.message!!)
+            }
+        }
     }
 
     fun addFeedback(){
@@ -175,10 +218,10 @@ class FeedBackViewModel(
                         caseSubId.get()!!,
                         "",
                         "",
-                        "",
+                        currentDateTime(),
                         ratings.get()!!.toInt(),
                         "",
-                        "",
+                        currentDateTime(),
                             feedbackTitle.get()!!,
                             repositary.getPrincipleSubId()
                     )
@@ -193,7 +236,7 @@ class FeedBackViewModel(
                                     it.filePath,
                                     "A",
                                     "",
-                                    ""
+                                    currentDateTime()
                                 )
                                 repositary.insertFeedBackFiles(attachment)
                             }

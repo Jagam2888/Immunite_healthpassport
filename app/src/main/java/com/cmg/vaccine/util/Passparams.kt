@@ -27,6 +27,7 @@ object Passparams{
     const val ISFROMCHANGELANGUAGE = "is_from_change_language"
     const val ISSUBSCRIBE = "is_subscribe"
     const val ERROR_ALERT = "error_alert"
+    const val CASE_NO = "case_no"
 
     const val ADD_DEPENDENT_SUCCESS = "add_dependent_success"
 
@@ -138,6 +139,7 @@ object Passparams{
     const val ADD_FEEDBACK = "nhr-module-user/feedback"
     const val GET_FEEDBACK = "nhr-module-user/feedbackstatus"
     const val PAYMENT_LOG = "nhr-module-user/paymentlog"
+    const val FEEDBACK_DOWNLOAD_FILE = URL+"nhr-module-user/downloadfile?"
 
     //Block Chain
     const val BLOCK_CHAIN_URL = "https://cashierbook.com.my:8081/blockchainapi/"

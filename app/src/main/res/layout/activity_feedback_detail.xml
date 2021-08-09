@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="viewmodel"
+            type="com.cmg.vaccine.viewmodel.FeedBackViewModel" />
     </data>
 
     <LinearLayout
@@ -32,7 +34,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/payment_issues"
+                android:text="@{viewmodel.getFeedBackData.caseCategory}"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:layout_centerInParent="true"
@@ -91,6 +93,7 @@
                                 android:layout_gravity="center_vertical">
 
                                 <TextView
+                                    android:id="@+id/txt_username"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="Aminah Binti Mohamad"
@@ -100,6 +103,7 @@
                                     android:layout_centerVertical="true" />
 
                                 <TextView
+                                    android:id="@+id/txt_relation"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="@string/principle_account"
@@ -146,7 +150,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="A09128198"
+                                android:text="@{viewmodel.getFeedBackData.caseNo}"
                                 android:textColor="@color/black"
                                 android:textSize="14sp"
                                 android:textAppearance="@style/opens_bold"
@@ -156,7 +160,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/payment_issues"
+                            android:text="@{viewmodel.getFeedBackData.caseCategory}"
                             android:textColor="@color/black"
                             android:textSize="14sp"
                             android:textAppearance="@style/opens_bold"
@@ -166,14 +170,20 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/problem_solve_payment"
+                            android:text="@{viewmodel.getFeedBackData.caseDescription}"
                             android:textColor="@color/black"
                             android:textSize="14sp"
                             android:textAppearance="@style/opens_regular"
                             android:layout_marginLeft="5dp"
                             android:layout_marginTop="10dp" />
 
-                        <LinearLayout
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/image_recyclerview"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"/>
+
+                        <!--<LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
@@ -195,7 +205,7 @@
                                 android:layout_height="86dp"
                                 android:src="@drawable/sample_feedback"
                                 android:layout_marginLeft="10dp" />
-                        </LinearLayout>
+                        </LinearLayout>-->
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -207,7 +217,7 @@
                                 android:id="@+id/txt_status"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="@string/in_progress"
+                                android:text="@{viewmodel.getFeedBackData.caseStatus}"
                                 android:textSize="14sp"
                                 android:gravity="center_horizontal"
                                 android:textColor="#E25822"
@@ -215,6 +225,7 @@
                                 android:background="@drawable/feedback_progress_bg" />
 
                             <TextView
+                                android:id="@+id/feedback_date"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="20 Dec 2020, 2:00PM"
