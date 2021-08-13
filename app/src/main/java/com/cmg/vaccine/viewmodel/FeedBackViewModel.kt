@@ -187,13 +187,6 @@ class FeedBackViewModel(
                     for (i in filePathList.value!!.indices){
                         if (!filePathList.value!!.get(i)?.filePath.isNullOrEmpty()) {
                             val file = File(filePathList.value?.get(i)?.filePath)
-                            /*val feedBackUploadedFiles = FeedBackUploadedFiles(
-                                "",
-                                caseSubId.get()!!,
-                                file.name,
-                                file.absolutePath
-                            )*/
-
                             val requestFile: RequestBody =
                                 RequestBody.create(MediaType.parse("multipart/form-data"), file)
                             surveyImagesParts[i] = MultipartBody.Part.createFormData(

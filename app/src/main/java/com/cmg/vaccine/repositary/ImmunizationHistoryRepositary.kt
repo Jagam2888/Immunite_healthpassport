@@ -10,7 +10,7 @@ class ImmunizationHistoryRepositary(
         private val api: MyApi,
 ):SafeAPIRequest() {
 
-    suspend fun immunizationHistory(file:MultipartBody.Part,immunizationHistoryReq: ImmunizationHistoryReq):ImmunizationHistoryResponse{
+    suspend fun immunizationHistory(file:Array<MultipartBody.Part?>,immunizationHistoryReq: ImmunizationHistoryReq):ImmunizationHistoryResponse{
         return apiRequest {
             api.immunizationHistory(file,immunizationHistoryReq)
         }

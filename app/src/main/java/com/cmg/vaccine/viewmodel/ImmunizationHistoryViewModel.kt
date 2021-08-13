@@ -2,8 +2,10 @@ package com.cmg.vaccine.viewmodel
 
 import android.util.Log
 import androidx.databinding.ObservableField
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.cmg.vaccine.data.MultipleFilesData
 import com.cmg.vaccine.listener.SimpleListener
 import com.cmg.vaccine.model.request.ImmunizationHistoryReq
 import com.cmg.vaccine.model.request.ImmunizationHistoryReqData
@@ -47,6 +49,11 @@ class ImmunizationHistoryViewModel(
 
     var filePath:MutableLiveData<String> = MutableLiveData()
     var fileName:MutableLiveData<String> = MutableLiveData()
+
+    val _filePathList:MutableLiveData<ArrayList<MultipleFilesData>> = MutableLiveData()
+
+    val filePathList: LiveData<ArrayList<MultipleFilesData>>
+        get() = _filePathList
 
     var listener:SimpleListener?=null
 
@@ -100,9 +107,27 @@ class ImmunizationHistoryViewModel(
                         filename = filenameArray?.get(0) + "_" + System.currentTimeMillis() + ".pdf"
                     }
                 }
-                val requestFile: RequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file)
-                val body = MultipartBody.Part.createFormData("file", filename, requestFile)
-                val response = repositary.immunizationHistory(body, immunizationHistoryReq)
+
+                val surveyImagesParts = arrayOfNulls<MultipartBody.Part>(
+                    filePathList.value!!.size
+                )
+
+                for (i in filePathList.value!!.indices){
+                    if (!filePathList.value!!.get(i)?.filePath.isNullOrEmpty()) {
+                        val file = File(filePathList.value?.get(i)?.filePath)
+                        val requestFile: RequestBody =
+                            RequestBody.create(MediaType.parse("multipart/form-data"), file)
+                        surveyImagesParts[i] = MultipartBody.Part.createFormData(
+                            "files",
+                            file.name,
+                            requestFile
+                        )
+                    }
+                }
+
+                //val requestFile: RequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file)
+                //val body = MultipartBody.Part.createFormData("file", filename, requestFile)
+                val response = repositary.immunizationHistory(surveyImagesParts, immunizationHistoryReq)
                 Log.d("response",response.Message)
                 listener?.onSuccess(response.Message)
             }catch (e: APIException){

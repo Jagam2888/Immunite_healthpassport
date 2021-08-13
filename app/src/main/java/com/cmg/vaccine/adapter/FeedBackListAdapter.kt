@@ -19,7 +19,11 @@ class FeedBackListAdapter(
 ):RecyclerView.Adapter<FeedBackListAdapter.MyViewHolder>() {
 
 
-    val list = ArrayList<GetFeedbackStatusResponseData>()
+    var list = listOf<GetFeedbackStatusResponseData>()
+    set(value) {
+        field = value
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = MyViewHolder(
         DataBindingUtil.inflate(
@@ -66,10 +70,4 @@ class FeedBackListAdapter(
     inner class MyViewHolder(
         val feedbackListItemBinding: FeedbackListItemBinding
     ):RecyclerView.ViewHolder(feedbackListItemBinding.root)
-
-    fun refreshItem(listNew: List<GetFeedbackStatusResponseData>){
-        list.clear()
-        list.addAll(listNew)
-        notifyDataSetChanged()
-    }
 }

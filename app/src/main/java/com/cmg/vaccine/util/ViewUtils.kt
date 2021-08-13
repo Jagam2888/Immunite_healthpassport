@@ -1035,6 +1035,10 @@ fun Context.getFileFromUri(uri: Uri):File{
     return file
 }
 
+fun getFIleSize(file: File): Long {
+    val fileLength = file.length()
+    return fileLength / (1024 * 1024)
+}
 
 
 fun Context.getFileName(uri:Uri):String?{

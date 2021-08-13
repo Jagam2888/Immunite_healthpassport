@@ -63,15 +63,18 @@ class FeedBackActivity : BaseActivity(),KodeinAware,SimpleListener {
 
         //viewModel.getFeedBackList(inProgress)
 
-        binding.recyclerView.also {
+        feedBackAdapter = FeedBackListAdapter(this,viewModel)
+        binding.adapter = feedBackAdapter
+
+        /*binding.recyclerView.also {
             feedBackAdapter = FeedBackListAdapter(this,viewModel)
             it.adapter = feedBackAdapter
-        }
+        }*/
 
 
 
-        viewModel.feedBackList.observe(this, Observer {feedBackList->
-            feedBackAdapter.refreshItem(feedBackList)
+        viewModel.feedBackList.observe(this,{feedBackList->
+            feedBackAdapter.list = feedBackList
         })
 
         binding.recyclerView.addOnItemTouchListener(RecyclerViewTouchListener(this,binding.recyclerView,object :RecyclerViewTouchListener.ClickListener{

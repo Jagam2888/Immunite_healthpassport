@@ -10,8 +10,13 @@ import com.cmg.vaccine.databinding.NotificationListItemBinding
 import com.cmg.vaccine.util.changeDateFormatForNotification
 
 class NotificationListAdapter(
-    private val notificationList:List<Notification>
 ):RecyclerView.Adapter<NotificationListAdapter.MyViewHolder>() {
+
+    var notificationList = listOf<Notification>()
+    set(value) {
+        field = value
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = MyViewHolder(
         DataBindingUtil.inflate(

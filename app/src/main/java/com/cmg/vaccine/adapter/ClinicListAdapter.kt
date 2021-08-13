@@ -9,8 +9,13 @@ import com.cmg.vaccine.databinding.ClinicListItemBinding
 import com.cmg.vaccine.model.response.ClinicListResponseDataOne
 
 class ClinicListAdapter(
-        private val list:List<ClinicListResponseDataOne>
 ):RecyclerView.Adapter<ClinicListAdapter.MyViewHolder>() {
+
+    var list = listOf<ClinicListResponseDataOne>()
+    set(value) {
+        field = value
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = MyViewHolder(
             DataBindingUtil.inflate(

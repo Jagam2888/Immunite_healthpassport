@@ -24,6 +24,7 @@ class NewsUpdateActivity : BaseActivity(),KodeinAware,SimpleListener {
     override val kodein by kodein()
     private lateinit var binding:ActivityNewsUpdateBinding
     private lateinit var viewModel:NotificationViewModel
+    private lateinit var notificationAdapter:NotificationListAdapter
     private val factory:NotificationViewModelFactory by instance()
 
     var group:String?=null
@@ -46,14 +47,12 @@ class NewsUpdateActivity : BaseActivity(),KodeinAware,SimpleListener {
                 Passparams.ADVISARY_ALERT -> binding.actionBarTitle.text = resources.getString(R.string.advisory)
             }
 
+            notificationAdapter = NotificationListAdapter()
+            binding.adapter = notificationAdapter
 
 
-            viewModel.messageList.observe(this, Observer { list->
-                binding.notificationRecyclerView.also {
-                    it.layoutManager = LinearLayoutManager(this)
-                    it.adapter = NotificationListAdapter(list)
-                }
-
+            viewModel.messageList.observe(this, { list->
+                notificationAdapter.notificationList = list
             })
         }
 

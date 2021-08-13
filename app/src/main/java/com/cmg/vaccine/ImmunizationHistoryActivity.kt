@@ -13,8 +13,11 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import com.cmg.vaccine.adapter.CustomUploadFileAdapter
+import com.cmg.vaccine.data.MultipleFilesData
 import com.cmg.vaccine.data.setOnSingleClickListener
 import com.cmg.vaccine.databinding.ActivityImmunizationHistoryBinding
+import com.cmg.vaccine.listener.AdapterListener
 import com.cmg.vaccine.listener.SimpleListener
 import com.cmg.vaccine.util.*
 import com.cmg.vaccine.viewmodel.ImmunizationHistoryViewModel
@@ -28,7 +31,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class ImmunizationHistoryActivity : BaseActivity(),KodeinAware,SimpleListener,SlideDatePickerDialogCallback {
+class ImmunizationHistoryActivity : BaseActivity(),KodeinAware,SimpleListener,AdapterListener,SlideDatePickerDialogCallback{
     override val kodein by kodein()
 
 
@@ -38,6 +41,9 @@ class ImmunizationHistoryActivity : BaseActivity(),KodeinAware,SimpleListener,Sl
     private val immunizationHistoryViewModelFactory:ImmunizationHistoryViewModelFactory by instance()
     var lastClickTimeDOB:Long = 0
     var lastClickTimeDOBTime:Long = 0
+    var clickPosition:Int = 0
+    private var listOfFiles:ArrayList<MultipleFilesData>?=null
+    private lateinit var customAdapter:CustomUploadFileAdapter
 
     companion object{
         const val READ_EXTERNAL = 101
@@ -54,13 +60,13 @@ class ImmunizationHistoryActivity : BaseActivity(),KodeinAware,SimpleListener,Sl
 
         viewModel.userSubId.value = intent.extras?.getString(Passparams.SUBSID,"")
 
-        binding.btnNfc.setOnSingleClickListener() {
+        /*binding.btnNfc.setOnSingleClickListener() {
             if (checkPermission()){
                 openPDFFile()
             }else{
                 requestPermission()
             }
-        }
+        }*/
 
 
 
@@ -122,6 +128,36 @@ class ImmunizationHistoryActivity : BaseActivity(),KodeinAware,SimpleListener,Sl
         binding.imgBack.setOnClickListener {
             finish()
         }
+
+
+
+        listOfFiles = ArrayList<MultipleFilesData>()
+
+        listOfFiles!!.add(MultipleFilesData(
+            "",""
+        ))
+
+
+
+
+        customAdapter = CustomUploadFileAdapter(this,listOfFiles!!)
+        binding.listview.adapter = customAdapter
+        customAdapter.listener = this
+
+
+        binding.addDocument.setOnSingleClickListener{
+            if (listOfFiles!!.size < 5) {
+
+                listOfFiles!!.add(MultipleFilesData(
+                    "",""
+                ))
+                Log.d("list_size_after",listOfFiles!!.size.toString())
+                customAdapter.notifyDataSetChanged()
+            }else{
+                toast("Sorry, Already you have reached your attachment limit")
+            }
+        }
+
     }
 
     private fun openPDFFile(){
@@ -150,31 +186,21 @@ class ImmunizationHistoryActivity : BaseActivity(),KodeinAware,SimpleListener,Sl
         if ((requestCode == PICK_PDF_FILE) and (resultCode == Activity.RESULT_OK)){
             if (data == null)
                 return
-
-            val uri = data.data
-
-            //val path = RealPathUtil.getRealPath(this,uri)
-            /*val path = FilePath.getPath(this,uri!!)
-            if (path != null) {
-                Log.d("pdf_file_path",path)
-            }*/
-
             try {
                 val uri = data.data
-                val filePath = getRealPathFromURI(this,uri!!)?:""
-                viewModel.filePath.value = filePath
-                val file = File(filePath)
-                viewModel.fileName.value = file.name
-                /*val filePathColumn = arrayOf(MediaStore.MediaColumns.DATA)
-                val cursor = contentResolver.query(data.data!!,filePathColumn,null,null,null)
-                if (cursor?.moveToFirst()!!){
-                    val columnIndex = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA)
-                    val path = cursor.getString(columnIndex)
-                    Log.d("pdf_file_path",path)
-                    viewModel.filePath.value = path
-                    val file = File(path)
-                    viewModel.fileName.value = file.name
-                }*/
+                val filePath = getFileFromUri(uri!!)
+                if (getFIleSize(filePath) <= 5) {
+                    viewModel.filePath.value = filePath.absolutePath
+                    viewModel.fileName.value = filePath.name
+
+                    val multipleFilesData = MultipleFilesData(
+                        filePath.name,filePath.absolutePath
+                    )
+                    listOfFiles!![clickPosition] = multipleFilesData
+                    customAdapter.notifyDataSetChanged()
+                    viewModel._filePathList.value = listOfFiles
+
+                }
             }catch (e:Exception){
                 e.printStackTrace()
                 toast("Sorry!,this folder file can't access")
@@ -233,6 +259,15 @@ class ImmunizationHistoryActivity : BaseActivity(),KodeinAware,SimpleListener,Sl
             showAlertDialog(showMsg, resources.getString(R.string.check_internet), false, supportFragmentManager)
         }else {
             showAlertDialog(msg, "", false, supportFragmentManager)
+        }
+    }
+
+    override fun onClick(position: Int) {
+        if (checkPermission()){
+            clickPosition = position
+            openPDFFile()
+        }else{
+            requestPermission()
         }
     }
 }

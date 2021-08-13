@@ -7,6 +7,9 @@
         <variable
             name="viewmodel"
             type="com.cmg.vaccine.viewmodel.ClinicListViewModel" />
+        <variable
+            name="adapter"
+            type="com.cmg.vaccine.adapter.ClinicListAdapter" />
         <import type="android.view.View"/>
     </data>
 
@@ -52,14 +55,15 @@
             android:visibility="@{viewmodel.clincList.size() > 0 ? View.GONE : View.VISIBLE}"/>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/clinic_recyclerview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingRight="20dp"
             android:paddingLeft="20dp"
             android:paddingBottom="20dp"
             android:paddingTop="10dp"
-            android:layout_below="@id/action_bar"/>
+            android:layout_below="@id/action_bar"
+            app:adapter="@{adapter}"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
         <ProgressBar
             android:id="@+id/clinic_progress_bar"

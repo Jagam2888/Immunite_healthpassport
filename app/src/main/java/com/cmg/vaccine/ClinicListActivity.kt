@@ -23,6 +23,7 @@ class ClinicListActivity : BaseActivity(),KodeinAware,SimpleListener {
     override val kodein by kodein()
     private lateinit var binding:ActivityClinicListBinding
     private lateinit var viewModel:ClinicListViewModel
+    private lateinit var clicnicAdapter:ClinicListAdapter
 
     private val factory:ClinicListViewModelFactory by instance()
 
@@ -36,16 +37,19 @@ class ClinicListActivity : BaseActivity(),KodeinAware,SimpleListener {
 
         viewModel.listener = this
 
-        viewModel.clincList.observe(this, Observer { list->
-            binding.clinicRecyclerview.also {
-                it.layoutManager = LinearLayoutManager(this)
-                it.adapter = ClinicListAdapter(list)
-            }
-        })
+        clicnicAdapter = ClinicListAdapter()
+        binding.adapter = clicnicAdapter
+        viewObserver()
 
         binding.imgBack.setOnClickListener {
             finish()
         }
+    }
+
+    private fun viewObserver(){
+        viewModel.clincList.observe(this,{
+            clicnicAdapter.list = it
+        })
     }
 
     override fun onStarted() {

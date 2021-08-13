@@ -242,7 +242,6 @@ class AddFeedbackActivity : BaseActivity(),KodeinAware,SimpleListener,AdapterLis
                     if (filePath.name.contains(".pdf", true)) {
                         viewModel.feedbackFile.set(filePath.name)
                         viewModel.filePath.value = filePath.absolutePath
-                        //viewModel._filePathList.value?.add(filePath.absolutePath)
 
                         val multipleFilesData = MultipleFilesData(
                             filePath.name,filePath.absolutePath
@@ -266,11 +265,6 @@ class AddFeedbackActivity : BaseActivity(),KodeinAware,SimpleListener,AdapterLis
             }
 
         }
-    }
-
-    private fun getFIleSize(file: File): Long {
-        val fileLength = file.length()
-        return fileLength / (1024 * 1024)
     }
 
     private fun compressImage(actualImage:File) {

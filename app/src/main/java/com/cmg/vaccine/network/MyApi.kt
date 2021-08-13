@@ -86,7 +86,7 @@ interface MyApi {
 
     @Multipart
     @POST(Passparams.IMMUNIZATION_HISTORY)
-    suspend fun immunizationHistory(@Part file:MultipartBody.Part,@Part("form") immunizationHistoryReq: ImmunizationHistoryReq):Response<ImmunizationHistoryResponse>
+    suspend fun immunizationHistory(@Part file:Array<MultipartBody.Part?>,@Part("form") immunizationHistoryReq: ImmunizationHistoryReq):Response<ImmunizationHistoryResponse>
 
     @GET(Passparams.GET_TEST_REPORT_LIST)
     suspend fun getVaccineTestRef(@Query("privateKey")privateKey:String):Response<ResponseBody>
