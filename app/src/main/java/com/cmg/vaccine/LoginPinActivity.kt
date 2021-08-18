@@ -145,6 +145,7 @@ class LoginPinActivity : BaseActivity(),KodeinAware,SimpleListener {
         hideKeyBoard()
         if (loginStatus == "create") {
             Intent(this@LoginPinActivity, SuccessPopUpActivity::class.java).also {
+                it.putExtra(Passparams.NAVIGATE_FROM,Passparams.LOGINPIN)
                 it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(it)
             }

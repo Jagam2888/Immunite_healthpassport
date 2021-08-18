@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import com.cmg.vaccine.databinding.ActivitySuccessPopBinding
+import com.cmg.vaccine.util.Passparams
 
 class SuccessPopUpActivity : BaseActivity() {
 
@@ -13,6 +14,14 @@ class SuccessPopUpActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this,R.layout.activity_success_pop)
+
+        val intent = intent.extras?.getString(Passparams.NAVIGATE_FROM)
+        if (!intent.isNullOrEmpty()){
+            if (intent == Passparams.IMMUNIZATIONHISTORY){
+                binding.image.setImageResource(R.drawable.ic_immunization_history_complete)
+                binding.text.text = resources.getString(R.string.successfull_past_vaccine)
+            }
+        }
 
         binding.btnDone.setOnClickListener {
             Intent(this, MainActivity::class.java).also {

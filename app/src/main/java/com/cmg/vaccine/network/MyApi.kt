@@ -151,6 +151,9 @@ interface MyApi {
     @GET(Passparams.GET_FEEDBACK)
     suspend fun getFeedBackListAPI(@Query("casePrincpleId")subId: String):Response<GetFeedbackStatusResponse>
 
+    @GET(Passparams.GET_SUBSCRIPTION)
+    suspend fun getSubscriptionPackage():Response<GetSubscriptionPackage>
+
 
 
 

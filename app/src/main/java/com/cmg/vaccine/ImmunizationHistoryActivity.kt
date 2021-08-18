@@ -239,6 +239,7 @@ class ImmunizationHistoryActivity : BaseActivity(),KodeinAware,SimpleListener,Ad
         hide(binding.progressBar)
         toast(msg)
         Intent(this, SuccessPopUpActivity::class.java).also {
+            it.putExtra(Passparams.NAVIGATE_FROM,Passparams.IMMUNIZATIONHISTORY)
             startActivity(it)
             finish()
         }

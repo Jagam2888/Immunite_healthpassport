@@ -52,6 +52,8 @@ object Passparams{
     const val EDIT_DEPENDENT_PROFILE = "edit_dependent_profile"
     const val ADD_DEPENDENT_PROFILE = "add_dependent_profile"
     const val FORGOT_PIN = "forgot_pin"
+    const val IMMUNIZATIONHISTORY = "ImmunizationHistory"
+    const val AUTHERIZATION = "autherization"
 
     const val NOTIFICATION_FROM = "notification_from"
     const val NEWS_UPDATE = "N"
@@ -138,6 +140,7 @@ object Passparams{
     const val PACKAGECODE = "nhr-module-user/searchpackagecode"
     const val ADD_FEEDBACK = "nhr-module-user/feedback"
     const val GET_FEEDBACK = "nhr-module-user/feedbackstatus"
+    const val GET_SUBSCRIPTION = "nhr-module-user/searchpackagecode"
     const val PAYMENT_LOG = "nhr-module-user/paymentlog"
     const val FEEDBACK_DOWNLOAD_FILE = URL+"nhr-module-user/downloadfile?"
 

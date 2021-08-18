@@ -116,6 +116,8 @@ class AppController : Application(),KodeinAware {
         bind() from singleton { FeedBackViewRepositary(instance(),instance(),instance()) }
         bind() from provider { FeedBackViewModelFactory(instance()) }
 
+        bind() from singleton { SubscriptionRepositary(instance()) }
+        bind() from provider { SubscriptionViewModelFactory(instance()) }
         //bind() from provider { MyFirebaseInstanceIDService(instance()) }
 
     }
