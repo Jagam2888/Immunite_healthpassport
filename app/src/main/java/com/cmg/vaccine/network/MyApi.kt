@@ -154,6 +154,9 @@ interface MyApi {
     @GET(Passparams.GET_SUBSCRIPTION)
     suspend fun getSubscriptionPackage():Response<GetSubscriptionPackage>
 
+    @POST(Passparams.ADD_SUBSCRIPTION)
+    suspend fun addSubscription(@Body subscribeReq: SubscribeReq):Response<AddSubscribeResponse>
+
 
 
 

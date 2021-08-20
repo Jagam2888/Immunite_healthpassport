@@ -12,4 +12,8 @@ class CheckOutRepositary(
     fun getUser():User{
         return database.getDao().getUserData(preference.getSubId()!!)
     }
+
+    fun getSubsId():String{
+        return preference.getSubId()!!
+    }
 }

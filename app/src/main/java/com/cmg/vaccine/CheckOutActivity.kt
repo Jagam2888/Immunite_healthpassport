@@ -27,6 +27,8 @@ class CheckOutActivity : BaseActivity(),KodeinAware {
 
     private val factory:CheckOutViewModelFactory by instance()
 
+    var packageCode:String?=null
+
     companion object{
         var resultTitle: String? = null
         var resultInfo: String? = null
@@ -48,6 +50,8 @@ class CheckOutActivity : BaseActivity(),KodeinAware {
         binding.btnPayment.setOnSingleClickListener{
             proceedPayment()
         }
+
+        packageCode = intent.extras?.getString(Passparams.PACKAGE_CODE,"")
     }
 
     private fun proceedPayment(){
@@ -55,7 +59,7 @@ class CheckOutActivity : BaseActivity(),KodeinAware {
         iPayIHPayment.merchantCode = Passparams.MERCHANT_CODE
         iPayIHPayment.merchantKey = Passparams.MERCHANT_KEY
         iPayIHPayment.currency = Passparams.PAYMENT_CURRENCY
-        iPayIHPayment.refNo = System.currentTimeMillis().toString()
+        iPayIHPayment.refNo = viewModel.getSubID()+"_"+packageCode
         iPayIHPayment.amount = "1.0"
         iPayIHPayment.prodDesc = "Subscription"
         iPayIHPayment.userName = viewModel.userData.value?.fullName

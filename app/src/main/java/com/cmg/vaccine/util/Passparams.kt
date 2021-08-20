@@ -66,6 +66,7 @@ object Passparams{
     const val COUNTER_CHECKIN_2 = "Airline_Counter_Check_IN_2"
     const val WEB_CHECKIN = "Airline_Online_Check_IN"
     const val QR_VALID_TIME = "qr_valid_time"
+    const val PACKAGE_CODE = "package_code"
 
 
     const val GSON_HASHMAP_COUNTRYLIST = "gson_hashmap_countrylist"
@@ -141,6 +142,7 @@ object Passparams{
     const val ADD_FEEDBACK = "nhr-module-user/feedback"
     const val GET_FEEDBACK = "nhr-module-user/feedbackstatus"
     const val GET_SUBSCRIPTION = "nhr-module-user/searchpackagecode"
+    const val ADD_SUBSCRIPTION = "nhr-module-user/subscriberpaymentinfo"
     const val PAYMENT_LOG = "nhr-module-user/paymentlog"
     const val FEEDBACK_DOWNLOAD_FILE = URL+"nhr-module-user/downloadfile?"
 

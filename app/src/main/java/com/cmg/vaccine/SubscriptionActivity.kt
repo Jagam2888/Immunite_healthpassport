@@ -99,6 +99,7 @@ class SubscriptionActivity : BaseActivity(),KodeinAware,SimpleListener {
             override fun onClick(view: View?, position: Int) {
                 if (subViewModel.packageList.value?.get(position)?.subsPackageAmount!! > 0){
                     Intent(this@SubscriptionActivity,CheckOutActivity::class.java).also {
+                        it.putExtra(Passparams.PACKAGE_CODE,subViewModel.packageList.value?.get(position)!!.subsPackageCode)
                         startActivity(it)
                     }
                 }else{

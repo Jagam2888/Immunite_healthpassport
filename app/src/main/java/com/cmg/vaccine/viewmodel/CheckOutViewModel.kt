@@ -20,4 +20,6 @@ class CheckOutViewModel(
             _userData.value = user
         }
     }
+
+    fun getSubID() = repositary.getSubsId()
 }
