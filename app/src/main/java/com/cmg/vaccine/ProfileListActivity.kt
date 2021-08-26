@@ -26,7 +26,7 @@ class ProfileListActivity:BaseActivity(),KodeinAware {
     override val kodein by kodein()
     private lateinit var binding: FragmentProfileBinding
     private lateinit var viewModel: ProfileViewModel
-    var childListAdapter:ChildListAdapter?=null
+    private lateinit var childListAdapter:ChildListAdapter
 
     private val factory: ProfileViewModelFactory by instance()
     var lastClickTime:Long = 0
@@ -39,42 +39,19 @@ class ProfileListActivity:BaseActivity(),KodeinAware {
         binding.profileviewmodel = viewModel
         binding.lifecycleOwner = this
 
+        childListAdapter = ChildListAdapter()
+        binding.adapter = childListAdapter
+
         viewModel.dependentList.observe(this, Observer {list ->
-            childListAdapter = ChildListAdapter(list)
-            binding.recyclerViewChild.also {
-                it.layoutManager = LinearLayoutManager(this)
-                it.adapter = childListAdapter
-            }
+            childListAdapter.list = list
         })
 
-
-
-        /*binding.layoutParent.setOnClickListener {
-            Intent(this,ViewProfileActivity::class.java).also {
-                it.putExtra(Passparams.USER, Passparams.PARENT)
-                startActivity(it)
-            }
-        }*/
 
         binding.btnAddDependent.setOnSingleClickListener{
             Intent(this,AddDependentActivity::class.java).also {
                 startActivity(it)
             }
         }
-
-        /*binding.btnAddDependent.setOnClickListener {
-
-            if (SystemClock.elapsedRealtime() - lastClickTime<1000){
-                return@setOnClickListener
-            }
-            Log.d("onclick","come here")
-            lastClickTime = SystemClock.elapsedRealtime()
-
-
-            Intent(this,AddDependentActivity::class.java).also {
-                startActivity(it)
-            }
-        }*/
 
         binding.recyclerViewChild.addOnItemTouchListener(RecyclerViewTouchListener(this,binding.recyclerViewChild,object :
             RecyclerViewTouchListener.ClickListener{

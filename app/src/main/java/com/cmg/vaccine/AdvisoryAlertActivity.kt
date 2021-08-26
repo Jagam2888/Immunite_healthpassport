@@ -11,7 +11,8 @@ class AdvisoryAlertActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this,R.layout.activity_advisory_alert)
+        binding = ActivityAdvisoryAlertBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         binding.imageView.setOnClickListener {
             finish()

@@ -58,7 +58,8 @@ class AddFeedbackActivity : BaseActivity(),KodeinAware,SimpleListener,AdapterLis
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this,R.layout.activity_add_feedback)
+        binding = ActivityAddFeedbackBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         viewModel = ViewModelProvider(this,factory).get(FeedBackViewModel::class.java)
 

@@ -28,7 +28,8 @@ class AddWorldEntryActivity : BaseActivity(),KodeinAware,SimpleListener {
     var worldEntryCountryListAdapter:WorldEntryCountryListAdapter?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_add_world_entry)
+        binding = ActivityAddWorldEntryBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         viewModel = ViewModelProvider(this,factory).get(WorldEntryViewModel::class.java)
         binding.viewModel = viewModel
         //binding.lifecycleOwner = this

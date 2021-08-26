@@ -31,14 +31,23 @@ class NewsUpdateActivity : BaseActivity(),KodeinAware,SimpleListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this,R.layout.activity_news_update)
+        binding = ActivityNewsUpdateBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         viewModel = ViewModelProvider(this,factory).get(NotificationViewModel::class.java)
 
         binding.viewmodel = viewModel
         binding.lifecycleOwner = this
 
         viewModel.listener = this
+        getIntentValue()
 
+        binding.imgBack.setOnClickListener {finish()}
+
+        binding.txtClearAll.setOnSingleClickListener{showAlertForClearAll()}
+
+    }
+
+    private fun getIntentValue(){
         group = intent?.extras?.getString(Passparams.NOTIFICATION_FROM,null)
         if (!group.isNullOrEmpty()){
             when(group){
@@ -49,13 +58,19 @@ class NewsUpdateActivity : BaseActivity(),KodeinAware,SimpleListener {
 
             notificationAdapter = NotificationListAdapter()
             binding.adapter = notificationAdapter
+            onViewObserver()
+            onRecyclerViewClick()
 
-
-            viewModel.messageList.observe(this, { list->
-                notificationAdapter.notificationList = list
-            })
         }
+    }
 
+    private fun onViewObserver(){
+        viewModel.messageList.observe(this, { list->
+            notificationAdapter.notificationList = list
+        })
+    }
+
+    private fun onRecyclerViewClick(){
         binding.notificationRecyclerView.addOnItemTouchListener(RecyclerViewTouchListener(this,binding.notificationRecyclerView,object :RecyclerViewTouchListener.ClickListener{
             override fun onClick(view: View?, position: Int) {
                 viewModel.updateNotificationReadStatus(viewModel.messageList.value?.get(position)?.id!!)
@@ -70,15 +85,6 @@ class NewsUpdateActivity : BaseActivity(),KodeinAware,SimpleListener {
             override fun onLongClick(view: View?, position: Int) {
             }
         }))
-
-
-        binding.imgBack.setOnClickListener {
-            finish()
-        }
-
-        binding.txtClearAll.setOnSingleClickListener{
-            showAlertForClearAll()
-        }
 
     }
 

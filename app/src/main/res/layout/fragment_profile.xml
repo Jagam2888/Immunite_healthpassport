@@ -7,13 +7,16 @@
         <variable
             name="profileviewmodel"
             type="com.cmg.vaccine.viewmodel.ProfileViewModel" />
+        <variable
+            name="adapter"
+            type="com.cmg.vaccine.adapter.ChildListAdapter" />
         <import type="android.view.View"/>
     </data>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".fragment.ProfileFragment"
+        tools:context=".ProfileListActivity"
         android:background="@color/lite_yellow">
 
         <RelativeLayout
@@ -50,60 +53,6 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true" />
         </RelativeLayout>
-
-        <!--<LinearLayout
-            android:id="@+id/layout_parent"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:paddingBottom="20dp"
-            android:paddingTop="20dp"
-            android:background="@drawable/box_gray_transparent"
-            android:layout_below="@id/action_bar"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp">
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/img_profile"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/user_icon"
-                android:layout_gravity="center_vertical"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginLeft="20dp"
-                android:layout_gravity="center_vertical">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@{profileviewmodel.firstName}"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"
-                    style="@style/opens_bold"
-                    android:layout_centerVertical="true"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Principle Account"
-                    android:textColor="@color/dark_gray"
-                    android:background="@drawable/gray_background"
-                    android:textSize="12sp"
-                    android:textAppearance="@style/opens_regular"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:paddingLeft="5dp"
-                    android:paddingRight="5dp"
-                    android:paddingBottom="5dp"
-                    android:paddingTop="5dp"/>
-            </LinearLayout>
-
-        </LinearLayout>-->
         <TextView
             android:id="@+id/btn_upgrade"
             android:layout_width="wrap_content"
@@ -120,6 +69,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="20dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:adapter="@{adapter}"
             android:layout_below="@id/action_bar"
             android:paddingBottom="20dp"
             android:paddingRight="10dp"
@@ -134,9 +85,5 @@
             style="@style/opens_regular"
             android:layout_centerInParent="true"
             android:visibility="@{profileviewmodel.dependentListCount == 0 ? View.VISIBLE:View.GONE}"/>
-
-
-
-
     </RelativeLayout>
 </layout>

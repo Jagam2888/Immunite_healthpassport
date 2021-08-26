@@ -34,6 +34,7 @@ class FeedbackDetailActivity : BaseActivity(),KodeinAware {
 
         val caseNo = intent.extras?.getString(Passparams.CASE_NO,"")
         viewModel._getFeedBackData.value = viewModel.getFeedBackDataByCaseNo(caseNo!!)
+        viewModel.getFeedBackChronolgy(caseNo)
 
         viewModel.getFeedBackData.observe(this, Observer {data->
             binding.feedbackDate.text = changeDateFormatFeedback(data.createdDate)
@@ -49,6 +50,12 @@ class FeedbackDetailActivity : BaseActivity(),KodeinAware {
                 }
             }
 
+        })
+
+        viewModel.feedbackChronology.observe(this,{data->
+            if (!data.comments.isNullOrEmpty()){
+                binding.feedbackChronologyStatus.text = data.comments
+            }
         })
 
         if (!caseNo.isNullOrEmpty()) {

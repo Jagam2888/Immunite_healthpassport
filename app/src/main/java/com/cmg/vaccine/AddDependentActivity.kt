@@ -52,7 +52,8 @@ class AddDependentActivity : BaseActivity(),KodeinAware,SimpleListener,SlideDate
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this,R.layout.activity_add_dependent)
+        binding = ActivityAddDependentBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         viewModel = ViewModelProvider(this,factory).get(DependentViewModel::class.java)
         binding.dependentViewModel = viewModel

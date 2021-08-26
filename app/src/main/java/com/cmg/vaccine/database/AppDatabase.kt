@@ -12,7 +12,8 @@ import com.cmg.vaccine.model.response.*
     entities = [User::class,LoginPin::class,Dependent::class,Countries::class,Vaccine::class,TestReport::class,AddWorldEntries::class,
                TestType::class,Virus::class,VaccineDetail::class,WorldEntryCountries::class,WorldEntryRulesByCountry::class,AirportCitiesName::class,TestCodes::class,
                IdentifierType::class,WorldPriority::class,BlockChainErrorCode::class,ObservationStatus::class,Notification::class,ScanAirportEntry::class,VaccineReport::class,
-               SystemConfigResponseData::class,PackageCodeResponseData::class,GetFeedbackStatusResponseData::class,GetFeedbackStatusResponseAttachment::class],
+               SystemConfigResponseData::class,PackageCodeResponseData::class,GetFeedbackStatusResponseData::class,GetFeedbackStatusResponseAttachment::class,
+               GetFeedbackChronology::class],
     version = 1,
     exportSchema = false
 )

@@ -11,9 +11,14 @@ import com.cmg.vaccine.databinding.ListChildItemBinding
 import com.cmg.vaccine.model.response.HomeResponse
 
 class ChildListAdapter(
-    private val list:List<Dependent>
 
     ):RecyclerView.Adapter<ChildListAdapter.MyViewHolder>() {
+
+    var list = listOf<Dependent>()
+    set(value) {
+        field = value
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = MyViewHolder(
         DataBindingUtil.inflate(

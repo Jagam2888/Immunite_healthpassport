@@ -357,4 +357,10 @@ interface PatientDao {
 
     @Query("DELETE FROM GetFeedbackStatusResponseAttachment")
     fun deleteFeedBackFiles()
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertFeedbackChronolgy(getFeedbackChronology: GetFeedbackChronology)
+
+    @Query("SELECT * FROM GetFeedbackChronology WHERE createdDate IN (SELECT max(createdDate) FROM GetFeedbackChronology WHERE caseNo =:caseNo)")
+    fun getFeedbackChronolgy(caseNo: String):GetFeedbackChronology
 }

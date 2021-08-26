@@ -10,6 +10,7 @@ import com.cmg.vaccine.data.UserProfileList
 import com.cmg.vaccine.listener.SimpleListener
 import com.cmg.vaccine.model.request.AddFeedbackData
 import com.cmg.vaccine.model.request.AddFeedbackReq
+import com.cmg.vaccine.model.response.GetFeedbackChronology
 import com.cmg.vaccine.model.response.GetFeedbackStatusResponseAttachment
 import com.cmg.vaccine.model.response.GetFeedbackStatusResponseData
 import com.cmg.vaccine.repositary.FeedBackViewRepositary
@@ -55,6 +56,10 @@ class FeedBackViewModel(
     val _getFeedBackData:MutableLiveData<GetFeedbackStatusResponseData> = MutableLiveData()
     val getFeedBackData:LiveData<GetFeedbackStatusResponseData>
     get() = _getFeedBackData
+
+    val _feedbackChronolgy:MutableLiveData<GetFeedbackChronology> = MutableLiveData()
+    val feedbackChronology:LiveData<GetFeedbackChronology>
+    get() = _feedbackChronolgy
 
     var listener:SimpleListener?=null
 
@@ -117,6 +122,13 @@ class FeedBackViewModel(
         return repositary.getFeedBackDataByCaseNo(caseNo)
     }
 
+    fun getFeedBackChronolgy(caseNo: String){
+        val data = repositary.getFeedBackChronolgy(caseNo)
+        if (data != null) {
+            _feedbackChronolgy.value = data
+        }
+    }
+
     fun getFeedBackListFromAPI(){
         listener?.onStarted()
         Couritnes.main {
@@ -136,6 +148,11 @@ class FeedBackViewModel(
                         if (repositary.getFeedBackFileCount(it.caseNo,it.fileName) == 0){
                             repositary.insertFeedBackFiles(it)
                         }
+                    }
+                }
+                if (!response.chronology.isNullOrEmpty()){
+                    response.chronology.forEach {
+                        repositary.insertFeedbackChronolgy(it)
                     }
                 }
                 getFeedBackList(feedbackStatus.value!!)

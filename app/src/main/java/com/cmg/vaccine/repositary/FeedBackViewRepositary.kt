@@ -4,10 +4,7 @@ import com.cmg.vaccine.database.AppDatabase
 import com.cmg.vaccine.database.Dependent
 import com.cmg.vaccine.database.User
 import com.cmg.vaccine.model.request.AddFeedbackReq
-import com.cmg.vaccine.model.response.AddFeedbackResponse
-import com.cmg.vaccine.model.response.GetFeedbackStatusResponse
-import com.cmg.vaccine.model.response.GetFeedbackStatusResponseAttachment
-import com.cmg.vaccine.model.response.GetFeedbackStatusResponseData
+import com.cmg.vaccine.model.response.*
 import com.cmg.vaccine.network.MyApi
 import com.cmg.vaccine.network.SafeAPIRequest
 import com.cmg.vaccine.prefernces.PreferenceProvider
@@ -75,5 +72,13 @@ class FeedBackViewRepositary(
 
     fun getFeedBackUploadFiles(caseNo:String):List<GetFeedbackStatusResponseAttachment>{
         return database.getDao().getFeedBackUploadFiles(caseNo)
+    }
+
+    suspend fun insertFeedbackChronolgy(getFeedbackChronology: GetFeedbackChronology){
+        database.getDao().insertFeedbackChronolgy(getFeedbackChronology)
+    }
+
+    fun getFeedBackChronolgy(caseNo: String):GetFeedbackChronology{
+        return database.getDao().getFeedbackChronolgy(caseNo)
     }
 }

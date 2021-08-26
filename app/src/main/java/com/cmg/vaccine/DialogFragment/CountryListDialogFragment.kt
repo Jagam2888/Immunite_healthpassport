@@ -35,6 +35,7 @@ class CountryListDialogFragment:DialogFragment(),AddSelectedRVListener,KodeinAwa
     override val kodein by kodein()
     private lateinit var binding:FragmentCountryDialogBinding
     private lateinit var viewModel:CountryListFragmentViewModel
+    private lateinit var adapter:CountryListRecyclerViewAdapter
     var type:String?=null
     var from:String?=null
 
@@ -67,21 +68,21 @@ class CountryListDialogFragment:DialogFragment(),AddSelectedRVListener,KodeinAwa
         type= arguments?.getString("type")
         from= arguments?.getString("from")
 
-        /*var list= World.getAllCountries()
-        val arrayList = arrayListOf<Country>()*/
+        adapter = CountryListRecyclerViewAdapter( this, type)
+
+        binding.countryRv.adapter = adapter
+        binding.countryRv.setIndexBarColor(R.color.transparent)
+        binding.countryRv.setIndexTextSize(12)
+        binding.countryRv.setIndexBarTextColor(R.color.black)
+        binding.countryRv.setIndexBarHighLateTextVisibility(true)
+        binding.countryRv.setIndexBarHighLateTextVisibility(true)
+
 
         viewModel.countryList.observe(viewLifecycleOwner, Observer {
             var list= it
             val arrayList = arrayListOf<Countries>()
             arrayList.addAll(list)
-
-            binding.countryRv.adapter = CountryListRecyclerViewAdapter(arrayList, this, type)
-            binding.countryRv.layoutManager = LinearLayoutManager(this.context)
-            binding.countryRv.setIndexBarColor(R.color.transparent)
-            binding.countryRv.setIndexTextSize(12)
-            binding.countryRv.setIndexBarTextColor(R.color.black)
-            binding.countryRv.setIndexBarHighLateTextVisibility(true)
-            binding.countryRv.setIndexBarHighLateTextVisibility(true)
+            adapter.countryList = arrayList
         })
 
 

@@ -17,11 +17,17 @@ import com.cmg.vaccine.listener.AddSelectedRVListener
 
 
 class CountryListRecyclerViewAdapter(
-    private val countryList: ArrayList<Countries>,
+    //private val countryList: ArrayList<Countries>,
     var addSelectedRVListener: AddSelectedRVListener?,
     var type:String?
 
 ): RecyclerView.Adapter<CountryListRecyclerViewAdapter.MyViewHolder>(), Filterable, SectionIndexer {
+
+    var countryList = ArrayList<Countries>()
+    set(value) {
+        field = value
+        notifyDataSetChanged()
+    }
 
     private var mSectionPositions= ArrayList<Int>()
 
