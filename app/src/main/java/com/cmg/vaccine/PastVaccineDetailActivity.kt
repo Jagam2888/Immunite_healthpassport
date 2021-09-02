@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import com.cmg.vaccine.databinding.ActivityPastVaccineDetailBinding
+import com.cmg.vaccine.util.navigateTo
 
 class PastVaccineDetailActivity : BaseActivity() {
 
@@ -15,9 +16,7 @@ class PastVaccineDetailActivity : BaseActivity() {
         binding = DataBindingUtil.setContentView(this,R.layout.activity_past_vaccine_detail)
 
         binding.btnSubmit.setOnClickListener {
-            Intent(this,AutherizationActivity::class.java).also {
-                startActivity(it)
-            }
+            navigateTo(this,AutherizationActivity::class.java)
         }
     }
 }

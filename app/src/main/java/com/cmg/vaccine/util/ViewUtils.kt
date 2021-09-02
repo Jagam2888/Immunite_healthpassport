@@ -29,6 +29,7 @@ import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
@@ -51,6 +52,7 @@ import com.niwattep.materialslidedatepicker.SlideDatePickerDialog
 import immuniteeEncryption.EncryptionUtils
 import io.github.douglasjunior.androidSimpleTooltip.SimpleTooltip
 import io.paperdb.Paper
+import org.apache.poi.ss.formula.functions.T
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
@@ -97,6 +99,11 @@ fun hide(progressBar: ProgressBar){
 /*fun isValidEmail(value: String):Boolean{
     return (!TextUtils.isEmpty(value) and Patterns.EMAIL_ADDRESS.matcher(value).matches())
 }*/
+fun Activity.navigateTo(activity: Activity, navigateClass:Class<*>){
+    Intent(activity,navigateClass).also {
+        startActivity(it)
+    }
+}
 
 fun showAlertDialog(title: String, msg: String, status: Boolean,fragmentManager: FragmentManager){
     var alertDialog = AlertDialogFragment()

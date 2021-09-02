@@ -14,8 +14,13 @@ import com.cmg.vaccine.util.Passparams
 
 class FeedBackAttachmentAdapter(
     private val context: Context,
-    private val list:List<GetFeedbackStatusResponseAttachment>
 ):RecyclerView.Adapter<FeedBackAttachmentAdapter.MyViewHolder>() {
+
+    var list = listOf<GetFeedbackStatusResponseAttachment>()
+    set(value) {
+        field = value
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = MyViewHolder(
         DataBindingUtil.inflate(

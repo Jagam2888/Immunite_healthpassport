@@ -41,9 +41,7 @@ class ClinicListActivity : BaseActivity(),KodeinAware,SimpleListener {
         binding.adapter = clicnicAdapter
         viewObserver()
 
-        binding.imgBack.setOnClickListener {
-            finish()
-        }
+        binding.imgBack.setOnClickListener {finish()}
     }
 
     private fun viewObserver(){

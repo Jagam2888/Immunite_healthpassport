@@ -14,8 +14,7 @@ import com.cmg.vaccine.adapter.FeedBackListAdapter
 import com.cmg.vaccine.data.setOnSingleClickListener
 import com.cmg.vaccine.databinding.ActivityFeedBackBinding
 import com.cmg.vaccine.listener.SimpleListener
-import com.cmg.vaccine.util.Passparams
-import com.cmg.vaccine.util.RecyclerViewTouchListener
+import com.cmg.vaccine.util.*
 import com.cmg.vaccine.viewmodel.FeedBackViewModel
 import com.cmg.vaccine.viewmodel.viewmodelfactory.FeedBackViewModelFactory
 import com.google.android.material.tabs.TabLayout
@@ -34,7 +33,11 @@ class FeedBackActivity : BaseActivity(),KodeinAware,SimpleListener {
 
     private lateinit var feedBackAdapter:FeedBackListAdapter
 
-
+    companion object{
+        const val new = "New"
+        const val inProgress = "In Progress"
+        const val solve = "Solve"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,54 +46,29 @@ class FeedBackActivity : BaseActivity(),KodeinAware,SimpleListener {
 
         binding.viewmodel = viewModel
 
-        val new = getString(R.string.new_)
-        val inProgress = getString(R.string.in_progress)
-        val solve = getString(R.string.solve)
+
 
         viewModel.feedbackStatus.value = inProgress
 
-        binding.btnAddFeedback.setOnSingleClickListener{
-            Intent(this,AddFeedbackActivity::class.java).also {
-                startActivity(it)
-            }
-        }
+        binding.btnAddFeedback.setOnSingleClickListener{navigateTo(this,AddFeedbackActivity::class.java)}
 
-        binding.imgBack.setOnClickListener {
-            finish()
-        }
-
-        viewModel.getFeedBackListFromAPI()
-
-        //viewModel.getFeedBackList(inProgress)
+        binding.imgBack.setOnClickListener {finish()}
 
         feedBackAdapter = FeedBackListAdapter(this,viewModel)
         binding.adapter = feedBackAdapter
 
-        /*binding.recyclerView.also {
-            feedBackAdapter = FeedBackListAdapter(this,viewModel)
-            it.adapter = feedBackAdapter
-        }*/
+        observeList()
+        setTabLayout()
+        recyclerViewClickListener()
+    }
 
-
-
+    private fun observeList(){
         viewModel.feedBackList.observe(this,{feedBackList->
             feedBackAdapter.list = feedBackList
         })
+    }
 
-        binding.recyclerView.addOnItemTouchListener(RecyclerViewTouchListener(this,binding.recyclerView,object :RecyclerViewTouchListener.ClickListener{
-            override fun onClick(view: View?, position: Int) {
-                Intent(this@FeedBackActivity,FeedbackDetailActivity::class.java).also {
-                    it.putExtra(Passparams.CASE_NO,viewModel.feedBackList.value?.get(position)?.caseNo)
-                    startActivity(it)
-                }
-
-            }
-
-            override fun onLongClick(view: View?, position: Int) {
-            }
-        }))
-
-
+    private fun setTabLayout(){
 
         binding.tabLayout.addTab(binding.tabLayout.newTab().setText(new))
         binding.tabLayout.addTab(binding.tabLayout.newTab().setText(inProgress))
@@ -123,33 +101,41 @@ class FeedBackActivity : BaseActivity(),KodeinAware,SimpleListener {
             override fun onTabReselected(tab: TabLayout.Tab?) {
             }
         })
+    }
 
-       /* binding.cardview1.setOnSingleClickListener{
-            Intent(this,FeedbackDetailActivity::class.java).also {
-                startActivity(it)
-            }
-        }
+    private fun recyclerViewClickListener(){
+        binding.recyclerView.addOnItemTouchListener(RecyclerViewTouchListener(this,binding.recyclerView,object :RecyclerViewTouchListener.ClickListener{
+            override fun onClick(view: View?, position: Int) {
+                Intent(this@FeedBackActivity,FeedbackDetailActivity::class.java).also {
+                    it.putExtra(Passparams.CASE_NO,viewModel.feedBackList.value?.get(position)?.caseNo)
+                    startActivity(it)
+                }
 
-        binding.cardview2.setOnSingleClickListener{
-            Intent(this,FeedbackDetailActivity::class.java).also {
-                startActivity(it)
             }
-        }*/
+
+            override fun onLongClick(view: View?, position: Int) {
+            }
+        }))
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.getFeedBackListFromAPI()
     }
 
     override fun onStarted() {
-        TODO("Not yet implemented")
+        show(binding.progressCircular)
     }
 
     override fun onSuccess(msg: String) {
-        TODO("Not yet implemented")
+        hide(binding.progressCircular)
     }
 
     override fun onFailure(msg: String) {
-        TODO("Not yet implemented")
+        hide(binding.progressCircular)
     }
 
     override fun onShowToast(msg: String) {
-        TODO("Not yet implemented")
+        hide(binding.progressCircular)
     }
 }

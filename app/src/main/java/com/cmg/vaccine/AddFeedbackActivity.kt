@@ -157,12 +157,6 @@ class AddFeedbackActivity : BaseActivity(),KodeinAware,SimpleListener,AdapterLis
             }
         }
 
-        binding.btnSubmit.setOnSingleClickListener{
-            Intent(this,FeedbackSuccessActivity::class.java).also {
-                startActivity(it)
-            }
-        }
-
         listOfFiles = ArrayList<MultipleFilesData>()
 
         listOfFiles!!.add(MultipleFilesData(
@@ -193,10 +187,13 @@ class AddFeedbackActivity : BaseActivity(),KodeinAware,SimpleListener,AdapterLis
 
     private fun setSpinnerValue(position:Int){
         viewModel.caseDob.set(viewModel.userProfileList.value?.get(position)?.dob)
+        viewModel.caseEncryptPk.set("")
         if (!viewModel.userProfileList.value?.get(position)?.privateKey.isNullOrEmpty()) {
             val encryptpK = EncryptionUtils.encryptForBackup(viewModel.userProfileList.value?.get(position)?.privateKey,changeDateFormatOnlyDateReverse(viewModel.caseDob.get()!!))
             val trimValue = encryptpK.replace("\n","")
             viewModel.caseEncryptPk.set(trimValue)
+        }else{
+            toast("Your Key is InProgress, Please check MyKey")
         }
 
         viewModel.caseSubId.set(viewModel.userProfileList.value?.get(position)?.subId)
@@ -320,7 +317,7 @@ class AddFeedbackActivity : BaseActivity(),KodeinAware,SimpleListener,AdapterLis
     }
 
     override fun onSuccess(msg: String) {
-        toast(msg)
+        //toast(msg)
         hide(binding.progressCircular)
         Intent(this,FeedbackSuccessActivity::class.java).also {
             startActivity(it)

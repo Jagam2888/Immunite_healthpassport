@@ -98,9 +98,7 @@ class EditProfileActivity : BaseActivity(),KodeinAware,SimpleListener,SlideDateP
         binding.checkboxTerms.movementMethod = LinkMovementMethod.getInstance()
 
         binding.checkboxTerms.setOnSingleClickListener{
-            Intent(this,TermsOfUseActivity::class.java).also {
-                startActivity(it)
-            }
+            navigateTo(this,TermsOfUseActivity::class.java)
         }
 
         /*binding.btnDobCalender.setOnClickListener {

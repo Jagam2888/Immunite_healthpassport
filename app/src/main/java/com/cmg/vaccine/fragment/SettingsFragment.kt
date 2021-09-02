@@ -18,7 +18,6 @@ import com.cmg.vaccine.*
 import com.cmg.vaccine.DialogFragment.BackupSuccessDialogFragment
 import com.cmg.vaccine.data.setOnSingleClickListener
 import com.cmg.vaccine.databinding.FragmentSettingsBinding
-import com.cmg.vaccine.decryptTesting.DecryptActivityActivity
 import com.cmg.vaccine.listener.SimpleListener
 import com.cmg.vaccine.services.DriveServiceHelper
 import com.cmg.vaccine.services.NotificationService
@@ -195,12 +194,6 @@ class SettingsFragment : Fragment(),KodeinAware,SimpleListener {
         binding.imgBack.setOnSingleClickListener {
             binding.txtAppBar.text = context?.resources?.getString(R.string.setting)
             showMainLayout()
-        }
-
-        binding.layoutDecrypt.setOnSingleClickListener{
-            Intent(context,DecryptActivityActivity::class.java).also {
-                startActivity(it)
-            }
         }
 
         layout_version_relase.setOnSingleClickListener {

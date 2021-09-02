@@ -43,13 +43,9 @@ class CheckOutActivity : BaseActivity(),KodeinAware {
         binding.viewmodel = viewModel
         binding.lifecycleOwner = this
 
-        binding.imgBack.setOnClickListener {
-            finish()
-        }
+        binding.imgBack.setOnClickListener {finish()}
 
-        binding.btnPayment.setOnSingleClickListener{
-            proceedPayment()
-        }
+        binding.btnPayment.setOnSingleClickListener{proceedPayment()}
 
         packageCode = intent.extras?.getString(Passparams.PACKAGE_CODE,"")
     }

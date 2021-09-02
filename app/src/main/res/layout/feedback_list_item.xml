@@ -6,6 +6,9 @@
         <variable
             name="feedback"
             type="com.cmg.vaccine.model.response.GetFeedbackStatusResponseData" />
+        <variable
+            name="adapter"
+            type="com.cmg.vaccine.adapter.FeedBackAttachmentAdapter" />
     </data>
 
     <LinearLayout
@@ -146,7 +149,8 @@
                     android:id="@+id/image_recyclerview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"/>
+                    android:layout_marginTop="5dp"
+                    app:adapter="@{adapter}"/>
                 <!--<LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

@@ -14,6 +14,7 @@ import com.cmg.vaccine.data.setOnSingleClickListener
 import com.cmg.vaccine.databinding.FragmentProfileBinding
 import com.cmg.vaccine.util.Passparams
 import com.cmg.vaccine.util.RecyclerViewTouchListener
+import com.cmg.vaccine.util.navigateTo
 import com.cmg.vaccine.util.showAlertDialog
 import com.cmg.vaccine.viewmodel.ProfileViewModel
 import com.cmg.vaccine.viewmodel.viewmodelfactory.ProfileViewModelFactory
@@ -48,9 +49,7 @@ class ProfileListActivity:BaseActivity(),KodeinAware {
 
 
         binding.btnAddDependent.setOnSingleClickListener{
-            Intent(this,AddDependentActivity::class.java).also {
-                startActivity(it)
-            }
+            navigateTo(this,AddDependentActivity::class.java)
         }
 
         binding.recyclerViewChild.addOnItemTouchListener(RecyclerViewTouchListener(this,binding.recyclerViewChild,object :

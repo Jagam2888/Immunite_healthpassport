@@ -65,9 +65,7 @@ class EditDependentProfileActivity : BaseActivity(),KodeinAware,SimpleListener,S
         binding.checkboxTerms.movementMethod = LinkMovementMethod.getInstance()
 
         binding.checkboxTerms.setOnSingleClickListener{
-            Intent(this,TermsOfUseActivity::class.java).also {
-                startActivity(it)
-            }
+            navigateTo(this,TermsOfUseActivity::class.java)
         }
 
         dependentSubId = intent.extras?.getString(Passparams.DEPENDENT_SUBID,"")

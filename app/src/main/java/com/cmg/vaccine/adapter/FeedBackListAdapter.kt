@@ -36,6 +36,20 @@ class FeedBackListAdapter(
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.feedbackListItemBinding.feedback = list[position]
+        val adapter = FeedBackAttachmentAdapter(context)
+        holder.feedbackListItemBinding.adapter = adapter
+
+        holder.feedbackListItemBinding.imageRecyclerview.apply {
+            val customLayoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
+            layoutManager = customLayoutManager
+        }
+
+        if (!list[position].caseNo.isNullOrEmpty()) {
+            val attachementList = viewModel.getAttachementList(list[position].caseNo)
+            if (!attachementList.isNullOrEmpty()) {
+                adapter.list = attachementList
+            }
+        }
 
         holder.feedbackListItemBinding.ratingBar.count = list[position].rating
 
@@ -48,18 +62,6 @@ class FeedBackListAdapter(
                 if (list[position].caseSubId == it.subId){
                     holder.feedbackListItemBinding.userName.text = it.userName
                     holder.feedbackListItemBinding.userRelationship.text = it.profile+" Account"
-                }
-            }
-        }
-
-
-        if (!list[position].caseNo.isNullOrEmpty()) {
-            val attachementList = viewModel.getAttachementList(list[position].caseNo)
-            if (!attachementList.isNullOrEmpty()) {
-                holder.feedbackListItemBinding.imageRecyclerview.also {
-                    val layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
-                    it.layoutManager = layoutManager
-                    it.adapter = FeedBackAttachmentAdapter(context,attachementList)
                 }
             }
         }

@@ -22,6 +22,7 @@ class FeedbackDetailActivity : BaseActivity(),KodeinAware {
     override val kodein by kodein()
     private lateinit var binding:ActivityFeedbackDetailBinding
     private lateinit var viewModel: FeedBackViewModel
+    private lateinit var feedBackAdapter:FeedBackAttachmentAdapter
 
     private val factory: FeedBackViewModelFactory by instance()
 
@@ -31,11 +32,26 @@ class FeedbackDetailActivity : BaseActivity(),KodeinAware {
         viewModel = ViewModelProvider(this,factory).get(FeedBackViewModel::class.java)
 
         binding.viewmodel = viewModel
+        feedBackAdapter = FeedBackAttachmentAdapter(this)
+        binding.adapter = feedBackAdapter
+        binding.imgBack.setOnClickListener {finish()}
 
+        viewModel.getFeedBackListFromAPI()
+
+        feedBackData()
+        observeFeedBackChronology()
+        customLayoutManager()
+        setAttachmentList()
+    }
+
+    private fun caseNo():String{
         val caseNo = intent.extras?.getString(Passparams.CASE_NO,"")
         viewModel._getFeedBackData.value = viewModel.getFeedBackDataByCaseNo(caseNo!!)
         viewModel.getFeedBackChronolgy(caseNo)
+        return caseNo
+    }
 
+    private fun feedBackData(){
         viewModel.getFeedBackData.observe(this, Observer {data->
             binding.feedbackDate.text = changeDateFormatFeedback(data.createdDate)
             binding.ratingBar.count = data.rating
@@ -51,29 +67,29 @@ class FeedbackDetailActivity : BaseActivity(),KodeinAware {
             }
 
         })
+    }
 
+    private fun observeFeedBackChronology(){
         viewModel.feedbackChronology.observe(this,{data->
             if (!data.comments.isNullOrEmpty()){
                 binding.feedbackChronologyStatus.text = data.comments
             }
         })
+    }
 
-        if (!caseNo.isNullOrEmpty()) {
-            val attachementList = viewModel.getAttachementList(caseNo)
-            if (!attachementList.isNullOrEmpty()) {
-                binding.imageRecyclerview.also {
-                    val layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
-                    it.layoutManager = layoutManager
-                    it.adapter = FeedBackAttachmentAdapter(this,attachementList)
-                }
-            }
+    private fun customLayoutManager(){
+        binding.imageRecyclerview.apply {
+            val customLayoutManager = LinearLayoutManager(this@FeedbackDetailActivity, RecyclerView.HORIZONTAL, false)
+            layoutManager = customLayoutManager
         }
+    }
 
-
-
-
-        binding.imgBack.setOnClickListener {
-            finish()
+    private fun setAttachmentList(){
+        if (!caseNo().isNullOrEmpty()) {
+            val attachementList = viewModel.getAttachementList(caseNo())
+            if (!attachementList.isNullOrEmpty()) {
+                feedBackAdapter.list = attachementList
+            }
         }
     }
 }

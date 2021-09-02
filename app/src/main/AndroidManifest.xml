@@ -63,12 +63,6 @@
             android:name=".VerifyFaceIDActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".decryptTesting.DecryptActivityActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".decryptTesting.QRCodeActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".IntroActivity"
             android:screenOrientation="portrait" />
         <activity
