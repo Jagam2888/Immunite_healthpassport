@@ -7,257 +7,40 @@
 
     </data>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="@color/primary">
+        tools:context=".FaceRecognitionActivity">
 
-        <RelativeLayout
-            android:id="@+id/action_bar1"
+        <com.google.android.cameraview.CameraView
+            android:id="@+id/camera"
             android:layout_width="match_parent"
-            android:layout_height="?android:attr/actionBarSize"
-            android:orientation="horizontal"
-            android:background="@color/primary">
-
-            <ImageView
-                android:id="@+id/img_back"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/left_arrow"
-                android:layout_centerVertical="true"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/set_up_face_id"
-                android:textColor="@color/white"
-                android:textSize="16sp"
-                android:layout_centerInParent="true"
-                android:textAppearance="@style/opens_bold"/>
-        </RelativeLayout>
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:adjustViewBounds="true"
+            app:facing="front"
+            android:background="@android:color/black"/>
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="40dp">
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/img_circle"
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                android:layout_gravity="center_horizontal"
-                android:background="@drawable/oval_gray_outline" />
-
-            <TextView
-                android:id="@+id/text_desc"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/position_within_frame"
-                android:textColor="@color/white"
-                android:textAppearance="@style/opens_bold"
-                android:textSize="18sp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="50dp"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/layout_complete"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="20dp"
-            android:paddingRight="20dp"
-            android:paddingLeft="20dp"
-            android:visibility="gone">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Awesome your face ID created."
-                android:textColor="@color/white"
-                android:textAppearance="@style/opens_regular"
-                android:textSize="14sp"
-                android:layout_gravity="center_horizontal"/>
-            <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:buttonTint="@color/white"
-                android:text="I agree to the terms and privacy policy."
-                android:textColor="@color/white"
-                android:textSize="14sp"
-                android:textAppearance="@style/opens_regular"
-                android:layout_marginTop="20dp"
-                android:layout_gravity="center_horizontal"/>
-            <androidx.appcompat.widget.AppCompatButton
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/button_primary_white_stroke"
-                android:text="@string/signup"
-                android:textColor="@color/white"
-                android:textAppearance="@style/opens_bold"
-                android:textSize="18sp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"/>
-        </LinearLayout>
-
-        <!--<androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/progress_circular"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal">
-
-            &lt;!&ndash;<com.shunan.circularprogressbar.CircularProgressBar
-                android:id="@+id/progress_bar"
-                android:layout_width="300dp"
-                android:layout_height="300dp"
-                android:layout_gravity="center_horizontal"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:enableBackgroundDashEffect="true"
-                app:maxProgress="100"
-                app:progressColor="@color/parrot_green"
-                app:progressValue="0"
-
-
-                >
-
-            </com.shunan.circularprogressbar.CircularProgressBar>&ndash;&gt;
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cameraWrapper"
-                android:layout_width="252dp"
-                android:layout_height="252dp"
-                android:padding="-20dp"
-                app:cardCornerRadius="360dp"
-                app:cardElevation="0dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                &lt;!&ndash; <com.wonderkiln.camerakit.CameraView
-                     android:id="@+id/camera"
-                     android:layout_width="match_parent"
-                     android:layout_height="match_parent"
-                     app:cameraFacing="front"
-                     />
-
-                 <com.cmg.vaccine.services.GraphicOverlay
-                     android:id="@+id/graphic_overlay"
-                     android:layout_width="294dp"
-                     android:layout_height="match_parent" />&ndash;&gt;
-
-                <TextureView
-                    android:id="@+id/tracking_texture_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-
-                <ImageView
-                    android:id="@+id/tracking_image_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    />
-
-                <ImageView
-                    android:id="@+id/result_capture"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    />
-
-            </androidx.cardview.widget.CardView>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-        <LinearLayout
-            android:id="@+id/layout_1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:visibility="visible">
-
-            <TextView
-                android:id="@+id/instruction"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="50dp"
-                android:text="@string/position_within_frame"
-                android:textColor="@color/white"
-                android:textSize="23sp"
-                android:textAppearance="@style/opens_bold"/>
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/layout_2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:orientation="horizontal"
+            android:layout_centerInParent="true"
             android:visibility="gone">
 
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
             <TextView
-                android:id="@+id/instruction_2"
-                android:layout_width="300dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="50dp"
-                android:text="@string/setup_complete"
+                android:text="Please Wait..."
                 android:textColor="@color/white"
-                android:textSize="23sp"
-                android:textAppearance="@style/opens_bold"/>
+                android:layout_gravity="center_vertical"/>
+        </LinearLayout>
 
-            <TextView
-                android:id="@+id/instruction_2_desc"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="20dp"
-                android:text="@string/position_within_frame"
-                android:textColor="@color/white"
-                android:textSize="14sp"
-                android:textAppearance="@style/opens_regular"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="20dp"
-                android:gravity="center_horizontal">
-                <androidx.appcompat.widget.AppCompatCheckBox
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:buttonTint="@color/white"
-                    android:layout_marginRight="-15dp" />
-                <TextView
-                    android:id="@+id/checkbox_terms"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/terms_condition"
-                    android:textColor="@color/white"
-                    android:textSize="14sp"
-                    android:textAppearance="@style/opens_regular"/>
-
-            </LinearLayout>
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btn_sign_up"
-                android:layout_width="300dp"
-                android:layout_gravity="center"
-                android:layout_height="wrap_content"
-                android:text="@string/signup"
-                android:textColor="@color/white"
-                android:textAllCaps="false"
-                android:background="@drawable/button_white_corner"
-                android:paddingTop="20dp"
-                android:paddingBottom="20dp"
-                android:layout_marginTop="20dp" />
-
-        </LinearLayout>-->
-
-    </LinearLayout>
+    </RelativeLayout>
 </layout>

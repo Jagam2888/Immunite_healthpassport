@@ -8,7 +8,12 @@ import android.content.ContentUris
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.res.Configuration
 import android.database.Cursor
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.Matrix
+import android.graphics.Point
 import android.location.Address
 import android.location.Geocoder
 import android.location.Location
@@ -24,6 +29,7 @@ import android.util.Base64
 import android.util.Log
 import android.view.Gravity
 import android.view.View
+import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ProgressBar
@@ -52,6 +58,10 @@ import com.niwattep.materialslidedatepicker.SlideDatePickerDialog
 import immuniteeEncryption.EncryptionUtils
 import io.github.douglasjunior.androidSimpleTooltip.SimpleTooltip
 import io.paperdb.Paper
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.apache.poi.ss.formula.functions.T
 import java.io.File
 import java.io.FileInputStream
@@ -1067,4 +1077,44 @@ fun Context.getFileName(uri:Uri):String?{
     }
     return result
 }
+fun Context.drawResizedBitmap(src: Bitmap, dst: Bitmap) {
+    val getOrient = (getSystemService(AppCompatActivity.WINDOW_SERVICE) as WindowManager).defaultDisplay
+    var orientation = Configuration.ORIENTATION_UNDEFINED
+    val point = Point()
+    getOrient.getSize(point)
+    val screen_width = point.x
+    val screen_height = point.y
+    var mScreenRotation = 0
+    Log.d(
+        "",
+        String.format("screen size (%d,%d)", screen_width, screen_height)
+    )
+    if (screen_width < screen_height) {
+        orientation = Configuration.ORIENTATION_PORTRAIT
+        mScreenRotation = 0
+    } else {
+        orientation = Configuration.ORIENTATION_LANDSCAPE
+        mScreenRotation = 0
+    }
+    //junit.framework.Assert.assertEquals(dst.width, dst.height)
+    val minDim = Math.min(src.width, src.height).toFloat()
+    val matrix = Matrix()
+
+    // We only want the center square out of the original rectangle.
+    val translateX = -Math.max(0f, (src.width - minDim) / 2)
+    val translateY = -Math.max(0f, (src.height - minDim) / 2)
+    matrix.preTranslate(translateX, translateY)
+    val scaleFactor = dst.height / minDim
+    matrix.postScale(scaleFactor, scaleFactor)
+
+    // Rotate around the center if necessary.
+    if (mScreenRotation != 0) {
+        matrix.postTranslate(-dst.width / 2.0f, -dst.height / 2.0f)
+        matrix.postRotate(mScreenRotation.toFloat())
+        matrix.postTranslate(dst.width / 2.0f, dst.height / 2.0f)
+    }
+    val canvas = Canvas(dst)
+    canvas.drawBitmap(src, matrix, null)
+}
+
 

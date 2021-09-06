@@ -2,7 +2,6 @@ package com.cmg.vaccine
 
 import android.content.Intent
 import android.content.pm.PackageManager
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.core.app.ActivityCompat
@@ -43,21 +42,25 @@ class VerifyFaceIDActivity : BaseActivity() {
         }
 
         binding.btnGetStart.setOnSingleClickListener{
-            Intent(this, FaceRecognitionActivity::class.java).also {
-                startActivity(it)
-            }
+            navigate()
         }
 
         binding.takePhotoBtn.setOnSingleClickListener{
             Intent(this, FaceRecognitionActivity::class.java).also {
                 startActivity(it)
             }
-            //if (checkPermission()) {
-               // cropImage()
-           /* }else{
-                requestPermission()
-            }*/
+
         }
+    }
+
+    private fun navigate(){
+        if (checkPermission()) {
+            Intent(this, FaceDetectionActivity::class.java).also {
+                startActivity(it)
+            }
+         }else{
+             requestPermission()
+         }
     }
 
     private fun checkPermission():Boolean{
@@ -70,6 +73,28 @@ class VerifyFaceIDActivity : BaseActivity() {
             arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE),
             CAMERA_PERMISSION_CODE
         )
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when(requestCode){
+            CAMERA_PERMISSION_CODE ->{
+                if (grantResults.isNotEmpty()) {
+                    val accepted: Boolean = grantResults[0] == PackageManager.PERMISSION_GRANTED
+                    if (accepted) {
+                        Intent(this, FaceDetectionActivity::class.java).also {
+                            startActivity(it)
+                        }
+                    } else {
+                        toast("Permission Denied, You cannot access your camera")
+                    }
+                }
+            }
+        }
     }
 
     private fun cropImage() {
@@ -92,7 +117,7 @@ class VerifyFaceIDActivity : BaseActivity() {
                 pref.saveProfileImage(resultUri.toString())
                 //viewModel.profileImageUri.set(resultUri.toString())
                 toast("You profile picture was successfully changed")
-                Intent(this, FaceRecognitionActivity::class.java).also {
+                Intent(this, FaceDetectionActivity::class.java).also {
                     it.putExtra("recent_capture",resultUri.toString())
                     startActivity(it)
                 }
@@ -101,5 +126,10 @@ class VerifyFaceIDActivity : BaseActivity() {
                 error?.message?.let { toast(it) }
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
     }
 }

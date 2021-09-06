@@ -6,9 +6,7 @@ import com.cmg.vaccine.network.BlockChainAPi
 import com.cmg.vaccine.network.MyApi
 import com.cmg.vaccine.prefernces.PreferenceProvider
 import com.cmg.vaccine.repositary.*
-import com.cmg.vaccine.services.MyFirebaseInstanceIDService
 import com.cmg.vaccine.viewmodel.viewmodelfactory.*
-import io.paperdb.Paper
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.androidXModule
@@ -118,6 +116,13 @@ class AppController : Application(),KodeinAware {
 
         bind() from singleton { SubscriptionRepositary(instance()) }
         bind() from provider { SubscriptionViewModelFactory(instance()) }
+
+        bind() from singleton { FaceDetectRepositary(instance(),instance()) }
+        bind() from provider { FaceDetectViewModelFactory(instance()) }
+
+        bind() from singleton { FaceRecognitionRepositary(instance()) }
+        bind() from provider { FaceRecognitionViewModelFactory(instance()) }
+
         //bind() from provider { MyFirebaseInstanceIDService(instance()) }
 
     }

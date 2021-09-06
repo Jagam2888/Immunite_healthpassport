@@ -1,293 +1,107 @@
 package com.cmg.vaccine
 
-import android.content.Intent
-import android.content.pm.PackageManager
+import android.content.res.Configuration
+import android.graphics.*
 import android.os.Bundle
-import android.util.Size
+import android.util.Log
 import android.view.View
-import android.view.ViewGroup
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
-import androidx.databinding.DataBindingUtil
-import com.canhub.cropper.CropImage
-import com.canhub.cropper.CropImageView
-import com.cmg.vaccine.data.setOnSingleClickListener
+import android.view.WindowManager
+import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import com.cmg.vaccine.databinding.ActivityFaceRecognitionBinding
+import com.cmg.vaccine.listener.SimpleListener
 import com.cmg.vaccine.util.toast
+import com.cmg.vaccine.viewmodel.FaceRecognitionViewModel
+import com.cmg.vaccine.viewmodel.viewmodelfactory.FaceRecognitionViewModelFactory
+import com.google.android.cameraview.CameraView
+import com.tzutalin.dlib.FaceRec
+import org.kodein.di.KodeinAware
+import org.kodein.di.android.kodein
+import org.kodein.di.generic.instance
 
-class FaceRecognitionActivity : BaseActivity() {
-    private lateinit var binding: ActivityFaceRecognitionBinding
+class FaceRecognitionActivity : BaseActivity(),KodeinAware,SimpleListener {
+    override val kodein by kodein()
+    private lateinit var binding:ActivityFaceRecognitionBinding
+    private lateinit var viewModel:FaceRecognitionViewModel
 
-   // var lens = CameraX.LensFacing.FRONT
-    val REQUEST_CODE_PERMISSION = 101
-    var capture=false
-    val REQUIRED_PERMISSIONS = arrayOf(
-        "android.permission.CAMERA",
-        "android.permission.WRITE_EXTERNAL_STORAGE"
-    )
-    /*var detector: FirebaseVisionFaceDetector? = null
-    var image: FirebaseVisionImage? = null
-    var graphicOverlay: GraphicOverlay? = null*/
+    private val factory:FaceRecognitionViewModelFactory by instance()
+
+    var mFaceRec:FaceRec?=null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_face_recognition)
+        binding = ActivityFaceRecognitionBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
+        viewModel = ViewModelProvider(this,factory).get(FaceRecognitionViewModel::class.java)
 
-        /*  if(intent.getStringExtra("recent_capture")!=null){
+        viewModel.simpleListener = this
 
-              var recent_cap=intent.getStringExtra("recent_capture")
-              val uri: Uri = Uri.parse(recent_cap)
-              val bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, uri)
-              runFaceDetector(bitmap)
-          }
+        if (binding.camera != null)
+            binding.camera.addCallback(mCallback)
+    }
 
-
-          binding.camera.start()
-
-          binding.btnSignUp.setOnClickListener {
-              binding.camera.captureImage()
-              binding.graphicOverlay.clear()
-
-          }
-
-          binding.camera.setFacing(CameraKit.Constants.FACING_FRONT);
-          binding.progressBar.dashLineLength=8.0f
-          binding.camera.addCameraKitListener(object : CameraKitEventListener {
-              override fun onEvent(p0: CameraKitEvent?) {
-                  binding.camera.captureImage()
-                  Log.e("Capture", "Camera")
-              }
-
-              override fun onError(p0: CameraKitError?) {
-
-              }
-
-              override fun onImage(p0: CameraKitImage?) {
-                  //binding.progressBar.
-                  var bitmap = p0?.bitmap
-                  bitmap = bitmap?.let { Bitmap.createScaledBitmap(it, binding.camera.width, binding.camera.height, false) }
-                  runFaceDetector(bitmap)
-                  //binding.graphicOverlay.clear()
-              }
-
-              override fun onVideo(p0: CameraKitVideo?) {
-
-              }
-
-
-          })*/
-
-        binding.imgBack.setOnClickListener {
-            finish()
+    private val mCallback: CameraView.Callback = object : CameraView.Callback() {
+        override fun onCameraOpened(cameraView: CameraView) {
+            Log.d("", "onCameraOpened")
         }
 
-        binding.imgCircle.setOnSingleClickListener{
-            if (checkPermission()){
-                cropImage()
-            }else{
-                requestPermission()
-            }
+        override fun onCameraClosed(cameraView: CameraView) {
+            Log.d("", "onCameraClosed")
         }
 
-
-        if(intent.getStringExtra("recent_capture")==null)
-            if (checkPermission()){
-                //binding.trackingTextureView.post(Runnable { startCamera() })
-            }else{
-                requestPermission()
-            }
-        else{
-
+        override fun onPictureTaken(cameraView: CameraView, data: ByteArray) {
+            Log.d(
+                "",
+                "onPictureTaken " + data.size
+            )
+            Toast.makeText(cameraView.context, "Taken", Toast.LENGTH_SHORT)
+                .show()
+            val bp = BitmapFactory.decodeByteArray(data, 0, data.size)
+            viewModel.recognizeFace(bp)
+            /*com.google.android.cameraview.demo.MainActivity.recognizeAsync().execute(bp)*/
         }
-
-
     }
 
 
-
-/*    private fun runFaceDetector(bitmap: Bitmap?) {
-        val image= bitmap?.let { FirebaseVisionImage.fromBitmap(it) }
-        val options=FirebaseVisionFaceDetectorOptions.Builder()
-                .setPerformanceMode(FirebaseVisionFaceDetectorOptions.ACCURATE)
-                .setLandmarkMode(FirebaseVisionFaceDetectorOptions.ALL_LANDMARKS)
-                .setMinFaceSize(0.3f)
-                .enableTracking()
-                .build()
-
-        val detector=FirebaseVision.getInstance().getVisionFaceDetector(options)
-
-        image?.let {
-            detector.detectInImage(it)
-                .addOnSuccessListener { result->processFaceResult(result) }
-                .addOnFailureListener { e->toast("fail to process face") }
-        }
-
-    }
-
-
-    var temp=0
-
-    private fun processFaceResult(result: List<FirebaseVisionFace>) {
-
-        for(face in result){
-
-            if(face.trackingId!=temp){
-                binding.progressBar.progress=0
-                temp=face.trackingId
-            }
-            else{
-                binding.progressBar.progress+=20
-            }
-
-        }
-
-        if(binding.progressBar.progress==100){
-            binding.layout1.visibility=View.GONE
-            binding.layout2.visibility=View.VISIBLE
-            binding.camera.stop()
-            toast("Verify Successfully")
-        }
-
-
-
-
-
-
-
-    }*/
-
-/*    override fun onStart() {
-        super.onStart()
-        binding.camera.start()
-    }
 
     override fun onResume() {
         super.onResume()
-        Log.e("Hello", "Resume")
         binding.camera.start()
+        viewModel.addPeople()
     }
 
     override fun onPause() {
-        binding.camera.stop()
         super.onPause()
-    }
-
-    override fun onStop() {
         binding.camera.stop()
-        super.onStop()
-    }*/
-
-
-    //New test
-
-    private fun startCamera() {
-        initCamera()
     }
 
-    private fun initCamera() {
-      /*  CameraX.unbindAll()
-        val pc = PreviewConfig.Builder()
-            .setTargetResolution(
-                Size(
-                    binding.trackingTextureView.getWidth(),
-                    binding.trackingTextureView.getHeight()
-                )
-            )
-            .setLensFacing(lens)
-            .build()
-        val preview = Preview(pc)
-        preview.setOnPreviewOutputUpdateListener { output: Preview.PreviewOutput ->
-            val vg = binding.trackingTextureView.getParent() as ViewGroup
-            vg.removeView(binding.trackingTextureView)
-            vg.addView(binding.trackingTextureView, 0)
-            binding.trackingTextureView.setSurfaceTexture(output.surfaceTexture)
-        }
-        val iac = ImageAnalysisConfig.Builder()
-            .setImageReaderMode(ImageAnalysis.ImageReaderMode.ACQUIRE_LATEST_IMAGE)
-            .setTargetResolution(
-                Size(
-                    binding.trackingTextureView.getWidth(),
-                    binding.trackingTextureView.getHeight()
-                )
-            )
-            .setLensFacing(lens)
-            .build()
-        val imageAnalysis = ImageAnalysis(iac)
-        imageAnalysis.setAnalyzer(
-            { obj: Runnable -> obj.run() },
-            FaceTrackingAnalyzer(
-                binding.trackingTextureView,
-                binding.trackingImageView,
-                lens,
-                binding.progressBar,
-                binding.layout2,
-                binding.layout1,
-                binding.resultCapture
-            )
-        )
-        CameraX.bindToLifecycle(this, preview, imageAnalysis)*/
+    override fun onDestroy() {
+        super.onDestroy()
+        binding.camera.stop()
+        /*if (mFaceRec != null)
+            mFaceRec!!.release()*/
     }
 
-    private fun cropImage() {
-        CropImage.activity()
-            .setGuidelines(CropImageView.Guidelines.ON)
-            .setActivityTitle("Face ID")
-            .setCropShape(CropImageView.CropShape.OVAL)
-            .setFixAspectRatio(true)
-            .setCropMenuCropButtonTitle("Done")
-            .start(this)
+    override fun onStarted() {
+        binding.progressCircular.visibility = View.VISIBLE
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode === CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-            val result = CropImage.getActivityResult(data)
-            if (resultCode === RESULT_OK) {
-                val resultUri = result?.uri
-                //viewModel.saveProfileImage(resultUri.toString())
-                //viewModel.profileImageUri.set(resultUri.toString())
-                binding.imgCircle.setImageURI(resultUri)
-                binding.textDesc.text = resources.getString(R.string.set_up_face_id)
-                binding.layoutComplete.visibility = View.VISIBLE
-                //toast("You profile picture was successfully changed")
-            } else if (resultCode === CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-                val error = result?.error
-                error?.message?.let { toast(it) }
-            }
-        }
-
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String?>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        when (requestCode) {
-            REQUEST_CODE_PERMISSION -> {
-                if (grantResults.isNotEmpty()) {
-                    val accepted: Boolean = grantResults[0] == PackageManager.PERMISSION_GRANTED
-                    if (accepted) {
-                        cropImage()
-                        //binding.trackingTextureView.post(Runnable { startCamera() })
-                    } else {
-                        toast("Permission Denied, You cannot access your camera")
-                    }
-                }
+    override fun onSuccess(msg: String) {
+        binding.progressCircular.visibility = View.GONE
+        toast(msg)
+        if (msg.startsWith("1")){
+            if (binding.camera != null){
+                binding.camera.takePicture()
             }
         }
     }
 
-
-
-
-    //
-    private fun checkPermission():Boolean{
-        return (ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED)
+    override fun onFailure(msg: String) {
+        binding.progressCircular.visibility = View.GONE
     }
 
-    private fun requestPermission(){
-        ActivityCompat.requestPermissions(this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSION);
+    override fun onShowToast(msg: String) {
+        binding.progressCircular.visibility = View.GONE
     }
 }

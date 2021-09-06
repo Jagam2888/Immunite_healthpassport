@@ -64,6 +64,8 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation files('libs/encryptionUtils-0.0.2.jar')
     implementation files('libs/IPHSD_SDK_23122020.aar')
+    implementation project(':dlib')
+    implementation project(':library')
     //implementation(name: 'IPHSD_SDK_23122020', ext: 'aar')
 
 
