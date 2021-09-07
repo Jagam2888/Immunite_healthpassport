@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewmodel"
             type="com.cmg.vaccine.viewmodel.FaceDetectViewModel" />
@@ -12,41 +13,43 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="@color/primary">
+        android:background="@color/primary"
+        android:orientation="vertical">
 
         <RelativeLayout
             android:id="@+id/action_bar1"
             android:layout_width="match_parent"
             android:layout_height="?android:attr/actionBarSize"
-            android:orientation="horizontal"
-            android:background="@color/primary">
+            android:background="@color/primary"
+            android:orientation="horizontal">
 
             <ImageView
                 android:id="@+id/img_back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/left_arrow"
-                android:layout_centerVertical="true"/>
+                android:layout_centerVertical="true"
+                android:src="@drawable/left_arrow" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/set_up_face_id"
-                android:textColor="@color/white"
-                android:textSize="16sp"
                 android:layout_centerInParent="true"
-                android:textAppearance="@style/opens_bold"/>
+                android:text="@string/set_up_face_id"
+                android:textAppearance="@style/opens_bold"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="40dp">
+                android:layout_marginTop="40dp"
+                android:orientation="vertical">
+
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/img_circle"
                     android:layout_width="200dp"
@@ -58,71 +61,77 @@
                     android:id="@+id/text_desc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/position_within_frame"
-                    android:textColor="@color/white"
-                    android:textAppearance="@style/opens_bold"
-                    android:textSize="18sp"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="50dp"/>
-            </LinearLayout>
+                    android:layout_marginTop="50dp"
+                    android:text="@string/position_within_frame"
+                    android:textAppearance="@style/opens_bold"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
 
             <LinearLayout
-            android:id="@+id/layout_complete"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="20dp"
-            android:paddingRight="20dp"
-            android:paddingLeft="20dp"
-            android:visibility="gone">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Awesome your face ID created."
-                android:textColor="@color/white"
-                android:textAppearance="@style/opens_regular"
-                android:textSize="14sp"
-                android:layout_gravity="center_horizontal"/>
-            <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:buttonTint="@color/white"
-                android:text="I agree to the terms and privacy policy."
-                android:textColor="@color/white"
-                android:textSize="14sp"
-                android:textAppearance="@style/opens_regular"
-                android:layout_marginTop="20dp"
-                android:layout_gravity="center_horizontal"/>
-            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/layout_complete"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:background="@drawable/button_primary_white_stroke"
-                android:text="@string/signup"
-                android:textColor="@color/white"
-                android:textAppearance="@style/opens_bold"
-                android:textSize="18sp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"/>
-        </LinearLayout>
+                android:orientation="vertical"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="Awesome your face ID created."
+                    android:textAppearance="@style/opens_regular"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="20dp"
+                    android:buttonTint="@color/white"
+                    android:text="I agree to the terms and privacy policy."
+                    android:textAppearance="@style/opens_regular"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_signup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/button_primary_white_stroke"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:text="@string/signup"
+                    android:textAppearance="@style/opens_bold"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
+            </LinearLayout>
+            </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/progress_circular"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:layout_centerInParent="true"
+                android:orientation="vertical"
                 android:visibility="gone">
 
                 <ProgressBar
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"/>
+                    android:layout_gravity="center_horizontal" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
                     android:text="Please Wait Face Dedecting..."
-                    android:textColor="@color/white"
-                    android:layout_gravity="center_horizontal"/>
+                    android:textColor="@color/white" />
             </LinearLayout>
         </RelativeLayout>
 

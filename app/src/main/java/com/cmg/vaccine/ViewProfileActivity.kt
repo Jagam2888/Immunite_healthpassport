@@ -49,7 +49,17 @@ class ViewProfileActivity : BaseActivity(),KodeinAware,SimpleListener {
         binding.txtEditProfile.setOnSingleClickListener {
 
             if (!viewModel.privateKey.value.isNullOrEmpty()) {
-                if (user == Passparams.PARENT) {
+                Intent(this, FaceRecognitionActivity::class.java).also {
+                    it.putExtra(Passparams.USER,user)
+                    if (user == Passparams.DEPENDENT) {
+                        it.putExtra(
+                            Passparams.DEPENDENT_SUBID,
+                            intent.extras?.getString(Passparams.DEPENDENT_SUBID, "")!!
+                        )
+                    }
+                    startActivity(it)
+                }
+                /*if (user == Passparams.PARENT) {
                     Intent(this, EditProfileActivity::class.java).also {
                         startActivity(it)
                     }
@@ -62,7 +72,7 @@ class ViewProfileActivity : BaseActivity(),KodeinAware,SimpleListener {
                         )
                         startActivity(it)
                     }
-                }
+                }*/
             }else{
             showAlertDialog(resources.getString(R.string.account_opening), "Your Private Key is not generate, Check Mykey in Dashboard", true, supportFragmentManager)
         }

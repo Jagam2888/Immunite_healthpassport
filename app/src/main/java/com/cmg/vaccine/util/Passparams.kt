@@ -28,6 +28,7 @@ object Passparams{
     const val ISSUBSCRIBE = "is_subscribe"
     const val ERROR_ALERT = "error_alert"
     const val CASE_NO = "case_no"
+    const val NAVIGATE_FACE_ID = "navigate_face_id"
 
     const val ADD_DEPENDENT_SUCCESS = "add_dependent_success"
 

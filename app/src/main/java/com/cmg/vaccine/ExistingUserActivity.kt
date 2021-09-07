@@ -156,8 +156,14 @@ class ExistingUserActivity : BaseActivity(),KodeinAware,SimpleListener,SlideDate
                     startActivity(it)
                 }
             } else {
-                toast(msg)
-                Intent(this, SuccessAccountRestoredActivity::class.java).also {
+                //toast(msg)
+                /*Intent(this, SuccessAccountRestoredActivity::class.java).also {
+                    it.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                    startActivity(it)
+                }*/
+                Intent(this, VerifyFaceIDActivity::class.java).also {
+                    Paper.book().write(Passparams.NAVIGATE_FACE_ID,Passparams.EXISTING_USER)
+                    //it.putExtra(Passparams.NAVIGATE_FACE_ID,Passparams.EXISTING_USER)
                     it.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                     startActivity(it)
                 }

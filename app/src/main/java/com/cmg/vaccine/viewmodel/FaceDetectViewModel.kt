@@ -1,5 +1,6 @@
 package com.cmg.vaccine.viewmodel
 
+import android.content.Context
 import android.graphics.Bitmap
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -30,23 +31,29 @@ class FaceDetectViewModel(
     var mFaceRec:FaceRec?=null
     var simpleListener:SimpleListener?=null
 
+    var errorMsg:String?=null
+    var failedMsg:String?=null
+    var successMsg:String?=null
+
     init {
         if (faceDetectViewModelRepositary.user() != null){
-            _userName.postValue(faceDetectViewModelRepositary.user().fullName)
+            _userName.value = faceDetectViewModelRepositary.user().fullName
         }
     }
 
-    fun detectFace(bitmap: Bitmap,destination:File) = viewModelScope.executeAsyncTask(
+    fun detectFace(bitmap: Bitmap,destination:File,context: Context) = viewModelScope.executeAsyncTask(
         onPreExecute = {
             simpleListener?.onStarted()
         },doInBackground = {
-                mFaceRec = FaceRec(Constants.getDLibDirectoryPath())
+                mFaceRec = FaceRec(Constants.getDLibDirectoryPath(context))
                 //val results = listOf<VisionDetRet>()
                 val results = mFaceRec!!.detect(bitmap)
                 if (results?.isEmpty() == true){
-                    simpleListener?.onShowToast("No face was detected or face was too small. Please select a different image")
+                    failedMsg = "No face was detected or face was too small. Please select a different image"
+                    //simpleListener?.onShowToast()
                 }else if (results?.size!! > 1){
-                    simpleListener?.onShowToast("More than one face was detected. Please select a different image")
+                    failedMsg = "More than one face was detected. Please select a different image"
+                    //simpleListener?.onShowToast("")
                 }else{
                     val bytes = ByteArrayOutputStream()
                     bitmap.compress(Bitmap.CompressFormat.JPEG,100,bytes)
@@ -55,18 +62,27 @@ class FaceDetectViewModel(
                         val fo = FileOutputStream(destination)
                         fo.write(bytes.toByteArray())
                         fo.close()
+                        successMsg = "success"
                         //simpleListener?.onSuccess("Face Detected")
                     }catch (e:FileNotFoundException){
-                        simpleListener?.onFailure(e.message!!)
+                        errorMsg = e.message
+                        //simpleListener?.onFailure(e.message!!)
                     }catch (e:IOException){
-                        simpleListener?.onFailure(e.message!!)
+                        errorMsg = e.message
+                        //simpleListener?.onFailure(e.message!!)
                     }
 
 
             }
         },onPostExecute = {
-            filePath.value = destination.absolutePath
-            simpleListener?.onSuccess(destination.absolutePath)
+            if (!successMsg.isNullOrEmpty()) {
+                filePath.value = destination.absolutePath
+                simpleListener?.onSuccess(destination.absolutePath)
+            }else if (!failedMsg.isNullOrEmpty()){
+                simpleListener?.onShowToast(failedMsg!!)
+            }else if (!errorMsg.isNullOrEmpty()){
+                simpleListener?.onFailure(errorMsg!!)
+            }
         }
     )
 }

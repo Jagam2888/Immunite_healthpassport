@@ -62,9 +62,7 @@
         <activity
             android:name=".FaceDetectionActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".VerifyFaceIDActivity"
-            android:screenOrientation="portrait" />
+
         <activity
             android:name=".IntroActivity"
             android:screenOrientation="portrait" />
@@ -219,6 +217,9 @@
             android:label="Home"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".VerifyFaceIDActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".SplashActivity"
             android:screenOrientation="portrait">

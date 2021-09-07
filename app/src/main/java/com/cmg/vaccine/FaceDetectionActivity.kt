@@ -20,6 +20,7 @@ import com.cmg.vaccine.util.*
 import com.cmg.vaccine.viewmodel.FaceDetectViewModel
 import com.cmg.vaccine.viewmodel.viewmodelfactory.FaceDetectViewModelFactory
 import com.tzutalin.dlib.Constants
+import io.paperdb.Paper
 import kotlinx.android.synthetic.main.activity_verify_face_i_d.*
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
@@ -62,7 +63,10 @@ class FaceDetectionActivity : BaseActivity(),KodeinAware,SimpleListener {
         binding.viewmodel = viewModel
         viewModel.simpleListener = this
 
-        destination = File(Constants.getDLibDirectoryPath() + "/temp.jpg")
+        destination = File(Constants.getDLibDirectoryPath(this) + "/temp.jpg")
+
+        val intentValue = Paper.book().read<String>(Passparams.NAVIGATE_FACE_ID)
+        Log.d("intent_value",intentValue!!)
 
 
         /*  if(intent.getStringExtra("recent_capture")!=null){
@@ -119,12 +123,32 @@ class FaceDetectionActivity : BaseActivity(),KodeinAware,SimpleListener {
             requestPermission()
         }
 
-        binding.imgCircle.setOnSingleClickListener{
+        /*binding.imgCircle.setOnSingleClickListener{
             if (checkPermission()){
                 navigateCamera()
             }else{
                 requestPermission()
             }
+        }*/
+
+        binding.btnSignup.setOnSingleClickListener{
+            when(intentValue){
+                Passparams.SIGNUP ->{
+                    Paper.book().write(Passparams.NAVIGATE_FACE_ID,"")
+                    Intent(this, SignupCompleteActivity::class.java).also {
+                        it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        startActivity(it)
+                    }
+                }
+                Passparams.EXISTING_USER ->{
+                    Paper.book().write(Passparams.NAVIGATE_FACE_ID,"")
+                    Intent(this, SuccessAccountRestoredActivity::class.java).also {
+                        it.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                        startActivity(it)
+                    }
+                }
+            }
+
         }
 
 
@@ -291,7 +315,7 @@ class FaceDetectionActivity : BaseActivity(),KodeinAware,SimpleListener {
             val bitMap = data?.extras?.get("data") as Bitmap
             scaleBitmap = scaleDown(bitMap!!, MAX_IMAGE_SIZE,true)
             Log.d("image_detect",destination?.absolutePath!!)
-            viewModel.detectFace(scaleBitmap!!,destination!!)
+            viewModel.detectFace(scaleBitmap!!,destination!!,this)
         }
         /*if (requestCode === CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             val result = CropImage.getActivityResult(data)
@@ -366,21 +390,29 @@ class FaceDetectionActivity : BaseActivity(),KodeinAware,SimpleListener {
         binding.progressCircular.visibility = View.GONE
         binding.imgCircle.setImageBitmap(scaleBitmap)
         val targetPath =
-            Constants.getDLibImageDirectoryPath() + "/" + viewModel.userName.value + ".jpg"
+            Constants.getDLibImageDirectoryPath(this) + "/" + viewModel.userName.value + ".jpg"
         Log.d("path_image",viewModel.filePath.value!!)
         Log.d("path_name",targetPath)
         copyFile(viewModel.filePath.value!!,targetPath)
+
+        if (binding.textDesc.visibility == View.VISIBLE)
+            binding.textDesc.visibility = View.GONE
+
+        if (binding.layoutComplete.visibility == View.GONE)
+            binding.layoutComplete.visibility = View.VISIBLE
         //FileUtils.copyFile(viewModel.filePath.value!!,targetPath)
         //toast(msg)
     }
 
     override fun onFailure(msg: String) {
-        binding.progressCircular.visibility = View.GONE
         toast(msg)
+        if (binding.progressCircular.visibility == View.VISIBLE)
+            binding.progressCircular.visibility = View.GONE
     }
 
     override fun onShowToast(msg: String) {
-        binding.progressCircular.visibility = View.GONE
         toast(msg)
+        if (binding.progressCircular.visibility == View.VISIBLE)
+            binding.progressCircular.visibility = View.GONE
     }
 }

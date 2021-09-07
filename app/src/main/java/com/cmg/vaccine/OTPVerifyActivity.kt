@@ -21,6 +21,7 @@ import com.cmg.vaccine.receiver.OTPReceiver
 import com.cmg.vaccine.util.*
 import com.cmg.vaccine.viewmodel.OTPVerifyViewModel
 import com.cmg.vaccine.viewmodel.viewmodelfactory.OTPVerifyModelFactory
+import io.paperdb.Paper
 
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
@@ -174,7 +175,13 @@ class OTPVerifyActivity : BaseActivity(),KodeinAware,SimpleListener{
         hide(binding.progressBar)
         //toast(msg)
         if (navigateFrom.equals(Passparams.SIGNUP)) {
-            Intent(this, SignupCompleteActivity::class.java).also {
+            /*Intent(this, SignupCompleteActivity::class.java).also {
+                it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(it)
+            }*/
+            Intent(this, VerifyFaceIDActivity::class.java).also {
+                Paper.book().write(Passparams.NAVIGATE_FACE_ID,Passparams.SIGNUP)
+                //it.putExtra(Passparams.NAVIGATE_FACE_ID,Passparams.SIGNUP)
                 it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(it)
             }

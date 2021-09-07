@@ -41,10 +41,10 @@ class FaceRecognitionViewModel(
             if (names.isNotEmpty()) {
                 simpleListener?.onSuccess(getResultMessage(names)!!)
             }else{
-                simpleListener?.onFailure("Face not found")
+                simpleListener?.onFailure("No face detected or Unknown person")
             }
         },onPreExecute = {
-
+            simpleListener?.onStarted()
         }
     )
 
