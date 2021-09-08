@@ -49,6 +49,8 @@ class TellUsMoreActivity : BaseActivity(),KodeinAware,SimpleListener,SlideDatePi
             }
         }
 
+        //binding.txtFaceId.setOnSingleClickListener{navigateTo(this,VerifyFaceIDActivity::class.java)}
+
         /*viewModel.countries.observe(this, androidx.lifecycle.Observer {list->
             val arrayList = arrayListOf<Country>()
             arrayList.addAll(list)
@@ -132,12 +134,6 @@ class TellUsMoreActivity : BaseActivity(),KodeinAware,SimpleListener,SlideDatePi
                 }
             }
         })
-
-        binding.txtFaceId.setOnSingleClickListener{
-            Intent(this,VerifyFaceIDActivity::class.java).also {
-                startActivity(it)
-            }
-        }
     }
 
     override fun onPositiveClick(day: Int, month: Int, year: Int, calendar: Calendar) {

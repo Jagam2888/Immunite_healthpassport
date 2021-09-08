@@ -174,17 +174,44 @@ class OTPVerifyActivity : BaseActivity(),KodeinAware,SimpleListener{
     override fun onSuccess(msg: String) {
         hide(binding.progressBar)
         //toast(msg)
-        if (navigateFrom.equals(Passparams.SIGNUP)) {
-            /*Intent(this, SignupCompleteActivity::class.java).also {
+        when(navigateFrom){
+            Passparams.SIGNUP ->{
+                /*Intent(this, SignupCompleteActivity::class.java).also {
+                    it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    startActivity(it)
+                }*/
+                Intent(this, VerifyFaceIDActivity::class.java).also {
+                    Paper.book().write(Passparams.NAVIGATE_FACE_ID,Passparams.SIGNUP)
+                    //it.putExtra(Passparams.NAVIGATE_FACE_ID,Passparams.SIGNUP)
+                    it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    startActivity(it)
+                }
+            }
+            Passparams.FORGOT_PIN ->{
+                Intent(this, LoginPinActivity::class.java).also {
+                    it.putExtra(Passparams.ISCREATE,"create")
+                    it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    startActivity(it)
+                }
+            }else ->{
+                Intent(this, CheckOutActivity::class.java).also {
+                    //it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    startActivity(it)
+                    finish()
+                }
+            }
+        }
+        /*if (navigateFrom.equals(Passparams.SIGNUP)) {
+            Intent(this, SignupCompleteActivity::class.java).also {
                 it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(it)
-            }*/
-            Intent(this, VerifyFaceIDActivity::class.java).also {
+            }
+            *//*Intent(this, VerifyFaceIDActivity::class.java).also {
                 Paper.book().write(Passparams.NAVIGATE_FACE_ID,Passparams.SIGNUP)
                 //it.putExtra(Passparams.NAVIGATE_FACE_ID,Passparams.SIGNUP)
                 it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(it)
-            }
+            }*//*
         }else if(navigateFrom.equals(Passparams.FORGOT_PIN)){
             Intent(this, LoginPinActivity::class.java).also {
                 it.putExtra(Passparams.ISCREATE,"create")
@@ -197,7 +224,7 @@ class OTPVerifyActivity : BaseActivity(),KodeinAware,SimpleListener{
                 startActivity(it)
                 finish()
             }
-        }
+        }*/
     }
 
     override fun onShowToast(msg: String) {

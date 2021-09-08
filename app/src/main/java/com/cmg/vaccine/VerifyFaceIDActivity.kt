@@ -62,9 +62,7 @@ class VerifyFaceIDActivity : BaseActivity(),KodeinAware,SimpleListener {
         }
 
         binding.takePhotoBtn.setOnSingleClickListener{
-            Intent(this, FaceRecognitionActivity::class.java).also {
-                startActivity(it)
-            }
+            navigate()
         }
 
         val directory = File(Constants.getDLibDirectoryPath(this))

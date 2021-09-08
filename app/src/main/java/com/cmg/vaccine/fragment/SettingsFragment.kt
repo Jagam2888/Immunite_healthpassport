@@ -337,7 +337,11 @@ class SettingsFragment : Fragment(),KodeinAware,SimpleListener {
             }
         }*/
 
-        ringtone_name.post {  ringtone_name.text=viewModel.getRingtoneName()}
+        ringtone_name.post {
+            if (!viewModel.getRingtoneName().isNullOrEmpty()) {
+                ringtone_name.text = viewModel.getRingtoneName()
+            }
+        }
 
         layout_change_ringtone.setOnClickListener {
             pickupRingtone()

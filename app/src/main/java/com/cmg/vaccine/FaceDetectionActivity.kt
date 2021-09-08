@@ -132,22 +132,34 @@ class FaceDetectionActivity : BaseActivity(),KodeinAware,SimpleListener {
         }*/
 
         binding.btnSignup.setOnSingleClickListener{
-            when(intentValue){
-                Passparams.SIGNUP ->{
-                    Paper.book().write(Passparams.NAVIGATE_FACE_ID,"")
-                    Intent(this, SignupCompleteActivity::class.java).also {
-                        it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                        startActivity(it)
+            if (binding.checkboxTerms.isChecked) {
+                when (intentValue) {
+                    Passparams.SIGNUP -> {
+                        Paper.book().write(Passparams.NAVIGATE_FACE_ID, "")
+                        Intent(this, SignupCompleteActivity::class.java).also {
+                            it.flags =
+                                Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                            startActivity(it)
+                        }
+                    }
+                    Passparams.EXISTING_USER -> {
+                        Paper.book().write(Passparams.NAVIGATE_FACE_ID, "")
+                        Intent(this, SuccessAccountRestoredActivity::class.java).also {
+                            it.flags =
+                                Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                            startActivity(it)
+                        }
                     }
                 }
-                Passparams.EXISTING_USER ->{
-                    Paper.book().write(Passparams.NAVIGATE_FACE_ID,"")
-                    Intent(this, SuccessAccountRestoredActivity::class.java).also {
-                        it.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                        startActivity(it)
-                    }
-                }
+            }else{
+                toast("Please Agree terms and condition")
             }
+            /*Intent(this,OTPVerifyActivity::class.java).also {
+                it.putExtra(Passparams.NAVIGATE_FROM,Passparams.SIGNUP)
+                it.putExtra(Passparams.SUBSID, viewModel.userSubId.value)
+                it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(it)
+            }*/
 
         }
 

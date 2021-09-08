@@ -26,6 +26,8 @@ class FaceDetectViewModel(
     val userName:LiveData<String>
     get() = _userName
 
+    var userSubId:MutableLiveData<String> = MutableLiveData()
+
     var filePath:MutableLiveData<String> = MutableLiveData()
 
     var mFaceRec:FaceRec?=null
@@ -36,9 +38,15 @@ class FaceDetectViewModel(
     var successMsg:String?=null
 
     init {
-        if (faceDetectViewModelRepositary.user() != null){
-            _userName.value = faceDetectViewModelRepositary.user().fullName
+        try {
+            if (faceDetectViewModelRepositary.user() != null){
+                _userName.value = faceDetectViewModelRepositary.user().fullName
+                userSubId.value = faceDetectViewModelRepositary.user().parentSubscriberId
+            }
+        }catch (e:NullPointerException){
+            _userName.value = "User"
         }
+
     }
 
     fun detectFace(bitmap: Bitmap,destination:File,context: Context) = viewModelScope.executeAsyncTask(
