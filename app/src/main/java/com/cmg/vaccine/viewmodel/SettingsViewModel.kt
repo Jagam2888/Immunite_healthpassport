@@ -233,7 +233,7 @@ class SettingsViewModel(
 
     private fun getTestReportCall(){
        getVaccineTestRef(repositary.getPrivateKey()!!,"Prinicipal")
-       //getVaccineTestRef("122CD59272572BAF68C4B824F254D5361F459528D0F02CFC23054CAEA284FF42","Prinicipal")
+       //getVaccineTestRef("F3B091EFE3E06214139D34944792891B5771EAB667B8A3E24984C2C9CD674C41","Prinicipal")
 
         val dependent = repositary.getAllDependent()
 
